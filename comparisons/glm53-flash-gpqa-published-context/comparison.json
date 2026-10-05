@@ -1,0 +1,4 @@
+{"id": "glm53-flash-gpqa-published-context", "protocol": "gpqa-diamond/v1",
+ "runs": ["2026-09-29_glm53-flash_k3.25-v0.7.0-dflash5_gpqa-diamond", "2026-09-29_glm53-flash_k3.25-v0.8.0-dflash3_gpqa-diamond"],
+ "comparable": false,
+ "reason": "Published numbers use other weights (BF16, NVFP4) and an unstated (NVIDIA) or partly stated (Red Hat) harness; context only."}

@@ -1,0 +1,34 @@
+{
+ "id": "glm53-flash/k3.25-v0.8.0-nospec",
+ "model": {
+  "repo": "wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1",
+  "quant": "EXL3 K3.25 (mixed K3/K4 routed experts)",
+  "revision": "0490d2f708b12145f6516555ab066aaeb401cd21"
+ },
+ "engine": {
+  "project": "tpurtell/glm-5.3-flash-ext3-2x-rtx",
+  "version": "v0.8.0",
+  "image": "ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:e4d37a01da91ec590df78af13efa9d256fc306a5a88df09908ea12ebefa32423",
+  "patches": []
+ },
+ "serving": {
+  "speculative": {
+   "method": "none",
+   "tokens": 0,
+   "draft_model": null
+  },
+  "draft_slot_sharing": null,
+  "tp": 2,
+  "ep": 1,
+  "dcp": 1,
+  "kv_cache_dtype": "fp8",
+  "vision": false,
+  "prefix_caching": true,
+  "gpu_memory_utilization": 0.95
+ },
+ "hardware": {
+  "gpus": "2x NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition",
+  "driver": "595.84"
+ },
+ "notes": "v0.8.0 without speculative decoding."
+}

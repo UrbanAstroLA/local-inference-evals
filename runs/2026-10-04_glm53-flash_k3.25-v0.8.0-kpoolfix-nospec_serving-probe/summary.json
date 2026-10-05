@@ -1,0 +1,36 @@
+{
+ "batches": {
+  "greedy_run1": {
+   "requests": 16,
+   "median_decode_tok_s": 76.97,
+   "median_ttft_s": 0.223,
+   "aggregate_tok_s": 75.7,
+   "acceptance_rate": null,
+   "mean_acceptance_length": null
+  },
+  "greedy_run2": {
+   "requests": 16,
+   "median_decode_tok_s": 76.43,
+   "median_ttft_s": 0.206,
+   "aggregate_tok_s": 75.6,
+   "acceptance_rate": null,
+   "mean_acceptance_length": null
+  },
+  "sampled_c1": {
+   "requests": 16,
+   "median_decode_tok_s": 75.875,
+   "median_ttft_s": 0.203,
+   "aggregate_tok_s": 75.3,
+   "acceptance_rate": null,
+   "mean_acceptance_length": null
+  },
+  "sampled_c8": {
+   "requests": 16,
+   "median_decode_tok_s": 38.775,
+   "median_ttft_s": 0.495,
+   "aggregate_tok_s": 235.7,
+   "acceptance_rate": null,
+   "mean_acceptance_length": null
+  }
+ }
+}

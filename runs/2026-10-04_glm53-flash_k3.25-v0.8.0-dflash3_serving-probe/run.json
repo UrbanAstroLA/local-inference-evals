@@ -1,0 +1,10 @@
+{
+ "id": "2026-10-04_glm53-flash_k3.25-v0.8.0-dflash3_serving-probe",
+ "config": "glm53-flash/k3.25-v0.8.0-dflash3",
+ "protocol": "serving-probe/v1",
+ "date": "2026-10-04",
+ "software": {
+  "client": "tools/clients/serving_probe.py"
+ },
+ "notes": "Speculation counters are deltas of the server's vllm:spec_decode_* metrics over each batch; 'drafts' is derived from the server-reported mean acceptance length (acceptance_rate is exact)."
+}

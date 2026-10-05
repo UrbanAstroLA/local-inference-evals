@@ -1,0 +1,6 @@
+{"id": "glm53-flash-serving-probe", "protocol": "serving-probe/v1",
+ "question": "Speed, acceptance and greedy agreement for v0.8.0 with and without the kpool fixes and speculation.",
+ "runs": ["2026-10-04_glm53-flash_k3.25-v0.8.0-dflash3_serving-probe", "2026-10-04_glm53-flash_k3.25-v0.8.0-nospec_serving-probe",
+          "2026-10-04_glm53-flash_k3.25-v0.8.0-kpoolfix-dflash3_serving-probe", "2026-10-04_glm53-flash_k3.25-v0.8.0-kpoolfix-nospec_serving-probe",
+          "2026-10-04_glm53-flash_k3.25-v0.8.0-kpoolfix-dflash5_serving-probe"],
+ "varies": ["engine.patches", "serving.speculative", "serving.draft_slot_sharing"], "comparable": true}

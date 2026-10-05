@@ -1,0 +1,5 @@
+{"id": "glm53-flash-kpool-screen", "protocol": "hard-prompt-screen/v1",
+ "question": "Do the kpool tail fixes, or removing their speculative trigger, reduce non-completion on hard GPQA prompts?",
+ "runs": ["2026-10-04_glm53-flash_k3.25-v0.8.0-dflash3_screen-a", "2026-10-04_glm53-flash_k3.25-v0.8.0-dflash1_screen-b",
+          "2026-10-04_glm53-flash_k3.25-v0.8.0-kpoolfix-dflash3_screen-c"],
+ "varies": ["engine.patches", "serving.speculative.tokens"], "comparable": true}

@@ -1,0 +1,10 @@
+{
+ "id": "2026-09-29_glm53-flash_k3.25-v0.8.0-dflash3_gpqa-diamond",
+ "config": "glm53-flash/k3.25-v0.8.0-dflash3",
+ "protocol": "gpqa-diamond/v1",
+ "date": "2026-09-29",
+ "software": {
+  "harness": "lm-evaluation-harness 0.4.14.dev0 @ b954108c"
+ },
+ "notes": "Three passes. Raw lm-eval flexible-extract / strict-match scores (not rescored)."
+}
