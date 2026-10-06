@@ -3,6 +3,8 @@
 Receipts for evaluations of locally served LLMs: what was run, on exactly which software and hardware, the raw
 per-item results, and the scripts that recompute every published number. Null and negative results are kept.
 
+Start with [`FINDINGS.md`](FINDINGS.md) for results and [`DATASHEET.md`](DATASHEET.md) for what the data is and is not.
+
 ## Layout
 
 ```
@@ -15,6 +17,8 @@ runs/<run-id>/                    one evaluation of one config under one protoco
 investigations/<yyyy-mm>-<topic>/ narrative, preregistration and decision rules for a line of work, linking its runs
 comparisons/<id>/                 apples-to-apples analyses of several runs (see the rules below)
 tools/verify.py                   checks manifests, recomputes every summary, and enforces the comparison rules
+tools/analyze.py                  recomputes the analyses in FINDINGS.md from published rows
+SCHEMA.md, DATASHEET.md           field definitions; provenance, terms and intended uses
 ```
 
 ## Comparability rules

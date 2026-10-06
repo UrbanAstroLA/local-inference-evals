@@ -1,0 +1,10 @@
+{
+ "id": "2026-10-05_glm53-flash_k4-v0.7.0-kpoolfix-dflash5_screen-invalid",
+ "config": "glm53-flash/k4-v0.7.0-kpoolfix-dflash5",
+ "protocol": "hard-prompt-screen/v1",
+ "date": "2026-10-05",
+ "software": {
+  "client": "tools/clients/hard_prompt_screen.py"
+ },
+ "notes": "INVALID - not a measurement. K4 leaves v0.7.0 a 437,563-token KV pool (3.9 GiB/GPU vs 15.8 GiB with K3.25); the engine crashed (CUDA illegal memory access) ~35 min in, when the pool filled. All 40 requests are errors. Kept as a documented failure: v0.7.0's layout cannot host K4 at this concurrency."
+}

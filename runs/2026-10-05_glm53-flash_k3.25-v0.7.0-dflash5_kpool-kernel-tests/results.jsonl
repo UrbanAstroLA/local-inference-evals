@@ -1,0 +1,40 @@
+{"outcome": "passed", "suite": "upstream", "test": "test_decode_writer_matches_prefill_writer[1-4]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_decode_writer_matches_prefill_writer[1-16]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_rejected_draft_redo_needs_ring_slots[1]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_leading_invalid_tail_slot"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference[no_completion]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference[completion_at_end]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference[completion_mid_batch]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference[non_uniform_padding]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference[plain_decode]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference_fuzz[0]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference_fuzz[1]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference_fuzz[2]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference_fuzz[3]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference_fuzz[4]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference_fuzz[5]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference_fuzz[6]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference_fuzz[7]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference_fuzz[8]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference_fuzz[9]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference_fuzz[10]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference_fuzz[11]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference_fuzz[12]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference_fuzz[13]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference_fuzz[14]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference_fuzz[15]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference_fuzz[16]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference_fuzz[17]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference_fuzz[18]"}
+{"outcome": "passed", "suite": "upstream", "test": "test_batched_matches_reference_fuzz[19]"}
+{"outcome": "skipped", "suite": "upstream", "test": "test_amd_prefill_writer_uses_preshuffled_cache_layout"}
+{"outcome": "failed", "suite": "upstream", "test": "test_decode_writer_matches_prefill_writer[2-4]"}
+{"outcome": "failed", "suite": "upstream", "test": "test_decode_writer_matches_prefill_writer[2-16]"}
+{"outcome": "failed", "suite": "upstream", "test": "test_rejected_draft_redo_needs_ring_slots[2]"}
+{"outcome": "failed", "suite": "upstream", "test": "test_prefill_seed_honors_padded_tail_block_stride"}
+{"key_bytes_wrong": 0, "outcome": "passed", "ring_slots": 4, "suite": "rejected-draft", "test": "control: 3 drafts, all accepted"}
+{"key_bytes_wrong": 0, "outcome": "passed", "ring_slots": 4, "suite": "rejected-draft", "test": "1 draft token (DFLASH_TOKENS=1), pool-completing draft rejected"}
+{"key_bytes_wrong": 107, "outcome": "failed", "ring_slots": 4, "suite": "rejected-draft", "test": "2 draft tokens, pool-completing draft rejected"}
+{"key_bytes_wrong": 105, "outcome": "failed", "ring_slots": 4, "suite": "rejected-draft", "test": "3 draft tokens (v0.8.0 default), rejected"}
+{"key_bytes_wrong": 106, "outcome": "failed", "ring_slots": 4, "suite": "rejected-draft", "test": "5 draft tokens (v0.7.0 setting), rejected"}
+{"key_bytes_wrong": 107, "outcome": "failed", "ring_slots": 4, "suite": "rejected-draft", "test": "7 draft tokens (checkpoint max), rejected"}

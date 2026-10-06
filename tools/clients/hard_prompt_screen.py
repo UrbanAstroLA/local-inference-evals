@@ -52,6 +52,8 @@ def run(doc, rep):
     r, c = ''.join(reasoning), ''.join(content)
     body_text = r if r else c
     ratio = zr(body_text)
+    if fin is None:   # a healthy stream always ends with a finish reason (early stop sets 'length')
+        fin = 'ERROR stream ended without a finish reason (server error or engine down)'
     cls = 'ok' if fin == 'stop' else ('error' if str(fin).startswith('ERROR') else ('loop' if (stopped_early or ratio < 0.15) else 'exhaust'))
     rec = dict(doc=doc, rep=rep, seed=1234, finish_reason=fin, cls=cls, stopped_early=stopped_early, zlib_checks=chk, usage=usage, chunks=nchunk,
                reasoning_chars=len(r), content_chars=len(c), secs=round(time.time()-t0),

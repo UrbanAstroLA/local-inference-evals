@@ -1,0 +1,16 @@
+{
+ "tests": 40,
+ "passed": 31,
+ "failed": 8,
+ "skipped": 1,
+ "failed_tests": [
+  "2 draft tokens, pool-completing draft rejected",
+  "3 draft tokens (v0.8.0 default), rejected",
+  "5 draft tokens (v0.7.0 setting), rejected",
+  "7 draft tokens (checkpoint max), rejected",
+  "test_decode_writer_matches_prefill_writer[2-16]",
+  "test_decode_writer_matches_prefill_writer[2-4]",
+  "test_prefill_seed_honors_padded_tail_block_stride",
+  "test_rejected_draft_redo_needs_ring_slots[2]"
+ ]
+}
