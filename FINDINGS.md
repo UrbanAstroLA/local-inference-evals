@@ -54,6 +54,11 @@ byte for byte). Weights: 3.25bpw = wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1, 
   question with the same seed (1234) produced eight different outputs that diverged within the first 0-266 characters.
   Even one greedy request at a time diverges from its own rerun after ~80 tokens on this stack. Compare distributions
   (accuracy, failure rates), never individual transcripts.
+- **Scores reproduce statistically, transcripts do not.** GPQA at temperature 1.0 is a fresh random draw each pass;
+  passes here vary by 1.0-3.5 points and all 12 fall inside their run's 95% interval. A rerun should land inside the
+  interval, not on the same number. Match the concurrency (8 requests) as well as the sampling settings: different
+  batch sizes take different numerical paths, and whether that shifts accuracy systematically is untested. The
+  analysis itself is exactly reproducible: `tools/verify.py` and `tools/analyze.py` recompute every number from rows.
 - **The screen's question set is not neutral.** Its five questions were chosen from v0.8.0's empty answers; in v0.7.0's
   full GPQA run only one of them (q88) ever came back empty. Within-engine comparisons on the screen are fair; the
   size of the cross-engine gap on the screen is an upper-end estimate. The engine finding rests on the full GPQA runs.
