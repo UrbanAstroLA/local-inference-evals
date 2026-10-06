@@ -1,0 +1,10 @@
+{
+ "id": "2026-10-05_glm53-flash_k4-v0.8.0-kpoolfix-dflash3_screen-k4",
+ "config": "glm53-flash/k4-v0.8.0-kpoolfix-dflash3",
+ "protocol": "hard-prompt-screen/v1",
+ "date": "2026-10-05",
+ "software": {
+  "client": "tools/clients/hard_prompt_screen.py"
+ },
+ "notes": "K4 on v0.8.0 + kpool fixes (equivalent to v0.9.0 defaults). KV pool 1,377,179 tokens, full for much of the run (vLLM ran 5 of 8 requests at a time); zero errors."
+}

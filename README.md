@@ -19,6 +19,7 @@ runs/<run-id>/                    one evaluation of one config under one protoco
 investigations/<yyyy-mm>-<topic>/ narrative, preregistration and decision rules for a line of work, linking its runs
 comparisons/<id>/                 apples-to-apples analyses of several runs (see the rules below)
 tools/verify.py                   checks manifests, recomputes every summary, and enforces the comparison rules
+docs/                             the results site (GitHub Pages), built from runs/ by tools/site.py
 tools/analyze.py                  recomputes the analyses in FINDINGS.md from published rows
 SCHEMA.md, DATASHEET.md           field definitions; provenance, terms and intended uses
 ```

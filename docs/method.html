@@ -1,0 +1,40 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>How to read this - local-inference-evals</title><style>
+:root{color-scheme:light;--page:#f9f9f7;--surface:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;
+--grid:#e1e0d9;--axis:#c3c2b7;--ring:rgba(11,11,11,.10);--s1:#2a78d6;--s2:#eb6834;--good:#0ca30c;--crit:#d03b3b;
+--seq1:#cde2fb;--seq2:#9ec5f4;--seq3:#6da7ec;--seq4:#3987e5;--seq5:#256abf;--seq6:#184f95;--seq7:#0d366b}
+@media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])){color-scheme:dark;--page:#0d0d0d;--surface:#1a1a19;
+--ink:#fff;--ink2:#c3c2b7;--grid:#2c2c2a;--axis:#383835;--ring:rgba(255,255,255,.10);--s1:#3987e5;--s2:#d95926}}
+:root[data-theme="dark"]{color-scheme:dark;--page:#0d0d0d;--surface:#1a1a19;--ink:#fff;--ink2:#c3c2b7;--grid:#2c2c2a;--axis:#383835;
+--ring:rgba(255,255,255,.10);--s1:#3987e5;--s2:#d95926}
+*{box-sizing:border-box}body{margin:0;background:var(--page);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:980px;margin:0 auto;padding:24px 16px 64px}
+nav{display:flex;flex-wrap:wrap;gap:4px 18px;padding:14px 16px;max-width:980px;margin:0 auto;border-bottom:1px solid var(--grid)}
+nav a{color:var(--ink2);text-decoration:none}nav a.on{color:var(--ink);font-weight:600}nav .brand{color:var(--ink);font-weight:600;margin-right:12px}
+h1{font-size:28px;line-height:1.2;margin:8px 0 6px}h2{font-size:19px;margin:36px 0 6px}p,li{color:var(--ink2)}
+a{color:var(--s1)}.lede{font-size:16px;max-width:760px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:22px 0}
+.tile{background:var(--surface);border:1px solid var(--ring);border-radius:10px;padding:14px 16px}
+.tile .lab{color:var(--ink2);font-size:13px}.tile .val{font-size:30px;font-weight:600;margin:2px 0}.tile .sub{color:var(--muted);font-size:13px}
+figure{background:var(--surface);border:1px solid var(--ring);border-radius:10px;margin:16px 0;padding:16px 16px 10px}
+figcaption .t{font-weight:600}figcaption .s{color:var(--ink2);font-size:13px;margin-top:2px}
+.legend{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:13px;color:var(--ink2);margin:10px 0 4px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.chart{overflow-x:auto}svg{display:block;width:100%;height:auto;max-width:900px;font:13px system-ui,-apple-system,"Segoe UI",sans-serif}
+svg text{fill:var(--ink2)}svg .muted{fill:var(--muted)}svg .grid{stroke:var(--grid);stroke-width:1}svg .axis{stroke:var(--axis);stroke-width:1}
+svg .hit{fill:transparent;cursor:default}svg .hit:hover+g,svg .hit:focus+g{opacity:.75}
+details{margin:6px 0 2px}summary{cursor:pointer;color:var(--ink2);font-size:13px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:13.5px}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--grid)}
+th{color:var(--ink2);font-weight:600}td.n{text-align:right;font-variant-numeric:tabular-nums}
+.tbl{overflow-x:auto}.note{border-left:3px solid var(--axis);padding:6px 12px;margin:14px 0;color:var(--ink2);font-size:14px}
+.ok{color:var(--good)}.bad{color:var(--crit)}
+#tip{position:fixed;pointer-events:none;background:var(--surface);color:var(--ink);border:1px solid var(--ring);border-radius:8px;
+padding:8px 10px;font-size:13px;box-shadow:0 4px 16px rgba(0,0,0,.12);display:none;max-width:320px;z-index:9}
+#tip b{display:block;font-size:15px}footer{max-width:980px;margin:0 auto;padding:0 16px 40px;color:var(--muted);font-size:13px}
+</style></head><body><nav><span class="brand">local-inference-evals</span><a href="index.html" class="">Overview</a><a href="gpqa.html" class="">GPQA Diamond</a><a href="screens.html" class="">Hard-question screen</a><a href="serving.html" class="">Speed &amp; acceptance</a><a href="kernels.html" class="">Kernel tests</a><a href="method.html" class="on">How to read this</a></nav><main><h1>How to read this</h1><h2>Intervals</h2><p>GPQA accuracy: 95% bootstrap over questions, because each question's three passes are not independent. Rates (empty answers, screen failures): 95% Wilson score intervals. Where intervals overlap, the configurations cannot be told apart.</p><h2>Concurrency changes the arithmetic</h2><p>Requests are served 8 at a time, and batch composition changes the numerics inside the engine. A fixed seed therefore does not reproduce a response, and even one greedy request at a time diverges from its own rerun after about 80 tokens. Compare distributions (accuracy, failure rates), never individual transcripts.</p><h2>What reproduces</h2><p>Scores reproduce statistically: at temperature 1.0 every pass is a fresh draw, passes here vary by 1.0-3.5 points, and all fall inside their run's interval. Match the concurrency (8) as well as the sampling settings when rerunning. The analysis reproduces exactly: <code>tools/verify.py</code> and <code>tools/analyze.py</code> recompute every number from the published rows.</p><h2>Comparability</h2><p>Comparisons only line up runs with the same protocol version and hardware, and declare which configuration fields differ; <code>tools/verify.py</code> enforces this. Published numbers from other harnesses are shown as context, never plotted as a ranking.</p><h2>Sources</h2><ul><li><a href="https://github.com/UrbanAstroLA/local-inference-evals/tree/main/protocols">Protocols</a> - exact settings per benchmark version</li><li><a href="https://github.com/UrbanAstroLA/local-inference-evals/tree/main/configs">Configurations</a> - engine image digests, model revisions, settings</li><li><a href="https://github.com/UrbanAstroLA/local-inference-evals/blob/main/DATASHEET.md">Datasheet</a> - what the data is, and is not, suitable for</li><li><a href="https://github.com/UrbanAstroLA/local-inference-evals/blob/main/FINDINGS.md">Findings</a> - the full write-up</li></ul></main><footer>Generated from the repository data by <code>tools/site.py</code>. Receipts, protocols and code: <a href="https://github.com/UrbanAstroLA/local-inference-evals">github.com/UrbanAstroLA/local-inference-evals</a>. Results CC BY 4.0, code Apache-2.0.</footer><div id="tip" role="status"></div><script>
+const tip=document.getElementById('tip');
+function show(e,el){const [v,l]=el.dataset.tip.split('||');tip.replaceChildren();const b=document.createElement('b');b.textContent=v;
+tip.append(b,document.createTextNode(l||''));tip.style.display='block';const r=el.getBoundingClientRect();
+const x=(e&&e.clientX)||r.left+r.width/2,y=(e&&e.clientY)||r.top;tip.style.left=Math.min(x+14,innerWidth-330)+'px';tip.style.top=(y+14)+'px';}
+document.querySelectorAll('[data-tip]').forEach(el=>{el.addEventListener('pointermove',e=>show(e,el));
+el.addEventListener('focus',()=>show(null,el));['pointerleave','blur'].forEach(t=>el.addEventListener(t,()=>tip.style.display='none'));});
+</script></body></html>
