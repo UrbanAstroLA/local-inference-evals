@@ -7,7 +7,7 @@ Every chart and table is computed from runs/ at build time, so the site cannot d
 Intervals: GPQA accuracy = 95% bootstrap over questions (a question's passes resampled together);
 rates (empty answers, screen failures) = 95% Wilson score intervals. Serve docs/ with GitHub Pages.
 """
-import html, json, math, statistics as st
+import html, json, math, re, statistics as st
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -179,7 +179,7 @@ def gpqa_rows(runs, full_only=False):
         s = m["summary"]; npass = len(s["passes"])
         if full_only and npass < 3:
             continue
-        lab = label(m["cfg"]) + ("" if npass == 3 else " (1 pass)")
+        lab = label(m["cfg"]) + ("" if npass == 3 else f" ({npass} pass{'es' if npass > 1 else ''})")
         out.append(dict(rid=rid, label=lab, fam=family(m["cfg"]), npass=npass, s=s, n=s["samples"]))
     return sorted(out, key=lambda r: (r["npass"] != 3, r["fam"], r["label"]))
 
@@ -268,6 +268,27 @@ def heatmap(runs):
             f'{scale}<div class="chart">{"".join(s)}</div><details><summary>Show the numbers as a table</summary>{tbl}</details></figure>')
 
 
+def fisher(a, b, c, d):
+    """Two-sided Fisher exact test for the 2x2 table [[a, b], [c, d]]."""
+    n, r1, c1 = a + b + c + d, a + b, a + c
+    p = lambda x: math.comb(r1, x) * math.comb(n - r1, c1 - x) / math.comb(n, c1)
+    p0 = p(a)
+    return sum(p(x) for x in range(max(0, c1 - (n - r1)), min(r1, c1) + 1) if p(x) <= p0 * (1 + 1e-9))
+
+
+def k4_signal(runs):
+    """Empty answers, 4bpw 0.9.0 vs unpatched 4bpw 0.8.0, over the GPQA passes both runs have."""
+    g = {m["config"]: m for m in runs.values() if m["protocol"] == "gpqa-diamond/v1"}
+    a, b = g.get("glm53-flash/k4-v0.8.0-dflash3"), g.get("glm53-flash/k4-v0.9.0-dflash3")
+    if not a or not b:
+        return ""
+    ps = sorted(set(a["summary"]["passes"]) & set(b["summary"]["passes"]))
+    ea, eb = (sum(r["empty"] for r in m["rows"] if r["pass"] in ps) for m in (a, b))
+    n = 198 * len(ps); pv = fisher(ea, n - ea, eb, n - eb)
+    return (f' One open signal: on 4bpw, 0.9.0 left {eb} of {n} answers empty against {ea} for unpatched 0.8.0 on the same seeds '
+            f'(Fisher p = {pv:.2f}{", not significant" if pv >= 0.05 else ""}; optimistic, as empty answers cluster by question).')
+
+
 def build():
     runs = load_runs(); OUT.mkdir(exist_ok=True)
     full = gpqa_rows(runs, full_only=True); allg = gpqa_rows(runs)
@@ -300,10 +321,10 @@ def build():
                         "<a href=\"method.html\">how to read this</a>). Questions were chosen from 0.8.0's failures, so the gap between engines "
                         "here is an upper-end estimate; comparisons within one engine are fair.")
            + '<h2>What it shows</h2><ol>'
-           '<li><b>Accuracy does not depend on engine, patches, draft depth or quantization</b> here: every configuration lands at 85-88%.</li>'
+           f'<li><b>Accuracy does not depend on engine, patches, draft depth or quantization</b> here: every configuration lands at {min(accs):.0f}-{max(accs):.0f}%.</li>'
            '<li><b>Finishing long reasoning depends on the engine.</b> On the same weights, 0.7.0 leaves about a third as many answers empty as 0.8.0.</li>'
-           '<li><b>The two kpool bugs were real and are fixed in 0.9.0</b>, at no measurable cost, but they are not the cause of the loops. '
-           'Their benefit is in long-lived servers with prefix caching, which these fresh-server runs rarely exercise.</li>'
+           '<li><b>The two kpool bugs were real and are fixed in 0.9.0</b>, at no measurable accuracy cost, but they are not the cause of the loops. '
+           'Their benefit is in long-lived servers with prefix caching, which these fresh-server runs rarely exercise.' + k4_signal(runs) + '</li>'
            '<li><b>The gap to published scores (NVIDIA 92.1, Red Hat 90.6) is not a runtime problem</b>: removing every empty answer would add 1-3 points.</li>'
            '</ol><p>Full write-up: <a href="' + REPO + '/blob/main/FINDINGS.md">FINDINGS.md</a>.</p>')
     (OUT / "index.html").write_text(page("index.html", "Overview", idx))
@@ -312,7 +333,7 @@ def build():
     pass1 = {}
     for r in allg:
         rows = runs[r["rid"]]["rows"]
-        pass1[r["label"].replace(" (1 pass)", "")] = {x["doc_id"]: x for x in rows if x["pass"] == 1}
+        pass1[re.sub(r" \(\d pass(es)?\)$", "", r["label"])] = {x["doc_id"]: x for x in rows if x["pass"] == 1}
     names = sorted(pass1); ptr = []
     for i, a in enumerate(names):
         for b in names[i + 1:]:
@@ -328,7 +349,8 @@ def build():
                 [["NVIDIA model card", "BF16", "92.17", "temp 1.0, top_p 0.95, 327,680 max new tokens; harness not stated"],
                  ["NVIDIA model card", "NVFP4", "92.11", "same"],
                  ["Red Hat model card", "NVFP4", "90.57", "lm-eval / lighteval forks, vLLM, 3 seeds averaged"],
-                 ["This repository", "EXL3 3.25bpw / 4bpw", "85.0-86.2", "see the GPQA protocol"]])
+                 ["This repository", "EXL3 3.25bpw / 4bpw", "{:.1f}-{:.1f}".format(*(100 * f(r["s"]["accuracy_flexible"] for r in full) for f in (min, max))),
+                  "full 3-pass runs; see the GPQA protocol"]])
     gp = ('<h1>GPQA Diamond</h1><p class="lede">198 graduate-level multiple-choice questions, lm-evaluation-harness, temperature 1.0, '
           'top_p 0.95, 327,680-token budget, thinking on, 8 concurrent requests. Results carry question ids and hashes only: the dataset '
           'asks that its questions not be published in plain text.</p>'

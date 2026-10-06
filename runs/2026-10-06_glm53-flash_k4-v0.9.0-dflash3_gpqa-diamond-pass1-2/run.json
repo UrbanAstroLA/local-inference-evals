@@ -1,0 +1,10 @@
+{
+ "id": "2026-10-06_glm53-flash_k4-v0.9.0-dflash3_gpqa-diamond-pass1-2",
+ "config": "glm53-flash/k4-v0.9.0-dflash3",
+ "protocol": "gpqa-diamond/v1",
+ "date": "2026-10-06",
+ "software": {
+  "harness": "lm-evaluation-harness 0.4.14.dev0 @ b954108c"
+ },
+ "notes": "Passes 1, 2 only (n=2); an early comparative, compare per question with other runs' pass 1 (same seed). Raw lm-eval flexible-extract / strict-match scores (not rescored)."
+}

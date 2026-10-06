@@ -16,14 +16,20 @@ Weights: 3.25bpw = wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1, 4bpw = brandonmu
 | 3.25bpw | 0.8.0, draft-slot sharing off | 5 | 86.2% | 17 (10-27) |
 | 4bpw | 0.8.0 | 3 | 85.0% | 15 (8-25) |
 
-## GPQA Diamond, first pass only (198 answers, same seed and prompts as above)
-| Weights | Engine | Drafts | Accuracy | Empty | Projected empty at 594 (95% CI) |
-|---|---|---|---|---|---|
-| 3.25bpw | 0.7.0 + patches | 5 | 85.9% | 2 | 6 (1-21) |
-| 3.25bpw | 0.8.0 + patches (≈ 0.9.0) | 5 | 86.9% | 3 | 9 (2-26) |
-| 4bpw | 0.9.0 | 3 | 84.3% | 9 | 27 (12-50) |
+## GPQA Diamond, partial runs (fewer than 3 passes; same seeds and prompts as above)
+| Weights | Engine | Drafts | Passes | Accuracy | Empty | Projected empty at 594 (95% CI) |
+|---|---|---|---|---|---|---|
+| 3.25bpw | 0.7.0 + patches | 5 | 1 | 85.9% | 2 of 198 | 6 (1-21) |
+| 3.25bpw | 0.8.0 + patches (≈ 0.9.0) | 5 | 1 | 86.9% | 3 of 198 | 9 (2-26) |
+| 4bpw | 0.9.0 | 3 | 1-2 | 84.3% | 17 of 396 | 26 (15-40) |
 
-The 4bpw 0.9.0 row is pass 1 of 3; passes 2 and 3 are running and will replace it with the full protocol.
+The 4bpw 0.9.0 run is in progress: pass 3 is running and will complete the full protocol. Its passes scored 84.3% and
+84.3% with 9 and 8 empty answers.
+
+**4bpw, 0.9.0 vs unpatched 0.8.0, same seeds and prompts (passes 1-2, 396 answers each).** Accuracy 84.3% vs 85.4%
+(paired sign test p = 0.65). Empty answers 17 vs 7 (Fisher exact p = 0.06; optimistic, because empty answers cluster
+by question). Both servers had the same KV pool (1.37M tokens) and context limit. Not significant; noted under
+inference 3 and to be re-tested with pass 3.
 
 ## Hard-question screen (5 hardest GPQA questions x 8 = 40 runs; failures = loops + exhaustions)
 | Weights | Engine | Drafts | Failures / 40 |
@@ -33,18 +39,23 @@ The 4bpw 0.9.0 row is pass 1 of 3; passes 2 and 3 are running and will replace i
 | 3.25bpw | 0.8.0 | 3 | 24 (2026-09-30), 22 (2026-10-04) |
 | 3.25bpw | 0.8.0 | 1 | 21 |
 | 3.25bpw | 0.8.0 + patches (≈ 0.9.0) | 3 | 20 |
+| 4bpw | 0.8.0 + patches (≈ 0.9.0) | 3 | 15 |
 | 4bpw | 0.7.0 + patches | 5 | not runnable: 437k-token KV pool; engine crashed when it filled |
 
 ## Inferences
 1. **Accuracy does not depend on engine, patches, draft depth or quantization here.** Every configuration scores
-   85-88%; every paired per-question comparison is consistent with noise (sign-test p >= 0.45).
+   84-87% (full 3-pass runs 85.0-86.2%); every paired per-question comparison of first passes is consistent with noise
+   (sign-test p >= 0.23).
 2. **Finishing long reasoning depends on the engine.** On the same 3.25bpw weights, 0.7.0 fails to finish about half
    as often as 0.8.0 (screen 12-13 vs 20-24 of 40; GPQA 6 vs 20 empty, non-overlapping 95% intervals). Replicated
    across sessions.
 3. **The kpool bugs do not cause the loops, but the fixes are worth having.** They correct real cache corruption
    (every prefill wrote 2 KB of keys into another block's indexer region; rejected drafts could overwrite committed
-   keys), at no measurable cost. Their benefit is in long-lived servers with prefix caching and reused system prompts,
-   where upstream showed the damage accumulating; fresh-server benchmarks like these rarely exercise that.
+   keys), at no measurable accuracy cost. Their benefit is in long-lived servers with prefix caching and reused system prompts,
+   where upstream showed the damage accumulating; fresh-server benchmarks like these rarely exercise that. One open
+   signal: on 4bpw, 0.9.0 left more answers empty than unpatched 0.8.0 over the same two passes (17 vs 7 of 396,
+   p = 0.06), while on 3.25bpw the patched engine left no more than the unpatched one (screen 20 vs 22-24 of 40; GPQA
+   pass 1 projects 9 vs 20). Pass 3 of the 4bpw run will tighten this.
 4. **Quantization shows no clear effect within an engine.** On 0.8.0, 4bpw gave 15 empty answers vs 20 for 3.25bpw,
    within noise. 4bpw cannot run on 0.7.0 at this concurrency: 13 GiB more weights per GPU leave 3.9 GiB of KV cache.
 5. **The engines trade reliability for speed.** 0.7.0 decodes ~28 tok/s per request on long reasoning at 8
