@@ -26,7 +26,9 @@ local paths. Scores are lm-eval's raw `flexible-extract` and `strict-match` filt
 **Uses.** Comparing configurations under the same protocol and hardware (enforced by `tools/verify.py`), reproducing
 the findings, or as a baseline for other hardware. **Not suitable** for: ranking models in general, comparing with
 scores from other harnesses as if equal, or estimating population failure rates from the hard-question screen (it
-deliberately samples the hardest items).
+deliberately samples the hardest items), quoting the screen's cross-engine gap as an effect size (its items
+were selected from one engine's failures), or comparing individual responses between runs (concurrent batching
+makes outputs nondeterministic even with a fixed seed).
 
 **Distribution.** Public repository. Results and docs CC BY 4.0, code Apache-2.0. Model weights, engines and
 datasets are not redistributed.

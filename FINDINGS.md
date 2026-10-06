@@ -48,6 +48,19 @@ byte for byte). Weights: 3.25bpw = wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1, 
 7. **The engine is not bitwise reproducible at temperature 0** (identical configs diverge after ~80 tokens), so greedy
    parity cannot certify speculative exactness on this stack.
 
+## Reading these results
+- **Concurrency changes the arithmetic.** Requests are served 8 at a time, and batch composition changes the numerics
+  inside the engine. A fixed seed therefore does not reproduce a response: in the screens, eight repeats of the same
+  question with the same seed (1234) produced eight different outputs that diverged within the first 0-266 characters.
+  Even one greedy request at a time diverges from its own rerun after ~80 tokens on this stack. Compare distributions
+  (accuracy, failure rates), never individual transcripts.
+- **The screen's question set is not neutral.** Its five questions were chosen from v0.8.0's empty answers; in v0.7.0's
+  full GPQA run only one of them (q88) ever came back empty. Within-engine comparisons on the screen are fair; the
+  size of the cross-engine gap on the screen is an upper-end estimate. The engine finding rests on the full GPQA runs.
+- **Screen intervals assume independent runs.** Outcomes cluster by question (q121 nearly always finishes, q88 nearly
+  always loops), so the Wilson intervals in screen summaries are too narrow. Decision rules were count-based, not
+  interval-based.
+
 ## Why this exists
 Recipes for these models are widely shared and ported on the strength of speed numbers, with little end-to-end
 correctness evidence. This work started from looping/no-answer reports on GPQA, found and fixed two real upstream
