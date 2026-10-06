@@ -1,5 +1,7 @@
 # local-inference-evals
 
+Maintained by Michael M: [UrbanAstroLA](https://github.com/UrbanAstroLA) on GitHub, [@UrbanAstroFella](https://x.com/UrbanAstroFella) on X.
+
 Receipts for evaluations of locally served LLMs: what was run, on exactly which software and hardware, the raw
 per-item results, and the scripts that recompute every published number. Null and negative results are kept.
 

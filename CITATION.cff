@@ -2,7 +2,10 @@ cff-version: 1.2.0
 message: "If you use these receipts, please cite them as below."
 title: "local-inference-evals: end-to-end receipts for locally served LLMs"
 authors:
-  - alias: "UrbanAstroLA"
+  - given-names: "Michael"
+    family-names: "M."
+    alias: "UrbanAstroFella"
+    website: "https://github.com/UrbanAstroLA"
 license: CC-BY-4.0
 repository-code: "https://github.com/UrbanAstroLA/local-inference-evals"
 type: dataset
