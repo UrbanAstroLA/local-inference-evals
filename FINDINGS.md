@@ -2,8 +2,11 @@
 
 Analysis only; every number links to receipts in `runs/` and can be regenerated with `tools/analyze.py` and
 `tools/verify.py`. Engines are tpurtell/glm-5.3-flash-ext3-2x-rtx releases; "patches" are the two upstream kpool
-fixes ported in tpurtell/glm-5.3-flash-ext3-2x-rtx#5 and shipped in v0.9.0 ("0.8.0 + patches" = 0.9.0's kpool code,
-byte for byte). Weights: 3.25bpw = wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1, 4bpw = brandonmusic/GLM-5.3-Flash-tr3-4bpw.
+fixes ported in tpurtell/glm-5.3-flash-ext3-2x-rtx#5 and shipped in v0.9.0. **"0.8.0 + patches" and "0.9.0" are the
+same serving engine for these measurements:** the patched kpool files are byte-for-byte identical to the 0.9.0 release, and
+0.9.0's other two changes (an opt-in prefix-cache lookup, off by default, and usage reporting) do not touch what is measured
+here. The patched 0.8.0 rows were simply measured before 0.9.0 existed. "0.7.0 + patches" is a separate backport, not 0.9.0.
+Weights: 3.25bpw = wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1, 4bpw = brandonmusic/GLM-5.3-Flash-tr3-4bpw.
 
 ## GPQA Diamond, full protocol (3 passes, 594 answers; accuracy CI about +-4 points)
 | Weights | Engine | Drafts | Accuracy | Empty answers (95% CI) |
@@ -17,7 +20,10 @@ byte for byte). Weights: 3.25bpw = wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1, 
 | Weights | Engine | Drafts | Accuracy | Empty | Projected empty at 594 (95% CI) |
 |---|---|---|---|---|---|
 | 3.25bpw | 0.7.0 + patches | 5 | 85.9% | 2 | 6 (1-21) |
-| 3.25bpw | 0.8.0 + patches | 5 | 86.9% | 3 | 9 (2-26) |
+| 3.25bpw | 0.8.0 + patches (≈ 0.9.0) | 5 | 86.9% | 3 | 9 (2-26) |
+| 4bpw | 0.9.0 | 3 | 84.3% | 9 | 27 (12-50) |
+
+The 4bpw 0.9.0 row is pass 1 of 3; passes 2 and 3 are running and will replace it with the full protocol.
 
 ## Hard-question screen (5 hardest GPQA questions x 8 = 40 runs; failures = loops + exhaustions)
 | Weights | Engine | Drafts | Failures / 40 |
@@ -26,7 +32,7 @@ byte for byte). Weights: 3.25bpw = wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1, 
 | 3.25bpw | 0.7.0 + patches | 5 | 13 |
 | 3.25bpw | 0.8.0 | 3 | 24 (2026-09-30), 22 (2026-10-04) |
 | 3.25bpw | 0.8.0 | 1 | 21 |
-| 3.25bpw | 0.8.0 + patches | 3 | 20 |
+| 3.25bpw | 0.8.0 + patches (≈ 0.9.0) | 3 | 20 |
 | 4bpw | 0.7.0 + patches | 5 | not runnable: 437k-token KV pool; engine crashed when it filled |
 
 ## Inferences

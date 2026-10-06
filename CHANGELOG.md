@@ -7,5 +7,7 @@
 - Results site in `docs/` (GitHub Pages), generated from the data by `tools/site.py`: overview, GPQA, screens,
   speed and acceptance, kernel tests, and a reading guide; interval plots with 95% intervals, table views, links to receipts.
 - 4bpw on v0.8.0 + patches (= v0.9.0 defaults) hard-question screen: 15/40.
+- 4bpw on the official v0.9.0 release: GPQA Diamond pass 1 (84.3%, 9 empty); passes 2-3 to follow.
+- Engine labels: patched 0.8.0 rows read "0.8.0 + patches ≈ 0.9.0", with a note on every page (same kpool kernel files as the 0.9.0 release).
 - Client fix before release: a stream that ends without a finish reason is an `error`, not an `exhaust`. Affected only
   the INVALID run (engine crash); all other screens were audited and have finish reasons on every row.

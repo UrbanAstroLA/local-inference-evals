@@ -32,6 +32,8 @@ def load_runs():
 def label(cfg):
     q = "4bpw" if "K4" in cfg["model"]["quant"] and "K3" not in cfg["model"]["quant"] else "3.25bpw"
     eng = cfg["engine"]["version"].lstrip("v") + (" + patches" if cfg["engine"]["patches"] else "")
+    if cfg["engine"]["version"] == "v0.8.0" and cfg["engine"]["patches"]:
+        eng += " \u2248 0.9.0"   # same kpool kernel files as the 0.9.0 release; see ENGINE_NOTE
     sp = cfg["serving"]["speculative"]
     spec = "no speculation" if not sp["tokens"] else f"{sp['tokens']} draft{'s' if sp['tokens'] > 1 else ''}"
     if cfg["serving"].get("draft_slot_sharing") is False:
@@ -77,7 +79,7 @@ figure{background:var(--surface);border:1px solid var(--ring);border-radius:10px
 figcaption .t{font-weight:600}figcaption .s{color:var(--ink2);font-size:13px;margin-top:2px}
 .legend{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:13px;color:var(--ink2);margin:10px 0 4px}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
-.chart{overflow-x:auto}svg{display:block;width:100%;height:auto;max-width:900px;font:13px system-ui,-apple-system,"Segoe UI",sans-serif}
+.chart{overflow-x:auto}.chart svg{min-width:640px}svg{display:block;width:100%;height:auto;max-width:900px;font:13px system-ui,-apple-system,"Segoe UI",sans-serif}
 svg text{fill:var(--ink2)}svg .muted{fill:var(--muted)}svg .grid{stroke:var(--grid);stroke-width:1}svg .axis{stroke:var(--axis);stroke-width:1}
 svg .hit{fill:transparent;cursor:default}svg .hit:hover+g,svg .hit:focus+g{opacity:.75}
 details{margin:6px 0 2px}summary{cursor:pointer;color:var(--ink2);font-size:13px}
@@ -100,13 +102,20 @@ el.addEventListener('focus',()=>show(null,el));['pointerleave','blur'].forEach(t
 """
 
 COLOR = {"v07": "var(--s1)", "v08": "var(--s2)"}
-LEGEND = ('<div class="legend"><span><i style="background:var(--s1)"></i>Engine 0.7.0</span>'
-          '<span><i style="background:var(--s2)"></i>Engine 0.8.0 / 0.9.0</span></div>')
+LEGEND = ('<div class="legend"><span><i style="background:var(--s1)"></i>Engine 0.7.0 (with or without patches)</span>'
+          '<span><i style="background:var(--s2)"></i>Engine 0.8.0, 0.8.0 + patches, 0.9.0</span></div>')
+
+ENGINE_NOTE = ('<p class="note"><b>Engine labels.</b> 0.9.0 is 0.8.0 plus the kpool patches '
+               '(<a href="https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/5">tpurtell PR #5</a>; the patched kernel files '
+               'are byte-for-byte identical to the 0.9.0 release), plus two changes that do not affect these measurements at defaults: '
+               'an opt-in prefix-cache lookup (off by default) and usage reporting. Rows labelled <b>0.8.0 + patches \u2248 0.9.0</b> '
+               'are therefore the same serving engine as rows labelled <b>0.9.0</b>; the patched 0.8.0 rows were measured before 0.9.0 was released. '
+               'Plain <b>0.8.0</b> is the unpatched release. <b>0.7.0 + patches</b> is a separate backport, not 0.9.0.</p>')
 
 
 def interval_plot(rows, lo, hi, ticks, fmt, unit=""):
     """rows: dicts with label, est, lo, hi, fam, tip. Horizontal dot-and-whisker, one row per config."""
-    lw, w, rh, top = 300, 900, 34, 10
+    lw, w, rh, top = 350, 950, 34, 10
     pw = w - lw - 30
     x = lambda v: lw + (v - lo) / (hi - lo) * pw
     h = top + rh * len(rows) + 30
@@ -145,11 +154,18 @@ PAGES = [("index.html", "Overview"), ("gpqa.html", "GPQA Diamond"), ("screens.ht
          ("serving.html", "Speed & acceptance"), ("kernels.html", "Kernel tests"), ("method.html", "How to read this")]
 
 
+def with_note(body):
+    """Engine-equivalence note right after the page's lede (or at the end if a page has none)."""
+    i = body.find('class="lede"')
+    j = body.find("</p>", i) + 4 if i >= 0 else len(body)
+    return body[:j] + ENGINE_NOTE + body[j:]
+
+
 def page(name, title, body):
     nav = "".join(f'<a href="{f}" class="{"on" if f == name else ""}">{esc(t)}</a>' for f, t in PAGES)
     return (f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<title>{esc(title)} - local-inference-evals</title><style>{CSS}</style></head><body>'
-            f'<nav><span class="brand">local-inference-evals</span>{nav}</nav><main>{body}</main>'
+            f'<nav><span class="brand">local-inference-evals</span>{nav}</nav><main>{with_note(body)}</main>'
             f'<footer>Generated from the repository data by <code>tools/site.py</code>. Receipts, protocols and code: '
             f'<a href="{REPO}">{REPO.replace("https://", "")}</a>. Results CC BY 4.0, code Apache-2.0.</footer>'
             f'<div id="tip" role="status"></div><script>{JS}</script></body></html>')
@@ -224,7 +240,7 @@ def screen_fig(rows, title, sub):
 def heatmap(runs):
     rows = [r for r in screen_rows(runs, "hard-prompt-screen/v1") + screen_rows(runs, "hard-prompt-screen/v0") if not r["invalid"]]
     docs = [79, 13, 127, 88, 121]
-    cw, lw, rh, top = 92, 330, 30, 30
+    cw, lw, rh, top = 92, 380, 30, 30
     w, h = lw + cw * len(docs) + 10, top + rh * len(rows) + 10
     seq = [None, "var(--seq1)", "var(--seq2)", "var(--seq3)", "var(--seq4)", "var(--seq5)", "var(--seq6)", "var(--seq7)", "var(--seq7)"]
     s = [f'<svg viewBox="0 0 {w} {h}" width="{w}" height="{h}" role="img">']
