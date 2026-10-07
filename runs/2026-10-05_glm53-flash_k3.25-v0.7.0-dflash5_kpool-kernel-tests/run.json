@@ -5,7 +5,7 @@
  "date": "2026-10-05",
  "software": {
   "tests": "vllm-project/vllm tests/kernels/test_kpool_decode_update_batched.py (sha256 698d6886...)",
-  "image": "tpurtell v0.7.0"
+  "image": "tpurtell 0.7.0"
  },
  "notes": "Kernel tests only; model and serving fields of the config do not apply."
 }

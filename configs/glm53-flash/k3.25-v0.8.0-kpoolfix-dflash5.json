@@ -3,14 +3,18 @@
  "model": {
   "repo": "wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1",
   "quant": "EXL3 K3.25 (mixed K3/K4 routed experts)",
+  "label": "3.25bpw",
   "revision": "0490d2f708b12145f6516555ab066aaeb401cd21"
  },
  "engine": {
+  "name": "tpurtell",
+  "built_on": "vLLM",
   "project": "tpurtell/glm-5.3-flash-ext3-2x-rtx",
   "version": "v0.8.0",
   "image": "ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:e4d37a01da91ec590df78af13efa9d256fc306a5a88df09908ea12ebefa32423",
   "patches": [
    {
+    "name": "kpool fixes",
     "source": "https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/5",
     "commit": "5a366b5",
     "ports": [
@@ -18,7 +22,12 @@
      "vllm-project/vllm#58454"
     ]
    }
-  ]
+  ],
+  "equivalent_to": {
+   "version": "v0.9.0",
+   "basis": "kpool kernel files byte-identical to the v0.9.0 release; v0.9.0's other changes (an opt-in boundary prefix-cache lookup, off by default, and usage reporting) do not affect these measurements"
+  },
+  "series": "tpurtell 0.8.0-0.9.0"
  },
  "serving": {
   "speculative": {
@@ -39,5 +48,5 @@
   "gpus": "2x NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition",
   "driver": "595.84"
  },
- "notes": "v0.8.0 plus kpool fixes, five draft tokens."
+ "notes": "tpurtell 0.8.0 + kpool fixes ≈ 0.9.0: v0.8.0 with the PR #5 fixes, whose kpool kernel files are byte-identical to the v0.9.0 release; five draft tokens."
 }

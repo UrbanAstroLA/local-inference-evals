@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify local-inference-evals: manifests, recomputed summaries, comparison rules.
+"""Verify local-inference-evals: manifests, recomputed summaries, comparison rules, label consistency.
 
     python3 tools/verify.py              # everything
     python3 tools/verify.py runs/<id>    # one run
@@ -11,7 +11,64 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 RUN_KEYS = {"id", "config", "protocol", "date", "software", "notes"}
+# Descriptive config fields that follow from others (repo, version, patches), so comparisons do not check them.
+DESCRIPTIVE = ("id", "notes", "model.label", "engine.series", "engine.equivalent_to", "engine.built_on")
 fails = []
+
+
+# ---------------------------------------------------------------- labels (SCHEMA.md, "Labels"); the site uses these too
+
+def weights_label(cfg):
+    return cfg["model"]["label"]
+
+
+def engine_label(cfg, with_name=True):
+    """'<engine name> <version>[ + <patch name>...][ \u2248 <equivalent release>]', e.g. 'tpurtell 0.8.0 + kpool fixes \u2248 0.9.0'."""
+    e = cfg["engine"]
+    s = (e["name"] + " " if with_name else "") + e["version"].lstrip("v")
+    s += "".join(f" + {p['name']}" for p in e.get("patches", []))
+    return s + (f" \u2248 {e['equivalent_to']['version'].lstrip('v')}" if e.get("equivalent_to") else "")
+
+
+def spec_label(cfg, with_method=False):
+    sp = cfg["serving"]["speculative"]
+    if not sp["tokens"]:
+        return "no speculation"
+    s = (f"{sp['method']} " if with_method else "") + f"{sp['tokens']} draft{'s' if sp['tokens'] > 1 else ''}"
+    return s + (", sharing off" if cfg["serving"].get("draft_slot_sharing") is False else "")
+
+
+def config_label(cfg, with_method=False):
+    """'<weights> · <engine> · <speculation>'. Pass with_method=True once configs use more than one speculative method."""
+    return f"{weights_label(cfg)} \u00b7 {engine_label(cfg)} \u00b7 {spec_label(cfg, with_method)}"
+
+
+def check_labels(cfgs):
+    """One label per thing and one thing per label: weights labels <-> model repos, engine labels <-> engine builds."""
+    def one_to_one(kind, pairs):
+        fwd, back = {}, {}
+        for lab, thing in pairs:
+            fwd.setdefault(lab, set()).add(thing); back.setdefault(thing, set()).add(lab)
+        for lab, things in fwd.items():
+            if len(things) > 1: fails.append(f"labels: label {lab!r} names {len(things)} different {kind}s: {sorted(things)}")
+        for thing, labs in back.items():
+            if len(labs) > 1: fails.append(f"labels: one {kind} has {len(labs)} labels: {sorted(labs)}")
+    ok = []
+    for c in cfgs:
+        e = c.get("engine", {})
+        miss = [k for k, v in (("model.label", c.get("model", {}).get("label")), ("engine.name", e.get("name")),
+                               ("engine.series", e.get("series")), ("engine.built_on", e.get("built_on"))) if not v]
+        miss += ["engine.patches[].name" for p in e.get("patches", []) if not p.get("name")]
+        if miss: fails.append(f"config {c.get('id')}: missing label field(s) {miss}")
+        else: ok.append(c)
+    one_to_one("weights repo", [(weights_label(c), c["model"]["repo"]) for c in ok])
+    build = lambda e: json.dumps([e["project"], e["version"], e["image"], [[p.get("source"), p.get("commit"), p.get("ports")] for p in e["patches"]]])
+    one_to_one("engine build", [(engine_label(c), build(c["engine"])) for c in ok])
+    desc = {}
+    for c in ok:
+        e = c["engine"]; d = json.dumps([e["series"], e["built_on"], e.get("equivalent_to")], sort_keys=True)
+        if desc.setdefault(engine_label(c), d) != d:
+            fails.append(f"labels: configs of engine {engine_label(c)!r} disagree on series / built_on / equivalent_to")
 
 
 def load(p):
@@ -130,7 +187,7 @@ def check_comparison(cdir, manifests):
     protos = {m["protocol"] for m in runs}
     if protos != {c["protocol"]}: fails.append(f"comparison {cid}: protocols {sorted(protos)} != {c['protocol']}")
     cfgs = [flatten(load(ROOT / "configs" / f"{m['config']}.json")) for m in runs]
-    keys = set().union(*cfgs) - {"id", "notes"}
+    keys = {k for k in set().union(*cfgs) if not any(k == d or k.startswith(d + ".") for d in DESCRIPTIVE)}
     allowed = set(c.get("varies", []))
     for k in sorted(keys):
         vals = {json.dumps(x.get(k), sort_keys=True) for x in cfgs}
@@ -146,6 +203,7 @@ def main(args):
             m = check_run(d)
             if m: manifests[d.name] = m
     if not args:
+        check_labels([load(p) for p in sorted((ROOT / "configs").rglob("*.json"))])
         for cdir in sorted((ROOT / "comparisons").iterdir()):
             if (cdir / "comparison.json").exists(): check_comparison(cdir, manifests)
     print(f"checked {len(manifests)} run(s)" + ("" if args else f", {len([1 for x in (ROOT/'comparisons').iterdir() if (x/'comparison.json').exists()])} comparison(s)"))

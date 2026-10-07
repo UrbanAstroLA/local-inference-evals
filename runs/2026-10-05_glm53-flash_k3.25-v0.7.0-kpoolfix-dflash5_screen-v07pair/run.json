@@ -6,5 +6,5 @@
  "software": {
   "client": "tools/clients/hard_prompt_screen.py"
  },
- "notes": "Same-session pair with the unpatched v0.7.0 run of this date."
+ "notes": "Same-session pair with the tpurtell 0.7.0 run (no kpool fixes) of this date."
 }
