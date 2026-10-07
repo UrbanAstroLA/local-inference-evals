@@ -1,0 +1,17 @@
+{
+ "samples": 594,
+ "questions": 198,
+ "passes": [
+  1,
+  2,
+  3
+ ],
+ "empty": 23,
+ "accuracy_flexible": 0.8468,
+ "accuracy_strict": 0.0219,
+ "accuracy_flexible_ci95": [
+  0.8047,
+  0.8855
+ ],
+ "accuracy_flexible_answered": 0.8809
+}

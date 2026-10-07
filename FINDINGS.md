@@ -15,21 +15,19 @@ Weights: 3.25bpw = wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1, 4bpw = brandonmu
 | 3.25bpw | 0.8.0 | 3 | 85.5% | 20 (12-31) |
 | 3.25bpw | 0.8.0, draft-slot sharing off | 5 | 86.2% | 17 (10-27) |
 | 4bpw | 0.8.0 | 3 | 85.0% | 15 (8-25) |
+| 4bpw | 0.9.0 | 3 | 84.7% | 23 (15-34) |
 
-## GPQA Diamond, partial runs (fewer than 3 passes; same seeds and prompts as above)
-| Weights | Engine | Drafts | Passes | Accuracy | Empty | Projected empty at 594 (95% CI) |
-|---|---|---|---|---|---|---|
-| 3.25bpw | 0.7.0 + patches | 5 | 1 | 85.9% | 2 of 198 | 6 (1-21) |
-| 3.25bpw | 0.8.0 + patches (≈ 0.9.0) | 5 | 1 | 86.9% | 3 of 198 | 9 (2-26) |
-| 4bpw | 0.9.0 | 3 | 1-2 | 84.3% | 17 of 396 | 26 (15-40) |
+**4bpw, 0.9.0 vs unpatched 0.8.0, same seeds and prompts (594 answers each).** The configs differ only in engine version
+and image (checked by `tools/verify.py`, comparison `glm53-flash-k4-v080-v090-gpqa`). Accuracy 84.7% vs 85.0% (paired sign
+test over all 594 answers p = 0.90). Empty answers 23 vs 15 (Fisher exact p = 0.25; resampling questions, the 95% interval
+for the difference is -3 to +19). No detectable difference. The gap after two passes (17 vs 7) reversed in pass 3 (6 vs 8):
+a reminder that two passes of a rare, clustered outcome can mislead.
 
-The 4bpw 0.9.0 run is in progress: pass 3 is running and will complete the full protocol. Its passes scored 84.3% and
-84.3% with 9 and 8 empty answers.
-
-**4bpw, 0.9.0 vs unpatched 0.8.0, same seeds and prompts (passes 1-2, 396 answers each).** Accuracy 84.3% vs 85.4%
-(paired sign test p = 0.65). Empty answers 17 vs 7 (Fisher exact p = 0.06; optimistic, because empty answers cluster
-by question). Both servers had the same KV pool (1.37M tokens) and context limit. Not significant; noted under
-inference 3 and to be re-tested with pass 3.
+## GPQA Diamond, first pass only (198 answers, same seed and prompts as above)
+| Weights | Engine | Drafts | Accuracy | Empty | Projected empty at 594 (95% CI) |
+|---|---|---|---|---|---|
+| 3.25bpw | 0.7.0 + patches | 5 | 85.9% | 2 | 6 (1-21) |
+| 3.25bpw | 0.8.0 + patches (≈ 0.9.0) | 5 | 86.9% | 3 | 9 (2-26) |
 
 ## Hard-question screen (5 hardest GPQA questions x 8 = 40 runs; failures = loops + exhaustions)
 | Weights | Engine | Drafts | Failures / 40 |
@@ -44,7 +42,7 @@ inference 3 and to be re-tested with pass 3.
 
 ## Inferences
 1. **Accuracy does not depend on engine, patches, draft depth or quantization here.** Every configuration scores
-   84-87% (full 3-pass runs 85.0-86.2%); every paired per-question comparison of first passes is consistent with noise
+   84.7-86.9%; every paired per-question comparison of first passes is consistent with noise
    (sign-test p >= 0.23).
 2. **Finishing long reasoning depends on the engine.** On the same 3.25bpw weights, 0.7.0 fails to finish about half
    as often as 0.8.0 (screen 12-13 vs 20-24 of 40; GPQA 6 vs 20 empty, non-overlapping 95% intervals). Replicated
@@ -52,16 +50,16 @@ inference 3 and to be re-tested with pass 3.
 3. **The kpool bugs do not cause the loops, but the fixes are worth having.** They correct real cache corruption
    (every prefill wrote 2 KB of keys into another block's indexer region; rejected drafts could overwrite committed
    keys), at no measurable accuracy cost. Their benefit is in long-lived servers with prefix caching and reused system prompts,
-   where upstream showed the damage accumulating; fresh-server benchmarks like these rarely exercise that. One open
-   signal: on 4bpw, 0.9.0 left more answers empty than unpatched 0.8.0 over the same two passes (17 vs 7 of 396,
-   p = 0.06), while on 3.25bpw the patched engine left no more than the unpatched one (screen 20 vs 22-24 of 40; GPQA
-   pass 1 projects 9 vs 20). Pass 3 of the 4bpw run will tighten this.
+   where upstream showed the damage accumulating; fresh-server benchmarks like these rarely exercise that. Neither
+   weight set shows a completion cost: on 4bpw, 0.9.0 vs unpatched 0.8.0 left 23 vs 15 of 594 answers empty (p = 0.25);
+   on 3.25bpw the patched engine left no more than the unpatched one (screen 20 vs 22-24 of 40; GPQA pass 1 projects 9
+   vs 20).
 4. **Quantization shows no clear effect within an engine.** On 0.8.0, 4bpw gave 15 empty answers vs 20 for 3.25bpw,
    within noise. 4bpw cannot run on 0.7.0 at this concurrency: 13 GiB more weights per GPU leave 3.9 GiB of KV cache.
 5. **The engines trade reliability for speed.** 0.7.0 decodes ~28 tok/s per request on long reasoning at 8
    concurrent, 0.8.0 ~47 tok/s; 0.8.0 fits 4bpw but abandons more hard problems.
 6. **The gap to published scores (NVIDIA 92.1, Red Hat 90.6) is not a runtime problem.** Removing every empty answer
-   would add 1-3 points; the remainder is quantization and/or harness, which these runs cannot separate.
+   would add 0.9-3.4 points; the remainder is quantization and/or harness, which these runs cannot separate.
 7. **The engine is not bitwise reproducible at temperature 0** (identical configs diverge after ~80 tokens), so greedy
    parity cannot certify speculative exactness on this stack.
 
@@ -72,7 +70,7 @@ inference 3 and to be re-tested with pass 3.
   Even one greedy request at a time diverges from its own rerun after ~80 tokens on this stack. Compare distributions
   (accuracy, failure rates), never individual transcripts.
 - **Scores reproduce statistically, transcripts do not.** GPQA at temperature 1.0 is a fresh random draw each pass;
-  passes here vary by 1.0-3.5 points and all 12 fall inside their run's 95% interval. A rerun should land inside the
+  passes here vary by 1.0-3.5 points and all 15 fall inside their run's 95% interval. A rerun should land inside the
   interval, not on the same number. Match the concurrency (8 requests) as well as the sampling settings: different
   batch sizes take different numerical paths, and whether that shifts accuracy systematically is untested. The
   analysis itself is exactly reproducible: `tools/verify.py` and `tools/analyze.py` recompute every number from rows.

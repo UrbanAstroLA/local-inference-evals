@@ -285,7 +285,8 @@ def k4_signal(runs):
     ps = sorted(set(a["summary"]["passes"]) & set(b["summary"]["passes"]))
     ea, eb = (sum(r["empty"] for r in m["rows"] if r["pass"] in ps) for m in (a, b))
     n = 198 * len(ps); pv = fisher(ea, n - ea, eb, n - eb)
-    return (f' One open signal: on 4bpw, 0.9.0 left {eb} of {n} answers empty against {ea} for unpatched 0.8.0 on the same seeds '
+    lead = " One open signal: on 4bpw," if pv < 0.1 else " No completion cost either: on 4bpw,"
+    return (f'{lead} 0.9.0 left {eb} of {n} answers empty against {ea} for unpatched 0.8.0 on the same seeds '
             f'(Fisher p = {pv:.2f}{", not significant" if pv >= 0.05 else ""}; optimistic, as empty answers cluster by question).')
 
 
@@ -305,7 +306,7 @@ def build():
 
     # ---- index
     tiles = (f'<div class="tiles"><div class="tile"><div class="lab">GPQA Diamond accuracy, every configuration</div>'
-             f'<div class="val">{min(accs):.0f}-{max(accs):.0f}%</div><div class="sub">no configuration distinguishable from another</div></div>'
+             f'<div class="val">{min(accs):.1f}-{max(accs):.1f}%</div><div class="sub">no configuration distinguishable from another</div></div>'
              f'<div class="tile"><div class="lab">Empty answers per 594, same weights</div><div class="val">{e07["s"]["empty"]} vs {e08["s"]["empty"]}</div>'
              f'<div class="sub">engine 0.7.0 vs 0.8.0 (3.25bpw)</div></div>'
              f'<div class="tile"><div class="lab">Upstream kpool regression tests</div><div class="val">{up_pa[0]}/{up_pa[1]}</div>'
@@ -321,12 +322,13 @@ def build():
                         "<a href=\"method.html\">how to read this</a>). Questions were chosen from 0.8.0's failures, so the gap between engines "
                         "here is an upper-end estimate; comparisons within one engine are fair.")
            + '<h2>What it shows</h2><ol>'
-           f'<li><b>Accuracy does not depend on engine, patches, draft depth or quantization</b> here: every configuration lands at {min(accs):.0f}-{max(accs):.0f}%.</li>'
+           f'<li><b>Accuracy does not depend on engine, patches, draft depth or quantization</b> here: every configuration lands at {min(accs):.1f}-{max(accs):.1f}%.</li>'
            '<li><b>Finishing long reasoning depends on the engine.</b> On the same weights, 0.7.0 leaves about a third as many answers empty as 0.8.0.</li>'
            '<li><b>The two kpool bugs were real and are fixed in 0.9.0</b>, at no measurable accuracy cost, but they are not the cause of the loops. '
            'Their benefit is in long-lived servers with prefix caching, which these fresh-server runs rarely exercise.' + k4_signal(runs) + '</li>'
-           '<li><b>The gap to published scores (NVIDIA 92.1, Red Hat 90.6) is not a runtime problem</b>: removing every empty answer would add 1-3 points.</li>'
-           '</ol><p>Full write-up: <a href="' + REPO + '/blob/main/FINDINGS.md">FINDINGS.md</a>.</p>')
+           '<li><b>The gap to published scores (NVIDIA 92.1, Red Hat 90.6) is not a runtime problem</b>: removing every empty answer would add '
+           + '{:.1f}-{:.1f} points.</li>'.format(*(100 * f(r["s"]["accuracy_flexible_answered"] - r["s"]["accuracy_flexible"] for r in full) for f in (min, max)))
+           + '</ol><p>Full write-up: <a href="' + REPO + '/blob/main/FINDINGS.md">FINDINGS.md</a>.</p>')
     (OUT / "index.html").write_text(page("index.html", "Overview", idx))
 
     # ---- gpqa
