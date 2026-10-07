@@ -8,7 +8,8 @@ fixed, versioned protocols, so that configurations can be compared like for like
 **Composition.** One directory per run (`runs/<id>/`): a manifest, one JSON line per item, and a summary recomputable
 from those lines. Items are benchmark questions (GPQA Diamond), screen requests, probe requests, or kernel tests.
 Rows contain ids, hashes, outcomes, token counts, timings and compression ratios. They contain **no benchmark text
-and no model output text.** Field definitions: `SCHEMA.md`.
+and no model output text.** Field definitions, and the rule that names configurations (weights · engine version ·
+speculation): `SCHEMA.md`.
 
 **Benchmark terms.** GPQA (Idavidrein/gpqa, CC BY 4.0) asks that examples not be revealed in plain text or images
 online. Accordingly this repository holds only lm-evaluation-harness `doc_id`, `doc_hash`, `prompt_hash` and
@@ -23,7 +24,7 @@ Known collection issues are recorded in each run's `notes` (for example a run ke
 **Preprocessing.** Exported by a local script that copies numeric fields, computes hashes and drops all text and
 local paths. Scores are lm-eval's raw `flexible-extract` and `strict-match` filters, not rescored.
 
-**Uses.** Comparing configurations under the same protocol and hardware (enforced by `tools/verify.py`), reproducing
+**Uses.** Comparing configurations, including different engines, under the same protocol and hardware (enforced by `tools/verify.py`), reproducing
 the findings, or as a baseline for other hardware. **Not suitable** for: ranking models in general, comparing with
 scores from other harnesses as if equal, or estimating population failure rates from the hard-question screen (it
 deliberately samples the hardest items), quoting the screen's cross-engine gap as an effect size (its items

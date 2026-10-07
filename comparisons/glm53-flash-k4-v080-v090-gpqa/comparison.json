@@ -1,4 +1,4 @@
 {"id": "glm53-flash-k4-v080-v090-gpqa", "protocol": "gpqa-diamond/v1",
- "question": "Does 4bpw GLM-5.3-Flash score or finish differently on tpurtell v0.9.0 (kpool fixes) than on unpatched v0.8.0?",
+ "question": "Does 4bpw GLM-5.3-Flash score or finish differently on tpurtell 0.9.0 (which includes the kpool fixes) than on tpurtell 0.8.0?",
  "runs": ["2026-09-30_glm53-flash_k4-v0.8.0-dflash3_gpqa-diamond", "2026-10-06_glm53-flash_k4-v0.9.0-dflash3_gpqa-diamond"],
  "varies": ["engine.version", "engine.image"], "comparable": true}
