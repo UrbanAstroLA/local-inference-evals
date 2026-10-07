@@ -1,6 +1,8 @@
 # Changelog
 
 ## Unreleased (first public version)
+- Correction: the GPQA protocol said passes used seeds 1235-1237. Those are lm-eval's `--seed`; every request
+  carried `seed: 1234`. Passes differ through batching nondeterminism. Protocol and schema now say so; no number changes.
 - GLM-5.3-Flash on 2x RTX PRO 6000: five 3-pass and two 1-pass GPQA Diamond runs, eight hard-question screens (one
   kept as INVALID with its cause), five serving probes, four kpool kernel-test runs, seven comparisons, the kpool
   investigation with its preregistrations, `FINDINGS.md`, `DATASHEET.md`, `SCHEMA.md`.

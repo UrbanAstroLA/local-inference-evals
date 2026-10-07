@@ -10,7 +10,8 @@
 gpu_memory_utilization}, `hardware` {gpus, driver}, `notes`.
 
 ## results.jsonl by protocol
-**gpqa-diamond/v1:** `doc_id`, `doc_hash`, `prompt_hash`, `target_hash` (as logged by lm-eval), `pass`, `seed`,
+**gpqa-diamond/v1:** `doc_id`, `doc_hash`, `prompt_hash`, `target_hash` (as logged by lm-eval), `pass`, `seed` (lm-eval's
+`--seed` for the pass; requests carried seed 1234 unless the run notes say otherwise),
 `correct_flexible`, `correct_strict`, `empty` (no answer after reasoning), `response_chars`, `response_sha256`.
 
 **hard-prompt-screen/v0, v1:** `doc_id`, `rep`, `seed`, `cls` (ok / loop / exhaust / error), `finish_reason`,
