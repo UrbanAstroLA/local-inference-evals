@@ -30,7 +30,7 @@
   {
    "a": "glm53-flash/k3.25-v0.8.0-kpoolfix-dflash3#greedy_run1",
    "b": "glm53-flash/k3.25-v0.8.0-kpoolfix-nospec#greedy_run1",
-   "meaning": "tpurtell 0.8.0 + kpool fixes ≈ 0.9.0: 3 drafts vs no speculation",
+   "meaning": "tpurtell 0.8.0 + kpool fixes ≈ 0.9.0: DFlash2 ×3 vs no speculation",
    "identical_outputs": 0,
    "n": 16,
    "median_shared_prefix_chars": 146.0,
@@ -56,7 +56,7 @@
   {
    "a": "glm53-flash/k3.25-v0.8.0-kpoolfix-dflash5#greedy_run1",
    "b": "glm53-flash/k3.25-v0.8.0-kpoolfix-nospec#greedy_run1",
-   "meaning": "tpurtell 0.8.0 + kpool fixes ≈ 0.9.0: 5 drafts vs no speculation",
+   "meaning": "tpurtell 0.8.0 + kpool fixes ≈ 0.9.0: DFlash2 ×5 vs no speculation",
    "identical_outputs": 0,
    "n": 16,
    "median_shared_prefix_chars": 195.0,
@@ -82,7 +82,7 @@
   {
    "a": "glm53-flash/k3.25-v0.8.0-dflash3#greedy_run1",
    "b": "glm53-flash/k3.25-v0.8.0-nospec#greedy_run1",
-   "meaning": "tpurtell 0.8.0: 3 drafts vs no speculation",
+   "meaning": "tpurtell 0.8.0: DFlash2 ×3 vs no speculation",
    "identical_outputs": 0,
    "n": 16,
    "median_shared_prefix_chars": 205.0,

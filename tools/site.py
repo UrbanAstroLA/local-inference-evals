@@ -32,13 +32,12 @@ def load_runs():
     return runs
 
 
-MULTI_METHOD = False   # set in build(): prefix the speculative method once configs use more than one
 SERIES = {}            # engine.series -> colour, in order of each series' first run (new engines get the next colour)
 PALETTE = ["var(--s1)", "var(--s2)", "var(--s3)", "var(--s4)"]
 
 
 def label(cfg):
-    return config_label(cfg, MULTI_METHOD)
+    return config_label(cfg)
 
 
 def color(cfg):
@@ -46,8 +45,8 @@ def color(cfg):
 
 
 def label_width(labels):
-    """Left margin for chart row labels: about 6.4 px per character at 13 px, plus the gap."""
-    return int(18 + 6.4 * max((len(x) for x in labels), default=20))
+    """Left margin for chart row labels: about 7 px per character at 13 px (wide sans-serif fonts), plus the gap."""
+    return int(18 + 7.0 * max((len(x) for x in labels), default=20))
 
 
 def wilson(k, n, z=1.96):
@@ -127,7 +126,7 @@ def key(cfgs, open_=False):
     for c in cfgs:
         eng.setdefault(engine_label(c), c); wts.setdefault(weights_label(c), c)
         sp = c["serving"]["speculative"]
-        if sp["tokens"]: spec.setdefault((sp["method"], sp["draft_model"]), 1)
+        if sp["tokens"]: spec.setdefault((sp["label"], sp["draft_model"]), 1)
     rows = []
     for lab, c in sorted(eng.items(), key=lambda t: (list(SERIES).index(t[1]["engine"]["series"]), t[1]["engine"]["version"], len(t[1]["engine"]["patches"]))):
         e = c["engine"]; proj = f'<a href="https://github.com/{esc(e["project"])}">{esc(e["project"])}</a>'
@@ -148,9 +147,9 @@ def key(cfgs, open_=False):
     for lab, c in sorted(wts.items()):
         m = c["model"]
         rows.append([esc(lab), f'Weights <a href="https://huggingface.co/{esc(m["repo"])}">{esc(m["repo"])}</a>: {esc(m["quant"])}.'])
-    for (meth, dm) in spec:
-        rows.append(["N drafts", f'Speculative decoding with {esc(meth)}, N draft tokens per step (draft model {esc(dm)}). '
-                     '"sharing off": draft-slot sharing disabled.'])
+    for (lab, dm) in spec:
+        rows.append([f"{esc(lab)} \u00d7N", f'Speculative decoding with {esc(lab)}, N draft tokens per step (draft model {esc(dm)}). '
+                     '"sharing off": draft-slot sharing disabled. "no speculation": plain decoding.'])
     eqs = [(lab, c) for lab, c in eng.items() if c["engine"].get("equivalent_to")]
     lead = "".join(f' <b>{esc(lab)}</b> is the same engine as <b>{esc(c["engine"]["name"])} {esc(c["engine"]["equivalent_to"]["version"].lstrip("v"))}</b> for these measurements.' for lab, c in eqs[:1])
     return (f'<details class="key"{" open" if open_ else ""}><summary><b>Labels</b> read <i>weights · engine version · speculation</i>.{lead} '
@@ -162,7 +161,7 @@ def key(cfgs, open_=False):
 def interval_plot(rows, lo, hi, ticks, fmt, unit=""):
     """rows: dicts with label, est, lo, hi, color, tip. Horizontal dot-and-whisker, one row per config."""
     lw, rh, top = label_width(r["label"] for r in rows), 34, 10
-    pw = 480; w = lw + pw + 30
+    pw = 440; w = lw + pw + 30
     x = lambda v: lw + (v - lo) / (hi - lo) * pw
     h = top + rh * len(rows) + 30
     s = [f'<svg viewBox="0 0 {w} {h}" width="{w}" height="{h}" role="img">']
@@ -363,13 +362,11 @@ def k4_signal(runs):
 
 
 def build():
-    global MULTI_METHOD
     runs = load_runs(); OUT.mkdir(exist_ok=True)
     first = {}
     for m in sorted(runs.values(), key=lambda m: (m["date"], m["cfg"]["engine"]["series"])):
         first.setdefault(m["cfg"]["engine"]["series"], m["date"])
     SERIES.clear(); SERIES.update((ser, PALETTE[i % len(PALETTE)]) for i, ser in enumerate(sorted(first, key=lambda x: (first[x], x))))
-    MULTI_METHOD = len({m["cfg"]["serving"]["speculative"]["method"] for m in runs.values() if m["cfg"]["serving"]["speculative"]["tokens"]}) > 1
     cfgs = list({m["config"]: m["cfg"] for m in runs.values()}.values())
     key_open, key_closed = key(cfgs, open_=True), key(cfgs)
     full = gpqa_rows(runs, full_only=True); allg = gpqa_rows(runs)

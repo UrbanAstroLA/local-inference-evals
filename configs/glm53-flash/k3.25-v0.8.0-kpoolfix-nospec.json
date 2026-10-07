@@ -32,6 +32,7 @@
  "serving": {
   "speculative": {
    "method": "none",
+   "label": null,
    "tokens": 0,
    "draft_model": null
   },

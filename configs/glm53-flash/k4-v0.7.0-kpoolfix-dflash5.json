@@ -4,7 +4,7 @@
   "repo": "brandonmusic/GLM-5.3-Flash-tr3-4bpw",
   "revision": "a5fee929",
   "quant": "EXL3 uniform K4 routed experts (tr3)",
-  "label": "4bpw"
+  "label": "4bpw TR3 (Brandon)"
  },
  "engine": {
   "name": "tpurtell",
@@ -29,6 +29,7 @@
  "serving": {
   "speculative": {
    "method": "dflash2",
+   "label": "DFlash2",
    "tokens": 5,
    "draft_model": "incoai/GLM-5.3-Flash-DFlash2@bf582e4e"
   },
@@ -45,5 +46,5 @@
   "gpus": "2x NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition",
   "driver": "595.84"
  },
- "notes": "tpurtell 0.7.0 + kpool fixes: v0.7.0 with the PR #5 fix scripts applied (a backport; not a release and not 0.9.0); serving the 4bpw weights at 0.7.0's own settings. 4bpw revision a5fee929 (v0.7.0's profile pins aba59d21; only LICENSE differs). Default 1M request limit refused (KV); ran at 393,216."
+ "notes": "tpurtell 0.7.0 + kpool fixes: v0.7.0 with the PR #5 fix scripts applied (a backport; not a release and not 0.9.0); serving Brandon M. Music's TR3 checkpoint brandonmusic/GLM-5.3-Flash-tr3-4bpw at 0.7.0's own settings. Revision a5fee929 (v0.7.0's profile pins aba59d21; only LICENSE differs). Default 1M request limit refused (KV); ran at 393,216."
 }

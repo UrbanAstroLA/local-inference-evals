@@ -6,5 +6,5 @@
  "software": {
   "client": "tools/clients/hard_prompt_screen.py"
  },
- "notes": "INVALID - not a measurement. The 4bpw weights leave tpurtell 0.7.0 + kpool fixes a 437,563-token KV pool (3.9 GiB/GPU vs 15.8 GiB with 3.25bpw); the engine crashed (CUDA illegal memory access) ~35 min in, when the pool filled. All 40 requests are errors. Kept as a documented failure: 0.7.0's layout cannot host the 4bpw weights at this concurrency."
+ "notes": "INVALID - not a measurement. The 4bpw TR3 (Brandon) weights leave tpurtell 0.7.0 + kpool fixes a 437,563-token KV pool (3.9 GiB/GPU vs 15.8 GiB with 3.25bpw); the engine crashed (CUDA illegal memory access) ~35 min in, when the pool filled. All 40 requests are errors. Kept as a documented failure: 0.7.0's layout cannot host these weights at this concurrency."
 }

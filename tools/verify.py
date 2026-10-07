@@ -30,17 +30,17 @@ def engine_label(cfg, with_name=True):
     return s + (f" \u2248 {e['equivalent_to']['version'].lstrip('v')}" if e.get("equivalent_to") else "")
 
 
-def spec_label(cfg, with_method=False):
+def spec_label(cfg):
+    """'<serving.speculative.label> ×<tokens>[, sharing off]', e.g. 'DFlash2 ×3', or 'no speculation'."""
     sp = cfg["serving"]["speculative"]
     if not sp["tokens"]:
         return "no speculation"
-    s = (f"{sp['method']} " if with_method else "") + f"{sp['tokens']} draft{'s' if sp['tokens'] > 1 else ''}"
-    return s + (", sharing off" if cfg["serving"].get("draft_slot_sharing") is False else "")
+    return f"{sp['label']} \u00d7{sp['tokens']}" + (", sharing off" if cfg["serving"].get("draft_slot_sharing") is False else "")
 
 
-def config_label(cfg, with_method=False):
-    """'<weights> · <engine> · <speculation>'. Pass with_method=True once configs use more than one speculative method."""
-    return f"{weights_label(cfg)} \u00b7 {engine_label(cfg)} \u00b7 {spec_label(cfg, with_method)}"
+def config_label(cfg):
+    """'<weights> · <engine> · <speculation>', e.g. '4bpw TR3 (Brandon) · tpurtell 0.9.0 · DFlash2 ×3'."""
+    return f"{weights_label(cfg)} \u00b7 {engine_label(cfg)} \u00b7 {spec_label(cfg)}"
 
 
 def check_labels(cfgs):
@@ -59,9 +59,13 @@ def check_labels(cfgs):
         miss = [k for k, v in (("model.label", c.get("model", {}).get("label")), ("engine.name", e.get("name")),
                                ("engine.series", e.get("series")), ("engine.built_on", e.get("built_on"))) if not v]
         miss += ["engine.patches[].name" for p in e.get("patches", []) if not p.get("name")]
+        sp = c.get("serving", {}).get("speculative", {})
+        if sp.get("tokens") and not sp.get("label"): miss.append("serving.speculative.label")
         if miss: fails.append(f"config {c.get('id')}: missing label field(s) {miss}")
         else: ok.append(c)
     one_to_one("weights repo", [(weights_label(c), c["model"]["repo"]) for c in ok])
+    one_to_one("speculative method", [(c["serving"]["speculative"]["label"], c["serving"]["speculative"]["method"])
+                                      for c in ok if c["serving"]["speculative"]["tokens"]])
     build = lambda e: json.dumps([e["project"], e["version"], e["image"], [[p.get("source"), p.get("commit"), p.get("ports")] for p in e["patches"]]])
     one_to_one("engine build", [(engine_label(c), build(c["engine"])) for c in ok])
     desc = {}
