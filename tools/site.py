@@ -413,7 +413,7 @@ def build():
              f'<div class="sub">with the kpool fixes (without: {up_un[0]}/{up_un[1]})</div></div></div>')
     idx = (f'<h1>GLM-5.3-Flash on 2x RTX PRO 6000: end-to-end receipts</h1>'
            f'<p class="lede">Accuracy, completion, speed and kernel-correctness measurements of locally served GLM-5.3-Flash EXL3 quants '
-           f'on tpurtell\'s vLLM-based engine releases, under fixed, versioned protocols. Every number links to raw per-item receipts and can be '
+           f'on tpurtell\'s vLLM-based engine releases and two locally patched builds of them, under fixed, versioned protocols. Every number links to raw per-item receipts and can be '
            f'recomputed with the repository\'s tools.</p>{tiles}'
            + gpqa_accuracy_fig(full, "GPQA Diamond accuracy (3 passes, 594 answers)")
            + gpqa_empty_fig(full, "Empty answers on GPQA Diamond (3 passes)")

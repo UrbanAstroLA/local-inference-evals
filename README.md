@@ -11,8 +11,8 @@ Results site: <https://urbanastrola.github.io/local-inference-evals/>.
 ## Labels
 
 Configurations are named **weights · engine version · speculation**, for example `4bpw · tpurtell 0.9.0 · 3 drafts`.
-The engine name comes first because engines number their versions independently. Every engine so far is a release of
-[tpurtell/glm-5.3-flash-ext3-2x-rtx](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx), built on vLLM:
+The engine name comes first because engines number their versions independently. Every engine so far is a build of
+[tpurtell/glm-5.3-flash-ext3-2x-rtx](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx), which is built on vLLM:
 
 - `tpurtell 0.8.0 + kpool fixes ≈ 0.9.0` is 0.8.0 with the two upstream kpool fixes that later shipped in 0.9.0. It is
   the same engine as `tpurtell 0.9.0` for every measurement here, and was measured before 0.9.0 was released.
