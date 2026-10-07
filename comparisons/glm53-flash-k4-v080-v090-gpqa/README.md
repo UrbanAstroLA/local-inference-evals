@@ -1,6 +1,6 @@
-# 4bpw GLM-5.3-Flash: tpurtell 0.8.0 vs tpurtell 0.9.0 on GPQA Diamond
+# 4bpw TR3 (Brandon): tpurtell 0.8.0 vs tpurtell 0.9.0 on GPQA Diamond
 
-`4bpw · tpurtell 0.8.0 · 3 drafts` vs `4bpw · tpurtell 0.9.0 · 3 drafts`. Same weights (same revision), same serving
+`4bpw TR3 (Brandon) · tpurtell 0.8.0 · DFlash2 ×3` vs `4bpw TR3 (Brandon) · tpurtell 0.9.0 · DFlash2 ×3`. Same weights (same revision), same serving
 settings, same prompts and request seed; only the engine release differs. 0.9.0 is 0.8.0 plus the kpool fixes
 (tpurtell/glm-5.3-flash-ext3-2x-rtx#5) and two changes that are off or inert at defaults.
 

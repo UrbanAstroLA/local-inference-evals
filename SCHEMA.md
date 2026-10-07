@@ -6,28 +6,37 @@
 
 ## configs/<family>/<id>.json
 `model` {repo, revision, quant, label}, `engine` {name, built_on, project, version, image digest, patches[] {name,
-source, commit, ports}, equivalent_to {version, basis} or null, series}, `serving` {speculative {method, tokens,
+source, commit, ports}, equivalent_to {version, basis} or null, series}, `serving` {speculative {method, label, tokens,
 draft_model}, draft_slot_sharing, tp, ep, dcp, kv_cache_dtype, vision, prefix_caching, gpu_memory_utilization},
 `hardware` {gpus, driver}, `notes`.
 
 ## Labels
 Tables, charts and text name a configuration `<weights> · <engine> · <speculation>`, built from config fields by
-`config_label()` in `tools/verify.py` (the site uses the same function). Example: `4bpw · tpurtell 0.8.0 + kpool fixes ≈ 0.9.0 · 3 drafts`.
+`config_label()` in `tools/verify.py` (the site uses the same function). Example: `4bpw TR3 (Brandon) · tpurtell 0.8.0 + kpool fixes ≈ 0.9.0 · DFlash2 ×3`.
 
 - **Weights** = `model.label`. Each label names exactly one weights repository, and each repository has one label.
+  Labels give bit width, then format family and source when two checkpoints share a bit width:
+  - `3.25bpw`: wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1.
+  - `4bpw TR3 (Brandon)`: Brandon M. Music's TR3 checkpoint brandonmusic/GLM-5.3-Flash-tr3-4bpw.
+  - `4bpw TR3 (Mia recal.)`, reserved for Mia-AiLab/GLM-5.3-Flash-EXL3-4bpw-TensorFold when results with it are added.
+    Per its model card it is Mia's AI Lab's own calibration with the same format and bit width as
+    brandonmusic/GLM-5.3-Flash-tr3-4bpw. No configuration uses it yet.
 - **Engine** = `engine.name`, the version without its leading `v`, then ` + <name>` for each locally applied patch set
   in `engine.patches`, then ` ≈ <version>` when `engine.equivalent_to` records that the patched build matches a later
   release for everything measured here (`basis` says why). The engine name comes first because engines number their
   versions independently: `tpurtell 0.9.0` is a tpurtell release, not vLLM 0.9.0. Each engine label names exactly one
   build (project, version, image digest, patches), and each build has one label.
-- **Speculation** = `N drafts` (draft tokens per step), `no speculation`, plus `, sharing off` when draft-slot sharing
-  is disabled. If configurations with different speculative methods are shown together, the method is prefixed.
+- **Speculation** = `<serving.speculative.label> ×<tokens>` (draft tokens per step), for example `DFlash2 ×3`, or
+  `no speculation`; plus `, sharing off` when draft-slot sharing is disabled. The method's display name comes from
+  the config (`DFlash2`; another method would carry its own, such as `MTP`), and each name maps to one
+  `serving.speculative.method`.
 - `engine.built_on` says what the engine is built on (shown in the label key). `engine.series` groups builds that share
   one code base; charts give each series one colour. tpurtell 0.8.0, 0.8.0 + kpool fixes and 0.9.0 are one series;
   tpurtell 0.7.0 (with or without the fixes) is another.
 
 `tools/verify.py` fails if any of these fields is missing or if a label is ambiguous. Results from another engine need
-only these fields in their configs: its own `name`, `built_on` and `series`, and its own version scheme.
+only these fields in their configs: its own `name`, `built_on` and `series`, its own version scheme, and a
+`serving.speculative.label` for any new speculative method.
 Config and run ids (for example `k4-v0.8.0-kpoolfix-dflash3`) are stable identifiers, not labels. The existing ids
 omit the engine name because every configuration so far is a tpurtell build; ids for other engines include it after the
 weights (`<weights>-<engine>-<version>[-<patch>]-<speculation>`).

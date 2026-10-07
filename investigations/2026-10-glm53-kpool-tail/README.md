@@ -30,7 +30,7 @@ Files: `preregistration-kpool-screen.md` (decision rules for arms A/B/C), `prere
 v0.8.0 above are `tpurtell 0.7.0` and `tpurtell 0.8.0`; the patched v0.8.0 image is `tpurtell 0.8.0 + kpool fixes ≈ 0.9.0`,
 because tpurtell merged #5 and shipped it in v0.9.0 with byte-identical kpool kernel files; the patched v0.7.0 image is
 `tpurtell 0.7.0 + kpool fixes`, a separate backport. Since this README was written: v0.7.0 with the fixes failed 13/40
-vs 13/40 unpatched in the same session (`comparisons/glm53-flash-kpool-screen-v070`; rule not met), and 4bpw on
+vs 13/40 unpatched in the same session (`comparisons/glm53-flash-kpool-screen-v070`; rule not met), and 4bpw TR3 (Brandon) on
 tpurtell 0.9.0 vs 0.8.0 left 23 vs 15 of 594 GPQA answers empty (p = 0.25; `comparisons/glm53-flash-k4-v080-v090-gpqa`).
 For Finding 3, the published receipts cover decode speed and acceptance only (`comparisons/glm53-flash-serving-probe`:
 no consistent change, single runs); KV capacity and NLL are not among the published receipts. The amplified test of

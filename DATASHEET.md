@@ -16,7 +16,8 @@ online. Accordingly this repository holds only lm-evaluation-harness `doc_id`, `
 `target_hash` values and SHA-256 hashes of responses. To verify a run, regenerate prompts from the dataset with the
 protocol's harness settings and compare hashes.
 
-**Collection process.** Two NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition GPUs (96 GB each, PCIe), driver
+**Collection process.** Models: GLM-5.3-Flash EXL3 weights wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1 (`3.25bpw`) and Brandon M. Music's TR3
+checkpoint brandonmusic/GLM-5.3-Flash-tr3-4bpw (`4bpw TR3 (Brandon)`). Two NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition GPUs (96 GB each, PCIe), driver
 595.84, one machine, served through Docker images pinned by digest. Clients and settings are in `tools/clients/` and
 `protocols/`. Decision rules for each investigation were written before its data (`investigations/*/preregistration*`).
 Known collection issues are recorded in each run's `notes` (for example a run kept as INVALID after an engine crash).

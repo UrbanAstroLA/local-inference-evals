@@ -10,7 +10,7 @@ Results site: <https://urbanastrola.github.io/local-inference-evals/>.
 
 ## Labels
 
-Configurations are named **weights · engine version · speculation**, for example `4bpw · tpurtell 0.9.0 · 3 drafts`.
+Configurations are named **weights · engine version · speculation**, for example `4bpw TR3 (Brandon) · tpurtell 0.9.0 · DFlash2 ×3`.
 The engine name comes first because engines number their versions independently. Every engine so far is a build of
 [tpurtell/glm-5.3-flash-ext3-2x-rtx](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx), which is built on vLLM:
 
@@ -18,6 +18,9 @@ The engine name comes first because engines number their versions independently.
   the same engine as `tpurtell 0.9.0` for every measurement here, and was measured before 0.9.0 was released.
 - `tpurtell 0.7.0 + kpool fixes` is a separate backport of the same fixes: not a release, and not 0.9.0.
 - Plain `tpurtell 0.7.0`, `0.8.0` and `0.9.0` are the releases as published.
+
+Weights: `3.25bpw` is wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1; `4bpw TR3 (Brandon)` is Brandon M. Music's TR3
+checkpoint brandonmusic/GLM-5.3-Flash-tr3-4bpw. Speculation: `DFlash2 ×N` is DFlash2 with N draft tokens per step.
 
 Full key: [`FINDINGS.md`](FINDINGS.md#labels). Labels are built from config fields by one rule, so results from
 another engine carry its own name and version without code changes ([`SCHEMA.md`](SCHEMA.md#labels)).

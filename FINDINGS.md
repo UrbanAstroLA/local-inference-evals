@@ -16,8 +16,8 @@ Configurations are named **weights · engine version · speculation**, built fro
 | **tpurtell 0.9.0** | Release v0.9.0 as published, at its defaults (includes the kpool fixes) |
 | kpool fixes | Upstream vLLM fixes vllm-project/vllm#57477 and #58454, ported in [tpurtell/glm-5.3-flash-ext3-2x-rtx#5](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/5) (commit 5a366b5) and shipped in v0.9.0 |
 | 3.25bpw | [wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1](https://huggingface.co/wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1) (EXL3, mixed K3/K4 routed experts) |
-| 4bpw | [brandonmusic/GLM-5.3-Flash-tr3-4bpw](https://huggingface.co/brandonmusic/GLM-5.3-Flash-tr3-4bpw) (EXL3, uniform K4 routed experts) |
-| N drafts | DFlash2 speculative decoding (incoai/GLM-5.3-Flash-DFlash2), N draft tokens per step |
+| 4bpw TR3 (Brandon) | Brandon M. Music's TR3 checkpoint [brandonmusic/GLM-5.3-Flash-tr3-4bpw](https://huggingface.co/brandonmusic/GLM-5.3-Flash-tr3-4bpw) (EXL3, uniform K4 routed experts) |
+| DFlash2 ×N | DFlash2 speculative decoding (incoai/GLM-5.3-Flash-DFlash2), N draft tokens per step; "no speculation" = plain decoding |
 
 All engines here are tpurtell builds. 0.7.0 and the 0.8.0/0.9.0 line also differ in their default parallel layout
 (0.7.0: EP2 + DCP2, vision on; 0.8.0 and 0.9.0: EP1 + DCP1, vision off), so "engine" below means the release as shipped.
@@ -25,44 +25,45 @@ All engines here are tpurtell builds. 0.7.0 and the 0.8.0/0.9.0 line also differ
 ## GPQA Diamond, full protocol (3 passes, 594 answers; accuracy 95% CI about ±4 points)
 `analyze.py gpqa-empties` (exact 95% CI for the empty count)
 
-| Weights | Engine | Drafts | Accuracy | Empty answers (95% CI) |
+| Weights | Engine | Speculation | Accuracy | Empty answers (95% CI) |
 |---|---|---|---|---|
-| 3.25bpw | tpurtell 0.7.0 | 5 | 85.5% | 6 (2-13) |
-| 3.25bpw | tpurtell 0.8.0 | 3 | 85.5% | 20 (12-31) |
-| 3.25bpw | tpurtell 0.8.0, draft-slot sharing off | 5 | 86.2% | 17 (10-27) |
-| 4bpw | tpurtell 0.8.0 | 3 | 85.0% | 15 (8-25) |
-| 4bpw | tpurtell 0.9.0 | 3 | 84.7% | 23 (15-34) |
+| 3.25bpw | tpurtell 0.7.0 | DFlash2 ×5 | 85.5% | 6 (2-13) |
+| 3.25bpw | tpurtell 0.8.0 | DFlash2 ×3 | 85.5% | 20 (12-31) |
+| 3.25bpw | tpurtell 0.8.0 | DFlash2 ×5, sharing off | 86.2% | 17 (10-27) |
+| 4bpw TR3 (Brandon) | tpurtell 0.8.0 | DFlash2 ×3 | 85.0% | 15 (8-25) |
+| 4bpw TR3 (Brandon) | tpurtell 0.9.0 | DFlash2 ×3 | 84.7% | 23 (15-34) |
 
-**4bpw, tpurtell 0.9.0 vs 0.8.0, same prompts and request seed (594 answers each).** The configs differ only in engine
-version and image (checked by `tools/verify.py`, comparison `glm53-flash-k4-v080-v090-gpqa`; `analyze.py gpqa-pairs`).
+**4bpw TR3 (Brandon), tpurtell 0.9.0 vs 0.8.0, same prompts and request seed (594 answers each).** The configs differ
+only in engine version and image (checked by `tools/verify.py`, comparison `glm53-flash-k4-v080-v090-gpqa`; `analyze.py gpqa-pairs`).
 Accuracy 84.7% vs 85.0% (paired sign test over all 594 answers, p = 0.90). Empty answers 23 vs 15 (Fisher exact
 p = 0.25; resampling questions, 0.9.0 leaves -3 to +19 more). No detectable difference, but a small completion cost is
 not excluded. The gap after two passes (17 vs 7) reversed in pass 3 (6 vs 8): two passes of a rare, clustered outcome
 can mislead.
 
 ## GPQA Diamond, first pass only (198 answers, same prompts and request seed as above)
-| Weights | Engine | Drafts | Accuracy | Empty | Projected empty at 594 (95% CI) |
+| Weights | Engine | Speculation | Accuracy | Empty | Projected empty at 594 (95% CI) |
 |---|---|---|---|---|---|
-| 3.25bpw | tpurtell 0.7.0 + kpool fixes | 5 | 85.9% | 2 | 6 (1-21) |
-| 3.25bpw | tpurtell 0.8.0 + kpool fixes ≈ 0.9.0 | 5 | 86.9% | 3 | 9 (2-26) |
+| 3.25bpw | tpurtell 0.7.0 + kpool fixes | DFlash2 ×5 | 85.9% | 2 | 6 (1-21) |
+| 3.25bpw | tpurtell 0.8.0 + kpool fixes ≈ 0.9.0 | DFlash2 ×5 | 86.9% | 3 | 9 (2-26) |
 
-For comparison, pass 1 of the full runs left 0 (3.25bpw 0.7.0), 5 (3.25bpw 0.8.0, 3 drafts), 5 (3.25bpw 0.8.0, 5 drafts,
-sharing off), 3 (4bpw 0.8.0) and 9 (4bpw 0.9.0) empty (`analyze.py gpqa-pass1`).
+For comparison, pass 1 of the full runs left empty (`analyze.py gpqa-pass1`): 0 for `3.25bpw · tpurtell 0.7.0 · DFlash2 ×5`,
+5 for `3.25bpw · tpurtell 0.8.0 · DFlash2 ×3`, 5 for `3.25bpw · tpurtell 0.8.0 · DFlash2 ×5, sharing off`,
+3 for `4bpw TR3 (Brandon) · tpurtell 0.8.0 · DFlash2 ×3` and 9 for `4bpw TR3 (Brandon) · tpurtell 0.9.0 · DFlash2 ×3`.
 
 ## Hard-question screen (5 hardest GPQA questions x 8 = 40 runs; failures = loops + exhaustions)
 Rows with the same date ran in one session. Protocol v0 has no early loop stop; v0 and v1 are not mixed in comparisons.
 
-| Weights | Engine | Drafts | Protocol, date | Failures / 40 |
+| Weights | Engine | Speculation | Protocol, date | Failures / 40 |
 |---|---|---|---|---|
-| 3.25bpw | tpurtell 0.7.0 | 5 | v0, 2026-09-30 | 12 |
-| 3.25bpw | tpurtell 0.8.0 | 3 | v0, 2026-09-30 | 24 |
-| 3.25bpw | tpurtell 0.8.0 | 3 | v1, 2026-10-04 | 22 |
-| 3.25bpw | tpurtell 0.8.0 | 1 | v1, 2026-10-04 | 21 |
-| 3.25bpw | tpurtell 0.8.0 + kpool fixes ≈ 0.9.0 | 3 | v1, 2026-10-04 | 20 |
-| 3.25bpw | tpurtell 0.7.0 | 5 | v1, 2026-10-05 | 13 |
-| 3.25bpw | tpurtell 0.7.0 + kpool fixes | 5 | v1, 2026-10-05 | 13 |
-| 4bpw | tpurtell 0.8.0 + kpool fixes ≈ 0.9.0 | 3 | v1, 2026-10-05 | 15 |
-| 4bpw | tpurtell 0.7.0 + kpool fixes | 5 | v1, 2026-10-05 | not runnable: 437,563-token KV pool; engine crashed when it filled |
+| 3.25bpw | tpurtell 0.7.0 | DFlash2 ×5 | v0, 2026-09-30 | 12 |
+| 3.25bpw | tpurtell 0.8.0 | DFlash2 ×3 | v0, 2026-09-30 | 24 |
+| 3.25bpw | tpurtell 0.8.0 | DFlash2 ×3 | v1, 2026-10-04 | 22 |
+| 3.25bpw | tpurtell 0.8.0 | DFlash2 ×1 | v1, 2026-10-04 | 21 |
+| 3.25bpw | tpurtell 0.8.0 + kpool fixes ≈ 0.9.0 | DFlash2 ×3 | v1, 2026-10-04 | 20 |
+| 3.25bpw | tpurtell 0.7.0 | DFlash2 ×5 | v1, 2026-10-05 | 13 |
+| 3.25bpw | tpurtell 0.7.0 + kpool fixes | DFlash2 ×5 | v1, 2026-10-05 | 13 |
+| 4bpw TR3 (Brandon) | tpurtell 0.8.0 + kpool fixes ≈ 0.9.0 | DFlash2 ×3 | v1, 2026-10-05 | 15 |
+| 4bpw TR3 (Brandon) | tpurtell 0.7.0 + kpool fixes | DFlash2 ×5 | v1, 2026-10-05 | not runnable: 437,563-token KV pool; engine crashed when it filled |
 
 ## Inferences
 1. **Accuracy shows no dependence on engine, kpool fixes, draft depth or weights here.** Every configuration scores
@@ -71,24 +72,24 @@ Rows with the same date ran in one session. Protocol v0 has no early loop stop; 
 2. **Finishing long reasoning depends on the engine.** On the same 3.25bpw weights, tpurtell 0.7.0 left about a third
    as many GPQA answers empty as tpurtell 0.8.0 (6 vs 20 of 594; Fisher exact p = 0.009; resampling questions,
    0.8.0 leaves 4 to 25 more), and failed about half as often on the hard-question screen (12 vs 24 of 40 in the same
-   session; 13 vs 22 under protocol v1 a day apart). Draft depth alone does not explain it: 0.8.0 with 0.7.0's five
-   drafts and slot sharing off still left 17 (p = 0.033 against 6).
+   session; 13 vs 22 under protocol v1 a day apart). Draft depth alone does not explain it: 0.8.0 with 0.7.0's DFlash2 ×5
+   and slot sharing off still left 17 (p = 0.033 against 6).
 3. **The kpool bugs are real but are not the main cause of the loops.** The fixes correct real cache corruption (every
    prefill wrote 2 KB of keys into another block's indexer region; rejected drafts could overwrite committed keys) and
    make upstream's regression tests pass (33/33, from 29/33). Accuracy: no measurable cost. Completion: no detectable
-   change on either weight set, though these data cannot exclude a small one either way. On 4bpw, 0.9.0 left 23 vs 15
-   of 594 answers empty against unpatched 0.8.0 (p = 0.25; -3 to +19). On 3.25bpw the screen moved from 22 to 20 of 40
+   change on either weight set, though these data cannot exclude a small one either way. On 4bpw TR3 (Brandon), 0.9.0 left
+   23 vs 15 of 594 answers empty against unpatched 0.8.0 (p = 0.25; -3 to +19). On 3.25bpw the screen moved from 22 to 20 of 40
    on 0.8.0 and stayed at 13 vs 13 on 0.7.0, each within one session, and neither met its preregistered rule. Their
    expected benefit is in long-lived servers with prefix caching and reused system prompts, where cached blocks are
    reused across requests; fresh-server benchmarks like these rarely exercise that, and this repository has no
    measurement of it.
-4. **Quantization shows no clear effect within an engine.** On tpurtell 0.8.0, 4bpw left 15 of 594 answers empty vs
-   20 for 3.25bpw (p = 0.49), at 85.0% vs 85.5% accuracy. 4bpw cannot run on tpurtell 0.7.0's layout at this
-   concurrency: the weights leave a 437,563-token KV pool (3.9 GiB per GPU vs 15.8 GiB with 3.25bpw), and the engine
+4. **Quantization shows no clear effect within an engine.** On tpurtell 0.8.0, 4bpw TR3 (Brandon) left 15 of 594 answers empty
+   vs 20 for 3.25bpw (p = 0.49), at 85.0% vs 85.5% accuracy. 4bpw TR3 (Brandon) cannot run on tpurtell 0.7.0's layout
+   at this concurrency: the weights leave a 437,563-token KV pool (3.9 GiB per GPU vs 15.8 GiB with 3.25bpw), and the engine
    crashed when it filled.
 5. **The engines trade completion for speed.** In the screens (8 concurrent), requests that finished ran at a median
-   27-28 completion tokens per second on tpurtell 0.7.0 vs 47-49 on 0.8.0 with 3 drafts, with or without the kpool
-   fixes (`analyze.py screen-speed`). 0.8.0 also fits 4bpw; it leaves more long reasoning unfinished.
+   27-28 completion tokens per second on tpurtell 0.7.0 vs 47-49 on 0.8.0 with DFlash2 ×3, with or without the kpool
+   fixes (`analyze.py screen-speed`). 0.8.0 also fits 4bpw TR3 (Brandon); it leaves more long reasoning unfinished.
 6. **Empty answers explain only part of the gap to published scores (NVIDIA 92.1, Red Hat 90.6).** Scoring only
    answered questions would add 0.9-3.4 points (86.4-88.7% across the full runs), still below both. The rest mixes
    quantization, harness and other runtime effects, which these runs cannot separate.
@@ -109,7 +110,8 @@ Rows with the same date ran in one session. Protocol v0 has no early loop stop; 
   and whether that shifts accuracy systematically is untested. The analysis itself is exactly reproducible:
   `tools/verify.py` and `tools/analyze.py` recompute every number from rows.
 - **The screen's question set is not neutral.** Its five questions were chosen from empty answers in the tpurtell
-  0.8.0 GPQA runs (3.25bpw and 4bpw); in tpurtell 0.7.0's full GPQA run only one of them (q88) ever came back empty.
+  0.8.0 GPQA runs on both 3.25bpw and 4bpw TR3 (Brandon); in tpurtell 0.7.0's full GPQA run only one of them (q88)
+  ever came back empty.
   Within-engine comparisons on the screen are fair; the size of the cross-engine gap on the screen is an upper-end
   estimate. The engine finding rests on the full GPQA runs.
 - **Screen intervals assume independent runs.** Outcomes cluster by question (q121 failed once in 64 repeats across
