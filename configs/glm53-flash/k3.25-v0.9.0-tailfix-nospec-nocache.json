@@ -1,0 +1,53 @@
+{
+ "id": "glm53-flash/k3.25-v0.9.0-tailfix-nospec-nocache",
+ "model": {
+  "repo": "wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1",
+  "quant": "EXL3 K3.25 (mixed K3/K4 routed experts)",
+  "label": "3.25bpw",
+  "revision": "0490d2f708b12145f6516555ab066aaeb401cd21"
+ },
+ "engine": {
+  "name": "tpurtell",
+  "built_on": "vLLM",
+  "project": "tpurtell/glm-5.3-flash-ext3-2x-rtx",
+  "version": "v0.9.0",
+  "image": "ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:f36dfb876da9393c95ca738ed912ca73905d0211004ce5c09b9ae312ed0f5cc9",
+  "patches": [
+   {
+    "name": "DCP1 tail fix",
+    "source": "https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/6",
+    "commit": "f51ace6",
+    "ports": []
+   }
+  ],
+  "equivalent_to": null,
+  "series": "tpurtell 0.8.0-0.9.0"
+ },
+ "serving": {
+  "speculative": {
+   "method": "none",
+   "label": null,
+   "tokens": 0,
+   "draft_model": null
+  },
+  "draft_slot_sharing": null,
+  "tp": 2,
+  "ep": 1,
+  "dcp": 1,
+  "kv_cache_dtype": "fp8",
+  "vision": false,
+  "prefix_caching": false,
+  "gpu_memory_utilization": 0.95,
+  "layout": {
+   "label": null,
+   "mla_owners": "split:25",
+   "nope_records": true,
+   "dcp_topk_owner_exchange": null
+  }
+ },
+ "hardware": {
+  "gpus": "2x NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition",
+  "driver": "595.84"
+ },
+ "notes": "tpurtell 0.9.0 + DCP1 tail fix: the v0.9.0 image with the fix of tpurtell/glm-5.3-flash-ext3-2x-rtx#6 applied locally as an overlay; the image built from the PR branch (f51ace6) produces the same b12x_mla_sparse.py apart from the kernel's name. Default layout otherwise. Speculation off and prefix caching off, so prompt log-probabilities score every position."
+}

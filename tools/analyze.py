@@ -7,6 +7,9 @@
     python3 tools/analyze.py gpqa-pairs       # full runs pairwise: accuracy sign test over 594 answers, empty answers
                                               # (Fisher exact, and a 95% interval for the difference resampling questions)
     python3 tools/analyze.py screen-speed     # hard-question screens: median completion tokens/s of requests that finished
+    python3 tools/analyze.py screen-pool CONFIG [CONFIG ...]
+                                              # protocol-v1 screens pooled per config: failures, Wilson 95% CI, per question,
+                                              # and pairwise Fisher exact tests (config ids without the family, e.g. k3.25-v0.9.0-dflash3)
 
 Configurations are named by their labels (SCHEMA.md, "Labels") and config ids. Every GPQA request carried seed 1234
 (see protocols/gpqa-diamond/v1.md); passes differ through batching nondeterminism.
@@ -121,6 +124,28 @@ def screen_speed():
               + (f"{st.median(v):.1f}" if v else "-") + " |")
 
 
+def screen_pool(cfgs):
+    from verify import wilson
+    pooled = {}
+    for m in runs("hard-prompt-screen/v1"):
+        c = m["config"].split("/", 1)[1]
+        if c in cfgs and "INVALID" not in m["notes"]:
+            pooled.setdefault(c, {"m": m, "runs": [], "rows": []}); pooled[c]["runs"].append(m["id"]); pooled[c]["rows"] += m["rows"]
+    print("| config | screens | failures / requests | 95% Wilson | loops | exhaustions | failures by question (13, 79, 88, 121, 127) |")
+    print("|---|---|---|---|---|---|---|")
+    for c in cfgs:
+        p = pooled[c]; rs = p["rows"]; k = sum(r["cls"] in ("loop", "exhaust") for r in rs); lo, hi = wilson(k, len(rs))
+        q = [sum(r["cls"] in ("loop", "exhaust") for r in rs if r["doc_id"] == d) for d in (13, 79, 88, 121, 127)]
+        print(f"| {config_label(p['m']['cfg'])} | {len(p['runs'])} | {k}/{len(rs)} | {100 * lo:.1f}-{100 * hi:.1f}% | "
+              f"{sum(r['cls'] == 'loop' for r in rs)} | {sum(r['cls'] == 'exhaust' for r in rs)} | {', '.join(map(str, q))} |")
+    print("\n| A | B | failures A vs B | Fisher exact p |"); print("|---|---|---|---|")
+    for i, a in enumerate(cfgs):
+        for b in cfgs[i + 1:]:
+            ra, rb = pooled[a]["rows"], pooled[b]["rows"]
+            ka, kb = (sum(r["cls"] in ("loop", "exhaust") for r in x) for x in (ra, rb))
+            print(f"| {a} | {b} | {ka}/{len(ra)} vs {kb}/{len(rb)} | {fisher(ka, len(ra) - ka, kb, len(rb) - kb):.4f} |")
+
+
 def empties():
     print("| config | passes | empty | answers | projected empty at 594 (exact 95% CI) |"); print("|---|---|---|---|---|")
     for c, rows in gpqa_runs():
@@ -130,4 +155,4 @@ def empties():
 
 if __name__ == "__main__":
     {"gpqa-pass1": pass1, "gpqa-empties": empties, "gpqa-passes": passes, "gpqa-pairs": pairs,
-     "screen-speed": screen_speed}[sys.argv[1] if len(sys.argv) > 1 else "gpqa-pass1"]()
+     "screen-speed": screen_speed}.get(sys.argv[1] if len(sys.argv) > 1 else "gpqa-pass1", lambda: screen_pool(sys.argv[2:]))()

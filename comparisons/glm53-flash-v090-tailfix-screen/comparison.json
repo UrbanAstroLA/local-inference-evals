@@ -1,0 +1,4 @@
+{"id": "glm53-flash-v090-tailfix-screen", "protocol": "hard-prompt-screen/v1",
+ "question": "Does the DCP1 tail fix (tpurtell/glm-5.3-flash-ext3-2x-rtx#6) change non-completion on hard GPQA prompts on tpurtell 0.9.0, 3.25bpw weights?",
+ "runs": ["2026-10-07_glm53-flash_k3.25-v0.9.0-dflash3_screen-bisect1", "2026-10-07_glm53-flash_k3.25-v0.9.0-dflash3_screen-bisect2", "2026-10-07_glm53-flash_k3.25-v0.9.0-tailfix-dflash3_screen-bisect1", "2026-10-08_glm53-flash_k3.25-v0.9.0-tailfix-dflash3_screen-bisect2"],
+ "varies": ["engine.patches"], "comparable": true}

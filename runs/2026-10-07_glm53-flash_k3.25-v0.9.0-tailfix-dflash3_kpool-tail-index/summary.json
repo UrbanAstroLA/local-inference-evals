@@ -1,0 +1,16 @@
+{
+ "by_layout": {
+  "packed": {
+   "cases": 23,
+   "cases_tail_dropped": 0,
+   "cases_any_dropped": 0,
+   "tokens_dropped": 0
+  },
+  "scattered": {
+   "cases": 23,
+   "cases_tail_dropped": 0,
+   "cases_any_dropped": 0,
+   "tokens_dropped": 0
+  }
+ }
+}

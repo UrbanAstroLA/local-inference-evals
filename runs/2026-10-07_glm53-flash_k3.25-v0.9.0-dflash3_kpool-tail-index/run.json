@@ -1,0 +1,11 @@
+{
+ "id": "2026-10-07_glm53-flash_k3.25-v0.9.0-dflash3_kpool-tail-index",
+ "config": "glm53-flash/k3.25-v0.9.0-dflash3",
+ "protocol": "kpool-tail-index/v1",
+ "date": "2026-10-07",
+ "software": {
+  "check": "tools/kernel/kpool_tail_index_check.py",
+  "image": "tpurtell 0.9.0"
+ },
+ "notes": "Index pipeline only, the image's own compiled Triton kernels on GPU; model and serving fields of the config do not apply."
+}

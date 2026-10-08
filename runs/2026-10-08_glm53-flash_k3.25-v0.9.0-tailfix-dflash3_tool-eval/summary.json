@@ -1,0 +1,20 @@
+{
+ "reps": {
+  "1": {
+   "scenarios": 88,
+   "points": 159,
+   "max_points": 176,
+   "pass": 73,
+   "partial": 13,
+   "fail": 2
+  },
+  "2": {
+   "scenarios": 88,
+   "points": 163,
+   "max_points": 176,
+   "pass": 78,
+   "partial": 7,
+   "fail": 3
+  }
+ }
+}

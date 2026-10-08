@@ -1,0 +1,103 @@
+{
+ "prompts": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5
+ ],
+ "positions": 15600,
+ "by_region": {
+  "2044-2047": {
+   "positions": 24,
+   "mean_abs_dlp": 0.04686,
+   "top1_agree": 1.0,
+   "mean_kl_top20": 0.00665
+  },
+  "2044-2047|mod0": {
+   "positions": 6,
+   "mean_abs_dlp": 0.03172,
+   "top1_agree": 1.0,
+   "mean_kl_top20": 0.01118
+  },
+  "2044-2047|mod1": {
+   "positions": 6,
+   "mean_abs_dlp": 0.05288,
+   "top1_agree": 1.0,
+   "mean_kl_top20": 0.00924
+  },
+  "2044-2047|mod2": {
+   "positions": 6,
+   "mean_abs_dlp": 0.07778,
+   "top1_agree": 1.0,
+   "mean_kl_top20": 0.00433
+  },
+  "2044-2047|mod3": {
+   "positions": 6,
+   "mean_abs_dlp": 0.02507,
+   "top1_agree": 1.0,
+   "mean_kl_top20": 0.00184
+  },
+  "ge2048": {
+   "positions": 4407,
+   "mean_abs_dlp": 0.06883,
+   "top1_agree": 0.9707,
+   "mean_kl_top20": 0.01874
+  },
+  "ge2048|mod0": {
+   "positions": 1105,
+   "mean_abs_dlp": 0.06579,
+   "top1_agree": 0.9729,
+   "mean_kl_top20": 0.01805
+  },
+  "ge2048|mod1": {
+   "positions": 1102,
+   "mean_abs_dlp": 0.06232,
+   "top1_agree": 0.9619,
+   "mean_kl_top20": 0.01843
+  },
+  "ge2048|mod2": {
+   "positions": 1100,
+   "mean_abs_dlp": 0.06477,
+   "top1_agree": 0.9764,
+   "mean_kl_top20": 0.01475
+  },
+  "ge2048|mod3": {
+   "positions": 1100,
+   "mean_abs_dlp": 0.08246,
+   "top1_agree": 0.9718,
+   "mean_kl_top20": 0.02374
+  },
+  "lt2044": {
+   "positions": 11169,
+   "mean_abs_dlp": 0.04939,
+   "top1_agree": 0.9762,
+   "mean_kl_top20": 0.01032
+  },
+  "lt2044|mod0": {
+   "positions": 2789,
+   "mean_abs_dlp": 0.04433,
+   "top1_agree": 0.976,
+   "mean_kl_top20": 0.00902
+  },
+  "lt2044|mod1": {
+   "positions": 2792,
+   "mean_abs_dlp": 0.05101,
+   "top1_agree": 0.9753,
+   "mean_kl_top20": 0.01151
+  },
+  "lt2044|mod2": {
+   "positions": 2794,
+   "mean_abs_dlp": 0.0463,
+   "top1_agree": 0.9785,
+   "mean_kl_top20": 0.00864
+  },
+  "lt2044|mod3": {
+   "positions": 2794,
+   "mean_abs_dlp": 0.05591,
+   "top1_agree": 0.9749,
+   "mean_kl_top20": 0.01211
+  }
+ }
+}

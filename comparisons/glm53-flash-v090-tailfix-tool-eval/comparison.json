@@ -1,0 +1,4 @@
+{"id": "glm53-flash-v090-tailfix-tool-eval", "protocol": "tool-eval-bench/v1",
+ "question": "Does the DCP1 tail fix change tool-calling results on tpurtell 0.9.0, 3.25bpw weights?",
+ "runs": ["2026-10-08_glm53-flash_k3.25-v0.9.0-dflash3_tool-eval", "2026-10-08_glm53-flash_k3.25-v0.9.0-tailfix-dflash3_tool-eval"],
+ "varies": ["engine.patches"], "comparable": true}

@@ -38,9 +38,15 @@ def spec_label(cfg):
     return f"{sp['label']} \u00d7{sp['tokens']}" + (", sharing off" if cfg["serving"].get("draft_slot_sharing") is False else "")
 
 
+def layout_label(cfg):
+    """serving.layout.label: set only when the parallel layout differs from the engine release's default."""
+    return (cfg["serving"].get("layout") or {}).get("label")
+
+
 def config_label(cfg):
-    """'<weights> · <engine> · <speculation>', e.g. '4bpw TR3 (Brandon) · tpurtell 0.9.0 · DFlash2 ×3'."""
-    return f"{weights_label(cfg)} \u00b7 {engine_label(cfg)} \u00b7 {spec_label(cfg)}"
+    """'<weights> · <engine>[ · <layout>] · <speculation>', e.g. '4bpw TR3 (Brandon) · tpurtell 0.9.0 · DFlash2 ×3'."""
+    parts = [weights_label(cfg), engine_label(cfg), layout_label(cfg), spec_label(cfg)]
+    return " \u00b7 ".join(x for x in parts if x)
 
 
 def check_labels(cfgs):
@@ -68,6 +74,7 @@ def check_labels(cfgs):
                                       for c in ok if c["serving"]["speculative"]["tokens"]])
     build = lambda e: json.dumps([e["project"], e["version"], e["image"], [[p.get("source"), p.get("commit"), p.get("ports")] for p in e["patches"]]])
     one_to_one("engine build", [(engine_label(c), build(c["engine"])) for c in ok])
+    one_to_one("configuration", [(config_label(c), c["id"]) for c in ok])
     desc = {}
     for c in ok:
         e = c["engine"]; d = json.dumps([e["series"], e["built_on"], e.get("equivalent_to")], sort_keys=True)
@@ -126,6 +133,29 @@ def summarize(protocol, rs):
         c = Counter(r["outcome"] for r in rs)
         return {"tests": len(rs), "passed": c["passed"], "failed": c["failed"], "skipped": c["skipped"],
                 "failed_tests": sorted(r["test"] for r in rs if r["outcome"] == "failed")}
+    if fam == "decode-prefill-consistency":
+        out = {}
+        for key in sorted({f"{r['region']}|mod{r['mod4']}" for r in rs} | {r["region"] for r in rs}):
+            sel = [r for r in rs if key in (r["region"], f"{r['region']}|mod{r['mod4']}")]
+            kl = [r["kl_top20"] for r in sel if r["kl_top20"] is not None]
+            out[key] = {"positions": len(sel), "mean_abs_dlp": round(sum(r["abs_dlp"] or 0.0 for r in sel) / len(sel), 5),
+                        "top1_agree": round(sum(r["top1_agree"] for r in sel) / len(sel), 4),
+                        "mean_kl_top20": round(sum(kl) / len(kl), 5) if kl else None}
+        return {"prompts": sorted({r["doc_id"] for r in rs}), "positions": len(rs), "by_region": out}
+    if fam == "kpool-tail-index":
+        out = {}
+        for lay in sorted({r["layout"] for r in rs}):
+            sel = [r for r in rs if r["layout"] == lay]
+            out[lay] = {"cases": len(sel), "cases_tail_dropped": sum(not r["tail_attended"] for r in sel),
+                        "cases_any_dropped": sum(r["n_dropped"] > 0 for r in sel), "tokens_dropped": sum(r["n_dropped"] for r in sel)}
+        return {"by_layout": out}
+    if fam == "tool-eval-bench":
+        out = {}
+        for rep_ in sorted({r["rep"] for r in rs}):
+            sel = [r for r in rs if r["rep"] == rep_]; c = Counter(r["status"] for r in sel)
+            out[str(rep_)] = {"scenarios": len(sel), "points": sum(r["points"] for r in sel), "max_points": 2 * len(sel),
+                              "pass": c["pass"], "partial": c["partial"], "fail": c["fail"]}
+        return {"reps": out}
     if fam == "serving-probe":
         out = {}
         for b in sorted({r["batch"] for r in rs}):

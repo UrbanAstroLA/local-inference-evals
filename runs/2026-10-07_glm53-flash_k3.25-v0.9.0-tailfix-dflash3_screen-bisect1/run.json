@@ -1,0 +1,10 @@
+{
+ "id": "2026-10-07_glm53-flash_k3.25-v0.9.0-tailfix-dflash3_screen-bisect1",
+ "config": "glm53-flash/k3.25-v0.9.0-tailfix-dflash3",
+ "protocol": "hard-prompt-screen/v1",
+ "date": "2026-10-07",
+ "software": {
+  "client": "tools/clients/hard_prompt_screen.py"
+ },
+ "notes": "Layout bisection (preregistered; investigations/2026-10-glm53-looping), screen 1 of 2 for this configuration, on a freshly started server. Server log (not published): KV pool 4,707,515 tokens; mean generation throughput 484 tok/s over the 866 ten-second intervals with at least 8 running requests; mean acceptance length 2.98 (mean of the server's per-interval values); draft acceptance rate 0.647 (accepted / drafted tokens)."
+}
