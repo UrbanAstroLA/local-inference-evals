@@ -6,7 +6,8 @@ Following the questions of "Datasheets for Datasets" (Gebru et al.).
 fixed, versioned protocols, so that configurations can be compared like for like and claims can be checked.
 
 **Composition.** One directory per run (`runs/<id>/`): a manifest, one JSON line per item, and a summary recomputable
-from those lines. Items are benchmark questions (GPQA Diamond), screen requests, probe requests, or kernel tests.
+from those lines. Items are benchmark questions (GPQA Diamond), screen requests, probe requests, kernel tests, decode positions
+compared with prefill, attention-index check cases, or tool-calling scenarios.
 Rows contain ids, hashes, outcomes, token counts, timings and compression ratios. They contain **no benchmark text
 and no model output text.** Field definitions, and the rule that names configurations (weights · engine version ·
 speculation): `SCHEMA.md`.

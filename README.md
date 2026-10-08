@@ -6,6 +6,8 @@ Receipts for evaluations of locally served LLMs: what was run, on exactly which 
 per-item results, and the scripts that recompute every published number. Null and negative results are kept.
 
 Start with [`FINDINGS.md`](FINDINGS.md) for results and [`DATASHEET.md`](DATASHEET.md) for what the data is and is not.
+Looping, exhaustion and empty answers across tpurtell's runtimes, with commands to recompute every number:
+[`investigations/2026-10-glm53-looping`](investigations/2026-10-glm53-looping).
 Results site: <https://urbanastrola.github.io/local-inference-evals/>.
 
 ## Labels
@@ -17,6 +19,9 @@ The engine name comes first because engines number their versions independently.
 - `tpurtell 0.8.0 + kpool fixes ≈ 0.9.0` is 0.8.0 with the two upstream kpool fixes that later shipped in 0.9.0. It is
   the same engine as `tpurtell 0.9.0` for every measurement here, and was measured before 0.9.0 was released.
 - `tpurtell 0.7.0 + kpool fixes` is a separate backport of the same fixes: not a release, and not 0.9.0.
+- `tpurtell 0.9.0 + DCP1 tail fix` is 0.9.0 with the fix proposed in tpurtell/glm-5.3-flash-ext3-2x-rtx#6, applied locally.
+- A layout segment such as `0.7.0 layout (DCP2, EP2)` appears only when a configuration runs a parallel layout other than
+  its release's default (here a diagnostic control).
 - Plain `tpurtell 0.7.0`, `0.8.0` and `0.9.0` are the releases as published.
 
 Weights: `3.25bpw` is wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1; `4bpw TR3 (Brandon)` is Brandon M. Music's TR3

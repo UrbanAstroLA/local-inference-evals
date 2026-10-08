@@ -14,6 +14,8 @@ Configurations are named **weights · engine version · speculation**, built fro
 | **tpurtell 0.8.0** | Release v0.8.0 as published (no kpool fixes) |
 | **tpurtell 0.8.0 + kpool fixes ≈ 0.9.0** | v0.8.0 with the kpool fixes applied locally. **The same engine as tpurtell 0.9.0 for every measurement here:** its kpool kernel files are byte-for-byte identical to the 0.9.0 release, and 0.9.0's other two changes (an opt-in boundary prefix-cache lookup, off by default, and usage reporting) do not affect these measurements. Measured before 0.9.0 was released |
 | **tpurtell 0.9.0** | Release v0.9.0 as published, at its defaults (includes the kpool fixes) |
+| **tpurtell 0.9.0 + DCP1 tail fix** | v0.9.0 with the fix proposed in [tpurtell/glm-5.3-flash-ext3-2x-rtx#6](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/6) applied locally. Not a release |
+| 0.7.0 layout (DCP2, EP2) | Shown only when a configuration runs a parallel layout other than its release's default: here v0.7.0's layout on the 0.9.0 image, a diagnostic control ([investigation](investigations/2026-10-glm53-looping)) |
 | kpool fixes | Upstream vLLM fixes vllm-project/vllm#57477 and #58454, ported in [tpurtell/glm-5.3-flash-ext3-2x-rtx#5](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/5) (commit 5a366b5) and shipped in v0.9.0 |
 | 3.25bpw | [wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1](https://huggingface.co/wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1) (EXL3, mixed K3/K4 routed experts) |
 | 4bpw TR3 (Brandon) | Brandon M. Music's TR3 checkpoint [brandonmusic/GLM-5.3-Flash-tr3-4bpw](https://huggingface.co/brandonmusic/GLM-5.3-Flash-tr3-4bpw) (EXL3, uniform K4 routed experts) |
@@ -64,6 +66,12 @@ Rows with the same date ran in one session. Protocol v0 has no early loop stop; 
 | 3.25bpw | tpurtell 0.7.0 + kpool fixes | DFlash2 ×5 | v1, 2026-10-05 | 13 |
 | 4bpw TR3 (Brandon) | tpurtell 0.8.0 + kpool fixes ≈ 0.9.0 | DFlash2 ×3 | v1, 2026-10-05 | 15 |
 | 4bpw TR3 (Brandon) | tpurtell 0.7.0 + kpool fixes | DFlash2 ×5 | v1, 2026-10-05 | not runnable: 437,563-token KV pool; engine crashed when it filled |
+| 3.25bpw | tpurtell 0.9.0 | DFlash2 ×3 | v1, 2026-10-07 (two screens) | 20, 21 |
+| 3.25bpw | tpurtell 0.9.0 + DCP1 tail fix | DFlash2 ×3 | v1, 2026-10-07 and 10-08 | 18, 15 |
+| 3.25bpw | tpurtell 0.9.0 · 0.7.0 layout (DCP2, EP2) | DFlash2 ×3 | v1, 2026-10-07 and 10-08 | 15, 14 |
+
+The last three rows are the preregistered layout bisection: two screens per configuration, interleaved, each on a fresh
+server ([`investigations/2026-10-glm53-looping`](investigations/2026-10-glm53-looping)).
 
 ## Inferences
 1. **Accuracy shows no dependence on engine, kpool fixes, draft depth or weights here.** Every configuration scores
@@ -73,7 +81,8 @@ Rows with the same date ran in one session. Protocol v0 has no early loop stop; 
    as many GPQA answers empty as tpurtell 0.8.0 (6 vs 20 of 594; Fisher exact p = 0.009; resampling questions,
    0.8.0 leaves 4 to 25 more), and failed about half as often on the hard-question screen (12 vs 24 of 40 in the same
    session; 13 vs 22 under protocol v1 a day apart). Draft depth alone does not explain it: 0.8.0 with 0.7.0's DFlash2 ×5
-   and slot sharing off still left 17 (p = 0.033 against 6).
+   and slot sharing off still left 17 (p = 0.033 against 6). A preregistered bisection on 0.9.0 with v0.7.0's parallel
+   layout as a diagnostic control was inconclusive (41 vs 29 failures of 80, Fisher p = 0.079; see inference 8).
 3. **The kpool bugs are real but are not the main cause of the loops.** The fixes correct real cache corruption (every
    prefill wrote 2 KB of keys into another block's indexer region; rejected drafts could overwrite committed keys) and
    make upstream's regression tests pass (33/33, from 29/33). Accuracy: no measurable cost. Completion: no detectable
@@ -96,6 +105,22 @@ Rows with the same date ran in one session. Protocol v0 has no early loop stop; 
 7. **The engine is not bitwise reproducible at temperature 0.** The same configuration run twice diverges after a
    median of 318 characters (`comparisons/glm53-flash-serving-probe`), so greedy parity cannot certify speculative
    exactness on this stack.
+8. **Under the default DCP1 layout of tpurtell 0.8.0 and 0.9.0, a masking path in the vendored attention code drops recent
+   tokens during decode. The DCP1 tail fix removes it; its effect on looping is not detectable at this sample size.**
+   - The path existed before the layout change, which activated it. With DCP1, decode steps at causal lengths up to 2,043 that are not a multiple of 4 skip the newest 1-3
+     tokens in every MLA layer (index check on the image's own kernels).
+   - The fix, proposed in tpurtell/glm-5.3-flash-ext3-2x-rtx#6:
+     - Decode-vs-prefill KL falls from 0.066 to 0.010 below 2,044 tokens and from 0.031 to 0.019 after (6 of 6 and 5 of
+       6 prompts lower).
+     - TC-80 and TC-88 of tool-eval-bench pass in both repeats instead of failing (157 and 157 of 176 → 159 and 163).
+     - Server throughput, acceptance and KV capacity unchanged: 484 and 490 tok/s vs 486 and 497 tok/s during the
+       screens. The median rate of finished screen requests was lower, 46.5-46.7 vs 48.9-50.2 tok/s, but it also
+       depends on which requests finish.
+   - Hard-question screen: 41 → 33 failures of 80 (p = 0.27, "no detectable loop effect" under the preregistered rule).
+   - Failure rates fall in the order as released 51% > with the fix 41% > v0.7.0-layout control 36%. None of these
+     differences is significant.
+   - Receipts, open questions and commands:
+     [`investigations/2026-10-glm53-looping`](investigations/2026-10-glm53-looping).
 
 ## Reading these results
 - **Concurrency changes the arithmetic.** Requests are served 8 at a time, and batch composition changes the numerics
@@ -114,8 +139,8 @@ Rows with the same date ran in one session. Protocol v0 has no early loop stop; 
   ever came back empty.
   Within-engine comparisons on the screen are fair; the size of the cross-engine gap on the screen is an upper-end
   estimate. The engine finding rests on the full GPQA runs.
-- **Screen intervals assume independent runs.** Outcomes cluster by question (q121 failed once in 64 repeats across
-  the eight valid screens; q88 failed in 4-8 of 8 repeats in every one), so the Wilson intervals in screen summaries
+- **Screen intervals assume independent runs.** Outcomes cluster by question (q121 failed once in 112 repeats across
+  the fourteen valid screens; q88 failed in 4-8 of 8 repeats in every one), so the Wilson intervals in screen summaries
   are too narrow. Decision rules were count-based, not interval-based.
 - **Intervals.** GPQA accuracy: 95% bootstrap over questions. Empty answers: exact (Clopper-Pearson) 95% intervals
   here, Wilson score intervals on the site; they differ slightly.

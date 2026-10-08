@@ -1,10 +1,30 @@
 # Changelog
 
 ## Unreleased (first public version)
-Contents: 25 runs of GLM-5.3-Flash on 2x RTX PRO 6000 (7 GPQA Diamond runs: 5 full 3-pass and 2 single-pass;
-9 hard-question screens, one kept as INVALID with its cause; 5 serving probes; 4 kpool kernel-test runs), 7 comparisons,
-the kpool investigation with its preregistrations, `FINDINGS.md`, `DATASHEET.md`, `SCHEMA.md`, and the results site.
+Contents: 39 runs of GLM-5.3-Flash on 2x RTX PRO 6000:
+- 7 GPQA Diamond runs: 5 full 3-pass and 2 single-pass;
+- 15 hard-question screens, one kept as INVALID with its cause;
+- 7 serving probes;
+- 4 kpool kernel-test runs;
+- 2 kpool tail index checks;
+- 2 decode-vs-prefill consistency runs;
+- 2 tool-eval-bench runs.
 
+Also: 11 comparisons, two investigations with their preregistrations, `FINDINGS.md`, `DATASHEET.md`, `SCHEMA.md`, and the
+results site.
+
+- Looping investigation (2026-10-08): `investigations/2026-10-glm53-looping`, and a site page.
+  - **Layout bisection** on tpurtell 0.9.0, preregistered with three amendments: six screens across three
+    configurations.
+    - 0.9.0 as released vs v0.7.0's layout as a diagnostic control: 41 vs 29 failures of 80, p = 0.079, inconclusive.
+    - With vs without the DCP1 tail fix (tpurtell/glm-5.3-flash-ext3-2x-rtx#6): 33 vs 41, p = 0.27, no detectable
+      loop effect.
+  - **Tail-fix checks:** index check, decode-vs-prefill consistency (KL 0.066 → 0.010 below 2,044 tokens), serving
+    probe, and tool-eval-bench (157/157 → 159/163 of 176).
+  - New protocols `decode-prefill-consistency/v1`, `kpool-tail-index/v1` and `tool-eval-bench/v1`, with their clients.
+  - New config field `serving.layout`. Its label appears only for non-default layouts.
+  - `tools/analyze.py screen-pool`, and `recompute.py` in the investigation.
+  - `FINDINGS.md` gains inference 8.
 - Labels (2026-10-06): configurations are named `weights · engine version · speculation`, engine name first (for
   example `4bpw TR3 (Brandon) · tpurtell 0.8.0 + kpool fixes ≈ 0.9.0 · DFlash2 ×3`), built from new config fields (`model.label`,
   `engine.name`, `engine.built_on`, `engine.patches[].name`, `engine.equivalent_to`, `engine.series`,
