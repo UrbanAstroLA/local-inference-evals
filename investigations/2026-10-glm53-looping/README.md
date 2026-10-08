@@ -192,37 +192,26 @@ Per question, each count is out of 16.
 - That any of this closes the gap to published GPQA scores.
 - That the v0.7.0 layout is preferable: it is a diagnostic control, and it holds about a third less KV cache.
 
-## Open questions, and the experiment that would answer each
-1. **Does the layout itself matter (as released vs control, 41 vs 29 of 80)?** At the observed rates, 80% power at
-   p < 0.05 needs about 170 requests per configuration, about three more screens each (`recompute.py`, power section). That is
-   optimistic, because failures cluster by question. A better instrument is a screen version with more questions and
-   a different seed per repeat (`protocols/hard-prompt-screen/v1.md`, known limitations).
-2. **Is there a layout effect left after the fix (33 vs 29 of 80)?** A 5-point difference would need ~1,500 requests
-   per configuration on this screen. A 3-pass GPQA run per configuration (594 answers, empty count) is the more
-   practical test.
-3. **Does the fix change GPQA empty answers or accuracy?** A 3-pass GPQA run with the fix, against 20 of 594 (0.8.0)
-   on the same weights.
-4. **Batch composition.**
-   - Scoring answer letters on vLLM, local measurements put repeats at concurrency 1 within KL ~3e-4 of each other and
-     at concurrency 8 ~0.02. Those receipts are not published.
-   - Does batch composition change completion? Experiment: the hardest screen questions at concurrency 1 vs 8, plus a
-     concurrency-1 repeat with prefix caching off to attribute the residual.
-5. **The 511-pool slice (read in code; effect not measured).**
-   - From 2,048 tokens of context, the indexer keeps 511 of the 512 pools it selected.
-   - Which one it drops depends on the order the top-k emits them, not on score.
-   - Experiment: teacher-forced replay of saved screen traces, logging the dropped pool's score rank on looping vs
-     finishing traces.
-6. **`swiglu_limit` on routed experts (read in code, all versions).**
-   - The checkpoint sets `swiglu_limit` 10.0. The shared expert clamps, but the routed-expert path does not pass the
-     limit.
-   - Experiment: count routed activations above 10 on long traces, then compare against the BF16 teacher with and
-     without the clamp.
-7. **Top-k ties (read in code).**
-   - The DCP2 merge path uses a stable top-k with lowest-index ties.
-   - The DCP1 fused path places ties by atomic arrival order, so exact ties can resolve differently between layouts
-     and between batch compositions.
-   - Experiment: count exact score ties at the selection boundary along long traces, and compare selections at
-     concurrency 1 vs 8.
+## Open questions
+Each item states the question and what is known so far. How to pursue them is left to the reader.
+
+1. **Does the parallel layout itself matter?** As released vs the v0.7.0-layout control: 41 vs 29 failures of 80
+   (p = 0.079). Failures cluster by question: two of the five screen questions account for most of them in every
+   configuration.
+2. **Is there a layout effect left once the tail bug is fixed?** With the fix vs the control: 33 vs 29 of 80
+   (p = 0.63).
+3. **Does the fix change GPQA empty answers or accuracy?** No GPQA run with the fix exists yet. For reference, the same
+   weights on tpurtell 0.8.0 left 20 of 594 answers empty, and on 0.7.0 6 of 594.
+4. **Does batch composition affect completion?** Scoring answer letters on vLLM, local measurements put repeats at
+   concurrency 1 within KL ~3e-4 of each other and at concurrency 8 ~0.02 (receipts not published). Whether that
+   difference reaches long-reasoning completion is unmeasured.
+5. **Does the 511-pool slice matter?** Read in code, effect not measured: from 2,048 tokens of context the indexer keeps
+   511 of the 512 pools it selected, and which one it drops depends on the order the top-k emits them, not on score.
+6. **Does `swiglu_limit` on the routed experts matter?** Read in code, all versions: the checkpoint sets
+   `swiglu_limit` 10.0; the shared expert clamps, the routed-expert path does not pass the limit.
+7. **Do top-k ties matter?** Read in code: the DCP2 merge path uses a stable top-k with lowest-index ties; the DCP1 fused
+   path places ties by atomic arrival order, so exact ties can resolve differently between layouts and between batch
+   compositions.
 
 ## Receipts and how to recompute them
 Every number above comes from files in this repository, except the batch-composition figures in open question 4

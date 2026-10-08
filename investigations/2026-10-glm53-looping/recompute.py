@@ -113,7 +113,7 @@ for c in (AS, FIX):
     b = summarize(m["protocol"], m["rows"])["batches"]
     print(f"{m['id']}: " + "; ".join(f"{k}: decode {v['median_decode_tok_s']} tok/s, acceptance {v['acceptance_rate']}" for k, v in b.items()))
 
-print("\n## Power for the open questions (normal approximation, two-sided p < 0.05, 80% power, ignores clustering)")
+print("\n## Sample size behind each comparison (normal approximation, two-sided p < 0.05, 80% power, ignores clustering)")
 def n_per_arm(p1, p2, za=1.959964, zb=0.841621):
     pb = (p1 + p2) / 2
     return math.ceil((za * math.sqrt(2 * pb * (1 - pb)) + zb * math.sqrt(p1 * (1 - p1) + p2 * (1 - p2))) ** 2 / (p1 - p2) ** 2)
