@@ -136,8 +136,9 @@ def key(cfgs, open_=False):
             for pt in e["patches"]:
                 m = re.match(r"https://github.com/([^/]+/[^/]+)/pull/(\d+)", pt["source"])
                 src = f'<a href="{esc(pt["source"])}">{esc(m.group(1) + "#" + m.group(2)) if m else "source"}</a>'
-                txt += (f' with the {esc(pt["name"])} applied locally: {" and ".join(esc(x) for x in pt.get("ports", []))}, as ported in {src} '
-                        f'(commit {esc(pt["commit"])})')
+                ports = " and ".join(esc(x) for x in pt.get("ports", []))
+                txt += (f' with the {esc(pt["name"])} applied locally' + (f': {ports}, as ported in {src} ' if ports else f', from {src} ')
+                        + f'(commit {esc(pt["commit"])})')
             txt += f'. A local build on the {esc(e["version"])} image {digest}, not a release'
             txt += (f'. <b>The same engine as {esc(e["name"])} {esc(e["equivalent_to"]["version"].lstrip("v"))} for every measurement here</b>: '
                     f'{esc(e["equivalent_to"]["basis"])}.' if e.get("equivalent_to") else ', and not equivalent to any release.')
@@ -147,6 +148,15 @@ def key(cfgs, open_=False):
     for lab, c in sorted(wts.items()):
         m = c["model"]
         rows.append([esc(lab), f'Weights <a href="https://huggingface.co/{esc(m["repo"])}">{esc(m["repo"])}</a>: {esc(m["quant"])}.'])
+    lays = {}
+    for c in cfgs:
+        lay = c["serving"].get("layout") or {}
+        if lay.get("label"): lays.setdefault(lay["label"], (c, lay))
+    for lab, (c, lay) in sorted(lays.items()):
+        rows.append([esc(lab), f'Parallel layout that differs from the engine release\'s default: EP{c["serving"]["ep"]} routed experts, '
+                     f'DCP{c["serving"]["dcp"]}, MLA layer ownership "{esc(str(lay.get("mla_owners")))}", NOPE records '
+                     f'{"on" if lay.get("nope_records") else "off"}' + (", DCP top-k owner exchange off" if lay.get("dcp_topk_owner_exchange") is False else "")
+                     + '. Used as a diagnostic control; see the configuration notes.'])
     for (lab, dm) in spec:
         rows.append([f"{esc(lab)} \u00d7N", f'Speculative decoding with {esc(lab)}, N draft tokens per step (draft model {esc(dm)}). '
                      '"sharing off": draft-slot sharing disabled. "no speculation": plain decoding.'])
@@ -196,7 +206,7 @@ def figure(title, sub, body, tbl, legend_html=""):
 # ---------------------------------------------------------------- pages
 
 PAGES = [("index.html", "Overview"), ("gpqa.html", "GPQA Diamond"), ("screens.html", "Hard-question screen"),
-         ("serving.html", "Speed & acceptance"), ("kernels.html", "Kernel tests"), ("method.html", "How to read this")]
+         ("serving.html", "Speed & acceptance"), ("kernels.html", "Kernel tests"), ("looping.html", "Looping investigation"), ("method.html", "How to read this")]
 
 
 def with_key(body, key_html):
@@ -266,6 +276,13 @@ def screen_rows(runs, protocol):
         s = m["summary"]
         out.append(dict(rid=rid, label=label(m["cfg"]) + f' ({m["date"][5:]})', cfg=m["cfg"], color=color(m["cfg"]), s=s,
                         invalid="INVALID" in m["notes"]))
+    labs = [r["label"] for r in out]   # two screens of one configuration on one date: number them by run id order
+    for r in out:
+        if labs.count(r["label"]) > 1:
+            same = sorted(x["rid"] for x in out if x["label"] == r["label"])
+            r["label2"] = r["label"][:-1] + f', screen {same.index(r["rid"]) + 1})'
+    for r in out:
+        r["label"] = r.pop("label2", r["label"])
     return sorted(out, key=lambda r: (list(SERIES).index(r["cfg"]["engine"]["series"]), r["label"]))
 
 
@@ -285,8 +302,9 @@ def screen_fig(rows, title, sub):
     return figure(title, sub, body, tbl, legend([r["cfg"] for r in rows]))
 
 
-def heatmap(runs):
-    rows = [r for r in screen_rows(runs, "hard-prompt-screen/v1") + screen_rows(runs, "hard-prompt-screen/v0") if not r["invalid"]]
+def heatmap(runs, rows=None, caption=None):
+    if rows is None:
+        rows = [r for r in screen_rows(runs, "hard-prompt-screen/v1") + screen_rows(runs, "hard-prompt-screen/v0") if not r["invalid"]]
     docs = [79, 13, 127, 88, 121]
     cw, lw, rh, top = 92, label_width(r["label"] for r in rows), 30, 30
     w, h = lw + cw * len(docs) + 10, top + rh * len(rows) + 10
@@ -313,9 +331,10 @@ def heatmap(runs):
     scale = ('<div class="legend">Failures out of 8: ' + "".join(f'<span><i style="background:{seq[v]};border-radius:2px;outline:1px solid var(--ring)"></i>{v}</span>' for v in (0, 2, 4, 6, 8)) + "</div>")
     q88 = [r["s"]["per_doc"].get("88", {}) for r in rows]
     f88 = [d.get("loop", 0) + d.get("exhaust", 0) for d in q88]
+    caption = caption or (f'Question 88 fails in {min(f88)}-{max(f88)} of 8 repeats in every configuration, which points to the model '
+                          f'as much as the runtime. Rows dated 09-30 used protocol v0 (no early stop); the others v1.')
     return (f'<figure><figcaption><div class="t">Failures by question</div><div class="s">Each cell: how many of the 8 repeats of that question failed '
-            f'(loop or exhaustion). Question 88 fails in {min(f88)}-{max(f88)} of 8 repeats in every configuration, which points to the model '
-            f'as much as the runtime. Rows dated 09-30 used protocol v0 (no early stop); the others v1.</div></figcaption>'
+            f'(loop or exhaustion). {caption}</div></figcaption>'
             f'{scale}<div class="chart">{"".join(s)}</div><details><summary>Show the numbers as a table</summary>{tbl}</details></figure>')
 
 
@@ -359,6 +378,105 @@ def k4_signal(runs):
     return (f' No detectable completion cost either: on {esc(weights_label(b["cfg"]))}, {esc(engine_label(b["cfg"]))} left {eb} of {n} answers empty '
             f'against {ea} for {esc(engine_label(a["cfg"]))} with the same prompts (Fisher p = {pv:.2f}). Resampling questions, the difference is '
             f'{lo:+d} to {hi:+d} answers, so a small cost is not excluded.')
+
+
+LOOP_CFG = {"as": "glm53-flash/k3.25-v0.9.0-dflash3", "fix": "glm53-flash/k3.25-v0.9.0-tailfix-dflash3",
+            "ctrl": "glm53-flash/k3.25-v0.9.0-ep2dcp2-dflash3"}
+INV = REPO + "/tree/main/investigations/2026-10-glm53-looping"
+
+
+def looping(runs):
+    """The looping / empty-answer investigation across tpurtell runtimes (investigations/2026-10-glm53-looping)."""
+    by = lambda proto, cfg: sorted((m for m in runs.values() if m["protocol"] == proto and m["config"] == cfg), key=lambda m: m["id"])
+    order = [LOOP_CFG["as"], LOOP_CFG["fix"], LOOP_CFG["ctrl"]]
+    screens = {c: by("hard-prompt-screen/v1", c) for c in order}
+    data, tr, pooled = [], [], {}
+    for c in order:
+        ms = screens[c]; rows = [r for m in ms for r in m["rows"]]; cfg = ms[0]["cfg"]
+        k = sum(r["cls"] in ("loop", "exhaust") for r in rows); n = len(rows); lo, hi = wilson(k, n); pooled[c] = (k, n)
+        data.append(dict(label=label(cfg), color=color(cfg), est=100 * k / n, lo=100 * lo, hi=100 * hi,
+                         tip=f"{k} of {n} failed ({100 * k / n:.0f}%)||{label(cfg)}; 95% Wilson {100 * lo:.1f}-{100 * hi:.1f}%"))
+        tr.append([esc(label(cfg)), f"{k}/{n}", f"{100 * lo:.1f}-{100 * hi:.1f}%", sum(r["cls"] == "loop" for r in rows),
+                   sum(r["cls"] == "exhaust" for r in rows), " ".join(link(m["id"], m["id"][-7:]) for m in ms)])
+    fp = lambda a, b: fisher(pooled[a][0], pooled[a][1] - pooled[a][0], pooled[b][0], pooled[b][1] - pooled[b][0])
+    fig1 = figure("Failures (loop or exhaustion) per configuration, 2 screens x 40", "Dot = share of 80 requests that did not finish; line = 95% Wilson "
+                  f"interval (assumes independent requests; outcomes cluster by question, so it is too narrow). Fisher exact: as released vs control "
+                  f"p = {fp(order[0], order[2]):.3f} (preregistered verdict INCONCLUSIVE); with vs without the fix p = {fp(order[0], order[1]):.2f} "
+                  f"(NO DETECTABLE LOOP EFFECT); fix vs control p = {fp(order[1], order[2]):.2f}.",
+                  interval_plot(data, 0, 100, [0, 20, 40, 60, 80, 100], lambda v: f"{v:.0f}", "%"),
+                  table(["Configuration", "Failures", "95% Wilson", "Loops", "Exhaustions", "Receipts"], tr, numeric=(1, 3, 4)),
+                  legend([screens[c][0]["cfg"] for c in order]))
+    hrows = [r for r in screen_rows(runs, "hard-prompt-screen/v1") if r["cfg"]["id"] in order]
+    hm = heatmap(runs, sorted(hrows, key=lambda r: (order.index(r["cfg"]["id"]), r["label"])),
+                 "Two screens per configuration, each on a freshly started server. Question 13 (post hoc, not preregistered) failed only as released.")
+    # decode vs prefill
+    dp = {c: by("decode-prefill-consistency/v1", c)[0] for c in ("glm53-flash/k3.25-v0.9.0-nospec-nocache", "glm53-flash/k3.25-v0.9.0-tailfix-nospec-nocache")}
+    kd, ktr = [], []
+    for reg, name in (("lt2044", "i < 2,044"), ("ge2048", "i ≥ 2,048")):
+        for c, m in dp.items():
+            per = []
+            for d in sorted({r["doc_id"] for r in m["rows"]}):
+                v = [r["kl_top20"] for r in m["rows"] if r["doc_id"] == d and r["region"] == reg and r["kl_top20"] is not None]
+                per.append(sum(v) / len(v))
+            s_ = m["summary"]["by_region"][reg]; lab = f"{name} · {engine_label(m['cfg'])}"
+            kd.append(dict(label=lab, color=color(m["cfg"]), est=s_["mean_kl_top20"], lo=min(per), hi=max(per),
+                           tip=f"KL {s_['mean_kl_top20']:.4f}||{lab}; {s_['positions']} positions; per-prompt range {min(per):.4f}-{max(per):.4f}"))
+            ktr.append([esc(lab), s_["positions"], f"{s_['mean_kl_top20']:.4f}", f"{100 * s_['top1_agree']:.1f}%", f"{s_['mean_abs_dlp']:.4f}", link(m["id"])])
+    fig2 = figure("Decode vs prefill re-scoring of the same tokens", "3.25bpw, speculation and prefix caching off, 6 GPQA prompts x 2,600 decoded "
+                  "tokens. Dot = mean KL over the shared top-20 tokens (lower = decode agrees with prefill); line = range of the six prompts' means. "
+                  "The difference persists past 2,048 tokens, where the fix changes no selection, because keys and values written earlier stay in the cache.",
+                  interval_plot(kd, 0, 0.12, [0, 0.03, 0.06, 0.09, 0.12], lambda v: f"{v:g}", ""),
+                  table(["Positions · engine", "Positions", "Mean KL", "Top-1 agreement", "Mean abs Δlogprob", "Receipts"], ktr, numeric=(1, 2, 3, 4)),
+                  legend([m["cfg"] for m in dp.values()]))
+    # index check
+    ix = {c: by("kpool-tail-index/v1", c)[0] for c in (LOOP_CFG["as"], LOOP_CFG["fix"])}
+    ia, ib = (sorted((r for r in ix[c]["rows"] if r["layout"] == "packed"), key=lambda r: r["length"]) for c in ix)
+    itr = [[r["length"], ", ".join(map(str, r["tail"])) or "-", '<span class="bad">dropped</span>' if not r["tail_attended"] else "attended",
+            '<span class="ok">attended</span>' if q["tail_attended"] else '<span class="bad">dropped</span>', "yes" if r["row_sha256_16"] == q["row_sha256_16"] else "no"]
+           for r, q in zip(ia, ib) if r["length"] <= 2052]
+    # tool eval
+    te = {c: by("tool-eval-bench/v1", c)[0] for c in (LOOP_CFG["as"], LOOP_CFG["fix"])}
+    stt = {c: {(r["rep"], r["scenario_id"]): r["status"] for r in m["rows"]} for c, m in te.items()}
+    ids = sorted({sid for _, sid in stt[LOOP_CFG["as"]]})
+    diff = [sid for sid in ids if len({stt[c][(rp, sid)] for c in te for rp in (1, 2)}) > 1]
+    ttr = [[esc(sid)] + [stt[c][(rp, sid)] for c in te for rp in (1, 2)] for sid in diff]
+    pts = [[esc(label(m["cfg"]))] + [f'{m["summary"]["reps"][str(rp)]["points"]}/{m["summary"]["reps"][str(rp)]["max_points"]}' for rp in (1, 2)] + [link(m["id"])]
+           for m in te.values()]
+    # speed / capacity from run notes and rows
+    sp = []
+    for c in order:
+        for m in screens[c]:
+            v = [r["completion_tokens"] / r["secs"] for r in m["rows"] if r["finish_reason"] == "stop" and r.get("completion_tokens")]
+            note = m["notes"]
+            kv = re.search(r"KV pool ([\d,]+) tokens", note).group(1); thr = re.search(r"throughput (\d+) tok/s", note).group(1)
+            mal = re.search(r"mean acceptance length ([\d.]+)", note).group(1)
+            sp.append([esc(label(m["cfg"])), m["date"], f"{st.median(v):.1f}", thr, mal, kv, link(m["id"])])
+    eh = lambda c: esc(engine_label(te[c]["cfg"]))
+    return ('<h1>Looping, exhaustion and empty answers across tpurtell runtimes</h1>'
+            '<p class="lede">On the same weights, tpurtell 0.8.0 and 0.9.0 leave more long reasoning unfinished than 0.7.0. This page shows the '
+            'preregistered layout bisection on 0.9.0, and a decode bug found on the way and its fix '
+            '(<a href="https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/6">tpurtell PR #6</a>). Write-up, glossary, open questions and '
+            f'commands to recompute every number: <a href="{INV}">investigations/2026-10-glm53-looping</a>.</p>'
+            '<div class="note"><b>Terms.</b> <i>DCP1 + MLA layer ownership</i> (0.8.0/0.9.0 default): each MLA layer runs on one GPU with its whole '
+            'KV cache; <i>DCP2</i> (0.7.0) splits each layer\'s KV cache across both GPUs. <i>TP2 / EP2 experts</i>: routed experts split across '
+            'both GPUs, or placed whole on one. <i>kpool tail</i>: the newest, incomplete 4-token pool of the sparse-attention selection. '
+            '<b>0.7.0 layout (DCP2, EP2)</b> is a diagnostic control used to separate the tail bug from the rest of the layout change, not a '
+            'recommendation: with the same weights and memory setting the default layout held 4,707,515 KV tokens and the control 3,140,895-3,165,056.</div>'
+            + fig1 + hm + fig2
+            + '<h2>Which tokens a decode step attends (index check, the image\'s own kernels on GPU)</h2>'
+              '<p>Selections as the indexer emits them (valid pools first). Without the fix, the tail (current token and up to two before it) is '
+              'masked out at every causal length up to 2,043 that is not a multiple of 4. With the fix, every selected token is attended; rows the '
+              'stock code already handled are byte-identical.</p>'
+            + table(["Causal length", "Tail tokens", eh(LOOP_CFG["as"]), eh(LOOP_CFG["fix"]), "Same row bytes"], itr, numeric=(0,))
+            + '<h2>Tool calling (tool-eval-bench, 88 scenarios, temperature 0, two repeats)</h2>'
+            + table(["Configuration", "Repeat 1", "Repeat 2", "Receipts"], pts)
+            + '<p>Scenarios whose status differs anywhere. TC-80 and TC-88 fail in both repeats without the fix and pass in both with it; the '
+              'others also vary between repeats of the same build.</p>'
+            + table(["Scenario"] + [f"{eh(c)}, repeat {rp}" for c in te for rp in (1, 2)], ttr)
+            + '<h2>Speed and KV capacity during the screens</h2><p>Per-request rate from the rows; server throughput (10-second intervals with at '
+              'least 8 running requests), mean acceptance length and KV cache size from the server logs, as recorded in each run\'s notes.</p>'
+            + table(["Configuration", "Date", "Median tok/s, finished requests", "Server tok/s", "Mean acceptance length", "KV cache tokens", "Receipts"],
+                    sp, numeric=(2, 3, 4, 5)))
 
 
 def build():
@@ -430,6 +548,10 @@ def build():
            f'<li><b>Empty answers explain only part of the gap to published scores</b> (NVIDIA 92.1, Red Hat 90.6): scoring only answered questions '
            f'would add {min(gain):.1f}-{max(gain):.1f} points ({min(answered):.1f}-{max(answered):.1f}%), still below both. The rest mixes quantization, '
            f'harness and other runtime effects, which these runs cannot separate.</li>'
+           '<li><b>Under tpurtell 0.8.0/0.9.0\'s default DCP1 layout, a masking path in the vendored attention code drops the newest 1-3 '
+           'tokens from decode attention</b> until the context reaches 2,044 tokens. The DCP1 tail fix (tpurtell PR #6) brings decode much closer to '
+           'prefill and turned two failing tool-calling scenarios into passes; a preregistered screen found no detectable effect on looping. See the '
+           '<a href="looping.html">looping investigation</a>.</li>'
            '</ol><p>Full write-up: <a href="' + REPO + '/blob/main/FINDINGS.md">FINDINGS.md</a>.</p>')
     (OUT / "index.html").write_text(page("index.html", "Overview", idx, key_open))
 
@@ -503,8 +625,9 @@ def build():
              for bt, k in (("sampled_c1", "median_decode_tok_s"), ("sampled_c8", "median_decode_tok_s"), ("sampled_c8", "aggregate_tok_s"))]
     acc_move = max(abs(pc["glm53-flash/k3.25-v0.8.0-kpoolfix-dflash3"][bt]["acceptance_rate"] - pc["glm53-flash/k3.25-v0.8.0-dflash3"][bt]["acceptance_rate"])
                    for bt in ("sampled_c1", "sampled_c8"))
-    sv = ('<h1>Speed and speculative acceptance</h1><p class="lede">tpurtell 0.8.0 with and without the kpool fixes, 3.25bpw weights, 16 fixed GPQA '
-          'prompts, 4,096 tokens, temperature 1.0, one run per configuration. The kpool fixes show no consistent change: with the same speculation '
+    sv = ('<h1>Speed and speculative acceptance</h1><p class="lede">3.25bpw weights, 16 fixed GPQA prompts, 4,096 tokens, temperature 1.0, one run '
+          'per configuration: tpurtell 0.8.0 with and without the kpool fixes (2026-10-04), and tpurtell 0.9.0 with and without the DCP1 tail fix '
+          '(2026-10-08; see the <a href="looping.html">looping investigation</a>). The kpool fixes show no consistent change: with the same speculation '
           f'setting, decode speed and throughput move by {min(moves):+.0f}% to {max(moves):+.0f}% and acceptance by at most {acc_move:.3f} (see the '
           f'<a href="{REPO}/tree/main/comparisons/glm53-flash-serving-probe">comparison</a>).</p>'
           + bars("median_decode_tok_s", "sampled_c1", " tok/s", "Decode speed, one request at a time", "Median per-request decode tokens per second.", 180)
@@ -538,6 +661,9 @@ def build():
           '(<a href="https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/5">tpurtell PR #5</a>, shipped in tpurtell 0.9.0) fix all of them.</p>'
           + table(hdr, ktr))
     (OUT / "kernels.html").write_text(page("kernels.html", "Kernel tests", kp, key_closed))
+
+    # ---- looping investigation
+    (OUT / "looping.html").write_text(page("looping.html", "Looping investigation", looping(runs), key_closed))
 
     # ---- method
     mt = ('<h1>How to read this</h1>'
