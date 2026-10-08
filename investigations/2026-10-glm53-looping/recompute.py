@@ -15,7 +15,7 @@ from analyze import fisher, sign_test  # noqa: E402
 
 F = "glm53-flash/"
 AS, FIX, CTRL = F + "k3.25-v0.9.0-dflash3", F + "k3.25-v0.9.0-tailfix-dflash3", F + "k3.25-v0.9.0-ep2dcp2-dflash3"
-NAMES = {AS: "0.9.0 as released", FIX: "0.9.0 + DCP1 tail fix", CTRL: "0.9.0, 0.7.0 layout (control)"}
+NAMES = {AS: "0.9.0 as released", FIX: "0.9.0 + DCP1 tail fix ≈ 0.9.1", CTRL: "0.9.0, 0.7.0 layout (control)"}
 
 
 def load(protocol, config):

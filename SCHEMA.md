@@ -33,7 +33,7 @@ Tables, charts and text name a configuration `<weights> · <engine>[ · <layout>
   NOPE record format and the DCP top-k owner exchange where the configuration sets them.
 - Every configuration label names exactly one configuration.
 - `engine.built_on` says what the engine is built on (shown in the label key). `engine.series` groups builds that share
-  one code base; charts give each series one colour. tpurtell 0.8.0, 0.8.0 + kpool fixes and 0.9.0 are one series;
+  one code base; charts give each series one colour. tpurtell 0.8.0, 0.8.0 + kpool fixes, 0.9.0, 0.9.0 + DCP1 tail fix and 0.9.1 are one series;
   tpurtell 0.7.0 (with or without the fixes) is another.
 
 `tools/verify.py` fails if any of these fields is missing or if a label is ambiguous. Results from another engine need

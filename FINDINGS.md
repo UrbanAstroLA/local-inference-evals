@@ -14,7 +14,8 @@ Configurations are named **weights · engine version · speculation**, built fro
 | **tpurtell 0.8.0** | Release v0.8.0 as published (no kpool fixes) |
 | **tpurtell 0.8.0 + kpool fixes ≈ 0.9.0** | v0.8.0 with the kpool fixes applied locally. **The same engine as tpurtell 0.9.0 for every measurement here:** its kpool kernel files are byte-for-byte identical to the 0.9.0 release, and 0.9.0's other two changes (an opt-in boundary prefix-cache lookup, off by default, and usage reporting) do not affect these measurements. Measured before 0.9.0 was released |
 | **tpurtell 0.9.0** | Release v0.9.0 as published, at its defaults (includes the kpool fixes) |
-| **tpurtell 0.9.0 + DCP1 tail fix** | v0.9.0 with the fix proposed in [tpurtell/glm-5.3-flash-ext3-2x-rtx#6](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/6) applied locally. Not a release |
+| **tpurtell 0.9.0 + DCP1 tail fix ≈ 0.9.1** | v0.9.0 with the fix of [tpurtell/glm-5.3-flash-ext3-2x-rtx#6](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/6) applied locally, measured before the fix was merged. **The same engine as tpurtell 0.9.1 for every measurement here:** 0.9.1 (released 2026-10-08 from that merge) ships the fixed attention file byte-for-byte as built from the pull request, which differs from the build measured here only in identifier names; its other kpool and indexer files are those of 0.9.0 |
+| **tpurtell 0.9.1** | Release v0.9.1 as published: v0.9.0 plus the DCP1 tail fix |
 | 0.7.0 layout (DCP2, EP2) | Shown only when a configuration runs a parallel layout other than its release's default: here v0.7.0's layout on the 0.9.0 image, a diagnostic control ([investigation](investigations/2026-10-glm53-looping)) |
 | kpool fixes | Upstream vLLM fixes vllm-project/vllm#57477 and #58454, ported in [tpurtell/glm-5.3-flash-ext3-2x-rtx#5](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/5) (commit 5a366b5) and shipped in v0.9.0 |
 | 3.25bpw | [wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1](https://huggingface.co/wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1) (EXL3, mixed K3/K4 routed experts) |
@@ -67,7 +68,7 @@ Rows with the same date ran in one session. Protocol v0 has no early loop stop; 
 | 4bpw TR3 (Brandon) | tpurtell 0.8.0 + kpool fixes ≈ 0.9.0 | DFlash2 ×3 | v1, 2026-10-05 | 15 |
 | 4bpw TR3 (Brandon) | tpurtell 0.7.0 + kpool fixes | DFlash2 ×5 | v1, 2026-10-05 | not runnable: 437,563-token KV pool; engine crashed when it filled |
 | 3.25bpw | tpurtell 0.9.0 | DFlash2 ×3 | v1, 2026-10-07 (two screens) | 20, 21 |
-| 3.25bpw | tpurtell 0.9.0 + DCP1 tail fix | DFlash2 ×3 | v1, 2026-10-07 and 10-08 | 18, 15 |
+| 3.25bpw | tpurtell 0.9.0 + DCP1 tail fix ≈ 0.9.1 | DFlash2 ×3 | v1, 2026-10-07 and 10-08 | 18, 15 |
 | 3.25bpw | tpurtell 0.9.0 · 0.7.0 layout (DCP2, EP2) | DFlash2 ×3 | v1, 2026-10-07 and 10-08 | 15, 14 |
 
 The last three rows are the preregistered layout bisection: two screens per configuration, interleaved, each on a fresh
@@ -107,11 +108,11 @@ server ([`investigations/2026-10-glm53-looping`](investigations/2026-10-glm53-lo
    median of 318 characters (`comparisons/glm53-flash-serving-probe`), so greedy parity cannot certify speculative
    exactness on this stack.
 8. **Under the default DCP1 layout of tpurtell 0.8.0 and 0.9.0, a masking path in the vendored attention code drops recent
-   tokens during decode. The DCP1 tail fix removes it, and loop failures fell in the direction of the v0.7.0 layout
+   tokens during decode. The DCP1 tail fix, released in tpurtell 0.9.1, removes it, and loop failures fell in the direction of the v0.7.0 layout
    (not yet statistically significant at this sample size).**
    - The path existed before the layout change, which activated it. With DCP1, decode steps at causal lengths up to 2,043 that are not a multiple of 4 skip the newest 1-3
      tokens in every MLA layer (index check on the image's own kernels).
-   - The fix, proposed in tpurtell/glm-5.3-flash-ext3-2x-rtx#6:
+   - The fix, tpurtell/glm-5.3-flash-ext3-2x-rtx#6 (measured as a local build before it was merged):
      - Decode-vs-prefill KL falls from 0.066 to 0.010 below 2,044 tokens and from 0.031 to 0.019 after (6 of 6 and 5 of
        6 prompts lower).
      - TC-80 and TC-88 of tool-eval-bench pass in both repeats instead of failing (157 and 157 of 176 → 159 and 163).

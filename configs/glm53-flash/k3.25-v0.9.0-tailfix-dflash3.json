@@ -20,8 +20,11 @@
     "ports": []
    }
   ],
-  "equivalent_to": null,
-  "series": "tpurtell 0.8.0-0.9.0"
+  "equivalent_to": {
+   "version": "v0.9.1",
+   "basis": "v0.9.1 (released 2026-10-08 from the merge of PR #6) ships b12x_mla_sparse.py byte-identical to the PR build (f51ace6), which differs from the overlay measured here only in identifier names; its other kpool and indexer files are those of v0.9.0"
+  },
+  "series": "tpurtell 0.8.0-0.9.1"
  },
  "serving": {
   "speculative": {
@@ -49,5 +52,5 @@
   "gpus": "2x NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition",
   "driver": "595.84"
  },
- "notes": "tpurtell 0.9.0 + DCP1 tail fix: the v0.9.0 image with the fix of tpurtell/glm-5.3-flash-ext3-2x-rtx#6 applied locally as an overlay; the image built from the PR branch (f51ace6) produces the same b12x_mla_sparse.py apart from the kernel's name. Default layout otherwise."
+ "notes": "tpurtell 0.9.0 + DCP1 tail fix: the v0.9.0 image with the fix of tpurtell/glm-5.3-flash-ext3-2x-rtx#6 applied locally as an overlay, measured before the fix was merged; the fix shipped in v0.9.1, whose b12x_mla_sparse.py matches the overlay apart from identifier names. Default layout otherwise."
 }

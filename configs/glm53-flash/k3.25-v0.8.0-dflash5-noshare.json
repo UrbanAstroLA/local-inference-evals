@@ -14,7 +14,7 @@
   "image": "ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:e4d37a01da91ec590df78af13efa9d256fc306a5a88df09908ea12ebefa32423",
   "patches": [],
   "equivalent_to": null,
-  "series": "tpurtell 0.8.0-0.9.0"
+  "series": "tpurtell 0.8.0-0.9.1"
  },
  "serving": {
   "speculative": {

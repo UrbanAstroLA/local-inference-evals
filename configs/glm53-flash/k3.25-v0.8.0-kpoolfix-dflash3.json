@@ -27,7 +27,7 @@
    "version": "v0.9.0",
    "basis": "kpool kernel files byte-identical to the v0.9.0 release; v0.9.0's other changes (an opt-in boundary prefix-cache lookup, off by default, and usage reporting) do not affect these measurements"
   },
-  "series": "tpurtell 0.8.0-0.9.0"
+  "series": "tpurtell 0.8.0-0.9.1"
  },
  "serving": {
   "speculative": {

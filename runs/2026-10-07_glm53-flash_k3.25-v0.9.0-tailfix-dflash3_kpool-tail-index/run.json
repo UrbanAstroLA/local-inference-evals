@@ -5,7 +5,7 @@
  "date": "2026-10-07",
  "software": {
   "check": "tools/kernel/kpool_tail_index_check.py",
-  "image": "tpurtell 0.9.0 + DCP1 tail fix"
+  "image": "tpurtell 0.9.0 + DCP1 tail fix ≈ 0.9.1"
  },
  "notes": "Index pipeline only, the image's own compiled Triton kernels on GPU; model and serving fields of the config do not apply."
 }

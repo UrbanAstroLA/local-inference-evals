@@ -28,7 +28,7 @@ tokens, 8 concurrent requests and `gpu_memory_utilization` 0.95.
 | Label | What it is |
 |---|---|
 | `3.25bpw · tpurtell 0.9.0 · DFlash2 ×3` | tpurtell 0.9.0 as released: DCP1 + MLA layer ownership, TP2 experts |
-| `3.25bpw · tpurtell 0.9.0 + DCP1 tail fix · DFlash2 ×3` | The same, with the fix proposed in [tpurtell/glm-5.3-flash-ext3-2x-rtx#6](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/6) |
+| `3.25bpw · tpurtell 0.9.0 + DCP1 tail fix ≈ 0.9.1 · DFlash2 ×3` | The same, with the fix of [tpurtell/glm-5.3-flash-ext3-2x-rtx#6](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/6) |
 | `3.25bpw · tpurtell 0.9.0 · 0.7.0 layout (DCP2, EP2) · DFlash2 ×3` | The 0.9.0 image run with v0.7.0's parallel layout. **A diagnostic control** to separate the tail bug from the rest of the 0.7.0 → 0.8.0 layout change, not a recommended configuration |
 
 ### Why 0.9.0 uses DCP1 + MLA layer ownership
@@ -95,7 +95,9 @@ Not affected:
 Upstream vLLM avoids the case with an exact causal fill for short decodes (vllm-project/vllm#53906).
 
 The fix in #6 compacts the valid entries before the existing mask, in the DCP1 branch only. Rows the stock code
-already handled are left untouched.
+already handled are left untouched. It was merged on 2026-10-08 and released in tpurtell 0.9.1; every measurement on
+this page was taken on a local build of the fix before the merge, which is why the configuration is labelled
+`tpurtell 0.9.0 + DCP1 tail fix ≈ 0.9.1`.
 
 **Index check** (runs `2026-10-07_glm53-flash_k3.25-v0.9.0-dflash3_kpool-tail-index` and the `-tailfix-` twin):
 

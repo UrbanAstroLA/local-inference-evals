@@ -1,6 +1,6 @@
 # tpurtell 0.9.0 with and without the DCP1 tail fix: decode vs prefill
 
-`3.25bpw · tpurtell 0.9.0 · no speculation` vs `3.25bpw · tpurtell 0.9.0 + DCP1 tail fix · no speculation`, both with
+`3.25bpw · tpurtell 0.9.0 · no speculation` vs `3.25bpw · tpurtell 0.9.0 + DCP1 tail fix ≈ 0.9.1 · no speculation`, both with
 prefix caching off. 6 GPQA prompts × 2,600 decoded tokens, each position compared with prefill re-scoring of the same
 token ids (`protocols/decode-prefill-consistency/v1.md`).
 

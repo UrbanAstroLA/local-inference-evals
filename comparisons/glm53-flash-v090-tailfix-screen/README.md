@@ -1,6 +1,6 @@
 # tpurtell 0.9.0 with and without the DCP1 tail fix (hard-question screen)
 
-`3.25bpw · tpurtell 0.9.0 · DFlash2 ×3` vs `3.25bpw · tpurtell 0.9.0 + DCP1 tail fix · DFlash2 ×3`
+`3.25bpw · tpurtell 0.9.0 · DFlash2 ×3` vs `3.25bpw · tpurtell 0.9.0 + DCP1 tail fix ≈ 0.9.1 · DFlash2 ×3`
 (tpurtell/glm-5.3-flash-ext3-2x-rtx#6). Same layout, weights and settings; only the fix differs.
 
 Failures (loop or exhaustion): 41/80 without the fix vs 33/80 (95% Wilson 31.1-52.2%) with it, lower in both screens

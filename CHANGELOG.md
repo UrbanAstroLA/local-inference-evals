@@ -13,6 +13,11 @@ Contents: 39 runs of GLM-5.3-Flash on 2x RTX PRO 6000:
 Also: 11 comparisons, two investigations with their preregistrations, `FINDINGS.md`, `DATASHEET.md`, `SCHEMA.md`, and the
 results site.
 
+- tpurtell 0.9.1 (2026-10-08): the DCP1 tail fix was merged (tpurtell/glm-5.3-flash-ext3-2x-rtx#6) and released in
+  tpurtell 0.9.1. The tail-fix configurations, measured on a local build before the merge, are now labelled
+  `tpurtell 0.9.0 + DCP1 tail fix ≈ 0.9.1` with the basis in `engine.equivalent_to`, as `0.8.0 + kpool fixes ≈ 0.9.0`
+  is. Engine series `tpurtell 0.8.0-0.9.0` renamed `tpurtell 0.8.0-0.9.1`. Glossaries, the investigation and the site
+  define 0.9.1. No data changed.
 - Looping investigation (2026-10-08): `investigations/2026-10-glm53-looping`, and a site page.
   - **Layout bisection** on tpurtell 0.9.0, preregistered with three amendments: six screens across three
     configurations.
