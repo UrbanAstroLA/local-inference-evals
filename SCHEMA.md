@@ -19,9 +19,6 @@ Tables, charts and text name a configuration `<weights> · <engine>[ · <layout>
   Labels give bit width, then format family and source when two checkpoints share a bit width:
   - `3.25bpw`: wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1.
   - `4bpw TR3 (Brandon)`: Brandon M. Music's TR3 checkpoint brandonmusic/GLM-5.3-Flash-tr3-4bpw.
-  - `4bpw TR3 (Mia recal.)`, reserved for Mia-AiLab/GLM-5.3-Flash-EXL3-4bpw-TensorFold when results with it are added.
-    Per its model card it is Mia's AI Lab's own calibration with the same format and bit width as
-    brandonmusic/GLM-5.3-Flash-tr3-4bpw. No configuration uses it yet.
 - **Engine** = `engine.name`, the version without its leading `v`, then ` + <name>` for each locally applied patch set
   in `engine.patches`, then ` ≈ <version>` when `engine.equivalent_to` records that the patched build matches a later
   release for everything measured here (`basis` says why). The engine name comes first because engines number their
