@@ -52,14 +52,16 @@ With the fix, the design works as intended.
 - **Serving probe** (`protocols/serving-probe/v1.md`) and **tool-eval-bench** (`protocols/tool-eval-bench/v1.md`):
   speed, draft acceptance and tool calling, with and without the fix.
 
-Decision rules came before the data:
-- **The kpool investigation:** [`../2026-10-glm53-kpool-tail`](../2026-10-glm53-kpool-tail).
-- **The layout bisection:** [`preregistration/`](preregistration), which holds the preregistration, three amendments
-  and the gate record.
-  - Amendment 1 had to change the control configuration before it could start.
-  - Amendment 2 defined a gate for testing the tail fix on the screen. The gate failed.
-  - **Amendment 3 was written after the validation had been seen.** It records the decision to run the tail-fix
-    screens anyway, under the rule already written in Amendment 2.
+The plan and the decision rules were written down, timestamped and hashed before any data was collected (a
+"preregistration"), so results could not quietly reshape the rules. Changes made while the experiment ran were recorded
+the same way, as dated amendments. All of it is in [`preregistration/`](preregistration):
+- **Before any control data:** the v0.7.0-layout control crashed at its first forward pass on 0.9.0 (a DCP2
+  communication bug), so one setting was changed to let it start (`VLLM_B12X_DCP_TOPK_OWNER_EXCHANGE=0`).
+- **Before the tail-fix checks:** a pass/fail test was written for whether to add the tail-fix configuration to the
+  screen. As written, it did not pass, because it looked for the wrong signature (see "Decode vs prefill" below).
+- **After seeing the tail-fix checks:** the tail-fix configuration was added anyway, with the decision rule already
+  written. This one is labelled as decided after seeing data.
+- The earlier kpool investigation followed the same practice: [`../2026-10-glm53-kpool-tail`](../2026-10-glm53-kpool-tail).
 
 ## What was noticed
 On the same 3.25bpw weights, tpurtell 0.7.0 left 6 of 594 GPQA answers empty and 0.8.0 left 20 (Fisher p = 0.009).
@@ -119,11 +121,15 @@ already handled are left untouched.
 
 Per question, each count is out of 16.
 
-- **As released vs the control:** 41 vs 29, Fisher exact p = 0.079. Preregistered verdict: **INCONCLUSIVE**.
-- **With vs without the fix:** 33 vs 41, p = 0.27. Verdict: **NO DETECTABLE LOOP EFFECT**.
+- **As released vs the control:** 41 vs 29 failures, 12 fewer with the v0.7.0 layout. Fisher exact p = 0.079: close
+  to, but short of, significance at this size (the preregistered rule's label: "inconclusive").
+- **With vs without the fix:** 33 vs 41, 8 fewer with the fix. p = 0.27: not yet significant at this size (the rule's
+  label for a difference below its 10-failure threshold: "no detectable loop effect").
 - **With the fix vs the control:** 33 vs 29, p = 0.63.
-- The joint reading in Amendment 2 was not triggered, because the first comparison is not a LAYOUT verdict.
-- Failure rates fall in the order 51%, 41%, 36%, but none of the differences is significant.
+- The verdicts are the preregistered rule's words. "Inconclusive" and "no detectable effect" mean the difference is not
+  yet distinguishable from chance with 80 requests per configuration; they are not evidence that there is no effect.
+- Failure rates fall in the order 51%, 41%, 36%, and **both screens with the fix had fewer failures than both screens
+  without it** (18 and 15 vs 20 and 21). None of the pairwise differences reaches p < 0.05 at this size.
 - **Post hoc, not preregistered:** question 13 failed 6 of 16 times as released, and 0 of 16 with the fix or with the
   control layout. In the earlier tpurtell 0.8.0 screens with DFlash2 ×3 it failed 5 and 3 of 8; it never failed on 0.7.0.
 
@@ -158,25 +164,33 @@ Per question, each count is out of 16.
   - Acceptance rate 0.534 vs 0.526 at 1 and 0.529 vs 0.550 at 8.
   - KV capacity is unchanged.
 
-## Tangible gains
-1. **Kpool fixes** (#5, merged and shipped in tpurtell 0.9.0). They correct cache corruption that upstream's own
-   regression tests detect (33/33 pass, from 29/33).
-2. **DCP1 tail fix** (#6):
-   - Decode attends every token the indexer selected.
-   - Decode-vs-prefill KL falls from 0.066 to 0.010 below 2,044 tokens and from 0.031 to 0.019 after.
-   - Two tool-calling scenarios go from failing to passing in both repeats.
-   - Server throughput, acceptance and KV capacity unchanged. The median rate of finished screen requests was lower
-     (46.5-46.7 vs 48.9-50.2 tok/s), but it also depends on which requests finish.
-3. **A smaller open gap.** The failure rate trends 51% (as released) > 41% (with the fix) > 36% (control layout). It
-   is not significant, but it is consistent with the fix closing part of the difference the layout control shows.
+## What the evidence shows, by strength
 
-## What is not claimed
-- That the tail fix reduces looping or empty answers. The preregistered verdict is "no detectable loop effect", and
-  there is no GPQA run with the fix yet.
-- That the parallel layout causes the 0.7.0 vs 0.8.0 completion gap. That verdict is inconclusive.
-- That v0.7.0's layout is preferable. It is a diagnostic control, and it holds about a third less KV cache.
+**Established** (measured directly, or statistically significant):
+1. **The tail bug exists, and the fix removes it.** With DCP1, decode skips the newest 1-3 tokens in every MLA layer
+   below 2,044 tokens of context; with the fix, decode attends every selected token. Rows the stock code already
+   handled are byte-identical (index check on the image's own kernels).
+2. **Decode agrees much better with prefill.** KL falls from 0.066 to 0.010 below 2,044 tokens (6 of 6 prompts lower,
+   sign test p = 0.031) and from 0.031 to 0.019 after, where tokens decoded under the bug stay in the cache.
+3. **No measured cost.** Server throughput, draft acceptance and KV capacity are unchanged. The median rate of
+   finished screen requests was lower (46.5-46.7 vs 48.9-50.2 tok/s), which also depends on which requests finish.
+4. **The kpool fixes** (#5, shipped in tpurtell 0.9.0) correct cache corruption that upstream's own regression tests
+   detect (33/33 pass, from 29/33).
+
+**Strongly indicated, not yet significant** (consistent direction; too few requests for p < 0.05):
+1. **Fewer loop and exhaustion failures with the fix:** 41 → 33 of 80, lower in both screens (18 and 15 vs 20 and 21),
+   p = 0.27. An effect this size needs about 390 requests per configuration to confirm at 80% power.
+2. **The fix closes about two thirds of the gap to the v0.7.0 layout** (41 → 33, against 29 for the control). The
+   layout gap itself is 41 vs 29, p = 0.079, and needs about 171 requests per configuration.
+3. **Question 13** (observed after the fact): 6 of 16 failures as released, 0 of 16 with the fix or the control layout.
+4. **Tool calling:** TC-80 and TC-88 pass in both repeats with the fix and fail in both without it (157 and 157 of 176
+   → 159 and 163). Ten other scenarios vary between repeats of the same build, so totals alone are noisy.
+
+**Not established:**
+- That the fix accounts for all of the v0.7.0 vs v0.8.0 completion gap, or what the rest of the layout change adds.
+- Any effect on GPQA accuracy: there is no GPQA run with the fix yet.
 - That any of this closes the gap to published GPQA scores.
-- That the question-13 pattern is more than a post-hoc observation.
+- That the v0.7.0 layout is preferable: it is a diagnostic control, and it holds about a third less KV cache.
 
 ## Open questions, and the experiment that would answer each
 1. **Does the layout itself matter (as released vs control, 41 vs 29 of 80)?** At the observed rates, 80% power at

@@ -7,6 +7,7 @@
 
 Preregistered (`investigations/2026-10-glm53-looping`); two screens per configuration, interleaved, each on a fresh
 server. Failures (loop or exhaustion): 41/80 (95% Wilson 40.5-61.9%) with the default layout vs 29/80 (26.6-47.2%)
-with the control layout. Fisher exact p = 0.079. Preregistered verdict: **INCONCLUSIVE**; the rule asks for more
-repeats rather than reinterpretation. Recompute with
+with the control layout: 12 fewer with the control. Fisher exact p = 0.079, close to but short of significance at
+80 requests per configuration (about 171 would be needed); the preregistered rule labels this "inconclusive" and asks
+for more repeats rather than reinterpretation. Recompute with
 `tools/analyze.py screen-pool k3.25-v0.9.0-dflash3 k3.25-v0.9.0-ep2dcp2-dflash3`.

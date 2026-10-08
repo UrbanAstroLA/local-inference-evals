@@ -401,8 +401,9 @@ def looping(runs):
     fp = lambda a, b: fisher(pooled[a][0], pooled[a][1] - pooled[a][0], pooled[b][0], pooled[b][1] - pooled[b][0])
     fig1 = figure("Failures (loop or exhaustion) per configuration, 2 screens x 40", "Dot = share of 80 requests that did not finish; line = 95% Wilson "
                   f"interval (assumes independent requests; outcomes cluster by question, so it is too narrow). Fisher exact: as released vs control "
-                  f"p = {fp(order[0], order[2]):.3f} (preregistered verdict INCONCLUSIVE); with vs without the fix p = {fp(order[0], order[1]):.2f} "
-                  f"(NO DETECTABLE LOOP EFFECT); fix vs control p = {fp(order[1], order[2]):.2f}.",
+                  f"p = {fp(order[0], order[2]):.3f}; with vs without the fix p = {fp(order[0], order[1]):.2f}; fix vs control p = {fp(order[1], order[2]):.2f}. "
+                  f"Both screens with the fix failed less than both without it; none of the differences is significant yet at 80 requests "
+                  f"per configuration (the preregistered rule's labels: inconclusive / no detectable loop effect; see the write-up).",
                   interval_plot(data, 0, 100, [0, 20, 40, 60, 80, 100], lambda v: f"{v:.0f}", "%"),
                   table(["Configuration", "Failures", "95% Wilson", "Loops", "Exhaustions", "Receipts"], tr, numeric=(1, 3, 4)),
                   legend([screens[c][0]["cfg"] for c in order]))
@@ -550,7 +551,8 @@ def build():
            f'harness and other runtime effects, which these runs cannot separate.</li>'
            '<li><b>Under tpurtell 0.8.0/0.9.0\'s default DCP1 layout, a masking path in the vendored attention code drops the newest 1-3 '
            'tokens from decode attention</b> until the context reaches 2,044 tokens. The DCP1 tail fix (tpurtell PR #6) brings decode much closer to '
-           'prefill and turned two failing tool-calling scenarios into passes; a preregistered screen found no detectable effect on looping. See the '
+           'prefill and turned two failing tool-calling scenarios into passes. On a preregistered screen, loop failures fell from 41 to 33 of 80, '
+           'toward the v0.7.0 layout\'s 29: a consistent direction, not yet statistically significant at this sample size. See the '
            '<a href="looping.html">looping investigation</a>.</li>'
            '</ol><p>Full write-up: <a href="' + REPO + '/blob/main/FINDINGS.md">FINDINGS.md</a>.</p>')
     (OUT / "index.html").write_text(page("index.html", "Overview", idx, key_open))

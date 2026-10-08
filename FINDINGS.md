@@ -82,7 +82,8 @@ server ([`investigations/2026-10-glm53-looping`](investigations/2026-10-glm53-lo
    0.8.0 leaves 4 to 25 more), and failed about half as often on the hard-question screen (12 vs 24 of 40 in the same
    session; 13 vs 22 under protocol v1 a day apart). Draft depth alone does not explain it: 0.8.0 with 0.7.0's DFlash2 ×5
    and slot sharing off still left 17 (p = 0.033 against 6). A preregistered bisection on 0.9.0 with v0.7.0's parallel
-   layout as a diagnostic control was inconclusive (41 vs 29 failures of 80, Fisher p = 0.079; see inference 8).
+   layout as a diagnostic control points the same way: 41 vs 29 failures of 80, close to but short of significance
+   at this size (Fisher p = 0.079; see inference 8).
 3. **The kpool bugs are real but are not the main cause of the loops.** The fixes correct real cache corruption (every
    prefill wrote 2 KB of keys into another block's indexer region; rejected drafts could overwrite committed keys) and
    make upstream's regression tests pass (33/33, from 29/33). Accuracy: no measurable cost. Completion: no detectable
@@ -106,7 +107,8 @@ server ([`investigations/2026-10-glm53-looping`](investigations/2026-10-glm53-lo
    median of 318 characters (`comparisons/glm53-flash-serving-probe`), so greedy parity cannot certify speculative
    exactness on this stack.
 8. **Under the default DCP1 layout of tpurtell 0.8.0 and 0.9.0, a masking path in the vendored attention code drops recent
-   tokens during decode. The DCP1 tail fix removes it; its effect on looping is not detectable at this sample size.**
+   tokens during decode. The DCP1 tail fix removes it, and loop failures fell in the direction of the v0.7.0 layout
+   (not yet statistically significant at this sample size).**
    - The path existed before the layout change, which activated it. With DCP1, decode steps at causal lengths up to 2,043 that are not a multiple of 4 skip the newest 1-3
      tokens in every MLA layer (index check on the image's own kernels).
    - The fix, proposed in tpurtell/glm-5.3-flash-ext3-2x-rtx#6:
@@ -116,9 +118,11 @@ server ([`investigations/2026-10-glm53-looping`](investigations/2026-10-glm53-lo
      - Server throughput, acceptance and KV capacity unchanged: 484 and 490 tok/s vs 486 and 497 tok/s during the
        screens. The median rate of finished screen requests was lower, 46.5-46.7 vs 48.9-50.2 tok/s, but it also
        depends on which requests finish.
-   - Hard-question screen: 41 → 33 failures of 80 (p = 0.27, "no detectable loop effect" under the preregistered rule).
-   - Failure rates fall in the order as released 51% > with the fix 41% > v0.7.0-layout control 36%. None of these
-     differences is significant.
+   - Hard-question screen: 41 → 33 failures of 80, lower in both screens with the fix (18 and 15 vs 20 and 21).
+     p = 0.27: not yet significant at 80 requests per configuration (about 390 would be needed to confirm an effect
+     this size); the preregistered rule's label is "no detectable loop effect".
+   - Failure rates fall in the order as released 51% > with the fix 41% > v0.7.0-layout control 36%: the fix closes
+     about two thirds of the gap to the control. None of the pairwise differences reaches p < 0.05 yet.
    - Receipts, open questions and commands:
      [`investigations/2026-10-glm53-looping`](investigations/2026-10-glm53-looping).
 

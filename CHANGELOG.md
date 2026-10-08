@@ -16,9 +16,10 @@ results site.
 - Looping investigation (2026-10-08): `investigations/2026-10-glm53-looping`, and a site page.
   - **Layout bisection** on tpurtell 0.9.0, preregistered with three amendments: six screens across three
     configurations.
-    - 0.9.0 as released vs v0.7.0's layout as a diagnostic control: 41 vs 29 failures of 80, p = 0.079, inconclusive.
-    - With vs without the DCP1 tail fix (tpurtell/glm-5.3-flash-ext3-2x-rtx#6): 33 vs 41, p = 0.27, no detectable
-      loop effect.
+    - 0.9.0 as released vs v0.7.0's layout as a diagnostic control: 41 vs 29 failures of 80, p = 0.079 (not yet
+      significant at this size).
+    - With vs without the DCP1 tail fix (tpurtell/glm-5.3-flash-ext3-2x-rtx#6): 33 vs 41, p = 0.27, lower in both screens
+      with the fix, not yet significant at this size.
   - **Tail-fix checks:** index check, decode-vs-prefill consistency (KL 0.066 → 0.010 below 2,044 tokens), serving
     probe, and tool-eval-bench (157/157 → 159/163 of 176).
   - New protocols `decode-prefill-consistency/v1`, `kpool-tail-index/v1` and `tool-eval-bench/v1`, with their clients.
