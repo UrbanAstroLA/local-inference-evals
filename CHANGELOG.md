@@ -13,6 +13,10 @@ Contents: 39 runs of GLM-5.3-Flash on 2x RTX PRO 6000:
 Also: 11 comparisons, two investigations with their preregistrations, `FINDINGS.md`, `DATASHEET.md`, `SCHEMA.md`, and the
 results site.
 
+- Scoring note (2026-10-08): `flexible-extract` matches any parenthesised capital letter, so notation in a reply can
+  be read as the answer. A deterministic misread that only lowers scores, about 0.7 points per pass. Stated in the GPQA
+  protocol, DATASHEET, SCHEMA and site; no scores changed. FINDINGS 6 now credits unanswered questions at their own
+  observed accuracy (0.8-2.8 points instead of 0.9-3.4).
 - tpurtell 0.9.1 (2026-10-08): the DCP1 tail fix was merged (tpurtell/glm-5.3-flash-ext3-2x-rtx#6) and released in
   tpurtell 0.9.1. The tail-fix configurations, measured on a local build before the merge, are now labelled
   `tpurtell 0.9.0 + DCP1 tail fix ≈ 0.9.1` with the basis in `engine.equivalent_to`, as `0.8.0 + kpool fixes ≈ 0.9.0`

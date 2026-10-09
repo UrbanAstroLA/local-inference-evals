@@ -24,7 +24,9 @@ checkpoint brandonmusic/GLM-5.3-Flash-tr3-4bpw (`4bpw TR3 (Brandon)`). Two NVIDI
 Known collection issues are recorded in each run's `notes` (for example a run kept as INVALID after an engine crash).
 
 **Preprocessing.** Exported by a local script that copies numeric fields, computes hashes and drops all text and
-local paths. Scores are lm-eval's raw `flexible-extract` and `strict-match` filters, not rescored.
+local paths. Scores are lm-eval's raw `flexible-extract` and `strict-match` filters, not rescored. `flexible-extract` scores some
+correct answers as wrong on particular questions (about 0.7 points per pass on average); see the known limitation in
+`protocols/gpqa-diamond/v1.md`.
 
 **Uses.** Comparing configurations, including different engines, under the same protocol and hardware (enforced by `tools/verify.py`), reproducing
 the findings, or as a baseline for other hardware. **Not suitable** for: ranking models in general, comparing with
