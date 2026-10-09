@@ -35,11 +35,12 @@ def engine_label(cfg, with_name=True):
 
 
 def spec_label(cfg):
-    """'<serving.speculative.label> ×<tokens>[, sharing off]', e.g. 'DFlash2 ×3', or 'no speculation'."""
+    """'<serving.speculative.label> ×<tokens>[, sharing off]' or 'no speculation', then ', prefix cache off' when prefix caching
+    is disabled; e.g. 'DFlash2 ×3', 'no speculation, prefix cache off'."""
     sp = cfg["serving"]["speculative"]
-    if not sp["tokens"]:
-        return "no speculation"
-    return f"{sp['label']} \u00d7{sp['tokens']}" + (", sharing off" if cfg["serving"].get("draft_slot_sharing") is False else "")
+    lab = "no speculation" if not sp["tokens"] else f"{sp['label']} \u00d7{sp['tokens']}"
+    lab += ", sharing off" if sp["tokens"] and cfg["serving"].get("draft_slot_sharing") is False else ""
+    return lab + (", prefix cache off" if cfg["serving"].get("prefix_caching") is False else "")
 
 
 def layout_label(cfg):
@@ -90,8 +91,8 @@ def load(p):
     return json.loads(Path(p).read_text())
 
 
-def rows(run_dir):
-    return [json.loads(l) for l in (run_dir / "results.jsonl").read_text().splitlines() if l.strip()]
+def rows(run_dir, name="results.jsonl"):
+    return [json.loads(l) for l in (run_dir / name).read_text().splitlines() if l.strip()]
 
 
 def wilson(k, n, z=1.96):
@@ -125,6 +126,10 @@ def summarize(protocol, rs):
         answered = [r for r in rs if not r["empty"]]
         out["accuracy_flexible_answered"] = round(sum(r["correct_flexible"] for r in answered) / max(1, len(answered)), 4)
         out["empty_by_finish_reason"] = dict(sorted(Counter(r.get("finish_reason") or "not logged" for r in rs if r["empty"]).items()))
+        if all("correct_stated" in r for r in rs):      # secondary, audited score (protocols/gpqa-diamond/v1.md)
+            out["accuracy_stated"] = round(sum(r["correct_stated"] for r in rs) / len(rs), 4)
+            out["accuracy_stated_ci95"] = bootstrap_by_item(rs, "correct_stated")
+            out["accuracy_stated_answered"] = round(sum(r["correct_stated"] for r in answered) / max(1, len(answered)), 4)
         return out
     if fam == "hard-prompt-screen":
         c = Counter(r["cls"] for r in rs)
@@ -180,6 +185,28 @@ def summarize(protocol, rs):
     raise ValueError(f"unknown protocol family {fam}")
 
 
+def summarize_server(recs):
+    """Aggregates of server_log.jsonl: numeric fields parsed from the engine's server log (the log text is not part of the
+    receipts; these records are). 'waiting_below_max_seqs' counts 10-second status lines with requests waiting while fewer
+    than the server's maximum number of sequences were running, i.e. the KV pool, not the sequence limit, held them back."""
+    get = lambda k: [r for r in recs if r["kind"] == k]
+    mns = next((r["max_num_seqs"] for r in get("config")), None)
+    stl, spec = get("status"), get("spec")
+    gen8 = [r["gen_tok_s"] for r in stl if r["running"] >= 8]
+    acc, dr = sum(r["accepted"] for r in spec), sum(r["drafted"] for r in spec)
+    return {"kv_pool_tokens": next((r["tokens"] for r in reversed(get("kv_pool"))), None),
+            "kv_memory_gib_per_gpu": sorted({r["gib"] for r in get("kv_memory")}),
+            "max_num_seqs": mns, "status_lines": len(stl),
+            "waiting_below_max_seqs": sum(1 for r in stl if r["waiting"] > 0 and mns and r["running"] < mns),
+            "max_running": max((r["running"] for r in stl), default=None),
+            "peak_kv_usage_pct": max((r["kv_usage_pct"] for r in stl), default=None),
+            "mean_gen_tok_s_8plus_running": round(sum(gen8) / len(gen8), 1) if gen8 else None, "intervals_8plus_running": len(gen8),
+            "mean_acceptance_length": round(sum(r["mean_acceptance_length"] for r in spec) / len(spec), 3) if spec else None,
+            "acceptance_rate": round(acc / dr, 4) if dr else None,
+            "events": dict(sorted(Counter(r["what"] for r in get("event")).items())),
+            "first_error_s": next((r["t_s"] for r in get("event") if r["what"] != "preemption"), None)}
+
+
 def median(xs):
     xs = sorted(xs); n = len(xs)
     return None if n == 0 else (xs[n // 2] if n % 2 else round((xs[n // 2 - 1] + xs[n // 2]) / 2, 3))
@@ -215,6 +242,8 @@ def check_run(run_dir):
             if len(set(seeds)) != len(seeds) and "fixed-seed control" not in m.get("notes", ""):
                 fails.append(f"{rid}: repeated request seeds in a hard-prompt-screen/v2 run not labelled 'fixed-seed control'")
         stored = load(run_dir / "summary.json"); fresh = summarize(proto, rs)
+        if (run_dir / "server_log.jsonl").exists():
+            fresh["server"] = summarize_server(rows(run_dir, "server_log.jsonl"))
         diff = [k for k in fresh if not same(fresh[k], stored.get(k))]
         if diff: fails.append(f"{rid}: summary.json disagrees with results.jsonl on {diff}")
     except Exception as e:

@@ -14,5 +14,11 @@
  "accuracy_flexible_answered": 0.8808,
  "empty_by_finish_reason": {
   "not logged": 5
- }
+ },
+ "accuracy_stated": 0.8687,
+ "accuracy_stated_ci95": [
+  0.8182,
+  0.9141
+ ],
+ "accuracy_stated_answered": 0.8912
 }

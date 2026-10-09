@@ -21,5 +21,25 @@
   "127": {
    "error": 1
   }
+ },
+ "server": {
+  "kv_pool_tokens": 437563,
+  "kv_memory_gib_per_gpu": [
+   3.93
+  ],
+  "max_num_seqs": 16,
+  "status_lines": 214,
+  "waiting_below_max_seqs": 208,
+  "max_running": 5,
+  "peak_kv_usage_pct": 98.0,
+  "mean_gen_tok_s_8plus_running": null,
+  "intervals_8plus_running": 0,
+  "mean_acceptance_length": 3.607,
+  "acceptance_rate": 0.5197,
+  "events": {
+   "cuda_illegal_memory_access": 2,
+   "preemption": 2
+  },
+  "first_error_s": 2120
  }
 }

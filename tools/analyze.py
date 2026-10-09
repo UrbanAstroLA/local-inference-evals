@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Analyses recomputed from published rows only (standard library).
 
-    python3 tools/analyze.py gpqa-table        # every GPQA run (pass 1): accuracy with 95% interval, empty answers, finish reasons
+    python3 tools/analyze.py gpqa-table        # every GPQA run (pass 1): raw accuracy with 95% interval, the audited stated-answer score,
+                                               # accuracy among answered questions, empty answers and their finish reasons
     python3 tools/analyze.py gpqa-pairs [A B]  # question-paired comparisons of two runs' pass 1 (default: the pairs in PAIRS below):
                                                # discordant questions, exact McNemar p, difference with a 95% interval over questions
     python3 tools/analyze.py screen-v2         # hard-prompt-screen/v2 (component screen): counts, Wilson intervals, the
@@ -11,6 +12,8 @@
                                                # configuration; outcomes only, never rates
     python3 tools/analyze.py screen-anatomy    # v2 screens: loop vs exhaustion per question, where the early stop fired,
                                                # the detector's margin on finished requests
+    python3 tools/analyze.py screen-power      # component screen: smallest differences detectable with 80% power (Fisher, p < 0.05)
+    python3 tools/analyze.py decode-prefill    # decode vs prefill: KL by region for every run; repeat spread; where a repeat diverges
     python3 tools/analyze.py screen-speed      # median completion tokens/s of finished requests in the v2 screens
 
 Configurations are named by their labels (SCHEMA.md, "Labels") and config ids. GPQA runs are pass 1, request seed 1234
@@ -84,13 +87,15 @@ def gpqa():
 
 
 def gpqa_table():
-    print("| config | accuracy | 95% interval over questions | empty | empty by finish reason | accuracy when answered |")
-    print("|---|---|---|---|---|---|")
+    print("| config | raw accuracy (flexible-extract) | 95% interval over questions | raw, answered only | stated answer (audited) | "
+          "stated, answered only | stated - raw, points | empty | empty by finish reason |")
+    print("|---|---|---|---|---|---|---|---|---|")
     for c, m in gpqa().items():
         s = json.loads((ROOT / "runs" / m["id"] / "summary.json").read_text())
         lo, hi = s["accuracy_flexible_ci95"]
-        print(f"| {name(m)} | {100 * s['accuracy_flexible']:.1f}% | {100 * lo:.1f}-{100 * hi:.1f}% | {s['empty']} | "
-              f"{s['empty_by_finish_reason'] or '-'} | {100 * s['accuracy_flexible_answered']:.1f}% |")
+        print(f"| {name(m)} | {100 * s['accuracy_flexible']:.1f}% | {100 * lo:.1f}-{100 * hi:.1f}% | {100 * s['accuracy_flexible_answered']:.1f}% | "
+              f"{100 * s['accuracy_stated']:.1f}% | {100 * s['accuracy_stated_answered']:.1f}% | "
+              f"{100 * (s['accuracy_stated'] - s['accuracy_flexible']):+.1f} | {s['empty']} | {s['empty_by_finish_reason'] or '-'} |")
 
 
 def paired(a, b, n_boot=10000, seed=0):
@@ -233,6 +238,66 @@ def anatomy():
         print(f"{cls}: {len(x)} requests, none stopped early; lowest check {min(x):.4f}")
 
 
+def fisher_power(p1, p2, n1, n2, alpha=0.05):
+    """Exact power of the two-sided Fisher test (p < alpha) for true rates p1, p2 with n1, n2 independent draws."""
+    b = lambda n, p: [math.comb(n, k) * p ** k * (1 - p) ** (n - k) for k in range(n + 1)]
+    b1, b2 = b(n1, p1), b(n2, p2)
+    return sum(b1[x] * b2[y] for x in range(n1 + 1) for y in range(n2 + 1) if fisher(x, n1 - x, y, n2 - y) < alpha)
+
+
+def mdd(p1, n1, n2, power=0.8, alpha=0.05):
+    """Smallest true difference from p1 (down, up) that the Fisher test detects with the given power; None if none in [0, 1]."""
+    grid = [i / 100 for i in range(101)]
+    down = [p1 - q for q in grid if q < p1 and fisher_power(p1, q, n1, n2, alpha) >= power]
+    up = [q - p1 for q in grid if q > p1 and fisher_power(p1, q, n1, n2, alpha) >= power]
+    return (min(down) if down else None), (min(up) if up else None)
+
+
+def power_table():
+    """Minimum detectable differences for the component screen's comparisons (two-sided Fisher p < 0.05, 80% power)."""
+    v = v2_runs(); k = {a: sum(map(failed, m["rows"])) for a, m in v.items()}
+    base88 = sum(k[a] for a in ARMS88) / (12 * len(ARMS88))
+    cases = [("one arm vs another, question 88 (12 vs 12)", k["B"] / 12, 12, 12),
+             ("switch on vs off, question 88 (24 vs 24)", base88, 24, 24),
+             ("B79 vs V79, question 79 (12 vs 12)", k["B79"] / 12, 12, 12)]
+    print("| comparison | baseline failure rate | smallest detectable drop | smallest detectable rise |"); print("|---|---|---|---|")
+    for name_, p0, n1, n2 in cases:
+        d, u = mdd(p0, n1, n2)
+        f = lambda x: "not detectable at any size" if x is None else f"{100 * x:.0f} points (to {100 * (p0 - x if x is d else p0 + x):.0f}%)"
+        print(f"| {name_} | {100 * p0:.0f}% | {f(d)} | {f(u)} |")
+
+
+def decode_prefill():
+    """decode-prefill-consistency/v1: mean KL by region for every run, on prompts 0-5 (shared by all runs) and on all prompts;
+    and, for two runs of one configuration with the same seeds, where their decodes first differ (single-request nondeterminism)."""
+    ms = list(runs("decode-prefill-consistency/"))
+    def kl(rows, reg, docs=None):
+        v = [r["kl_top20"] for r in rows if r["region"] == reg and r["kl_top20"] is not None and (docs is None or r["doc_id"] in docs)]
+        return sum(v) / len(v)
+    print("| run | configuration | prompts | KL i < 2,044 (prompts 0-5) | KL i >= 2,048 (prompts 0-5) | KL i < 2,044 (all) | KL i >= 2,048 (all) |")
+    print("|---|---|---|---|---|---|---|")
+    for m in ms:
+        d = sorted({r["doc_id"] for r in m["rows"]})
+        print(f"| {m['id']} | {config_label(m['cfg'])} | {d[0]}-{d[-1]} | {kl(m['rows'], 'lt2044', range(6)):.4f} | {kl(m['rows'], 'ge2048', range(6)):.4f} | "
+              f"{kl(m['rows'], 'lt2044'):.4f} | {kl(m['rows'], 'ge2048'):.4f} |")
+    by = {}
+    for m in ms: by.setdefault(m["config"], []).append(m)
+    for c, pair in by.items():
+        if len(pair) != 2: continue
+        a, b = ({(r["doc_id"], r["i"]): r for r in m["rows"]} for m in pair)
+        first = {}
+        for doc in sorted({k[0] for k in a}):
+            pos = sorted(i for (d, i) in a if d == doc)
+            diff = [i for i in pos if (doc, i) in b and (a[(doc, i)]["abs_dlp"], a[(doc, i)]["kl_top20"]) != (b[(doc, i)]["abs_dlp"], b[(doc, i)]["kl_top20"])]
+            first[doc] = (diff[0] - pos[0]) if diff else None
+        print(f"\nSame configuration twice ({config_label(pair[0]['cfg'])}; {pair[0]['id']} vs {pair[1]['id']}), concurrency 1, same seeds: "
+              f"generated tokens before the first position whose decode values differ, per prompt: {first}")
+        for reg in ("lt2044", "ge2048"):
+            per = [(kl(pair[0]["rows"], reg, [d]), kl(pair[1]["rows"], reg, [d])) for d in sorted(first)]
+            print(f"  {reg}: per-prompt KL ratio between the two runs (max / min): {max(max(x, y) / min(x, y) for x, y in per):.1f}; "
+                  f"run means {kl(pair[0]['rows'], reg):.4f} vs {kl(pair[1]['rows'], reg):.4f}")
+
+
 def screen_single():
     print("Single draws (repeat 1 of each question); outcomes only. Every repeat of these screens sent seed 1234, so they are not rates.")
     docs = [13, 79, 88, 121, 127]
@@ -253,4 +318,4 @@ def screen_speed():
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "gpqa-table"
     {"gpqa-table": gpqa_table, "gpqa-pairs": lambda: gpqa_pairs(sys.argv[2:]), "screen-v2": screen_v2,
-     "screen-single": screen_single, "screen-speed": screen_speed, "screen-anatomy": anatomy}[cmd]()
+     "screen-single": screen_single, "decode-prefill": decode_prefill, "screen-power": power_table, "screen-speed": screen_speed, "screen-anatomy": anatomy}[cmd]()

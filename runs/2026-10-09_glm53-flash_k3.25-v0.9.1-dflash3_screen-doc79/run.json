@@ -6,5 +6,5 @@
  "software": {
   "client": "tools/clients/hard_prompt_screen.py"
  },
- "notes": "Component screen, 2026-10-09 (preregistered; investigations/2026-10-glm53-looping/component-screen), arm B79: tpurtell 0.9.1 at its defaults. GPQA Diamond doc 79 x 12 repeats, seeds 5001-5012 (5000 + repeat), 12 concurrent requests, fresh server. Gate: the container's settings were checked against the arm before any request; 12 of 12 records, 0 errors. Server log (not published): KV pool 4,707,515 tokens; peak KV cache usage 81.8%; 0 log lines mention preemption; 0 of 737 scheduler status lines show requests waiting."
+ "notes": "Component screen, 2026-10-09 (preregistered; investigations/2026-10-glm53-looping/component-screen), arm B79: tpurtell 0.9.1 at its defaults. GPQA Diamond doc 79 x 12 repeats, seeds 5001-5012 (5000 + repeat), 12 concurrent requests, fresh server. Gate: the container's settings were checked against the arm before any request; 12 of 12 records, 0 errors. Server log figures (server_log.jsonl; summary.json 'server'): KV pool 4,707,515 tokens; peak KV cache usage 81.8%; mean generation throughput 460 tok/s over the 734 ten-second intervals with at least 8 running requests; mean acceptance length 3.17; draft acceptance rate 0.720; 0 of 753 status lines show requests waiting while fewer than 16 were running; 0 preemption log lines."
 }

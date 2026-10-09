@@ -1,0 +1,15 @@
+{
+ "id": "glm53-flash-v091-decode-prefill-speculation",
+ "protocol": "decode-prefill-consistency/v1",
+ "question": "On tpurtell 0.9.1, does decoding through DFlash2 x3's draft-and-verify path agree with prefill re-scoring as well as plain decoding does?",
+ "runs": [
+  "2026-10-08_glm53-flash_k3.25-v0.9.1-nospec-nocache_decode-prefill",
+  "2026-10-09_glm53-flash_k3.25-v0.9.1-nospec-nocache_decode-prefill",
+  "2026-10-08_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill"
+ ],
+ "varies": [
+  "serving.speculative",
+  "serving.draft_slot_sharing"
+ ],
+ "comparable": true
+}

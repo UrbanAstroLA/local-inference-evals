@@ -1,0 +1,11 @@
+{
+ "id": "glm53-flash-v091-decode-prefill-repeat",
+ "protocol": "decode-prefill-consistency/v1",
+ "question": "How much does the decode-vs-prefill measurement vary between two runs of the same configuration (tpurtell 0.9.1, speculation and prefix caching off, same prompts and seeds)? The noise floor for every decode-vs-prefill comparison here.",
+ "runs": [
+  "2026-10-08_glm53-flash_k3.25-v0.9.1-nospec-nocache_decode-prefill",
+  "2026-10-09_glm53-flash_k3.25-v0.9.1-nospec-nocache_decode-prefill"
+ ],
+ "varies": [],
+ "comparable": true
+}

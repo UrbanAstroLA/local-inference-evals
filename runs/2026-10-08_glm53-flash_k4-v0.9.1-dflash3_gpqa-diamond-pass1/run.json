@@ -6,5 +6,5 @@
  "software": {
   "harness": "lm-evaluation-harness 0.4.14.dev0 @ b954108c"
  },
- "notes": "Pass 1 (request seed 1234). Raw lm-eval flexible-extract / strict-match scores (not rescored). finish_reason and completion_tokens per question from a passive request log. Server log (not published): KV pool 1,377,179 tokens; 656 of 1424 scheduler status lines show requests waiting (the KV pool was full at times, so fewer than 8 requests ran at once)."
+ "notes": "Pass 1 (request seed 1234). Raw lm-eval flexible-extract / strict-match scores (not rescored). finish_reason and completion_tokens per question from a passive request log. correct_stated: whether the reply's stated final answer is the target (secondary, audited score; see the protocol). Server log figures (server_log.jsonl; summary.json 'server'): KV pool 1,377,179 tokens; peak KV cache usage 100.0%; mean generation throughput 350 tok/s over the 581 ten-second intervals with at least 8 running requests; mean acceptance length 2.97; draft acceptance rate 0.622; 656 of 1424 status lines show requests waiting while fewer than 16 were running (the KV pool was full for part of the run, so fewer than 8 requests ran at once); 0 preemption log lines."
 }

@@ -13,4 +13,9 @@ neither the 0.7.0 image (with its layout) nor draft depth is implicated at this 
 parallel layout (EP2 + DCP2), vision and model revision (identical weight shards; only the chat template differs).
 Its KV pool (2,894,456 tokens) was full for part of the run, so fewer than 12 requests ran at once then (run notes).
 Most failures on this question are exhaustion: reasoning that keeps varying until the 327,680-token budget runs out.
-Recompute with `tools/analyze.py screen-v2`.
+
+**Power** (`tools/analyze.py screen-power`): from 75% failing, 12 vs 12 draws detect with 80% power only a drop of about
+60 points (two-sided Fisher, p < 0.05). **Held fixed:** 3.25bpw weights, DFlash2 ×3, temperature 1.0 / top_p 0.95,
+12 concurrent requests, one question. **Not settled here:** tpurtell 0.7.0 ships with five draft tokens, and its GPQA
+runs used five; this screen ran it at three, so it says nothing about 0.7.0 as shipped. Draft depth, quantization and
+sampling were not varied. Question 79 was chosen as hard from seed-1234 data. Recompute with `tools/analyze.py screen-v2`.

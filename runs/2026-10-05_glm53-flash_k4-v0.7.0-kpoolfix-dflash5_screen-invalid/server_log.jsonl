@@ -1,0 +1,433 @@
+{"kind": "config", "max_num_seqs": 16}
+{"gib": 3.93, "kind": "kv_memory"}
+{"kind": "kv_pool", "tokens": 437563}
+{"gen_tok_s": 3.1, "kind": "status", "kv_usage_pct": 51.0, "prompt_tok_s": 264.4, "running": 1, "t_s": 0, "waiting": 0}
+{"accepted": 71, "drafted": 120, "kind": "spec", "mean_acceptance_length": 3.96}
+{"gen_tok_s": 25.4, "kind": "status", "kv_usage_pct": 91.8, "prompt_tok_s": 1658.4, "running": 5, "t_s": 10, "waiting": 11}
+{"accepted": 127, "drafted": 605, "kind": "spec", "mean_acceptance_length": 2.05}
+{"gen_tok_s": 199.6, "kind": "status", "kv_usage_pct": 95.9, "prompt_tok_s": 24.6, "running": 5, "t_s": 20, "waiting": 5}
+{"accepted": 1443, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 3.59}
+{"gen_tok_s": 184.7, "kind": "status", "kv_usage_pct": 0.0, "prompt_tok_s": 20.5, "running": 0, "t_s": 30, "waiting": 0}
+{"accepted": 1331, "drafted": 2640, "kind": "spec", "mean_acceptance_length": 3.52}
+{"gen_tok_s": 170.8, "kind": "status", "kv_usage_pct": 94.6, "prompt_tok_s": 41.0, "running": 5, "t_s": 40, "waiting": 6}
+{"accepted": 1190, "drafted": 2590, "kind": "spec", "mean_acceptance_length": 3.3}
+{"gen_tok_s": 214.4, "kind": "status", "kv_usage_pct": 57.8, "prompt_tok_s": 24.6, "running": 3, "t_s": 50, "waiting": 0}
+{"accepted": 1563, "drafted": 2960, "kind": "spec", "mean_acceptance_length": 3.64}
+{"gen_tok_s": 160.0, "kind": "status", "kv_usage_pct": 95.2, "prompt_tok_s": 32.8, "running": 5, "t_s": 60, "waiting": 8}
+{"accepted": 1097, "drafted": 2555, "kind": "spec", "mean_acceptance_length": 3.15}
+{"gen_tok_s": 188.3, "kind": "status", "kv_usage_pct": 93.9, "prompt_tok_s": 32.8, "running": 5, "t_s": 70, "waiting": 0}
+{"accepted": 1350, "drafted": 2670, "kind": "spec", "mean_acceptance_length": 3.53}
+{"gen_tok_s": 200.7, "kind": "status", "kv_usage_pct": 96.6, "prompt_tok_s": 24.6, "running": 5, "t_s": 80, "waiting": 10}
+{"accepted": 1448, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 3.59}
+{"gen_tok_s": 181.7, "kind": "status", "kv_usage_pct": 95.2, "prompt_tok_s": 32.8, "running": 5, "t_s": 90, "waiting": 2}
+{"accepted": 1285, "drafted": 2695, "kind": "spec", "mean_acceptance_length": 3.38}
+{"gen_tok_s": 112.9, "kind": "status", "kv_usage_pct": 0.0, "prompt_tok_s": 8.2, "running": 0, "t_s": 100, "waiting": 0}
+{"accepted": 874, "drafted": 1330, "kind": "spec", "mean_acceptance_length": 4.29}
+{"gen_tok_s": 0.0, "kind": "status", "kv_usage_pct": 0.0, "prompt_tok_s": 0.0, "running": 0, "t_s": 110, "waiting": 0}
+{"gen_tok_s": 228.2, "kind": "status", "kv_usage_pct": 94.6, "prompt_tok_s": 306.8, "running": 4, "t_s": 120, "waiting": 4}
+{"accepted": 1610, "drafted": 3340, "kind": "spec", "mean_acceptance_length": 3.41}
+{"gen_tok_s": 264.2, "kind": "status", "kv_usage_pct": 81.0, "prompt_tok_s": 0.0, "running": 3, "t_s": 130, "waiting": 5}
+{"accepted": 1895, "drafted": 3730, "kind": "spec", "mean_acceptance_length": 3.54}
+{"gen_tok_s": 225.5, "kind": "status", "kv_usage_pct": 87.8, "prompt_tok_s": 0.0, "running": 3, "t_s": 140, "waiting": 5}
+{"accepted": 1556, "drafted": 3495, "kind": "spec", "mean_acceptance_length": 3.23}
+{"gen_tok_s": 239.5, "kind": "status", "kv_usage_pct": 88.4, "prompt_tok_s": 0.0, "running": 3, "t_s": 150, "waiting": 5}
+{"accepted": 1681, "drafted": 3570, "kind": "spec", "mean_acceptance_length": 3.35}
+{"gen_tok_s": 215.1, "kind": "status", "kv_usage_pct": 88.4, "prompt_tok_s": 0.0, "running": 3, "t_s": 160, "waiting": 5}
+{"accepted": 1452, "drafted": 3495, "kind": "spec", "mean_acceptance_length": 3.08}
+{"gen_tok_s": 222.0, "kind": "status", "kv_usage_pct": 87.8, "prompt_tok_s": 0.0, "running": 3, "t_s": 170, "waiting": 5}
+{"accepted": 1527, "drafted": 3465, "kind": "spec", "mean_acceptance_length": 3.2}
+{"gen_tok_s": 219.4, "kind": "status", "kv_usage_pct": 88.4, "prompt_tok_s": 0.0, "running": 3, "t_s": 180, "waiting": 5}
+{"accepted": 1498, "drafted": 3480, "kind": "spec", "mean_acceptance_length": 3.15}
+{"gen_tok_s": 224.7, "kind": "status", "kv_usage_pct": 89.1, "prompt_tok_s": 0.0, "running": 3, "t_s": 190, "waiting": 5}
+{"accepted": 1548, "drafted": 3495, "kind": "spec", "mean_acceptance_length": 3.21}
+{"gen_tok_s": 244.5, "kind": "status", "kv_usage_pct": 88.4, "prompt_tok_s": 0.0, "running": 3, "t_s": 200, "waiting": 5}
+{"accepted": 1758, "drafted": 3435, "kind": "spec", "mean_acceptance_length": 3.56}
+{"gen_tok_s": 260.7, "kind": "status", "kv_usage_pct": 89.8, "prompt_tok_s": 0.0, "running": 3, "t_s": 210, "waiting": 5}
+{"accepted": 1914, "drafted": 3465, "kind": "spec", "mean_acceptance_length": 3.76}
+{"gen_tok_s": 227.1, "kind": "status", "kv_usage_pct": 89.8, "prompt_tok_s": 0.0, "running": 3, "t_s": 220, "waiting": 5}
+{"accepted": 1563, "drafted": 3540, "kind": "spec", "mean_acceptance_length": 3.21}
+{"gen_tok_s": 225.6, "kind": "status", "kv_usage_pct": 89.8, "prompt_tok_s": 0.0, "running": 3, "t_s": 230, "waiting": 5}
+{"accepted": 1563, "drafted": 3465, "kind": "spec", "mean_acceptance_length": 3.26}
+{"gen_tok_s": 242.4, "kind": "status", "kv_usage_pct": 89.8, "prompt_tok_s": 0.0, "running": 3, "t_s": 240, "waiting": 5}
+{"accepted": 1731, "drafted": 3465, "kind": "spec", "mean_acceptance_length": 3.5}
+{"gen_tok_s": 253.4, "kind": "status", "kv_usage_pct": 89.8, "prompt_tok_s": 0.0, "running": 3, "t_s": 250, "waiting": 5}
+{"accepted": 1844, "drafted": 3450, "kind": "spec", "mean_acceptance_length": 3.67}
+{"gen_tok_s": 236.5, "kind": "status", "kv_usage_pct": 89.8, "prompt_tok_s": 0.0, "running": 3, "t_s": 260, "waiting": 5}
+{"accepted": 1678, "drafted": 3435, "kind": "spec", "mean_acceptance_length": 3.44}
+{"gen_tok_s": 227.0, "kind": "status", "kv_usage_pct": 90.5, "prompt_tok_s": 0.0, "running": 3, "t_s": 270, "waiting": 5}
+{"accepted": 1574, "drafted": 3480, "kind": "spec", "mean_acceptance_length": 3.26}
+{"gen_tok_s": 251.8, "kind": "status", "kv_usage_pct": 91.8, "prompt_tok_s": 0.0, "running": 3, "t_s": 280, "waiting": 5}
+{"accepted": 1825, "drafted": 3465, "kind": "spec", "mean_acceptance_length": 3.63}
+{"gen_tok_s": 222.5, "kind": "status", "kv_usage_pct": 92.5, "prompt_tok_s": 0.0, "running": 3, "t_s": 290, "waiting": 5}
+{"accepted": 1523, "drafted": 3510, "kind": "spec", "mean_acceptance_length": 3.17}
+{"gen_tok_s": 236.7, "kind": "status", "kv_usage_pct": 92.5, "prompt_tok_s": 0.0, "running": 3, "t_s": 300, "waiting": 5}
+{"accepted": 1665, "drafted": 3510, "kind": "spec", "mean_acceptance_length": 3.37}
+{"gen_tok_s": 234.1, "kind": "status", "kv_usage_pct": 92.5, "prompt_tok_s": 0.0, "running": 3, "t_s": 310, "waiting": 5}
+{"accepted": 1642, "drafted": 3495, "kind": "spec", "mean_acceptance_length": 3.35}
+{"gen_tok_s": 243.7, "kind": "status", "kv_usage_pct": 91.8, "prompt_tok_s": 0.0, "running": 3, "t_s": 320, "waiting": 5}
+{"accepted": 1747, "drafted": 3450, "kind": "spec", "mean_acceptance_length": 3.53}
+{"gen_tok_s": 245.0, "kind": "status", "kv_usage_pct": 91.8, "prompt_tok_s": 0.0, "running": 3, "t_s": 330, "waiting": 5}
+{"accepted": 1760, "drafted": 3450, "kind": "spec", "mean_acceptance_length": 3.55}
+{"gen_tok_s": 226.3, "kind": "status", "kv_usage_pct": 91.8, "prompt_tok_s": 0.0, "running": 3, "t_s": 340, "waiting": 5}
+{"accepted": 1567, "drafted": 3480, "kind": "spec", "mean_acceptance_length": 3.25}
+{"gen_tok_s": 219.3, "kind": "status", "kv_usage_pct": 92.5, "prompt_tok_s": 0.0, "running": 3, "t_s": 350, "waiting": 5}
+{"accepted": 1500, "drafted": 3465, "kind": "spec", "mean_acceptance_length": 3.16}
+{"gen_tok_s": 240.9, "kind": "status", "kv_usage_pct": 91.8, "prompt_tok_s": 0.0, "running": 3, "t_s": 360, "waiting": 5}
+{"accepted": 1710, "drafted": 3495, "kind": "spec", "mean_acceptance_length": 3.45}
+{"gen_tok_s": 226.8, "kind": "status", "kv_usage_pct": 93.9, "prompt_tok_s": 0.0, "running": 3, "t_s": 370, "waiting": 5}
+{"accepted": 1584, "drafted": 3420, "kind": "spec", "mean_acceptance_length": 3.32}
+{"gen_tok_s": 230.3, "kind": "status", "kv_usage_pct": 93.9, "prompt_tok_s": 0.0, "running": 3, "t_s": 380, "waiting": 5}
+{"accepted": 1619, "drafted": 3420, "kind": "spec", "mean_acceptance_length": 3.37}
+{"gen_tok_s": 234.1, "kind": "status", "kv_usage_pct": 94.6, "prompt_tok_s": 0.0, "running": 3, "t_s": 390, "waiting": 5}
+{"accepted": 1648, "drafted": 3465, "kind": "spec", "mean_acceptance_length": 3.38}
+{"gen_tok_s": 210.3, "kind": "status", "kv_usage_pct": 94.6, "prompt_tok_s": 0.0, "running": 3, "t_s": 400, "waiting": 5}
+{"accepted": 1401, "drafted": 3510, "kind": "spec", "mean_acceptance_length": 3.0}
+{"gen_tok_s": 219.4, "kind": "status", "kv_usage_pct": 93.9, "prompt_tok_s": 0.0, "running": 3, "t_s": 410, "waiting": 5}
+{"accepted": 1495, "drafted": 3495, "kind": "spec", "mean_acceptance_length": 3.14}
+{"gen_tok_s": 234.5, "kind": "status", "kv_usage_pct": 97.3, "prompt_tok_s": 0.0, "running": 3, "t_s": 420, "waiting": 5}
+{"accepted": 1661, "drafted": 3420, "kind": "spec", "mean_acceptance_length": 3.43}
+{"gen_tok_s": 239.5, "kind": "status", "kv_usage_pct": 95.2, "prompt_tok_s": 0.0, "running": 3, "t_s": 430, "waiting": 5}
+{"accepted": 1693, "drafted": 3510, "kind": "spec", "mean_acceptance_length": 3.41}
+{"gen_tok_s": 245.6, "kind": "status", "kv_usage_pct": 94.6, "prompt_tok_s": 0.0, "running": 3, "t_s": 440, "waiting": 5}
+{"accepted": 1769, "drafted": 3435, "kind": "spec", "mean_acceptance_length": 3.57}
+{"gen_tok_s": 237.6, "kind": "status", "kv_usage_pct": 94.6, "prompt_tok_s": 0.0, "running": 3, "t_s": 450, "waiting": 5}
+{"accepted": 1671, "drafted": 3525, "kind": "spec", "mean_acceptance_length": 3.37}
+{"gen_tok_s": 231.6, "kind": "status", "kv_usage_pct": 94.6, "prompt_tok_s": 0.0, "running": 3, "t_s": 460, "waiting": 5}
+{"accepted": 1611, "drafted": 3525, "kind": "spec", "mean_acceptance_length": 3.29}
+{"gen_tok_s": 202.6, "kind": "status", "kv_usage_pct": 95.2, "prompt_tok_s": 0.0, "running": 3, "t_s": 470, "waiting": 5}
+{"accepted": 1333, "drafted": 3465, "kind": "spec", "mean_acceptance_length": 2.92}
+{"gen_tok_s": 263.8, "kind": "status", "kv_usage_pct": 95.2, "prompt_tok_s": 0.0, "running": 3, "t_s": 480, "waiting": 5}
+{"accepted": 1954, "drafted": 3420, "kind": "spec", "mean_acceptance_length": 3.86}
+{"gen_tok_s": 242.9, "kind": "status", "kv_usage_pct": 95.9, "prompt_tok_s": 0.0, "running": 3, "t_s": 490, "waiting": 5}
+{"accepted": 1739, "drafted": 3450, "kind": "spec", "mean_acceptance_length": 3.52}
+{"gen_tok_s": 264.2, "kind": "status", "kv_usage_pct": 95.9, "prompt_tok_s": 0.0, "running": 3, "t_s": 500, "waiting": 5}
+{"accepted": 1937, "drafted": 3525, "kind": "spec", "mean_acceptance_length": 3.75}
+{"gen_tok_s": 260.0, "kind": "status", "kv_usage_pct": 95.9, "prompt_tok_s": 0.0, "running": 3, "t_s": 510, "waiting": 5}
+{"accepted": 1907, "drafted": 3465, "kind": "spec", "mean_acceptance_length": 3.75}
+{"gen_tok_s": 217.7, "kind": "status", "kv_usage_pct": 95.9, "prompt_tok_s": 0.0, "running": 3, "t_s": 520, "waiting": 5}
+{"accepted": 1469, "drafted": 3540, "kind": "spec", "mean_acceptance_length": 3.07}
+{"gen_tok_s": 226.5, "kind": "status", "kv_usage_pct": 95.9, "prompt_tok_s": 0.0, "running": 3, "t_s": 530, "waiting": 5}
+{"accepted": 1572, "drafted": 3465, "kind": "spec", "mean_acceptance_length": 3.27}
+{"gen_tok_s": 245.0, "kind": "status", "kv_usage_pct": 95.9, "prompt_tok_s": 0.0, "running": 3, "t_s": 540, "waiting": 5}
+{"accepted": 1769, "drafted": 3405, "kind": "spec", "mean_acceptance_length": 3.6}
+{"gen_tok_s": 273.0, "kind": "status", "kv_usage_pct": 95.9, "prompt_tok_s": 0.0, "running": 3, "t_s": 550, "waiting": 5}
+{"accepted": 2043, "drafted": 3435, "kind": "spec", "mean_acceptance_length": 3.97}
+{"gen_tok_s": 238.8, "kind": "status", "kv_usage_pct": 65.3, "prompt_tok_s": 0.0, "running": 2, "t_s": 560, "waiting": 6}
+{"accepted": 1803, "drafted": 2925, "kind": "spec", "mean_acceptance_length": 4.08}
+{"gen_tok_s": 211.6, "kind": "status", "kv_usage_pct": 65.3, "prompt_tok_s": 0.0, "running": 2, "t_s": 570, "waiting": 6}
+{"accepted": 1554, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.77}
+{"gen_tok_s": 198.7, "kind": "status", "kv_usage_pct": 66.0, "prompt_tok_s": 0.0, "running": 2, "t_s": 580, "waiting": 6}
+{"accepted": 1415, "drafted": 2860, "kind": "spec", "mean_acceptance_length": 3.47}
+{"gen_tok_s": 193.3, "kind": "status", "kv_usage_pct": 66.0, "prompt_tok_s": 0.0, "running": 2, "t_s": 590, "waiting": 6}
+{"accepted": 1367, "drafted": 2830, "kind": "spec", "mean_acceptance_length": 3.42}
+{"gen_tok_s": 206.2, "kind": "status", "kv_usage_pct": 65.3, "prompt_tok_s": 0.0, "running": 2, "t_s": 600, "waiting": 6}
+{"accepted": 1500, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.67}
+{"gen_tok_s": 210.5, "kind": "status", "kv_usage_pct": 65.3, "prompt_tok_s": 0.0, "running": 2, "t_s": 610, "waiting": 6}
+{"accepted": 1543, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.75}
+{"gen_tok_s": 197.1, "kind": "status", "kv_usage_pct": 65.3, "prompt_tok_s": 0.0, "running": 2, "t_s": 620, "waiting": 6}
+{"accepted": 1407, "drafted": 2820, "kind": "spec", "mean_acceptance_length": 3.49}
+{"gen_tok_s": 195.0, "kind": "status", "kv_usage_pct": 66.7, "prompt_tok_s": 0.0, "running": 2, "t_s": 630, "waiting": 6}
+{"accepted": 1384, "drafted": 2830, "kind": "spec", "mean_acceptance_length": 3.45}
+{"gen_tok_s": 197.5, "kind": "status", "kv_usage_pct": 67.3, "prompt_tok_s": 0.0, "running": 2, "t_s": 640, "waiting": 6}
+{"accepted": 1407, "drafted": 2840, "kind": "spec", "mean_acceptance_length": 3.48}
+{"gen_tok_s": 185.6, "kind": "status", "kv_usage_pct": 66.7, "prompt_tok_s": 0.0, "running": 2, "t_s": 650, "waiting": 6}
+{"accepted": 1286, "drafted": 2850, "kind": "spec", "mean_acceptance_length": 3.26}
+{"gen_tok_s": 169.0, "kind": "status", "kv_usage_pct": 67.3, "prompt_tok_s": 0.0, "running": 2, "t_s": 660, "waiting": 6}
+{"accepted": 1124, "drafted": 2830, "kind": "spec", "mean_acceptance_length": 2.99}
+{"gen_tok_s": 191.1, "kind": "status", "kv_usage_pct": 66.7, "prompt_tok_s": 0.0, "running": 2, "t_s": 670, "waiting": 6}
+{"accepted": 1351, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.41}
+{"gen_tok_s": 223.9, "kind": "status", "kv_usage_pct": 66.7, "prompt_tok_s": 0.0, "running": 2, "t_s": 680, "waiting": 6}
+{"accepted": 1679, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 4.0}
+{"gen_tok_s": 188.0, "kind": "status", "kv_usage_pct": 66.7, "prompt_tok_s": 0.0, "running": 2, "t_s": 690, "waiting": 6}
+{"accepted": 1312, "drafted": 2840, "kind": "spec", "mean_acceptance_length": 3.31}
+{"gen_tok_s": 191.8, "kind": "status", "kv_usage_pct": 67.3, "prompt_tok_s": 0.0, "running": 2, "t_s": 700, "waiting": 6}
+{"accepted": 1352, "drafted": 2830, "kind": "spec", "mean_acceptance_length": 3.39}
+{"gen_tok_s": 184.6, "kind": "status", "kv_usage_pct": 67.3, "prompt_tok_s": 0.0, "running": 2, "t_s": 710, "waiting": 6}
+{"accepted": 1280, "drafted": 2830, "kind": "spec", "mean_acceptance_length": 3.26}
+{"gen_tok_s": 209.9, "kind": "status", "kv_usage_pct": 68.0, "prompt_tok_s": 0.0, "running": 2, "t_s": 720, "waiting": 6}
+{"accepted": 1537, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.73}
+{"gen_tok_s": 186.2, "kind": "status", "kv_usage_pct": 68.0, "prompt_tok_s": 0.0, "running": 2, "t_s": 730, "waiting": 6}
+{"accepted": 1294, "drafted": 2840, "kind": "spec", "mean_acceptance_length": 3.28}
+{"gen_tok_s": 205.9, "kind": "status", "kv_usage_pct": 68.0, "prompt_tok_s": 0.0, "running": 2, "t_s": 740, "waiting": 6}
+{"accepted": 1493, "drafted": 2830, "kind": "spec", "mean_acceptance_length": 3.64}
+{"gen_tok_s": 181.2, "kind": "status", "kv_usage_pct": 68.7, "prompt_tok_s": 0.0, "running": 2, "t_s": 750, "waiting": 6}
+{"accepted": 1250, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.22}
+{"gen_tok_s": 186.5, "kind": "status", "kv_usage_pct": 68.7, "prompt_tok_s": 0.0, "running": 2, "t_s": 760, "waiting": 6}
+{"accepted": 1303, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.32}
+{"gen_tok_s": 187.4, "kind": "status", "kv_usage_pct": 69.4, "prompt_tok_s": 0.0, "running": 2, "t_s": 770, "waiting": 6}
+{"accepted": 1318, "drafted": 2780, "kind": "spec", "mean_acceptance_length": 3.37}
+{"gen_tok_s": 204.8, "kind": "status", "kv_usage_pct": 68.7, "prompt_tok_s": 0.0, "running": 2, "t_s": 780, "waiting": 6}
+{"accepted": 1486, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.64}
+{"gen_tok_s": 200.6, "kind": "status", "kv_usage_pct": 69.4, "prompt_tok_s": 0.0, "running": 2, "t_s": 790, "waiting": 6}
+{"accepted": 1440, "drafted": 2830, "kind": "spec", "mean_acceptance_length": 3.54}
+{"gen_tok_s": 211.9, "kind": "status", "kv_usage_pct": 70.1, "prompt_tok_s": 0.0, "running": 2, "t_s": 800, "waiting": 6}
+{"accepted": 1563, "drafted": 2780, "kind": "spec", "mean_acceptance_length": 3.81}
+{"gen_tok_s": 197.6, "kind": "status", "kv_usage_pct": 69.4, "prompt_tok_s": 0.0, "running": 2, "t_s": 810, "waiting": 6}
+{"accepted": 1418, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 3.54}
+{"gen_tok_s": 201.7, "kind": "status", "kv_usage_pct": 69.4, "prompt_tok_s": 0.0, "running": 2, "t_s": 820, "waiting": 6}
+{"accepted": 1449, "drafted": 2840, "kind": "spec", "mean_acceptance_length": 3.55}
+{"gen_tok_s": 171.6, "kind": "status", "kv_usage_pct": 69.4, "prompt_tok_s": 0.0, "running": 2, "t_s": 830, "waiting": 6}
+{"accepted": 1148, "drafted": 2840, "kind": "spec", "mean_acceptance_length": 3.02}
+{"gen_tok_s": 175.2, "kind": "status", "kv_usage_pct": 70.1, "prompt_tok_s": 0.0, "running": 2, "t_s": 840, "waiting": 6}
+{"accepted": 1188, "drafted": 2820, "kind": "spec", "mean_acceptance_length": 3.11}
+{"gen_tok_s": 200.5, "kind": "status", "kv_usage_pct": 70.1, "prompt_tok_s": 0.0, "running": 2, "t_s": 850, "waiting": 6}
+{"accepted": 1445, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.58}
+{"gen_tok_s": 205.3, "kind": "status", "kv_usage_pct": 70.1, "prompt_tok_s": 0.0, "running": 2, "t_s": 860, "waiting": 6}
+{"accepted": 1487, "drafted": 2830, "kind": "spec", "mean_acceptance_length": 3.63}
+{"gen_tok_s": 211.6, "kind": "status", "kv_usage_pct": 70.7, "prompt_tok_s": 0.0, "running": 2, "t_s": 870, "waiting": 6}
+{"accepted": 1558, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 3.79}
+{"gen_tok_s": 184.8, "kind": "status", "kv_usage_pct": 70.7, "prompt_tok_s": 0.0, "running": 2, "t_s": 880, "waiting": 6}
+{"accepted": 1282, "drafted": 2830, "kind": "spec", "mean_acceptance_length": 3.27}
+{"gen_tok_s": 196.4, "kind": "status", "kv_usage_pct": 70.7, "prompt_tok_s": 0.0, "running": 2, "t_s": 890, "waiting": 6}
+{"accepted": 1400, "drafted": 2820, "kind": "spec", "mean_acceptance_length": 3.48}
+{"gen_tok_s": 189.4, "kind": "status", "kv_usage_pct": 70.7, "prompt_tok_s": 0.0, "running": 2, "t_s": 900, "waiting": 6}
+{"accepted": 1326, "drafted": 2840, "kind": "spec", "mean_acceptance_length": 3.33}
+{"gen_tok_s": 199.3, "kind": "status", "kv_usage_pct": 70.7, "prompt_tok_s": 0.0, "running": 2, "t_s": 910, "waiting": 6}
+{"accepted": 1431, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.55}
+{"gen_tok_s": 189.1, "kind": "status", "kv_usage_pct": 72.1, "prompt_tok_s": 0.0, "running": 2, "t_s": 920, "waiting": 6}
+{"accepted": 1329, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.36}
+{"gen_tok_s": 214.8, "kind": "status", "kv_usage_pct": 71.4, "prompt_tok_s": 0.0, "running": 2, "t_s": 930, "waiting": 6}
+{"accepted": 1586, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.82}
+{"gen_tok_s": 201.4, "kind": "status", "kv_usage_pct": 72.1, "prompt_tok_s": 0.0, "running": 2, "t_s": 940, "waiting": 6}
+{"accepted": 1454, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.6}
+{"gen_tok_s": 193.7, "kind": "status", "kv_usage_pct": 72.1, "prompt_tok_s": 0.0, "running": 2, "t_s": 950, "waiting": 6}
+{"accepted": 1375, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.45}
+{"gen_tok_s": 185.1, "kind": "status", "kv_usage_pct": 72.1, "prompt_tok_s": 0.0, "running": 2, "t_s": 960, "waiting": 6}
+{"accepted": 1287, "drafted": 2820, "kind": "spec", "mean_acceptance_length": 3.28}
+{"gen_tok_s": 190.4, "kind": "status", "kv_usage_pct": 72.1, "prompt_tok_s": 0.0, "running": 2, "t_s": 970, "waiting": 6}
+{"accepted": 1338, "drafted": 2830, "kind": "spec", "mean_acceptance_length": 3.36}
+{"gen_tok_s": 185.5, "kind": "status", "kv_usage_pct": 72.8, "prompt_tok_s": 0.0, "running": 2, "t_s": 980, "waiting": 6}
+{"accepted": 1291, "drafted": 2820, "kind": "spec", "mean_acceptance_length": 3.29}
+{"gen_tok_s": 228.3, "kind": "status", "kv_usage_pct": 72.8, "prompt_tok_s": 0.0, "running": 2, "t_s": 990, "waiting": 6}
+{"accepted": 1717, "drafted": 2830, "kind": "spec", "mean_acceptance_length": 4.03}
+{"gen_tok_s": 205.2, "kind": "status", "kv_usage_pct": 72.8, "prompt_tok_s": 0.0, "running": 2, "t_s": 1000, "waiting": 6}
+{"accepted": 1490, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.65}
+{"gen_tok_s": 221.7, "kind": "status", "kv_usage_pct": 74.1, "prompt_tok_s": 0.0, "running": 2, "t_s": 1010, "waiting": 6}
+{"accepted": 1653, "drafted": 2820, "kind": "spec", "mean_acceptance_length": 3.93}
+{"gen_tok_s": 185.2, "kind": "status", "kv_usage_pct": 73.5, "prompt_tok_s": 0.0, "running": 2, "t_s": 1020, "waiting": 6}
+{"accepted": 1290, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.3}
+{"gen_tok_s": 196.0, "kind": "status", "kv_usage_pct": 73.5, "prompt_tok_s": 0.0, "running": 2, "t_s": 1030, "waiting": 6}
+{"accepted": 1398, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.49}
+{"gen_tok_s": 203.4, "kind": "status", "kv_usage_pct": 73.5, "prompt_tok_s": 0.0, "running": 2, "t_s": 1040, "waiting": 6}
+{"accepted": 1472, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.62}
+{"gen_tok_s": 198.5, "kind": "status", "kv_usage_pct": 73.5, "prompt_tok_s": 0.0, "running": 2, "t_s": 1050, "waiting": 6}
+{"accepted": 1429, "drafted": 2780, "kind": "spec", "mean_acceptance_length": 3.57}
+{"gen_tok_s": 200.6, "kind": "status", "kv_usage_pct": 74.8, "prompt_tok_s": 0.0, "running": 2, "t_s": 1060, "waiting": 6}
+{"accepted": 1448, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 3.59}
+{"gen_tok_s": 201.5, "kind": "status", "kv_usage_pct": 74.1, "prompt_tok_s": 0.0, "running": 2, "t_s": 1070, "waiting": 6}
+{"accepted": 1453, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.59}
+{"gen_tok_s": 206.3, "kind": "status", "kv_usage_pct": 74.8, "prompt_tok_s": 0.0, "running": 2, "t_s": 1080, "waiting": 6}
+{"accepted": 1501, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.67}
+{"gen_tok_s": 212.6, "kind": "status", "kv_usage_pct": 74.8, "prompt_tok_s": 0.0, "running": 2, "t_s": 1090, "waiting": 6}
+{"accepted": 1568, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 3.81}
+{"gen_tok_s": 216.4, "kind": "status", "kv_usage_pct": 74.8, "prompt_tok_s": 0.0, "running": 2, "t_s": 1100, "waiting": 6}
+{"accepted": 1604, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.86}
+{"gen_tok_s": 210.2, "kind": "status", "kv_usage_pct": 74.8, "prompt_tok_s": 0.0, "running": 2, "t_s": 1110, "waiting": 6}
+{"accepted": 1538, "drafted": 2820, "kind": "spec", "mean_acceptance_length": 3.73}
+{"gen_tok_s": 218.6, "kind": "status", "kv_usage_pct": 74.8, "prompt_tok_s": 0.0, "running": 2, "t_s": 1120, "waiting": 6}
+{"accepted": 1624, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.89}
+{"gen_tok_s": 234.5, "kind": "status", "kv_usage_pct": 75.5, "prompt_tok_s": 0.0, "running": 2, "t_s": 1130, "waiting": 6}
+{"accepted": 1786, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 4.19}
+{"gen_tok_s": 223.1, "kind": "status", "kv_usage_pct": 76.2, "prompt_tok_s": 0.0, "running": 2, "t_s": 1140, "waiting": 6}
+{"accepted": 1667, "drafted": 2820, "kind": "spec", "mean_acceptance_length": 3.96}
+{"gen_tok_s": 219.7, "kind": "status", "kv_usage_pct": 76.2, "prompt_tok_s": 0.0, "running": 2, "t_s": 1150, "waiting": 6}
+{"accepted": 1641, "drafted": 2780, "kind": "spec", "mean_acceptance_length": 3.95}
+{"gen_tok_s": 224.4, "kind": "status", "kv_usage_pct": 76.9, "prompt_tok_s": 0.0, "running": 2, "t_s": 1160, "waiting": 6}
+{"accepted": 1688, "drafted": 2780, "kind": "spec", "mean_acceptance_length": 4.04}
+{"gen_tok_s": 195.9, "kind": "status", "kv_usage_pct": 76.2, "prompt_tok_s": 0.0, "running": 2, "t_s": 1170, "waiting": 6}
+{"accepted": 1397, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.49}
+{"gen_tok_s": 201.0, "kind": "status", "kv_usage_pct": 76.2, "prompt_tok_s": 0.0, "running": 2, "t_s": 1180, "waiting": 6}
+{"accepted": 1446, "drafted": 2820, "kind": "spec", "mean_acceptance_length": 3.56}
+{"gen_tok_s": 218.9, "kind": "status", "kv_usage_pct": 76.2, "prompt_tok_s": 0.0, "running": 2, "t_s": 1190, "waiting": 6}
+{"accepted": 1623, "drafted": 2830, "kind": "spec", "mean_acceptance_length": 3.87}
+{"gen_tok_s": 215.8, "kind": "status", "kv_usage_pct": 76.9, "prompt_tok_s": 0.0, "running": 2, "t_s": 1200, "waiting": 6}
+{"accepted": 1598, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.85}
+{"gen_tok_s": 228.1, "kind": "status", "kv_usage_pct": 77.6, "prompt_tok_s": 0.0, "running": 2, "t_s": 1210, "waiting": 6}
+{"accepted": 1721, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 4.07}
+{"gen_tok_s": 253.6, "kind": "status", "kv_usage_pct": 78.2, "prompt_tok_s": 0.0, "running": 2, "t_s": 1220, "waiting": 6}
+{"accepted": 1984, "drafted": 2760, "kind": "spec", "mean_acceptance_length": 4.59}
+{"gen_tok_s": 218.7, "kind": "status", "kv_usage_pct": 77.6, "prompt_tok_s": 0.0, "running": 2, "t_s": 1230, "waiting": 6}
+{"accepted": 1631, "drafted": 2780, "kind": "spec", "mean_acceptance_length": 3.93}
+{"gen_tok_s": 199.9, "kind": "status", "kv_usage_pct": 77.6, "prompt_tok_s": 0.0, "running": 2, "t_s": 1240, "waiting": 6}
+{"accepted": 1437, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.56}
+{"gen_tok_s": 213.0, "kind": "status", "kv_usage_pct": 77.6, "prompt_tok_s": 0.0, "running": 2, "t_s": 1250, "waiting": 6}
+{"accepted": 1568, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.79}
+{"gen_tok_s": 224.9, "kind": "status", "kv_usage_pct": 78.2, "prompt_tok_s": 0.0, "running": 2, "t_s": 1260, "waiting": 6}
+{"accepted": 1689, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 4.02}
+{"gen_tok_s": 221.4, "kind": "status", "kv_usage_pct": 79.6, "prompt_tok_s": 0.0, "running": 2, "t_s": 1270, "waiting": 6}
+{"accepted": 1652, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.94}
+{"gen_tok_s": 229.0, "kind": "status", "kv_usage_pct": 78.9, "prompt_tok_s": 0.0, "running": 2, "t_s": 1280, "waiting": 6}
+{"accepted": 1730, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 4.09}
+{"gen_tok_s": 204.8, "kind": "status", "kv_usage_pct": 79.6, "prompt_tok_s": 0.0, "running": 2, "t_s": 1290, "waiting": 6}
+{"accepted": 1484, "drafted": 2820, "kind": "spec", "mean_acceptance_length": 3.63}
+{"gen_tok_s": 199.2, "kind": "status", "kv_usage_pct": 79.6, "prompt_tok_s": 0.0, "running": 2, "t_s": 1300, "waiting": 6}
+{"accepted": 1426, "drafted": 2830, "kind": "spec", "mean_acceptance_length": 3.52}
+{"gen_tok_s": 213.9, "kind": "status", "kv_usage_pct": 79.6, "prompt_tok_s": 0.0, "running": 2, "t_s": 1310, "waiting": 6}
+{"accepted": 1573, "drafted": 2830, "kind": "spec", "mean_acceptance_length": 3.78}
+{"gen_tok_s": 198.1, "kind": "status", "kv_usage_pct": 78.9, "prompt_tok_s": 0.0, "running": 2, "t_s": 1320, "waiting": 6}
+{"accepted": 1419, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.52}
+{"gen_tok_s": 204.7, "kind": "status", "kv_usage_pct": 79.6, "prompt_tok_s": 0.0, "running": 2, "t_s": 1330, "waiting": 6}
+{"accepted": 1493, "drafted": 2770, "kind": "spec", "mean_acceptance_length": 3.69}
+{"gen_tok_s": 209.6, "kind": "status", "kv_usage_pct": 80.3, "prompt_tok_s": 0.0, "running": 2, "t_s": 1340, "waiting": 6}
+{"accepted": 1544, "drafted": 2760, "kind": "spec", "mean_acceptance_length": 3.8}
+{"gen_tok_s": 232.7, "kind": "status", "kv_usage_pct": 80.3, "prompt_tok_s": 0.0, "running": 2, "t_s": 1350, "waiting": 6}
+{"accepted": 1769, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 4.17}
+{"gen_tok_s": 219.2, "kind": "status", "kv_usage_pct": 80.3, "prompt_tok_s": 0.0, "running": 2, "t_s": 1360, "waiting": 6}
+{"accepted": 1636, "drafted": 2780, "kind": "spec", "mean_acceptance_length": 3.94}
+{"gen_tok_s": 201.2, "kind": "status", "kv_usage_pct": 80.3, "prompt_tok_s": 0.0, "running": 2, "t_s": 1370, "waiting": 6}
+{"accepted": 1452, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.59}
+{"gen_tok_s": 222.5, "kind": "status", "kv_usage_pct": 80.3, "prompt_tok_s": 0.0, "running": 2, "t_s": 1380, "waiting": 6}
+{"accepted": 1669, "drafted": 2780, "kind": "spec", "mean_acceptance_length": 4.0}
+{"gen_tok_s": 220.6, "kind": "status", "kv_usage_pct": 80.3, "prompt_tok_s": 0.0, "running": 2, "t_s": 1390, "waiting": 6}
+{"accepted": 1646, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.94}
+{"gen_tok_s": 211.3, "kind": "status", "kv_usage_pct": 81.0, "prompt_tok_s": 0.0, "running": 2, "t_s": 1400, "waiting": 6}
+{"accepted": 1553, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.77}
+{"gen_tok_s": 194.3, "kind": "status", "kv_usage_pct": 82.3, "prompt_tok_s": 0.0, "running": 2, "t_s": 1410, "waiting": 6}
+{"accepted": 1387, "drafted": 2780, "kind": "spec", "mean_acceptance_length": 3.49}
+{"gen_tok_s": 206.2, "kind": "status", "kv_usage_pct": 81.6, "prompt_tok_s": 0.0, "running": 2, "t_s": 1420, "waiting": 6}
+{"accepted": 1502, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.68}
+{"gen_tok_s": 230.7, "kind": "status", "kv_usage_pct": 81.6, "prompt_tok_s": 0.0, "running": 2, "t_s": 1430, "waiting": 6}
+{"accepted": 1749, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 4.13}
+{"gen_tok_s": 198.6, "kind": "status", "kv_usage_pct": 81.6, "prompt_tok_s": 0.0, "running": 2, "t_s": 1440, "waiting": 6}
+{"accepted": 1424, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.53}
+{"gen_tok_s": 185.0, "kind": "status", "kv_usage_pct": 82.3, "prompt_tok_s": 0.0, "running": 2, "t_s": 1450, "waiting": 6}
+{"accepted": 1288, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.29}
+{"gen_tok_s": 194.9, "kind": "status", "kv_usage_pct": 81.6, "prompt_tok_s": 0.0, "running": 2, "t_s": 1460, "waiting": 6}
+{"accepted": 1389, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.48}
+{"gen_tok_s": 199.5, "kind": "status", "kv_usage_pct": 82.3, "prompt_tok_s": 0.0, "running": 2, "t_s": 1470, "waiting": 6}
+{"accepted": 1433, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.55}
+{"gen_tok_s": 191.6, "kind": "status", "kv_usage_pct": 83.0, "prompt_tok_s": 0.0, "running": 2, "t_s": 1480, "waiting": 6}
+{"accepted": 1350, "drafted": 2830, "kind": "spec", "mean_acceptance_length": 3.39}
+{"gen_tok_s": 207.6, "kind": "status", "kv_usage_pct": 83.0, "prompt_tok_s": 0.0, "running": 2, "t_s": 1490, "waiting": 6}
+{"accepted": 1516, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.71}
+{"gen_tok_s": 215.2, "kind": "status", "kv_usage_pct": 83.0, "prompt_tok_s": 0.0, "running": 2, "t_s": 1500, "waiting": 6}
+{"accepted": 1596, "drafted": 2780, "kind": "spec", "mean_acceptance_length": 3.87}
+{"gen_tok_s": 186.3, "kind": "status", "kv_usage_pct": 83.0, "prompt_tok_s": 0.0, "running": 2, "t_s": 1510, "waiting": 6}
+{"accepted": 1303, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.33}
+{"gen_tok_s": 238.6, "kind": "status", "kv_usage_pct": 83.0, "prompt_tok_s": 0.0, "running": 2, "t_s": 1520, "waiting": 6}
+{"accepted": 1834, "drafted": 2760, "kind": "spec", "mean_acceptance_length": 4.32}
+{"gen_tok_s": 224.9, "kind": "status", "kv_usage_pct": 83.0, "prompt_tok_s": 0.0, "running": 2, "t_s": 1530, "waiting": 6}
+{"accepted": 1691, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 4.03}
+{"gen_tok_s": 216.6, "kind": "status", "kv_usage_pct": 83.7, "prompt_tok_s": 0.0, "running": 2, "t_s": 1540, "waiting": 6}
+{"accepted": 1610, "drafted": 2780, "kind": "spec", "mean_acceptance_length": 3.9}
+{"gen_tok_s": 227.0, "kind": "status", "kv_usage_pct": 84.4, "prompt_tok_s": 0.0, "running": 2, "t_s": 1550, "waiting": 6}
+{"accepted": 1714, "drafted": 2780, "kind": "spec", "mean_acceptance_length": 4.08}
+{"gen_tok_s": 194.2, "kind": "status", "kv_usage_pct": 85.0, "prompt_tok_s": 0.0, "running": 2, "t_s": 1560, "waiting": 6}
+{"accepted": 1384, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 3.48}
+{"gen_tok_s": 209.1, "kind": "status", "kv_usage_pct": 84.4, "prompt_tok_s": 0.0, "running": 2, "t_s": 1570, "waiting": 6}
+{"accepted": 1533, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 3.75}
+{"gen_tok_s": 228.5, "kind": "status", "kv_usage_pct": 84.4, "prompt_tok_s": 0.0, "running": 2, "t_s": 1580, "waiting": 6}
+{"accepted": 1735, "drafted": 2750, "kind": "spec", "mean_acceptance_length": 4.15}
+{"gen_tok_s": 207.6, "kind": "status", "kv_usage_pct": 84.4, "prompt_tok_s": 0.0, "running": 2, "t_s": 1590, "waiting": 6}
+{"accepted": 1512, "drafted": 2820, "kind": "spec", "mean_acceptance_length": 3.68}
+{"gen_tok_s": 209.3, "kind": "status", "kv_usage_pct": 85.0, "prompt_tok_s": 0.0, "running": 2, "t_s": 1600, "waiting": 6}
+{"accepted": 1533, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.74}
+{"gen_tok_s": 194.2, "kind": "status", "kv_usage_pct": 85.0, "prompt_tok_s": 0.0, "running": 2, "t_s": 1610, "waiting": 6}
+{"accepted": 1384, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 3.48}
+{"gen_tok_s": 213.5, "kind": "status", "kv_usage_pct": 85.7, "prompt_tok_s": 0.0, "running": 2, "t_s": 1620, "waiting": 6}
+{"accepted": 1575, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.81}
+{"gen_tok_s": 211.2, "kind": "status", "kv_usage_pct": 85.7, "prompt_tok_s": 0.0, "running": 2, "t_s": 1630, "waiting": 6}
+{"accepted": 1552, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.77}
+{"gen_tok_s": 209.5, "kind": "status", "kv_usage_pct": 85.7, "prompt_tok_s": 0.0, "running": 2, "t_s": 1640, "waiting": 6}
+{"accepted": 1535, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.74}
+{"gen_tok_s": 221.5, "kind": "status", "kv_usage_pct": 85.7, "prompt_tok_s": 0.0, "running": 2, "t_s": 1650, "waiting": 6}
+{"accepted": 1657, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 3.97}
+{"gen_tok_s": 181.7, "kind": "status", "kv_usage_pct": 85.7, "prompt_tok_s": 0.0, "running": 2, "t_s": 1660, "waiting": 6}
+{"accepted": 1253, "drafted": 2820, "kind": "spec", "mean_acceptance_length": 3.22}
+{"gen_tok_s": 194.7, "kind": "status", "kv_usage_pct": 87.1, "prompt_tok_s": 0.0, "running": 2, "t_s": 1670, "waiting": 6}
+{"accepted": 1383, "drafted": 2820, "kind": "spec", "mean_acceptance_length": 3.45}
+{"gen_tok_s": 203.2, "kind": "status", "kv_usage_pct": 86.4, "prompt_tok_s": 0.0, "running": 2, "t_s": 1680, "waiting": 6}
+{"accepted": 1474, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 3.64}
+{"gen_tok_s": 194.1, "kind": "status", "kv_usage_pct": 87.8, "prompt_tok_s": 0.0, "running": 2, "t_s": 1690, "waiting": 6}
+{"accepted": 1385, "drafted": 2780, "kind": "spec", "mean_acceptance_length": 3.49}
+{"gen_tok_s": 209.7, "kind": "status", "kv_usage_pct": 87.1, "prompt_tok_s": 0.0, "running": 2, "t_s": 1700, "waiting": 6}
+{"accepted": 1543, "drafted": 2770, "kind": "spec", "mean_acceptance_length": 3.79}
+{"gen_tok_s": 208.8, "kind": "status", "kv_usage_pct": 87.1, "prompt_tok_s": 0.0, "running": 2, "t_s": 1710, "waiting": 6}
+{"accepted": 1536, "drafted": 2760, "kind": "spec", "mean_acceptance_length": 3.78}
+{"gen_tok_s": 200.0, "kind": "status", "kv_usage_pct": 87.1, "prompt_tok_s": 0.0, "running": 2, "t_s": 1720, "waiting": 6}
+{"accepted": 1440, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.57}
+{"gen_tok_s": 228.1, "kind": "status", "kv_usage_pct": 87.1, "prompt_tok_s": 0.0, "running": 2, "t_s": 1730, "waiting": 6}
+{"accepted": 1727, "drafted": 2770, "kind": "spec", "mean_acceptance_length": 4.12}
+{"gen_tok_s": 213.4, "kind": "status", "kv_usage_pct": 87.8, "prompt_tok_s": 0.0, "running": 2, "t_s": 1740, "waiting": 6}
+{"accepted": 1572, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.8}
+{"gen_tok_s": 207.8, "kind": "status", "kv_usage_pct": 87.8, "prompt_tok_s": 0.0, "running": 2, "t_s": 1750, "waiting": 6}
+{"accepted": 1526, "drafted": 2760, "kind": "spec", "mean_acceptance_length": 3.76}
+{"gen_tok_s": 192.5, "kind": "status", "kv_usage_pct": 88.4, "prompt_tok_s": 0.0, "running": 2, "t_s": 1760, "waiting": 6}
+{"accepted": 1361, "drafted": 2820, "kind": "spec", "mean_acceptance_length": 3.41}
+{"gen_tok_s": 206.8, "kind": "status", "kv_usage_pct": 88.4, "prompt_tok_s": 0.0, "running": 2, "t_s": 1770, "waiting": 6}
+{"accepted": 1516, "drafted": 2760, "kind": "spec", "mean_acceptance_length": 3.75}
+{"gen_tok_s": 239.8, "kind": "status", "kv_usage_pct": 88.4, "prompt_tok_s": 0.0, "running": 2, "t_s": 1780, "waiting": 6}
+{"accepted": 1836, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 4.27}
+{"gen_tok_s": 195.6, "kind": "status", "kv_usage_pct": 88.4, "prompt_tok_s": 0.0, "running": 2, "t_s": 1790, "waiting": 6}
+{"accepted": 1394, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.48}
+{"gen_tok_s": 202.2, "kind": "status", "kv_usage_pct": 88.4, "prompt_tok_s": 0.0, "running": 2, "t_s": 1800, "waiting": 6}
+{"accepted": 1464, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 3.62}
+{"gen_tok_s": 197.0, "kind": "status", "kv_usage_pct": 89.8, "prompt_tok_s": 0.0, "running": 2, "t_s": 1810, "waiting": 6}
+{"accepted": 1410, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.52}
+{"gen_tok_s": 220.1, "kind": "status", "kv_usage_pct": 89.1, "prompt_tok_s": 0.0, "running": 2, "t_s": 1820, "waiting": 6}
+{"accepted": 1641, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.93}
+{"gen_tok_s": 195.4, "kind": "status", "kv_usage_pct": 89.8, "prompt_tok_s": 0.0, "running": 2, "t_s": 1830, "waiting": 6}
+{"accepted": 1394, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.49}
+{"gen_tok_s": 209.0, "kind": "status", "kv_usage_pct": 89.8, "prompt_tok_s": 0.0, "running": 2, "t_s": 1840, "waiting": 6}
+{"accepted": 1534, "drafted": 2780, "kind": "spec", "mean_acceptance_length": 3.76}
+{"gen_tok_s": 202.4, "kind": "status", "kv_usage_pct": 89.8, "prompt_tok_s": 0.0, "running": 2, "t_s": 1850, "waiting": 6}
+{"accepted": 1464, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.61}
+{"gen_tok_s": 198.3, "kind": "status", "kv_usage_pct": 89.8, "prompt_tok_s": 0.0, "running": 2, "t_s": 1860, "waiting": 6}
+{"accepted": 1423, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.54}
+{"gen_tok_s": 206.9, "kind": "status", "kv_usage_pct": 90.5, "prompt_tok_s": 0.0, "running": 2, "t_s": 1870, "waiting": 6}
+{"accepted": 1511, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 3.71}
+{"gen_tok_s": 182.4, "kind": "status", "kv_usage_pct": 90.5, "prompt_tok_s": 0.0, "running": 2, "t_s": 1880, "waiting": 6}
+{"accepted": 1266, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 3.27}
+{"gen_tok_s": 199.3, "kind": "status", "kv_usage_pct": 91.2, "prompt_tok_s": 0.0, "running": 2, "t_s": 1890, "waiting": 6}
+{"accepted": 1433, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.56}
+{"gen_tok_s": 213.9, "kind": "status", "kv_usage_pct": 90.5, "prompt_tok_s": 0.0, "running": 2, "t_s": 1900, "waiting": 6}
+{"accepted": 1577, "drafted": 2810, "kind": "spec", "mean_acceptance_length": 3.81}
+{"gen_tok_s": 215.3, "kind": "status", "kv_usage_pct": 91.2, "prompt_tok_s": 0.0, "running": 2, "t_s": 1910, "waiting": 6}
+{"accepted": 1595, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 3.86}
+{"gen_tok_s": 216.6, "kind": "status", "kv_usage_pct": 91.2, "prompt_tok_s": 0.0, "running": 2, "t_s": 1920, "waiting": 6}
+{"accepted": 1612, "drafted": 2770, "kind": "spec", "mean_acceptance_length": 3.91}
+{"gen_tok_s": 186.0, "kind": "status", "kv_usage_pct": 91.2, "prompt_tok_s": 0.0, "running": 2, "t_s": 1930, "waiting": 6}
+{"accepted": 1306, "drafted": 2770, "kind": "spec", "mean_acceptance_length": 3.36}
+{"gen_tok_s": 219.0, "kind": "status", "kv_usage_pct": 91.8, "prompt_tok_s": 0.0, "running": 2, "t_s": 1940, "waiting": 6}
+{"accepted": 1634, "drafted": 2780, "kind": "spec", "mean_acceptance_length": 3.94}
+{"gen_tok_s": 255.5, "kind": "status", "kv_usage_pct": 91.8, "prompt_tok_s": 0.0, "running": 2, "t_s": 1950, "waiting": 6}
+{"accepted": 1999, "drafted": 2780, "kind": "spec", "mean_acceptance_length": 4.6}
+{"gen_tok_s": 222.4, "kind": "status", "kv_usage_pct": 91.8, "prompt_tok_s": 0.0, "running": 2, "t_s": 1960, "waiting": 6}
+{"accepted": 1670, "drafted": 2770, "kind": "spec", "mean_acceptance_length": 4.01}
+{"gen_tok_s": 201.7, "kind": "status", "kv_usage_pct": 92.5, "prompt_tok_s": 0.0, "running": 2, "t_s": 1970, "waiting": 6}
+{"accepted": 1461, "drafted": 2780, "kind": "spec", "mean_acceptance_length": 3.63}
+{"gen_tok_s": 221.7, "kind": "status", "kv_usage_pct": 92.5, "prompt_tok_s": 0.0, "running": 2, "t_s": 1980, "waiting": 6}
+{"accepted": 1659, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 3.97}
+{"gen_tok_s": 214.3, "kind": "status", "kv_usage_pct": 92.5, "prompt_tok_s": 0.0, "running": 2, "t_s": 1990, "waiting": 6}
+{"accepted": 1585, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 3.84}
+{"gen_tok_s": 212.6, "kind": "status", "kv_usage_pct": 93.2, "prompt_tok_s": 0.0, "running": 2, "t_s": 2000, "waiting": 6}
+{"accepted": 1570, "drafted": 2780, "kind": "spec", "mean_acceptance_length": 3.82}
+{"gen_tok_s": 215.8, "kind": "status", "kv_usage_pct": 93.2, "prompt_tok_s": 0.0, "running": 2, "t_s": 2010, "waiting": 6}
+{"accepted": 1600, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 3.87}
+{"gen_tok_s": 243.4, "kind": "status", "kv_usage_pct": 93.2, "prompt_tok_s": 0.0, "running": 2, "t_s": 2020, "waiting": 6}
+{"accepted": 1876, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 4.36}
+{"gen_tok_s": 210.2, "kind": "status", "kv_usage_pct": 93.2, "prompt_tok_s": 0.0, "running": 2, "t_s": 2030, "waiting": 6}
+{"accepted": 1544, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 3.77}
+{"gen_tok_s": 222.7, "kind": "status", "kv_usage_pct": 94.6, "prompt_tok_s": 0.0, "running": 2, "t_s": 2040, "waiting": 6}
+{"accepted": 1669, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 3.99}
+{"gen_tok_s": 224.9, "kind": "status", "kv_usage_pct": 93.9, "prompt_tok_s": 0.0, "running": 2, "t_s": 2050, "waiting": 6}
+{"accepted": 1695, "drafted": 2770, "kind": "spec", "mean_acceptance_length": 4.06}
+{"gen_tok_s": 188.7, "kind": "status", "kv_usage_pct": 93.9, "prompt_tok_s": 0.0, "running": 2, "t_s": 2060, "waiting": 6}
+{"accepted": 1329, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 3.38}
+{"gen_tok_s": 218.2, "kind": "status", "kv_usage_pct": 95.2, "prompt_tok_s": 0.0, "running": 2, "t_s": 2070, "waiting": 6}
+{"accepted": 1624, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 3.91}
+{"gen_tok_s": 199.2, "kind": "status", "kv_usage_pct": 94.6, "prompt_tok_s": 0.0, "running": 2, "t_s": 2080, "waiting": 6}
+{"accepted": 1432, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.56}
+{"gen_tok_s": 193.3, "kind": "status", "kv_usage_pct": 95.2, "prompt_tok_s": 0.0, "running": 2, "t_s": 2090, "waiting": 6}
+{"accepted": 1375, "drafted": 2790, "kind": "spec", "mean_acceptance_length": 3.46}
+{"gen_tok_s": 207.8, "kind": "status", "kv_usage_pct": 98.0, "prompt_tok_s": 0.0, "running": 2, "t_s": 2100, "waiting": 6}
+{"accepted": 1518, "drafted": 2800, "kind": "spec", "mean_acceptance_length": 3.71}
+{"gen_tok_s": 198.8, "kind": "status", "kv_usage_pct": 95.9, "prompt_tok_s": 0.0, "running": 2, "t_s": 2110, "waiting": 6}
+{"accepted": 1432, "drafted": 2780, "kind": "spec", "mean_acceptance_length": 3.58}
+{"kind": "event", "t_s": 2120, "what": "cuda_illegal_memory_access"}
+{"kind": "event", "t_s": 2120, "what": "cuda_illegal_memory_access"}
+{"gen_tok_s": 134.5, "kind": "status", "kv_usage_pct": 95.2, "prompt_tok_s": 0.0, "running": 2, "t_s": 2120, "waiting": 6}
+{"accepted": 781, "drafted": 2820, "kind": "spec", "mean_acceptance_length": 2.38}
+{"gen_tok_s": 0.0, "kind": "status", "kv_usage_pct": 95.2, "prompt_tok_s": 0.0, "running": 2, "t_s": 2130, "waiting": 6}
+{"kind": "event", "t_s": null, "what": "preemption"}
+{"kind": "event", "t_s": null, "what": "preemption"}

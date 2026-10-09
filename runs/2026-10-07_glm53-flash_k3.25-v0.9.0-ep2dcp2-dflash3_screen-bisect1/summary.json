@@ -21,5 +21,22 @@
   "127": {
    "ok": 1
   }
+ },
+ "server": {
+  "kv_pool_tokens": 3165056,
+  "kv_memory_gib_per_gpu": [
+   17.38
+  ],
+  "max_num_seqs": 16,
+  "status_lines": 1325,
+  "waiting_below_max_seqs": 0,
+  "max_running": 16,
+  "peak_kv_usage_pct": 78.0,
+  "mean_gen_tok_s_8plus_running": 458.7,
+  "intervals_8plus_running": 1005,
+  "mean_acceptance_length": 2.919,
+  "acceptance_rate": 0.6362,
+  "events": {},
+  "first_error_s": null
  }
 }

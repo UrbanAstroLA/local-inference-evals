@@ -12,5 +12,11 @@
   0.9192
  ],
  "accuracy_flexible_answered": 0.8788,
- "empty_by_finish_reason": {}
+ "empty_by_finish_reason": {},
+ "accuracy_stated": 0.8939,
+ "accuracy_stated_ci95": [
+  0.8485,
+  0.9343
+ ],
+ "accuracy_stated_answered": 0.8939
 }

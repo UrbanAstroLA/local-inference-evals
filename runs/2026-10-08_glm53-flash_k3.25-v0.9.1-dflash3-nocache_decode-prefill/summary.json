@@ -1,0 +1,109 @@
+{
+ "prompts": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11
+ ],
+ "positions": 31200,
+ "by_region": {
+  "2044-2047": {
+   "positions": 48,
+   "mean_abs_dlp": 0.04255,
+   "top1_agree": 1.0,
+   "mean_kl_top20": 0.00789
+  },
+  "2044-2047|mod0": {
+   "positions": 12,
+   "mean_abs_dlp": 0.02703,
+   "top1_agree": 1.0,
+   "mean_kl_top20": 0.00511
+  },
+  "2044-2047|mod1": {
+   "positions": 12,
+   "mean_abs_dlp": 0.06945,
+   "top1_agree": 1.0,
+   "mean_kl_top20": 0.01055
+  },
+  "2044-2047|mod2": {
+   "positions": 12,
+   "mean_abs_dlp": 0.06884,
+   "top1_agree": 1.0,
+   "mean_kl_top20": 0.01476
+  },
+  "2044-2047|mod3": {
+   "positions": 12,
+   "mean_abs_dlp": 0.00488,
+   "top1_agree": 1.0,
+   "mean_kl_top20": 0.00114
+  },
+  "ge2048": {
+   "positions": 9229,
+   "mean_abs_dlp": 0.05834,
+   "top1_agree": 0.9724,
+   "mean_kl_top20": 0.01155
+  },
+  "ge2048|mod0": {
+   "positions": 2312,
+   "mean_abs_dlp": 0.06748,
+   "top1_agree": 0.9728,
+   "mean_kl_top20": 0.01126
+  },
+  "ge2048|mod1": {
+   "positions": 2309,
+   "mean_abs_dlp": 0.05992,
+   "top1_agree": 0.9697,
+   "mean_kl_top20": 0.01378
+  },
+  "ge2048|mod2": {
+   "positions": 2305,
+   "mean_abs_dlp": 0.05201,
+   "top1_agree": 0.977,
+   "mean_kl_top20": 0.01038
+  },
+  "ge2048|mod3": {
+   "positions": 2303,
+   "mean_abs_dlp": 0.05391,
+   "top1_agree": 0.97,
+   "mean_kl_top20": 0.01076
+  },
+  "lt2044": {
+   "positions": 21923,
+   "mean_abs_dlp": 0.05024,
+   "top1_agree": 0.9755,
+   "mean_kl_top20": 0.01048
+  },
+  "lt2044|mod0": {
+   "positions": 5476,
+   "mean_abs_dlp": 0.05195,
+   "top1_agree": 0.9755,
+   "mean_kl_top20": 0.01176
+  },
+  "lt2044|mod1": {
+   "positions": 5479,
+   "mean_abs_dlp": 0.04804,
+   "top1_agree": 0.9746,
+   "mean_kl_top20": 0.01034
+  },
+  "lt2044|mod2": {
+   "positions": 5483,
+   "mean_abs_dlp": 0.04955,
+   "top1_agree": 0.9746,
+   "mean_kl_top20": 0.00953
+  },
+  "lt2044|mod3": {
+   "positions": 5485,
+   "mean_abs_dlp": 0.0514,
+   "top1_agree": 0.9772,
+   "mean_kl_top20": 0.01029
+  }
+ }
+}

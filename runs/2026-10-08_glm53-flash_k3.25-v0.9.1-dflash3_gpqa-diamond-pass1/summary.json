@@ -15,5 +15,28 @@
  "empty_by_finish_reason": {
   "length": 4,
   "stop": 1
+ },
+ "accuracy_stated": 0.8586,
+ "accuracy_stated_ci95": [
+  0.8081,
+  0.904
+ ],
+ "accuracy_stated_answered": 0.8808,
+ "server": {
+  "kv_pool_tokens": 4707515,
+  "kv_memory_gib_per_gpu": [
+   17.4
+  ],
+  "max_num_seqs": 16,
+  "status_lines": 859,
+  "waiting_below_max_seqs": 0,
+  "max_running": 16,
+  "peak_kv_usage_pct": 39.6,
+  "mean_gen_tok_s_8plus_running": 458.8,
+  "intervals_8plus_running": 791,
+  "mean_acceptance_length": 2.807,
+  "acceptance_rate": 0.5977,
+  "events": {},
+  "first_error_s": null
  }
 }

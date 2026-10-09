@@ -7,6 +7,12 @@ Fixes: no consistent change. With the same speculation setting, per-request deco
 aggregate throughput at 8 concurrent by +2.7% (DFlash2 ×3) and -7.4% (no speculation), acceptance by at most 0.004.
 DFlash2 ×5 vs ×3 (both with the fixes): faster at concurrency 1 (163 vs 146 tok/s per request), slower at 8
 (289 vs 374 tok/s aggregate).
-Greedy agreement: identical configs diverge after a median ~318 characters at temperature 0 (the engine is not
-bitwise reproducible), so greedy parity cannot certify speculative exactness here. Per-pair prefix lengths are in
-`parity.json` (derived locally from output text, which is not published; output hashes are in each run).
+**Single runs, no noise floor:** each configuration ran once, so speed and acceptance differences of a few percent
+cannot be told from run-to-run variation.
+
+Greedy agreement: the same configuration run twice, one request at a time, diverges after a median ~318 characters at
+temperature 0, so the engine is not bitwise reproducible even without batching, and greedy parity cannot certify
+speculative exactness here. **Receipts:** the per-pair prefix lengths in `parity.json` are derived from the greedy output
+text, which is model output and is not published; each run publishes the outputs' SHA-256 hashes (`output_sha256`), and
+the probe can be rerun with `tools/clients/serving_probe.py`. These lengths are the one serving figure without a
+row-level receipt.

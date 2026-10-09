@@ -28,5 +28,22 @@
  "non_ok_ci95": [
   0.0889,
   0.5323
- ]
+ ],
+ "server": {
+  "kv_pool_tokens": 4707515,
+  "kv_memory_gib_per_gpu": [
+   17.4
+  ],
+  "max_num_seqs": 16,
+  "status_lines": 354,
+  "waiting_below_max_seqs": 1,
+  "max_running": 16,
+  "peak_kv_usage_pct": 40.8,
+  "mean_gen_tok_s_8plus_running": 390.8,
+  "intervals_8plus_running": 231,
+  "mean_acceptance_length": 2.539,
+  "acceptance_rate": 0.4972,
+  "events": {},
+  "first_error_s": null
+ }
 }

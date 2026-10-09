@@ -61,6 +61,71 @@ def link(rid, text=None):
     return f'<a href="{REPO}/tree/main/runs/{esc(rid)}">{esc(text or "receipts")}</a>'
 
 
+# ---------------------------------------------------------------- glossary (method page; first use on every other page links here)
+
+GLOSSARY = [
+    ("mla", r"\bMLA\b(?! (?:layer )?ownership| owners)", "MLA", "Multi-head latent attention: GLM-5.3-Flash's attention in 11 of its layers (the others are KDA "
+     "layers). Keys and values are cached as a compressed latent, and a sparse-attention indexer picks which earlier tokens each decode step attends."),
+    ("kpool", r"\bkpool\b", "kpool", "The sparse-attention indexer's pooled key cache: earlier tokens are grouped in pools of 4, and each decode step "
+     "selects up to 512 pools (2,048 tokens). The <i>kpool tail</i> is the newest, incomplete pool: the current token and up to two before it."),
+    ("dcp", r"\bDCP[12]\b", "DCP1 / DCP2", "Decode context parallelism. DCP2 splits each MLA layer's KV cache across both GPUs by token; DCP1 "
+     "does not split it."),
+    ("mla-ownership", r"\bMLA (?:layer )?(?:ownership|owners)\b", "MLA ownership", "tpurtell's DCP1 layout from 0.8.0 on: each MLA layer, with its "
+     "indexer and caches, lives on one GPU only (<code>split:25</code>: layers 3-23 on the first GPU, 27-43 on the second) and runs all heads "
+     "there. <code>tp</code> is the setting without ownership."),
+    ("ep-tp", r"\b(?:EP2|TP2)\b", "EP2 / TP2", "Routed experts placed whole on one GPU each (expert parallel, EP2) or each expert split across "
+     "both GPUs (tensor parallel, TP2)."),
+    ("nope-record", r"\bNOPE records?\b", "NOPE record", "The KV cache record of an MLA latent. tpurtell 0.8.0 on stores a 528-byte record "
+     "(512 FP8 bytes and four FP32 scales); <i>NOPE records off</i> uses the 656-byte record that carries an unused rotary tail. tpurtell reports "
+     "that outputs match within BF16 rounding."),
+    ("dflash2", r"\bDFlash2\b", "DFlash2 ×N", "Speculative decoding with the draft model incoai/GLM-5.3-Flash-DFlash2, which proposes N tokens "
+     "per step; the served model checks them in one forward pass and keeps those it accepts. Acceptance rate = accepted / drafted tokens."),
+    ("draft-slot-sharing", r"\b[Dd]raft[- ]slot sharing\b", "Draft-slot sharing", "From tpurtell 0.8.0 on, the DFlash2 draft cache is stored "
+     "inside the MLA cache's slot tensors instead of separate tensors. <i>sharing off</i> disables it."),
+    ("flexible-extract", r"\bflexible-extract\b", "flexible-extract", "lm-evaluation-harness's GPQA answer filter: the last parenthesised capital "
+     "letter in the reply. The headline (raw) GPQA score. <code>correct_stated</code> is the secondary, audited score: whether the reply's stated "
+     "final answer is right."),
+    ("empty-answer", r"\b[Ee]mpty answers?\b", "Empty answer", "A GPQA reply with no content after its reasoning: the reasoning hit the "
+     "327,680-token budget, or ended without an answer. Scored wrong."),
+    ("loop", r"\b[Ll]oops?\b", "Loop", "A request that does not finish and repeats itself: stopped by the screen's early-stop detector (three "
+     "consecutive checks with the last 30,000 reasoning characters compressing below 10% of their size), or ending at the budget with a tail that "
+     "compresses below 15%."),
+    ("exhaustion", r"\b[Ee]xhaustions?\b", "Exhaustion", "A request that runs to the 327,680-token budget with varied, non-repetitive reasoning."),
+]
+SKIP_TAGS = {"a", "svg", "h1", "h2", "code", "title", "style", "script", "th", "nav", "summary"}
+
+
+def gloss(body, target="method.html"):
+    """Link the first use of each glossary term on a page (text outside links, headings, charts and code) to its definition."""
+    depth, done, out = [], set(), []
+    for part in re.split(r"(<[^>]+>)", body):
+        if part.startswith("<"):
+            m = re.match(r"<(/?)([a-zA-Z0-9]+)", part)
+            if m and m.group(2).lower() in SKIP_TAGS and not part.endswith("/>"):
+                if m.group(1):
+                    if depth: depth.pop()
+                else:
+                    depth.append(m.group(2).lower())
+            out.append(part); continue
+        segs = [part]
+        if not depth:
+            for slug, pat, _, _ in GLOSSARY:
+                if slug in done: continue
+                for n, seg in enumerate(segs):
+                    if isinstance(seg, tuple): continue
+                    m = re.search(pat, seg)
+                    if m:
+                        segs[n:n + 1] = [seg[:m.start()], (f'<a class="g" href="{target}#g-{slug}">{m.group(0)}</a>',), seg[m.end():]]
+                        done.add(slug); break
+        out.append("".join(x[0] if isinstance(x, tuple) else x for x in segs))
+    return "".join(out)
+
+
+def glossary_html():
+    return ('<h2 id="glossary">Glossary</h2><dl class="gl">' + "".join(f'<dt id="g-{slug}">{term}</dt><dd>{d}</dd>' for slug, _, term, d in GLOSSARY)
+            + '</dl>')
+
+
 # ---------------------------------------------------------------- chart parts
 
 CSS = """
@@ -96,6 +161,7 @@ th{color:var(--ink2);font-weight:600}td.n{text-align:right;font-variant-numeric:
 .key table{font-size:13px}.key td:first-child{white-space:nowrap;font-weight:600;color:var(--ink)}.key code{font-size:12px}
 #tip{position:fixed;pointer-events:none;background:var(--surface);color:var(--ink);border:1px solid var(--ring);border-radius:8px;
 padding:8px 10px;font-size:13px;box-shadow:0 4px 16px rgba(0,0,0,.12);display:none;max-width:320px;z-index:9}
+a.g{color:inherit;text-decoration:underline dotted;text-underline-offset:2px}.gl dt{font-weight:600;margin-top:10px}.gl dd{margin:2px 0 0 0;color:var(--ink2)}
 #tip b{display:block;font-size:15px}footer{max-width:980px;margin:0 auto;padding:0 16px 40px;color:var(--muted);font-size:13px}
 """
 
@@ -218,10 +284,13 @@ def with_key(body, key_html):
 
 
 def page(name, title, body, key_html):
+    body_html = with_key(body, key_html)
+    if name != "method.html":
+        body_html = gloss(body_html)
     nav = "".join(f'<a href="{f}" class="{"on" if f == name else ""}">{esc(t)}</a>' for f, t in PAGES)
     return (f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<title>{esc(title)} - local-inference-evals</title><style>{CSS}</style></head><body>'
-            f'<nav><span class="brand">local-inference-evals</span>{nav}</nav><main>{with_key(body, key_html)}</main>'
+            f'<nav><span class="brand">local-inference-evals</span>{nav}</nav><main>{body_html}</main>'
             f'<footer>Generated from the repository data by <code>tools/site.py</code>. Receipts, protocols and code: '
             f'<a href="{REPO}">{REPO.replace("https://", "")}</a>. Results CC BY 4.0, code Apache-2.0.</footer>'
             f'<div id="tip" role="status"></div><script>{JS}</script></body></html>')
@@ -243,12 +312,18 @@ def gpqa_accuracy_fig(rows, title):
                  tip=f'{100 * r["s"]["accuracy_flexible"]:.1f}% (95% CI {100 * r["s"]["accuracy_flexible_ci95"][0]:.1f}-{100 * r["s"]["accuracy_flexible_ci95"][1]:.1f})||'
                      f'{r["label"]}, {r["n"]} answers') for r in rows]
     body = interval_plot(data, 70, 100, [70, 75, 80, 85, 90, 95, 100], lambda v: f"{v:.0f}" if v == int(v) else f"{v:.1f}", "%")
-    tbl = table(["Configuration", "Accuracy", "95% CI", "Receipts"],
-                [[esc(r["label"]), f'{100 * r["s"]["accuracy_flexible"]:.1f}%',
-                  f'{100 * r["s"]["accuracy_flexible_ci95"][0]:.1f}-{100 * r["s"]["accuracy_flexible_ci95"][1]:.1f}', link(r["rid"])] for r in rows], numeric=(1,))
-    return figure(title, "Pass 1 of each configuration, 198 questions, request seed 1234. Raw lm-eval flexible-extract score, which reads some correct "
-                  "answers as wrong (0.5 to 2.5 points per pass, about 1.6; see the protocol). Dot = accuracy; line = 95% bootstrap interval over "
-                  "questions. Overlapping lines: the configurations cannot be told apart.", body, tbl, legend([r["cfg"] for r in rows]))
+    pc = lambda x: f"{100 * x:.1f}%"
+    tbl = table(["Configuration", "Raw (flexible-extract)", "95% CI", "Raw, answered only", "Stated answer (audited)", "Stated, answered only", "Receipts"],
+                [[esc(r["label"]), pc(r["s"]["accuracy_flexible"]),
+                  f'{100 * r["s"]["accuracy_flexible_ci95"][0]:.1f}-{100 * r["s"]["accuracy_flexible_ci95"][1]:.1f}',
+                  pc(r["s"]["accuracy_flexible_answered"]), pc(r["s"]["accuracy_stated"]), pc(r["s"]["accuracy_stated_answered"]), link(r["rid"])]
+                 for r in rows], numeric=(1, 3, 4, 5))
+    gap = [100 * (r["s"]["accuracy_stated"] - r["s"]["accuracy_flexible"]) for r in rows]
+    return figure(title, "Pass 1 of each configuration, 198 questions, request seed 1234. Dot = raw lm-eval flexible-extract score (the headline); line = "
+                  "95% bootstrap interval over questions. The audited stated-answer score (table) is "
+                  f"{min(gap):.1f}-{max(gap):.1f} points higher, because the raw filter reads some correct answers as wrong. All nine runs share one "
+                  "request seed, so this spread likely understates how much independent runs vary. Overlapping lines: the configurations cannot be told apart.",
+                  body, tbl, legend([r["cfg"] for r in rows]))
 
 
 def gpqa_empty_fig(rows, title):
@@ -322,6 +397,24 @@ def outcome_bars(items, title, sub):
     leg = ('<div class="legend">' + "".join(f'<span><i style="background:{col};border-radius:2px"></i>{name}</span>' for k, name, col in (OUTC[1], OUTC[2], OUTC[0]))
            + '<span>&#9474;&#8212;&#9474; 95% Wilson interval of failures</span></div>')
     return figure(title, sub, "".join(s), table(["Arm", "Finished", "Loop", "Exhaustion", "Failed", "95% Wilson", "Receipts"], tr, numeric=(1, 2, 3, 4)), leg)
+
+
+def screen_caveats(v2):
+    """What the component screen held fixed, what it did not test, and how large an effect it could see."""
+    k = {a: sum(r["cls"] in ("loop", "exhaust") for r in m["rows"]) for a, m in v2.items()}
+    base88 = sum(k[a] for a in analyze.ARMS88) / (12 * len(analyze.ARMS88))
+    m1 = analyze.mdd(k["B"] / 12, 12, 12); m2 = analyze.mdd(base88, 24, 24); m3 = analyze.mdd(k["B79"] / 12, 12, 12)
+    f = lambda x: "not reachable at all" if x is None else f"about {100 * x:.0f} points"
+    return ('<div class="note"><b>Scope.</b> Held fixed in every arm: 3.25bpw weights, DFlash2 ×3, temperature 1.0 / top_p 0.95, the 327,680-token '
+            'budget, 12 concurrent requests, one question per arm, a fresh server. Arms EO and NO also turned draft-slot sharing off (the launcher pairs '
+            'it with MLA ownership <code>tp</code>), so ownership and sharing are not separated. Arm V79 differs from B79 in image, layout, vision and '
+            'model revision together. Draft depth, quantization and sampling settings were not varied. '
+            f'<b>Power</b> (two-sided Fisher test, p &lt; 0.05, 80% power; <code>tools/analyze.py screen-power</code>): one arm against another on '
+            f'question 88 (12 vs 12, from {100 * k["B"] / 12:.0f}% failing) detects a rise of {f(m1[1])}, and a drop is {f(m1[0])}; a switch on '
+            f'vs off (24 vs 24, from {100 * base88:.0f}%) detects a rise of {f(m2[1])}; question 79 (12 vs 12, from {100 * k["B79"] / 12:.0f}%) '
+            f'detects a drop of {f(m3[0])}. Only very large effects could show. <b>Selection.</b> Questions 88 and 79 were chosen as hard from '
+            f'empty answers and screens that all sent request seed 1234; with distinct seeds, question 88 fails in {min(k[a] for a in analyze.ARMS88)}-'
+            f'{max(k[a] for a in analyze.ARMS88)} of 12 draws per arm. Two questions are not a benchmark-wide rate.</div>')
 
 
 def arm_label(arm, m):
@@ -417,28 +510,36 @@ def fisher(a, b, c, d):
     return analyze.fisher(a, b, c, d)
 
 
+def decode_prefill_fig(runs):
+    dps = sorted((m for m in runs.values() if m["protocol"] == "decode-prefill-consistency/v1"), key=lambda m: (m["config"], m["id"]))
+    kd, ktr = [], []
+    for reg, rname in (("lt2044", "i < 2,044"), ("ge2048", "i ≥ 2,048")):
+        for m in dps:
+            per = []
+            for d in range(6):
+                v = [r["kl_top20"] for r in m["rows"] if r["doc_id"] == d and r["region"] == reg and r["kl_top20"] is not None]
+                per.append(sum(v) / len(v))
+            allv = [r["kl_top20"] for r in m["rows"] if r["doc_id"] < 6 and r["region"] == reg and r["kl_top20"] is not None]
+            est = sum(allv) / len(allv)
+            lab = f"{rname} · {engine_label(m['cfg'])}{' · spec on' if m['cfg']['serving']['speculative']['tokens'] else ''} · {m['date'][5:]}"
+            kd.append(dict(label=lab, color=color(m["cfg"]), est=est, lo=min(per), hi=max(per),
+                           tip=f"KL {est:.4f}||{lab}; prompts 0-5; per-prompt range {min(per):.4f}-{max(per):.4f}"))
+            ktr.append([esc(lab), f"{est:.4f}", f"{min(per):.4f}-{max(per):.4f}", link(m["id"])])
+    return figure("Decode vs prefill re-scoring of the same tokens", "3.25bpw, prefix caching off, concurrency 1, GPQA prompts 0-5 (shared by every run; "
+                  "the tpurtell 0.9.1 runs also cover prompts 6-11) x 2,600 decoded tokens. Dot = mean KL over the shared top-20 tokens (lower = decode "
+                  "agrees with prefill); line = range of the six prompts' means. One run without the fix; three with it (the local build and two runs of "
+                  "the 0.9.1 release, whose difference is the run-to-run spread), plus 0.9.1 with speculation on. Below 2,044 tokens the run without "
+                  "the fix sits far above every run with it; from 2,048 tokens the runs with the fix themselves spread widely.",
+                  interval_plot(kd, 0, 0.12, [0, 0.03, 0.06, 0.09, 0.12], lambda v: "0" if v == 0 else f"{v:.4f}".rstrip("0"), ""),
+                  table(["Positions · engine · date", "Mean KL, prompts 0-5", "Per-prompt range", "Receipts"], ktr, numeric=(1,)),
+                  legend([m["cfg"] for m in dps]))
+
+
 def looping(runs):
     by = lambda proto, cfg: sorted((m for m in runs.values() if m["protocol"] == proto and m["config"] == cfg), key=lambda m: m["id"])
     v2 = v2_runs(runs)
-    # decode vs prefill
-    dp = {c: by("decode-prefill-consistency/v1", c)[0] for c in ("glm53-flash/k3.25-v0.9.0-nospec-nocache", "glm53-flash/k3.25-v0.9.0-tailfix-nospec-nocache")}
-    kd, ktr = [], []
-    for c, m in dp.items():
-        per = []
-        for d in sorted({r["doc_id"] for r in m["rows"]}):
-            v = [r["kl_top20"] for r in m["rows"] if r["doc_id"] == d and r["region"] == "lt2044" and r["kl_top20"] is not None]
-            per.append(sum(v) / len(v))
-        s_ = m["summary"]["by_region"]["lt2044"]; lab = f"i < 2,044 · {engine_label(m['cfg'])}"
-        kd.append(dict(label=lab, color=color(m["cfg"]), est=s_["mean_kl_top20"], lo=min(per), hi=max(per),
-                       tip=f"KL {s_['mean_kl_top20']:.4f}||{lab}; {s_['positions']} positions; per-prompt range {min(per):.4f}-{max(per):.4f}"))
-        ktr.append([esc(lab), s_["positions"], f"{s_['mean_kl_top20']:.4f}", f"{100 * s_['top1_agree']:.1f}%", f"{s_['mean_abs_dlp']:.4f}", link(m["id"])])
-    fig_kl = figure("Decode vs prefill re-scoring of the same tokens, below 2,044 tokens", "3.25bpw, speculation and prefix caching off, 6 GPQA prompts "
-                    "x 2,600 decoded tokens. Dot = mean KL over the shared top-20 tokens (lower = decode agrees with prefill); line = range of the six "
-                    "prompts' means. One run per build; a later repeat of this measurement varied by up to about 2x between runs (not published), so "
-                    "only this large effect is claimed.",
-                    interval_plot(kd, 0, 0.12, [0, 0.03, 0.06, 0.09, 0.12], lambda v: f"{v:g}", ""),
-                    table(["Positions · engine", "Positions", "Mean KL", "Top-1 agreement", "Mean abs Δlogprob", "Receipts"], ktr, numeric=(1, 2, 3, 4)),
-                    legend([m["cfg"] for m in dp.values()]))
+    # decode vs prefill: every run, on prompts 0-5 (the prompts all runs share)
+    fig_kl = decode_prefill_fig(runs)
     # index check
     ix = {c: by("kpool-tail-index/v1", c)[0] for c in (LOOP_CFG["as"], LOOP_CFG["fix"])}
     ia, ib = (sorted((r for r in ix[c]["rows"] if r["layout"] == "packed"), key=lambda r: r["length"]) for c in ix)
@@ -460,13 +561,16 @@ def looping(runs):
     summary = table(["Conclusion", "Strength"], [
         ["Under tpurtell 0.8.0/0.9.0's DCP1 layout, decode attention skipped the newest 1-3 tokens at causal lengths up to 2,043 not divisible by 4; "
          "the fix (tpurtell PR #6, released in 0.9.1) removes it", "<b>Supported</b> (index check on the image's own kernels)"],
-        ["With the fix, decode agrees much better with prefill below 2,044 tokens (KL 0.066 → 0.010)", "<b>Supported</b> for this large effect (one run per build)"],
-        ["With the fix, tool-eval-bench TC-80 and TC-88 pass in both repeats instead of failing in both", "Descriptive (two repeats)"],
-        [f"One request seed on every repeat makes repeats non-independent: question 88 failed {kb.get('S1234', '-')} of 12 with seed 1234 on every "
+        ["With the fix, decode agrees much better with prefill below 2,044 tokens (KL 0.066 → 0.006-0.010 across three runs with the fix)",
+         "<b>Supported</b> for this large effect (one run without the fix)"],
+        ["The fix's effect on answers and tool calls", "<b>Unmeasured</b>: GPQA +0.5 points in one pass per release; tool-eval-bench TC-80 and "
+         "TC-88 pass in both repeats with it, but ten other scenarios flip between repeats of one build"],
+        [f"Repeats that share one request seed are not a meaningful sample: question 88 failed {kb.get('S1234', '-')} of 12 with seed 1234 on every "
          f"repeat vs {kb['B']} of 12 with distinct seeds", "<b>Supported</b>; the reason the earlier screens were withdrawn"],
         [f"On tpurtell 0.9.1, question 88 fails in 1-3 of 12 draws in every tested arm; question 79 in {kb['B79']} of 12 on 0.9.1 and {kb['V79']} of 12 "
          "on the 0.7.0 image at three draft tokens", "Descriptive"],
-        ["None of the tested runtime parts moved either question at this size", "Descriptive (preregistered rules: no candidate / unresolved)"],
+        ["None of the tested runtime parts moved either question at this size", "Descriptive; only very large effects were detectable "
+         "(preregistered rules: no candidate / unresolved); draft depth, quantization and sampling untested"],
         ["Loops are stopped far beyond the 2,044-token tail-bug region; question 88 loops, question 79 mostly exhausts", "Descriptive"],
         ["What drives non-completion on these questions", "Open"]])
     return ('<h1>What drives non-completion on hard questions</h1>'
@@ -483,7 +587,9 @@ def looping(runs):
               f'({kv(s1)} tokens against {kv(s7)} for v0.7.0\'s layout on the same image); the masking path already existed in the vendored attention '
               'code, and only DCP1 exercises it. The fix, <a href="https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/6">tpurtell PR #6</a>, '
               'compacts the valid entries before the mask; it was merged on 2026-10-08 and released in tpurtell 0.9.1. The measurements below were '
-              'taken on a local build of the fix before the merge (<i>tpurtell 0.9.0 + DCP1 tail fix ≈ 0.9.1</i>).</p>'
+              'taken on a local build of the fix before the merge (<i>tpurtell 0.9.0 + DCP1 tail fix ≈ 0.9.1</i>), and the decode-vs-prefill '
+              'repeat on the 0.9.1 release. <b>Practical impact on answers is unmeasured:</b> 4bpw TR3 (Brandon) scored 0.5 points higher on 0.9.1 '
+              'than on 0.9.0 in one GPQA pass each (well inside noise), and the tool-calling result below rests on two repeats per build.</p>'
             + '<h2>Which tokens a decode step attends (index check, the image\'s own kernels on GPU)</h2>'
             + table(["Causal length", "Tail tokens", eh(LOOP_CFG["as"]), eh(LOOP_CFG["fix"]), "Same row bytes"], itr, numeric=(0,))
             + fig_kl
@@ -495,10 +601,10 @@ def looping(runs):
             + '<h2>3. What clean data shows about non-completion</h2>'
             + component_fig(v2)
             + '<p>Question 88: no layout switch (EP2 routed experts, NOPE records off, MLA ownership tp) met the preregistered screening rule; '
-              'question 79: the 0.7.0 image at equal draft depth failed as often as 0.9.1 (rule verdict: unresolved). The intervals still allow '
-              'differences of 14-33 points. Clean 3-pass GPQA runs with a distinct request seed per pass are in progress for tpurtell 0.7.0 and '
-              '0.9.1, as records per recipe, not as a looping evaluator.</p>'
-              '<p><b>Single draws from the earlier screens.</b> Repeat 1 of each question from each configuration\'s first fixed-seed screen: '
+              'question 79: the 0.7.0 image at three draft tokens failed as often as 0.9.1 (rule verdict: unresolved). Clean 3-pass GPQA runs with a '
+              'distinct request seed per pass are in progress for tpurtell 0.7.0 and 0.9.1, as records per recipe, not as a looping evaluator.</p>'
+            + screen_caveats(v2)
+            + '<p><b>Single draws from the earlier screens.</b> Repeat 1 of each question from each configuration\'s first fixed-seed screen: '
               'loops and exhaustion occur in every configuration tested. One draw per question, not a rate.</p>'
             + single_draw_table(runs)
             + '<h2>4. Method note on seeds</h2>' + seed_fig(v2) + WITHDRAWAL.format(inv=INV)
@@ -508,7 +614,11 @@ def looping(runs):
               'fails by looping; question 79 mostly by exhaustion (varied reasoning to the budget). No finished or exhausted request was stopped '
               'by the early-stop detector.</p>'
             + onset_hist(v2)
-            + f'<h2>6. Open questions</h2><p>Stated with their evidence, without prescriptions, in the <a href="{INV}#6-open-questions">write-up</a>.</p>')
+            + f'<h2>6. Open questions</h2><p>Each stated with its evidence, in the <a href="{INV}#6-open-questions">write-up</a>: what drives '
+              'non-completion on questions 88 and 79; whether tpurtell 0.7.0 at its shipped five draft tokens leaves fewer empty GPQA answers (0 and 2 '
+              'of 198 in pass 1, against 3-9 for every later build; the question-79 screen ran 0.7.0 at three); whether the tail fix changes answers; '
+              'why the engine is not bitwise reproducible even one request at a time; whether these quants cost accuracy against a higher-precision '
+              'reference (none was run on this hardware); and three code-level questions.</p>')
 
 
 def build():
@@ -528,15 +638,20 @@ def build():
     up = lambda s: (sum(1 for r in s if r["suite"] == "upstream" and r["outcome"] == "passed"), sum(1 for r in s if r["suite"] == "upstream" and r["outcome"] != "skipped"))
     up_un = up(next(m["rows"] for m in kern.values() if not m["cfg"]["engine"]["patches"]))
     up_pa = up(next(m["rows"] for m in kern.values() if m["cfg"]["engine"]["patches"]))
-    dpk = {m["config"]: m["summary"]["by_region"]["lt2044"]["mean_kl_top20"] for m in runs.values() if m["protocol"] == "decode-prefill-consistency/v1"}
+    dpk = {m["config"]: m["summary"]["by_region"]["lt2044"]["mean_kl_top20"] for m in runs.values()
+           if m["protocol"] == "decode-prefill-consistency/v1" and m["config"].startswith("glm53-flash/k3.25-v0.9.0")}
     kl0, kl1 = dpk["glm53-flash/k3.25-v0.9.0-nospec-nocache"], dpk["glm53-flash/k3.25-v0.9.0-tailfix-nospec-nocache"]
+    stated = [100 * r["s"]["accuracy_stated"] for r in allg]
+    e07 = sorted(r["s"]["empty"] for r in allg if r["cfg"]["engine"]["version"] == "v0.7.0")
+    elater = sorted(r["s"]["empty"] for r in allg if r["cfg"]["engine"]["version"] != "v0.7.0")
     v2 = v2_runs(runs); kb = {a: sum(r["cls"] in ("loop", "exhaust") for r in m["rows"]) for a, m in v2.items()}
+    gap = [100 * (r["s"]["accuracy_stated"] - r["s"]["accuracy_flexible"]) for r in allg]
     par = json.loads((ROOT / "comparisons/glm53-flash-serving-probe/parity.json").read_text())
     floor = next(pp for pp in par["pairs"] if pp["a"].split("#")[0] == pp["b"].split("#")[0])
 
     # ---- index
     tiles = (f'<div class="tiles"><div class="tile"><div class="lab">Decode vs prefill KL below 2,044 tokens</div>'
-             f'<div class="val">{kl0:.3f} → {kl1:.3f}</div><div class="sub">without vs with the DCP1 tail fix (released in tpurtell 0.9.1)</div></div>'
+             f'<div class="val">{kl0:.3f} → {kl1:.3f}</div><div class="sub">without vs with the DCP1 tail fix (released in tpurtell 0.9.1); one run without</div></div>'
              f'<div class="tile"><div class="lab">Upstream kpool regression tests</div><div class="val">{up_pa[0]}/{up_pa[1]}</div>'
              f'<div class="sub">with the kpool fixes (without: {up_un[0]}/{up_un[1]})</div></div>'
              f'<div class="tile"><div class="lab">GPQA Diamond accuracy, pass 1</div>'
@@ -544,23 +659,31 @@ def build():
     idx = (f'<h1>GLM-5.3-Flash on 2x RTX PRO 6000: end-to-end receipts</h1>'
            f'<p class="lede">Accuracy, completion, speed and kernel-correctness measurements of locally served GLM-5.3-Flash EXL3 quants '
            f'on tpurtell\'s vLLM-based engine releases and locally patched builds of them, under fixed, versioned protocols. Every number links to raw '
-           f'per-item receipts and can be recomputed with the repository\'s tools.</p>{tiles}'
-           + WITHDRAWAL.format(inv=INV)
-           + component_fig(v2)
-           + gpqa_accuracy_fig(allg, "GPQA Diamond accuracy (pass 1, 198 questions)")
+           f'per-item receipts and can be recomputed with the repository\'s tools (<a href="method.html#receipts">what has no row-level receipt</a>).</p>'
            + '<h2>What it shows</h2><ol>'
            '<li><b>A decode masking path in tpurtell 0.8.0/0.9.0\'s DCP1 layout skipped the newest 1-3 tokens</b> at causal lengths up to 2,043 '
-           f'that are not a multiple of 4 (index check on the image\'s own kernels). The fix (tpurtell PR #6, released in 0.9.1) removes it, and decode '
-           f'then agrees much better with prefill below 2,044 tokens (KL {kl0:.3f} → {kl1:.3f}). See the <a href="looping.html">investigation</a>.</li>'
+           f'that are not a multiple of 4 (supported: index check on the image\'s own kernels). The fix (tpurtell PR #6, released in 0.9.1) removes it, '
+           f'and decode then agrees much better with prefill below 2,044 tokens (KL {kl0:.3f} → {kl1:.3f}; two runs of the 0.9.1 release give 0.006-0.008 '
+           'on the same prompts). Its effect on answers is unmeasured. See the <a href="looping.html">investigation</a>.</li>'
            '<li><b>The two upstream kpool bugs were present in the 0.7.0 and 0.8.0 images</b>; upstream\'s regression tests pass with the fixes '
-           f'({up_pa[0]}/{up_pa[1]}, from {up_un[0]}/{up_un[1]}), which shipped in tpurtell 0.9.0.</li>'
-           f'<li><b>Non-completion is question-specific</b>: on tpurtell 0.9.1, question 88 fails in 1-3 of 12 draws in every tested arm and question 79 in '
-           f'{kb["B79"]} of 12, the same as on the tpurtell 0.7.0 image at three draft tokens ({kb["V79"]} of 12). None of the tested runtime parts moved '
-           'either question at this size; what drives it is open.</li>'
-           f'<li><b>GPQA accuracy does not separate the configurations</b>: pass 1 of every configuration lands at {min(accs):.1f}-{max(accs):.1f}%, and every '
-           f'question-paired comparison is consistent with noise (McNemar p &ge; {min_p:.2f}); each comparison resolves only differences of about 5 points.</li>'
-           '</ol><p>Full write-up: <a href="' + REPO + '/blob/main/FINDINGS.md">FINDINGS.md</a>.</p>')
-    (OUT / "index.html").write_text(page("index.html", "Overview", idx, key_open))
+           f'({up_pa[0]}/{up_pa[1]}, from {up_un[0]}/{up_un[1]}). The 0.9.0 and 0.9.1 release images have not been tested directly: that they carry '
+           'the fixes rests on file identity.</li>'
+           f'<li><b>On two hard questions, non-completion varies by question</b> (descriptive): on tpurtell 0.9.1, question 88 fails in 1-3 of 12 draws '
+           f'in every tested arm and question 79 in {kb["B79"]} of 12, the same as on the tpurtell 0.7.0 image at three draft tokens ({kb["V79"]} of 12). '
+           'None of the tested runtime parts moved either question, but with 12 draws per arm only very large effects could show. Both questions '
+           'were chosen as hard from seed-1234 data; they are not a benchmark-wide rate.</li>'
+           f'<li><b>GPQA accuracy does not separate the configurations</b>: pass 1 of every configuration lands at {min(accs):.1f}-{max(accs):.1f}% raw '
+           f'({min(stated):.1f}-{max(stated):.1f}% by the audited stated answer), and every question-paired comparison is consistent with noise '
+           f'(McNemar p &ge; {min_p:.2f}). All passes used request seed 1234, so the configurations share sampler noise and this range likely '
+           'understates independent run-to-run spread; clean passes 2-3 with per-pass seeds are in progress.</li>'
+           f'<li><b>Open</b>, among others: the two tpurtell 0.7.0 builds left {e07[0]} and {e07[1]} of 198 GPQA answers empty in pass 1, every later '
+           f'build {elater[0]}-{elater[-1]}; one pass each does not settle whether that differs. No higher-precision reference was run on this hardware, '
+           'so whether these quants cost accuracy is not measured here.</li>'
+           '</ol><p>Full write-up: <a href="' + REPO + '/blob/main/FINDINGS.md">FINDINGS.md</a>.</p>'
+           + key_open + tiles + WITHDRAWAL.format(inv=INV)
+           + component_fig(v2)
+           + gpqa_accuracy_fig(allg, "GPQA Diamond accuracy (pass 1, 198 questions)"))
+    (OUT / "index.html").write_text(page("index.html", "Overview", idx, ""))
 
     # ---- gpqa
     ptr = [[esc(label(g[a]["cfg"])), esc(label(g[b]["cfg"])), esc(what), f'{r["only_a"]} / {r["only_b"]}', f'{r["p_acc"]:.2f}',
@@ -576,6 +699,12 @@ def build():
     gp = ('<h1>GPQA Diamond</h1><p class="lede">198 graduate-level multiple-choice questions, lm-evaluation-harness, temperature 1.0, '
           'top_p 0.95, 327,680-token budget, thinking on, 8 concurrent requests, request seed 1234 (pass 1; further passes use per-pass seeds). '
           'Results carry question ids and hashes only: the dataset asks that its questions not be published in plain text.</p>'
+          '<div class="note"><b>Shared seed.</b> Every pass 1 sent request seed 1234, so the configurations share sampler noise question by '
+          f'question. The {min(accs):.1f}-{max(accs):.1f}% range therefore likely understates how much independent runs of one configuration '
+          'vary. Clean passes 2 and 3 with per-pass seeds are in progress. <b>Scores.</b> The headline is the raw flexible-extract score '
+          '(protocol v1); beside it, the audited stated-answer score <code>correct_stated</code> and accuracy among answered (non-empty) questions. '
+          '<b>No reference.</b> No higher-precision version of the model was run on this hardware, so these runs do not measure what the quants '
+          'cost in accuracy.</div>'
           + gpqa_accuracy_fig(allg, "Accuracy, pass 1") + gpqa_empty_fig(allg, "Empty answers, pass 1")
           + '<h2>Question by question</h2><p>Every run sent identical prompts with the same request seed, so configurations are compared per '
             'question: "only A right" counts questions A answered correctly and B did not; p is an exact McNemar test (no correction for multiple '
@@ -592,7 +721,7 @@ def build():
           'distinct request seeds, 12 concurrent requests, a fresh server (<a href="' + REPO + '/blob/main/protocols/hard-prompt-screen/v2.md">'
           'protocol v2</a>). A loop is repetitive reasoning stopped early or run to the budget; an exhaustion is varied reasoning that runs out of '
           'budget.</p>' + WITHDRAWAL.format(inv=INV)
-          + component_fig(v2) + seed_fig(v2)
+          + component_fig(v2) + screen_caveats(v2) + seed_fig(v2)
           + '<h2>Single draws from the earlier fixed-seed screens</h2><p>Repeat 1 of each question from each configuration\'s first screen '
             '(protocols v0 and v1). One draw per question: these show that loops and exhaustion occur, not how often.</p>'
           + single_draw_table(runs))
@@ -632,11 +761,16 @@ def build():
         if k and m["protocol"] in ("hard-prompt-screen/v2", "gpqa-diamond/v1") or (k and m["id"].endswith("bisect1")):
             if any(r[0] == esc(label(m["cfg"])) for r in kvt): continue
             kvt.append([esc(label(m["cfg"])), k.group(1), link(m["id"])])
+    a8 = {c: v["sampled_c8"]["acceptance_rate"] for c, v in pc.items() if v.get("sampled_c8", {}).get("acceptance_rate") and "dflash3" in c}
+    a90 = a8["glm53-flash/k3.25-v0.9.0-dflash3"]; aoth = [v for c, v in a8.items() if c != "glm53-flash/k3.25-v0.9.0-dflash3"]
     sv = ('<h1>Speed, acceptance and KV capacity</h1><p class="lede">3.25bpw weights, 16 fixed GPQA prompts, 4,096 tokens, temperature 1.0, one run '
           'per configuration: tpurtell 0.8.0 with and without the kpool fixes (2026-10-04), and tpurtell 0.9.0 with and without the DCP1 tail fix '
           '(2026-10-08; see the <a href="looping.html">looping investigation</a>). The kpool fixes show no consistent change: with the same speculation '
           f'setting, decode speed and throughput move by {min(moves):+.0f}% to {max(moves):+.0f}% and acceptance by at most {acc_move:.3f} (see the '
           f'<a href="{REPO}/tree/main/comparisons/glm53-flash-serving-probe">comparison</a>).</p>'
+          '<div class="note"><b>Single runs, no noise floor.</b> Every speed and acceptance figure on this page comes from one run per configuration; '
+          'no configuration was repeated, so differences of a few percent cannot be told from run-to-run variation. Descriptively, draft acceptance '
+          f'at 8 concurrent requests was {a90:.4f} on unpatched tpurtell 0.9.0 against {min(aoth):.4f}-{max(aoth):.4f} on the other DFlash2 ×3 builds.</div>'
           + bars("median_decode_tok_s", "sampled_c1", " tok/s", "Decode speed, one request at a time", "Median per-request decode tokens per second.", 180)
           + bars("aggregate_tok_s", "sampled_c8", " tok/s", "Total throughput, 8 requests at once", "Generated tokens per second across all requests.", 400)
           + bars("acceptance_rate", "sampled_c8", "", "Draft acceptance rate, 8 requests at once", "Accepted / drafted tokens from the server's counters.", 0.6)
@@ -644,8 +778,9 @@ def build():
             '(0.95). tpurtell\'s default DCP1 layout with MLA layer ownership holds the most tokens.</p>'
           + table(["Configuration", "KV pool, tokens", "Receipts"], kvt, numeric=(1,))
           + '<h2>Greedy agreement</h2><p>Temperature 0, one request at a time: characters of identical output before two runs diverge. '
-            f'Even the same configuration run twice diverges early (median {floor["median_shared_prefix_chars"]:.0f} characters), so this cannot '
-            'certify that speculative decoding is exact.</p>'
+            f'Even the same configuration run twice, one request at a time, diverges early (median {floor["median_shared_prefix_chars"]:.0f} '
+            'characters), so batching cannot explain it, and greedy parity cannot certify that speculative decoding is exact. The prefix lengths are '
+            'derived from output text, which is not published (model output); each run publishes its outputs\' hashes.</p>'
           + table(["Comparison", "Identical outputs", "Median shared characters"],
                   [[esc(pp["meaning"]), f'{pp["identical_outputs"]}/{pp["n"]}', f'{pp["median_shared_prefix_chars"]:.0f}'] for pp in par["pairs"]], numeric=(1, 2)))
     (OUT / "serving.html").write_text(page("serving.html", "Speed and acceptance", sv, key_closed))
@@ -669,6 +804,10 @@ def build():
           '(<code>tests/kernels/test_kpool_decode_update_batched.py</code>, pinned by hash), plus a rejected-draft reproduction, run inside each '
           'engine image. The four upstream failures are exactly the tests written for vllm#57477 and vllm#58454; the kpool fixes '
           '(<a href="https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/5">tpurtell PR #5</a>, shipped in tpurtell 0.9.0) fix all of them.</p>'
+          + ('' if any(m["cfg"]["engine"]["version"] in ("v0.9.0", "v0.9.1") for m in km) else
+             '<div class="note">The tests ran on the 0.7.0 and 0.8.0 release images and on local builds with the fixes. They have not yet run on the '
+             '0.9.0 or 0.9.1 release images: that those releases carry the fixes rests, for now, on their kpool kernel files being byte-identical '
+             'to the tested build.</div>')
           + table(hdr, ktr))
     (OUT / "kernels.html").write_text(page("kernels.html", "Kernel tests", kp, key_closed))
 
@@ -683,28 +822,37 @@ def build():
           '<h2 id="scoring">Scoring</h2><p>GPQA scores are lm-eval\'s raw <code>flexible-extract</code> filter. It takes the last parenthesised '
           'capital letter in the reply, so a reply that states its answer and then mentions other options\' labels, or uses notation such as (H) '
           'or (R) in chemistry, is read as choosing the last one. The misread is deterministic: the same reply is always scored the same way, on '
-          'particular questions, so repeating a run never reveals it. Checking the model\'s stated final answer in 17 passes of these configurations '
-          'puts raw scores 0.5 to 2.5 points low per pass, about 1.6 on average. Raw scores stay the headline so runs remain comparable; read them as '
-          'low, not as exact accuracy. <code>strict-match</code> records whether the reply used the phrase "The answer is", which the prompt never '
+          'particular questions, so repeating a run never reveals it. An audit of the stated final answer of every published reply, hand-checked '
+          'wherever it disagrees with the filter, is published per row as <code>correct_stated</code>: it puts the raw score '
+          f'{min(gap):.1f}-{max(gap):.1f} points low per run. Raw scores stay the headline (protocol v1) so runs remain comparable; the stated-answer '
+          'score is shown beside them as a secondary, audited score. <code>strict-match</code> records whether the reply used the phrase "The answer is", which the prompt never '
           'asks for; it is not an accuracy measure.</p>'
-          '<h2>Seeds</h2><p>The engine draws each request\'s sampling noise from its request seed. Repeats that share a seed still vary, because '
-          'concurrent batching changes the arithmetic and their texts diverge, but they draw on the same sampler noise, so that variation is not '
-          'a statistically meaningful sample. Screens therefore '
+          '<h2>Seeds</h2><p>The engine draws each request\'s sampling noise from its request seed. Repeats that share a seed still vary (see '
+          'below) and their texts diverge, but they draw on the same sampler noise, so that variation is not a statistically meaningful sample. '
+          'Screens therefore '
           'use a distinct seed per repeat (protocol v2), and GPQA passes a distinct seed per pass (pass <i>p</i> sends 1233 + <i>p</i>). The '
           'earlier fixed-seed screens are shown only as single draws.</p>'
           '<h2>Intervals</h2><p>GPQA accuracy: 95% bootstrap over questions. Rates (empty answers; screen failures of one question in one '
           'configuration): 95% Wilson score intervals. Configurations are compared question by question. Where intervals overlap, the '
           'configurations cannot be told apart.</p>'
-          '<h2>Concurrency changes the arithmetic</h2><p>Requests are served 8 (GPQA) or 12 (screens) at a time, and batch composition changes the '
-          'numerics inside the engine. Even one greedy request at a time diverges from its own rerun after a median of '
-          f'{floor["median_shared_prefix_chars"]:.0f} characters. Compare outcomes over many draws, never individual transcripts. The analysis '
-          'reproduces exactly: <code>tools/verify.py</code> and <code>tools/analyze.py</code> recompute every number from the published rows.</p>'
+          '<h2>The engine is not bitwise reproducible</h2><p>Even one request at a time, the engine does not repeat itself exactly: a greedy '
+          f'(temperature 0) request diverges from its own rerun after a median of {floor["median_shared_prefix_chars"]:.0f} characters, and two '
+          'decode-vs-prefill runs of tpurtell 0.9.1 with the same prompts and seeds, one request at a time, first differ in their '
+          'per-position values after 1-130 generated tokens. Batching cannot explain that. At 8 or 12 concurrent requests, batch composition adds '
+          'further variation. Why single requests vary is an open question. Compare outcomes over many draws, never individual transcripts. '
+          'The analysis reproduces exactly: <code>tools/verify.py</code> and <code>tools/analyze.py</code> recompute every number from the published rows.</p>'
+          '<h2 id="receipts">Receipts</h2><p>Every number on this site is recomputed from published files: per-item rows (<code>results.jsonl</code>), '
+          'and, for figures from the engine\'s server log (KV pool size, throughput, acceptance, waiting requests), the numeric fields parsed from '
+          'that log (<code>server_log.jsonl</code>, summarised in <code>summary.json</code>). Two kinds of figure rest on text that is not published, '
+          'because it is model output or benchmark text: the greedy shared-prefix lengths (<code>comparisons/glm53-flash-serving-probe/parity.json</code>; '
+          'the outputs\' hashes are published), and the per-row <code>correct_stated</code> judgement (the judgement is published, the reply text it '
+          'was read from is not).</p>'
           '<h2>Comparability</h2><p>Comparisons only line up runs with the same protocol version and hardware, and declare which configuration fields differ; '
           '<code>tools/verify.py</code> enforces this. Published numbers from other harnesses are shown as context, never plotted as a ranking.</p>'
           f'<h2>Sources</h2><ul><li><a href="{REPO}/tree/main/protocols">Protocols</a> - exact settings per benchmark version</li>'
           f'<li><a href="{REPO}/tree/main/configs">Configurations</a> - engine image digests, model revisions, settings</li>'
           f'<li><a href="{REPO}/blob/main/DATASHEET.md">Datasheet</a> - what the data is, and is not, suitable for</li>'
-          f'<li><a href="{REPO}/blob/main/FINDINGS.md">Findings</a> - the full write-up</li></ul>')
+          f'<li><a href="{REPO}/blob/main/FINDINGS.md">Findings</a> - the full write-up</li></ul>' + glossary_html())
     (OUT / "method.html").write_text(page("method.html", "How to read this", mt, key_open))
     print(f"built {len(PAGES)} pages into {OUT}")
 

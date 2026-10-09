@@ -1,0 +1,109 @@
+{
+ "prompts": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11
+ ],
+ "positions": 31200,
+ "by_region": {
+  "2044-2047": {
+   "positions": 48,
+   "mean_abs_dlp": 0.03796,
+   "top1_agree": 0.9167,
+   "mean_kl_top20": 0.00305
+  },
+  "2044-2047|mod0": {
+   "positions": 12,
+   "mean_abs_dlp": 0.02672,
+   "top1_agree": 0.9167,
+   "mean_kl_top20": 0.003
+  },
+  "2044-2047|mod1": {
+   "positions": 12,
+   "mean_abs_dlp": 0.0422,
+   "top1_agree": 0.9167,
+   "mean_kl_top20": 0.00317
+  },
+  "2044-2047|mod2": {
+   "positions": 12,
+   "mean_abs_dlp": 0.03758,
+   "top1_agree": 0.9167,
+   "mean_kl_top20": 0.0028
+  },
+  "2044-2047|mod3": {
+   "positions": 12,
+   "mean_abs_dlp": 0.04535,
+   "top1_agree": 0.9167,
+   "mean_kl_top20": 0.00321
+  },
+  "ge2048": {
+   "positions": 9229,
+   "mean_abs_dlp": 0.04038,
+   "top1_agree": 0.9807,
+   "mean_kl_top20": 0.0053
+  },
+  "ge2048|mod0": {
+   "positions": 2312,
+   "mean_abs_dlp": 0.04085,
+   "top1_agree": 0.9805,
+   "mean_kl_top20": 0.00502
+  },
+  "ge2048|mod1": {
+   "positions": 2309,
+   "mean_abs_dlp": 0.03921,
+   "top1_agree": 0.9844,
+   "mean_kl_top20": 0.0048
+  },
+  "ge2048|mod2": {
+   "positions": 2305,
+   "mean_abs_dlp": 0.04118,
+   "top1_agree": 0.9831,
+   "mean_kl_top20": 0.00565
+  },
+  "ge2048|mod3": {
+   "positions": 2303,
+   "mean_abs_dlp": 0.04027,
+   "top1_agree": 0.9748,
+   "mean_kl_top20": 0.00575
+  },
+  "lt2044": {
+   "positions": 21923,
+   "mean_abs_dlp": 0.04514,
+   "top1_agree": 0.9761,
+   "mean_kl_top20": 0.0072
+  },
+  "lt2044|mod0": {
+   "positions": 5476,
+   "mean_abs_dlp": 0.04444,
+   "top1_agree": 0.9775,
+   "mean_kl_top20": 0.00677
+  },
+  "lt2044|mod1": {
+   "positions": 5479,
+   "mean_abs_dlp": 0.04451,
+   "top1_agree": 0.9741,
+   "mean_kl_top20": 0.00736
+  },
+  "lt2044|mod2": {
+   "positions": 5483,
+   "mean_abs_dlp": 0.04596,
+   "top1_agree": 0.9754,
+   "mean_kl_top20": 0.00774
+  },
+  "lt2044|mod3": {
+   "positions": 5485,
+   "mean_abs_dlp": 0.04563,
+   "top1_agree": 0.9776,
+   "mean_kl_top20": 0.00693
+  }
+ }
+}

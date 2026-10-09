@@ -1,5 +1,5 @@
 {
- "method": "Leading identical characters of greedy outputs (temperature 0, 2,048 tokens, concurrency 1). Derived from output text that is not published; each run's results.jsonl carries the output_sha256 values.",
+ "method": "Leading identical characters of greedy outputs (temperature 0, 2,048 tokens, one request at a time). Derived from the output text, which is model output and is not published, so these values have no row-level receipt; each run's results.jsonl carries the outputs' output_sha256 values, and the probe can be rerun with tools/clients/serving_probe.py.",
  "pairs": [
   {
    "a": "glm53-flash/k3.25-v0.8.0-kpoolfix-nospec#greedy_run1",

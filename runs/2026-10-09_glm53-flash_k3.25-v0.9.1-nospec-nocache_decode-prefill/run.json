@@ -1,0 +1,10 @@
+{
+ "id": "2026-10-09_glm53-flash_k3.25-v0.9.1-nospec-nocache_decode-prefill",
+ "config": "glm53-flash/k3.25-v0.9.1-nospec-nocache",
+ "protocol": "decode-prefill-consistency/v1",
+ "date": "2026-10-09",
+ "software": {
+  "client": "tools/clients/decode_prefill_consistency.py"
+ },
+ "notes": "GPQA Diamond doc ids 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 (lm-eval prompt_hash 0: 6b01485ca6c3d2cc, 1: 769b3781775e1b23, 2: 09d7adceb2186f10, 3: 0beeb08fdff9a3e1, 4: 96ec0c33934b7154, 5: 4dc7f71fe5c9bce2, 6: 7bf2017d92a86d6b, 7: d9358b727c61208a, 8: c9dc339ca995be06, 9: 035a5051b294095e, 10: 5158772fd4612dbf, 11: 5d00b1e84ad8db71), 2600 generated tokens each at concurrency 1, request seed 1234 + doc id. Positions, regions and comparison values only; no token ids or text. Values rounded to 6 decimals. Repeat of the 2026-10-08 run of this configuration (same prompts and seeds, fresh server): the run-to-run spread."
+}
