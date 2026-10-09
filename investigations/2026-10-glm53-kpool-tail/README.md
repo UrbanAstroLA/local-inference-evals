@@ -7,7 +7,9 @@ cap) come from runtime bugs fixed upstream after the engine's base was cut?
 kernel ignores the padded tail stride) and #58454 (one-pool tail ring overwritten by drafts behind a rejected
 pool-completing draft). Upstream's own regression tests fail on both images (4 failed, 29 passed) and pass with both
 fixes ported (33 passed); see `protocols/kpool-kernel-tests/v1.md`. Ported as tpurtell/glm-5.3-flash-ext3-2x-rtx#5 and
-shipped in tpurtell 0.9.0.
+shipped in tpurtell 0.9.0. The tests have run on the 0.7.0 and 0.8.0 release images and on the local builds with the fixes,
+not yet on the 0.9.0 or 0.9.1 release images: that those releases carry the fixes rests, for now, on their kpool kernel
+files being byte-identical to the tested build.
 
 **Finding 2 (withdrawn 2026-10-09).** This finding rested on hard-question screen counts (arms A, B and C of the
 preregistered kpool screen, and the tpurtell 0.7.0 pair of 2026-10-05). Those screens sent request seed 1234 on every
@@ -16,11 +18,12 @@ repeat; batching made the repeats vary, but not in a statistically meaningful wa
 from the patched 0.7.0 screen is kept as a single draw. Whether the fixes change how often hard questions fail to
 finish is not established either way.
 
-**Finding 3: the fixes cost nothing measurable in speed.** Decode speed and acceptance show no consistent change
-(`comparisons/glm53-flash-serving-probe`, single runs). KV capacity and NLL are not among the published receipts.
+**Finding 3: the fixes show no speed cost, in single runs.** Decode speed and acceptance show no consistent change
+(`comparisons/glm53-flash-serving-probe`; one run per configuration, no noise floor). KV capacity and NLL are not among the published receipts.
 
-**Finding 4: the engine is not bitwise reproducible at temperature 0.** The same configuration run twice diverges
-after a median of about 318 characters, so greedy parity cannot certify speculative exactness on this stack.
+**Finding 4: the engine is not bitwise reproducible at temperature 0, even one request at a time.** The same
+configuration run twice, one greedy request at a time, diverges after a median of about 318 characters, so greedy
+parity cannot certify speculative exactness on this stack.
 
 **Expected benefit of the fixes.** They correct real cache corruption. Their effect is expected mainly in long-lived
 servers with prefix caching and reused system prompts, where cached blocks are reused across requests; the fresh-server

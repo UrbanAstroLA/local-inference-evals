@@ -25,7 +25,8 @@ Tables, charts and text name a configuration `<weights> · <engine>[ · <layout>
   versions independently: `tpurtell 0.9.0` is a tpurtell release, not vLLM 0.9.0. Each engine label names exactly one
   build (project, version, image digest, patches), and each build has one label.
 - **Speculation** = `<serving.speculative.label> ×<tokens>` (draft tokens per step), for example `DFlash2 ×3`, or
-  `no speculation`; plus `, sharing off` when draft-slot sharing is disabled. The method's display name comes from
+  `no speculation`; plus `, sharing off` when draft-slot sharing is disabled, and `, prefix cache off` when
+  `serving.prefix_caching` is false (for example `no speculation, prefix cache off`). The method's display name comes from
   the config (`DFlash2`; another method would carry its own, such as `MTP`), and each name maps to one
   `serving.speculative.method`.
 - **Layout** = `serving.layout.label`, present only when the parallel layout differs from the engine release's default,
@@ -46,10 +47,12 @@ weights (`<weights>-<engine>-<version>[-<patch>]-<speculation>`).
 ## results.jsonl by protocol
 **gpqa-diamond/v1:** `doc_id`, `doc_hash`, `prompt_hash`, `target_hash` (as logged by lm-eval), `pass`, `seed` (the
 request seed: 1233 + pass), `correct_flexible`, `correct_strict`, `empty` (no answer after reasoning), `response_chars`,
-`response_sha256`, `finish_reason` and `completion_tokens` (from a passive request log; null when the run had none).
+`response_sha256`, `finish_reason` and `completion_tokens` (from a passive request log; null when the run had none),
+`correct_stated` (secondary, audited score: the reply's stated final answer is the target; see the protocol).
 One row per question: a run is one pass (`tools/verify.py` enforces it); further passes are their own runs.
-`correct_flexible` is lm-eval's raw filter and underscores by 0.5 to 2.5 points per pass (see the GPQA protocol's known
-limitation). `correct_strict` records whether the reply used the phrase "The answer is", which the prompt never asks
+`correct_flexible` is lm-eval's raw filter, the headline score; it underscores by 0.5 to 2.0 points per run in the
+published runs (see the GPQA protocol's known limitation). Summaries add `accuracy_stated`, its interval, and accuracy
+among answered (non-empty) questions for both scores. `correct_strict` records whether the reply used the phrase "The answer is", which the prompt never asks
 for; it is not an accuracy measure.
 
 **hard-prompt-screen/v0, v1, v2:** `doc_id`, `rep`, `seed` (the request seed), `cls` (ok / loop / exhaust / error),
@@ -75,3 +78,13 @@ Wilson interval `non_ok_ci95`.
 
 **kpool-kernel-tests/v1:** `suite` (upstream / rejected-draft), `test`, `outcome` (passed / failed / skipped); the
 rejected-draft suite adds `ring_slots` and `key_bytes_wrong`.
+
+## server_log.jsonl (optional, per run)
+Numeric fields parsed from the engine's server log, one record per relevant log line; the log text itself is not
+published. `kind` = `config` (`max_num_seqs`), `kv_pool` (`tokens`), `kv_memory` (`gib`, KV memory per GPU), `status`
+(10-second scheduler line: `t_s` seconds since the first status line, `prompt_tok_s`, `gen_tok_s`, `running`, `waiting`,
+`kv_usage_pct`), `spec` (speculation counters per interval: `mean_acceptance_length`, `accepted`, `drafted`) or `event`
+(`what` = `preemption` or `cuda_illegal_memory_access`, `t_s`). `tools/verify.py` recomputes the run summary's `server`
+block from it: KV pool, peak KV usage, mean generation throughput over intervals with at least 8 running requests,
+acceptance, and `waiting_below_max_seqs` (status lines with requests waiting while fewer than `max_num_seqs` ran, i.e.
+the KV pool, not the sequence limit, held them back). Run notes quote these figures.

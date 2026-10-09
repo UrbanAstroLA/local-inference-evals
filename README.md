@@ -3,7 +3,10 @@
 Maintained by Michael M: [UrbanAstroLA](https://github.com/UrbanAstroLA) on GitHub, [@UrbanAstroFella](https://x.com/UrbanAstroFella) on X.
 
 Receipts for evaluations of locally served LLMs: what was run, on exactly which software and hardware, the raw
-per-item results, and the scripts that recompute every published number. Null and negative results are kept.
+per-item results, and the scripts that recompute every published number. Null and negative results are kept. Two kinds
+of figure rest on text that cannot be published (model output): greedy shared-prefix lengths
+(`comparisons/glm53-flash-serving-probe/parity.json`) and the per-row audited `correct_stated` judgement; for both, the
+outputs' hashes are published. Terms are defined in the [glossary](#glossary).
 
 Start with [`FINDINGS.md`](FINDINGS.md) for results and [`DATASHEET.md`](DATASHEET.md) for what the data is and is not.
 What drives non-completion on hard questions, the DCP1 tail bug and its fix (tpurtell PR #6, released in tpurtell
@@ -44,7 +47,8 @@ configs/<model-family>/<id>.json  exact serving configurations: engine image dig
 runs/<run-id>/                    one evaluation of one config under one protocol
     run.json                      manifest: config id, protocol id, dates, software versions
     results.jsonl                 one line per item (question, request, test) - no benchmark text
-    summary.json                  aggregates, recomputable from results.jsonl
+    summary.json                  aggregates, recomputable from results.jsonl (and server_log.jsonl)
+    server_log.jsonl              optional: numeric fields parsed from the engine's server log (KV pool, throughput)
 investigations/<yyyy-mm>-<topic>/ narrative, preregistration and decision rules for a line of work, linking its runs
 comparisons/<id>/                 apples-to-apples analyses of several runs (see the rules below)
 tools/verify.py                   checks manifests, recomputes every summary, and enforces the comparison rules
@@ -77,6 +81,36 @@ python3 tools/verify.py            # all runs and comparisons
 python3 tools/verify.py runs/<id>  # one run
 ```
 Python 3.10+, standard library only.
+
+## Glossary
+- **MLA** (multi-head latent attention): GLM-5.3-Flash's attention in 11 of its layers (the others are KDA layers). Keys
+  and values are cached as a compressed latent, and a sparse-attention indexer picks which earlier tokens each decode
+  step attends.
+- **kpool:** the indexer's pooled key cache: earlier tokens are grouped in pools of 4, and each decode step selects up to
+  512 pools (2,048 tokens). The **kpool tail** is the newest, incomplete pool: the current token and up to two before it.
+- **DCP1 / DCP2:** decode context parallelism. DCP2 splits each MLA layer's KV cache across both GPUs by token; DCP1
+  does not split it.
+- **MLA ownership:** tpurtell's DCP1 layout from 0.8.0 on: each MLA layer, with its indexer and caches, lives on one GPU
+  only (`split:25`: layers 3-23 on the first GPU, 27-43 on the second) and runs all heads there. `tp` is the setting
+  without ownership.
+- **EP2 / TP2:** routed experts placed whole on one GPU each (expert parallel) or each expert split across both GPUs
+  (tensor parallel).
+- **NOPE record:** the KV cache record of an MLA latent. tpurtell 0.8.0 on stores a 528-byte record (512 FP8 bytes and
+  four FP32 scales); "NOPE records off" uses the 656-byte record with an unused rotary tail. tpurtell reports that outputs
+  match within BF16 rounding.
+- **DFlash2 ×N:** speculative decoding with the draft model incoai/GLM-5.3-Flash-DFlash2, which proposes N tokens per
+  step; the served model checks them in one forward pass and keeps those it accepts. Acceptance rate = accepted /
+  drafted tokens.
+- **Draft-slot sharing:** from tpurtell 0.8.0 on, the DFlash2 draft cache is stored inside the MLA cache's slot tensors
+  instead of separate tensors; "sharing off" disables it.
+- **flexible-extract:** lm-evaluation-harness's GPQA answer filter: the last parenthesised capital letter in the reply.
+  The headline (raw) GPQA score. **`correct_stated`** is the secondary, audited score: whether the reply's stated final
+  answer is right.
+- **Empty answer:** a GPQA reply with no content after its reasoning: the reasoning hit the 327,680-token budget, or ended
+  without an answer. Scored wrong.
+- **Loop:** a request that does not finish and repeats itself: stopped by the screen's early-stop detector, or ending at
+  the budget with a tail that compresses below 15% of its size.
+- **Exhaustion:** a request that runs to the 327,680-token budget with varied, non-repetitive reasoning.
 
 ## Licenses
 

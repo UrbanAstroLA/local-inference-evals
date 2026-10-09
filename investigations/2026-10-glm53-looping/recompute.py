@@ -61,6 +61,9 @@ print("prompt lengths (first generated position per prompt):", {d: min(r["i"] fo
 for reg in ("lt2044|mod0", "lt2044|mod1", "lt2044|mod2", "lt2044|mod3"):
     print(f"  {reg}: " + ", ".join(f"{summarize(m['protocol'], m['rows'])['by_region'][reg]['mean_kl_top20']:.4f}" for m in dp.values()))
 
+print("\n## Decode vs prefill, every run (prompts 0-5 shared by all), the 0.9.1 noise floor and single-request divergence")
+analyze.decode_prefill()
+
 print("\n## tool-eval-bench (tool-eval-bench/v1)")
 te = {c: load("tool-eval-bench/v1", c)[0] for c in (AS, FIX)}
 for c, m in te.items():
@@ -72,16 +75,16 @@ for sid in ("TC-80", "TC-88"):
 within = [sid for sid in ids if any(st_[c][(1, sid)] != st_[c][(2, sid)] for c in (AS, FIX))]
 print(f"scenarios whose status differs between repeats of the same build: {len(within)} {within}")
 
-print("\n## Serving probe (serving-probe/v1) and KV pools")
+print("\n## Serving probe (serving-probe/v1, single runs) and KV pools (server_log.jsonl -> summary.json 'server')")
 for c in (AS, FIX):
     m = load("serving-probe/v1", c)[0]
     bt = summarize(m["protocol"], m["rows"])["batches"]
     print(f"{m['id']}: " + "; ".join(f"{k}: decode {v['median_decode_tok_s']} tok/s, acceptance {v['acceptance_rate']}" for k, v in bt.items()))
 for d in sorted((ROOT / "runs").iterdir()):
-    m = json.loads((d / "run.json").read_text())
-    k = re.search(r"KV pool ([\d,]+) tokens", m["notes"])
-    if k and ("bisect1" in d.name or m["protocol"] == "hard-prompt-screen/v2"):
-        print(f"KV pool, {d.name}: {k.group(1)}")
+    if (d / "server_log.jsonl").exists() and ("bisect1" in d.name or "screen-doc" in d.name):
+        sv = json.loads((d / "summary.json").read_text())["server"]
+        print(f"KV pool, {d.name}: {sv['kv_pool_tokens']:,}; peak usage {sv['peak_kv_usage_pct']}%; "
+              f"waiting below max seqs {sv['waiting_below_max_seqs']} of {sv['status_lines']}")
 
 print("\n## Kernel tests (kpool-kernel-tests/v1), upstream suite")
 for d in sorted((ROOT / "runs").iterdir()):
@@ -92,6 +95,8 @@ for d in sorted((ROOT / "runs").iterdir()):
 
 print("\n# Sections 3 and 4: component screen (hard-prompt-screen/v2) and the fixed-seed control\n")
 analyze.screen_v2()
+print("\n## Minimum detectable differences (section 3)")
+analyze.power_table()
 print("\n# Section 3: single draws from the earlier screens\n")
 analyze.screen_single()
 print("\n# Section 3: GPQA Diamond, pass 1 per configuration\n")

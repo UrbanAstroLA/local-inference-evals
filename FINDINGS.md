@@ -3,7 +3,8 @@
 Analysis only; every number links to receipts in `runs/` and can be regenerated with `tools/analyze.py` (subcommands
 named below), `tools/verify.py` and the investigation's `recompute.py`. Each statement says how strong it is:
 **supported** (deterministic, or statistically clear), **descriptive** (what the data shows, without a test that
-separates it from chance), or **open**.
+separates it from chance), **unmeasured**, or **open**. Terms (kpool, DCP1, MLA ownership, NOPE record, DFlash2,
+flexible-extract, loop, exhaustion and others) are defined in the [glossary](README.md#glossary).
 
 ## Labels
 Configurations are named **weights · engine version · speculation**, built from the config files by one rule
@@ -35,7 +36,9 @@ the release as shipped.
    with the fixes (vllm-project/vllm#57477: every prefill wrote 2 KB of keys into another block's indexer region;
    #58454: a rejected pool-completing draft could overwrite committed keys at 2 or more draft tokens). Ported in
    tpurtell PR #5 and shipped in tpurtell 0.9.0 (`runs/*_kpool-kernel-tests`;
-   [`investigations/2026-10-glm53-kpool-tail`](investigations/2026-10-glm53-kpool-tail)).
+   [`investigations/2026-10-glm53-kpool-tail`](investigations/2026-10-glm53-kpool-tail)). The tests ran on the 0.7.0 and
+   0.8.0 release images and on local builds with the fixes; they have not yet run on the 0.9.0 or 0.9.1 release images,
+   so for those releases the fixes' presence rests on their kpool kernel files being byte-identical to the tested build.
 2. **Under the DCP1 layout of tpurtell 0.8.0 and 0.9.0, decode attention skipped the newest 1-3 tokens at causal lengths
    up to 2,043 that are not a multiple of 4; the DCP1 tail fix removes it.** **Supported** (index check on the image's
    own kernels: the tail is dropped in 9 of 23 packed cases without the fix, 0 with it; rows the stock code already
@@ -43,29 +46,37 @@ the release as shipped.
    the masking path already existed in the vendored attention code, and only this layout exercises it. The fix was merged
    as tpurtell PR #6 and released in tpurtell 0.9.1
    ([`investigations/2026-10-glm53-looping`](investigations/2026-10-glm53-looping)).
-3. **With the fix, decode agrees much better with prefill re-scoring of the same tokens below 2,044 tokens:** mean KL
-   0.066 → 0.010, top-1 agreement 93.8% → 97.6%, lower in 6 of 6 prompts. **Supported for this large effect.** Each build
-   was measured once; a later repeat of the measurement on tpurtell 0.9.1 (not published) varied by up to about 2x
-   between runs, so the smaller difference beyond 2,048 tokens is not claimed
-   (`comparisons/glm53-flash-v090-tailfix-decode-prefill`).
-4. **With the fix, tool-eval-bench scenarios TC-80 and TC-88 pass in both repeats instead of failing in both** (157 and
-   157 of 176 points → 159 and 163). **Descriptive:** two repeats per build, and ten other scenarios vary between repeats
-   of the same build (`comparisons/glm53-flash-v090-tailfix-tool-eval`).
+3. **With the fix, decode agrees much better with prefill re-scoring of the same tokens below 2,044 tokens.**
+   **Supported for this large effect.** On the six prompts every run shares, mean KL is 0.066 without the fix (one run)
+   against 0.010 with the local build of the fix and 0.008 and 0.006 in two runs of the 0.9.1 release; top-1 agreement
+   93.8% → 97.6%; lower in 6 of 6 prompts. The two 0.9.1 runs, with the same prompts and seeds, are the noise floor:
+   their means differ by up to about 2x and single prompts by up to about 6x. From 2,048 tokens the runs with the fix
+   range from 0.006 to 0.019 and the one run without it is 0.031, so no effect is claimed there
+   (`comparisons/glm53-flash-v090-tailfix-decode-prefill`, `glm53-flash-v091-decode-prefill-repeat`). With speculation
+   on (DFlash2 ×3, one run), 0.9.1 decode sits somewhat above both speculation-off runs, within that spread
+   (`glm53-flash-v091-decode-prefill-speculation`; descriptive).
+4. **The fix's effect on answers is unmeasured.** In GPQA, 4bpw TR3 (Brandon) scored 84.8% on tpurtell 0.9.1 against
+   84.3% on 0.9.0, one pass each, well inside noise (item 5). In tool-eval-bench, scenarios TC-80 and TC-88 pass in both
+   repeats with the fix and fail in both without it (157 and 157 of 176 points → 159 and 163), but that is two repeats per
+   build, and ten other scenarios flip between repeats of the same build
+   (`comparisons/glm53-flash-v090-tailfix-tool-eval`). **Descriptive.**
 
 ## 2. GPQA Diamond, pass 1 per configuration
-`analyze.py gpqa-table`. 198 questions, request seed 1234, the same prompts and answer order in every run.
+`analyze.py gpqa-table`. 198 questions, request seed 1234, the same prompts and answer order in every run. Raw =
+`flexible-extract`, the headline (protocol v1); stated = `correct_stated`, the secondary, audited stated-answer score;
+"answered" leaves out empty answers.
 
-| Weights | Engine | Speculation | Accuracy (95% interval over questions) | Empty answers |
-|---|---|---|---|---|
-| 3.25bpw | tpurtell 0.7.0 | DFlash2 ×5 | 87.9% (82.8-91.9) | 0 |
-| 3.25bpw | tpurtell 0.7.0 + kpool fixes | DFlash2 ×5 | 85.9% (80.8-90.4) | 2 |
-| 3.25bpw | tpurtell 0.8.0 | DFlash2 ×3 | 85.9% (80.8-90.4) | 5 |
-| 3.25bpw | tpurtell 0.8.0 | DFlash2 ×5, sharing off | 86.9% (81.8-91.4) | 5 |
-| 3.25bpw | tpurtell 0.8.0 + kpool fixes ≈ 0.9.0 | DFlash2 ×5 | 86.9% (82.3-91.4) | 3 |
-| 3.25bpw | tpurtell 0.9.1 | DFlash2 ×3 | 85.4% (80.3-89.9) | 5 |
-| 4bpw TR3 (Brandon) | tpurtell 0.8.0 | DFlash2 ×3 | 85.9% (80.8-90.4) | 3 |
-| 4bpw TR3 (Brandon) | tpurtell 0.9.0 | DFlash2 ×3 | 84.3% (78.8-88.9) | 9 |
-| 4bpw TR3 (Brandon) | tpurtell 0.9.1 | DFlash2 ×3 | 84.8% (79.8-89.4) | 6 |
+| Weights | Engine | Speculation | Raw (95% interval) | Raw, answered | Stated | Stated, answered | Empty |
+|---|---|---|---|---|---|---|---|
+| 3.25bpw | tpurtell 0.7.0 | DFlash2 ×5 | 87.9% (82.8-91.9) | 87.9% | 89.4% | 89.4% | 0 |
+| 3.25bpw | tpurtell 0.7.0 + kpool fixes | DFlash2 ×5 | 85.9% (80.8-90.4) | 86.7% | 87.4% | 88.3% | 2 |
+| 3.25bpw | tpurtell 0.8.0 | DFlash2 ×3 | 85.9% (80.8-90.4) | 88.1% | 86.9% | 89.1% | 5 |
+| 3.25bpw | tpurtell 0.8.0 | DFlash2 ×5, sharing off | 86.9% (81.8-91.4) | 89.1% | 88.4% | 90.7% | 5 |
+| 3.25bpw | tpurtell 0.8.0 + kpool fixes ≈ 0.9.0 | DFlash2 ×5 | 86.9% (82.3-91.4) | 88.2% | 88.4% | 89.7% | 3 |
+| 3.25bpw | tpurtell 0.9.1 | DFlash2 ×3 | 85.4% (80.3-89.9) | 87.6% | 85.9% | 88.1% | 5 |
+| 4bpw TR3 (Brandon) | tpurtell 0.8.0 | DFlash2 ×3 | 85.9% (80.8-90.4) | 87.2% | 87.9% | 89.2% | 3 |
+| 4bpw TR3 (Brandon) | tpurtell 0.9.0 | DFlash2 ×3 | 84.3% (78.8-88.9) | 88.4% | 85.4% | 89.4% | 9 |
+| 4bpw TR3 (Brandon) | tpurtell 0.9.1 | DFlash2 ×3 | 84.8% (79.8-89.4) | 87.5% | 86.9% | 89.6% | 6 |
 
 Question-paired comparisons of configurations that differ in one named respect (`analyze.py gpqa-pairs`; exact McNemar
 tests on the questions where two runs disagree; no correction for multiple comparisons):
@@ -81,18 +92,23 @@ tests on the questions where two runs disagree; no correction for multiple compa
 | 3.25bpw vs 4bpw on 0.9.1 | weights | 13 / 12 (1.00) | -0.5 (-5.6 to +4.5) | 4 / 5 (1.00) |
 
 5. **One pass per configuration does not separate these configurations in accuracy.** **Descriptive.** Every run lands
-   at 84.3-87.9%, and every paired difference is consistent with noise; each comparison resolves only differences of
-   about 5 points, so smaller effects are neither shown nor excluded.
-6. **Empty answers are 0 to 9 of 198 per run.** **Descriptive.** In pass 1, tpurtell 0.7.0 left none and 0.8.0 left 5
-   on the same 3.25bpw weights; that is one draw per question and does not establish a difference between the releases.
-   No paired comparison of empty answers reaches p < 0.05. Where a request log exists (the two 0.9.1 runs), 10 of the 11
+   at 84.3-87.9% raw (85.4-89.4% stated), and every paired difference is consistent with noise; each comparison resolves
+   only differences of about 5 points, so smaller effects are neither shown nor excluded. Every pass 1 sent request seed
+   1234, so the configurations share sampler noise question by question, and this range likely understates how much
+   independent runs of one configuration vary. Clean passes 2 and 3 with per-pass seeds are in progress.
+6. **Empty answers are 0 to 9 of 198 per run.** **Descriptive.** The two tpurtell 0.7.0 builds left 0 and 2 empty in
+   pass 1, every later build 3 to 9; with one draw per question this does not establish a difference between the
+   releases (open question below). No paired comparison of empty answers reaches p < 0.05. Where a request log exists (the two 0.9.1 runs), 10 of the 11
    empty answers ran to the 327,680-token cap and one ended after 38 tokens (`finish_reason` stop).
 7. **Scoring limitation.** The raw `flexible-extract` score reads some correct answers as wrong when a reply mentions
-   other options' labels or chemistry notation after its answer: 0.5 to 2.5 points low per pass, about 1.6 on average
-   (`protocols/gpqa-diamond/v1.md`, known limitation). Raw scores stay the headline so runs remain comparable.
-8. **Published scores, for context only.** NVIDIA's 92.1 (BF16 and NVFP4) lies above every local run's interval; Red
-   Hat's 90.6 (NVFP4) lies inside the interval of `3.25bpw · tpurtell 0.7.0 · DFlash2 ×5` and above the others. Weights,
-   harness and scoring differ, so these runs cannot separate quantization, harness and runtime effects
+   other options' labels or chemistry notation after its answer, or states its answer as a boxed or bold letter: in the
+   published runs 25 correct answers are scored wrong, 0.5 to 2.0 points per run, and none the other way. The audited
+   `correct_stated` score is published per row beside it (`protocols/gpqa-diamond/v1.md`); raw scores stay the headline
+   so runs remain comparable.
+8. **Published scores, for context only.** On the raw score, NVIDIA's 92.1 (BF16 and NVFP4) lies above every local run's
+   interval and Red Hat's 90.6 (NVFP4) inside the intervals of three runs (all at DFlash2 ×5); on the stated-answer score, 90.6 lies inside seven runs' intervals and 92.1 inside three. Those numbers used
+   other weights and harnesses whose details are not fully published; no higher-precision reference was run here, so
+   these runs cannot separate quantization, harness, scoring and runtime effects
    (`comparisons/glm53-flash-gpqa-published-context`).
 
 ## 3. Non-completion on hard questions
@@ -101,7 +117,11 @@ Details, failure anatomy and open questions: [`investigations/2026-10-glm53-loop
 
 9. **On tpurtell 0.9.1, question 88 fails to finish in 1-3 of 12 draws in every tested arm; question 79 in 9 of 12 on
    both tpurtell 0.9.1 and the tpurtell 0.7.0 image at three draft tokens.** **Descriptive** (component screen,
-   2026-10-09, preregistered: one question per run, distinct request seeds 5001-5012, 12 concurrent requests).
+   2026-10-09, preregistered: one question per run, distinct request seeds 5001-5012). Held fixed in every arm: 3.25bpw
+   weights, DFlash2 ×3, temperature 1.0 / top_p 0.95, the 327,680-token budget, 12 concurrent requests, one question per
+   arm, a fresh server. Both questions were chosen as hard from GPQA runs and screens that all sent request seed 1234; with
+   distinct seeds question 88 fails far less often than those screens suggested. Two questions are not a benchmark-wide
+   rate.
 
    | Arm | Configuration | Question | Failed / 12 (95% Wilson) |
    |---|---|---|---|
@@ -111,10 +131,14 @@ Details, failure anatomy and open questions: [`investigations/2026-10-glm53-loop
    | NO | `3.25bpw · tpurtell 0.9.1 · NOPE records off, MLA owners tp · DFlash2 ×3, sharing off` | 88 | 2 (5-45%) |
    | B79 | `3.25bpw · tpurtell 0.9.1 · DFlash2 ×3` | 79 | 9 (47-91%) |
    | V79 | `3.25bpw · tpurtell 0.7.0 · DFlash2 ×3` | 79 | 9 (47-91%) |
-10. **None of the tested runtime parts moved either question at this size.** **Descriptive.** Question 88: EP2 routed
-    experts 3 vs 5 failures of 24 (Fisher p = 0.70), NOPE records off 4 vs 4 (p = 1.00), MLA ownership tp 3 vs 5
-    (p = 0.70); the preregistered rule found no candidate. Question 79: 9 vs 9; the rule's verdict is "unresolved". The
-    95% intervals for these differences reach 14-33 points, so effects of that size are not excluded.
+10. **None of the tested runtime parts moved either question at this size, and only very large effects could have
+    shown.** **Descriptive.** Question 88: EP2 routed experts 3 vs 5 failures of 24 (Fisher p = 0.70), NOPE records off
+    4 vs 4 (p = 1.00), MLA ownership tp 3 vs 5 (p = 0.70); arms EO and NO also turned draft-slot sharing off, so ownership
+    and sharing are not separated; the preregistered rule found no candidate. Question 79: 9 vs 9; the rule's verdict is
+    "unresolved". Minimum detectable differences (two-sided Fisher, p < 0.05, 80% power; `analyze.py screen-power`): one
+    arm against another on question 88 (12 vs 12, from 25%) only a rise of about 60 points, and no drop at any size; a
+    switch on vs off (24 vs 24, from 17%) a rise of about 41 points; question 79 (from 75%) a drop of about 60 points.
+    Draft depth, quantization and sampling settings were not varied.
 11. **Repeats that share one request seed vary, but not in a statistically meaningful way.** **Supported.** Same configuration and question
     (88), 12 repeats each: 3 failures with distinct seeds, 11 with seed 1234 on every repeat (Fisher p = 0.003;
     `comparisons/glm53-flash-fixed-seed-control`). The earlier hard-question screens sent seed 1234 on every repeat; their
@@ -134,21 +158,28 @@ Details, failure anatomy and open questions: [`investigations/2026-10-glm53-loop
     0.7.0 image 2,894,456. 4bpw TR3 (Brandon) on tpurtell 0.9.1 has 1,377,179 tokens and ran fewer than 8 GPQA requests at
     once while the pool was full; on tpurtell 0.7.0 + kpool fixes it has 437,563 tokens, and the engine crashed when the
     pool filled at 8 concurrent requests.
-14. **Neither fix costs measurable speed.** **Descriptive** (serving probe, one run per configuration): the kpool fixes
-    move per-request decode speed by -3.5% to +1.7% and acceptance by at most 0.004
+14. **Neither fix shows a speed cost, in single runs.** **Descriptive** (serving probe, one run per configuration, no
+    noise floor): the kpool fixes move per-request decode speed by -3.5% to +1.7% and acceptance by at most 0.004
     (`comparisons/glm53-flash-serving-probe`); the DCP1 tail fix 147.3 vs 146.9 tok/s at concurrency 1 and 62.5 vs 64.9
-    at 8, acceptance 0.534 vs 0.526 and 0.529 vs 0.550.
-15. **The engine is not bitwise reproducible at temperature 0.** **Supported.** The same configuration run twice diverges
-    after a median of 318 characters (`comparisons/glm53-flash-serving-probe`), so greedy parity cannot certify
-    speculative exactness on this stack.
+    at 8, acceptance 0.534 vs 0.526 and 0.529 vs 0.550. Draft acceptance at 8 concurrent requests was 0.5285 on unpatched
+    tpurtell 0.9.0 against 0.548-0.552 on the other DFlash2 ×3 builds (single runs).
+15. **The engine is not bitwise reproducible, even one request at a time.** **Supported.** The same configuration run
+    twice with greedy decoding, one request at a time, diverges after a median of 318 characters
+    (`comparisons/glm53-flash-serving-probe`), and two decode-vs-prefill runs of tpurtell 0.9.1 with the same prompts and
+    seeds, one request at a time, first differ in their per-position values after 1 to 130 generated tokens
+    (`glm53-flash-v091-decode-prefill-repeat`). Batching cannot explain this; at 8 or 12 concurrent requests batching adds
+    further variation. Greedy parity therefore cannot certify speculative exactness on this stack.
 
 ## Reading these results
-- **Seeds.** The engine draws each request's sampling noise from its request seed. Repeats that share a seed still vary,
-  because concurrent batching changes the arithmetic and their texts diverge, but they draw on the same sampler noise,
-  so that variation is not a statistically meaningful sample. Screens therefore use a distinct seed per repeat (`hard-prompt-screen/v2`) and GPQA a distinct request
-  seed per pass (pass *p* sends 1233 + *p*). All GPQA runs here are pass 1 (seed 1234), so a question's draw in two
-  configurations starts from the same sampler noise; how far that correlates outcomes across configurations is not
-  measured, and comparisons are paired by question.
+- **Seeds.** The engine draws each request's sampling noise from its request seed. Repeats that share a seed still vary
+  (the engine is not bitwise reproducible, and batching adds variation) and their texts diverge, but they draw on the same
+  sampler noise, so that variation is not a statistically meaningful sample. Screens therefore use a distinct seed per repeat (`hard-prompt-screen/v2`) and GPQA a distinct request
+  seed per pass (pass *p* sends 1233 + *p*). All GPQA runs here are pass 1 (seed 1234), so the configurations share
+  sampler noise question by question; the spread across them likely understates independent run-to-run spread, and
+  comparisons are paired by question.
+- **Receipts.** Every figure is recomputed from published rows, and server-log figures from `server_log.jsonl`. Two rest
+  on unpublished model output: the greedy shared-prefix lengths and the per-row `correct_stated` judgement (hashes of
+  the outputs are published).
 - **Questions are the unit.** Non-completion is concentrated on a few hard questions; rates are reported per question
   and never pooled across questions.
 - **Intervals.** GPQA accuracy: 95% bootstrap over questions. Rates (empty answers; screen failures of one question in
@@ -156,13 +187,22 @@ Details, failure anatomy and open questions: [`investigations/2026-10-glm53-loop
 - **Concurrency.** GPQA runs at 8 concurrent requests and screens at 12; match it when rerunning.
 
 ## Open questions
-Stated with their evidence; how to pursue them is left to the reader.
+Stated with their evidence.
 - **What drives non-completion on questions 88 and 79?** Question 88 fails in 1-3 of 12 draws on every tested arm of
   tpurtell 0.9.1; question 79 in 9 of 12 on tpurtell 0.9.1 and on the tpurtell 0.7.0 image. No tested runtime part moved
-  either at this size.
+  either, at a size where only very large effects could show.
+- **Does tpurtell 0.7.0 as shipped leave fewer empty answers?** In pass 1, the two tpurtell 0.7.0 builds (DFlash2 ×5) left
+  0 and 2 of 198 GPQA answers empty; every later build left 3 to 9. One pass each does not separate this from chance. The
+  question-79 screen ran 0.7.0 at three draft tokens, not the five its GPQA runs used, so it does not bear on this.
 - **Do releases or layouts differ in non-completion across the benchmark?** One GPQA pass per configuration shows 0 to 9
   empty answers of 198, with no paired difference at p < 0.05.
-- **Does the DCP1 tail fix change how often hard questions fail to finish?** It changes decode numerics in the first
-  2,044 tokens; the loops observed are stopped far later.
+- **Does the DCP1 tail fix change answers or how often hard questions fail to finish?** It changes decode numerics in
+  the first 2,044 tokens; the loops observed are stopped far later; GPQA and tool calling show no difference beyond
+  noise at their sizes.
+- **Why is the engine not bitwise reproducible one request at a time?** Greedy reruns diverge after a median of 318
+  characters, and same-seed decode-vs-prefill runs first differ after 1 to 130 tokens, with no concurrent requests.
+- **Do these quants cost accuracy?** No higher-precision reference (BF16 or NVFP4) was run on this hardware. The published
+  90.6-92.1 used other weights and harnesses that are not fully published, so the gap to them is not a measure of
+  quantization.
 - Code-level questions with no measurement yet (the 511-pool slice, `swiglu_limit` on the routed experts, top-k ties
   between layouts) are listed in the investigation.

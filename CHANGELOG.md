@@ -1,5 +1,30 @@
 # Changelog
 
+## 2026-10-09 (review): receipts for every figure, qualified determinations
+
+Contents now: 46 runs, 12 comparisons.
+
+- **Decode vs prefill on the tpurtell 0.9.1 release, published:** two runs of one configuration with the same prompts
+  and seeds (the noise floor) and one with DFlash2 ×3 on, 12 prompts each, protocol `decode-prefill-consistency/v1`.
+  New comparisons `glm53-flash-v091-decode-prefill-repeat` and `glm53-flash-v091-decode-prefill-speculation`. Only the
+  large tail-fix effect below 2,044 tokens is claimed; the fix's effect on answers is stated as unmeasured.
+- **Server-log figures now have receipts:** runs whose notes quote KV pool size, throughput, acceptance or waiting
+  requests publish `server_log.jsonl` (numeric fields parsed from the engine's log), and `tools/verify.py` recomputes a
+  `server` block in their summaries. The figures that still rest on unpublished model output (greedy prefix lengths,
+  the audited `correct_stated` judgement) are named as such.
+- **GPQA: secondary, audited score `correct_stated`** per row (whether the reply's stated final answer is right) and
+  accuracy among answered questions, beside the raw `flexible-extract` headline. The scoring note now uses the published
+  runs: 0.5 to 2.0 points low per run.
+- **Qualifications:** the shared pass-1 seed likely understates run-to-run spread; questions 88 and 79 were chosen
+  from seed-1234 data; the component screen's fixed settings, its pairing of ownership with slot sharing, and its
+  minimum detectable differences (`tools/analyze.py screen-power`); kernel tests cover the 0.7.0/0.8.0 images and
+  local builds, not the 0.9.0/0.9.1 release images; speed figures are single runs; the engine is not bitwise
+  reproducible even one request at a time.
+- **Open questions added:** 0.7.0 as shipped and empty answers; single-request nondeterminism; no higher-precision
+  reference on this hardware.
+- Labels: `, prefix cache off` is appended when prefix caching is disabled. Glossary in `README.md` and on the site's
+  method page, linked from first use on each site page; the overview leads with its summary.
+
 ## 2026-10-09: hard-question screens withdrawn as rate measures; component screen added
 
 Contents now: 43 runs of GLM-5.3-Flash on 2x RTX PRO 6000: 9 GPQA Diamond runs (pass 1 each); 7 component-screen runs
