@@ -13,6 +13,11 @@ Contents: 39 runs of GLM-5.3-Flash on 2x RTX PRO 6000:
 Also: 11 comparisons, two investigations with their preregistrations, `FINDINGS.md`, `DATASHEET.md`, `SCHEMA.md`, and the
 results site.
 
+- Scoring note revised (2026-10-08): `flexible-extract` underscores by 0.5 to 2.5 points per pass, about 1.6, not about
+  0.7. Most of it comes from replies that state the answer and then mention other options' labels; the earlier figure
+  checked only replies where the two filters disagree. Notes added on `strict-match` (a phrasing check, not accuracy)
+  and on answer order (fixed by the first `--seed 1235` load, cached). `tools/verify.py` now checks that compared GPQA
+  runs share prompt and target hashes. No scores changed.
 - Scoring note (2026-10-08): `flexible-extract` matches any parenthesised capital letter, so notation in a reply can
   be read as the answer. A deterministic misread that only lowers scores, about 0.7 points per pass. Stated in the GPQA
   protocol, DATASHEET, SCHEMA and site; no scores changed. FINDINGS 6 now credits unanswered questions at their own

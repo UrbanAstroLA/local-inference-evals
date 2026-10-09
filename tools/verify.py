@@ -220,6 +220,13 @@ def check_comparison(cdir, manifests):
         return
     protos = {m["protocol"] for m in runs}
     if protos != {c["protocol"]}: fails.append(f"comparison {cid}: protocols {sorted(protos)} != {c['protocol']}")
+    if c["protocol"].startswith("gpqa-diamond/"):        # same questions, prompts and answer order on every side
+        seen = {}
+        for r in c["runs"]:
+            for line in (ROOT / "runs" / r / "results.jsonl").read_text().splitlines():
+                x = json.loads(line); k = (x["prompt_hash"], x["target_hash"])
+                if seen.setdefault(x["doc_id"], k) != k:
+                    fails.append(f"comparison {cid}: doc {x['doc_id']} has different prompt/target hashes across runs"); break
     cfgs = [flatten(load(ROOT / "configs" / f"{m['config']}.json")) for m in runs]
     keys = {k for k in set().union(*cfgs) if not any(k == d or k.startswith(d + ".") for d in DESCRIPTIVE)}
     allowed = set(c.get("varies", []))

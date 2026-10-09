@@ -104,9 +104,10 @@ server ([`investigations/2026-10-glm53-looping`](investigations/2026-10-glm53-lo
 6. **Empty answers explain only part of the gap to published scores (NVIDIA 92.1, Red Hat 90.6).** Scoring only
    answered questions would add 0.9-3.4 points, but the questions that go unanswered are harder than average (74.1%
    correct when answered, vs 90.3% for the others). Credited at their own observed accuracy, completing them would add
-   0.8-2.8 points (86.4-88.4% across the full runs), still below both. The raw `flexible-extract` scores also run about
-   0.7 points low (see the GPQA protocol's known limitation). The rest mixes quantization, harness and other runtime
-   effects, which these runs cannot separate.
+   0.8-2.8 points (86.4-88.4% across the full runs), still below both. The raw `flexible-extract` scores also run 0.5 to
+   2.5 points low per pass, about 1.6 on average (see the GPQA protocol's known limitation); with that and the empties
+   credited, the full runs would be about 88-90%, still below both. Neither publisher's answer extraction is published.
+   The rest mixes quantization, harness and other runtime effects, which these runs cannot separate.
 7. **The engine is not bitwise reproducible at temperature 0.** The same configuration run twice diverges after a
    median of 318 characters (`comparisons/glm53-flash-serving-probe`), so greedy parity cannot certify speculative
    exactness on this stack.

@@ -25,7 +25,7 @@ Known collection issues are recorded in each run's `notes` (for example a run ke
 
 **Preprocessing.** Exported by a local script that copies numeric fields, computes hashes and drops all text and
 local paths. Scores are lm-eval's raw `flexible-extract` and `strict-match` filters, not rescored. `flexible-extract` scores some
-correct answers as wrong on particular questions (about 0.7 points per pass on average); see the known limitation in
+correct answers as wrong on particular questions (0.5 to 2.5 points per pass, about 1.6 on average); see the known limitation in
 `protocols/gpqa-diamond/v1.md`.
 
 **Uses.** Comparing configurations, including different engines, under the same protocol and hardware (enforced by `tools/verify.py`), reproducing

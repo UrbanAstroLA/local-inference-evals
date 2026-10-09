@@ -248,7 +248,7 @@ def gpqa_accuracy_fig(rows, title):
     tbl = table(["Configuration", "Passes", "Accuracy", "95% CI", "Receipts"],
                 [[esc(r["label"]), r["npass"], f'{100 * r["s"]["accuracy_flexible"]:.1f}%',
                   f'{100 * r["s"]["accuracy_flexible_ci95"][0]:.1f}-{100 * r["s"]["accuracy_flexible_ci95"][1]:.1f}', link(r["rid"])] for r in rows], numeric=(1, 2))
-    return figure(title, "Raw lm-eval flexible-extract score, which reads some correct answers as wrong (about 0.7 points per pass; see the protocol). Dot = mean over passes; line = 95% bootstrap interval over questions "
+    return figure(title, "Raw lm-eval flexible-extract score, which reads some correct answers as wrong (0.5 to 2.5 points per pass, about 1.6; see the protocol). Dot = mean over passes; line = 95% bootstrap interval over questions "
                   "(each question's passes resampled together). Overlapping lines: the configurations cannot be told apart.", body, tbl,
                   legend([r["cfg"] for r in rows]))
 
@@ -558,8 +558,8 @@ def build():
            f'<li><b>Empty answers explain only part of the gap to published scores</b> (NVIDIA 92.1, Red Hat 90.6): scoring only answered questions '
            f'would add {min(gain):.1f}-{max(gain):.1f} points, but the questions that go unanswered are harder ({100 * sum(hard) / len(hard):.1f}% correct when '
            f'answered, vs {100 * sum(easy) / len(easy):.1f}% for the others). Credited at their own observed accuracy, completing them would add '
-           f'{min(cgain):.1f}-{max(cgain):.1f} points ({min(credited):.1f}-{max(credited):.1f}%), still below both. Raw scores also run about 0.7 points '
-           f'low (see the <a href="method.html#scoring">scoring note</a>). The rest mixes quantization, harness and other runtime effects, which these runs cannot separate.</li>'
+           f'{min(cgain):.1f}-{max(cgain):.1f} points ({min(credited):.1f}-{max(credited):.1f}%), still below both. Raw scores also run 0.5-2.5 points '
+           f'low per pass, about 1.6 (see the <a href="method.html#scoring">scoring note</a>). The rest mixes quantization, harness and other runtime effects, which these runs cannot separate.</li>'
            '<li><b>Under tpurtell 0.8.0/0.9.0\'s default DCP1 layout, a masking path in the vendored attention code drops the newest 1-3 '
            'tokens from decode attention</b> until the context reaches 2,044 tokens. The DCP1 tail fix (tpurtell PR #6, released in 0.9.1) brings decode much closer to '
            'prefill and turned two failing tool-calling scenarios into passes. On a preregistered screen, loop failures fell from 41 to 33 of 80, '
@@ -683,11 +683,13 @@ def build():
           '<h2>Labels</h2><p>Every configuration is named <i>weights · engine version · speculation</i>, built from its configuration file by one rule '
           f'(<a href="{REPO}/blob/main/SCHEMA.md#labels">SCHEMA.md</a>). The engine name comes first because engines number their versions '
           'independently. Chart colours mark engine series (builds that share one code base); the legend under each chart lists the labels each colour covers.</p>'
-          '<h2 id="scoring">Scoring</h2><p>GPQA scores are lm-eval\'s raw <code>flexible-extract</code> filter. It matches any parenthesised '
-          'capital letter, so notation in a reply, such as (H) or (R) in chemistry, can be read as the answer. The misread is deterministic: the '
-          'same reply is always scored the same way, on particular questions, and it only lowers scores. A hand check of every reply where the two '
-          'lm-eval filters disagree puts raw scores 0 to 2 points low per pass, about 0.7 on average. Raw scores stay the headline so runs remain '
-          'comparable; read them as slightly low, not as exact accuracy.</p>'
+          '<h2 id="scoring">Scoring</h2><p>GPQA scores are lm-eval\'s raw <code>flexible-extract</code> filter. It takes the last parenthesised '
+          'capital letter in the reply, so a reply that states its answer and then mentions other options\' labels, or uses notation such as (H) '
+          'or (R) in chemistry, is read as choosing the last one. The misread is deterministic: the same reply is always scored the same way, on '
+          'particular questions, so repeating a run never reveals it. Checking the model\'s stated final answer in every published pass puts raw '
+          'scores 0.5 to 2.5 points low per pass, about 1.6 on average. Raw scores stay the headline so runs remain comparable; read them as low, '
+          'not as exact accuracy. <code>strict-match</code> records whether the reply used the phrase "The answer is", which the prompt never '
+          'asks for; it is not an accuracy measure.</p>'
           '<h2>Intervals</h2><p>GPQA accuracy: 95% bootstrap over questions, because each question\'s three passes are not independent. '
           'Rates (empty answers, screen failures): 95% Wilson score intervals. Where intervals overlap, the configurations cannot be told apart.</p>'
           '<h2>Concurrency changes the arithmetic</h2><p>Requests are served 8 at a time, and batch composition changes the numerics inside the engine. '

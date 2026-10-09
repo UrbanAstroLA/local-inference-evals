@@ -47,7 +47,9 @@ weights (`<weights>-<engine>-<version>[-<patch>]-<speculation>`).
 **gpqa-diamond/v1:** `doc_id`, `doc_hash`, `prompt_hash`, `target_hash` (as logged by lm-eval), `pass`, `seed` (lm-eval's
 `--seed` for the pass; requests carried seed 1234 unless the run notes say otherwise),
 `correct_flexible`, `correct_strict`, `empty` (no answer after reasoning), `response_chars`, `response_sha256`.
-`correct_flexible` is lm-eval's raw filter and slightly underscores (see the GPQA protocol's known limitation).
+`correct_flexible` is lm-eval's raw filter and underscores by 0.5 to 2.5 points per pass (see the GPQA protocol's known
+limitation). `correct_strict` records whether the reply used the phrase "The answer is", which the prompt never asks
+for; it is not an accuracy measure.
 
 **hard-prompt-screen/v0, v1:** `doc_id`, `rep`, `seed`, `cls` (ok / loop / exhaust / error), `finish_reason`,
 `stopped_early`, `completion_tokens` (null when the stream was stopped early), `secs`, `tail_zlib_ratio` (compressed /
