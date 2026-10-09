@@ -1,17 +1,16 @@
 {
- "samples": 594,
+ "samples": 198,
  "questions": 198,
  "passes": [
-  1,
-  2,
-  3
+  1
  ],
- "empty": 6,
- "accuracy_flexible": 0.8552,
- "accuracy_strict": 0.0269,
+ "empty": 0,
+ "accuracy_flexible": 0.8788,
+ "accuracy_strict": 0.0202,
  "accuracy_flexible_ci95": [
-  0.8131,
-  0.8923
+  0.8283,
+  0.9192
  ],
- "accuracy_flexible_answered": 0.8639
+ "accuracy_flexible_answered": 0.8788,
+ "empty_by_finish_reason": {}
 }

@@ -1,33 +1,25 @@
 {
- "requests": 40,
- "ok": 16,
- "loop": 19,
- "exhaust": 5,
+ "requests": 5,
+ "ok": 2,
+ "loop": 3,
+ "exhaust": 0,
  "error": 0,
- "non_ok": 24,
- "non_ok_ci95": [
-  0.446,
-  0.7365
- ],
+ "non_ok": 3,
  "per_doc": {
   "13": {
-   "loop": 5,
-   "ok": 3
+   "loop": 1
   },
   "79": {
-   "loop": 2,
-   "exhaust": 5,
-   "ok": 1
+   "loop": 1
   },
   "88": {
-   "loop": 8
+   "loop": 1
   },
   "121": {
-   "ok": 8
+   "ok": 1
   },
   "127": {
-   "ok": 4,
-   "loop": 4
+   "ok": 1
   }
  }
 }

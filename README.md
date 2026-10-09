@@ -6,8 +6,12 @@ Receipts for evaluations of locally served LLMs: what was run, on exactly which 
 per-item results, and the scripts that recompute every published number. Null and negative results are kept.
 
 Start with [`FINDINGS.md`](FINDINGS.md) for results and [`DATASHEET.md`](DATASHEET.md) for what the data is and is not.
-Looping, exhaustion and empty answers across tpurtell's runtimes, with commands to recompute every number:
+What drives non-completion on hard questions, the DCP1 tail bug and its fix (tpurtell PR #6, released in tpurtell
+0.9.1), with commands to recompute every number:
 [`investigations/2026-10-glm53-looping`](investigations/2026-10-glm53-looping).
+
+**2026-10-09:** the earlier hard-question screen rates were withdrawn because every repeat sent the same request seed;
+see the notice in the investigation and [`CHANGELOG.md`](CHANGELOG.md).
 Results site: <https://urbanastrola.github.io/local-inference-evals/>.
 
 ## Labels
@@ -22,8 +26,8 @@ The engine name comes first because engines number their versions independently.
 - `tpurtell 0.9.0 + DCP1 tail fix ≈ 0.9.1` is 0.9.0 with the fix of tpurtell/glm-5.3-flash-ext3-2x-rtx#6, applied locally
   and measured before the fix was merged. The fix shipped in 0.9.1 (2026-10-08); it is the same engine as
   `tpurtell 0.9.1` for every measurement here.
-- A layout segment such as `0.7.0 layout (DCP2, EP2)` appears only when a configuration runs a parallel layout other than
-  its release's default (here a diagnostic control).
+- A layout segment such as `0.7.0 layout (DCP2, EP2)` or `EP2 experts, NOPE records off` appears only when a
+  configuration runs a parallel layout other than its release's default (screen arms and diagnostic controls).
 - Plain `tpurtell 0.7.0`, `0.8.0`, `0.9.0` and `0.9.1` are the releases as published.
 
 Weights: `3.25bpw` is tpurtell's K3.25 checkpoint wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1; `4bpw TR3 (Brandon)` is Brandon M. Music's TR3
@@ -56,7 +60,9 @@ A comparison may only line up runs that share the same **protocol id and version
 fails if anything else differs. Cross-protocol or cross-hardware tables are allowed only when marked
 `"comparable": false` with a stated reason, and are reported as context, never as a ranking.
 
-Every accuracy is reported with a 95% confidence interval. Differences inside the interval are ties.
+Every accuracy is reported with a 95% confidence interval. Differences inside the interval are ties. Runs that send
+one request seed on every repeat (`hard-prompt-screen` v0 and v1) are single draws per question and cannot be compared;
+`tools/verify.py` enforces this.
 
 ## Benchmark data
 

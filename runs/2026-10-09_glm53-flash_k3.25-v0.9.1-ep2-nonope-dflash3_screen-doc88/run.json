@@ -1,0 +1,10 @@
+{
+ "id": "2026-10-09_glm53-flash_k3.25-v0.9.1-ep2-nonope-dflash3_screen-doc88",
+ "config": "glm53-flash/k3.25-v0.9.1-ep2-nonope-dflash3",
+ "protocol": "hard-prompt-screen/v2",
+ "date": "2026-10-09",
+ "software": {
+  "client": "tools/clients/hard_prompt_screen.py"
+ },
+ "notes": "Component screen, 2026-10-09 (preregistered; investigations/2026-10-glm53-looping/component-screen), arm EN: EP2 routed experts and NOPE records off. GPQA Diamond doc 88 x 12 repeats, seeds 5001-5012 (5000 + repeat), 12 concurrent requests, fresh server. Gate: the container's settings were checked against the arm before any request; 12 of 12 records, 0 errors. Server log (not published): KV pool 3,992,056 tokens; peak KV cache usage 43.0%; 0 log lines mention preemption; 0 of 331 scheduler status lines show requests waiting."
+}

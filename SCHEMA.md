@@ -44,17 +44,21 @@ omit the engine name because every configuration so far is a tpurtell build; ids
 weights (`<weights>-<engine>-<version>[-<patch>]-<speculation>`).
 
 ## results.jsonl by protocol
-**gpqa-diamond/v1:** `doc_id`, `doc_hash`, `prompt_hash`, `target_hash` (as logged by lm-eval), `pass`, `seed` (lm-eval's
-`--seed` for the pass; requests carried seed 1234 unless the run notes say otherwise),
-`correct_flexible`, `correct_strict`, `empty` (no answer after reasoning), `response_chars`, `response_sha256`.
+**gpqa-diamond/v1:** `doc_id`, `doc_hash`, `prompt_hash`, `target_hash` (as logged by lm-eval), `pass`, `seed` (the
+request seed: 1233 + pass), `correct_flexible`, `correct_strict`, `empty` (no answer after reasoning), `response_chars`,
+`response_sha256`, `finish_reason` and `completion_tokens` (from a passive request log; null when the run had none).
+One row per question: a run is one pass (`tools/verify.py` enforces it); further passes are their own runs.
 `correct_flexible` is lm-eval's raw filter and underscores by 0.5 to 2.5 points per pass (see the GPQA protocol's known
 limitation). `correct_strict` records whether the reply used the phrase "The answer is", which the prompt never asks
 for; it is not an accuracy measure.
 
-**hard-prompt-screen/v0, v1:** `doc_id`, `rep`, `seed`, `cls` (ok / loop / exhaust / error), `finish_reason`,
-`stopped_early`, `completion_tokens` (null when the stream was stopped early), `secs`, `tail_zlib_ratio` (compressed /
-raw size of the last 30,000 reasoning characters; low = repetitive), `reasoning_chars`, `content_chars`,
-`lm_eval_prompt_hash`, `reasoning_sha256`. Rows corrected after collection carry `reclassified` with the reason.
+**hard-prompt-screen/v0, v1, v2:** `doc_id`, `rep`, `seed` (the request seed), `cls` (ok / loop / exhaust / error),
+`finish_reason`, `stopped_early`, `completion_tokens` (null when the stream was stopped early), `secs`, `tail_zlib_ratio`
+(compressed / raw size of the last 30,000 reasoning characters; low = repetitive), `reasoning_chars`, `content_chars`,
+`lm_eval_prompt_hash`, `reasoning_sha256`; v2 adds `min_zlib_check` (the lowest of the early-stop detector's periodic
+checks; null if none ran). v0/v1 runs hold repeat 1 of each question only (every repeat sent seed 1234); their
+summaries give counts, never rates. A v2 run holds one question with distinct seeds, and its summary adds `seeds` and a
+Wilson interval `non_ok_ci95`.
 
 **serving-probe/v1:** rows with `kind` = `request` (`batch`, `doc_id`, `tokens`, `finish`, `ttft_s`, `decode_tok_s`,
 `secs`, `output_chars`, `output_sha256`) or `batch` (`batch`, `concurrency`, `temperature`, `max_tokens`, `wall_s`,

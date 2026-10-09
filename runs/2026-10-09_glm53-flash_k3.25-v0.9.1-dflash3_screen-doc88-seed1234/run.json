@@ -1,0 +1,10 @@
+{
+ "id": "2026-10-09_glm53-flash_k3.25-v0.9.1-dflash3_screen-doc88-seed1234",
+ "config": "glm53-flash/k3.25-v0.9.1-dflash3",
+ "protocol": "hard-prompt-screen/v2",
+ "date": "2026-10-09",
+ "software": {
+  "client": "tools/clients/hard_prompt_screen.py"
+ },
+ "notes": "Component screen, 2026-10-09 (preregistered; investigations/2026-10-glm53-looping/component-screen), arm S1234: arm B repeated with request seed 1234 on every repeat (Amendment 1), all else identical. A control for the seed, not a measurement of the configuration. GPQA Diamond doc 88 x 12 repeats, seed 1234 on every request (fixed-seed control), 12 concurrent requests, fresh server. Gate: the container's settings were checked against the arm before any request; 12 of 12 records, 0 errors. Server log (not published): KV pool 4,707,515 tokens; peak KV cache usage 54.3%; 0 log lines mention preemption; 0 of 595 scheduler status lines show requests waiting."
+}

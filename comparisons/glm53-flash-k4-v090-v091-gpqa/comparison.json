@@ -1,0 +1,14 @@
+{
+ "id": "glm53-flash-k4-v090-v091-gpqa",
+ "protocol": "gpqa-diamond/v1",
+ "question": "Does GLM-5.3-Flash 4bpw TR3 (Brandon) score or finish differently on tpurtell 0.9.1 (0.9.0 plus the DCP1 tail fix) than on tpurtell 0.9.0? Pass 1 of each, paired by question.",
+ "runs": [
+  "2026-10-06_glm53-flash_k4-v0.9.0-dflash3_gpqa-diamond",
+  "2026-10-08_glm53-flash_k4-v0.9.1-dflash3_gpqa-diamond-pass1"
+ ],
+ "varies": [
+  "engine.version",
+  "engine.image"
+ ],
+ "comparable": true
+}

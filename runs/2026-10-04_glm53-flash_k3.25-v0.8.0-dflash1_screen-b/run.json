@@ -6,5 +6,5 @@
  "software": {
   "client": "tools/clients/hard_prompt_screen.py"
  },
- "notes": "Arm B of the kpool screen (tpurtell 0.8.0, DFlash2 ×1)."
+ "notes": "Repeat 1 of each question only. Every repeat of this screen sent request seed 1234, and the engine draws its sampling noise from the seed, so all repeats of a question shared one random stream and were not independent samples; repeats 2-8 are not published (withdrawal notice: investigations/2026-10-glm53-looping). One draw per question: these rows show that loops or exhaustion occur in this configuration, not how often. Arm B of the kpool screen."
 }

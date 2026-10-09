@@ -6,5 +6,5 @@
  "software": {
   "client": "tools/clients/hard_prompt_screen.py"
  },
- "notes": "4bpw TR3 (Brandon) on tpurtell 0.8.0 + kpool fixes ≈ 0.9.0 (kpool kernel files byte-identical to v0.9.0). KV pool 1,377,179 tokens, full for much of the run (vLLM ran 5 of 8 requests at a time); zero errors."
+ "notes": "Repeat 1 of each question only. Every repeat of this screen sent request seed 1234, and the engine draws its sampling noise from the seed, so all repeats of a question shared one random stream and were not independent samples; repeats 2-8 are not published (withdrawal notice: investigations/2026-10-glm53-looping). One draw per question: these rows show that loops or exhaustion occur in this configuration, not how often. KV pool 1,377,179 tokens; zero errors."
 }

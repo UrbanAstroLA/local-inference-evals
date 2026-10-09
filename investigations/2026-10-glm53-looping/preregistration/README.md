@@ -1,3 +1,6 @@
+> **Withdrawn (2026-10-09).** The layout bisection planned here used one request seed on every repeat; its results
+> were withdrawn. The documents are kept unchanged so their hashes verify. See [`WITHDRAWN.md`](WITHDRAWN.md).
+
 # Layout bisection: preregistration and amendments
 
 **Names used in these files:** arm A = `3.25bpw · tpurtell 0.9.0 · DFlash2 ×3` (v0.9.0 as released: DCP1 + MLA layer

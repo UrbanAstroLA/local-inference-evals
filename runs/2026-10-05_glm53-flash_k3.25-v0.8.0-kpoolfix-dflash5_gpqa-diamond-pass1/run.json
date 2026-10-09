@@ -6,5 +6,5 @@
  "software": {
   "harness": "lm-evaluation-harness 0.4.14.dev0 @ b954108c"
  },
- "notes": "Pass 1 only (n=1); an early comparative, compare per question with other runs' pass 1 (same prompts and request seed). Raw lm-eval flexible-extract / strict-match scores (not rescored)."
+ "notes": "Pass 1 (request seed 1234). Raw lm-eval flexible-extract / strict-match scores (not rescored). No request log for this run: finish_reason and completion_tokens are null."
 }

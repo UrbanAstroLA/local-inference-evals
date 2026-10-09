@@ -1,0 +1,17 @@
+{
+ "id": "glm53-flash-v091-component-screen-doc88",
+ "protocol": "hard-prompt-screen/v2",
+ "question": "On tpurtell 0.9.1 (3.25bpw), does any of three layout switches (EP2 routed experts; NOPE records off; MLA layer ownership tp with draft-slot sharing off) change how often GPQA Diamond question 88 fails to finish? Preregistered half-fraction factorial screen.",
+ "runs": [
+  "2026-10-09_glm53-flash_k3.25-v0.9.1-dflash3_screen-doc88",
+  "2026-10-09_glm53-flash_k3.25-v0.9.1-ep2-nonope-dflash3_screen-doc88",
+  "2026-10-09_glm53-flash_k3.25-v0.9.1-ep2-owntp-dflash3_screen-doc88",
+  "2026-10-09_glm53-flash_k3.25-v0.9.1-nonope-owntp-dflash3_screen-doc88"
+ ],
+ "varies": [
+  "serving.ep",
+  "serving.layout",
+  "serving.draft_slot_sharing"
+ ],
+ "comparable": true
+}

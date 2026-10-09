@@ -1,0 +1,21 @@
+{
+ "requests": 12,
+ "ok": 1,
+ "loop": 11,
+ "exhaust": 0,
+ "error": 0,
+ "non_ok": 11,
+ "per_doc": {
+  "88": {
+   "loop": 11,
+   "ok": 1
+  }
+ },
+ "seeds": [
+  1234
+ ],
+ "non_ok_ci95": [
+  0.6461,
+  0.9851
+ ]
+}

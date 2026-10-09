@@ -6,8 +6,10 @@ Following the questions of "Datasheets for Datasets" (Gebru et al.).
 fixed, versioned protocols, so that configurations can be compared like for like and claims can be checked.
 
 **Composition.** One directory per run (`runs/<id>/`): a manifest, one JSON line per item, and a summary recomputable
-from those lines. Items are benchmark questions (GPQA Diamond), screen requests, probe requests, kernel tests, decode positions
-compared with prefill, attention-index check cases, or tool-calling scenarios.
+from those lines. Items are benchmark questions (GPQA Diamond, pass 1 per configuration), screen requests, probe requests, kernel tests,
+decode positions compared with prefill, attention-index check cases, or tool-calling scenarios. Screens under
+`hard-prompt-screen/v2` hold 12 independent draws of one question (distinct request seeds); the earlier `v0`/`v1`
+screens hold one draw per question (repeat 1), because every repeat sent the same seed.
 Rows contain ids, hashes, outcomes, token counts, timings and compression ratios. They contain **no benchmark text
 and no model output text.** Field definitions, and the rule that names configurations (weights · engine version ·
 speculation): `SCHEMA.md`.
@@ -24,19 +26,20 @@ checkpoint brandonmusic/GLM-5.3-Flash-tr3-4bpw (`4bpw TR3 (Brandon)`). Two NVIDI
 Known collection issues are recorded in each run's `notes` (for example a run kept as INVALID after an engine crash).
 
 **Preprocessing.** Exported by a local script that copies numeric fields, computes hashes and drops all text and
-local paths. Scores are lm-eval's raw `flexible-extract` and `strict-match` filters, not rescored. `flexible-extract` scores some
+local paths. It keeps pass 1 of each GPQA run and repeat 1 of each question in the fixed-seed screens; `tools/verify.py`
+fails if any other pass or repeat appears. Scores are lm-eval's raw `flexible-extract` and `strict-match` filters, not rescored. `flexible-extract` scores some
 correct answers as wrong on particular questions (0.5 to 2.5 points per pass, about 1.6 on average); see the known limitation in
 `protocols/gpqa-diamond/v1.md`.
 
 **Uses.** Comparing configurations, including different engines, under the same protocol and hardware (enforced by `tools/verify.py`), reproducing
 the findings, or as a baseline for other hardware. **Not suitable** for: ranking models in general, comparing with
-scores from other harnesses as if equal, or estimating population failure rates from the hard-question screen (it
-deliberately samples the hardest items), quoting the screen's cross-engine gap as an effect size (its items
-were selected from one engine's failures), or comparing individual responses between runs (concurrent batching
-makes outputs nondeterministic even with a fixed seed).
+scores from other harnesses as if equal, estimating benchmark-wide failure rates from the hard-question screen (it samples
+the hardest items, one question per run), reading the single draws of the v0/v1 screens as rates, or comparing
+individual responses between runs (concurrent batching makes outputs nondeterministic even with a fixed seed).
 
 **Distribution.** Public repository. Results and docs CC BY 4.0, code Apache-2.0. Model weights, engines and
 datasets are not redistributed.
 
-**Maintenance.** Runs are append-only; corrections are new commits recorded in `CHANGELOG.md`. Protocol changes get a
+**Maintenance.** Corrections and withdrawals are new commits recorded in `CHANGELOG.md`; withdrawn rows stay in the
+git history. Protocol changes get a
 new version number; old runs are never rescored under a new version.

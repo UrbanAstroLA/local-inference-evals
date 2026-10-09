@@ -11,5 +11,8 @@
   0.8232,
   0.9141
  ],
- "accuracy_flexible_answered": 0.8821
+ "accuracy_flexible_answered": 0.8821,
+ "empty_by_finish_reason": {
+  "not logged": 3
+ }
 }

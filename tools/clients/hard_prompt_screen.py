@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
-"""hard-prompt-screen/v1 client. Usage: GPQA_SAMPLES=<samples.jsonl> [BASE_URL=...] hard_prompt_screen.py OUTDIR REPEATS DOC [DOC ...]
-Protocol: protocols/hard-prompt-screen/v1.md. Request body, seed (1234), order (Random(7)), concurrency (8), classes and
-early stop as specified there. Prompts are the lm-eval-rendered chat messages taken from GPQA_SAMPLES."""
+"""hard-prompt-screen client (v1 and v2).
+Usage: GPQA_SAMPLES=<samples.jsonl> [BASE_URL=...] [SEED_BASE=N] [CONC=N] hard_prompt_screen.py OUTDIR REPEATS DOC [DOC ...]
+v2 (protocols/hard-prompt-screen/v2.md): SEED_BASE=5000 CONC=12, one DOC, 12 REPEATS; request seed = SEED_BASE + repeat.
+v1 (protocols/hard-prompt-screen/v1.md): SEED_BASE unset (seed 1234 on every request) and CONC unset (8). v1 sent one seed
+on every repeat, so its repeats were not independent draws; use v2 for repeated draws.
+Request body, order (Random(7)), classes and early stop as specified in the protocols. Prompts are the lm-eval-rendered
+chat messages taken from GPQA_SAMPLES."""
 import json, sys, os, time, glob, threading, queue, random, zlib, requests
 out, reps, docs = sys.argv[1], int(sys.argv[2]), [int(x) for x in sys.argv[3:]]
 os.makedirs(out, exist_ok=True)
@@ -20,7 +24,8 @@ def zr(s):
 def run(doc, rep):
     fn = f'{out}/doc{doc}_rep{rep}.json'
     if os.path.exists(fn): return
-    body = dict(model=MODEL, messages=prompts[doc], temperature=1.0, top_p=0.95, seed=1234,
+    seed = (int(os.environ['SEED_BASE']) + rep) if os.environ.get('SEED_BASE') else 1234
+    body = dict(model=MODEL, messages=prompts[doc], temperature=1.0, top_p=0.95, seed=seed,
                 max_tokens=327680, stop=['</s>'], stream=True, stream_options={'include_usage': True},
                 chat_template_kwargs={'enable_thinking': True})
     t0 = time.time(); reasoning = []; content = []; fin = None; usage = None; nchunk = 0
@@ -55,7 +60,7 @@ def run(doc, rep):
     if fin is None:   # a healthy stream always ends with a finish reason (early stop sets 'length')
         fin = 'ERROR stream ended without a finish reason (server error or engine down)'
     cls = 'ok' if fin == 'stop' else ('error' if str(fin).startswith('ERROR') else ('loop' if (stopped_early or ratio < 0.15) else 'exhaust'))
-    rec = dict(doc=doc, rep=rep, seed=1234, finish_reason=fin, cls=cls, stopped_early=stopped_early, zlib_checks=chk, usage=usage, chunks=nchunk,
+    rec = dict(doc=doc, rep=rep, seed=seed, finish_reason=fin, cls=cls, stopped_early=stopped_early, zlib_checks=chk, usage=usage, chunks=nchunk,
                reasoning_chars=len(r), content_chars=len(c), secs=round(time.time()-t0),
                tail_zlib_ratio=ratio, tail=body_text[-3000:], content=c[-2000:], reasoning_head=r[:1500])
     json.dump(rec, open(fn, 'w'))
@@ -70,6 +75,6 @@ def worker():
         try: d, rep = q.get_nowait()
         except queue.Empty: return
         run(d, rep)
-ts = [threading.Thread(target=worker) for _ in range(8)]
+ts = [threading.Thread(target=worker) for _ in range(int(os.environ.get('CONC', '8')))]
 [t.start() for t in ts]; [t.join() for t in ts]
 log('ALL DONE')

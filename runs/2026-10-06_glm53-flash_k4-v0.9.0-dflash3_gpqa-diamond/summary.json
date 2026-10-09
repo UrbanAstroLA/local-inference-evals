@@ -1,17 +1,18 @@
 {
- "samples": 594,
+ "samples": 198,
  "questions": 198,
  "passes": [
-  1,
-  2,
-  3
+  1
  ],
- "empty": 23,
- "accuracy_flexible": 0.8468,
- "accuracy_strict": 0.0219,
+ "empty": 9,
+ "accuracy_flexible": 0.8434,
+ "accuracy_strict": 0.0152,
  "accuracy_flexible_ci95": [
-  0.8047,
-  0.8855
+  0.7879,
+  0.8889
  ],
- "accuracy_flexible_answered": 0.8809
+ "accuracy_flexible_answered": 0.8836,
+ "empty_by_finish_reason": {
+  "not logged": 9
+ }
 }

@@ -1,0 +1,11 @@
+{
+ "id": "glm53-flash-fixed-seed-control",
+ "protocol": "hard-prompt-screen/v2",
+ "question": "fixed-seed control: does sending request seed 1234 on every repeat, instead of a distinct seed per repeat, change how often GPQA Diamond question 88 fails to finish on tpurtell 0.9.1 (3.25bpw), all else identical? Shows why the earlier fixed-seed screens were withdrawn.",
+ "runs": [
+  "2026-10-09_glm53-flash_k3.25-v0.9.1-dflash3_screen-doc88",
+  "2026-10-09_glm53-flash_k3.25-v0.9.1-dflash3_screen-doc88-seed1234"
+ ],
+ "varies": [],
+ "comparable": true
+}

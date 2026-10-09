@@ -1,6 +1,17 @@
-{"id": "glm53-flash-gpqa-published-context", "protocol": "gpqa-diamond/v1",
- "runs": ["2026-09-29_glm53-flash_k3.25-v0.7.0-dflash5_gpqa-diamond", "2026-09-29_glm53-flash_k3.25-v0.8.0-dflash3_gpqa-diamond",
-          "2026-10-01_glm53-flash_k3.25-v0.8.0-dflash5-noshare_gpqa-diamond", "2026-09-30_glm53-flash_k4-v0.8.0-dflash3_gpqa-diamond",
-          "2026-10-06_glm53-flash_k4-v0.9.0-dflash3_gpqa-diamond"],
+{
+ "id": "glm53-flash-gpqa-published-context",
+ "protocol": "gpqa-diamond/v1",
+ "runs": [
+  "2026-09-29_glm53-flash_k3.25-v0.7.0-dflash5_gpqa-diamond",
+  "2026-10-05_glm53-flash_k3.25-v0.7.0-kpoolfix-dflash5_gpqa-diamond-pass1",
+  "2026-09-29_glm53-flash_k3.25-v0.8.0-dflash3_gpqa-diamond",
+  "2026-10-01_glm53-flash_k3.25-v0.8.0-dflash5-noshare_gpqa-diamond",
+  "2026-10-05_glm53-flash_k3.25-v0.8.0-kpoolfix-dflash5_gpqa-diamond-pass1",
+  "2026-10-08_glm53-flash_k3.25-v0.9.1-dflash3_gpqa-diamond-pass1",
+  "2026-09-30_glm53-flash_k4-v0.8.0-dflash3_gpqa-diamond",
+  "2026-10-06_glm53-flash_k4-v0.9.0-dflash3_gpqa-diamond",
+  "2026-10-08_glm53-flash_k4-v0.9.1-dflash3_gpqa-diamond-pass1"
+ ],
  "comparable": false,
- "reason": "Published numbers use other weights (BF16, NVFP4) and an unstated (NVIDIA) or partly stated (Red Hat) harness; context only."}
+ "reason": "Published numbers use other weights (BF16, NVFP4) and an unstated (NVIDIA) or partly stated (Red Hat) harness; context only."
+}

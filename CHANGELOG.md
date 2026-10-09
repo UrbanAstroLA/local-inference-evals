@@ -1,5 +1,44 @@
 # Changelog
 
+## 2026-10-09: hard-question screens withdrawn as rate measures; component screen added
+
+Contents now: 43 runs of GLM-5.3-Flash on 2x RTX PRO 6000: 9 GPQA Diamond runs (pass 1 each); 7 component-screen runs
+(`hard-prompt-screen/v2`); 10 earlier screens kept as single draws (one kept as INVALID with its cause); 7 serving
+probes; 4 kpool kernel-test runs; 2 kpool tail index checks; 2 decode-vs-prefill runs; 2 tool-eval-bench runs. 10
+comparisons.
+
+- **Withdrawn: the hard-question screen rates.** Every repeat of the `hard-prompt-screen/v0` and `v1` screens
+  (2026-09-30 to 2026-10-08) sent request seed 1234. Concurrent batching still made the repeats vary, but every repeat
+  drew on the same sampler noise, so that variation was not statistically meaningful and the effective sample behind
+  each rate was far smaller than its request count. Evidence: on `3.25bpw · tpurtell 0.9.1 · DFlash2 ×3`, question 88 failed 3 of 12
+  times with distinct seeds and 11 of 12 with seed 1234 on every repeat, all else equal. Withdrawn: the screen failure
+  rates and intervals, the layout-bisection statistics and verdicts, and the question-level observations drawn from
+  those screens, together with the text built on them in `FINDINGS.md`, the investigation, the comparisons and the site.
+  Kept: repeat 1 of each question from each configuration's first screen, as a single draw. Removed runs (in git
+  history): the 2026-10-04 `screen-a`, the 2026-10-05 `k3.25-v0.7.0-dflash5_screen-v07pair` and the three
+  `screen-bisect2` runs; removed comparisons: `glm53-flash-engine-screen-v0`, `glm53-flash-kpool-screen`,
+  `glm53-flash-kpool-screen-v070`, `glm53-flash-v090-layout-screen`, `glm53-flash-v090-tailfix-screen`. Notice:
+  `investigations/2026-10-glm53-looping`, section 4. The layout-bisection preregistration is kept unchanged and marked
+  withdrawn in a separate `WITHDRAWN.md`.
+- **New protocol `hard-prompt-screen/v2`:** one question per run, 12 repeats with distinct request seeds (5000 +
+  repeat), 12 concurrent, same early stop and classifier. `tools/clients/hard_prompt_screen.py` gains `SEED_BASE` and
+  `CONC`; its v1 defaults are unchanged.
+- **New data: the 2026-10-09 component screen** on tpurtell 0.9.1 (preregistered; plan and amendment in
+  `investigations/2026-10-glm53-looping/component-screen`): question 88 under three layout switches (arms B, EN, EO,
+  NO), question 79 on tpurtell 0.9.1 and on the tpurtell 0.7.0 image at three draft tokens (B79, V79), and a
+  fixed-seed control (S1234). Five new configurations; new comparisons `glm53-flash-v091-component-screen-doc88`,
+  `glm53-flash-doc79-image-screen`, `glm53-flash-fixed-seed-control`.
+- GPQA runs now publish pass 1 only; further passes will use per-pass request seeds (1233 + pass). New: pass 1 of
+  `3.25bpw · tpurtell 0.9.1 · DFlash2 ×3` and `4bpw TR3 (Brandon) · tpurtell 0.9.1 · DFlash2 ×3`, with `finish_reason`
+  and `completion_tokens` from a passive request log. GPQA rows' `seed` is now the request seed.
+- Decode vs prefill: each build was measured once, and a later repeat of the measurement varied by up to about 2x
+  between runs; only the large effect below 2,044 tokens (KL 0.066 → 0.010) is claimed.
+- `FINDINGS.md` rewritten to what the data supports, each statement graded supported / descriptive / open; the
+  investigation reframed around what drives non-completion on hard questions; `tools/analyze.py` subcommands
+  `gpqa-table`, `gpqa-pairs` (question-paired), `screen-v2`, `screen-single`, `screen-anatomy`, `screen-speed`;
+  `tools/verify.py` enforces pass 1 for GPQA runs, repeat 1 for v0/v1 screens, distinct seeds in v2 runs, and no
+  comparisons of v0/v1 runs; site rebuilt.
+
 ## Unreleased (first public version)
 Contents: 39 runs of GLM-5.3-Flash on 2x RTX PRO 6000:
 - 7 GPQA Diamond runs: 5 full 3-pass and 2 single-pass;

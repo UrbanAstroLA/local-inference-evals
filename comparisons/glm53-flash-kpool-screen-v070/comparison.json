@@ -1,4 +1,0 @@
-{"id": "glm53-flash-kpool-screen-v070", "protocol": "hard-prompt-screen/v1",
- "question": "Do the kpool fixes change non-completion on tpurtell 0.7.0 (DFlash2 ×5)?",
- "runs": ["2026-10-05_glm53-flash_k3.25-v0.7.0-kpoolfix-dflash5_screen-v07pair", "2026-10-05_glm53-flash_k3.25-v0.7.0-dflash5_screen-v07pair"],
- "varies": ["engine.patches"], "comparable": true}

@@ -1,29 +1,25 @@
 {
- "requests": 40,
+ "requests": 5,
  "ok": 0,
  "loop": 0,
  "exhaust": 0,
- "error": 40,
+ "error": 5,
  "non_ok": 0,
- "non_ok_ci95": [
-  -0.0,
-  0.0876
- ],
  "per_doc": {
   "13": {
-   "error": 8
+   "error": 1
   },
   "79": {
-   "error": 8
+   "error": 1
   },
   "88": {
-   "error": 8
+   "error": 1
   },
   "121": {
-   "error": 8
+   "error": 1
   },
   "127": {
-   "error": 8
+   "error": 1
   }
  }
 }

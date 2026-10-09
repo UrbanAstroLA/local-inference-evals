@@ -11,6 +11,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 RUN_KEYS = {"id", "config", "protocol", "date", "software", "notes"}
+# hard-prompt-screen v0/v1 sent seed 1234 on every repeat, so repeats were not independent draws: only repeat 1 of each
+# question is published, and these runs may not be pooled, compared or reported as rates (withdrawal notice,
+# investigations/2026-10-glm53-looping).
+SINGLE_DRAW = ("hard-prompt-screen/v0", "hard-prompt-screen/v1")
 # Descriptive config fields that follow from others (repo, version, patches), so comparisons do not check them.
 DESCRIPTIVE = ("id", "notes", "model.label", "engine.series", "engine.equivalent_to", "engine.built_on")
 fails = []
@@ -120,15 +124,20 @@ def summarize(protocol, rs):
         out["accuracy_flexible_ci95"] = bootstrap_by_item(rs, "correct_flexible")
         answered = [r for r in rs if not r["empty"]]
         out["accuracy_flexible_answered"] = round(sum(r["correct_flexible"] for r in answered) / max(1, len(answered)), 4)
+        out["empty_by_finish_reason"] = dict(sorted(Counter(r.get("finish_reason") or "not logged" for r in rs if r["empty"]).items()))
         return out
     if fam == "hard-prompt-screen":
         c = Counter(r["cls"] for r in rs)
         per = {}
         for r in rs:
             per.setdefault(str(r["doc_id"]), Counter())[r["cls"]] += 1
-        return {"requests": len(rs), "ok": c["ok"], "loop": c["loop"], "exhaust": c["exhaust"], "error": c["error"],
-                "non_ok": c["loop"] + c["exhaust"], "non_ok_ci95": wilson(c["loop"] + c["exhaust"], len(rs)),
-                "per_doc": {d: dict(v) for d, v in sorted(per.items(), key=lambda x: int(x[0]))}}
+        out = {"requests": len(rs), "ok": c["ok"], "loop": c["loop"], "exhaust": c["exhaust"], "error": c["error"],
+               "non_ok": c["loop"] + c["exhaust"], "per_doc": {d: dict(v) for d, v in sorted(per.items(), key=lambda x: int(x[0]))}}
+        if protocol in SINGLE_DRAW:          # one draw per question: outcomes, never a rate
+            return out
+        out["seeds"] = sorted({r["seed"] for r in rs})
+        out["non_ok_ci95"] = wilson(out["non_ok"], len(rs))   # v2: one question, distinct seeds, independent draws
+        return out
     if fam == "kpool-kernel-tests":
         c = Counter(r["outcome"] for r in rs)
         return {"tests": len(rs), "passed": c["passed"], "failed": c["failed"], "skipped": c["skipped"],
@@ -194,7 +203,18 @@ def check_run(run_dir):
     cfg = m.get("config", "")
     if cfg and not (ROOT / "configs" / f"{cfg}.json").exists(): fails.append(f"{rid}: config {cfg!r} not found")
     try:
-        stored = load(run_dir / "summary.json"); fresh = summarize(proto, rows(run_dir))
+        rs = rows(run_dir); docs = Counter(r.get("doc_id") for r in rs)
+        if proto.startswith("gpqa-diamond/") and ({r["pass"] for r in rs} != {1} or max(docs.values()) > 1):
+            fails.append(f"{rid}: a gpqa-diamond run publishes pass 1 only, one row per question; later passes need per-pass "
+                         "request seeds and their own run")
+        if proto in SINGLE_DRAW and (max(docs.values()) > 1 or {r["rep"] for r in rs} != {1}):
+            fails.append(f"{rid}: {proto} runs publish repeat 1 of each question only (every repeat sent seed 1234)")
+        if proto == "hard-prompt-screen/v2":
+            seeds = [r["seed"] for r in rs]
+            if len(docs) != 1: fails.append(f"{rid}: a hard-prompt-screen/v2 run has one question")
+            if len(set(seeds)) != len(seeds) and "fixed-seed control" not in m.get("notes", ""):
+                fails.append(f"{rid}: repeated request seeds in a hard-prompt-screen/v2 run not labelled 'fixed-seed control'")
+        stored = load(run_dir / "summary.json"); fresh = summarize(proto, rs)
         diff = [k for k in fresh if not same(fresh[k], stored.get(k))]
         if diff: fails.append(f"{rid}: summary.json disagrees with results.jsonl on {diff}")
     except Exception as e:
@@ -215,6 +235,10 @@ def check_comparison(cdir, manifests):
     runs = [manifests.get(r) for r in c["runs"]]
     if None in runs:
         fails.append(f"comparison {cid}: unknown run(s) {[r for r, m in zip(c['runs'], runs) if m is None]}"); return
+    if c.get("protocol") in SINGLE_DRAW or any(m["protocol"] in SINGLE_DRAW for m in runs):
+        fails.append(f"comparison {cid}: hard-prompt-screen v0/v1 runs are single draws and cannot be compared"); return
+    if any("fixed-seed control" in m["notes"] for m in runs) and "fixed-seed control" not in json.dumps(c):
+        fails.append(f"comparison {cid}: includes a fixed-seed control run without saying so")
     if not c.get("comparable", True):
         if not c.get("reason"): fails.append(f"comparison {cid}: comparable=false needs a reason")
         return

@@ -1,0 +1,10 @@
+{
+ "id": "2026-10-08_glm53-flash_k3.25-v0.9.1-dflash3_gpqa-diamond-pass1",
+ "config": "glm53-flash/k3.25-v0.9.1-dflash3",
+ "protocol": "gpqa-diamond/v1",
+ "date": "2026-10-08",
+ "software": {
+  "harness": "lm-evaluation-harness 0.4.14.dev0 @ b954108c"
+ },
+ "notes": "Pass 1 (request seed 1234). Raw lm-eval flexible-extract / strict-match scores (not rescored). finish_reason and completion_tokens per question from a passive request log. Server log (not published): KV pool 4,707,515 tokens; 0 of 859 scheduler status lines show requests waiting."
+}

@@ -1,0 +1,18 @@
+{
+ "samples": 198,
+ "questions": 198,
+ "passes": [
+  1
+ ],
+ "empty": 6,
+ "accuracy_flexible": 0.8485,
+ "accuracy_strict": 0.0354,
+ "accuracy_flexible_ci95": [
+  0.798,
+  0.8939
+ ],
+ "accuracy_flexible_answered": 0.875,
+ "empty_by_finish_reason": {
+  "length": 6
+ }
+}
