@@ -1098,13 +1098,20 @@ def build():
                   "pass 1 of each configuration (95% intervals {:.1f}-{:.1f})".format(
                       min(100 * r["s"]["accuracy_flexible_ci95"][0] for r in allg), max(100 * r["s"]["accuracy_flexible_ci95"][1] for r in allg))]])
 
+    acc3 = lambda c: "{:.1f} / {:.1f}%".format(analyze.pct(g[c]["rows"], "correct_flexible"), analyze.pct(g[c]["rows"], "correct_stated"))
+    _l = [analyze.pct(g["k3.25-v0.7.0-dflash5"]["rows"], "correct_flexible") - analyze.pct(g[b]["rows"], "correct_flexible")
+          for b in ("k3.25-v0.9.1-dflash3", "k4-v0.9.1-dflash3-c4")]
+    lead_lo, lead_hi = min(_l), max(_l)
     # ---- Results (index)
     summary = says([
-        (f'<b>No tested configuration is measurably more accurate on GPQA Diamond.</b> Three-pass records: {min(rec_acc):.1f}-{max(rec_acc):.1f}%; '
-         f'pass 1 of all {len(allg)} configurations: {min(accs):.1f}-{max(accs):.1f}%.', "Descriptive",
-         f"Raw lm-eval score. Audited stated-answer score: {min(rec_st):.1f}-{max(rec_st):.1f}% (records), {min(stated):.1f}-{max(stated):.1f}% (pass 1). "
-         f"Every paired comparison is consistent with noise (pass 1: McNemar p ≥ {min_p:.2f}). One pass resolves about 5 points, three passes about 3.",
-         '<a href="#gpqa">tables</a>'),
+        (f'<b>3.25bpw on tpurtell 0.7.0 scored highest.</b> Three-pass means, raw / stated: '
+         f'{acc3("k3.25-v0.7.0-dflash5")} (0.7.0), {acc3("k3.25-v0.9.1-dflash3")} (3.25bpw 0.9.1), {acc3("k4-v0.9.1-dflash3-c4")} (4bpw 0.9.1). '
+         f'The lead is {lead_lo:.1f}-{lead_hi:.1f} points raw, consistent on both scores but within pass-to-pass noise, so not yet established. '
+         'Why 0.7.0 leads is open.', "Descriptive",
+         "Question-clustered tests, 0.7.0 vs 3.25bpw 0.9.1: raw p = {:.2f}, stated p = {:.2f}; vs 4bpw 0.9.1: raw p = {:.2f}, stated p = {:.2f}. "
+         "Every 95% interval includes zero.".format(*[analyze.records(g["k3.25-v0.7.0-dflash5"], g[b], k)["p_cluster"]
+                                                      for b in ("k3.25-v0.9.1-dflash3", "k4-v0.9.1-dflash3-c4") for k in ("correct_flexible", "correct_stated")]),
+         '<a href="#records">records</a>'),
         (f'<b>One pass varies by {sp[0]:.1f}-{sp[-1]:.1f} points</b> between passes with their own seeds: as much as configurations differ.',
          "Descriptive", "Three configurations, three passes each", '<a href="#records">chart</a>'),
         (f'<b>tpurtell 0.7.0 as shipped left fewer questions unanswered than 0.9.1:</b> {e7["a"]} vs {e7["b"]} empty answers of {e7["n"]} (3.25bpw). '

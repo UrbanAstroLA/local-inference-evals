@@ -67,6 +67,7 @@ investigation. Standard library only.
 | 5 | One pass of one configuration varies by 0.5 to 3.5 points between passes with their own request seeds. | **Descriptive** | `analyze.py gpqa-passes` |
 | 6 | 3.25bpw and 4bpw TR3 (Brandon) on tpurtell 0.9.1 show no measurable difference in accuracy (86.9% vs 85.7%) or completion (16 vs 17 empty of 594). | **Descriptive** | `analyze.py gpqa-records` |
 | 7 | tpurtell 0.7.0 as shipped left fewer GPQA questions unanswered than tpurtell 0.9.1 (3.25bpw, three passes each): 4 vs 16 empty answers of 594. What produces the difference is open. | **Supported** (clustered p = 0.009); cause **open** | `analyze.py gpqa-records`, [confounds](CONFOUNDS.md#7-several-changes-between-releases-at-once) |
+| 7a | 3.25bpw on tpurtell 0.7.0 scored highest over three passes. Raw / stated means: 88.2 / 89.4% (0.7.0), 86.9 / 87.9% (3.25bpw 0.9.1), 85.7 / 87.7% (4bpw 0.9.1). The lead is 1.3-2.5 points raw, consistent on both scores but within pass-to-pass noise (clustered p = 0.12-0.41; every 95% interval includes zero), so not yet established. Why 0.7.0 leads is open. | **Descriptive**; cause **open** | `analyze.py gpqa-records` |
 | 8 | Empty answers concentrate on a few questions. | **Descriptive** | `analyze.py gpqa-empty` |
 | 9 | One pass per configuration does not separate these configurations in accuracy: pass 1 lands at 84.3-87.9% raw. | **Descriptive** | `analyze.py gpqa-table`, `gpqa-pairs` |
 | 10 | Empty answers in pass 1 are 0 to 9 of 198 per run. | **Descriptive** | `analyze.py gpqa-table` |
