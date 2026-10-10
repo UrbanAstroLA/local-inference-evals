@@ -9,8 +9,10 @@ arm, request seeds 5001-5012, 12 concurrent requests, fresh server (`protocols/h
 | V79 | `3.25bpw · tpurtell 0.7.0 · DFlash2 ×3` | 9 (47-91%) | 3 | 6 |
 
 Fisher p = 1.00; difference 0 points (95% Newcombe -32.5 to +32.5). The preregistered rule's verdict is "unresolved":
-neither the 0.7.0 image (with its layout) nor draft depth is implicated at this size. V79 differs from B79 in image,
-parallel layout (EP2 + DCP2), vision and model revision (identical weight shards; only the chat template differs).
+neither of its outcomes (the 0.7.0 image as candidate, or draft depth implicated) was met at this size; draft depth
+itself was not varied (both arms ran three draft tokens). V79 differs from B79 in image,
+parallel layout (EP2 + DCP2) and vision. The model revisions differ only in files neither server uses (identical weight
+files; both servers load the same vendored chat template).
 Its KV pool (2,894,456 tokens) was full for part of the run, so fewer than 12 requests ran at once then (run notes).
 Most failures on this question are exhaustion: reasoning that keeps varying until the 327,680-token budget runs out.
 

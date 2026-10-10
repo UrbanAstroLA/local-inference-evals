@@ -22,7 +22,7 @@ draft-slot sharing, loop, exhaustion) are defined in the repository's [glossary]
 | None of the tested runtime parts (EP2 routed experts, 656-byte NOPE records, MLA ownership tp with draft-slot sharing off, the tpurtell 0.7.0 image at three draft tokens) moved either question at this size | **Descriptive**: preregistered rules returned "no candidate at this size" and "unresolved"; with 12 draws per arm only very large effects (about 40-60 points) were detectable; draft depth, quantization and sampling were not varied |
 | The questions screened (88 and 79) were chosen as hard from seed-1234 data; with distinct seeds question 88 fails in 1-3 of 12 draws | **Descriptive**; two questions are not a benchmark-wide rate |
 | Loops are stopped far beyond the 2,044-token region where the tail bug acted; question 88 fails by looping, question 79 mostly by exhaustion | **Descriptive** |
-| Across GPQA, tpurtell 0.7.0 as shipped left fewer questions unanswered than tpurtell 0.9.1 (3.25bpw, three passes each with their own request seeds): 4 vs 16 empty answers of 594, on 4 vs 11 questions | **Supported** (question-clustered sign-flip test p = 0.009); the question was raised by pass 1, and passes 2-3 alone give 4 vs 11 (p = 0.06) |
+| Across GPQA, tpurtell 0.7.0 as shipped left fewer questions unanswered than tpurtell 0.9.1 (3.25bpw, three passes each with their own request seeds): 4 vs 16 empty answers of 594, on 4 vs 11 questions | **Supported** (question-clustered sign-flip test p = 0.009); the question was raised by pass 1, and passes 2-3 alone give 4 vs 11 empty answers on 1 vs 7 questions (p = 0.06) |
 | 3.25bpw and 4bpw TR3 (Brandon) on tpurtell 0.9.1 leave about as many questions unanswered (16 vs 17 of 594) | **Descriptive** (no difference detected) |
 | What drives non-completion on these questions, and which of 0.7.0's several differences from 0.9.1 produces its lower count | **Open** |
 
@@ -132,7 +132,7 @@ the 95% Wilson interval for that question in that configuration. Counts are neve
   so ownership and sharing are not separated.
 - **Question 79, the tpurtell 0.7.0 image at three draft tokens:** 9 of 12 on both. The preregistered rule's verdict is
   "unresolved". tpurtell 0.7.0 ships with five draft tokens; this arm ran three, so it says nothing about 0.7.0 as
-  shipped, and it also differs from B79 in layout, vision and model revision.
+  shipped, and it also differs from B79 in layout and vision.
 - **Held fixed** in every arm: 3.25bpw weights, DFlash2 ×3, temperature 1.0 / top_p 0.95, the 327,680-token budget,
   12 concurrent requests, one question per arm, a fresh server. Draft depth, quantization and sampling were not varied.
 - **Power** (`tools/analyze.py screen-power`; two-sided Fisher test, p < 0.05, 80% power): one arm against another on
@@ -186,11 +186,11 @@ three configurations also have passes 2 and 3 with request seeds 1235 and 1236
 - **tpurtell 0.7.0 as shipped vs 0.9.1 (3.25bpw).** 0.9.1 had more empty answers on 10 questions and fewer on 1; an exact
   sign-flip test over questions (questions as clusters, each question's difference summed over its three passes) gives
   p = 0.009, and the difference is +2.0 points (95% interval over questions +0.7 to +3.5). Supported by that test. The
-  question was raised by pass 1 (0 vs 5); passes 2 and 3 alone, run after it was raised, give 4 vs 11 (1 vs 7 questions,
+  question was raised by pass 1 (0 vs 5); passes 2 and 3 alone, run after it was raised, give 4 vs 11 empty answers (1 vs 7 questions,
   p = 0.06). Accuracy does not differ measurably (clustered p = 0.41).
 - **Why is open.** 0.7.0 differs from 0.9.1 at once in draft depth (5 vs 3), parallel layout (DCP2 with EP2 experts vs
-  DCP1 with MLA layer ownership), kernel and engine code, vision, KV pool (2,758,919 vs 4,707,515 tokens) and model
-  revision (chat template). The component screen did not test 0.7.0 at its shipped five draft tokens; at three, the 0.7.0
+  DCP1 with MLA layer ownership), kernel and engine code, vision, and KV pool (2,758,919 vs 4,707,515 tokens);
+  the model revisions differ only in files neither server uses (same weight files; both servers load the same vendored chat template). The component screen did not test 0.7.0 at its shipped five draft tokens; at three, the 0.7.0
   image failed question 79 as often as 0.9.1, and no tested layout part moved question 88 on 0.9.1.
 - **Weights on 0.9.1.** 3.25bpw and 4bpw TR3 (Brandon) leave about as many questions unanswered (16 vs 17; 9 questions each
   way; clustered p = 1.00); the 4bpw record ran 4 requests at once so that no request waited for KV memory.
@@ -259,8 +259,7 @@ Each item states the question and the evidence so far.
    tested runtime part moved either, at a size where only very large effects could show.
 2. **What makes tpurtell 0.7.0 as shipped leave fewer GPQA questions unanswered than tpurtell 0.9.1?** Over three passes
    with 3.25bpw weights, 4 vs 16 empty answers of 594, on 4 vs 11 questions (question-clustered p = 0.009; passes 2 and 3
-   alone p = 0.06). 0.7.0 differs in draft depth, parallel layout, kernel and engine code, vision, KV pool and model
-   revision at once, and none of these was varied alone in GPQA; the question-79 screen ran the 0.7.0 image at three
+   alone p = 0.06). 0.7.0 differs in draft depth, parallel layout, kernel and engine code, vision and KV pool at once, and none of these was varied alone in GPQA; the question-79 screen ran the 0.7.0 image at three
    draft tokens, not the five it ships with, and failed as often as 0.9.1. Which difference matters is inconclusive.
 3. **Does the DCP1 tail fix change answers, or how often hard questions fail to finish?** The fix changes decode numerics
    in the first 2,044 tokens; the loops observed are stopped far later; GPQA (one pass per release) and tool calling (two

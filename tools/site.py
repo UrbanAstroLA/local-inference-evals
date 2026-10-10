@@ -583,8 +583,8 @@ def screen_caveats(v2):
     f = lambda x: "not reachable at all" if x is None else f"about {100 * x:.0f} points"
     return ('<div class="note"><b>Scope.</b> Held fixed in every arm: 3.25bpw weights, DFlash2 ×3, temperature 1.0 / top_p 0.95, the 327,680-token '
             'budget, 12 concurrent requests, one question per arm, a fresh server. Arms EO and NO also turned draft-slot sharing off (the launcher pairs '
-            'it with MLA ownership <code>tp</code>), so ownership and sharing are not separated. Arm V79 differs from B79 in image, layout, vision and '
-            'model revision together. Draft depth, quantization and sampling settings were not varied. '
+            'it with MLA ownership <code>tp</code>), so ownership and sharing are not separated. Arm V79 differs from B79 in image, layout and vision '
+            'together. Draft depth, quantization and sampling settings were not varied. '
             f'<b>Power</b> (two-sided Fisher test, p &lt; 0.05, 80% power; <code>tools/analyze.py screen-power</code>): one arm against another on '
             f'question 88 (12 vs 12, from {100 * k["B"] / 12:.0f}% failing) detects a rise of {f(m1[1])}, and a drop is {f(m1[0])}; a switch on '
             f'vs off (24 vs 24, from {100 * base88:.0f}%) detects a rise of {f(m2[1])}; question 79 (12 vs 12, from {100 * k["B79"] / 12:.0f}%) '
@@ -797,7 +797,7 @@ def looping(runs):
               f'of {e7["n"]} answers empty, on {e7["qa_any"]} questions; 0.9.1 left {e7["b"]}, on {e7["qb_any"]} (question-clustered p = {e7["p_cluster"]:.3f}; '
               f'passes 2-3 alone, run after the question was raised: {e7b["a"]} vs {e7b["b"]}, p = {e7b["p_cluster"]:.2f}). With request logs, every empty '
               'answer but one ran to the 327,680-token cap. 0.7.0 differs from 0.9.1 in draft depth (5 vs 3), parallel layout (DCP2 and EP2 vs '
-              'DCP1 with MLA layer ownership), kernels and engine code, vision, KV pool and model revision at once, and the component screen at '
+              'DCP1 with MLA layer ownership), kernels and engine code, vision and KV pool at once, and the component screen at '
               'three draft tokens found no tested part that moved questions 88 or 79, so what produces the difference is open. Details: '
               '<a href="gpqa.html">GPQA page</a>.</p>' + empty_grid_fig(recs)
             + '<h2>4. Method note on seeds</h2>' + seed_fig(v2) + WITHDRAWAL.format(inv=INV)
@@ -873,7 +873,7 @@ def build():
            '2026-10-09).</li>'
            f'<li><b>tpurtell 0.7.0 as shipped left fewer GPQA questions unanswered than tpurtell 0.9.1</b> (3.25bpw, three passes each with their own '
            f'request seeds): {e7["a"]} vs {e7["b"]} empty answers of {e7["n"]}, on {e7["qa_any"]} vs {e7["qb_any"]} questions (supported: question-clustered '
-           f'test p = {e7["p_cluster"]:.3f}). The question arose from pass 1; passes 2 and 3 alone point the same way ({e7b["a"]} vs {e7b["b"]}, p = '
+           f'test p = {e7["p_cluster"]:.3f}). The question arose from pass 1; passes 2 and 3 alone point the same way ({e7b["a"]} vs {e7b["b"]} empty answers on {e7b["q_a"]} vs {e7b["q_b"]} questions, p = '
            f'{e7b["p_cluster"]:.2f}). Accuracy does not differ measurably ({analyze.pct(g["k3.25-v0.7.0-dflash5"]["rows"], "correct_flexible"):.1f}% vs '
            f'{analyze.pct(g["k3.25-v0.9.1-dflash3"]["rows"], "correct_flexible"):.1f}%). 0.7.0 differs from 0.9.1 in several ways at once (draft depth, '
            'parallel layout, kernels, vision, KV pool), so the cause is open.</li>'

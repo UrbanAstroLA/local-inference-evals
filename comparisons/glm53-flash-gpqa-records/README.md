@@ -24,7 +24,7 @@ separately and is shown for reference only. No correction for multiple compariso
 
 | A vs B | What differs | Outcome | A vs B (of 594) | B - A, points (95% interval) | Questions A / B | Clustered p | Pooled p |
 |---|---|---|---|---|---|---|---|
-| 0.7.0 vs 0.9.1, 3.25bpw | release as shipped: draft depth (5 vs 3), layout (DCP2 + EP2 vs DCP1 with MLA layer ownership), kernels and engine code, vision, KV pool, model revision | raw right | 524 vs 516 | -1.3 (-4.2 to +1.5) | 23 / 19 | 0.41 | 0.39 |
+| 0.7.0 vs 0.9.1, 3.25bpw | release as shipped: draft depth (5 vs 3), layout (DCP2 + EP2 vs DCP1 with MLA layer ownership), kernels and engine code, vision, KV pool | raw right | 524 vs 516 | -1.3 (-4.2 to +1.5) | 23 / 19 | 0.41 | 0.39 |
 | | | empty | 4 vs 16 | +2.0 (+0.7 to +3.5) | 1 / 10 | 0.009 | 0.002 |
 | 3.25bpw vs 4bpw, 0.9.1 | weights, and 8 vs 4 concurrent requests | raw right | 516 vs 509 | -1.2 (-4.2 to +1.7) | 19 / 16 | 0.51 | 0.47 |
 | | | empty | 16 vs 17 | +0.2 (-1.3 to +1.7) | 9 / 9 | 1.00 | 1.00 |
@@ -36,7 +36,7 @@ What this shows:
   separate configurations whose accuracy differs by less than that.
 - **tpurtell 0.7.0 as shipped left fewer questions unanswered than tpurtell 0.9.1** (supported by the question-clustered
   test, p = 0.009). The question was raised by pass 1 (0 vs 5 empty answers); passes 2 and 3 alone, run after it was
-  raised, give 4 vs 11 (1 vs 7 questions; clustered p = 0.06). Accuracy does not differ measurably. The two differ in
+  raised, give 4 vs 11 empty answers (1 vs 7 questions; clustered p = 0.06). Accuracy does not differ measurably. The two differ in
   several ways at once, so which difference matters is open.
 - **3.25bpw and 4bpw TR3 (Brandon) on 0.9.1 show no measurable difference** in accuracy or in empty answers
   (descriptive). The 4bpw record ran at 4 concurrent requests, the 3.25bpw record at 8.

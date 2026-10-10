@@ -86,7 +86,7 @@ treat a question's passes as independent and are given for reference only. No co
 
 | A vs B | What differs | Raw: B - A, points (95% interval); questions A / B; clustered p | Empty: A vs B of 594; questions A / B; clustered p | Pooled McNemar p (raw; empty) |
 |---|---|---|---|---|
-| 3.25bpw 0.7.0 ×5 vs 0.9.1 ×3 | release as shipped: draft depth, layout, kernels, vision, KV pool and model revision together | -1.3 (-4.2 to +1.5); 23 / 19; 0.41 | 4 vs 16; 1 / 10; 0.009 | 0.39; 0.002 |
+| 3.25bpw 0.7.0 ×5 vs 0.9.1 ×3 | release as shipped: draft depth, layout, kernels, vision and KV pool together | -1.3 (-4.2 to +1.5); 23 / 19; 0.41 | 4 vs 16; 1 / 10; 0.009 | 0.39; 0.002 |
 | 3.25bpw vs 4bpw on 0.9.1 | weights, and 8 vs 4 concurrent requests | -1.2 (-4.2 to +1.7); 19 / 16; 0.51 | 16 vs 17; 9 / 9; 1.00 | 0.47; 1.00 |
 | 3.25bpw 0.7.0 ×5 vs 4bpw 0.9.1 ×3 | all of the above | -2.5 (-5.4 to +0.5); 25 / 14; 0.12 | 4 vs 17; 2 / 13; 0.006 | 0.07; 0.004 |
 
@@ -103,12 +103,12 @@ treat a question's passes as independent and are given for reference only. No co
    **Supported** (question-clustered test): 4 vs 16 empty answers of 594, on 4 vs 11 questions; 0.9.1 had more empty
    answers on 10 questions and fewer on 1 (exact sign-flip test over questions p = 0.009; difference +2.0 points, 95%
    interval over questions +0.7 to +3.5). Qualifications: the question was raised by pass 1 (0 vs 5); passes 2 and 3
-   alone, run after it was raised, point the same way (4 vs 11, 1 vs 7 questions, clustered p = 0.06). Three record
+   alone, run after it was raised, point the same way (4 vs 11 empty answers on 1 vs 7 questions, clustered p = 0.06). Three record
    comparisons were made without correction (with a Bonferroni correction over three, p = 0.03). Accuracy does not differ
    measurably (88.2% vs 86.9%, clustered p = 0.41). Where a request log exists, every one of these empty answers ran to the
    327,680-token cap except one, which ended after 38 tokens. **What produces the difference is open**: 0.7.0 differs from
    0.9.1 in draft depth (5 vs 3 tokens), parallel layout (DCP2 with EP2 experts vs DCP1 with MLA layer ownership), kernel
-   and engine code, vision (on vs off), KV pool (2,758,919 vs 4,707,515 tokens) and model revision (chat template) at once;
+   and engine code, vision (on vs off), and KV pool (2,758,919 vs 4,707,515 tokens) at once (the model revisions differ only in files neither server uses (same weight files; both servers load the same vendored chat template));
    none of these was varied alone in GPQA, and the component screen at three draft tokens found no tested part that moved
    questions 88 or 79 (item 14). The 4bpw TR3 (Brandon) record on 0.9.1 also left more empty answers than 0.7.0 (17, on 14
    questions; clustered p = 0.006), but it differs in weights and concurrency as well.
@@ -260,9 +260,9 @@ Stated with their evidence.
   either, at a size where only very large effects could show.
 - **What makes tpurtell 0.7.0 as shipped leave fewer GPQA questions unanswered than tpurtell 0.9.1?** Over three passes
   with 3.25bpw weights: 4 vs 16 empty answers of 594, on 4 vs 11 questions (question-clustered p = 0.009; passes 2 and 3
-  alone 4 vs 11, p = 0.06), almost all at the 327,680-token cap; accuracy does not differ measurably. 0.7.0 differs in
+  alone 4 vs 11 empty answers on 1 vs 7 questions, p = 0.06), almost all at the 327,680-token cap; accuracy does not differ measurably. 0.7.0 differs in
   draft depth (5 vs 3), parallel layout (DCP2 with EP2 vs DCP1 with MLA layer ownership), kernel and engine code, vision,
-  KV pool and model revision at once, and none of these was varied alone in GPQA. The component screen ran the 0.7.0 image
+  and KV pool at once, and none of these was varied alone in GPQA. The component screen ran the 0.7.0 image
   at three draft tokens on question 79 only, where it failed as often as 0.9.1 (9 of 12 each), and found no tested layout
   part that moved question 88 on 0.9.1. Which difference matters is inconclusive.
 - **Do other releases or layouts differ in non-completion across the benchmark?** Only pass 1 exists for the other
