@@ -123,7 +123,7 @@ Details: [investigation](investigations/2026-10-glm53-looping/README.md#non-comp
 |---|---|---|---|
 | 13 | On tpurtell 0.9.1, question 88 fails to finish in 1-3 of 12 draws in every tested arm; question 79 in 9 of 12 on both tpurtell 0.9.1 and the tpurtell 0.7.0 image at three draft tokens. | **Descriptive** | `analyze.py screen-v2`, [`glm53-flash-v091-component-screen-doc88`](comparisons/glm53-flash-v091-component-screen-doc88), [`glm53-flash-doc79-image-screen`](comparisons/glm53-flash-doc79-image-screen) |
 | 14 | None of the tested runtime parts moved either question at this size, and only very large effects could have shown. | **Descriptive** | `analyze.py screen-v2`, `screen-power` |
-| 15 | Repeats that share one request seed vary only through batching, which is not a meaningful sample of how often a question fails: 11 of 12 failed with seed 1234 on every repeat vs 3 of 12 with distinct seeds. | **Supported** (Fisher p = 0.003) | [`glm53-flash-fixed-seed-control`](comparisons/glm53-flash-fixed-seed-control) |
+| 15 | Repeats that share one request seed vary only through small numerical differences (batching and engine nondeterminism), which is not a meaningful sample of how often a question fails: 11 of 12 failed with seed 1234 on every repeat vs 3 of 12 with distinct seeds. | **Supported** (Fisher p = 0.003) | [`glm53-flash-fixed-seed-control`](comparisons/glm53-flash-fixed-seed-control) |
 | 16 | Loops are stopped far beyond the 2,044-token region where the tail issue acted: an estimated 106,000-187,000 tokens. | **Descriptive** | `analyze.py screen-anatomy` |
 
 <details>
