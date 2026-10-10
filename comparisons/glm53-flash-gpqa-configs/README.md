@@ -1,13 +1,21 @@
 # GPQA Diamond across GLM-5.3-Flash configurations (pass 1)
 
-Ten configurations, pass 1 of 198 questions each, the same prompts, answer order and request seed (1234):
-3.25bpw on tpurtell 0.7.0 (with and without the kpool fixes), 0.8.0 (DFlash2 ×3; ×5 with sharing off),
+**Question.** GPQA Diamond accuracy and empty answers across tpurtell engine releases (0.7.0 to 0.9.1), weights,
+speculation settings and concurrency, 2x RTX PRO 6000: pass 1 (request seed 1234) of every configuration side by side.
+
+**Grade.** Descriptive: one pass per configuration does not separate these configurations in accuracy, and no pair
+differs in empty answers at p < 0.05 ([`FINDINGS.md`](../../FINDINGS.md#2b-pass-1-of-every-configuration), items 9-10).
+
+**Configurations.** Ten configurations, pass 1 of 198 questions each, the same prompts, answer order and request seed
+(1234): 3.25bpw on tpurtell 0.7.0 (with and without the kpool fixes), 0.8.0 (DFlash2 ×3; ×5 with sharing off),
 0.8.0 + kpool fixes ≈ 0.9.0 (×5) and 0.9.1; 4bpw TR3 (Brandon) on tpurtell 0.8.0, 0.9.0 and 0.9.1, the last both at 8
 concurrent requests (KV-saturated) and at 4. Three of these runs also hold passes 2 and 3 (request seeds 1235, 1236);
 they are compared in [`glm53-flash-gpqa-records`](../glm53-flash-gpqa-records). This comparison uses pass 1 only.
 
+## Result
+
 Raw = lm-eval `flexible-extract`, the headline (protocol v1). Stated = `correct_stated`, the secondary, audited score:
-whether the reply's stated final answer is the target. "Answered" excludes empty answers. `tools/analyze.py gpqa-table`.
+whether the reply's stated final answer is the target. "Answered" excludes empty answers.
 
 | Configuration | Raw (95% interval) | Raw, answered | Stated | Stated, answered | Empty answers |
 |---|---|---|---|---|---|
@@ -28,6 +36,8 @@ requests waiting for KV memory in 653 of 1,417 status lines, so fewer than 8 ran
 at 4 concurrent requests, where no request waited, replaces it as this configuration's record; it is kept, labelled, as
 the like-for-like partner of the 0.9.0 run.
 
+### Paired comparisons
+
 Question-paired comparisons of configurations that differ in one named respect (`tools/analyze.py gpqa-pairs`; exact
 McNemar tests on the questions where the two runs disagree; no correction for multiple comparisons):
 
@@ -42,14 +52,25 @@ McNemar tests on the questions where the two runs disagree; no correction for mu
 | 3.25bpw vs 4bpw on 0.9.1 | weights (4bpw KV-saturated) | 13 / 12 (1.00) | -0.5 (-5.6 to +4.5) | 4 / 5 (1.00) |
 | 4bpw 0.9.1, 8 vs 4 concurrent | concurrency (KV-saturated vs not) | 13 / 13 (1.00) | 0.0 (-5.1 to +5.1) | 3 / 5 (0.73) |
 
+### What it shows
+
 What one pass per configuration shows: no pair differs detectably in accuracy (raw scores; the stated-answer score is
 0.5 to 2.0 points higher per run); each interval spans about ±5 points, so differences smaller than that cannot be seen.
 Empty answers are 0 to 9 of 198 per run; with one pass each, no pair differs at p < 0.05.
 
-Read with care:
+## Caveats
+
 - One draw per question per configuration, all with request seed 1234, so the comparisons are paired by question. Passes
   of one configuration with their own request seeds differ by 0.5 to 3.5 points
   ([`glm53-flash-gpqa-records`](../glm53-flash-gpqa-records)), about as much as the 84.3-87.9% range across these runs.
 - No higher-precision reference (BF16 or NVFP4) was run on this hardware, so these runs do not measure what the EXL3
   quants cost in accuracy.
 - Raw `flexible-extract` scores run 0.5 to 3.5 points low per pass (see the protocol's known limitation).
+
+## Recompute
+
+```bash
+python3 tools/analyze.py gpqa-table   # the table above
+python3 tools/analyze.py gpqa-pairs   # the paired comparisons
+python3 tools/verify.py
+```

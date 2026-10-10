@@ -10,6 +10,12 @@ open, and it will be updated as clean data arrives. On 2026-10-09 the earlier sc
 [section 4](#4-method-note-on-seeds-and-withdrawal-notice). Terms (MLA, kpool, DCP1, MLA ownership, NOPE record, DFlash2,
 draft-slot sharing, loop, exhaustion) are defined in the repository's [glossary](../../README.md#glossary).
 
+**Fast path.** [Summary](#1-summary) · [the DCP1 tail bug and its fix](#2-defect-found-and-fixed-the-dcp1-tail-bug) ·
+[withdrawal notice](#4-method-note-on-seeds-and-withdrawal-notice) · [open questions](#6-open-questions) ·
+[recompute every number](#receipts-and-how-to-recompute-them) · charts on the
+[results site](https://urbanastrola.github.io/local-inference-evals/looping.html) · every finding, graded:
+[`FINDINGS.md`](../../FINDINGS.md#summary).
+
 ## 1. Summary
 
 | Conclusion | Strength |
@@ -203,8 +209,8 @@ three configurations also have passes 2 and 3 with request seeds 1235 and 1236
 The engine draws each request's sampling noise from its request seed. Repeats of one question that send the same seed
 therefore draw on the same sampler noise. They still vary: their texts diverge within a few hundred characters,
 because the engine is not bitwise reproducible even one request at a time and concurrent batching adds to that. But
-that variation is small numerical noise, not fresh sampling, so it is not a statistically meaningful sample of how often a question fails, and the effective sample behind
-a rate is far smaller than its request count.
+that variation is small numerical noise, not fresh sampling, so it is not a statistically meaningful sample of how
+often a question fails, and the effective sample behind a rate is far smaller than its request count.
 
 The same configuration, `3.25bpw · tpurtell 0.9.1 · DFlash2 ×3`, question 88, 12 repeats, 12 concurrent, fresh server:
 
@@ -220,8 +226,8 @@ fixed seed explains most of the difference) was written before it ran.
 > **WITHDRAWAL NOTICE (2026-10-09).** Every repeat of the earlier hard-question screens (`hard-prompt-screen/v0` and
 > `v1`, 2026-09-30 to 2026-10-08) sent request seed 1234. Concurrent batching made the repeats vary, but every repeat
 > drew on the same sampler noise, so that variation was not statistically meaningful and the effective sample behind each
-> rate was far smaller than its request count. The following are withdrawn: the screen failure rates and their intervals; the layout-bisection statistics (as released
-> vs the v0.7.0-layout control, with vs without the tail fix, and the verdicts built on them); and the question-level
+> rate was far smaller than its request count. The following are withdrawn: the screen failure rates and their
+> intervals; the layout-bisection statistics (as released vs the v0.7.0-layout control, with vs without the tail fix, and the verdicts built on them); and the question-level
 > observations drawn from those screens. Evidence: question 88 failed 3 of 12 times with distinct seeds and 11 of 12
 > with seed 1234 on every repeat, all else equal (above); in the eight earlier fixed-seed screens of 3.25bpw DCP1
 > configurations it had failed 62 of 64 repeats. Repeat 1 of each question from each configuration's first screen is

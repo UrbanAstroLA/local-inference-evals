@@ -3,20 +3,28 @@
 Maintained by Michael M: [UrbanAstroLA](https://github.com/UrbanAstroLA) on GitHub, [@UrbanAstroFella](https://x.com/UrbanAstroFella) on X.
 
 Receipts for evaluations of locally served LLMs: what was run, on exactly which software and hardware, the raw
-per-item results, and the scripts that recompute every published number. Null and negative results are kept. Two kinds
-of figure rest on text that cannot be published (model output): greedy shared-prefix lengths
-(`comparisons/glm53-flash-serving-probe/parity.json`) and the per-row audited `correct_stated` judgement; for both, the
-outputs' hashes are published. Terms are defined in the [glossary](#glossary).
+per-item results, and the scripts that recompute every published number. Null and negative results are kept. Terms are
+defined in the [glossary](#glossary).
 
-Start with [`FINDINGS.md`](FINDINGS.md) for results and [`DATASHEET.md`](DATASHEET.md) for what the data is and is not.
-What drives non-completion on hard questions, the DCP1 tail bug and its fix (tpurtell PR #6, released in tpurtell
-0.9.1), with commands to recompute every number:
-[`investigations/2026-10-glm53-looping`](investigations/2026-10-glm53-looping).
+## Start here
 
-**2026-10-09:** the earlier hard-question screen rates were withdrawn because every repeat sent the same request seed;
-see the notice in the investigation and [`CHANGELOG.md`](CHANGELOG.md). **2026-10-10:** three-pass GPQA records, one
-request seed per pass, for three configurations ([`FINDINGS.md`](FINDINGS.md#2-gpqa-diamond)).
-Results site: <https://urbanastrola.github.io/local-inference-evals/>.
+| If you want | Read | Then |
+|---|---|---|
+| The answer in 30 seconds | [Results site](https://urbanastrola.github.io/local-inference-evals/): "What it shows" | [`FINDINGS.md`](FINDINGS.md#summary): every statement, numbered and graded |
+| The DCP1 tail bug and its fix (tpurtell PR #6, released in tpurtell 0.9.1) | [Investigation, section 2](investigations/2026-10-glm53-looping/README.md#2-defect-found-and-fixed-the-dcp1-tail-bug) | [Recompute commands](investigations/2026-10-glm53-looping/README.md#receipts-and-how-to-recompute-them) |
+| The current state of the non-completion question | [Investigation summary](investigations/2026-10-glm53-looping/README.md#1-summary) | [Open questions](investigations/2026-10-glm53-looping/README.md#6-open-questions) |
+| To choose a GLM-5.3-Flash quant or runtime for 2x RTX PRO 6000 | [`FINDINGS.md` section 2](FINDINGS.md#2-gpqa-diamond) (GPQA) and [section 4](FINDINGS.md#4-serving-facts) (serving) | [Labels](#labels), then the [comparisons](comparisons) |
+| To check a claim | [`FINDINGS.md`](FINDINGS.md): grades (supported, descriptive, unmeasured, open) and receipts | [Verify](#verify), [`DATASHEET.md`](DATASHEET.md) (what the data is and is not), [`SCHEMA.md`](SCHEMA.md) |
+
+**Latest.** 2026-10-10: three-pass GPQA records, one request seed per pass, for three configurations
+([`FINDINGS.md`](FINDINGS.md#2a-three-passes-per-configuration)). 2026-10-09: the earlier hard-question screen rates
+were withdrawn because every repeat sent the same request seed; see the
+[notice](investigations/2026-10-glm53-looping/README.md#4-method-note-on-seeds-and-withdrawal-notice). History:
+[`CHANGELOG.md`](CHANGELOG.md).
+
+**What has no row-level receipt.** Two kinds of figure rest on text that cannot be published (model output): greedy
+shared-prefix lengths (`comparisons/glm53-flash-serving-probe/parity.json`) and the per-row audited `correct_stated`
+judgement; for both, the outputs' hashes are published.
 
 ## Labels
 

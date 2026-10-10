@@ -6,6 +6,34 @@ named below), `tools/verify.py` and the investigation's `recompute.py`. Each sta
 separates it from chance), **unmeasured**, or **open**. Terms (kpool, DCP1, MLA ownership, NOPE record, DFlash2,
 flexible-extract, loop, exhaustion and others) are defined in the [glossary](README.md#glossary).
 
+## Summary
+
+Each row is the headline of the numbered statement below, with its grade; the statement itself carries the numbers,
+qualifications and receipts. Open questions are [at the end](#open-questions). Charts of the same results:
+[results site](https://urbanastrola.github.io/local-inference-evals/).
+
+| # | Statement | Grade | Where |
+|---|---|---|---|
+| 1 | Two upstream kpool bugs were present in the tpurtell 0.7.0 and 0.8.0 images, and the fixes remove them. | **Supported** | [§1](#1-runtime-defects-and-their-deterministic-evidence) |
+| 2 | Under the DCP1 layout of tpurtell 0.8.0 and 0.9.0, decode attention skipped the newest 1-3 tokens at causal lengths up to 2,043 that are not a multiple of 4; the DCP1 tail fix removes it. | **Supported** | [§1](#1-runtime-defects-and-their-deterministic-evidence) |
+| 3 | With the fix, decode agrees much better with prefill re-scoring of the same tokens below 2,044 tokens. | **Supported** (for this large effect) | [§1](#1-runtime-defects-and-their-deterministic-evidence) |
+| 4 | The fix's effect on answers is unmeasured. | **Descriptive** | [§1](#1-runtime-defects-and-their-deterministic-evidence) |
+| 5 | One pass of one configuration varies by 0.5 to 3.5 points between passes with their own request seeds. | **Descriptive** | [§2a](#2a-three-passes-per-configuration) |
+| 6 | 3.25bpw and 4bpw TR3 (Brandon) on tpurtell 0.9.1 show no measurable difference in accuracy or in completion. | **Descriptive** | [§2a](#2a-three-passes-per-configuration) |
+| 7 | tpurtell 0.7.0 as shipped left fewer GPQA questions unanswered than tpurtell 0.9.1 (3.25bpw, three passes each). What produces the difference is open. | **Supported** | [§2a](#2a-three-passes-per-configuration) |
+| 8 | Empty answers concentrate on a few questions. | **Descriptive** | [§2a](#2a-three-passes-per-configuration) |
+| 9 | One pass per configuration does not separate these configurations in accuracy. | **Descriptive** | [§2b](#2b-pass-1-of-every-configuration) |
+| 10 | Empty answers in pass 1 are 0 to 9 of 198 per run. | **Descriptive** | [§2b](#2b-pass-1-of-every-configuration) |
+| 11 | Scoring limitation: the raw `flexible-extract` score reads some correct answers as wrong. | not graded (scoring note) | [§2b](#2b-pass-1-of-every-configuration) |
+| 12 | Published scores, for context only. | not graded (context only) | [§2b](#2b-pass-1-of-every-configuration) |
+| 13 | On tpurtell 0.9.1, question 88 fails to finish in 1-3 of 12 draws in every tested arm; question 79 in 9 of 12 on both tpurtell 0.9.1 and the tpurtell 0.7.0 image at three draft tokens. | **Descriptive** | [§3](#3-non-completion-on-hard-questions) |
+| 14 | None of the tested runtime parts moved either question at this size, and only very large effects could have shown. | **Descriptive** | [§3](#3-non-completion-on-hard-questions) |
+| 15 | Repeats that share one request seed vary, but not in a statistically meaningful way. | **Supported** | [§3](#3-non-completion-on-hard-questions) |
+| 16 | Loops are stopped far beyond the 2,044-token region where the tail bug acted. | **Descriptive** | [§3](#3-non-completion-on-hard-questions) |
+| 17 | KV capacity depends on the layout; tpurtell's default DCP1 layout with MLA layer ownership holds the most. | **Supported** | [§4](#4-serving-facts) |
+| 18 | Neither fix shows a speed cost, in single runs. | **Descriptive** | [§4](#4-serving-facts) |
+| 19 | The engine is not bitwise reproducible, even one request at a time. | **Supported** | [§4](#4-serving-facts) |
+
 ## Labels
 Configurations are named **weights · engine version · speculation**, built from the config files by one rule
 ([`SCHEMA.md`](SCHEMA.md#labels)). The engine name comes first because engines number their versions independently.
@@ -31,6 +59,7 @@ All engines here are tpurtell builds. 0.7.0 and the 0.8.0-0.9.1 line also differ
 the release as shipped.
 
 ## 1. Runtime defects and their deterministic evidence
+Charts: [kernel tests](https://urbanastrola.github.io/local-inference-evals/kernels.html), [the DCP1 tail bug](https://urbanastrola.github.io/local-inference-evals/looping.html#tail-bug).
 
 1. **Two upstream kpool bugs were present in the tpurtell 0.7.0 and 0.8.0 images, and the fixes remove them.**
    **Supported.** Upstream vLLM's own regression tests for the kpool kernels pass 29 of 33 on both images and 33 of 33
@@ -64,6 +93,7 @@ the release as shipped.
    (`comparisons/glm53-flash-v090-tailfix-tool-eval`). **Descriptive.**
 
 ## 2. GPQA Diamond
+Charts: [GPQA Diamond](https://urbanastrola.github.io/local-inference-evals/gpqa.html).
 198 questions, the same prompts and answer order in every run; pass *p* sends request seed 1233 + *p*. Raw =
 `flexible-extract`, the headline (protocol v1); stated = `correct_stated`, the secondary, audited stated-answer score;
 "answered" leaves out empty answers. 8 concurrent requests unless the label says otherwise.
@@ -108,7 +138,8 @@ treat a question's passes as independent and are given for reference only. No co
    measurably (88.2% vs 86.9%, clustered p = 0.41). Where a request log exists, every one of these empty answers ran to the
    327,680-token cap except one, which ended after 38 tokens. **What produces the difference is open**: 0.7.0 differs from
    0.9.1 in draft depth (5 vs 3 tokens), parallel layout (DCP2 with EP2 experts vs DCP1 with MLA layer ownership), kernel
-   and engine code, vision (on vs off), and KV pool (2,758,919 vs 4,707,515 tokens) at once (the model revisions differ only in files neither server uses (same weight files; both servers load the same vendored chat template));
+   and engine code, vision (on vs off), and KV pool (2,758,919 vs 4,707,515 tokens) at once (the model revisions differ only in files neither server uses: same weight
+   files, and both servers load the same vendored chat template);
    none of these was varied alone in GPQA, and the component screen at three draft tokens found no tested part that moved
    questions 88 or 79 (item 14). The 4bpw TR3 (Brandon) record on 0.9.1 also left more empty answers than 0.7.0 (17, on 14
    questions; clustered p = 0.006), but it differs in weights and concurrency as well.
@@ -173,6 +204,7 @@ disagree; no correction for multiple comparisons):
     effects (`comparisons/glm53-flash-gpqa-published-context`).
 
 ## 3. Non-completion on hard questions
+Charts: [hard-question screen](https://urbanastrola.github.io/local-inference-evals/screens.html), [looping investigation](https://urbanastrola.github.io/local-inference-evals/looping.html#non-completion).
 Details, failure anatomy and open questions: [`investigations/2026-10-glm53-looping`](investigations/2026-10-glm53-looping).
 `analyze.py screen-v2`.
 
@@ -211,6 +243,7 @@ Details, failure anatomy and open questions: [`investigations/2026-10-glm53-loop
     79 mostly by exhaustion (varied reasoning until the budget runs out) (`analyze.py screen-anatomy`).
 
 ## 4. Serving facts
+Charts: [speed, acceptance and KV capacity](https://urbanastrola.github.io/local-inference-evals/serving.html).
 
 17. **KV capacity depends on the layout; tpurtell's default DCP1 layout with MLA layer ownership holds the most.**
     **Supported** (reported by the server at start-up, same memory setting): 3.25bpw on tpurtell 0.9.0/0.9.1 defaults

@@ -1,5 +1,9 @@
 # GLM-5.3-Flash: kpool tail bugs in the tpurtell engine images (2026-10)
 
+**Status.** Finding 1 is supported; finding 2 was withdrawn on 2026-10-09; finding 3 is descriptive (single runs);
+finding 4 is supported. Every finding, graded: [`FINDINGS.md`](../../FINDINGS.md#summary). The related DCP1 tail bug and
+the non-completion investigation: [`../2026-10-glm53-looping`](../2026-10-glm53-looping/README.md).
+
 **Question.** Does the GLM-5.3-Flash no-answer problem on long reasoning (loops and exhaustion to the 327,680-token
 cap) come from runtime bugs fixed upstream after the engine's base was cut?
 

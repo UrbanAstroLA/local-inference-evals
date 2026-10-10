@@ -97,3 +97,5 @@ acceptance, and `waiting_below_max_seqs` (status lines with requests waiting whi
 the KV pool, not the sequence limit, held them back), `max_running`, and `sessions` where session records exist. For GPQA
 runs with a request log, status, speculation and event records cover only the measured requests' time window, so the
 engine's start-up warm-up requests are excluded. Run notes quote these figures.
+
+**See also.** [`README.md`](README.md) (start here), [`DATASHEET.md`](DATASHEET.md) (what the data is and is not), [`comparisons/`](comparisons) (comparison rules).

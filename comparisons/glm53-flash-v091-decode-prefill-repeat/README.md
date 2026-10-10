@@ -1,8 +1,17 @@
 # Decode vs prefill: the same configuration twice (noise floor)
 
-`3.25bpw · tpurtell 0.9.1 · no speculation, prefix cache off`, run on 2026-10-08 and again on 2026-10-09, each on a fresh
-server, one request at a time, GPQA prompts 0-11 with the same request seeds (1234 + doc id), 2,600 generated tokens each
-(`protocols/decode-prefill-consistency/v1.md`). `tools/analyze.py decode-prefill`.
+**Question.** How much does the decode-vs-prefill measurement vary between two runs of the same configuration
+(tpurtell 0.9.1, speculation and prefix caching off, same prompts and seeds)? The noise floor for every
+decode-vs-prefill comparison here.
+
+**Grade.** That the engine is not bitwise reproducible one request at a time is supported
+([`FINDINGS.md`](../../FINDINGS.md#4-serving-facts), item 19); the spread is the noise floor used in item 3.
+
+**Configurations.** `3.25bpw · tpurtell 0.9.1 · no speculation, prefix cache off`, run on 2026-10-08 and again on
+2026-10-09, each on a fresh server, one request at a time, GPQA prompts 0-11 with the same request seeds (1234 + doc id),
+2,600 generated tokens each (`protocols/decode-prefill-consistency/v1.md`).
+
+## Result
 
 | Positions | Mean KL, run 1 | Mean KL, run 2 | Prompts 0-5 only: run 1, run 2 |
 |---|---|---|---|
@@ -14,5 +23,14 @@ server, one request at a time, GPQA prompts 0-11 with the same request seeds (12
 - **Single-request nondeterminism.** With the same prompts and seeds, one request at a time, the two runs' per-position
   values (log-probability of the sampled token, KL) first differ after 1 to 130 generated tokens, depending on the
   prompt; the sampled continuations then differ. Batching cannot explain this (there was none).
-- Use: the tail-fix comparison (`glm53-flash-v090-tailfix-decode-prefill`) has one run per build; this pair is the
-  spread such single runs carry.
+
+## Caveats
+
+- Use: the tail-fix comparison ([`glm53-flash-v090-tailfix-decode-prefill`](../glm53-flash-v090-tailfix-decode-prefill))
+  has one run per build; this pair is the spread such single runs carry.
+
+## Recompute
+
+```bash
+python3 tools/analyze.py decode-prefill
+```

@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-10-10 (readability): organization and charts; no data, number, grade or claim changed
+
+Contents unchanged: 49 runs, 13 comparisons.
+
+- **Reading paths.** `README.md` opens with a "Start here" table (30-second answer, the DCP1 tail bug record, the
+  current non-completion summary, choosing a quant or runtime, checking a claim). `FINDINGS.md` opens with a summary
+  table: every numbered statement's headline, its grade and its section; each section links to its charts on the site.
+  The looping investigation gains a fast-path line; secondary documents link back to the README and findings.
+- **Comparisons.** Every comparison README follows one template (question, grade with its findings item,
+  configurations, result, caveats, recompute command); `comparisons/README.md` gains an index of all thirteen.
+- **Site.** Every page leads with a graded "What it shows" list linking to its evidence; the overview ends with a
+  "Where to go next" table, and "How to read this" with a reading path and the grade definitions. Chart titles state
+  the takeaway and its grade; axes carry titles and units. The overview's two three-pass charts are merged into one
+  small-multiple figure (accuracy and empty answers per pass, side by side; the full charts stay on the GPQA page), and
+  the component-screen chart moves to the screen and investigation pages. The component screen is split into one panel
+  per question on a shared scale; decode vs prefill is split into one panel per position region on a shared scale;
+  serving charts put each fix's with/without pair on adjacent rows. The empty-answer grid uses darker shades so white
+  text meets 4.5:1 contrast. Section anchors and a document footer on every page.
+
 ## 2026-10-10: three-pass GPQA records with one request seed per pass
 
 Contents now: 49 runs, 13 comparisons. GPQA Diamond: 10 runs (one per configuration), three of them with three passes.

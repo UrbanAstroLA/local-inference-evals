@@ -54,3 +54,5 @@ datasets are not redistributed.
 **Maintenance.** Corrections and withdrawals are new commits recorded in `CHANGELOG.md`; withdrawn rows stay in the
 git history. Protocol changes get a
 new version number; old runs are never rescored under a new version.
+
+**See also.** [`README.md`](README.md) (start here), [`FINDINGS.md`](FINDINGS.md) (results, graded), [`SCHEMA.md`](SCHEMA.md) (fields).

@@ -1,14 +1,25 @@
 # GPQA Diamond: three passes per configuration
 
-Three configurations, three passes each of 198 questions, with request seeds 1234, 1235 and 1236 (pass *p* sends
-1233 + *p*; every configuration sends the same seed in the same pass, so passes pair across configurations):
+**Question.** How much does one configuration vary between passes with their own request seeds, and do the three-pass
+records of tpurtell 0.7.0 as shipped and tpurtell 0.9.1 (3.25bpw), and of 4bpw TR3 (Brandon) on tpurtell 0.9.1, differ
+in accuracy or in empty answers, with questions as the unit?
+
+**Grade.** Pass-to-pass noise: descriptive. 0.7.0 vs 0.9.1 empty answers: supported (question-clustered p = 0.009);
+accuracy does not differ measurably; what produces the difference is open. 3.25bpw vs 4bpw on 0.9.1: descriptive, no
+measurable difference ([`FINDINGS.md`](../../FINDINGS.md#2a-three-passes-per-configuration), items 5-8).
+
+**Configurations.** Three configurations, three passes each of 198 questions, with request seeds 1234, 1235 and 1236
+(pass *p* sends 1233 + *p*; every configuration sends the same seed in the same pass, so passes pair across
+configurations):
 
 - `3.25bpw · tpurtell 0.7.0 · DFlash2 ×5` (the release as shipped; 8 concurrent requests)
 - `3.25bpw · tpurtell 0.9.1 · DFlash2 ×3` (8 concurrent requests)
 - `4bpw TR3 (Brandon) · tpurtell 0.9.1 · DFlash2 ×3 · concurrency 4` (4 requests at once, because its KV pool of
   1,377,179 tokens holds 4.17 requests at the token cap; no request waited, peak KV usage 91.7%)
 
-`tools/analyze.py gpqa-passes`, `gpqa-records`, `gpqa-empty`. Raw = lm-eval `flexible-extract` (the headline); stated =
+## Result
+
+Raw = lm-eval `flexible-extract` (the headline); stated =
 the audited `correct_stated` score. Intervals: 95% bootstrap over questions, each question resampled with all its passes.
 
 | Configuration | Raw, passes 1 / 2 / 3 | Raw, mean (95% interval) | Spread | Stated, passes 1 / 2 / 3 | Empty, passes 1 / 2 / 3 | Questions ever empty |
@@ -17,7 +28,9 @@ the audited `correct_stated` score. Intervals: 95% bootstrap over questions, eac
 | `3.25bpw · tpurtell 0.9.1 · DFlash2 ×3` | 85.4 / 88.9 / 86.4% | 86.9% (83.0-90.4) | 3.5 | 85.9 / 89.9 / 87.9% | 5 / 5 / 6 | 11 |
 | `4bpw TR3 (Brandon) · tpurtell 0.9.1 · DFlash2 ×3 · concurrency 4` | 84.8 / 86.4 / 85.9% | 85.7% (81.5-89.6) | 1.5 | 86.9 / 86.9 / 89.4% | 8 / 2 / 7 | 14 |
 
-**Comparisons.** Paired by question and pass. A question answered in three passes is one unit: "questions A / B" counts
+### Comparisons
+
+Paired by question and pass. A question answered in three passes is one unit: "questions A / B" counts
 the questions on which A had more such outcomes than B over the three passes, and fewer; the clustered p is an exact
 sign-flip test over questions; the interval resamples questions. The pooled McNemar p counts every question-pass
 separately and is shown for reference only. No correction for multiple comparisons.
@@ -31,7 +44,8 @@ separately and is shown for reference only. No correction for multiple compariso
 | 0.7.0 3.25bpw vs 0.9.1 4bpw | all of the above | raw right | 524 vs 509 | -2.5 (-5.4 to +0.5) | 25 / 14 | 0.12 | 0.07 |
 | | | empty | 4 vs 17 | +2.2 (+0.8 to +3.7) | 2 / 13 | 0.006 | 0.004 |
 
-What this shows:
+### What it shows
+
 - **Pass-to-pass noise.** One configuration's passes differ by 0.5 to 3.5 points (descriptive). A single pass cannot
   separate configurations whose accuracy differs by less than that.
 - **tpurtell 0.7.0 as shipped left fewer questions unanswered than tpurtell 0.9.1** (supported by the question-clustered
@@ -43,7 +57,18 @@ What this shows:
 - **Which questions.** Questions 79 and 81 came back empty in all three records; 88, 127 and 147 in both 0.9.1 records and
   in no pass of 0.7.0. Where a request log exists, every empty answer but one ran to the 327,680-token cap.
 
-Provenance per pass is in each run's notes: pass 1 of the tpurtell 0.7.0 record ran on 2026-09-29 without a request log
-(its seed, 1234, is lm-eval's default); every other pass has a passive request log recording each request's seed. The
-stated-answer judgement of passes the 2026-10-09 audit did not cover was made on 2026-10-10 by the same script and hand
-check (protocol).
+## Caveats
+
+- **Provenance.** Provenance per pass is in each run's notes: pass 1 of the tpurtell 0.7.0 record ran on 2026-09-29 without a request log
+  (its seed, 1234, is lm-eval's default); every other pass has a passive request log recording each request's seed. The
+  stated-answer judgement of passes the 2026-10-09 audit did not cover was made on 2026-10-10 by the same script and hand
+  check (protocol).
+
+## Recompute
+
+```bash
+python3 tools/analyze.py gpqa-passes    # each pass, mean and interval
+python3 tools/analyze.py gpqa-records   # the clustered comparisons
+python3 tools/analyze.py gpqa-empty     # which questions came back empty, in which passes
+python3 tools/verify.py
+```

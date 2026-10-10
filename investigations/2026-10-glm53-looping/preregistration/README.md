@@ -38,3 +38,5 @@ i % 4 = 0, and the fix to remove that pattern. Values from the two `decode-prefi
 - Reported beyond the gate: mean KL below 2,044 was 0.0656 on stock vs 0.0103 with the fix; from 2,048, 0.0307 vs 0.0187.
 - The gate as written meant: no arm E, continue with A2 and D2.
 - Amendment 3 records the decision, taken after seeing these values, to run arm E anyway.
+
+Results and context: [`../README.md`](../README.md).
