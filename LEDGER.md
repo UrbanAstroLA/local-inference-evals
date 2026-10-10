@@ -25,7 +25,7 @@ What was asked, run, found, corrected and withdrawn, in date order.
 - First form of question 2: do runtime issues fixed upstream explain it?
   ([kpool investigation](investigations/2026-10-glm53-kpool-tail)).
 - Upstream vLLM's kpool kernel tests: 29 of 33 pass on the 0.7.0 and 0.8.0 images, 33 of 33 with two upstream fixes.
-- The fixes were contributed as [tpurtell PR #5](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/5) and
+- The upstream vLLM fixes were ported and contributed as [tpurtell PR #5](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/5) and
   shipped in tpurtell 0.9.0.
 - This repository was first published on 2026-10-05.
 
