@@ -37,8 +37,8 @@ the release as shipped.
    #58454: a rejected pool-completing draft could overwrite committed keys at 2 or more draft tokens). Ported in
    tpurtell PR #5 and shipped in tpurtell 0.9.0 (`runs/*_kpool-kernel-tests`;
    [`investigations/2026-10-glm53-kpool-tail`](investigations/2026-10-glm53-kpool-tail)). The tests ran on the 0.7.0 and
-   0.8.0 release images and on local builds with the fixes; they have not yet run on the 0.9.0 or 0.9.1 release images,
-   so for those releases the fixes' presence rests on their kpool kernel files being byte-identical to the tested build.
+   0.8.0 release images, on local builds with the fixes, and (2026-10-09) on the 0.9.0 and 0.9.1 release images, which pass
+   33 of 33 and reproduce no rejected-draft corruption at 2, 3, 5 or 7 draft tokens.
 2. **Under the DCP1 layout of tpurtell 0.8.0 and 0.9.0, decode attention skipped the newest 1-3 tokens at causal lengths
    up to 2,043 that are not a multiple of 4; the DCP1 tail fix removes it.** **Supported** (index check on the image's
    own kernels: the tail is dropped in 9 of 23 packed cases without the fix, 0 with it; rows the stock code already

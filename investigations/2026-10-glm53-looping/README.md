@@ -101,9 +101,8 @@ compared with prefill re-scoring of the same token ids (`protocols/decode-prefil
 Two upstream vLLM kpool bugs (vllm-project/vllm#57477 and #58454) were present in the tpurtell 0.7.0 and 0.8.0 images.
 Upstream's own regression tests fail on both (29 of 33 pass) and pass with the fixes (33 of 33). The fixes were ported
 in [tpurtell PR #5](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/5) and shipped in tpurtell 0.9.0
-([`../2026-10-glm53-kpool-tail`](../2026-10-glm53-kpool-tail)). The tests ran on the 0.7.0 and 0.8.0 release images and on local builds with the
-fixes, not yet on the 0.9.0 or 0.9.1 release images; for those, the fixes' presence rests on their kpool kernel files
-being byte-identical to the tested build.
+([`../2026-10-glm53-kpool-tail`](../2026-10-glm53-kpool-tail)). The tests ran on the 0.7.0 and 0.8.0 release images, on local builds with the
+fixes, and (2026-10-09) on the 0.9.0 and 0.9.1 release images, which pass 33 of 33.
 
 ## 3. What clean data shows about non-completion
 

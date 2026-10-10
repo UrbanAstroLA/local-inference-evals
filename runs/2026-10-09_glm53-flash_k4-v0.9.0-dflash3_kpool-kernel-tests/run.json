@@ -1,0 +1,11 @@
+{
+ "id": "2026-10-09_glm53-flash_k4-v0.9.0-dflash3_kpool-kernel-tests",
+ "config": "glm53-flash/k4-v0.9.0-dflash3",
+ "protocol": "kpool-kernel-tests/v1",
+ "date": "2026-10-09",
+ "software": {
+  "tests": "vllm-project/vllm tests/kernels/test_kpool_decode_update_batched.py (sha256 698d6886...)",
+  "image": "tpurtell 0.9.0"
+ },
+ "notes": "Kernel tests only; model and serving fields of the config do not apply."
+}

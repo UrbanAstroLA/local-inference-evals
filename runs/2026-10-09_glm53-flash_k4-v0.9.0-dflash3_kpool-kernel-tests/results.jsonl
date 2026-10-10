@@ -1,0 +1,6 @@
+{"key_bytes_wrong": 0, "outcome": "passed", "ring_slots": 8, "suite": "rejected-draft", "test": "control: 3 drafts, all accepted"}
+{"key_bytes_wrong": 0, "outcome": "passed", "ring_slots": 8, "suite": "rejected-draft", "test": "1 draft token (DFLASH_TOKENS=1), pool-completing draft rejected"}
+{"key_bytes_wrong": 0, "outcome": "passed", "ring_slots": 8, "suite": "rejected-draft", "test": "2 draft tokens, pool-completing draft rejected"}
+{"key_bytes_wrong": 0, "outcome": "passed", "ring_slots": 8, "suite": "rejected-draft", "test": "3 draft tokens (v0.8.0 default), rejected"}
+{"key_bytes_wrong": 0, "outcome": "passed", "ring_slots": 16, "suite": "rejected-draft", "test": "5 draft tokens (v0.7.0 setting), rejected"}
+{"key_bytes_wrong": 0, "outcome": "passed", "ring_slots": 16, "suite": "rejected-draft", "test": "7 draft tokens (checkpoint max), rejected"}

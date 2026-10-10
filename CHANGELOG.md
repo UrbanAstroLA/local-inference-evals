@@ -2,8 +2,11 @@
 
 ## 2026-10-09 (review): receipts for every figure, qualified determinations
 
-Contents now: 46 runs, 12 comparisons.
+Contents now: 48 runs, 12 comparisons.
 
+- Kernel tests on the release images (2026-10-09): `kpool-kernel-tests/v1` now covers the tpurtell 0.9.0 and 0.9.1
+  release images (33 of 33 upstream tests pass; no rejected-draft corruption at 2, 3, 5 or 7 draft tokens), replacing
+  the earlier reliance on file identity for those releases.
 - **Decode vs prefill on the tpurtell 0.9.1 release, published:** two runs of one configuration with the same prompts
   and seeds (the noise floor) and one with DFlash2 ×3 on, 12 prompts each, protocol `decode-prefill-consistency/v1`.
   New comparisons `glm53-flash-v091-decode-prefill-repeat` and `glm53-flash-v091-decode-prefill-speculation`. Only the

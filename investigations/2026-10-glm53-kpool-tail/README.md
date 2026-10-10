@@ -7,9 +7,8 @@ cap) come from runtime bugs fixed upstream after the engine's base was cut?
 kernel ignores the padded tail stride) and #58454 (one-pool tail ring overwritten by drafts behind a rejected
 pool-completing draft). Upstream's own regression tests fail on both images (4 failed, 29 passed) and pass with both
 fixes ported (33 passed); see `protocols/kpool-kernel-tests/v1.md`. Ported as tpurtell/glm-5.3-flash-ext3-2x-rtx#5 and
-shipped in tpurtell 0.9.0. The tests have run on the 0.7.0 and 0.8.0 release images and on the local builds with the fixes,
-not yet on the 0.9.0 or 0.9.1 release images: that those releases carry the fixes rests, for now, on their kpool kernel
-files being byte-identical to the tested build.
+shipped in tpurtell 0.9.0. The tests have run on the 0.7.0 and 0.8.0 release images, on the local builds with the fixes, and
+(2026-10-09) on the 0.9.0 and 0.9.1 release images, which pass 33 of 33 and reproduce no rejected-draft corruption.
 
 **Finding 2 (withdrawn 2026-10-09).** This finding rested on hard-question screen counts (arms A, B and C of the
 preregistered kpool screen, and the tpurtell 0.7.0 pair of 2026-10-05). Those screens sent request seed 1234 on every
