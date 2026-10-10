@@ -31,8 +31,8 @@ Known collection issues are recorded in each run's `notes` (for example a run ke
 local paths. It keeps GPQA passes only when each has its own request seed (pass *p* sends 1233 + *p*) and repeat 1 of
 each question in the fixed-seed screens; `tools/verify.py` fails if a GPQA pass carries another seed or another repeat
 appears. Server-log figures of GPQA runs cover only the measured requests' time window (the engine's start-up warm-up
-requests are excluded). Headline scores are lm-eval's raw `flexible-extract` and `strict-match`
-filters. `flexible-extract` scores some correct answers as wrong on particular questions (0.5 to 3.5 points per pass in
+requests are excluded). The headline score is lm-eval's raw `flexible-extract` filter;
+`strict-match` is published too but records whether a reply used the phrase "The answer is", not accuracy. `flexible-extract` scores some correct answers as wrong on particular questions (0.5 to 3.5 points per pass in
 the published passes); see the known limitation in `protocols/gpqa-diamond/v1.md`. A secondary, audited score
 (`correct_stated`: whether the reply's stated final answer is right) was determined from the reply text, which is not
 published; only the per-row judgement is. Passes added on 2026-10-10 were judged by the same script and hand check (see

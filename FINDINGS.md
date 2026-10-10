@@ -28,7 +28,7 @@ qualifications and receipts. Open questions are [at the end](#open-questions). C
 | 12 | Published scores, for context only. | not graded (context only) | [§2b](#2b-pass-1-of-every-configuration) |
 | 13 | On tpurtell 0.9.1, question 88 fails to finish in 1-3 of 12 draws in every tested arm; question 79 in 9 of 12 on both tpurtell 0.9.1 and the tpurtell 0.7.0 image at three draft tokens. | **Descriptive** | [§3](#3-non-completion-on-hard-questions) |
 | 14 | None of the tested runtime parts moved either question at this size, and only very large effects could have shown. | **Descriptive** | [§3](#3-non-completion-on-hard-questions) |
-| 15 | Repeats that share one request seed vary, but not in a statistically meaningful way. | **Supported** | [§3](#3-non-completion-on-hard-questions) |
+| 15 | Repeats that share one request seed vary only through batching, which is not a meaningful sample of how often a question fails. | **Supported** | [§3](#3-non-completion-on-hard-questions) |
 | 16 | Loops are stopped far beyond the 2,044-token region where the tail bug acted. | **Descriptive** | [§3](#3-non-completion-on-hard-questions) |
 | 17 | KV capacity depends on the layout; tpurtell's default DCP1 layout with MLA layer ownership holds the most. | **Supported** | [§4](#4-serving-facts) |
 | 18 | Neither fix shows a speed cost, in single runs. | **Descriptive** | [§4](#4-serving-facts) |
@@ -232,7 +232,7 @@ Details, failure anatomy and open questions: [`investigations/2026-10-glm53-loop
     arm against another on question 88 (12 vs 12, from 25%) only a rise of about 60 points, and no drop at any size; a
     switch on vs off (24 vs 24, from 17%) a rise of about 41 points; question 79 (from 75%) a drop of about 60 points.
     Draft depth, quantization and sampling settings were not varied.
-15. **Repeats that share one request seed vary, but not in a statistically meaningful way.** **Supported.** Same configuration and question
+15. **Repeats that share one request seed vary only through batching, which is not a meaningful sample of how often a question fails.** **Supported.** Same configuration and question
     (88), 12 repeats each: 3 failures with distinct seeds, 11 with seed 1234 on every repeat (Fisher p = 0.003;
     `comparisons/glm53-flash-fixed-seed-control`). The earlier hard-question screens sent seed 1234 on every repeat; their
     rates, the layout-bisection statistics and the question-level observations drawn from them were withdrawn on

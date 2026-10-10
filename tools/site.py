@@ -868,7 +868,7 @@ def looping(runs):
          "the fix (tpurtell PR #6, released in 0.9.1) removes it", "<b>Supported</b> (index check on the image's own kernels)", ev(("index-check", "index check"))],
         ["With the fix, decode agrees much better with prefill below 2,044 tokens (KL 0.066 → 0.006-0.010 across three runs with the fix)",
          "<b>Supported</b> for this large effect (one run without the fix)", ev(("decode-vs-prefill", "chart"))],
-        ["The fix's effect on answers and tool calls", "<b>Unmeasured</b>: GPQA +0.5 points in one pass per release (4bpw, both KV-limited at 8 "
+        ["The fix's effect on answers and tool calls", "<b>Descriptive</b> (the effect is unmeasured): GPQA +0.5 points in one pass per release (4bpw, both KV-limited at 8 "
          "concurrent); tool-eval-bench TC-80 and TC-88 pass in both repeats with it, but ten other scenarios flip between repeats of one build",
          ev(("impact", "impact"), ("tool-calling", "tool calling"))],
         [f"Repeats that share one request seed are not a meaningful sample: question 88 failed {kb.get('S1234', '-')} of 12 with seed 1234 on every "
