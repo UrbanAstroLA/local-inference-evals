@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-10-10 (completion investigation, Phase 0): existing data only; one correction; no data or number changed
+
+Contents unchanged: 49 runs, 13 comparisons.
+
+- **New `investigations/2026-10-glm53-completion/`**: why tpurtell 0.7.0 left fewer GPQA answers empty than 0.9.1.
+  `README.md` (Phase 0 answer, evidence, the effective configuration diff of the two servers, limits, ranked next
+  steps), `PLAN.md` (the plan, frozen 2026-10-10), `manifest.json`, `checks.jsonl`, `costs.jsonl` and `recompute.py`.
+- **New `tools/analyze.py gpqa-join [A B]`**: joins two multi-pass records on question and pass, checks seed, prompt,
+  target and question hashes, and splits the score into pairs where both answered and pairs where one came back empty.
+- **Results page and `FINDINGS.md` 7a**: one added sentence. The higher 0.7.0 score comes entirely from question-passes
+  0.9.1 left empty; where both answered (577 of 594), raw accuracy is identical (516 vs 516; stated 523 vs 522). The
+  pair list is in a tooltip and in the item 7 details. Numbers are computed by `tools/site.py`.
+- **Correction (chat template).** `CONFOUNDS.md`, `FINDINGS.md` item 7, the looping investigation and the doc-79
+  comparison said both servers loaded the same vendored chat template. 0.7.0 served the checkpoint's own template
+  (sha256 `34d5ee66…`), 0.9.1 the corrected Z.ai template (sha256 `0c4099f3…`). Both render all 198 GPQA prompts
+  byte-identically, so no result changes.
+- Links to the new investigation from `README.md`, `LEDGER.md` and the open questions in `FINDINGS.md`.
+
 ## 2026-10-10 (restructure): results first; confounds and ledger pages; no data, number, grade or claim changed
 
 Contents unchanged: 49 runs, 13 comparisons.

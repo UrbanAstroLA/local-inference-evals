@@ -154,7 +154,7 @@ differ in several ways at once.
 - Parallel layout: DCP2 with EP2 experts vs DCP1 with MLA layer ownership.
 - Kernel and engine code; vision on vs off.
 - KV pool: 2,758,919 vs 4,707,515 tokens.
-- Model revisions differ only in files neither server uses (same weight files, same vendored chat template).
+- The two model revisions share the same weight files. Their chat templates differ (0.7.0 served the checkpoint's own template, 0.9.1 the corrected Z.ai template), but both render all 198 GPQA prompts byte-identically.
 - Component screen, at three draft tokens: no tested layout part moved question 88 on 0.9.1, and the 0.7.0 image failed
   question 79 as often as 0.9.1 (9 of 12 each). Arms that set MLA ownership `tp` also turned draft-slot sharing off,
   so those two are not separated.

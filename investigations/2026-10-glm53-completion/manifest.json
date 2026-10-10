@@ -1,0 +1,156 @@
+{
+ "investigation": "2026-10-glm53-completion",
+ "question": "Why does tpurtell 0.7.0 (DFlash2 x5) return more final GPQA answers than tpurtell 0.9.1 (DFlash2 x3) with the same 3.25bpw weights?",
+ "frozen": "2026-10-10",
+ "plan": "PLAN.md",
+ "phase": 0,
+ "snapshot": {
+  "evaluation_repository": {
+   "repo": "UrbanAstroLA/local-inference-evals",
+   "commit": "5901e6b5591fd882c8da71e627b9d311d180d667"
+  },
+  "recipe_repository": {
+   "repo": "tpurtell/glm-5.3-flash-ext3-2x-rtx",
+   "cited_by_plan": "0e4a5820cf1fde29a5fb6afc36a53e08760a9cbb",
+   "tag": "v0.9.1",
+   "local_checkout": "f51ace61c8f294880d06f5da73966561295d8f8a",
+   "difference": "The local checkout is the DCP1 tail-fix commit, a direct ancestor of 0e4a5820. 0e4a5820 adds the merge, v0.9.1 benchmark receipts, a README section, a tail test script and the default image tag in start.sh (v0.9.0 to v0.9.1). The served engines are pinned by image digest below."
+  },
+  "images": {
+   "tpurtell 0.7.0": "ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629",
+   "tpurtell 0.9.1": "ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07"
+  }
+ },
+ "records": [
+  {
+   "role": "A: tpurtell 0.7.0 as shipped, DFlash2 x5",
+   "config": "glm53-flash/k3.25-v0.7.0-dflash5",
+   "run_id": "2026-09-29_glm53-flash_k3.25-v0.7.0-dflash5_gpqa-diamond",
+   "results_sha256": "da381c6b175392d59d37f7922772bb9732dc1c17d3c1d72b22ad314d75dae837",
+   "summary_sha256": "b0b47691c89151e860104416e44649e9a0105938f75cfbbc832e7ecb6d515c17",
+   "config_sha256": "9f6789218a3ff98dc156340b76f313e035597f7e16f78d2355ce44c45369f540",
+   "protocol": "gpqa-diamond/v1",
+   "passes": [
+    1,
+    2,
+    3
+   ],
+   "request_seeds": [
+    1234,
+    1235,
+    1236
+   ]
+  },
+  {
+   "role": "B: tpurtell 0.9.1, DFlash2 x3",
+   "config": "glm53-flash/k3.25-v0.9.1-dflash3",
+   "run_id": "2026-10-08_glm53-flash_k3.25-v0.9.1-dflash3_gpqa-diamond",
+   "results_sha256": "9d2f57c9c4c1c5fe0833f5d534a290bfc61793101ca0f5cf1cf6bb04cbc970b2",
+   "summary_sha256": "4fc36cc8dfce2c6dc1c761985a7e7d55c654dfd01649297b268cc903c7845395",
+   "config_sha256": "5e6ca1ac389829e3db34909f8d90bf9eb94eaea4b0ffcff3504ab5d93b675af1",
+   "protocol": "gpqa-diamond/v1",
+   "passes": [
+    1,
+    2,
+    3
+   ],
+   "request_seeds": [
+    1234,
+    1235,
+    1236
+   ]
+  },
+  {
+   "role": "reference only: 4bpw TR3 (Brandon) on 0.9.1, 4 concurrent",
+   "config": "glm53-flash/k4-v0.9.1-dflash3-c4",
+   "run_id": "2026-10-09_glm53-flash_k4-v0.9.1-dflash3-c4_gpqa-diamond",
+   "results_sha256": "9f66dd2459bdac05660731dcf3a49bdf139e882397c6554293b1290d3b72c2d8",
+   "summary_sha256": "c69e488922099baedc0d61623216966559339322c17c71923aa463cc1dd28f0a",
+   "config_sha256": "7eba6826f7e24ff13667d3fb274f376a2f234701acbc6157a45f76221f1a6c81",
+   "protocol": "gpqa-diamond/v1",
+   "passes": [
+    1,
+    2,
+    3
+   ],
+   "request_seeds": [
+    1234,
+    1235,
+    1236
+   ]
+  }
+ ],
+ "join": {
+  "key": [
+   "doc_id",
+   "pass"
+  ],
+  "request_seed": "1233 + pass",
+  "verified_equal": [
+   "seed",
+   "prompt_hash",
+   "target_hash",
+   "doc_hash"
+  ]
+ },
+ "score_driving_pairs": [
+  {
+   "doc_id": 12,
+   "pass": 1,
+   "request_seed": 1234,
+   "0.7.0": "right",
+   "0.9.1": "empty"
+  },
+  {
+   "doc_id": 55,
+   "pass": 2,
+   "request_seed": 1235,
+   "0.7.0": "right",
+   "0.9.1": "empty"
+  },
+  {
+   "doc_id": 81,
+   "pass": 3,
+   "request_seed": 1236,
+   "0.7.0": "right",
+   "0.9.1": "empty"
+  },
+  {
+   "doc_id": 88,
+   "pass": 1,
+   "request_seed": 1234,
+   "0.7.0": "right",
+   "0.9.1": "empty"
+  },
+  {
+   "doc_id": 88,
+   "pass": 3,
+   "request_seed": 1236,
+   "0.7.0": "right",
+   "0.9.1": "empty"
+  },
+  {
+   "doc_id": 109,
+   "pass": 1,
+   "request_seed": 1234,
+   "0.7.0": "right",
+   "0.9.1": "empty"
+  },
+  {
+   "doc_id": 120,
+   "pass": 1,
+   "request_seed": 1234,
+   "0.7.0": "right",
+   "0.9.1": "empty"
+  },
+  {
+   "doc_id": 170,
+   "pass": 3,
+   "request_seed": 1236,
+   "0.7.0": "right",
+   "0.9.1": "empty"
+  }
+ ],
+ "restricted_material": "Prompt text, replies, reasoning text and token sequences are not published. Local copies are indexed outside this repository by path and hash.",
+ "arms": "none yet (Phase 0 is CPU only)"
+}

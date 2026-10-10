@@ -24,8 +24,8 @@ keeps varying until the 327,680-token budget runs out.
 
 ## Caveats
 
-- **What differs.** V79 differs from B79 in image, parallel layout (EP2 + DCP2) and vision. The model revisions differ
-  only in files neither server uses (identical weight files; both servers load the same vendored chat template).
+- **What differs.** V79 differs from B79 in image, parallel layout (EP2 + DCP2) and vision. The two model revisions
+  share the same weight files. Their chat templates differ (0.7.0 served the checkpoint's own template, 0.9.1 the corrected Z.ai template), but both render all 198 GPQA prompts byte-identically.
 - **KV pool.** V79's KV pool (2,894,456 tokens) was full for part of the run, so fewer than 12 requests ran at once then
   (run notes).
 - **Power** (`tools/analyze.py screen-power`): from 75% failing, 12 vs 12 draws detect with 80% power only a drop of

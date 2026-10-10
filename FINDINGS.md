@@ -14,6 +14,7 @@ that separates it from chance. **Open**: not answered by the data. "Not graded" 
 
 `python3 tools/verify.py` recomputes every summary. `python3 tools/analyze.py <subcommand>` (named per row)
 recomputes the analyses. `python3 investigations/2026-10-glm53-looping/recompute.py` prints every number of the
+looping investigation; `python3 investigations/2026-10-glm53-completion/recompute.py` those of the completion
 investigation. Standard library only.
 
 </details>
@@ -67,7 +68,7 @@ investigation. Standard library only.
 | 5 | One pass of one configuration varies by 0.5 to 3.5 points between passes with their own request seeds. | **Descriptive** | `analyze.py gpqa-passes` |
 | 6 | 3.25bpw and 4bpw TR3 (Brandon) on tpurtell 0.9.1 show no measurable difference in accuracy (86.9% vs 85.7%) or completion (16 vs 17 empty of 594). | **Descriptive** | `analyze.py gpqa-records` |
 | 7 | tpurtell 0.7.0 as shipped left fewer GPQA questions unanswered than tpurtell 0.9.1 (3.25bpw, three passes each): 4 vs 16 empty answers of 594. What produces the difference is open. | **Supported** (clustered p = 0.009); cause **open** | `analyze.py gpqa-records`, [confounds](CONFOUNDS.md#7-several-changes-between-releases-at-once) |
-| 7a | 3.25bpw on tpurtell 0.7.0 scored highest over three passes. Raw / stated means: 88.2 / 89.4% (0.7.0), 86.9 / 87.9% (3.25bpw 0.9.1), 85.7 / 87.7% (4bpw 0.9.1). The lead is 1.3-2.5 points raw, consistent on both scores but within pass-to-pass noise (clustered p = 0.12-0.41; every 95% interval includes zero), so not yet established. Why 0.7.0 leads is open. | **Descriptive**; cause **open** | `analyze.py gpqa-records` |
+| 7a | 3.25bpw on tpurtell 0.7.0 scored highest over three passes. Raw / stated means: 88.2 / 89.4% (0.7.0), 86.9 / 87.9% (3.25bpw 0.9.1), 85.7 / 87.7% (4bpw 0.9.1). The lead is 1.3-2.5 points raw, consistent on both scores but within pass-to-pass noise (clustered p = 0.12-0.41; every 95% interval includes zero), so not yet established. Against 3.25bpw 0.9.1, the higher score comes entirely from questions 0.9.1 left unanswered: where both answered (577 of 594), raw accuracy is identical (516 vs 516; stated 523 vs 522). Why 0.7.0 leads is open. | **Descriptive**; cause **open** | `analyze.py gpqa-records`, `gpqa-join`, [investigation](investigations/2026-10-glm53-completion/README.md) |
 | 8 | Empty answers concentrate on a few questions. | **Descriptive** | `analyze.py gpqa-empty` |
 | 9 | One pass per configuration does not separate these configurations in accuracy: pass 1 lands at 84.3-87.9% raw. | **Descriptive** | `analyze.py gpqa-table`, `gpqa-pairs` |
 | 10 | Empty answers in pass 1 are 0 to 9 of 198 per run. | **Descriptive** | `analyze.py gpqa-table` |
@@ -90,11 +91,14 @@ investigation. Standard library only.
    differ measurably (88.2% vs 86.9%, clustered p = 0.41). Where a request log exists, every one of these empty answers
    ran to the 327,680-token cap except one, which ended after 38 tokens. 0.7.0 differs from 0.9.1 in draft depth (5 vs
    3 tokens), parallel layout (DCP2 with EP2 experts vs DCP1 with MLA layer ownership), kernel and engine code, vision
-   (on vs off) and KV pool (2,758,919 vs 4,707,515 tokens) at once; the model revisions differ only in files neither
-   server uses (same weight files; both servers load the same vendored chat template). None was varied alone in GPQA;
+   (on vs off) and KV pool (2,758,919 vs 4,707,515 tokens) at once. The two model revisions share the same weight files.
+   Their chat templates differ (0.7.0 served the checkpoint's own template, 0.9.1 the corrected Z.ai template), but both render all 198 GPQA prompts byte-identically. None was varied alone in GPQA;
    the component screen at three draft tokens found no tested part that moved questions 88 or 79 (item 14). The 4bpw
    TR3 (Brandon) record on 0.9.1 also left more empty answers than 0.7.0 (17, on 14 questions; clustered p = 0.006), but
    it differs in weights and concurrency as well.
+   Item 7a, pair by pair (same question, pass and request seed): 0.7.0 was right where 0.9.1 came back empty in 8
+   question-passes (q12 pass 1, q55 pass 2, q81 pass 3, q88 passes 1 and 3, q109 pass 1, q120 pass 1, q170 pass 3), and
+   never the other way. This splits the score by completion; it is not a causal comparison.
 8. Questions 79 and 81 came back empty in all three records; 88, 127 and 147 in both 0.9.1 records and in no pass of
    0.7.0; question 88 in two of three passes of each 0.9.1 record. Questions are doc ids; the questions themselves are
    not published.
@@ -191,7 +195,7 @@ Stated with their evidence. Grade: **open**.
 | Question | Evidence so far |
 |---|---|
 | What drives non-completion on questions 88 and 79? | Items 13-14: no tested runtime part moved either, at a size where only very large effects could show. |
-| What makes tpurtell 0.7.0 as shipped leave fewer GPQA questions unanswered than 0.9.1? | Item 7: 4 vs 16 of 594, almost all at the 327,680-token cap; several differences at once, none varied alone in GPQA. The component screen ran the 0.7.0 image at three draft tokens on question 79 only, where it failed as often as 0.9.1 (9 of 12 each). Which difference matters is inconclusive. |
+| What makes tpurtell 0.7.0 as shipped leave fewer GPQA questions unanswered than 0.9.1? | Item 7: 4 vs 16 of 594, almost all at the 327,680-token cap; several differences at once, none varied alone in GPQA. The component screen ran the 0.7.0 image at three draft tokens on question 79 only, where it failed as often as 0.9.1 (9 of 12 each). Which difference matters is inconclusive ([completion investigation](investigations/2026-10-glm53-completion/README.md)). |
 | Do other releases or layouts differ in non-completion across the benchmark? | Only pass 1 exists for the other configurations: 0 to 9 empty answers of 198, no paired difference at p < 0.05 (item 10). 3.25bpw and 4bpw TR3 (Brandon) on 0.9.1: no measurable difference over three passes (16 vs 17; item 6). |
 | Does the DCP1 tail fix change answers or how often hard questions fail to finish? | It changes decode numerics in the first 2,044 tokens; the loops observed are stopped far later; GPQA and tool calling show no difference beyond noise at their sizes (items 3, 4, 16). |
 | Why is the engine not bitwise reproducible one request at a time? | Item 19: greedy reruns diverge after a median of 318 characters; same-seed decode-vs-prefill runs first differ after 1 to 130 tokens, with no concurrent requests. |

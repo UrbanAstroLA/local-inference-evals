@@ -1102,12 +1102,22 @@ def build():
     _l = [analyze.pct(g["k3.25-v0.7.0-dflash5"]["rows"], "correct_flexible") - analyze.pct(g[b]["rows"], "correct_flexible")
           for b in ("k3.25-v0.9.1-dflash3", "k4-v0.9.1-dflash3-c4")]
     lead_lo, lead_hi = min(_l), max(_l)
+    jn = analyze.join(g["k3.25-v0.7.0-dflash5"], g["k3.25-v0.9.1-dflash3"])
+    assert not any(jn["mismatches"].values()) and not jn["unpaired"]
+    jpairs = ", ".join(f"q{d} pass {p}" for d, p in jn["a_right_b_empty"])
+    jtip = tip("questions 0.9.1 left unanswered",
+               f"{len(jn['a_right_b_empty'])} question-passes where 0.7.0 was right and 0.9.1 came back empty: {jpairs}. "
+               f"None the other way ({len(jn['b_right_a_empty'])}). Same question, pass and request seed in both records. Descriptive: "
+               "splitting by completion is not a causal comparison.")
     # ---- Results (index)
     summary = says([
         (f'<b>3.25bpw on tpurtell 0.7.0 scored highest.</b> Three-pass means, raw / stated: '
          f'{acc3("k3.25-v0.7.0-dflash5")} (0.7.0), {acc3("k3.25-v0.9.1-dflash3")} (3.25bpw 0.9.1), {acc3("k4-v0.9.1-dflash3-c4")} (4bpw 0.9.1). '
          f'The lead is {lead_lo:.1f}-{lead_hi:.1f} points raw, consistent on both scores but within pass-to-pass noise, so not yet established. '
-         'Why 0.7.0 leads is open.', "Descriptive",
+         f'Against 3.25bpw 0.9.1, the higher score comes entirely from {jtip}: where both answered ({len(jn["both"])} of {jn["n"]}), raw '
+         f'accuracy is identical ({jn["a_correct_flexible_both"]} vs {jn["b_correct_flexible_both"]}; stated {jn["a_correct_stated_both"]} vs '
+         f'{jn["b_correct_stated_both"]}). Why 0.7.0 leads is open (<a href="{REPO}/tree/main/investigations/2026-10-glm53-completion">investigation</a>).',
+         "Descriptive",
          "Question-clustered tests, 0.7.0 vs 3.25bpw 0.9.1: raw p = {:.2f}, stated p = {:.2f}; vs 4bpw 0.9.1: raw p = {:.2f}, stated p = {:.2f}. "
          "Every 95% interval includes zero.".format(*[analyze.records(g["k3.25-v0.7.0-dflash5"], g[b], k)["p_cluster"]
                                                       for b in ("k3.25-v0.9.1-dflash3", "k4-v0.9.1-dflash3-c4") for k in ("correct_flexible", "correct_stated")]),

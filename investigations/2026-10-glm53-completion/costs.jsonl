@@ -1,0 +1,1 @@
+{"phase": 0, "item": "existing-data audit (decomposition, inventory, classification, configuration diff)", "gpu_hours": 0, "allocated_gpus": 0, "wall_hours_cpu": 1.5, "engineering_hours_estimate": 3, "notes": "CPU only. No server started, no container run. Engine files read from the two images without starting them."}

@@ -9,6 +9,8 @@
                                                # passes with a 95% interval over questions, and the spread between passes
     python3 tools/analyze.py gpqa-records [A B]  # question-clustered comparisons of two multi-pass records (default: RECORD_PAIRS):
                                                # question-level counts, exact sign-flip test over questions, pooled tests for reference
+    python3 tools/analyze.py gpqa-join [A B]   # two multi-pass records joined on (question, pass), hashes checked: the score split into
+                                               # pairs where both answered and pairs where one came back empty (default: RECORD_PAIRS[0])
     python3 tools/analyze.py gpqa-empty        # which questions came back empty, in which passes, per multi-pass record
     python3 tools/analyze.py screen-v2         # hard-prompt-screen/v2 (component screen): counts, Wilson intervals, the
                                                # preregistered per-switch Fisher tests with Newcombe intervals, the doc-79 rule,
@@ -234,6 +236,51 @@ def gpqa_records(args):
                       f"{r['p_cluster']:.3f} | {r['only_a']} / {r['only_b']} ({r['p_pooled']:.3f}) | {r['p_fisher']:.3f} | {r['qa_any']} / {r['qb_any']} |")
 
 
+def join(a, b):
+    """Join two multi-pass records on (doc_id, pass) and split the outcome by completion: every pair, the pairs where both answered,
+    and the pairs where one answered and the other came back empty. Checks that each pair shares its request seed and its prompt,
+    target and question hashes."""
+    A = {(r["doc_id"], r["pass"]): r for r in a["rows"]}; B = {(r["doc_id"], r["pass"]): r for r in b["rows"]}
+    keys = sorted(A.keys() & B.keys())
+    bad = {h: sum(A[k][h] != B[k][h] for k in keys) for h in ("seed", "prompt_hash", "target_hash", "doc_hash")}
+    both = [k for k in keys if not A[k]["empty"] and not B[k]["empty"]]
+    tot = lambda R, ks, f: sum(R[k][f] for k in ks)
+    pick = lambda X, Y, f: [k for k in keys if X[k][f] and Y[k]["empty"]]
+    return dict(n=len(keys), unpaired=len(A.keys() ^ B.keys()), mismatches=bad, both=both, both_empty=[k for k in keys if A[k]["empty"] and B[k]["empty"]],
+                **{f"{x}_{f}_all": tot(R, keys, f) for x, R in (("a", A), ("b", B)) for f in ("correct_flexible", "correct_stated", "empty")},
+                **{f"{x}_{f}_both": tot(R, both, f) for x, R in (("a", A), ("b", B)) for f in ("correct_flexible", "correct_stated")},
+                a_right_b_empty=pick(A, B, "correct_flexible"), b_right_a_empty=pick(B, A, "correct_flexible"),
+                a_empty_only=[k for k in keys if A[k]["empty"] and not B[k]["empty"]], b_empty_only=[k for k in keys if B[k]["empty"] and not A[k]["empty"]],
+                a_stated_b_empty=pick(A, B, "correct_stated"), b_stated_a_empty=pick(B, A, "correct_stated"))
+
+
+def gpqa_join(args):
+    """Decompose the raw-accuracy difference between two multi-pass records into pairs where both answered and pairs where one
+    came back empty (default: the first of RECORD_PAIRS). Descriptive: conditioning on completion is not a causal comparison."""
+    g = gpqa(); a, b = (args[0], args[1]) if len(args) == 2 else RECORD_PAIRS[0][:2]
+    j = join(g[a], g[b]); n = j["n"]; nb = len(j["both"])
+    print(f"A = {name(g[a])}\nB = {name(g[b])}")
+    print(f"Joined on (doc_id, pass): {n} pairs, {j['unpaired']} unpaired; mismatched " + ", ".join(f"{h} {c}" for h, c in j["mismatches"].items()))
+    print("\n| outcome | A | B | B - A |\n|---|---|---|---|")
+    for lab, fa, fb in ((f"raw correct, all {n}", j["a_correct_flexible_all"], j["b_correct_flexible_all"]),
+                        (f"stated correct (audited), all {n}", j["a_correct_stated_all"], j["b_correct_stated_all"]),
+                        (f"empty, all {n}", j["a_empty_all"], j["b_empty_all"]),
+                        (f"raw correct, the {nb} pairs where both answered", j["a_correct_flexible_both"], j["b_correct_flexible_both"]),
+                        (f"stated correct, the {nb} pairs where both answered", j["a_correct_stated_both"], j["b_correct_stated_both"])):
+        print(f"| {lab} | {fa} | {fb} | {fb - fa:+d} |")
+    print(f"\nPairs empty in both: {len(j['both_empty'])}; empty in A only: {len(j['a_empty_only'])}; empty in B only: {len(j['b_empty_only'])}.")
+    print(f"Raw: A right where B came back empty: {len(j['a_right_b_empty'])}; B right where A came back empty: {len(j['b_right_a_empty'])}. "
+          f"Stated: {len(j['a_stated_b_empty'])} and {len(j['b_stated_a_empty'])}.")
+    print(f"Raw difference B - A = {j['b_correct_flexible_all'] - j['a_correct_flexible_all']:+d} = "
+          f"{j['b_correct_flexible_both'] - j['a_correct_flexible_both']:+d} (both answered) "
+          f"{len(j['b_right_a_empty']) - len(j['a_right_b_empty']):+d} (one empty, the other right).")
+    print("\nScore-driving pairs (one record right, the other empty): question, pass, request seed")
+    for lab, ks in (("A right, B empty", j["a_right_b_empty"]), ("B right, A empty", j["b_right_a_empty"])):
+        print(f"  {lab}: " + (", ".join(f"q{d} p{p} (seed {1233 + p})" for d, p in ks) or "none"))
+    print("  one empty, the other answered wrong: " + (", ".join(f"q{d} p{p} ({'A' if (d, p) in j['a_empty_only'] else 'B'} empty)"
+          for d, p in sorted(set(j["a_empty_only"] + j["b_empty_only"]) - set(j["a_right_b_empty"] + j["b_right_a_empty"]))) or "none"))
+
+
 def gpqa_empty():
     """Per multi-pass record: the questions that came back empty, the passes in which they did, and how each ended."""
     mp = multipass()
@@ -441,5 +488,5 @@ def screen_speed():
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "gpqa-table"
     {"gpqa-table": gpqa_table, "gpqa-pairs": lambda: gpqa_pairs(sys.argv[2:]), "gpqa-passes": gpqa_passes,
-     "gpqa-records": lambda: gpqa_records(sys.argv[2:]), "gpqa-empty": gpqa_empty, "screen-v2": screen_v2,
+     "gpqa-records": lambda: gpqa_records(sys.argv[2:]), "gpqa-join": lambda: gpqa_join(sys.argv[2:]), "gpqa-empty": gpqa_empty, "screen-v2": screen_v2,
      "screen-single": screen_single, "decode-prefill": decode_prefill, "screen-power": power_table, "screen-speed": screen_speed, "screen-anatomy": anatomy}[cmd]()

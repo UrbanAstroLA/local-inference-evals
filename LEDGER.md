@@ -13,6 +13,7 @@ What was asked, run, found, corrected and withdrawn, in date order.
 2. Why some hard GPQA questions do not finish within the 327,680-token budget
    ([investigation](investigations/2026-10-glm53-looping)).
 3. Which factors besides the configuration move a result, and how to control them ([`CONFOUNDS.md`](CONFOUNDS.md)).
+4. Why tpurtell 0.7.0 left fewer GPQA answers empty than 0.9.1 ([investigation](investigations/2026-10-glm53-completion/README.md)).
 
 ## Timeline
 
@@ -57,6 +58,12 @@ What was asked, run, found, corrected and withdrawn, in date order.
 - Three passes per configuration, one request seed per pass, for three configurations.
 - One configuration's passes differ by 0.5 to 3.5 points.
 - Documents reorganized around results, with this ledger and the confounds page.
+- New [completion investigation](investigations/2026-10-glm53-completion/README.md), Phase 0 (existing data, no GPU):
+  0.7.0's higher GPQA score comes entirely from question-passes 0.9.1 left empty. Where both answered (577 of 594),
+  raw accuracy is identical (516 vs 516).
+- Correction: earlier text said both servers loaded the same vendored chat template. They did not. 0.7.0 served the
+  checkpoint's own template, 0.9.1 the corrected Z.ai template. Both render all 198 GPQA prompts byte-identically, so
+  no number changes.
 
 ## Withdrawn, and what replaced it
 

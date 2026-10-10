@@ -242,8 +242,8 @@ GPQA is a whole-benchmark record, not a looping test: each pass is one draw per 
 - The question was raised by pass 1 (0 vs 5); passes 2 and 3 alone, run after it was raised, give 4 vs 11 empty answers
   (1 vs 7 questions, p = 0.06).
 - 0.7.0 differs from 0.9.1 in draft depth (5 vs 3), parallel layout (DCP2 with EP2 experts vs DCP1 with MLA layer
-  ownership), kernel and engine code, vision, and KV pool (2,758,919 vs 4,707,515 tokens). The model revisions differ
-  only in files neither server uses (same weight files; both servers load the same vendored chat template). The
+  ownership), kernel and engine code, vision, and KV pool (2,758,919 vs 4,707,515 tokens). The two model revisions
+  share the same weight files. Their chat templates differ (0.7.0 served the checkpoint's own template, 0.9.1 the corrected Z.ai template), but both render all 198 GPQA prompts byte-identically. The
   component screen did not test 0.7.0 at its shipped five draft tokens.
 - Weights on 0.9.1: 9 questions each way; clustered p = 1.00. The 4bpw record ran 4 requests at once so that no request
   waited for KV memory.
