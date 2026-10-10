@@ -3,7 +3,7 @@
 **Question.** Where do the local GPQA Diamond scores sit next to published model-card numbers? Context only, not a
 comparison: `comparison.json` marks it `"comparable": false`.
 
-**Grade.** Not graded; context only ([`FINDINGS.md`](../../FINDINGS.md#2b-pass-1-of-every-configuration), item 12).
+**Grade.** Not graded; context only ([`FINDINGS.md`](../../FINDINGS.md#2-gpqa-diamond), item 12).
 
 ## Result
 

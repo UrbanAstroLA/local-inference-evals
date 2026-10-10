@@ -3,7 +3,7 @@
 **Question.** Does the DCP1 tail fix bring tpurtell 0.9.0's decode closer to prefill re-scoring of the same tokens?
 
 **Grade.** Supported for the large effect below 2,044 tokens; from 2,048 tokens no effect is claimed
-([`FINDINGS.md`](../../FINDINGS.md#1-runtime-defects-and-their-deterministic-evidence), item 3).
+([`FINDINGS.md`](../../FINDINGS.md#1-engine-issues-found-during-evaluation-and-their-fixes), item 3).
 
 **Configurations.** `3.25bpw · tpurtell 0.9.0 · no speculation, prefix cache off` vs
 `3.25bpw · tpurtell 0.9.0 + DCP1 tail fix ≈ 0.9.1 · no speculation, prefix cache off`. 6 GPQA prompts × 2,600 decoded

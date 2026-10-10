@@ -1,5 +1,28 @@
 # Changelog
 
+## 2026-10-10 (restructure): results first; confounds and ledger pages; no data, number, grade or claim changed
+
+Contents unchanged: 49 runs, 13 comparisons.
+
+- **One summary.** The site's Results page (`docs/index.html`) carries the only summary: seven lines, each with its grade
+  and a link to its evidence. `README.md` and `FINDINGS.md` link to it instead of repeating it.
+- **Results page.** GPQA (three-pass records, pass 1 of every configuration), speed and acceptance, KV capacity, engine
+  issues and their fixes, and kernel tests, each as a table beside its chart. The former GPQA, screen, speed and kernel
+  pages are merged into Results and the investigation; their URLs forward to the new places, old anchors included.
+- **New `CONFOUNDS.md`** (site: Confounds): eight confounds the data covers, what each does, how the runs control for it
+  now, and its status. **New `LEDGER.md`** (site: Ledger): a dated, plain-language account of what was run, found,
+  corrected and withdrawn. It holds the withdrawal notice, now naming what replaced the withdrawn data (the
+  distinct-seed component screen; the three-pass GPQA records), and the single draws kept from the earlier screens.
+- **`FINDINGS.md`** becomes graded tables (statement, grade, evidence) with the numbers and qualifications in folded
+  blocks; statements keep their numbers 1-19. Grades are supported, descriptive or open; "unmeasured" is no longer a
+  grade word ("Descriptive (effect unmeasured)").
+- **Investigation** (`investigations/2026-10-glm53-looping`): answer first, then the DCP1 tail issue record, then the
+  evidence; method and history moved to the ledger and confounds pages. Old section anchors still resolve.
+- Engine findings are worded as issues found during evaluation and their fixes. Detail, statistics and receipts sit
+  in folded `<details>` blocks; on the site, glossary terms and numbers' context show as tooltips on hover or focus.
+- `tools/site.py` renders `CONFOUNDS.md` and `LEDGER.md` into the site; `recompute.py` section headings follow the new
+  page.
+
 ## 2026-10-10 (readability): organization and charts; no data, number, grade or claim changed
 
 Contents unchanged: 49 runs, 13 comparisons.

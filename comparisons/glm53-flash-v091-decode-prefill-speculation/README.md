@@ -3,7 +3,7 @@
 **Question.** On tpurtell 0.9.1, does decoding through DFlash2 ×3's draft-and-verify path agree with prefill re-scoring
 as well as plain decoding does?
 
-**Grade.** Descriptive only ([`FINDINGS.md`](../../FINDINGS.md#1-runtime-defects-and-their-deterministic-evidence),
+**Grade.** Descriptive only ([`FINDINGS.md`](../../FINDINGS.md#1-engine-issues-found-during-evaluation-and-their-fixes),
 item 3).
 
 **Configurations.** `3.25bpw · tpurtell 0.9.1 · no speculation, prefix cache off` (two runs) vs

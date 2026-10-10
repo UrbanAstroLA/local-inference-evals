@@ -6,7 +6,7 @@ in accuracy or in empty answers, with questions as the unit?
 
 **Grade.** Pass-to-pass noise: descriptive. 0.7.0 vs 0.9.1 empty answers: supported (question-clustered p = 0.009);
 accuracy does not differ measurably; what produces the difference is open. 3.25bpw vs 4bpw on 0.9.1: descriptive, no
-measurable difference ([`FINDINGS.md`](../../FINDINGS.md#2a-three-passes-per-configuration), items 5-8).
+measurable difference ([`FINDINGS.md`](../../FINDINGS.md#2-gpqa-diamond), items 5-8).
 
 **Configurations.** Three configurations, three passes each of 198 questions, with request seeds 1234, 1235 and 1236
 (pass *p* sends 1233 + *p*; every configuration sends the same seed in the same pass, so passes pair across

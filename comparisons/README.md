@@ -1,7 +1,7 @@
 # Comparisons
 
 Each comparison is a directory with `comparison.json` and a `README.md` stating the question it answers.
-Every README follows one template: **Question**, **Grade** (with the [`FINDINGS.md`](../FINDINGS.md#summary) item it
+Every README follows one template: **Question**, **Grade** (with the [`FINDINGS.md`](../FINDINGS.md) item it
 supports), **Configurations**, **Result**, **Caveats**, **Recompute**.
 
 ## Index

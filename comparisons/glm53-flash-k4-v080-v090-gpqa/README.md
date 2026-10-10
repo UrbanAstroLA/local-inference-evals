@@ -4,7 +4,7 @@
 than on tpurtell 0.8.0? Pass 1 of each, paired by question.
 
 **Grade.** Descriptive: no detectable difference at this size
-([`FINDINGS.md`](../../FINDINGS.md#2b-pass-1-of-every-configuration), item 9).
+([`FINDINGS.md`](../../FINDINGS.md#2-gpqa-diamond), item 9).
 
 **Configurations.** `4bpw TR3 (Brandon) · tpurtell 0.8.0 · DFlash2 ×3` vs `4bpw TR3 (Brandon) · tpurtell 0.9.0 · DFlash2 ×3`.
 Same weights (same revision), same serving settings, same prompts and request seed; only the engine release differs.

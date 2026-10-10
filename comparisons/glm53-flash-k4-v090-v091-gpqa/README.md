@@ -4,7 +4,7 @@
 on tpurtell 0.9.0? Pass 1 of each, paired by question.
 
 **Grade.** Descriptive: no detectable difference at this size; the fix's effect on answers is unmeasured
-([`FINDINGS.md`](../../FINDINGS.md#1-runtime-defects-and-their-deterministic-evidence), item 4).
+([`FINDINGS.md`](../../FINDINGS.md#1-engine-issues-found-during-evaluation-and-their-fixes), item 4).
 
 **Configurations.** `4bpw TR3 (Brandon) · tpurtell 0.9.0 · DFlash2 ×3` vs `4bpw TR3 (Brandon) · tpurtell 0.9.1 · DFlash2 ×3`.
 Same weights, serving settings, prompts and request seed; 0.9.1 is 0.9.0 plus the DCP1 tail fix

@@ -1,13 +1,13 @@
-# GLM-5.3-Flash: kpool tail bugs in the tpurtell engine images (2026-10)
+# GLM-5.3-Flash: upstream kpool fixes and the tpurtell engine images (2026-10)
 
 **Status.** Finding 1 is supported; finding 2 was withdrawn on 2026-10-09; finding 3 is descriptive (single runs);
-finding 4 is supported. Every finding, graded: [`FINDINGS.md`](../../FINDINGS.md#summary). The related DCP1 tail bug and
+finding 4 is supported. Every finding, graded: [`FINDINGS.md`](../../FINDINGS.md). The related DCP1 tail issue and
 the non-completion investigation: [`../2026-10-glm53-looping`](../2026-10-glm53-looping/README.md).
 
 **Question.** Does the GLM-5.3-Flash no-answer problem on long reasoning (loops and exhaustion to the 327,680-token
-cap) come from runtime bugs fixed upstream after the engine's base was cut?
+cap) come from runtime issues fixed upstream after the engine's base was cut?
 
-**Finding 1: two upstream bugs are present in tpurtell 0.7.0 and 0.8.0.** vllm-project/vllm#57477 (prefill tail-seed
+**Finding 1: two upstream kpool issues, fixed upstream, are present in tpurtell 0.7.0 and 0.8.0.** vllm-project/vllm#57477 (prefill tail-seed
 kernel ignores the padded tail stride) and #58454 (one-pool tail ring overwritten by drafts behind a rejected
 pool-completing draft). Upstream's own regression tests fail on both images (4 failed, 29 passed) and pass with both
 fixes ported (33 passed); see `protocols/kpool-kernel-tests/v1.md`. Ported as tpurtell/glm-5.3-flash-ext3-2x-rtx#5 and
@@ -16,8 +16,8 @@ shipped in tpurtell 0.9.0. The tests have run on the 0.7.0 and 0.8.0 release ima
 
 **Finding 2 (withdrawn 2026-10-09).** This finding rested on hard-question screen counts (arms A, B and C of the
 preregistered kpool screen, and the tpurtell 0.7.0 pair of 2026-10-05). Those screens sent request seed 1234 on every
-repeat; batching made the repeats vary, but not in a statistically meaningful way, and their rates and rule verdicts were withdrawn (notice:
-[`../2026-10-glm53-looping`](../2026-10-glm53-looping), section 4). Repeat 1 of each question from arms B and C and
+repeat; batching made the repeats vary, but not in a statistically meaningful way, and their rates and rule verdicts were withdrawn and replaced
+by the distinct-seed component screen ([ledger](../../LEDGER.md#withdrawn-and-what-replaced-it)). Repeat 1 of each question from arms B and C and
 from the patched 0.7.0 screen is kept as a single draw. Whether the fixes change how often hard questions fail to
 finish is not established either way.
 

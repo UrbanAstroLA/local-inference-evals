@@ -5,7 +5,7 @@
 decode-vs-prefill comparison here.
 
 **Grade.** That the engine is not bitwise reproducible one request at a time is supported
-([`FINDINGS.md`](../../FINDINGS.md#4-serving-facts), item 19); the spread is the noise floor used in item 3.
+([`FINDINGS.md`](../../FINDINGS.md#4-serving), item 19); the spread is the noise floor used in item 3.
 
 **Configurations.** `3.25bpw · tpurtell 0.9.1 · no speculation, prefix cache off`, run on 2026-10-08 and again on
 2026-10-09, each on a fresh server, one request at a time, GPQA prompts 0-11 with the same request seeds (1234 + doc id),

@@ -3,7 +3,7 @@
 **Question.** Does the DCP1 tail fix change tool-calling results on tpurtell 0.9.0, 3.25bpw weights?
 
 **Grade.** Descriptive; two repeats per build, not a significance test
-([`FINDINGS.md`](../../FINDINGS.md#1-runtime-defects-and-their-deterministic-evidence), item 4).
+([`FINDINGS.md`](../../FINDINGS.md#1-engine-issues-found-during-evaluation-and-their-fixes), item 4).
 
 **Configurations.** `3.25bpw · tpurtell 0.9.0 · DFlash2 ×3` vs `3.25bpw · tpurtell 0.9.0 + DCP1 tail fix ≈ 0.9.1 · DFlash2 ×3`.
 tool-eval-bench, 88 scenarios, temperature 0, two repeats each (`protocols/tool-eval-bench/v1.md`).

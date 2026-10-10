@@ -4,7 +4,7 @@
 speculation settings and concurrency, 2x RTX PRO 6000: pass 1 (request seed 1234) of every configuration side by side.
 
 **Grade.** Descriptive: one pass per configuration does not separate these configurations in accuracy, and no pair
-differs in empty answers at p < 0.05 ([`FINDINGS.md`](../../FINDINGS.md#2b-pass-1-of-every-configuration), items 9-10).
+differs in empty answers at p < 0.05 ([`FINDINGS.md`](../../FINDINGS.md#2-gpqa-diamond), items 9-10).
 
 **Configurations.** Ten configurations, pass 1 of 198 questions each, the same prompts, answer order and request seed
 (1234): 3.25bpw on tpurtell 0.7.0 (with and without the kpool fixes), 0.8.0 (DFlash2 ×3; ×5 with sharing off),

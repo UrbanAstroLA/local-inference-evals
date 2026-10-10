@@ -28,7 +28,7 @@ applies.
   sampler noise, so that variation is not a statistically meaningful sample of the configuration.
 - **A control, not a measurement.** S1234 is a control for the seed, not a measurement of the configuration. It is why
   the earlier screens, which sent seed 1234 on every repeat, were withdrawn as rate measures (notice:
-  [`investigations/2026-10-glm53-looping`](../../investigations/2026-10-glm53-looping/README.md#4-method-note-on-seeds-and-withdrawal-notice)).
+  [`LEDGER.md`](../../LEDGER.md#withdrawn-and-what-replaced-it)).
 
 ## Recompute
 

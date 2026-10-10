@@ -4,7 +4,7 @@
 speculation.
 
 **Grade.** Speed and acceptance: descriptive (single runs, no noise floor). The engine is not bitwise reproducible, even
-one request at a time: supported ([`FINDINGS.md`](../../FINDINGS.md#4-serving-facts), items 18-19).
+one request at a time: supported ([`FINDINGS.md`](../../FINDINGS.md#4-serving), items 18-19).
 
 **Configurations.** Five configurations on 3.25bpw: `tpurtell 0.8.0` with DFlash2 ×3 and with no speculation, and
 `tpurtell 0.8.0 + kpool fixes ≈ 0.9.0` with DFlash2 ×3, DFlash2 ×5 and no speculation. One run each

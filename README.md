@@ -3,35 +3,34 @@
 Maintained by Michael M: [UrbanAstroLA](https://github.com/UrbanAstroLA) on GitHub, [@UrbanAstroFella](https://x.com/UrbanAstroFella) on X.
 
 Receipts for evaluations of locally served LLMs: what was run, on exactly which software and hardware, the raw
-per-item results, and the scripts that recompute every published number. Null and negative results are kept. Terms are
-defined in the [glossary](#glossary).
+per-item results, and the scripts that recompute every published number. Null and negative results are kept.
 
-## Start here
+The current subject is GLM-5.3-Flash EXL3 quants on 2x RTX PRO 6000, served by builds of tpurtell's vLLM-based engine
+[tpurtell/glm-5.3-flash-ext3-2x-rtx](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx). It is a public ledger of
+evaluating the runtimes and quants, and the confounds that can move accuracy or speed.
 
-| If you want | Read | Then |
+## Read
+
+| Page | What it answers | Source |
 |---|---|---|
-| The answer in 30 seconds | [Results site](https://urbanastrola.github.io/local-inference-evals/): "What it shows" | [`FINDINGS.md`](FINDINGS.md#summary): every statement, numbered and graded |
-| The DCP1 tail bug and its fix (tpurtell PR #6, released in tpurtell 0.9.1) | [Investigation, section 2](investigations/2026-10-glm53-looping/README.md#2-defect-found-and-fixed-the-dcp1-tail-bug) | [Recompute commands](investigations/2026-10-glm53-looping/README.md#receipts-and-how-to-recompute-them) |
-| The current state of the non-completion question | [Investigation summary](investigations/2026-10-glm53-looping/README.md#1-summary) | [Open questions](investigations/2026-10-glm53-looping/README.md#6-open-questions) |
-| To choose a GLM-5.3-Flash quant or runtime for 2x RTX PRO 6000 | [`FINDINGS.md` section 2](FINDINGS.md#2-gpqa-diamond) (GPQA) and [section 4](FINDINGS.md#4-serving-facts) (serving) | [Labels](#labels), then the [comparisons](comparisons) |
-| To check a claim | [`FINDINGS.md`](FINDINGS.md): grades (supported, descriptive, unmeasured, open) and receipts | [Verify](#verify), [`DATASHEET.md`](DATASHEET.md) (what the data is and is not), [`SCHEMA.md`](SCHEMA.md) |
+| [Results](https://urbanastrola.github.io/local-inference-evals/) | What to run on 2x RTX PRO 6000: GPQA, speed, KV capacity, kernel tests. **The summary is here.** | [`FINDINGS.md`](FINDINGS.md): every statement, graded |
+| [Confounds](https://urbanastrola.github.io/local-inference-evals/confounds.html) | What else can move a result, and how the runs control for it | [`CONFOUNDS.md`](CONFOUNDS.md) |
+| [Ledger](https://urbanastrola.github.io/local-inference-evals/ledger.html) | What was run, found, corrected and withdrawn, and when | [`LEDGER.md`](LEDGER.md) |
+| [Investigation](https://urbanastrola.github.io/local-inference-evals/looping.html) | Why some hard questions do not finish | [`investigations/2026-10-glm53-looping`](investigations/2026-10-glm53-looping) |
+| [Method](https://urbanastrola.github.io/local-inference-evals/method.html) | Grades, scoring, intervals, receipts, glossary | [`protocols/`](protocols), [`DATASHEET.md`](DATASHEET.md) |
 
-**Latest.** 2026-10-10: three-pass GPQA records, one request seed per pass, for three configurations
-([`FINDINGS.md`](FINDINGS.md#2a-three-passes-per-configuration)). 2026-10-09: the earlier hard-question screen rates
-were withdrawn because every repeat sent the same request seed; see the
-[notice](investigations/2026-10-glm53-looping/README.md#4-method-note-on-seeds-and-withdrawal-notice). History:
-[`CHANGELOG.md`](CHANGELOG.md).
-
-**What has no row-level receipt.** Two kinds of figure rest on text that cannot be published (model output): greedy
-shared-prefix lengths (`comparisons/glm53-flash-serving-probe/parity.json`) and the per-row audited `correct_stated`
-judgement; for both, the outputs' hashes are published.
+**The DCP1 tail issue and its fix** (tpurtell PR #6, released in tpurtell 0.9.1):
+[record](investigations/2026-10-glm53-looping/README.md#the-dcp1-tail-issue-and-its-fix).
 
 ## Labels
 
-Configurations are named **weights · engine version · speculation**, for example `4bpw TR3 (Brandon) · tpurtell 0.9.0 · DFlash2 ×3`.
-The engine name comes first because engines number their versions independently. Every engine so far is a build of
-[tpurtell/glm-5.3-flash-ext3-2x-rtx](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx), which is built on vLLM:
+Configurations are named **weights · engine version · speculation**, for example
+`4bpw TR3 (Brandon) · tpurtell 0.9.0 · DFlash2 ×3`. Every engine so far is a build of tpurtell's engine.
 
+<details>
+<summary>Label details</summary>
+
+- The engine name comes first because engines number their versions independently.
 - `tpurtell 0.8.0 + kpool fixes ≈ 0.9.0` is 0.8.0 with the two upstream kpool fixes that later shipped in 0.9.0. It is
   the same engine as `tpurtell 0.9.0` for every measurement here, and was measured before 0.9.0 was released.
 - `tpurtell 0.7.0 + kpool fixes` is a separate backport of the same fixes: not a release, and not 0.9.0.
@@ -43,14 +42,18 @@ The engine name comes first because engines number their versions independently.
 - Plain `tpurtell 0.7.0`, `0.8.0`, `0.9.0` and `0.9.1` are the releases as published.
 - A trailing `· concurrency N` appears only when the client kept N requests in flight instead of the protocol's setting
   (GPQA: 8), as for `4bpw TR3 (Brandon) · tpurtell 0.9.1 · DFlash2 ×3 · concurrency 4`.
+- Weights: `3.25bpw` is tpurtell's K3.25 checkpoint wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1; `4bpw TR3 (Brandon)` is
+  Brandon M. Music's TR3 checkpoint brandonmusic/GLM-5.3-Flash-tr3-4bpw. Speculation: `DFlash2 ×N` is DFlash2 with N
+  draft tokens per step.
+- Full key: [`FINDINGS.md`](FINDINGS.md#labels). Labels are built from config fields by one rule, so results from
+  another engine carry its own name and version without code changes ([`SCHEMA.md`](SCHEMA.md#labels)).
 
-Weights: `3.25bpw` is tpurtell's K3.25 checkpoint wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1; `4bpw TR3 (Brandon)` is Brandon M. Music's TR3
-checkpoint brandonmusic/GLM-5.3-Flash-tr3-4bpw. Speculation: `DFlash2 ×N` is DFlash2 with N draft tokens per step.
-
-Full key: [`FINDINGS.md`](FINDINGS.md#labels). Labels are built from config fields by one rule, so results from
-another engine carry its own name and version without code changes ([`SCHEMA.md`](SCHEMA.md#labels)).
+</details>
 
 ## Layout
+
+<details>
+<summary>Where things are</summary>
 
 ```
 protocols/<benchmark>/v<N>.md     frozen, versioned evaluation procedures (settings, scoring, dataset revision)
@@ -66,9 +69,16 @@ tools/verify.py                   checks manifests, recomputes every summary, an
 docs/                             the results site (GitHub Pages), built from runs/ by tools/site.py
 tools/analyze.py                  recomputes the analyses in FINDINGS.md from published rows
 SCHEMA.md, DATASHEET.md           field definitions; provenance, terms and intended uses
+FINDINGS.md, CONFOUNDS.md         graded statements; confounds and their controls
+LEDGER.md, CHANGELOG.md           dated account in plain language; technical change history
 ```
 
+</details>
+
 ## Comparability rules
+
+<details>
+<summary>What may be compared, and how</summary>
 
 A comparison may only line up runs that share the same **protocol id and version** and the same **hardware**.
 `comparison.json` lists the runs and names the configuration fields that are meant to differ; `tools/verify.py`
@@ -80,11 +90,22 @@ one request seed on every repeat (`hard-prompt-screen` v0 and v1) are single dra
 GPQA passes must each carry their own request seed. `tools/verify.py` enforces both. Runs with several passes of the
 same questions are compared with questions as clusters.
 
+</details>
+
 ## Benchmark data
+
+<details>
+<summary>Why there is no question text</summary>
 
 Some benchmarks ask that their questions not be published in plain text (GPQA does). Results here therefore carry
 item ids and hashes (`doc_hash`, `prompt_hash`, `target_hash` as logged by lm-evaluation-harness) instead of text.
 Anyone with the dataset can regenerate the prompts from the protocol and confirm the hashes match.
+
+Two kinds of figure rest on text that cannot be published (model output): greedy shared-prefix lengths
+(`comparisons/glm53-flash-serving-probe/parity.json`) and the per-row audited `correct_stated` judgement; for both, the
+outputs' hashes are published.
+
+</details>
 
 ## Verify
 
@@ -95,6 +116,10 @@ python3 tools/verify.py runs/<id>  # one run
 Python 3.10+, standard library only.
 
 ## Glossary
+
+<details>
+<summary>Terms used across the repository</summary>
+
 - **MLA** (multi-head latent attention): GLM-5.3-Flash's attention in 11 of its layers (the others are KDA layers). Keys
   and values are cached as a compressed latent, and a sparse-attention indexer picks which earlier tokens each decode
   step attends.
@@ -132,6 +157,8 @@ Python 3.10+, standard library only.
   here an exact sign-flip test over questions (each question's difference, summed over its passes, keeps or flips its
   sign) with intervals that resample questions. A pooled test that counts every question-pass separately overstates the
   evidence and is shown only for reference.
+
+</details>
 
 ## Licenses
 

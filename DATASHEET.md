@@ -51,8 +51,9 @@ with questions as clusters).
 **Distribution.** Public repository. Results and docs CC BY 4.0, code Apache-2.0. Model weights, engines and
 datasets are not redistributed.
 
-**Maintenance.** Corrections and withdrawals are new commits recorded in `CHANGELOG.md`; withdrawn rows stay in the
+**Maintenance.** Corrections and withdrawals are new commits recorded in `CHANGELOG.md` and summarised in `LEDGER.md`; withdrawn rows stay in the
 git history. Protocol changes get a
 new version number; old runs are never rescored under a new version.
 
-**See also.** [`README.md`](README.md) (start here), [`FINDINGS.md`](FINDINGS.md) (results, graded), [`SCHEMA.md`](SCHEMA.md) (fields).
+**See also.** [`README.md`](README.md) (start here), [`FINDINGS.md`](FINDINGS.md) (statements, graded),
+[`CONFOUNDS.md`](CONFOUNDS.md) (confounds and controls), [`LEDGER.md`](LEDGER.md) (dated account), [`SCHEMA.md`](SCHEMA.md) (fields).

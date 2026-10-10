@@ -31,7 +31,7 @@ def load(protocol, config):
     return out
 
 
-print("# Section 2: the DCP1 tail bug\n")
+print("# The DCP1 tail issue and its fix\n")
 print("## Index check (kpool-tail-index/v1)")
 for c in (AS, FIX):
     m = load("kpool-tail-index/v1", c)[0]
@@ -94,21 +94,21 @@ for d in sorted((ROOT / "runs").iterdir()):
         up = [r for r in rows if r["suite"] == "upstream" and r["outcome"] != "skipped"]
         print(f"{d.name}: {sum(r['outcome'] == 'passed' for r in up)}/{len(up)} passed")
 
-print("\n# Sections 3 and 4: component screen (hard-prompt-screen/v2) and the fixed-seed control\n")
+print("\n# Non-completion: component screen (hard-prompt-screen/v2) and the fixed-seed control\n")
 analyze.screen_v2()
-print("\n## Minimum detectable differences (section 3)")
+print("\n## Minimum detectable differences (tests, power and scope)")
 analyze.power_table()
-print("\n# Section 3: single draws from the earlier screens\n")
+print("\n# Single draws from the earlier screens (LEDGER.md)\n")
 analyze.screen_single()
-print("\n# Section 3: GPQA Diamond, three passes per configuration (one request seed per pass)\n")
+print("\n# Across GPQA: three passes per configuration (one request seed per pass)\n")
 analyze.gpqa_passes()
 print()
 analyze.gpqa_records([])
 print()
 analyze.gpqa_empty()
-print("\n# Section 3: GPQA Diamond, pass 1 of every configuration\n")
+print("\n# GPQA Diamond, pass 1 of every configuration\n")
 analyze.gpqa_table()
 print()
 analyze.gpqa_pairs([])
-print("\n# Section 5: anatomy of a failure\n")
+print("\n# How the failures look\n")
 analyze.anatomy()

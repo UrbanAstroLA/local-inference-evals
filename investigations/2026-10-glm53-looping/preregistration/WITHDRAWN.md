@@ -11,4 +11,4 @@ Fisher tests, its verdicts ("inconclusive", "no detectable loop effect") and the
 from it are withdrawn. Only repeat 1 of each question from each configuration's first screen is kept, as a single
 draw. The gate record's decode-vs-prefill values come from a different protocol and are not affected.
 
-Notice and evidence: [`../README.md`](../README.md), section 4.
+Notice, evidence and what replaced it: [`LEDGER.md`](../../../LEDGER.md#withdrawn-and-what-replaced-it).
