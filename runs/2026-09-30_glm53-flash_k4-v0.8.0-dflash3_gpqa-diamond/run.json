@@ -6,5 +6,5 @@
  "software": {
   "harness": "lm-evaluation-harness 0.4.14.dev0 @ b954108c"
  },
- "notes": "Pass 1 (request seed 1234). Raw lm-eval flexible-extract / strict-match scores (not rescored). No request log for this run: finish_reason and completion_tokens are null. correct_stated: whether the reply's stated final answer is the target (secondary, audited score; see the protocol)."
+ "notes": "Pass 1 (request seed 1234). Raw lm-eval flexible-extract / strict-match scores (not rescored). No request log for this run: finish_reason and completion_tokens are null. correct_stated: whether the reply's stated final answer is the target (secondary, audited score; see the protocol). 8 concurrent requests. KV: the same weights on tpurtell 0.8.0 + kpool fixes report a 1,377,179-token KV pool (server log of 2026-10-05_glm53-flash_k4-v0.8.0-kpoolfix-dflash3_screen-k4), which holds about 4 requests at the token cap; this run kept no server log, so whether requests waited for KV is not recorded."
 }

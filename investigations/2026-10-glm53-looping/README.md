@@ -16,13 +16,15 @@ draft-slot sharing, loop, exhaustion) are defined in the repository's [glossary]
 |---|---|
 | Under the DCP1 layout of tpurtell 0.8.0 and 0.9.0, decode attention skipped the newest 1-3 tokens at causal lengths up to 2,043 that are not a multiple of 4. The fix ([tpurtell PR #6](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/6)) removes it; it shipped in tpurtell 0.9.1 | **Supported** (index check on the image's own kernels) |
 | With the fix, decode agrees much better with prefill re-scoring of the same tokens below 2,044 tokens (mean KL 0.066 without the fix; 0.006-0.010 in three runs with it) | **Supported** for this large effect (one run without the fix; two runs of the 0.9.1 release give the noise floor) |
-| The fix's practical effect on answers and tool calls | **Unmeasured**: GPQA +0.5 points on 4bpw TR3 (Brandon), one pass per release; tool-eval-bench TC-80 and TC-88 pass in both repeats with the fix, but ten other scenarios flip between repeats of one build |
+| The fix's practical effect on answers and tool calls | **Unmeasured**: GPQA +0.5 points on 4bpw TR3 (Brandon), one pass per release, both at 8 concurrent requests with a KV pool that holds about 4; tool-eval-bench TC-80 and TC-88 pass in both repeats with the fix, but ten other scenarios flip between repeats of one build |
 | Repeats that share one request seed are not a meaningful sample: question 88 failed 11 of 12 with seed 1234 on every repeat vs 3 of 12 with distinct seeds, same configuration | **Supported** (Fisher p = 0.003); the reason the earlier screen rates were withdrawn |
 | On tpurtell 0.9.1, question 88 fails to finish in 1-3 of 12 repeats (8-25%) in every tested arm; question 79 in 9 of 12 (75%) on both tpurtell 0.9.1 and the tpurtell 0.7.0 image at three draft tokens | **Descriptive** (12 independent draws per arm) |
 | None of the tested runtime parts (EP2 routed experts, 656-byte NOPE records, MLA ownership tp with draft-slot sharing off, the tpurtell 0.7.0 image at three draft tokens) moved either question at this size | **Descriptive**: preregistered rules returned "no candidate at this size" and "unresolved"; with 12 draws per arm only very large effects (about 40-60 points) were detectable; draft depth, quantization and sampling were not varied |
 | The questions screened (88 and 79) were chosen as hard from seed-1234 data; with distinct seeds question 88 fails in 1-3 of 12 draws | **Descriptive**; two questions are not a benchmark-wide rate |
 | Loops are stopped far beyond the 2,044-token region where the tail bug acted; question 88 fails by looping, question 79 mostly by exhaustion | **Descriptive** |
-| What drives non-completion on these questions | **Open** |
+| Across GPQA, tpurtell 0.7.0 as shipped left fewer questions unanswered than tpurtell 0.9.1 (3.25bpw, three passes each with their own request seeds): 4 vs 16 empty answers of 594, on 4 vs 11 questions | **Supported** (question-clustered sign-flip test p = 0.009); the question was raised by pass 1, and passes 2-3 alone give 4 vs 11 (p = 0.06) |
+| 3.25bpw and 4bpw TR3 (Brandon) on tpurtell 0.9.1 leave about as many questions unanswered (16 vs 17 of 594) | **Descriptive** (no difference detected) |
+| What drives non-completion on these questions, and which of 0.7.0's several differences from 0.9.1 produces its lower count | **Open** |
 
 ## 2. Defect found and fixed: the DCP1 tail bug
 
@@ -89,7 +91,9 @@ compared with prefill re-scoring of the same token ids (`protocols/decode-prefil
 
 ### Practical impact: unmeasured
 - **GPQA:** 4bpw TR3 (Brandon) scored 84.8% on tpurtell 0.9.1 and 84.3% on 0.9.0, one pass each (+0.5 points; 95% interval
-  of the paired difference -4.5 to +5.6). No GPQA run compares 3.25bpw with and without the fix on one release.
+  of the paired difference -4.5 to +5.6), both at 8 concurrent requests with a KV pool that holds about 4 requests at the
+  token cap (the 0.9.1 run's log shows requests waiting for KV). Passes of one configuration differ by 0.5-3.5 points. No
+  GPQA run compares 3.25bpw with and without the fix on one release.
 - **tool-eval-bench** (88 scenarios, temperature 0, two repeats per build): 157 and 157 of 176 points without the fix,
   159 and 163 with it. TC-80 and TC-88 fail in both repeats without the fix and pass in both with it; ten other
   scenarios change status between repeats of the same build, so two repeats cannot separate these two from that
@@ -166,13 +170,33 @@ in every configuration tested, not how often (`tools/analyze.py screen-single`).
 `4bpw TR3 (Brandon) · tpurtell 0.7.0 + kpool fixes · DFlash2 ×5` could not run at this concurrency: the weights leave a
 437,563-token KV pool and the engine crashed when it filled (run kept as INVALID).
 
-### GPQA Diamond
-GPQA is a whole-benchmark record per configuration, not an evaluator of looping: one pass per configuration gives one
-draw per question. Pass 1 of each configuration is published (`comparisons/glm53-flash-gpqa-configs`): 0 to 9 of 198
-answers came back empty per run, and none of the question-paired comparisons there differs in empty answers at
-p < 0.05. Every pass 1 sent request seed 1234, so the configurations share sampler noise. Clean 3-pass GPQA runs with a
-distinct request seed per pass are in progress for tpurtell 0.7.0 and 0.9.1, to give three records per recipe for
-comparison with other recipes.
+### GPQA Diamond: three passes per configuration
+GPQA is a whole-benchmark record per configuration, not an evaluator of looping: each pass is one draw per question.
+Every configuration has pass 1 (request seed 1234; [`comparisons/glm53-flash-gpqa-configs`](../../comparisons/glm53-flash-gpqa-configs));
+three configurations also have passes 2 and 3 with request seeds 1235 and 1236
+([`comparisons/glm53-flash-gpqa-records`](../../comparisons/glm53-flash-gpqa-records); `tools/analyze.py gpqa-passes`,
+`gpqa-records`, `gpqa-empty`).
+
+| Configuration | Empty answers, passes 1 / 2 / 3 | Of 594 | Questions ever empty | Raw accuracy, mean of 3 |
+|---|---|---|---|---|
+| `3.25bpw · tpurtell 0.7.0 · DFlash2 ×5` | 0 / 3 / 1 | 4 | 4 | 88.2% |
+| `3.25bpw · tpurtell 0.9.1 · DFlash2 ×3` | 5 / 5 / 6 | 16 | 11 | 86.9% |
+| `4bpw TR3 (Brandon) · tpurtell 0.9.1 · DFlash2 ×3 · concurrency 4` | 8 / 2 / 7 | 17 | 14 | 85.7% |
+
+- **tpurtell 0.7.0 as shipped vs 0.9.1 (3.25bpw).** 0.9.1 had more empty answers on 10 questions and fewer on 1; an exact
+  sign-flip test over questions (questions as clusters, each question's difference summed over its three passes) gives
+  p = 0.009, and the difference is +2.0 points (95% interval over questions +0.7 to +3.5). Supported by that test. The
+  question was raised by pass 1 (0 vs 5); passes 2 and 3 alone, run after it was raised, give 4 vs 11 (1 vs 7 questions,
+  p = 0.06). Accuracy does not differ measurably (clustered p = 0.41).
+- **Why is open.** 0.7.0 differs from 0.9.1 at once in draft depth (5 vs 3), parallel layout (DCP2 with EP2 experts vs
+  DCP1 with MLA layer ownership), kernel and engine code, vision, KV pool (2,758,919 vs 4,707,515 tokens) and model
+  revision (chat template). The component screen did not test 0.7.0 at its shipped five draft tokens; at three, the 0.7.0
+  image failed question 79 as often as 0.9.1, and no tested layout part moved question 88 on 0.9.1.
+- **Weights on 0.9.1.** 3.25bpw and 4bpw TR3 (Brandon) leave about as many questions unanswered (16 vs 17; 9 questions each
+  way; clustered p = 1.00); the 4bpw record ran 4 requests at once so that no request waited for KV memory.
+- **Which questions.** Questions 79 and 81 came back empty in all three records; 88, 127 and 147 in both 0.9.1 records
+  and in no pass of 0.7.0; question 88 in two of three passes of each 0.9.1 record. Where a request log exists, every
+  empty answer but one ran to the 327,680-token cap.
 
 ## 4. Method note on seeds, and withdrawal notice
 
@@ -233,9 +257,11 @@ Each item states the question and the evidence so far.
 1. **What drives non-completion on questions 88 and 79?** Question 88 fails in 1-3 of 12 draws in every tested arm on
    tpurtell 0.9.1; question 79 in 9 of 12 on both tpurtell 0.9.1 and the tpurtell 0.7.0 image at three draft tokens. No
    tested runtime part moved either, at a size where only very large effects could show.
-2. **Does tpurtell 0.7.0 as shipped leave fewer empty answers?** In GPQA pass 1 the two tpurtell 0.7.0 builds (DFlash2 ×5)
-   left 0 and 2 of 198 answers empty; every later build left 3 to 9. One pass each does not separate this from chance, and
-   the question-79 screen ran 0.7.0 at three draft tokens, not the five its GPQA runs used.
+2. **What makes tpurtell 0.7.0 as shipped leave fewer GPQA questions unanswered than tpurtell 0.9.1?** Over three passes
+   with 3.25bpw weights, 4 vs 16 empty answers of 594, on 4 vs 11 questions (question-clustered p = 0.009; passes 2 and 3
+   alone p = 0.06). 0.7.0 differs in draft depth, parallel layout, kernel and engine code, vision, KV pool and model
+   revision at once, and none of these was varied alone in GPQA; the question-79 screen ran the 0.7.0 image at three
+   draft tokens, not the five it ships with, and failed as often as 0.9.1. Which difference matters is inconclusive.
 3. **Does the DCP1 tail fix change answers, or how often hard questions fail to finish?** The fix changes decode numerics
    in the first 2,044 tokens; the loops observed are stopped far later; GPQA (one pass per release) and tool calling (two
    repeats) show no difference beyond noise.
@@ -271,6 +297,9 @@ python3 tools/analyze.py screen-anatomy                     # section 5
 python3 tools/analyze.py screen-single                      # the single draws from the earlier screens
 python3 tools/analyze.py screen-power                       # minimum detectable differences of the component screen
 python3 tools/analyze.py decode-prefill                     # decode vs prefill, every run; noise floor; single-request divergence
+python3 tools/analyze.py gpqa-passes                        # GPQA, three passes per configuration
+python3 tools/analyze.py gpqa-records                       # GPQA records compared with questions as clusters
+python3 tools/analyze.py gpqa-empty                         # which questions came back empty, in which passes
 ```
 
 | Runs (`runs/<id>/`) | Contents | Protocol |
@@ -284,8 +313,10 @@ python3 tools/analyze.py decode-prefill                     # decode vs prefill,
 | `2026-10-08_glm53-flash_k3.25-v0.9.0-dflash3_tool-eval` and the `-tailfix-` twin | 2 × 88 scenarios | [`tool-eval-bench/v1`](../../protocols/tool-eval-bench/v1.md) |
 | `2026-10-08_glm53-flash_k3.25-v0.9.0-dflash3_serving-probe` and the `-tailfix-` twin | 16-prompt speed and acceptance probe | [`serving-probe/v1`](../../protocols/serving-probe/v1.md) |
 | `…_screen-v0`, `…_screen-b`, `…_screen-c`, `…_screen-v07pair`, `…_screen-k4`, `…_screen-bisect1`, `…_screen-invalid` | Single draws (repeat 1) from the earlier screens | [`hard-prompt-screen/v1`](../../protocols/hard-prompt-screen/v1.md), [`v0`](../../protocols/hard-prompt-screen/v0.md) |
+| `2026-09-29_glm53-flash_k3.25-v0.7.0-dflash5_gpqa-diamond`, `2026-10-08_glm53-flash_k3.25-v0.9.1-dflash3_gpqa-diamond`, `2026-10-09_glm53-flash_k4-v0.9.1-dflash3-c4_gpqa-diamond` | GPQA Diamond, three passes each (request seeds 1234-1236) | [`gpqa-diamond/v1`](../../protocols/gpqa-diamond/v1.md) |
 
-- Comparisons: [`glm53-flash-v091-component-screen-doc88`](../../comparisons/glm53-flash-v091-component-screen-doc88),
+- Comparisons: [`glm53-flash-gpqa-records`](../../comparisons/glm53-flash-gpqa-records),
+  [`glm53-flash-v091-component-screen-doc88`](../../comparisons/glm53-flash-v091-component-screen-doc88),
   [`glm53-flash-doc79-image-screen`](../../comparisons/glm53-flash-doc79-image-screen),
   [`glm53-flash-fixed-seed-control`](../../comparisons/glm53-flash-fixed-seed-control),
   [`glm53-flash-v090-tailfix-decode-prefill`](../../comparisons/glm53-flash-v090-tailfix-decode-prefill),

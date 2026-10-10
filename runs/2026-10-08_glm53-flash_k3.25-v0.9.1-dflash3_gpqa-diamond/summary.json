@@ -1,0 +1,81 @@
+{
+ "samples": 594,
+ "questions": 198,
+ "passes": [
+  1,
+  2,
+  3
+ ],
+ "empty": 16,
+ "accuracy_flexible": 0.8687,
+ "accuracy_strict": 0.0236,
+ "accuracy_flexible_ci95": [
+  0.83,
+  0.904
+ ],
+ "accuracy_flexible_answered": 0.8927,
+ "empty_by_finish_reason": {
+  "length": 15,
+  "stop": 1
+ },
+ "accuracy_stated": 0.8788,
+ "accuracy_stated_ci95": [
+  0.8401,
+  0.9125
+ ],
+ "accuracy_stated_answered": 0.9031,
+ "by_pass": {
+  "1": {
+   "seed": 1234,
+   "accuracy_flexible": 0.8535,
+   "accuracy_stated": 0.8586,
+   "empty": 5
+  },
+  "2": {
+   "seed": 1235,
+   "accuracy_flexible": 0.8889,
+   "accuracy_stated": 0.899,
+   "empty": 5
+  },
+  "3": {
+   "seed": 1236,
+   "accuracy_flexible": 0.8636,
+   "accuracy_stated": 0.8788,
+   "empty": 6
+  }
+ },
+ "pass_spread_flexible_points": 3.5,
+ "questions_ever_empty": 11,
+ "server": {
+  "kv_pool_tokens": 4707515,
+  "kv_memory_gib_per_gpu": [
+   17.4
+  ],
+  "max_num_seqs": 16,
+  "status_lines": 2842,
+  "waiting_below_max_seqs": 0,
+  "max_running": 8,
+  "peak_kv_usage_pct": 41.6,
+  "mean_gen_tok_s_8plus_running": 451.5,
+  "intervals_8plus_running": 2404,
+  "mean_acceptance_length": 2.845,
+  "acceptance_rate": 0.5964,
+  "events": {},
+  "first_error_s": null,
+  "sessions": [
+   {
+    "session": 1,
+    "passes": [
+     1
+    ]
+   },
+   {
+    "session": 2,
+    "passes": [
+     2,
+     3
+    ]
+   }
+  ]
+ }
+}

@@ -48,9 +48,16 @@ def layout_label(cfg):
     return (cfg["serving"].get("layout") or {}).get("label")
 
 
+def concurrency_label(cfg):
+    """'concurrency <n>' when serving.concurrency records that the client kept a number of requests in flight other than the
+    protocol's setting; absent otherwise."""
+    c = cfg["serving"].get("concurrency")
+    return f"concurrency {c}" if c else None
+
+
 def config_label(cfg):
-    """'<weights> · <engine>[ · <layout>] · <speculation>', e.g. '4bpw TR3 (Brandon) · tpurtell 0.9.0 · DFlash2 ×3'."""
-    parts = [weights_label(cfg), engine_label(cfg), layout_label(cfg), spec_label(cfg)]
+    """'<weights> · <engine>[ · <layout>] · <speculation>[ · concurrency <n>]', e.g. '4bpw TR3 (Brandon) · tpurtell 0.9.0 · DFlash2 ×3'."""
+    parts = [weights_label(cfg), engine_label(cfg), layout_label(cfg), spec_label(cfg), concurrency_label(cfg)]
     return " \u00b7 ".join(x for x in parts if x)
 
 
@@ -130,6 +137,16 @@ def summarize(protocol, rs):
             out["accuracy_stated"] = round(sum(r["correct_stated"] for r in rs) / len(rs), 4)
             out["accuracy_stated_ci95"] = bootstrap_by_item(rs, "correct_stated")
             out["accuracy_stated_answered"] = round(sum(r["correct_stated"] for r in answered) / max(1, len(answered)), 4)
+        if len(out["passes"]) > 1:      # several passes: intervals above resample questions with all their passes together
+            out["by_pass"] = {}
+            for p in out["passes"]:
+                sel = [r for r in rs if r["pass"] == p]
+                out["by_pass"][str(p)] = {"seed": sel[0]["seed"], "accuracy_flexible": round(sum(r["correct_flexible"] for r in sel) / len(sel), 4),
+                                          "accuracy_stated": round(sum(r["correct_stated"] for r in sel) / len(sel), 4) if "accuracy_stated" in out else None,
+                                          "empty": sum(r["empty"] for r in sel)}
+            per = [v["accuracy_flexible"] for v in out["by_pass"].values()]
+            out["pass_spread_flexible_points"] = round(100 * (max(per) - min(per)), 1)
+            out["questions_ever_empty"] = len({r["doc_id"] for r in rs if r["empty"]})
         return out
     if fam == "hard-prompt-screen":
         c = Counter(r["cls"] for r in rs)
@@ -187,8 +204,10 @@ def summarize(protocol, rs):
 
 def summarize_server(recs):
     """Aggregates of server_log.jsonl: numeric fields parsed from the engine's server log (the log text is not part of the
-    receipts; these records are). 'waiting_below_max_seqs' counts 10-second status lines with requests waiting while fewer
-    than the server's maximum number of sequences were running, i.e. the KV pool, not the sequence limit, held them back."""
+    receipts; these records are). A log may hold several server sessions (several passes of one GPQA record), each opened by a
+    'session' record naming the passes it served; the aggregates then cover all sessions. 'waiting_below_max_seqs' counts
+    10-second status lines with requests waiting while fewer than the server's maximum number of sequences were running, i.e.
+    the KV pool, not the sequence limit, held them back."""
     get = lambda k: [r for r in recs if r["kind"] == k]
     mns = next((r["max_num_seqs"] for r in get("config")), None)
     stl, spec = get("status"), get("spec")
@@ -204,7 +223,8 @@ def summarize_server(recs):
             "mean_acceptance_length": round(sum(r["mean_acceptance_length"] for r in spec) / len(spec), 3) if spec else None,
             "acceptance_rate": round(acc / dr, 4) if dr else None,
             "events": dict(sorted(Counter(r["what"] for r in get("event")).items())),
-            "first_error_s": next((r["t_s"] for r in get("event") if r["what"] != "preemption"), None)}
+            "first_error_s": next((r["t_s"] for r in get("event") if r["what"] != "preemption"), None),
+            **({"sessions": [{"session": r["session"], "passes": r["passes"]} for r in get("session")]} if get("session") else {})}
 
 
 def median(xs):
@@ -231,9 +251,8 @@ def check_run(run_dir):
     if cfg and not (ROOT / "configs" / f"{cfg}.json").exists(): fails.append(f"{rid}: config {cfg!r} not found")
     try:
         rs = rows(run_dir); docs = Counter(r.get("doc_id") for r in rs)
-        if proto.startswith("gpqa-diamond/") and ({r["pass"] for r in rs} != {1} or max(docs.values()) > 1):
-            fails.append(f"{rid}: a gpqa-diamond run publishes pass 1 only, one row per question; later passes need per-pass "
-                         "request seeds and their own run")
+        if proto.startswith("gpqa-diamond/"):
+            check_gpqa_passes(rid, rs, fails)
         if proto in SINGLE_DRAW and (max(docs.values()) > 1 or {r["rep"] for r in rs} != {1}):
             fails.append(f"{rid}: {proto} runs publish repeat 1 of each question only (every repeat sent seed 1234)")
         if proto == "hard-prompt-screen/v2":
@@ -249,6 +268,24 @@ def check_run(run_dir):
     except Exception as e:
         fails.append(f"{rid}: could not recompute summary ({e})")
     return m
+
+
+def check_gpqa_passes(rid, rs, out):
+    """A gpqa-diamond run holds one row per question per pass. Pass p must carry request seed 1233 + p on every row (the protocol's
+    per-pass seed), so a run with several passes has a distinct seed per pass; passes that share a seed (the withdrawn fixed-seed
+    passes) are rejected."""
+    by = {}
+    for r in rs: by.setdefault(r["pass"], []).append(r)
+    if 1 not in by: out.append(f"{rid}: a gpqa-diamond run must contain pass 1")
+    for p, sel in sorted(by.items()):
+        ids = [r["doc_id"] for r in sel]
+        if len(ids) != len(set(ids)): out.append(f"{rid}: pass {p} has more than one row for a question")
+        seeds = {r["seed"] for r in sel}
+        if seeds != {1233 + p}:
+            out.append(f"{rid}: pass {p} must send request seed {1233 + p} on every row (found {sorted(seeds)}); fixed-seed passes "
+                       "are not published")
+    if len(by) > 1 and len({frozenset(r["doc_id"] for r in sel) for sel in by.values()}) != 1:
+        out.append(f"{rid}: passes cover different questions")
 
 
 def flatten(d, pre=""):

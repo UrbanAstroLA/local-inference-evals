@@ -27,15 +27,23 @@
    5.49
   ],
   "max_num_seqs": 16,
-  "status_lines": 1424,
-  "waiting_below_max_seqs": 656,
-  "max_running": 12,
+  "status_lines": 1417,
+  "waiting_below_max_seqs": 653,
+  "max_running": 8,
   "peak_kv_usage_pct": 100.0,
-  "mean_gen_tok_s_8plus_running": 349.5,
-  "intervals_8plus_running": 581,
+  "mean_gen_tok_s_8plus_running": 349.7,
+  "intervals_8plus_running": 578,
   "mean_acceptance_length": 2.966,
-  "acceptance_rate": 0.6219,
+  "acceptance_rate": 0.622,
   "events": {},
-  "first_error_s": null
+  "first_error_s": null,
+  "sessions": [
+   {
+    "session": 1,
+    "passes": [
+     1
+    ]
+   }
+  ]
  }
 }

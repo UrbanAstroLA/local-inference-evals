@@ -6,7 +6,8 @@ Following the questions of "Datasheets for Datasets" (Gebru et al.).
 fixed, versioned protocols, so that configurations can be compared like for like and claims can be checked.
 
 **Composition.** One directory per run (`runs/<id>/`): a manifest, one JSON line per item, and a summary recomputable
-from those lines. Items are benchmark questions (GPQA Diamond, pass 1 per configuration), screen requests, probe requests, kernel tests,
+from those lines. Items are benchmark questions (GPQA Diamond: pass 1 of every configuration, and three passes with distinct request seeds
+for three configurations), screen requests, probe requests, kernel tests,
 decode positions compared with prefill, attention-index check cases, or tool-calling scenarios. Screens under
 `hard-prompt-screen/v2` hold 12 independent draws of one question (distinct request seeds); the earlier `v0`/`v1`
 screens hold one draw per question (repeat 1), because every repeat sent the same seed.
@@ -27,12 +28,15 @@ checkpoint brandonmusic/GLM-5.3-Flash-tr3-4bpw (`4bpw TR3 (Brandon)`). Two NVIDI
 Known collection issues are recorded in each run's `notes` (for example a run kept as INVALID after an engine crash).
 
 **Preprocessing.** Exported by a local script that copies numeric fields, computes hashes and drops all text and
-local paths. It keeps pass 1 of each GPQA run and repeat 1 of each question in the fixed-seed screens; `tools/verify.py`
-fails if any other pass or repeat appears. Headline scores are lm-eval's raw `flexible-extract` and `strict-match`
-filters. `flexible-extract` scores some correct answers as wrong on particular questions (0.5 to 2.0 points per run in
-the published runs); see the known limitation in `protocols/gpqa-diamond/v1.md`. A secondary, audited score
+local paths. It keeps GPQA passes only when each has its own request seed (pass *p* sends 1233 + *p*) and repeat 1 of
+each question in the fixed-seed screens; `tools/verify.py` fails if a GPQA pass carries another seed or another repeat
+appears. Server-log figures of GPQA runs cover only the measured requests' time window (the engine's start-up warm-up
+requests are excluded). Headline scores are lm-eval's raw `flexible-extract` and `strict-match`
+filters. `flexible-extract` scores some correct answers as wrong on particular questions (0.5 to 3.5 points per pass in
+the published passes); see the known limitation in `protocols/gpqa-diamond/v1.md`. A secondary, audited score
 (`correct_stated`: whether the reply's stated final answer is right) was determined from the reply text, which is not
-published; only the per-row judgement is. Likewise the greedy shared-prefix lengths of the serving probe are derived from
+published; only the per-row judgement is. Passes added on 2026-10-10 were judged by the same script and hand check (see
+the protocol). Likewise the greedy shared-prefix lengths of the serving probe are derived from
 unpublished output text; output hashes are published.
 
 **Uses.** Comparing configurations, including different engines, under the same protocol and hardware (enforced by `tools/verify.py`), reproducing
@@ -41,7 +45,8 @@ scores from other harnesses as if equal, estimating benchmark-wide failure rates
 the hardest items, one question per run), reading the single draws of the v0/v1 screens as rates, measuring the
 accuracy cost of quantization (no higher-precision reference was run on this hardware), or comparing individual
 responses between runs (the engine is not bitwise reproducible even one request at a time, and concurrent batching adds
-variation).
+variation), or treating the passes of one GPQA question as independent draws in a test (they share the question; compare
+with questions as clusters).
 
 **Distribution.** Public repository. Results and docs CC BY 4.0, code Apache-2.0. Model weights, engines and
 datasets are not redistributed.

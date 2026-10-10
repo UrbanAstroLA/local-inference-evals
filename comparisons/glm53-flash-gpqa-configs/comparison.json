@@ -1,17 +1,18 @@
 {
  "id": "glm53-flash-gpqa-configs",
  "protocol": "gpqa-diamond/v1",
- "question": "GPQA Diamond accuracy and empty answers (pass 1) across tpurtell engine releases (0.7.0 to 0.9.1), weights and speculation settings, 2x RTX PRO 6000.",
+ "question": "GPQA Diamond accuracy and empty answers across tpurtell engine releases (0.7.0 to 0.9.1), weights, speculation settings and concurrency, 2x RTX PRO 6000: pass 1 (request seed 1234) of every configuration side by side.",
  "runs": [
   "2026-09-29_glm53-flash_k3.25-v0.7.0-dflash5_gpqa-diamond",
   "2026-10-05_glm53-flash_k3.25-v0.7.0-kpoolfix-dflash5_gpqa-diamond-pass1",
   "2026-09-29_glm53-flash_k3.25-v0.8.0-dflash3_gpqa-diamond",
   "2026-10-01_glm53-flash_k3.25-v0.8.0-dflash5-noshare_gpqa-diamond",
   "2026-10-05_glm53-flash_k3.25-v0.8.0-kpoolfix-dflash5_gpqa-diamond-pass1",
-  "2026-10-08_glm53-flash_k3.25-v0.9.1-dflash3_gpqa-diamond-pass1",
+  "2026-10-08_glm53-flash_k3.25-v0.9.1-dflash3_gpqa-diamond",
   "2026-09-30_glm53-flash_k4-v0.8.0-dflash3_gpqa-diamond",
   "2026-10-06_glm53-flash_k4-v0.9.0-dflash3_gpqa-diamond",
-  "2026-10-08_glm53-flash_k4-v0.9.1-dflash3_gpqa-diamond-pass1"
+  "2026-10-08_glm53-flash_k4-v0.9.1-dflash3_gpqa-diamond-pass1",
+  "2026-10-09_glm53-flash_k4-v0.9.1-dflash3-c4_gpqa-diamond"
  ],
  "varies": [
   "engine.version",

@@ -3,7 +3,8 @@
 
     python3 investigations/2026-10-glm53-looping/recompute.py
 
-Reads runs/*/results.jsonl and run.json (server-log aggregates are quoted from run notes; the logs are not published).
+Reads runs/*/results.jsonl, run.json and, for server-log figures, server_log.jsonl (numeric fields parsed from the engine's log;
+the log text is not published).
 """
 import json, re, sys
 from pathlib import Path
@@ -81,9 +82,9 @@ for c in (AS, FIX):
     bt = summarize(m["protocol"], m["rows"])["batches"]
     print(f"{m['id']}: " + "; ".join(f"{k}: decode {v['median_decode_tok_s']} tok/s, acceptance {v['acceptance_rate']}" for k, v in bt.items()))
 for d in sorted((ROOT / "runs").iterdir()):
-    if (d / "server_log.jsonl").exists() and ("bisect1" in d.name or "screen-doc" in d.name):
+    if (d / "server_log.jsonl").exists() and ("bisect1" in d.name or "screen-doc" in d.name or "gpqa-diamond" in d.name):
         sv = json.loads((d / "summary.json").read_text())["server"]
-        print(f"KV pool, {d.name}: {sv['kv_pool_tokens']:,}; peak usage {sv['peak_kv_usage_pct']}%; "
+        print(f"KV pool, {d.name}: {sv['kv_pool_tokens']:,}; peak usage {sv['peak_kv_usage_pct']}%; at most {sv['max_running']} running; "
               f"waiting below max seqs {sv['waiting_below_max_seqs']} of {sv['status_lines']}")
 
 print("\n## Kernel tests (kpool-kernel-tests/v1), upstream suite")
@@ -99,7 +100,13 @@ print("\n## Minimum detectable differences (section 3)")
 analyze.power_table()
 print("\n# Section 3: single draws from the earlier screens\n")
 analyze.screen_single()
-print("\n# Section 3: GPQA Diamond, pass 1 per configuration\n")
+print("\n# Section 3: GPQA Diamond, three passes per configuration (one request seed per pass)\n")
+analyze.gpqa_passes()
+print()
+analyze.gpqa_records([])
+print()
+analyze.gpqa_empty()
+print("\n# Section 3: GPQA Diamond, pass 1 of every configuration\n")
 analyze.gpqa_table()
 print()
 analyze.gpqa_pairs([])

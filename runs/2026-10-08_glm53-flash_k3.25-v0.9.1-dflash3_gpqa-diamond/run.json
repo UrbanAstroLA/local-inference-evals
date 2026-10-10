@@ -1,0 +1,10 @@
+{
+ "id": "2026-10-08_glm53-flash_k3.25-v0.9.1-dflash3_gpqa-diamond",
+ "config": "glm53-flash/k3.25-v0.9.1-dflash3",
+ "protocol": "gpqa-diamond/v1",
+ "date": "2026-10-08",
+ "software": {
+  "harness": "lm-evaluation-harness 0.4.14.dev0 @ b954108c"
+ },
+ "notes": "Three passes of 198 questions with one request seed per pass (pass p sends 1233 + p: 1234, 1235, 1236), 8 concurrent requests. Pass 1 ran on 2026-10-08 on a freshly started server; passes 2 and 3 on 2026-10-09, one after the other on another freshly started server. Every pass has a passive request log that records each request's seed, finish_reason and completion_tokens. Raw lm-eval flexible-extract / strict-match scores (not rescored). correct_stated (secondary, audited score; see the protocol): pass 1 from the 2026-10-09 audit; passes 2 and 3 judged on 2026-10-10 by the same script, with every reply whose stated answer disagrees with flexible-extract read by hand. Server-log figures: two server sessions (pass 1; passes 2-3), each within its requests' time window (the engine's start-up warm-up requests are excluded). Server log figures (server_log.jsonl; summary.json 'server'): KV pool 4,707,515 tokens; at most 8 requests running at once; peak KV cache usage 41.6%; mean generation throughput 452 tok/s over the 2404 ten-second intervals with at least 8 running requests; mean acceptance length 2.85; draft acceptance rate 0.596; 0 of 2842 status lines show requests waiting while fewer than 16 were running; 0 preemption log lines."
+}

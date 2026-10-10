@@ -14,7 +14,8 @@ What drives non-completion on hard questions, the DCP1 tail bug and its fix (tpu
 [`investigations/2026-10-glm53-looping`](investigations/2026-10-glm53-looping).
 
 **2026-10-09:** the earlier hard-question screen rates were withdrawn because every repeat sent the same request seed;
-see the notice in the investigation and [`CHANGELOG.md`](CHANGELOG.md).
+see the notice in the investigation and [`CHANGELOG.md`](CHANGELOG.md). **2026-10-10:** three-pass GPQA records, one
+request seed per pass, for three configurations ([`FINDINGS.md`](FINDINGS.md#2-gpqa-diamond)).
 Results site: <https://urbanastrola.github.io/local-inference-evals/>.
 
 ## Labels
@@ -32,6 +33,8 @@ The engine name comes first because engines number their versions independently.
 - A layout segment such as `0.7.0 layout (DCP2, EP2)` or `EP2 experts, NOPE records off` appears only when a
   configuration runs a parallel layout other than its release's default (screen arms and diagnostic controls).
 - Plain `tpurtell 0.7.0`, `0.8.0`, `0.9.0` and `0.9.1` are the releases as published.
+- A trailing `· concurrency N` appears only when the client kept N requests in flight instead of the protocol's setting
+  (GPQA: 8), as for `4bpw TR3 (Brandon) · tpurtell 0.9.1 · DFlash2 ×3 · concurrency 4`.
 
 Weights: `3.25bpw` is tpurtell's K3.25 checkpoint wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1; `4bpw TR3 (Brandon)` is Brandon M. Music's TR3
 checkpoint brandonmusic/GLM-5.3-Flash-tr3-4bpw. Speculation: `DFlash2 ×N` is DFlash2 with N draft tokens per step.
@@ -46,7 +49,7 @@ protocols/<benchmark>/v<N>.md     frozen, versioned evaluation procedures (setti
 configs/<model-family>/<id>.json  exact serving configurations: engine image digest, model revision, overrides, hardware, labels
 runs/<run-id>/                    one evaluation of one config under one protocol
     run.json                      manifest: config id, protocol id, dates, software versions
-    results.jsonl                 one line per item (question, request, test) - no benchmark text
+    results.jsonl                 one line per item (question and pass, request, test) - no benchmark text
     summary.json                  aggregates, recomputable from results.jsonl (and server_log.jsonl)
     server_log.jsonl              optional: numeric fields parsed from the engine's server log (KV pool, throughput)
 investigations/<yyyy-mm>-<topic>/ narrative, preregistration and decision rules for a line of work, linking its runs
@@ -66,7 +69,8 @@ fails if anything else differs. Cross-protocol or cross-hardware tables are allo
 
 Every accuracy is reported with a 95% confidence interval. Differences inside the interval are ties. Runs that send
 one request seed on every repeat (`hard-prompt-screen` v0 and v1) are single draws per question and cannot be compared;
-`tools/verify.py` enforces this.
+GPQA passes must each carry their own request seed. `tools/verify.py` enforces both. Runs with several passes of the
+same questions are compared with questions as clusters.
 
 ## Benchmark data
 
@@ -111,6 +115,15 @@ Python 3.10+, standard library only.
 - **Loop:** a request that does not finish and repeats itself: stopped by the screen's early-stop detector, or ending at
   the budget with a tail that compresses below 15% of its size.
 - **Exhaustion:** a request that runs to the 327,680-token budget with varied, non-repetitive reasoning.
+- **Pass:** one run of all 198 GPQA questions. Pass *p* sends request seed 1233 + *p* (1234, 1235, 1236), so the passes of
+  one configuration are independent draws, and pass *p* of two configurations shares its seed, which pairs them question
+  by question.
+- **KV pool / KV-saturated:** the KV cache capacity in tokens that the server reports at start-up. When the running
+  requests fill it, further requests wait, so fewer run at once than the client sends (KV-saturated).
+- **Question-clustered test:** a comparison that counts a question answered in several passes once, not once per pass:
+  here an exact sign-flip test over questions (each question's difference, summed over its passes, keeps or flips its
+  sign) with intervals that resample questions. A pooled test that counts every question-pass separately overstates the
+  evidence and is shown only for reference.
 
 ## Licenses
 

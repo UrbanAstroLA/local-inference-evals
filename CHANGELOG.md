@@ -1,5 +1,50 @@
 # Changelog
 
+## 2026-10-10: three-pass GPQA records with one request seed per pass
+
+Contents now: 49 runs, 13 comparisons. GPQA Diamond: 10 runs (one per configuration), three of them with three passes.
+
+- **New data: three GPQA Diamond passes per configuration, request seeds 1234, 1235, 1236** (pass *p* sends 1233 + *p*),
+  for `3.25bpw · tpurtell 0.7.0 · DFlash2 ×5` (pass 1 of 2026-09-29, passes 2-3 of 2026-10-10), `3.25bpw · tpurtell 0.9.1 ·
+  DFlash2 ×3` (pass 1 of 2026-10-08, passes 2-3 of 2026-10-09) and `4bpw TR3 (Brandon) · tpurtell 0.9.1 · DFlash2 ×3 ·
+  concurrency 4` (all three passes new, 2026-10-09/10). The first two extend their existing pass-1 runs, the 0.9.1 one
+  renamed from `…_gpqa-diamond-pass1` to `…_gpqa-diamond`; the third is a new run. Every new pass has a passive request log
+  (seed, finish reason and completion tokens per request).
+- **Concurrency in configurations and labels:** new config field `serving.concurrency`, present only where the client kept
+  a number of requests in flight other than the protocol's; labels gain ` · concurrency N`. New configuration
+  `k4-v0.9.1-dflash3-c4`: 4bpw TR3 (Brandon) leaves a 1,377,179-token KV pool, which holds 4.17 requests at the token cap, so
+  at 4 no request waits for KV (peak usage 91.7%, no preemption). The GPQA protocol notes the rule (dated note; procedure
+  otherwise unchanged).
+- **The KV-saturated 4bpw TR3 (Brandon) tpurtell 0.9.1 pass 1 at 8 concurrent requests is kept and labelled:** its server
+  log shows requests waiting for KV memory in 653 of 1,417 status lines. The record at 4 replaces it as the configuration's
+  record; it stays as the like-for-like partner of the 0.9.0 run, which (like the 0.8.0 run) used the same KV pool size at
+  8 concurrent requests and kept no server log; their notes now say so.
+- **`tools/verify.py`:** a GPQA run may hold several passes only when pass *p* carries request seed 1233 + *p* on every row,
+  one row per question per pass, the same questions in every pass; passes that share a seed are rejected. GPQA summaries of
+  multi-pass runs add `by_pass`, `pass_spread_flexible_points` and `questions_ever_empty`; intervals resample questions with
+  all their passes.
+- **Server logs:** GPQA server-log figures now cover only the measured requests' time window, so the engine's start-up
+  warm-up requests are excluded (the KV-saturated run's peak and waiting counts change slightly: 653 of 1,417 status lines,
+  was 656 of 1,424); `server_log.jsonl` gains `session` records naming the passes each server start served.
+- **`correct_stated` for the new passes:** judged on 2026-10-10 by the 2026-10-09 audit's script, unchanged (it reproduces
+  the earlier judgement on all 1,782 previously judged rows), and every one of the 31 replies whose stated answer disagrees
+  with `flexible-extract` was read by hand (three commit to two options and count as not correct), plus a 16-reply spot
+  check. The scoring note now covers all 16 published passes: 0.5 to 3.5 points low per pass, 1.5 on average.
+- **Determinations** (`FINDINGS.md` section 2, the looping investigation, comparisons, site): one configuration's passes
+  differ by 0.5 to 3.5 points, as much as pass 1 differs across configurations (descriptive); 3.25bpw and 4bpw TR3 (Brandon)
+  on tpurtell 0.9.1 show no measurable difference in accuracy or empty answers (descriptive); tpurtell 0.7.0 as shipped
+  left fewer questions unanswered than 0.9.1, 4 vs 16 of 594 on 4 vs 11 questions (supported by a question-clustered
+  sign-flip test, p = 0.009; passes 2-3 alone p = 0.06), cause open. The pass-1 table is reframed against the measured
+  pass-to-pass noise, and the 0.7.0 open question is restated with this evidence.
+- **`tools/analyze.py`:** `gpqa-passes`, `gpqa-records` (question-clustered comparisons: question-level counts, exact
+  sign-flip test over questions, bootstrap over questions; pooled tests for reference) and `gpqa-empty`; `gpqa-table` and
+  `gpqa-pairs` use pass 1 and compute percentages from the rows. New comparison `glm53-flash-gpqa-records`.
+- **Site:** accuracy and empty answers per pass with the three-pass mean and its interval, a question-by-record grid of
+  empty answers, the clustered comparison table, glossary entries (pass, KV pool, question-clustered test), and a
+  concurrency row in the label key. Pass-1 percentages are now computed from the rows (the site showed 84.9% for a 168/198
+  run that the text gives as 84.8%).
+- Glossary in `README.md` gains pass, KV pool / KV-saturated and question-clustered test.
+
 ## 2026-10-09 (review): receipts for every figure, qualified determinations
 
 Contents now: 48 runs, 12 comparisons.

@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 """Analyses recomputed from published rows only (standard library).
 
-    python3 tools/analyze.py gpqa-table        # every GPQA run (pass 1): raw accuracy with 95% interval, the audited stated-answer score,
-                                               # accuracy among answered questions, empty answers and their finish reasons
+    python3 tools/analyze.py gpqa-table        # pass 1 of every GPQA run (request seed 1234): raw accuracy with 95% interval, the audited
+                                               # stated-answer score, accuracy among answered questions, empty answers and finish reasons
     python3 tools/analyze.py gpqa-pairs [A B]  # question-paired comparisons of two runs' pass 1 (default: the pairs in PAIRS below):
                                                # discordant questions, exact McNemar p, difference with a 95% interval over questions
+    python3 tools/analyze.py gpqa-passes       # GPQA records with several passes (one request seed per pass): each pass, the mean over
+                                               # passes with a 95% interval over questions, and the spread between passes
+    python3 tools/analyze.py gpqa-records [A B]  # question-clustered comparisons of two multi-pass records (default: RECORD_PAIRS):
+                                               # question-level counts, exact sign-flip test over questions, pooled tests for reference
+    python3 tools/analyze.py gpqa-empty        # which questions came back empty, in which passes, per multi-pass record
     python3 tools/analyze.py screen-v2         # hard-prompt-screen/v2 (component screen): counts, Wilson intervals, the
                                                # preregistered per-switch Fisher tests with Newcombe intervals, the doc-79 rule,
                                                # the fixed-seed control, and the logistic fit
@@ -16,15 +21,15 @@
     python3 tools/analyze.py decode-prefill    # decode vs prefill: KL by region for every run; repeat spread; where a repeat diverges
     python3 tools/analyze.py screen-speed      # median completion tokens/s of finished requests in the v2 screens
 
-Configurations are named by their labels (SCHEMA.md, "Labels") and config ids. GPQA runs are pass 1, request seed 1234
-(protocols/gpqa-diamond/v1.md).
+Configurations are named by their labels (SCHEMA.md, "Labels") and config ids. Pass p of a GPQA run sent request seed 1233 + p
+(protocols/gpqa-diamond/v1.md); every run has pass 1 (seed 1234), so pass-1 tables cover every configuration.
 """
 import json, math, random, statistics as st, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
-from verify import config_label, wilson  # noqa: E402
+from verify import config_label, summarize, wilson  # noqa: E402
 
 F = "glm53-flash/"
 # Question-paired GPQA comparisons reported in FINDINGS.md: configurations that differ in one named respect.
@@ -34,7 +39,12 @@ PAIRS = [("k3.25-v0.7.0-dflash5", "k3.25-v0.8.0-dflash3", "engine release as shi
          ("k4-v0.8.0-dflash3", "k4-v0.9.0-dflash3", "0.8.0 vs 0.9.0 (kpool fixes)"),
          ("k4-v0.9.0-dflash3", "k4-v0.9.1-dflash3", "0.9.0 vs 0.9.1 (DCP1 tail fix)"),
          ("k3.25-v0.8.0-dflash3", "k4-v0.8.0-dflash3", "weights on 0.8.0"),
-         ("k3.25-v0.9.1-dflash3", "k4-v0.9.1-dflash3", "weights on 0.9.1")]
+         ("k3.25-v0.9.1-dflash3", "k4-v0.9.1-dflash3", "weights on 0.9.1 (4bpw KV-saturated)"),
+         ("k4-v0.9.1-dflash3", "k4-v0.9.1-dflash3-c4", "8 concurrent (KV-saturated) vs 4")]
+# Multi-pass GPQA records (one request seed per pass), compared pass by pass and question by question with questions as clusters.
+RECORD_PAIRS = [("k3.25-v0.7.0-dflash5", "k3.25-v0.9.1-dflash3", "tpurtell 0.7.0 as shipped vs 0.9.1 (several differences at once)"),
+                ("k3.25-v0.9.1-dflash3", "k4-v0.9.1-dflash3-c4", "weights on 0.9.1 (and 8 vs 4 concurrent requests)"),
+                ("k3.25-v0.7.0-dflash5", "k4-v0.9.1-dflash3-c4", "0.7.0 3.25bpw vs 0.9.1 4bpw (several differences at once)")]
 # hard-prompt-screen/v2 component screen (investigations/2026-10-glm53-looping/component-screen)
 ARMS88 = {"B": "k3.25-v0.9.1-dflash3", "EN": "k3.25-v0.9.1-ep2-nonope-dflash3", "EO": "k3.25-v0.9.1-ep2-owntp-dflash3",
           "NO": "k3.25-v0.9.1-nonope-owntp-dflash3"}
@@ -86,21 +96,42 @@ def gpqa():
     return {m["config"].split("/", 1)[1]: m for m in runs("gpqa-diamond/")}
 
 
+def pass_rows(m, p=1):
+    return [r for r in m["rows"] if r["pass"] == p]
+
+
+def pass1(m):
+    """The run restricted to pass 1 (request seed 1234), the pass every configuration has."""
+    return {**m, "rows": pass_rows(m, 1)}
+
+
+def multipass(g=None):
+    return {c: m for c, m in (g or gpqa()).items() if len({r["pass"] for r in m["rows"]}) > 1}
+
+
+def pct(rows, key, answered=False):
+    """Percentage of rows with `key` true, from the rows themselves (summary.json rounds to 4 decimals, which can move the first
+    decimal of a percentage)."""
+    rows = [r for r in rows if not (answered and r["empty"])]
+    return 100 * sum(r[key] for r in rows) / len(rows)
+
+
 def gpqa_table():
-    print("| config | raw accuracy (flexible-extract) | 95% interval over questions | raw, answered only | stated answer (audited) | "
-          "stated, answered only | stated - raw, points | empty | empty by finish reason |")
-    print("|---|---|---|---|---|---|---|---|---|")
+    print("| config | passes in the run | raw accuracy, pass 1 (flexible-extract) | 95% interval over questions | raw, answered only | "
+          "stated answer (audited) | stated, answered only | stated - raw, points | empty | empty by finish reason |")
+    print("|---|---|---|---|---|---|---|---|---|---|")
     for c, m in gpqa().items():
-        s = json.loads((ROOT / "runs" / m["id"] / "summary.json").read_text())
+        s = summarize(m["protocol"], pass_rows(m, 1))
         lo, hi = s["accuracy_flexible_ci95"]
-        print(f"| {name(m)} | {100 * s['accuracy_flexible']:.1f}% | {100 * lo:.1f}-{100 * hi:.1f}% | {100 * s['accuracy_flexible_answered']:.1f}% | "
-              f"{100 * s['accuracy_stated']:.1f}% | {100 * s['accuracy_stated_answered']:.1f}% | "
-              f"{100 * (s['accuracy_stated'] - s['accuracy_flexible']):+.1f} | {s['empty']} | {s['empty_by_finish_reason'] or '-'} |")
+        rs = pass_rows(m, 1)
+        print(f"| {name(m)} | {len({r['pass'] for r in m['rows']})} | {pct(rs, 'correct_flexible'):.1f}% | {100 * lo:.1f}-{100 * hi:.1f}% | "
+              f"{pct(rs, 'correct_flexible', True):.1f}% | {pct(rs, 'correct_stated'):.1f}% | {pct(rs, 'correct_stated', True):.1f}% | "
+              f"{pct(rs, 'correct_stated') - pct(rs, 'correct_flexible'):+.1f} | {s['empty']} | {s['empty_by_finish_reason'] or '-'} |")
 
 
 def paired(a, b, n_boot=10000, seed=0):
-    """Question-paired comparison of two GPQA runs (pass 1 each)."""
-    A = {r["doc_id"]: r for r in a["rows"]}; B = {r["doc_id"]: r for r in b["rows"]}
+    """Question-paired comparison of two GPQA runs' pass 1."""
+    A = {r["doc_id"]: r for r in pass_rows(a)}; B = {r["doc_id"]: r for r in pass_rows(b)}
     assert A.keys() == B.keys() and all(A[d]["prompt_hash"] == B[d]["prompt_hash"] for d in A)
     ids = sorted(A)
     xa = sum(A[d]["correct_flexible"] and not B[d]["correct_flexible"] for d in ids)
@@ -118,14 +149,106 @@ def paired(a, b, n_boot=10000, seed=0):
 def gpqa_pairs(args):
     g = gpqa()
     todo = [(args[0], args[1], "")] if len(args) == 2 else PAIRS
+    print("Pass 1 of each run (request seed 1234).")
     print("| A | B | what differs | accuracy A, B | only A right / only B right (McNemar p) | B - A, points (95% interval) | "
           "empty A, B | only A empty / only B empty (McNemar p) |")
     print("|---|---|---|---|---|---|---|---|")
     for a, b, what in todo:
-        r = paired(g[a], g[b]); acc = lambda m: 100 * sum(x["correct_flexible"] for x in m["rows"]) / len(m["rows"])
+        r = paired(g[a], g[b]); acc = lambda m: 100 * sum(x["correct_flexible"] for x in pass_rows(m)) / len(pass_rows(m))
         print(f"| {config_label(g[a]['cfg'])} | {config_label(g[b]['cfg'])} | {what} | {acc(g[a]):.1f}%, {acc(g[b]):.1f}% | "
               f"{r['only_a']} / {r['only_b']} ({r['p_acc']:.2f}) | {r['diff']:+.1f} ({r['lo']:+.1f} to {r['hi']:+.1f}) | "
               f"{r['empty_a']}, {r['empty_b']} | {r['empty_only_a']} / {r['empty_only_b']} ({r['p_empty']:.2f}) |")
+
+
+def gpqa_passes():
+    """Multi-pass records: each pass (its own request seed), the mean over passes with a 95% bootstrap interval that resamples
+    questions with all their passes, and the spread between passes, the measured run-to-run noise of one configuration."""
+    print("| config | pass (request seed) | raw | stated (audited) | empty | empty at the token cap / stopped | answered, raw |")
+    print("|---|---|---|---|---|---|---|")
+    for c, m in multipass().items():
+        for p in sorted({r["pass"] for r in m["rows"]}):
+            rs = pass_rows(m, p); s = summarize(m["protocol"], rs); fr = s["empty_by_finish_reason"]
+            print(f"| {name(m)} | {p} ({rs[0]['seed']}) | {pct(rs, 'correct_flexible'):.1f}% | {pct(rs, 'correct_stated'):.1f}% | "
+                  f"{s['empty']} | {fr.get('length', 0)} / {fr.get('stop', 0)}{' (not logged: ' + str(fr['not logged']) + ')' if 'not logged' in fr else ''} | "
+                  f"{pct(rs, 'correct_flexible', True):.1f}% |")
+        rs = m["rows"]; s = summarize(m["protocol"], rs)
+        per = [pct(pass_rows(m, p), "correct_flexible") for p in s["passes"]]
+        print(f"| {name(m)} | **all {len(s['passes'])}** | **{pct(rs, 'correct_flexible'):.1f}%** ({100 * s['accuracy_flexible_ci95'][0]:.1f}-"
+              f"{100 * s['accuracy_flexible_ci95'][1]:.1f}) | **{pct(rs, 'correct_stated'):.1f}%** ({100 * s['accuracy_stated_ci95'][0]:.1f}-"
+              f"{100 * s['accuracy_stated_ci95'][1]:.1f}) | **{s['empty']}** of {s['samples']}, {s['questions_ever_empty']} questions | | "
+              f"{pct(rs, 'correct_flexible', True):.1f}% |")
+        print(f"|  | spread between passes | {max(per) - min(per):.1f} points | | | | |")
+    print("\nIntervals: 95% bootstrap over questions, each question resampled with all its passes.")
+
+
+def signflip_p(d):
+    """Exact two-sided sign-flip (randomisation) test of sum(d) = 0, with questions as the unit: under the null, A and B are
+    exchangeable within a question, so each question's difference d_q (summed over passes) is equally likely to have either sign."""
+    dist = {0: 1}
+    for x in d:
+        if not x: continue
+        nd = {}
+        for s_, c in dist.items():
+            nd[s_ + x] = nd.get(s_ + x, 0) + c; nd[s_ - x] = nd.get(s_ - x, 0) + c
+        dist = nd
+    obs = abs(sum(d))
+    return sum(c for s_, c in dist.items() if abs(s_) >= obs) / sum(dist.values())
+
+
+def records(a, b, key, passes=None, n_boot=10000, seed=0):
+    """Compare two multi-pass records on one 0/1 field, pairing (question, pass) and treating questions as clusters."""
+    A = {(r["doc_id"], r["pass"]): r for r in a["rows"]}; B = {(r["doc_id"], r["pass"]): r for r in b["rows"]}
+    ps = sorted(passes or ({p for _, p in A} & {p for _, p in B}))
+    docs = sorted({d for d, _ in A})
+    assert all(A[(d, p)]["prompt_hash"] == B[(d, p)]["prompt_hash"] and A[(d, p)]["seed"] == B[(d, p)]["seed"] for d in docs for p in ps)
+    d = [sum(A[(q, p)][key] - B[(q, p)][key] for p in ps) for q in docs]
+    oa = sum(A[(q, p)][key] and not B[(q, p)][key] for q in docs for p in ps)
+    ob = sum(B[(q, p)][key] and not A[(q, p)][key] for q in docs for p in ps)
+    ta, tb, n = sum(A[(q, p)][key] for q in docs for p in ps), sum(B[(q, p)][key] for q in docs for p in ps), len(docs) * len(ps)
+    rng = random.Random(seed)
+    boots = sorted(-sum(d[rng.randrange(len(docs))] for _ in docs) / n for _ in range(n_boot))
+    return dict(passes=ps, n=n, a=ta, b=tb, only_a=oa, only_b=ob, p_pooled=sign_test(oa, ob), p_fisher=fisher(ta, n - ta, tb, n - tb),
+                q_a=sum(x > 0 for x in d), q_b=sum(x < 0 for x in d), p_q=sign_test(sum(x > 0 for x in d), sum(x < 0 for x in d)),
+                p_cluster=signflip_p(d), diff=100 * (tb - ta) / n, lo=100 * boots[int(0.025 * n_boot)], hi=100 * boots[int(0.975 * n_boot) - 1],
+                qa_any=len({q for q in docs for p in ps if A[(q, p)][key]}), qb_any=len({q for q in docs for p in ps if B[(q, p)][key]}))
+
+
+def gpqa_records(args):
+    g = gpqa()
+    todo = [(args[0], args[1], "")] if len(args) == 2 else RECORD_PAIRS
+    print("Multi-pass records, paired by question and pass (pass p sends request seed 1233 + p in every record). Question-level: "
+          "questions where A had more such outcomes over the passes than B, and fewer; clustered p = exact sign-flip test over "
+          "questions (each question's summed difference keeps or flips its sign). Pooled p (exact McNemar on question-passes; Fisher on "
+          "totals) treats the passes of one question as independent and is shown for reference only. Interval: 95% bootstrap over "
+          "questions. No correction for multiple comparisons.")
+    for key, what in (("correct_flexible", "raw accuracy"), ("correct_stated", "stated-answer accuracy (audited)"), ("empty", "empty answers")):
+        print(f"\n## {what}")
+        print("| A | B | what differs | passes | A, B (of n) | B - A, points (95% interval) | questions A more / B more (sign p) | clustered p | "
+              "pooled: only A / only B (McNemar p) | pooled Fisher p | questions with any, A / B |")
+        print("|---|---|---|---|---|---|---|---|---|---|---|")
+        for a, b, w in todo:
+            for ps in (None, (2, 3)) if key == "empty" else (None,):
+                r = records(g[a], g[b], key, ps)
+                print(f"| {config_label(g[a]['cfg'])} | {config_label(g[b]['cfg'])} | {w} | {','.join(map(str, r['passes']))} | {r['a']}, {r['b']} "
+                      f"(of {r['n']}) | {r['diff']:+.1f} ({r['lo']:+.1f} to {r['hi']:+.1f}) | {r['q_a']} / {r['q_b']} ({r['p_q']:.3f}) | "
+                      f"{r['p_cluster']:.3f} | {r['only_a']} / {r['only_b']} ({r['p_pooled']:.3f}) | {r['p_fisher']:.3f} | {r['qa_any']} / {r['qb_any']} |")
+
+
+def gpqa_empty():
+    """Per multi-pass record: the questions that came back empty, the passes in which they did, and how each ended."""
+    mp = multipass()
+    docs = sorted({r["doc_id"] for m in mp.values() for r in m["rows"] if r["empty"]})
+    print("| question | " + " | ".join(name(m) for m in mp.values()) + " |"); print("|---|" + "---|" * len(mp))
+    for d in docs:
+        cells = []
+        for m in mp.values():
+            e = [r for r in m["rows"] if r["doc_id"] == d and r["empty"]]
+            cells.append(", ".join(f"p{r['pass']}" + {"length": " cap", "stop": " stop"}.get(r["finish_reason"], "") for r in sorted(e, key=lambda r: r["pass"])) or "-")
+        print(f"| {d} | " + " | ".join(cells) + " |")
+    for m in mp.values():
+        e = [r for r in m["rows"] if r["empty"]]
+        print(f"{name(m)}: {len(e)} empty of {len(m['rows'])}, on {len({r['doc_id'] for r in e})} questions; finish reasons "
+              f"{dict(sorted({(r['finish_reason'] or 'not logged'): sum(1 for x in e if (x['finish_reason'] or 'not logged') == (r['finish_reason'] or 'not logged')) for r in e}.items()))}")
 
 
 # ---------------------------------------------------------------- hard-prompt-screen v2 (component screen)
@@ -317,5 +440,6 @@ def screen_speed():
 
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "gpqa-table"
-    {"gpqa-table": gpqa_table, "gpqa-pairs": lambda: gpqa_pairs(sys.argv[2:]), "screen-v2": screen_v2,
+    {"gpqa-table": gpqa_table, "gpqa-pairs": lambda: gpqa_pairs(sys.argv[2:]), "gpqa-passes": gpqa_passes,
+     "gpqa-records": lambda: gpqa_records(sys.argv[2:]), "gpqa-empty": gpqa_empty, "screen-v2": screen_v2,
      "screen-single": screen_single, "decode-prefill": decode_prefill, "screen-power": power_table, "screen-speed": screen_speed, "screen-anatomy": anatomy}[cmd]()
