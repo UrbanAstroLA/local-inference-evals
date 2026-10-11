@@ -141,10 +141,14 @@ every run shares (lower is closer):
 
 </details>
 
-**Related: the kpool fixes.** Two upstream vLLM kpool issues (vllm-project/vllm#57477 and #58454) affected the
+**Related: the kpool fixes.** Two upstream vLLM kpool issues (vllm-project/vllm#57477 and vllm-project/vllm#58454) affected the
 tpurtell 0.7.0 and 0.8.0 images: upstream's tests pass 29 of 33 there, 33 of 33 with the fixes. Ported in
 [tpurtell PR #5](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/5), shipped in 0.9.0. The 0.9.0 and 0.9.1
 release images pass 33 of 33 ([`../2026-10-glm53-kpool-tail`](../2026-10-glm53-kpool-tail)).
+*Later (2026-10-11):* a further kpool defect, outside these fixes, affects tpurtell 0.7.0 through 0.9.1: the engine
+builds attention metadata without token positions, so the tail ring is written to a shared null block and, through
+stale ids, occasionally into other requests' blocks. A fix is prepared, not released
+([completion investigation](../2026-10-glm53-completion/README.md#kpool-tail-ring), FINDINGS item 4b).
 
 ## Non-completion: what the clean data shows
 
@@ -232,6 +236,9 @@ GPQA is a whole-benchmark record, not a looping test: each pass is one draw per 
 - **0.7.0 vs 0.9.1 (3.25bpw): supported.** 0.9.1 had more empty answers on 10 questions and fewer on 1 (clustered
   p = 0.009). Accuracy does not differ measurably (clustered p = 0.41).
 - **Why is open.** The two differ in several ways at once ([confounds](../../CONFOUNDS.md#7-several-changes-between-releases-at-once)).
+  *Later (2026-10-11):* the [completion investigation](../2026-10-glm53-completion/README.md) follows this question. It found two localized engine
+  defects; one, the column-511 drop, differs between the engines in the direction of the gap, and a GPQA arm testing its
+  correction is running. Which difference matters is still open.
 - **Weights on 0.9.1: descriptive.** 3.25bpw and 4bpw TR3 (Brandon) leave about as many unanswered (16 vs 17).
 
 <details>
@@ -276,6 +283,10 @@ Each states the question and the evidence so far.
    engine code, vision and KV pool differ at once; none was varied alone in GPQA. The question-79 screen ran the 0.7.0
    image at three draft tokens, not the five it ships with, and failed as often as 0.9.1. Which difference matters is
    inconclusive.
+   *Later (2026-10-11):* continued in the [completion investigation](../2026-10-glm53-completion/README.md#open-questions): no step found 0.9.1's decode
+   agreeing worse with its prefill than 0.7.0's; a pilot of 0.7.0's layout bundle on 0.9.1 gave no useful separation;
+   two localized defects were found (the column-511 drop and the kpool tail ring), and a GPQA arm with the column-511
+   correction alone is running. Still inconclusive.
 3. **Does the DCP1 tail fix change answers, or how often hard questions fail to finish?** It changes decode numerics in
    the first 2,044 tokens; the loops observed are stopped far later; GPQA (one pass per release) and tool calling (two
    repeats) show no difference beyond noise.
@@ -290,10 +301,19 @@ Each states the question and the evidence so far.
 6. **Does the 511-pool slice matter?** From 2,048 tokens of context the indexer keeps 511 of the 512 pools it selected
    and drops the last one the top-k emits. In these releases the top-k emits winners first, so the dropped pool is
    among the lowest-scored; a top-k that emitted in index order would drop the newest pool instead.
+   *Later (2026-10-11): the premise is wrong.* No top-k path sorts its output. On tpurtell 0.9.1's tiled route (5-8
+   requests in flight) the dropped pool ranked better than 480 of 512 in 88.1% of live decode rows, against 6.9% on
+   0.7.0's path; the prefill branch, with exactly 512 candidates, returns them in index order and drops the newest pool
+   ([completion investigation](../2026-10-glm53-completion/README.md#phase-2-stage-2-real-inputs), FINDINGS item 4a).
 7. **Does `swiglu_limit` on the routed experts matter?** All versions: the checkpoint sets `swiglu_limit` 10.0; the
    shared expert clamps, the routed-expert path does not pass the limit.
+   *Later (2026-10-11):* confirmed against upstream vLLM; untested, the same in all releases
+   ([comparison with upstream](../2026-10-glm53-completion/README.md#comparison-with-upstream-vllm)).
 8. **Do top-k ties matter?** The DCP2 merge path uses a stable top-k with lowest-index ties; the DCP1 fused path places
    ties by atomic arrival order, so exact ties can resolve differently between layouts and between batch compositions.
+   *Later (2026-10-11):* every path selects the exact top 512 apart from boundary ties (0 set mismatches in 113,360
+   row-repeats on synthetic inputs); the larger difference between paths is the output order, which decides the
+   dropped pool (question 6) ([stage 1](../2026-10-glm53-completion/README.md#phase-2-stage-1-which-pool-is-dropped)).
 
 </details>
 

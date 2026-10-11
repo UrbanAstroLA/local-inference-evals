@@ -630,3 +630,9 @@ b5b13ce2155085ca46fb24877f12b7cd0a5cdd16eb4cf19012958e7b86ae0033 (primary: one-s
 differences in empty replies, comparator minus arm, over 198 questions; effect with a 20,000-replicate question bootstrap,
 seed 20261011; exchangeability assumption and historical-control limitation stated). The arm starts after the tail-fix
 verification runs release the GPUs.
+
+**Amendment 11c (2026-10-11, coordinator erratum, before any arm result was examined).** The frozen analysis
+specification's description of the treatment (section 1) cites the phase-3 decode-branch diff (`phase3/fix.diff`). The
+frozen treatment is the image recorded in amendment 11b, whose correction also covers the prefill branch (`gate/candidate.diff`,
+frozen sha256 1ca405f2…). The image id and diff hash in amendment 11b govern; the analysis itself (statistics, data, reading
+rules) does not depend on this reference and is unchanged. The frozen file is not edited.

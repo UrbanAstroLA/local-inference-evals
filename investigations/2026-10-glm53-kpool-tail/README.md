@@ -8,11 +8,23 @@ the non-completion investigation: [`../2026-10-glm53-looping`](../2026-10-glm53-
 cap) come from runtime issues fixed upstream after the engine's base was cut?
 
 **Finding 1: two upstream kpool issues, fixed upstream, are present in tpurtell 0.7.0 and 0.8.0.** vllm-project/vllm#57477 (prefill tail-seed
-kernel ignores the padded tail stride) and #58454 (one-pool tail ring overwritten by drafts behind a rejected
+kernel ignores the padded tail stride) and vllm-project/vllm#58454 (one-pool tail ring overwritten by drafts behind a rejected
 pool-completing draft). Upstream's own regression tests fail on both images (4 failed, 29 passed) and pass with both
 fixes ported (33 passed); see `protocols/kpool-kernel-tests/v1.md`. Ported as tpurtell/glm-5.3-flash-ext3-2x-rtx#5 and
 shipped in tpurtell 0.9.0. The tests have run on the 0.7.0 and 0.8.0 release images, on the local builds with the fixes, and
 (2026-10-09) on the 0.9.0 and 0.9.1 release images, which pass 33 of 33 and reproduce no rejected-draft corruption.
+
+*Later (2026-10-11).* The [completion investigation](../2026-10-glm53-completion/README.md#kpool-tail-ring) found a further kpool tail-ring defect,
+outside these two fixes and in the engine's attention-metadata call rather than in the kernels these tests exercise:
+tpurtell 0.7.0 through 0.9.1 build attention metadata without token positions, which upstream vLLM passes. The tail ring then takes a generic slot mapping: from
+position 8 tail writes go to a shared null block, so concurrently decoding requests can compress pools from each
+other's keys, and stale tail ids left by the runner's start-up warm-up occasionally send a write into another
+request's blocks. That explains the stale-write signature seen in that investigation's stage 2 (index-K pools byte-identical across two
+different requests, some decoding as NaN). The 0.7.0 baseline carries more of this indexer corruption than 0.9.1: on a
+CPU harness with each release's real kernels, 100% of 0.7.0's decode-completed pools differ from the request's own keys
+at 1, 2 and 8 requests in flight, against 0%, 47-57% and 78-90% on 0.9.1; with positions passed, 0.9.1 is clean and
+0.7.0 keeps the errors of the two issues above. A fix is prepared and verified locally (0 stray writes in shipped graph
+mode), not released ([`FINDINGS.md`](../../FINDINGS.md) item 4b; [confounds](../../CONFOUNDS.md#10-kpool-tail-ring-positions-omission)).
 
 **Finding 2 (withdrawn 2026-10-09).** This finding rested on hard-question screen counts (arms A, B and C of the
 preregistered kpool screen, and the tpurtell 0.7.0 pair of 2026-10-05). Those screens sent request seed 1234 on every

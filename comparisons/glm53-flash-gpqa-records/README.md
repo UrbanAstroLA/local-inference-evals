@@ -52,6 +52,10 @@ separately and is shown for reference only. No correction for multiple compariso
   test, p = 0.009). The question was raised by pass 1 (0 vs 5 empty answers); passes 2 and 3 alone, run after it was
   raised, give 4 vs 11 empty answers (1 vs 7 questions; clustered p = 0.06). Accuracy does not differ measurably. The two differ in
   several ways at once, so which difference matters is open.
+  *Later (2026-10-11):* followed up in the
+  [completion investigation](../../investigations/2026-10-glm53-completion/README.md), which found two localized engine
+  defects ([`FINDINGS.md`](../../FINDINGS.md) items 4a-4b); this 0.9.1 record is the historical comparator of its
+  running GPQA arm with the column-511 correction.
 - **3.25bpw and 4bpw TR3 (Brandon) on 0.9.1 show no measurable difference** in accuracy or in empty answers
   (descriptive). The 4bpw record ran at 4 concurrent requests, the 3.25bpw record at 8.
 - **Which questions.** Questions 79 and 81 came back empty in all three records; 88, 127 and 147 in both 0.9.1 records and

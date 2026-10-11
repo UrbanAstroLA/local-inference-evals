@@ -27,11 +27,13 @@ investigation. Standard library only.
 | 2 | Under the DCP1 layout of tpurtell 0.8.0 and 0.9.0, decode attention skipped the newest 1-3 tokens at causal lengths up to 2,043 not divisible by 4. The DCP1 tail fix removes it. | **Supported** | [investigation](investigations/2026-10-glm53-looping/README.md#the-dcp1-tail-issue-and-its-fix) |
 | 3 | With the fix, decode agrees much better with prefill below 2,044 tokens: mean KL 0.066 → 0.010, 0.008 and 0.006. | **Supported** (for this large effect) | [`glm53-flash-v090-tailfix-decode-prefill`](comparisons/glm53-flash-v090-tailfix-decode-prefill), [`glm53-flash-v091-decode-prefill-repeat`](comparisons/glm53-flash-v091-decode-prefill-repeat) |
 | 4 | The fix's effect on answers: GPQA and tool calling show no difference beyond noise at their sizes. | **Descriptive** (effect unmeasured) | [`glm53-flash-k4-v090-v091-gpqa`](comparisons/glm53-flash-k4-v090-v091-gpqa), [`glm53-flash-v090-tailfix-tool-eval`](comparisons/glm53-flash-v090-tailfix-tool-eval) |
+| 4a | The engine keeps 511 of the 512 pools its top-k selects, and no top-k path sorts its output. On 0.9.1's tiled route (5-8 requests in flight) the discarded pool ranked better than 480 of 512 in 88.1% of 9,944 live decode rows; on 0.7.0's path, 6.9% of the same rows. Moving the lowest-scoring selected pool into the discarded column removes it (100% of rows, selection unchanged), also under the shipped CUDA graphs. | **Supported** (localized defect); effect on completion **open** | [stage 2](investigations/2026-10-glm53-completion/README.md#phase-2-stage-2-real-inputs), [phase 3](investigations/2026-10-glm53-completion/README.md#phase-3-column-511-intervention), [gate](investigations/2026-10-glm53-completion/README.md#gate-column-511-correction-in-the-shipped-graph-configuration) |
+| 4b | tpurtell 0.7.0 through 0.9.1 build attention metadata without token positions, which upstream vLLM passes. The kpool tail ring is then written to a shared null block from position 8 (98% of tail writes on 0.9.1 in shipped graph mode) and occasionally into other requests' blocks. Passing positions as upstream does, with a write that replayed graphs read, removes it (0 stray writes). | **Supported** (localized defect); effect on completion **open** | [tail ring](investigations/2026-10-glm53-completion/README.md#kpool-tail-ring), [`tail-fix/`](investigations/2026-10-glm53-completion/tail-fix) |
 
 <details>
-<summary>Numbers and qualifications, items 1-4</summary>
+<summary>Numbers and qualifications, items 1-4b</summary>
 
-1. vllm-project/vllm#57477: every prefill wrote 2 KB of keys into another block's indexer region. #58454: a rejected
+1. vllm-project/vllm#57477: every prefill wrote 2 KB of keys into another block's indexer region. vllm-project/vllm#58454: a rejected
    pool-completing draft could overwrite committed keys at 2 or more draft tokens. 29 of 33 pass on both images.
    Ported in tpurtell PR #5, shipped in tpurtell 0.9.0. The tests ran on the 0.7.0 and 0.8.0 release images, on local
    builds with the fixes, and (2026-10-09) on the 0.9.0 and 0.9.1 release images, which pass 33 of 33 and reproduce no
@@ -53,6 +55,33 @@ investigation. Standard library only.
    without it (157 and 157 of 176 points → 159 and 163), but that is two repeats per build, and ten other scenarios
    flip between repeats of the same build.
 
+**4a.** Found by the [completion investigation](investigations/2026-10-glm53-completion/README.md) (2026-10-11). The
+engine asks the top-k for 512 compressed-key pools and keeps output columns 0-510 to make room for the newest 1-3
+tokens; the pool in column 511 is discarded. Upstream vLLM keeps all 512. On 0.9.1, decode batches of up to 16 rows
+(1-4 requests in flight at 3 draft tokens) take a fused top-k route that discarded a pool ranked better than 480 in
+0.5% of live rows; larger batches take a tiled route (88.1%). By context length: 96-97% from 4,000 to 64,000 tokens,
+13% at about 120,000. Synthetic inputs: 94-98% at 1,024-16,384 pools. Selected sets matched an fp64 reference in every
+clean row; only which selected pool is discarded differs. The real-input capture ran in eager mode (a probe cannot run
+inside the indexer under CUDA graphs; the route follows the row count). The gate, under the shipped graphs, found the
+prefill branch affected too (rows with exactly 512 candidates come back in index order, so the newest pool was
+discarded) and the frozen correction covers it; after correction, 0 changed selections and 0 rows with a non-lowest
+pool in column 511. The correction changes the engine's 511-pool selection policy to discard the lowest-scoring
+selected pool; it is not a restoration of upstream's 512-pool policy. Prepared locally, not released. It is the only
+defect found that differs between the engines in the direction of the completion gap (item 7); whether it changes
+completion is being tested.
+
+**4b.** Found by the same investigation in a capture where 16 index-K pools were byte-identical across two different
+requests, some decoding as NaN: raw indexer key and gate rows written through the tail ring into blocks then owned by
+other requests, from stale tail ids left by the runner's start-up warm-up. Upstream vLLM has passed positions since
+GLM-5.3-Flash support landed. On a CPU harness with each release's real kernels, the share of decode-completed pools
+that differ from the request's own keys is 0% / 47-57% / 78-90% on 0.9.1 at 1 / 2 / 8 requests, and 100% on 0.7.0 at
+all three; 0.7.0 is the more affected engine, so this defect does not explain its better completion. Shipped graph
+mode, unmodified 0.9.1: 6 events wrote into live attention blocks. The fix (positions, upstream's ownership guard and
+a graph-safe write) gave 0 null-block, 0 foreign and 0 attention-block writes in two variants; all requests completed;
+throughput unchanged. The gate found at least one selected pool with NaN bytes in 7.9% (rank 0) and 32.5% (rank 1) of
+sampled decode rows, attributed by inference to this defect. The kernel tests of item 1 exercise the kernels, not the
+metadata call where this omission sits. Prepared locally, not released, and excluded from the completion arm.
+
 </details>
 
 ## 2. GPQA Diamond
@@ -67,7 +96,7 @@ investigation. Standard library only.
 |---|---|---|---|
 | 5 | One pass of one configuration varies by 0.5 to 3.5 points between passes with their own request seeds. | **Descriptive** | `analyze.py gpqa-passes` |
 | 6 | 3.25bpw and 4bpw TR3 (Brandon) on tpurtell 0.9.1 show no measurable difference in accuracy (86.9% vs 85.7%) or completion (16 vs 17 empty of 594). | **Descriptive** | `analyze.py gpqa-records` |
-| 7 | tpurtell 0.7.0 as shipped left fewer GPQA questions unanswered than tpurtell 0.9.1 (3.25bpw, three passes each): 4 vs 16 empty answers of 594. What produces the difference is open. | **Supported** (clustered p = 0.009); cause **open** | `analyze.py gpqa-records`, [confounds](CONFOUNDS.md#7-several-changes-between-releases-at-once) |
+| 7 | tpurtell 0.7.0 as shipped left fewer GPQA questions unanswered than tpurtell 0.9.1 (3.25bpw, three passes each): 4 vs 16 empty answers of 594. What produces the difference is open: two localized defects have been found (items 4a-4b), and a GPQA arm testing one correction is running. | **Supported** (clustered p = 0.009); cause **open** | `analyze.py gpqa-records`, [confounds](CONFOUNDS.md#7-several-changes-between-releases-at-once) |
 | 7a | 3.25bpw on tpurtell 0.7.0 scored highest over three passes. Raw / stated means: 88.2 / 89.4% (0.7.0), 86.9 / 87.9% (3.25bpw 0.9.1), 85.7 / 87.7% (4bpw 0.9.1). The lead is 1.3-2.5 points raw, consistent on both scores but within pass-to-pass noise (clustered p = 0.12-0.41; every 95% interval includes zero), so not yet established. Against 3.25bpw 0.9.1, the higher score comes entirely from questions 0.9.1 left unanswered: where both answered (577 of 594), raw accuracy is identical (516 vs 516; stated 523 vs 522). Why 0.7.0 leads is open. | **Descriptive**; cause **open** | `analyze.py gpqa-records`, `gpqa-join`, [investigation](investigations/2026-10-glm53-completion/README.md) |
 | 8 | Empty answers concentrate on a few questions. | **Descriptive** | `analyze.py gpqa-empty` |
 | 9 | One pass per configuration does not separate these configurations in accuracy: pass 1 lands at 84.3-87.9% raw. | **Descriptive** | `analyze.py gpqa-table`, `gpqa-pairs` |
@@ -96,6 +125,14 @@ investigation. Standard library only.
    the component screen at three draft tokens found no tested part that moved questions 88 or 79 (item 14). The 4bpw
    TR3 (Brandon) record on 0.9.1 also left more empty answers than 0.7.0 (17, on 14 questions; clustered p = 0.006), but
    it differs in weights and concurrency as well.
+   The [completion investigation](investigations/2026-10-glm53-completion/README.md) (from 2026-10-10) has since found no step where 0.9.1's decode agreed worse with
+   its own prefill than 0.7.0's; its long-context measure turned out to cover continuation after the reply had ended,
+   so it does not bear on completion. A completion pilot and replication of 0.9.1's default layout against 0.7.0's
+   layout bundle on 0.9.1 gave no useful separation. A source audit found no defect unique to 0.9.1 in attention or the
+   DCP combine, and two localized defects (items 4a-4b): the column-511 drop, which differs between the engines in the
+   direction of the gap, and the tail-ring omission, which affects 0.7.0 more. A three-pass GPQA arm on 0.9.1 with the
+   column-511 correction alone is running against this 0.9.1 record as a historical control, with its analysis and
+   reading rules frozen before data ([completion arm](investigations/2026-10-glm53-completion/README.md#completion-arm-running)).
    Item 7a, pair by pair (same question, pass and request seed): 0.7.0 was right where 0.9.1 came back empty in 8
    question-passes (q12 pass 1, q55 pass 2, q81 pass 3, q88 passes 1 and 3, q109 pass 1, q120 pass 1, q170 pass 3), and
    never the other way. This splits the score by completion; it is not a causal comparison.
@@ -195,12 +232,15 @@ Stated with their evidence. Grade: **open**.
 | Question | Evidence so far |
 |---|---|
 | What drives non-completion on questions 88 and 79? | Items 13-14: no tested runtime part moved either, at a size where only very large effects could show. |
-| What makes tpurtell 0.7.0 as shipped leave fewer GPQA questions unanswered than 0.9.1? | Item 7: 4 vs 16 of 594, almost all at the 327,680-token cap; several differences at once, none varied alone in GPQA. The component screen ran the 0.7.0 image at three draft tokens on question 79 only, where it failed as often as 0.9.1 (9 of 12 each). Which difference matters is inconclusive ([completion investigation](investigations/2026-10-glm53-completion/README.md)). |
+| What makes tpurtell 0.7.0 as shipped leave fewer GPQA questions unanswered than 0.9.1? | Item 7: 4 vs 16 of 594, almost all at the 327,680-token cap; several differences at once, none varied alone in GPQA. The component screen ran the 0.7.0 image at three draft tokens on question 79 only, where it failed as often as 0.9.1 (9 of 12 each). The [completion investigation](investigations/2026-10-glm53-completion/README.md) found two localized defects (items 4a-4b); a pilot of 0.7.0's layout bundle on 0.9.1 gave no useful separation. Which difference matters is inconclusive. |
+| Does the column-511 correction change completion? | Item 4a: the localized defect is removed; it is the only defect found that differs between the engines in the direction of the gap. A three-pass GPQA arm with this correction alone is running against the existing 0.9.1 record (a historical control), with its analysis and reading rules frozen before data ([completion arm](investigations/2026-10-glm53-completion/README.md#completion-arm-running)). |
+| Do the tail-ring fix, the router's bf16 logits or the routed-expert SwiGLU clamp change completion or accuracy? | All three affect every release (the tail ring 0.7.0 more); untested ([confounds](CONFOUNDS.md#10-kpool-tail-ring-positions-omission), [13](CONFOUNDS.md#13-router-precision-and-the-routed-expert-swiglu-clamp)). |
+| Does generation-vs-prefill disagreement at long context bear on completion? | The completion investigation's 8,000-15,999-token measure covers continuation after the reply had ended (its amendment 7); no evidence either way ([confounds](CONFOUNDS.md#15-long-context-decode-vs-prefill-measures-continuation-after-the-reply)). |
 | Do other releases or layouts differ in non-completion across the benchmark? | Only pass 1 exists for the other configurations: 0 to 9 empty answers of 198, no paired difference at p < 0.05 (item 10). 3.25bpw and 4bpw TR3 (Brandon) on 0.9.1: no measurable difference over three passes (16 vs 17; item 6). |
 | Does the DCP1 tail fix change answers or how often hard questions fail to finish? | It changes decode numerics in the first 2,044 tokens; the loops observed are stopped far later; GPQA and tool calling show no difference beyond noise at their sizes (items 3, 4, 16). |
 | Why is the engine not bitwise reproducible one request at a time? | Item 19: greedy reruns diverge after a median of 318 characters; same-seed decode-vs-prefill runs first differ after 1 to 130 tokens, with no concurrent requests. |
 | Do these quants cost accuracy? | No higher-precision reference (BF16 or NVFP4) was run on this hardware. The published 90.6-92.1 used other weights and harnesses that are not fully published, so the gap to them is not a measure of quantization (item 12). |
-| Code-level questions: the 511-pool slice, `swiglu_limit` on the routed experts, top-k ties between layouts | Read in code, not measured ([investigation](investigations/2026-10-glm53-looping/README.md#open-questions)). |
+| Code-level questions: the 511-pool slice, `swiglu_limit` on the routed experts, top-k ties between layouts | Read in code ([investigation](investigations/2026-10-glm53-looping/README.md#open-questions)). Since measured: the 511-pool slice (item 4a). `swiglu_limit` on the routed experts: untested, the same in all releases. Top-k ties: the selected set matches an exact top 512 apart from boundary ties; not measured further. |
 
 ## Labels
 
@@ -221,7 +261,7 @@ Configurations are named **weights · engine version · speculation**, built fro
 | **tpurtell 0.9.1** | Release v0.9.1 as published: v0.9.0 plus the DCP1 tail fix |
 | Layout segments | Shown only when a configuration runs a parallel layout other than its release's default: `0.7.0 layout (DCP2, EP2)` on the 0.9.0 image, and the component-screen arms `EP2 experts, NOPE records off`, `EP2 experts, MLA owners tp` and `NOPE records off, MLA owners tp` on 0.9.1. Screen arms and diagnostic controls, not recommendations |
 | concurrency N | Shown only when the client kept N requests in flight instead of the protocol's setting (GPQA: 8): `4bpw TR3 (Brandon) · tpurtell 0.9.1 · DFlash2 ×3 · concurrency 4`, because that KV pool holds about 4 requests at the token cap |
-| kpool fixes | Upstream vLLM fixes vllm-project/vllm#57477 and #58454, ported in [tpurtell/glm-5.3-flash-ext3-2x-rtx#5](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/5) (commit 5a366b5) and shipped in v0.9.0 |
+| kpool fixes | Upstream vLLM fixes vllm-project/vllm#57477 and vllm-project/vllm#58454, ported in [tpurtell/glm-5.3-flash-ext3-2x-rtx#5](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/5) (commit 5a366b5) and shipped in v0.9.0 |
 | 3.25bpw | tpurtell's K3.25 checkpoint [wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1](https://huggingface.co/wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1) (EXL3, mixed K3/K4 routed experts) |
 | 4bpw TR3 (Brandon) | Brandon M. Music's TR3 checkpoint [brandonmusic/GLM-5.3-Flash-tr3-4bpw](https://huggingface.co/brandonmusic/GLM-5.3-Flash-tr3-4bpw) (EXL3, uniform K4 routed experts) |
 | DFlash2 ×N | DFlash2 speculative decoding (incoai/GLM-5.3-Flash-DFlash2), N draft tokens per step; "no speculation" = plain decoding |

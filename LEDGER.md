@@ -72,6 +72,100 @@ What was asked, run, found, corrected and withdrawn, in date order.
   checkpoint's own template, 0.9.1 the corrected Z.ai template. Both render all 198 GPQA prompts byte-identically, so
   no number changes.
 
+**2026-10-10, evening. What the long-context measure covered; a completion pilot.**
+- Trace audit of the 24 traces kept by Phase 1 steps 5-6 (CPU;
+  [amendment 7](investigations/2026-10-glm53-completion/PLAN.md#dated-amendments)): in every trace the model had closed
+  its reasoning and ended its reply at 637-5,377 generated tokens. The protocol keeps generating past the end
+  (`ignore_eos`), so the 8,000-15,999-token bin of steps 4-6 is entirely continuation after the reply had ended. That
+  measure says nothing about non-completion. Step 4 kept no traces; the same pattern is likely there, not verified.
+- [Completion pilot](investigations/2026-10-glm53-completion/README.md#completion-pilot-and-replication) (amendment 8,
+  manifest frozen before the run): 0.9.1 at its default layout against the 0.9.1 EP2/DCP2 diagnostic bundle (step 6's
+  layout), three target questions and a control, original and fresh seeds, 8 requests in flight, normal stopping, caps
+  of 65,536 or 131,072 tokens. Original seeds: no reply unanswered at the cap in either layout. Fresh seeds: 2 unanswered
+  at the cap with the default layout (q109, q170), 0 with the bundle; one draw each, within chance. 2.01 GPU-hours.
+
+**2026-10-11. Replication.**
+- Four new fresh seeds each on q109 and q170, same arms and caps (amendment 9): 0 vs 0 unanswered. With the pilot's
+  fresh seeds, 2 of 10 vs 0 of 10 target draws (one-sided p ≈ 0.24): no useful separation. 1.54 GPU-hours; the
+  investigation's total 14.10.
+
+**2026-10-11. Source audit, and which pool the 511-pool slice drops.**
+- [Kernel and DCP source audit](investigations/2026-10-glm53-completion/README.md#kernel-and-dcp-source-audit)
+  (amendments 10-10a; CPU; three independent audits of the 0.7.0, 0.8.0 and 0.9.1 source): no defect unique to 0.9.1 in
+  attention, the DCP combine, record readers, graphs or scratch. The known indexer write defects are 0.7.0's and
+  0.8.0's and fixed in 0.9.1. Common to every version: the top-k selects 512 compressed-key pools and the engine keeps
+  output columns 0-510 to make room for the newest tokens. No top-k path sorts its output, so the discarded pool (the
+  one in column 511) is not guaranteed to be the weakest. Upstream vLLM keeps all 512.
+- Correction: the looping investigation's code question 6 said these releases' top-k emits winners first, so the
+  discarded pool would be among the lowest-scored. No top-k path sorts its output; a dated note on that question now
+  points here ([looping, open questions](investigations/2026-10-glm53-looping/README.md#open-questions)).
+- [Stage 1](investigations/2026-10-glm53-completion/README.md#phase-2-stage-1-which-pool-is-dropped) (each release's
+  top-k kernels on frozen synthetic inputs; one GPU, no model; 0.10 GPU-hours): on 0.9.1's tiled route (5-8 requests in
+  flight at 3 draft tokens) the discarded pool ranked better than 480 of 512 in 94-98% of rows at 1,024-16,384 pools;
+  on the fused route (1-4 requests) 0-1%; on 0.7.0's path 3-21%.
+- [Stage 2](investigations/2026-10-glm53-completion/README.md#phase-2-stage-2-real-inputs) (real serving inputs
+  captured on 0.9.1 in eager mode, replayed through each release's kernels; 1.16 GPU-hours): 88.1% of 9,944 live tiled
+  decode rows; fused 0.5%; 0.7.0's path on the identical bytes 6.9%. The route, which follows the number of requests in
+  flight, alone decides it. Selected sets matched an fp64 reference.
+- [Phase 3](investigations/2026-10-glm53-completion/README.md#phase-3-column-511-intervention) (0.58 GPU-hours):
+  switching the two-level fold off did not meet the criterion (the weakest pool in column 511 in 39.8% of tiled rows);
+  moving the lowest-scoring selected pool into column 511 did, in 100% of rows offline and in place, with the selected
+  set unchanged. This is a correction to the engine's 511-pool selection policy, not a restoration of upstream's
+  512-pool policy.
+
+**2026-10-11. The kpool tail ring.**
+- In stage 2's second capture, 16 index-K pools were byte-identical across two different requests, some decoding as
+  NaN. A CPU forensic pass found raw indexer key and gate rows for tail-ring slots 4-7, written into blocks then owned
+  by other requests (amendment 10d).
+- Cause (amendment 10e; CPU trace with the real kernels): this build builds attention metadata without token
+  positions, which upstream vLLM has passed since GLM-5.3-Flash support landed. Without them, every tail write from
+  position 8 goes to a shared null block, and through stale ids left by the runner's start-up warm-up, occasionally
+  into another request's blocks. The same omission is in 0.7.0's source. Amendment 10d had nominated a stale request
+  row or a block-table staging race; no staging race was found (25,000 steps against a CPU shadow).
+- [Verification](investigations/2026-10-glm53-completion/README.md#kpool-tail-ring) (amendment 10f; 1.16 GPU-hours):
+  unmodified 0.9.1 in its shipped graph mode sent 98% of tail writes to the null block on each rank, and 6 into live
+  attention blocks. With positions passed and a graph-safe write: 0 and 0; 104 of 104 requests completed; throughput
+  unchanged.
+- A CPU harness running each release's real kernels: 0.7.0 gets 100% of decode-completed pools wrong at 1, 2 and 8
+  requests in flight; 0.9.1 0% at 1, 47-57% at 2 and 78-90% at 8. 0.7.0 is the more affected engine, so this defect
+  does not explain its better completion. The investigation's total: 17.11 GPU-hours.
+
+**2026-10-11. Upstream comparison, gate, completed tail fix, and the completion arm.**
+- [Comparison with upstream vLLM](investigations/2026-10-glm53-completion/README.md#comparison-with-upstream-vllm)
+  (CPU): all three releases carry the same vLLM development commit, not an ancestor of upstream main. No further
+  reachable correctness divergence on the GLM-5.3 paths. Two divergences outside them affect every release and are
+  untested: router logits computed in bf16 on this GPU family (upstream enabled the fp32 path for it, vllm#54048), and
+  no SwiGLU clamp on the routed experts.
+- An independent assessment was adopted (amendment 11): validate the column-511 correction in the shipped graph
+  configuration first, then test completion.
+- [Gate](investigations/2026-10-glm53-completion/README.md#gate-column-511-correction-in-the-shipped-graph-configuration)
+  (amendments 11-11a; 0.72 GPU-hours): passed all four conditions in one full server run under the shipped CUDA graphs,
+  with an observe-only device checker. It found the prefill branch affected too (rows with exactly 512 candidates came
+  back in index order, so the newest pool was dropped; 2,200 rows); the frozen correction covers it. At least one
+  selected pool with NaN bytes in 7.9% (rank 0) and 32.5% (rank 1) of sampled decode rows: the tail-ring defect, not
+  repaired by this correction.
+- [Tail fix completed](investigations/2026-10-glm53-completion/tail-fix/RESULT.md) (amendment 11; 1.15 GPU-hours):
+  positions passed, upstream's ownership guard and the graph-safe write, in two variants (with the sparse-MLA
+  causal-length source unchanged, or switched as upstream does). One shipped-graph run each: 0 null-block, 0 foreign
+  and 0 attention-block writes on both ranks. The investigation's total before the arm: 18.97 GPU-hours.
+- [Comparator audit](investigations/2026-10-glm53-completion/arm-col511-plan/COMPARATOR-AUDIT.md) and
+  [frozen analysis](investigations/2026-10-glm53-completion/arm-col511-plan/analysis-col511.md) (amendment 11b, before
+  any arm data): the comparator is the existing clean 0.9.1 three-pass record, a historical control; no material
+  unexplained configuration difference. Primary test: one-sided exact sign-flip on per-question differences in empty
+  replies. Reading: at most 6 empties with p < 0.05 supports a contribution relative to the recorded baseline; 7-12 with
+  p < 0.05 is a modest reduction, not support for explaining the gap; otherwise inconclusive or not supported. Power
+  0.82-0.87 if the arm matches 0.7.0's per-question rates, 0.95 for a 75% reduction, 0.51 for 50%.
+- Correction (cost): amendment 11 asked for up to 13 GPU-hours for the arm. That estimate left out pass 1's separate
+  server session; the comparator's three passes had occupied 16.59 GPU-hours. The ceiling was raised to 18.5 before
+  launch.
+- Correction (server starts): notes made while preparing the arm described the comparator's passes 2-3 server log as
+  holding more than one server start ("first server block" in the gate result and the frozen analysis). It holds one;
+  the frozen analysis script counts one start in each comparator log (dry runs). Nothing compared changes.
+- [Completion arm](investigations/2026-10-glm53-completion/README.md#completion-arm-running) started in the afternoon:
+  0.9.1 with the column-511 correction only, three GPQA passes (request seeds 1234-1236, 8 concurrent, 327,680-token
+  cap, shipped graph mode), the comparator's session split mirrored, ceiling 18.5 GPU-hours. Running. Nothing about
+  its outcome is reported until it has finished and been analysed with the frozen script and read by the frozen rules.
+
 ## Withdrawn, and what replaced it
 
 > **Withdrawal notice (2026-10-09).** The earlier hard-question screens (`hard-prompt-screen` v0 and v1, 2026-09-30 to
@@ -140,5 +234,8 @@ every configuration tested. Not a rate (`tools/analyze.py screen-single`).
 | How low raw `flexible-extract` runs | about 0.7, then about 1.6 points per pass | 0.5 to 3.5 points per pass, 1.5 on average (16 passes) | the first checked only replies where two filters disagree; the second included passes no longer published |
 | Kpool fixes in the 0.9.0 and 0.9.1 releases | kernel files byte-identical to the tested build | kernel tests run on both release images: 33 of 33 | tested directly on 2026-10-09 |
 | Run-to-run noise of one GPQA pass | passes sharing seed 1234 | three passes with their own seeds: 0.5 to 3.5 points | a shared seed understates the spread |
+| Which pool the 511-pool slice discards | among the lowest-scored, because the top-k emits winners first (code reading) | not guaranteed: no top-k path sorts its output; on 0.9.1's tiled route a pool ranked better than 480 of 512 in 88.1% of live decode rows | measured on 2026-10-11 (completion investigation, stage 2) |
+| Completion investigation, cumulative GPU-hour ceiling after amendment 9 | 15.65 | 17.1 (the approved ceilings added) | amendment 9 counted Tranche 1 from consumption rather than from the discovery allocation (amendment 10) |
+| GPU-hour ceiling for the completion arm | 13 | 18.5 | the estimate left out pass 1's server session; the comparator's three passes occupied 16.59 (amendment 11b) |
 
 </details>

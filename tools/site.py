@@ -66,8 +66,16 @@ def link(rid, text=None):
 GLOSSARY = [
     ("mla", r"\bMLA\b(?! (?:layer )?ownership| owners)", "MLA", "Multi-head latent attention: GLM-5.3-Flash's attention in 11 of its layers (the others are KDA "
      "layers). Keys and values are cached as a compressed latent, and a sparse-attention indexer picks which earlier tokens each decode step attends."),
-    ("kpool", r"\bkpool\b", "kpool", "The sparse-attention indexer's pooled key cache: earlier tokens are grouped in pools of 4, and each decode step "
-     "selects up to 512 pools (2,048 tokens). The <i>kpool tail</i> is the newest, incomplete pool: the current token and up to two before it."),
+    ("kpool", r"\bkpool\b", "kpool", "The sparse-attention indexer's pooled key cache: earlier tokens are grouped in pools of 4, and each decode step's "
+     "top-k selects up to 512 pools (2,048 tokens); this engine keeps 511 of them plus the kpool tail, upstream vLLM all 512. The <i>kpool tail</i> "
+     "is the newest, incomplete pool: the current token and up to two before it."),
+    ("column-511", r"\b[Cc]olumn[- ]511\b", "Column 511", "The pool in output column 511 of the indexer's top-k, which the engine discards to make "
+     "room for the kpool tail. No top-k path sorts its output, so which selected pool that is depends on the kernel route (on tpurtell 0.9.1: fused "
+     "for up to 16 decode rows, tiled for more). The <i>column-511 correction</i> moves the lowest-scoring selected pool there first: a correction "
+     "to the engine's 511-pool selection policy, not a restoration of upstream's 512-pool policy."),
+    ("tail-ring", r"\b[Tt]ail[- ]ring\b", "Tail ring", "The per-request ring of slots in which the indexer keeps the newest tokens' keys until "
+     "their pool of 4 is complete. Its intended slot mapping needs each token's position; tpurtell 0.7.0 through 0.9.1 build attention metadata "
+     "without positions, so a generic mapping is used instead."),
     ("dcp", r"\bDCP[12]\b", "DCP1 / DCP2", "Decode context parallelism. DCP2 splits each MLA layer's KV cache across both GPUs by token; DCP1 "
      "does not split it."),
     ("mla-ownership", r"\bMLA (?:layer )?(?:ownership|owners)\b", "MLA ownership", "tpurtell's DCP1 layout from 0.8.0 on: each MLA layer, with its "
@@ -947,6 +955,8 @@ def looping(runs):
             + f'<h3 id="gpqa-records">Across GPQA: empty answers in three passes</h3><p>tpurtell 0.7.0 as shipped left {e7["a"]} of {e7["n"]} answers '
               f'empty, 0.9.1 left {e7["b"]} (3.25bpw; supported). Accuracy does not differ measurably (clustered p = {a7["p_cluster"]:.2f}). '
               'The two differ in several ways at once, so the cause is open (<a href="confounds.html#7-several-changes-between-releases-at-once">confounds</a>). '
+              f'The <a href="{REPO}/blob/main/investigations/2026-10-glm53-completion/README.md">completion investigation</a> follows this question: it '
+              'found two localized engine defects (<a href="index.html#engine-issues">issues and fixes</a>), and a GPQA arm testing one correction is running. '
               'Tables and the per-question grid: <a href="index.html#gpqa">Results</a>.</p>'
             + '<h2 id="seeds">Seeds and the earlier screens</h2><p>The earlier screens sent seed 1234 on every repeat. Their rates were withdrawn on '
               '2026-10-09 and replaced by the component screen above (<a href="ledger.html#withdrawn-and-what-replaced-it">ledger</a>; why: '
@@ -1117,7 +1127,8 @@ def build():
          f'The lead is {lead_lo:.1f}-{lead_hi:.1f} points raw, consistent on both scores but within pass-to-pass noise, so not yet established. '
          f'Against 3.25bpw 0.9.1, the higher score comes entirely from {jtip}: where both answered ({len(jn["both"])} of {jn["n"]}), raw '
          f'accuracy is identical ({jn["a_correct_flexible_both"]} vs {jn["b_correct_flexible_both"]}; stated {jn["a_correct_stated_both"]} vs '
-         f'{jn["b_correct_stated_both"]}). Why 0.7.0 leads is open (<a href="{REPO}/tree/main/investigations/2026-10-glm53-completion">investigation</a>).',
+         f'{jn["b_correct_stated_both"]}). Why 0.7.0 leads is open: the <a href="{REPO}/tree/main/investigations/2026-10-glm53-completion">investigation</a> '
+         'has found two localized engine defects, and a GPQA arm testing one correction is running.',
          "Descriptive",
          "Question-clustered tests, 0.7.0 vs 3.25bpw 0.9.1: raw p = {:.2f}, stated p = {:.2f}; vs 4bpw 0.9.1: raw p = {:.2f}, stated p = {:.2f}. "
          "Every 95% interval includes zero.".format(*[analyze.records(g["k3.25-v0.7.0-dflash5"], g[b], k)["p_cluster"]
@@ -1126,9 +1137,10 @@ def build():
         (f'<b>One pass varies by {sp[0]:.1f}-{sp[-1]:.1f} points</b> between passes with their own seeds: as much as configurations differ.',
          "Descriptive", "Three configurations, three passes each", '<a href="#records">chart</a>'),
         (f'<b>tpurtell 0.7.0 as shipped left fewer questions unanswered than 0.9.1:</b> {e7["a"]} vs {e7["b"]} empty answers of {e7["n"]} (3.25bpw). '
-         'The cause is open.', "Supported",
+         'The cause is open; a three-pass GPQA arm with the column-511 correction alone is running.', "Supported",
          f"Question-clustered test p = {e7['p_cluster']:.3f}. Raised by pass 1; passes 2-3 alone {e7b['a']} vs {e7b['b']} (p = {e7b['p_cluster']:.2f}). "
-         "0.7.0 differs from 0.9.1 in draft depth, layout, kernels, vision and KV pool at once.",
+         "0.7.0 differs from 0.9.1 in draft depth, layout, kernels, vision and KV pool at once. The arm is compared with the existing 0.9.1 record, "
+         "a historical control, under an analysis frozen before data; no result yet.",
          '<a href="#records-compare">comparisons</a> · <a href="confounds.html#7-several-changes-between-releases-at-once">confounds</a>'),
         (f'<b>3.25bpw and 4bpw TR3 (Brandon) perform alike on 0.9.1</b>, in accuracy and in completion. 4bpw\'s KV pool holds about 4 requests '
          'at the token cap.', "Descriptive",
@@ -1139,10 +1151,16 @@ def build():
         ('<b>Neither engine fix costs speed</b>, in single runs.', "Descriptive",
          f"One run per configuration, no noise floor. Kpool fixes: {min(moves):+.0f}% to {max(moves):+.0f}%; DCP1 tail fix: 147.3 vs 146.9 tok/s at 1 request",
          '<a href="#serving">speed</a>'),
-        (f'<b>Engine issues found during evaluation are fixed in current releases:</b> two upstream kpool issues (0.9.0) and the DCP1 tail '
+        (f'<b>Three engine issues found during evaluation are fixed in current releases:</b> two upstream kpool issues (0.9.0) and the DCP1 tail '
          f'masking issue (0.9.1). The 0.9.0 and 0.9.1 images pass {up_pa[0]} of {up_pa[1]} upstream kernel tests.', "Supported",
          f"Without the kpool fixes {up_un[0]}/{up_un[1]}. Index check: the tail issue is gone with the fix; decode-vs-prefill KL below 2,044 tokens "
-         f"{kl0:.3f} → {kl1:.3f}. Effect on answers: unmeasured (descriptive).", '<a href="#engine-issues">issues and fixes</a>')])
+         f"{kl0:.3f} → {kl1:.3f}. Effect on answers: unmeasured (descriptive).", '<a href="#engine-issues">issues and fixes</a>'),
+        ('<b>Two more, found by the completion investigation, have fixes prepared (not released):</b> the 511-pool truncation of the indexer\'s '
+         'top-k can discard a well-ranked pool (column 511), and the kpool tail ring is written without token positions. Whether either '
+         'changes completion is open.', "Supported",
+         "Localized defects, verified on GPU. Column 511: on 0.9.1's tiled route a pool ranked better than 480 of 512 is discarded in 88.1% of "
+         "live decode rows (0.7.0's path: 6.9%). Tail ring: 98% of tail writes go to a shared null block on 0.9.1 (all releases affected, "
+         "0.7.0 more). Each fix removes its localized problem.", '<a href="#engine-issues">issues and fixes</a>')])
     issues = table(["Issue", "Found", "Fix", "Released in", "Evidence"], [
         ["Prefill wrote 2 KB of keys into another block's indexer region (kpool)", "upstream vLLM (vllm#57477)",
          'upstream fix, ported in <a href="https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/5">tpurtell PR #5</a>', "tpurtell 0.9.0",
@@ -1152,7 +1170,20 @@ def build():
          tip("<b>Supported</b>", "The 0.9.0 and 0.9.1 release images reproduce no rejected-draft corruption at 2, 3, 5 or 7 draft tokens")],
         ["DCP1 decode skipped the newest 1-3 tokens at causal lengths up to 2,043 not divisible by 4", "during this evaluation",
          '<a href="https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/6">tpurtell PR #6</a>', "tpurtell 0.9.1",
-         tip("<b>Supported</b>", "Index check on the image's own kernels; decode agrees much better with prefill below 2,044 tokens") + ' · <a href="looping.html#tail-bug">record</a>']])
+         tip("<b>Supported</b>", "Index check on the image's own kernels; decode agrees much better with prefill below 2,044 tokens") + ' · <a href="looping.html#tail-bug">record</a>'],
+        ["The indexer's top-k selects 512 pools and the engine keeps 511; no top-k path sorts its output, so the discarded pool (column 511) "
+         "can rank well inside the selection, depending on the kernel route and so on the requests in flight", "during this evaluation (all releases)",
+         "correction prepared: discard the lowest-scoring selected pool", "not released",
+         tip("<b>Supported</b>", "0.9.1 tiled route (5-8 requests in flight): a pool ranked better than 480 of 512 discarded in 88.1% of 9,944 live decode "
+             "rows; 0.7.0's path 6.9% on the same bytes. With the correction: 100% of rows correct, selection unchanged, also under the shipped "
+             "CUDA graphs. Effect on completion: open; a GPQA arm is running")
+         + f' · <a href="{REPO}/blob/main/investigations/2026-10-glm53-completion/README.md#phase-2-stage-2-real-inputs">record</a>'],
+        ["Attention metadata built without token positions: the kpool tail ring is written to a shared null block from position 8, and "
+         "occasionally into other requests' blocks", "during this evaluation (all releases; upstream vLLM passes positions)",
+         "upstream behaviour backported: positions, ownership guard, graph-safe write", "not released",
+         tip("<b>Supported</b>", "Unmodified 0.9.1 in shipped graph mode: 98% of tail writes to the null block, 6 into live attention blocks; with "
+             "the fix 0 and 0. 0.7.0 is more affected (CPU harness). Effect on completion: untested")
+         + f' · <a href="{REPO}/blob/main/investigations/2026-10-glm53-completion/README.md#kpool-tail-ring">record</a>']])
     idx = (f'<h1>GLM-5.3-Flash on 2x RTX PRO 6000: results</h1>'
            f'<p class="lede">Accuracy, completion, speed, KV capacity and kernel tests of GLM-5.3-Flash EXL3 quants on tpurtell\'s vLLM-based engine, '
            f'under fixed, versioned protocols. Every number links to its receipts. What else can move a result: '
@@ -1205,9 +1236,10 @@ def build():
            + f'<h2 id="kv">KV cache capacity</h2><p>Tokens the server reports at start-up, same memory setting. tpurtell\'s default DCP1 layout '
              f'with MLA layer ownership holds the most (supported). 4bpw TR3 (Brandon) on 0.9.1: {kv4:,} tokens, about 4 requests at the token cap.</p>'
            + table(["Configuration", "KV pool, tokens", "Receipts"], kvt, numeric=(1,))
-           + '<h2 id="engine-issues">Engine issues found during evaluation, and their fixes</h2><p>All three are fixed in tpurtell 0.9.1. DCP1 '
+           + '<h2 id="engine-issues">Engine issues found during evaluation, and their fixes</h2><p>The first three are fixed in tpurtell 0.9.1. DCP1 '
              'with MLA layer ownership is tpurtell\'s design; it holds about 1.5x the KV cache of v0.7.0\'s DCP2 layout. Their effect on answers '
-             'is unmeasured (descriptive).</p>' + issues
+             'is unmeasured (descriptive). The last two were found by the completion investigation on 2026-10-11 and are present in every '
+             'release; fixes are prepared and verified locally, not released, and their effect on answers is untested.</p>' + issues
            + f'<h3 id="kernels">Kernel tests: {up_un[0]}/{up_un[1]} without the kpool fixes, {up_pa[0]}/{up_pa[1]} with them (supported)</h3>'
              '<p>vLLM\'s own regression tests for the kpool kernels, plus a rejected-draft reproduction, run inside each engine image.</p>' + per_image
            + more("Every test", '<div id="kernel-grid"></div>' + table(["Test"] + [engine_label(m["cfg"]) for m in km], ktr)))

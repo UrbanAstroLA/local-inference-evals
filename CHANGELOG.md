@@ -1,5 +1,37 @@
 # Changelog
 
+## 2026-10-11 (completion investigation, amendments 7-11b): ledger, confounds, findings and site brought up to date; completion arm running
+
+Contents unchanged: 65 runs, 13 comparisons. No earlier run, number or grade changed; no arm result is reported.
+
+- **Completion investigation** (committed earlier on 2026-10-11 without a changelog entry): PLAN.md amendments 7-11b;
+  README sections for the trace audit, completion pilot and replication, prior probes, kernel and DCP source audit,
+  Phase 2 stages 1-2, Phase 3, the kpool tail ring, the comparison with upstream vLLM, the gate and the running
+  completion arm; receipt folders `pilot/`, `replication/`, `audits/`, `phase2-stage1/`, `phase2-stage2/`, `phase3/`,
+  `tail-ring/`, `tail-fix/`, `gate/`, `arm-col511-plan/`; costs appended (18.97 GPU-hours before the arm). One edit
+  today: the router-precision row names its upstream reference as vllm#54048.
+- **`LEDGER.md`**: dated entries from the trace audit (2026-10-10) through the arm's start (2026-10-11), with GPU-hours,
+  and three owned corrections: the 511-pool slice premise in the looping investigation's code question 6, the arm's
+  GPU-hour estimate (13 → 18.5 before launch) and a second server start described for a comparator log that holds one.
+  Three rows added to "Figures corrected along the way".
+- **`CONFOUNDS.md`**: seven new entries (9-15): requests in flight and the top-k route, the kpool tail-ring positions
+  omission, NaN-byte index rows, the historical control of the completion arm, router precision and the routed-expert
+  SwiGLU clamp, graph vs eager execution for instrumentation, and post-completion continuation in the long-context
+  decode-vs-prefill measure. Entry 7 lists what the completion investigation has tested since.
+- **`FINDINGS.md`**: new items 4a (column-511 drop) and 4b (kpool tail ring), both supported as localized defects with
+  their effect on completion open; item 7 and the open questions updated (the running arm, the tail-ring fix, router
+  precision, the SwiGLU clamp, the long-context measure); upstream references written as vllm-project/vllm#N.
+- **`README.md`**: the completion investigation's row, a line on the two further issues, glossary entries for column
+  511, the top-k route and the tail ring; the kpool entry now says the engine keeps 511 of the 512 selected pools.
+- **Forward pointers, dated 2026-10-11, history unchanged**: looping investigation (code questions 6-8, open question
+  2, "Why is open", the kpool fixes paragraph), kpool investigation (finding 1), the three-pass GPQA comparison.
+- **Protocols**: dated notes in `decode-prefill-consistency/v2` (long bins measure forced continuation) and
+  `kpool-kernel-tests/v1` (scope: kernels, not the engine's metadata call). Procedures unchanged.
+- **`comparisons/README.md`**: points to the completion investigation's receipt folders.
+- **Site** (`tools/site.py`): Results summary and the engine-issues table list the two further issues as found during
+  evaluation, fixes prepared and not released; the 0.7.0 vs 0.9.1 lines point to the investigation and the running
+  arm; glossary entries for column 511 and the tail ring.
+
 ## 2026-10-10 (completion investigation, Phase 1 steps 5-6): kpool fixes on 0.7.0; 0.7.0's layout on 0.9.1
 
 Contents: 65 runs (4 new), 13 comparisons. No earlier run, number or grade changed.

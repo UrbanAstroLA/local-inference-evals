@@ -1,3 +1,6 @@
+> Update 2026-10-11: the two GPU runs prepared below were executed (one shipped-graph-mode run each for variants T and U);
+> results in `summary-T-graph.txt` and `summary-U-graph.txt` and in the investigation README, section Kpool tail ring.
+
 # Tail fix completed, variants T and U (PLAN.md amendment 11, item 2) and 0.7.0 two-rank check (item 3)
 
 Date 2026-10-11. CPU only: no GPU used, no server started, no `--gpus`. Values are measured unless marked

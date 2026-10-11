@@ -22,6 +22,14 @@ supports), **Configurations**, **Result**, **Caveats**, **Recompute**.
 | [`glm53-flash-doc79-image-screen`](glm53-flash-doc79-image-screen) | hard-prompt-screen/v2 | Question 79: tpurtell 0.9.1 vs the 0.7.0 image at three draft tokens | Descriptive | 13-14 |
 | [`glm53-flash-fixed-seed-control`](glm53-flash-fixed-seed-control) | hard-prompt-screen/v2 | Question 88: seed 1234 on every repeat vs distinct seeds | Supported | 15 |
 
+The completion investigation's other receipts are not comparisons in this format (they compare kernel paths on frozen
+inputs, or run as pilots and fixtures outside `runs/`) and stay in its folder: [`pilot/`](../investigations/2026-10-glm53-completion/pilot),
+[`replication/`](../investigations/2026-10-glm53-completion/replication), [`audits/`](../investigations/2026-10-glm53-completion/audits), [`phase2-stage1/`](../investigations/2026-10-glm53-completion/phase2-stage1),
+[`phase2-stage2/`](../investigations/2026-10-glm53-completion/phase2-stage2), [`phase3/`](../investigations/2026-10-glm53-completion/phase3), [`tail-ring/`](../investigations/2026-10-glm53-completion/tail-ring),
+[`tail-fix/`](../investigations/2026-10-glm53-completion/tail-fix), [`gate/`](../investigations/2026-10-glm53-completion/gate) and [`arm-col511-plan/`](../investigations/2026-10-glm53-completion/arm-col511-plan) (the frozen analysis
+of the running completion arm, whose comparator is the 0.9.1 record in
+[`glm53-flash-gpqa-records`](glm53-flash-gpqa-records)). Findings 4a-4b and 7.
+
 ## Format and rules
 
 ```json

@@ -17,11 +17,14 @@ evaluating the runtimes and quants, and the confounds that can move accuracy or 
 | [Confounds](https://urbanastrola.github.io/local-inference-evals/confounds.html) | What else can move a result, and how the runs control for it | [`CONFOUNDS.md`](CONFOUNDS.md) |
 | [Ledger](https://urbanastrola.github.io/local-inference-evals/ledger.html) | What was run, found, corrected and withdrawn, and when | [`LEDGER.md`](LEDGER.md) |
 | [Investigation](https://urbanastrola.github.io/local-inference-evals/looping.html) | Why some hard questions do not finish | [`investigations/2026-10-glm53-looping`](investigations/2026-10-glm53-looping) |
-| [Completion audit](investigations/2026-10-glm53-completion/README.md) | Why 0.7.0 left fewer GPQA answers empty than 0.9.1 (Phase 0: existing data; Phase 1: decode vs prefill on both engines) | [`investigations/2026-10-glm53-completion`](investigations/2026-10-glm53-completion) |
+| [Completion investigation](investigations/2026-10-glm53-completion/README.md) | Why 0.7.0 left fewer GPQA answers empty than 0.9.1: decode vs prefill, a completion pilot, a kernel and DCP source audit, two localized defects with fixes prepared, and a three-pass GPQA arm with one correction (running) | [`investigations/2026-10-glm53-completion`](investigations/2026-10-glm53-completion) |
 | [Method](https://urbanastrola.github.io/local-inference-evals/method.html) | Grades, scoring, intervals, receipts, glossary | [`protocols/`](protocols), [`DATASHEET.md`](DATASHEET.md) |
 
 **The DCP1 tail issue and its fix** (tpurtell PR #6, released in tpurtell 0.9.1):
 [record](investigations/2026-10-glm53-looping/README.md#the-dcp1-tail-issue-and-its-fix).
+**Two further engine issues found during evaluation, fixes prepared locally (not released):** the column-511 drop
+([`FINDINGS.md`](FINDINGS.md#1-engine-issues-found-during-evaluation-and-their-fixes) item 4a) and the kpool tail ring
+written without token positions (item 4b; upstream vLLM passes them). Whether either changes completion is open.
 
 ## Labels
 
@@ -124,8 +127,19 @@ Python 3.10+, standard library only.
 - **MLA** (multi-head latent attention): GLM-5.3-Flash's attention in 11 of its layers (the others are KDA layers). Keys
   and values are cached as a compressed latent, and a sparse-attention indexer picks which earlier tokens each decode
   step attends.
-- **kpool:** the indexer's pooled key cache: earlier tokens are grouped in pools of 4, and each decode step selects up to
-  512 pools (2,048 tokens). The **kpool tail** is the newest, incomplete pool: the current token and up to two before it.
+- **kpool:** the indexer's pooled key cache: earlier tokens are grouped in pools of 4, and each decode step's top-k
+  selects up to 512 pools (2,048 tokens). This engine keeps 511 of them plus the kpool tail; upstream vLLM keeps all
+  512. The **kpool tail** is the newest, incomplete pool: the current token and up to two before it.
+- **Column 511 / column-511 drop:** the pool in output column 511 of the top-k, which the engine discards to make room
+  for the tail. No top-k path sorts its output, so which selected pool that is depends on the kernel route. The
+  **column-511 correction** moves the lowest-scoring selected pool into column 511 first: a correction to the engine's
+  511-pool selection policy, not a restoration of upstream's 512-pool policy.
+- **Top-k route (fused / tiled):** on tpurtell 0.9.1, decode batches of up to 16 rows (1-4 requests in flight at three
+  draft tokens) use a fused top-k kernel, larger batches a tiled one. 0.7.0 runs a top-k per GPU, then merges across
+  GPUs.
+- **Tail ring:** the per-request ring of slots in which the indexer keeps the newest tokens' keys until their pool of 4
+  is complete. Its intended slot mapping needs each token's position; tpurtell 0.7.0 through 0.9.1 build attention
+  metadata without positions, so a generic mapping is used instead (FINDINGS item 4b).
 - **DCP1 / DCP2:** decode context parallelism. DCP2 splits each MLA layer's KV cache across both GPUs by token; DCP1
   does not split it.
 - **MLA ownership:** tpurtell's DCP1 layout from 0.8.0 on: each MLA layer, with its indexer and caches, lives on one GPU

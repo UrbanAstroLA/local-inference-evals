@@ -13,7 +13,9 @@ with its analysis frozen beforehand (amendments 11-11b). Cumulative 18.97 GPU-ho
 Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#dated-amendments).
 **Fast path:** [answer](#answer) · [evidence](#evidence) · [configuration diff](#what-differs-between-the-two-servers) ·
 [Phase 1](#phase-1) · [completion pilot](#completion-pilot-and-replication) ·
-[prior probes](#prior-probes-read-before-proposing-new-work) · [kernel and DCP audit](#kernel-and-dcp-source-audit) · [open questions](#open-questions) · [limits](#limits) · [next steps](#next-steps) · [recompute](#recompute)
+[prior probes](#prior-probes-read-before-proposing-new-work) · [kernel and DCP audit](#kernel-and-dcp-source-audit) ·
+[column-511 stages](#phase-2-stage-1-which-pool-is-dropped) · [phase 3](#phase-3-column-511-intervention) · [tail ring](#kpool-tail-ring) ·
+[gate](#gate-column-511-correction-in-the-shipped-graph-configuration) · [completion arm](#completion-arm-running) · [upstream comparison](#comparison-with-upstream-vllm) · [open questions](#open-questions) · [limits](#limits) · [next steps](#next-steps) · [recompute](#recompute)
 
 ## Answer
 
@@ -576,7 +578,7 @@ are speed and feature work. Two divergences outside those paths affect every rel
 
 | Item | Detail | Status |
 |---|---|---|
-| Router logits | on this GPU family the MoE router's fp32-output path is not enabled, so routing logits are computed in bf16 although the checkpoint asks for fp32 routing; upstream enabled it for this family (#54048) | untested; same in all releases |
+| Router logits | on this GPU family the MoE router's fp32-output path is not enabled, so routing logits are computed in bf16 although the checkpoint asks for fp32 routing; upstream enabled it for this family (vllm#54048) | untested; same in all releases |
 | SwiGLU clamp | the routed experts' path never receives `swiglu_limit` (10); shared experts and dense layers are clamped; an earlier clamp A/B patched a path this quant does not run and is not evidence either way | untested; same in all releases |
 
 Neither can explain a difference between 0.7.0 and 0.9.1.
