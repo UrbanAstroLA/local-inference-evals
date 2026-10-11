@@ -1,0 +1,3 @@
+rank -1: source=None writes=None null_alias=None foreign=None attn_collision=None tail_collision=None stale_col_rows=None shadow_div=None prefwd dev/null/foreign=None/None/None eager_violation_lines=0 staged_anomalies=0 guard_errors=0
+rank 0: source=generic-persistent (positions=None) writes=306912 null_alias=301272 foreign=2604 attn_collision=96 tail_collision=0 stale_col_rows=16 shadow_div=0 prefwd dev/null/foreign=988181/987339/842 eager_violation_lines=0 staged_anomalies=17 guard_errors=0
+rank 1: source=generic-persistent (positions=None) writes=255820 null_alias=251060 foreign=2230 attn_collision=40 tail_collision=0 stale_col_rows=16 shadow_div=0 prefwd dev/null/foreign=988181/987315/866 eager_violation_lines=0 staged_anomalies=17 guard_errors=0

@@ -474,3 +474,88 @@ on any shipped path. Not actionable: column 511 always holds the 512th pool or a
 actionable (ceiling 1.3 GPU-hours, remainder of Phase 2): the same measurement in place on real serving inputs through an
 observe-only hook on 0.9.1 and 0.7.0, at the concurrency mix of a GPQA pass. A finding would establish conclusion (1) at
 most; it would not by itself show a completion effect.
+
+**Amendment 10b (2026-10-11, coordinator, after stage 1 and before stage 2 data).** Stage 1 met its criterion on synthetic
+inputs (0.9.1 tiled path: the dropped pool ranked better than 480 in 94-98% of rows at 1,024-16,384 pools; 0.9.1 fused
+0-1%; 0.7.0 per-rank plus merge 3-21%; no set mismatches beyond boundary ties). Stage 2 design (ceiling 1.3 GPU-hours,
+startup, warm-up and invalid runs included):
+- Capture, one 0.9.1 server run on both GPUs: the release image plus an observe-only hook in the decode branch of the
+  sparse indexer (a local derived image; no kernel or selection code changed). For sampled decode rows the hook stores the
+  real query bytes, head weights, the row's index-K pool entries, sequence length, row count and the kernel's output pool
+  order, and computes the rank of the column-511 pool from the stored bytes. Graph mode piecewise, so the hook runs at
+  every step (the indexer is an eager-break op there; the fused/tiled route still follows the live row count).
+- Histories: real model reasoning from the pilot's retained traces, appended to their rendered GPQA prompts at lengths
+  from about 4,000 to about 120,000 tokens; each history is prefilled once (prefix cache) and then decoded briefly with 8
+  requests together (tiled path) and with 4 or fewer (fused path).
+- Replay, one GPU: the same stored bytes through 0.9.1 fused and tiled and 0.7.0 per-rank top-k plus cross-rank merge
+  (stage 1 driver), against the fp64 reference from the same bytes.
+Actionable: on real inputs, 0.9.1's tiled path drops a pool ranked better than 480 (not a boundary tie) in at least 10% of
+sampled rows, and 0.7.0's path on the identical inputs does so materially less often. Then Phase 3 tests the smallest
+correct intervention (discard the lowest-scoring selected pool instead of column 511) on the same stored inputs and in
+place. Not actionable: real inputs leave column 511 at or near the boundary on every path; the difference is then
+documented and the tranche stops.
+
+**Amendment 10c (2026-10-11, coordinator, after stage 2 and before Phase 3 data).** Stage 2 met its criterion on real
+inputs: 0.9.1's tiled path dropped a pool ranked better than 480 in 88.1% of 9,944 live decode rows (replay of the same
+bytes 87.9-88.2%; 13% at about 120,000 tokens, 96-97% from 4,000 to 64,000); 0.9.1's fused path 0.4-0.5%; 0.7.0's path
+on the identical bytes 6.9%. The route alone decides it. Deviations: graph mode NONE (the indexer is not an eager-break op
+in this build, so under piecewise graphs a hook would not run); two server runs (the second the permitted retry). An
+incidental observation, not part of any rule: in run 2, sixteen index-K pools at the same in-page offsets were
+byte-identical across two different requests on all five DSA layers owned by GPU 1, some decoding as NaN.
+Phase 3 (reserve; ceiling 0.7 GPU-hours for this part): the smallest correct intervention for the column-511 drop,
+tested first offline on the stored stage-2 inputs (one GPU), then in place (one probe-image server run): (i) configuration
+only: B12X_INDEXER_TWO_LEVEL_FOLD=0; (ii) code: request the kernel's selected scores and move the lowest-scoring selected
+pool into column 511 before the slice (selection set unchanged). Pass: on the tiled route, column 511 holds the
+lowest-scoring selected pool or a boundary tie in at least 99% of rows, the selected set is unchanged, the fused route is
+unchanged, and decode throughput at 8 requests is reported. Whichever passes with less change is the candidate. This
+establishes at most that the localized problem is removed; completion effect and the GPQA gap remain separate questions.
+The pool corruption gets a CPU-only forensic pass on the stored captures first; any GPU reproduction is a separate
+decision by the operator.
+
+**Amendment 10d (2026-10-11; operator authorization: "This is significant enough finding that it warrants extending GPU
+time where necessary for proper verifications").** CPU forensic result on the stage-2 corruption: the corrupted index-K
+bytes are raw bf16 indexer key and gate rows for tail-ring slots 4-7, written through the tail-ring view (its padded
+per-block stride, ring of 8) into two indexer blocks then owned by other requests, on rank 1 only, in all five DSA layers
+that rank owns; compressing those rows as the kpool kernel does reproduces byte-for-byte the pool of shared prompt tokens
+12-15, which is why the bytes matched across two questions. The seed-stride and spec-ring fixes behave as intended; the
+DCP1 tail-compaction fix writes no cache. Excluded by layout or address arithmetic: draft slot sharing, KDA state, MLA
+record writer, block-pool double ownership (GPU 0 clean at the same block ids). Nominated mechanism: a wrong tail-block id
+reached the tail write path once on rank 1 (a stale request row in the tail group's block table, or a CPU/GPU race in the
+model runner's staged block-table updates). Competing explanations: an artefact of eager mode with the probe's per-step
+synchronisation; a scheduler-side id error that rank 0 masked. Seen once in two capture runs. Not explained: why only
+slots 4-7 (a 16-token write ending at position 15).
+Extension: up to 4 GPU-hours beyond the 17.1 already approved (cumulative ceiling 21.1), for defect verification only:
+(T0, CPU) read the runner's tail-group row writes for new, resumed and reused requests and its asynchronous staging;
+(T1) an observe-only guard at the tail seed and stash call sites that checks, per step and rank, the tail-block ids used
+against that step's scheduled tail-group ids and against its attention-block ids, logging any violation with rank, step,
+request row, mapping, positions and chunk length; run on the stage-2 workload in eager mode and in the shipped graph mode
+(device-side check), repeated to estimate a rate; (T2) a single-GPU unit test reproducing the nominated row-reuse or race
+condition; (T3) if a source is located, the smallest correct fix, verified by the same guard. Column 511 continues under
+amendment 10c; its in-place check under the shipped graph mode may use this extension. Shorter fixtures cannot answer:
+the event depends on live scheduling, request-row reuse and rank-local runner state. Each run is costed before launch
+from measured startup (about 10-13 minutes) and workload time (about 15 minutes per capture run, two GPUs). Completion
+effects (conclusions 2 and 3) are not covered; they need their own proposal.
+
+**Amendment 10e (2026-10-11, coordinator, T0 result, before T1-T3 GPU data).** T0 (CPU, the real Triton tail kernels
+run in the interpreter): in this build the hybrid model state's attention-metadata call omits `positions`
+(`v1/worker/gpu/model_states/mamba_hybrid.py`, `build_attn_metadata(...)` without `positions=input_batch.positions`;
+upstream vLLM has passed it since GLM-5.3-Flash support landed, commit 98ed0856f3, and still does). Without positions the
+kpool tail group's intended slot mapping is never built; the generic per-group mapping is used instead, so positions 0-7
+go to the request's own tail block and every position from 8 goes to column pos // 8 of the tail table, normally the
+null block 0 and occasionally a stale id. Reproduced on CPU: a stale column 1 plus a prefill from position 0 writes
+exactly the stage-2 signature (slots 4-7 of positions 12-15 into another request's first indexer page); concurrently
+decoding requests share block 0's ring, so a pool completed across two steps can be compressed from another request's
+keys (relative error 0.9 vs 0.0 with positions passed). The same omission is in the 0.7.0 source (inferred for 0.8.0);
+by itself it is not a version difference. Sequence under amendment 10d: T2 on one GPU (real kernels and block tables;
+graph-capture smoke of the guard); T1 guard runs on the unmodified 0.9.1 code, shipped graph mode first, then eager;
+T3 = the one-line upstream backport (pass positions), verified by the same guard in both modes and checked for graph
+safety (the tail mapping must be read by replayed graphs). Pass for T3: zero tail writes outside each request's own tail
+block and zero null-block aliasing, with no new guard violations. Effects on selection quality and completion are not
+covered.
+
+**Amendment 10f (2026-10-11, operator decision, before T1-T3 server data).** The tail-ring omission is in 0.7.0's source as
+well, so by itself it does not explain the version difference; its verification is trimmed to the GPU unit test, one
+shipped-graph-mode guard run on unmodified 0.9.1 and one with the positions backport (eager runs dropped; ceiling 2.0
+GPU-hours for T1-T3). In parallel, a CPU-only audit compares the fork's vLLM with upstream vLLM on the GLM-5.3-Flash paths,
+because every defect found so far sits where the fork departs from or lags upstream. A completion test of the column-511
+fix needs its own proposal afterwards.

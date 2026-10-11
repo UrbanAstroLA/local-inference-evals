@@ -6,8 +6,9 @@ difference. Quantization is held fixed.
 
 **Status:** Phase 0 done (existing data only). Phase 1 steps 1-6 done (decode vs prefill, 10.55 GPU-hours); a trace audit
 then showed their long-context measure covers continuation after the model had already stopped. Completion pilot and
-fresh-seed replication done (3.55 GPU-hours). Kernel and DCP source audit done (CPU only); stage 1 of the selection-order fixture met its
-pre-set criterion; stage 2 next (amendments 10, 10a). Cumulative 14.20 GPU-hours.
+fresh-seed replication done (3.55 GPU-hours). Kernel and DCP source audit done (CPU only). Two localized defects found and verified on GPU, each
+with a fix that removes the localized problem; neither has been tested for an effect on completion (amendments 10-10f).
+Cumulative 17.11 GPU-hours.
 Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#dated-amendments).
 **Fast path:** [answer](#answer) · [evidence](#evidence) · [configuration diff](#what-differs-between-the-two-servers) ·
 [Phase 1](#phase-1) · [completion pilot](#completion-pilot-and-replication) ·
@@ -27,7 +28,9 @@ Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#d
 | Trace audit (amendment 7): in all 24 retained step-5/6 traces the model ended its reply at 637-5,377 tokens; the 8,000-15,999-token measure of steps 4-6 is entirely forced continuation after that point, so it says nothing about non-completion. | **Descriptive** |
 | Completion pilot and replication (amendments 8-9): 0.9.1's default layout vs the 0.9.1 EP2/DCP2 diagnostic bundle, 24 requests per arm on three target questions and a control. Default layout 2 of 10 fresh-seed target draws unanswered at the cap, bundle 0 of 10 (one-sided p ≈ 0.24); 0 vs 0 on the 8 replication draws per arm. No useful separation. | **Descriptive** |
 | Kernel and DCP source audit (amendment 10a): no defect unique to 0.9.1 found in attention, the DCP combine, record readers, graphs or scratch; the known indexer write defects are on 0.7.0's side and fixed in 0.9.1. | **Descriptive** (source reading) |
-| Which difference causes the completion gap. | **Open** |
+| Column-511 drop, real inputs (amendment 10b): 0.9.1's tiled top-k path discards a pool ranked better than 480 of 512 in 88.1% of 9,944 live decode rows; 0.7.0's path does so in 6.9% of rows on the identical bytes. A fix that moves the lowest-scoring selected pool into the discarded column removes it (100% of rows, offline and in place; selection unchanged). | **Supported** (localized defect; eager mode) |
+| Kpool tail ring (amendments 10d-10e): this build does not pass token positions to the attention metadata, so from position 8 the tail ring is written to a shared null block (98% of tail writes in shipped graph mode) and, through stale ids left by the runner's start-up warm-up, occasionally into live attention blocks. The same omission is in 0.7.0's source. Passing positions as upstream vLLM does, with a graph-safe write, removes it (0 stray writes). | **Supported** (localized defect; graph mode) |
+| Whether either fix changes completion, and whether the column-511 drop explains the completion gap. | **Open** |
 
 Splitting the score by completion is not a causal comparison. It says where the difference sits, not what produces it.
 
@@ -426,7 +429,8 @@ listed only so they are not repeated as if new.
 
 ## Kernel and DCP source audit
 
-Amendments 10-10a. CPU only: the installed vLLM and B12x kernel source of the three releases (0.7.0 B12x `fe054789`;
+Amendments 10-10a. Audit reports: [`audits/`](audits) (three Phase 1 audits with file:line references, B12x kernel
+notes, and the upstream comparison by area). CPU only: the installed vLLM and B12x kernel source of the three releases (0.7.0 B12x `fe054789`;
 0.8.0 and 0.9.1 `7fcc094e`), read by three independent audits (indexer selection; DCP attention; kernel dispatch and
 storage), each citing file and line.
 
@@ -462,7 +466,85 @@ where the dropped pool ranked better than 480 (well inside the selection), 5 rep
   which pool should be dropped, and upstream vLLM keeps all 512.
 
 0.10 GPU-hours. Receipts: [`phase2-stage1/`](phase2-stage1) (driver, analysis, per-cell summaries, hashes of the raw rows).
-Stage 2 (in place on real serving inputs, observe-only) is next.
+### Phase 2, stage 2: real inputs
+
+Amendment 10b. One 0.9.1 server run with an observe-only probe after the decode top-k recorded, for sampled rows, the
+real query bytes, head weights, index-K pools and the kernel's output order; histories were real model reasoning from the
+pilot's retained traces at about 4,000-120,000 tokens (questions 55, 109, 170), decoded with 8 requests in flight (tiled
+route) and with 4 or fewer (fused route). The same bytes were replayed through each release's kernels.
+
+| Path | Rows | Dropped pool ranked better than 480 | Median rank of dropped pool |
+|---|---|---|---|
+| 0.9.1 live, tiled | 9,944 | 88.1% | 280 |
+| 0.9.1 live, fused | 1,400 | 0.5% | 511 |
+| 0.9.1 replay, tiled / fused | | 88.1% / 0.4% | 275 / 511 |
+| 0.7.0 path on the same bytes | | 6.9% | 510 |
+
+- By length: 96-97% from 4,000 to 64,000 tokens; 13% at about 120,000 (two live fold slices).
+- The route alone decides it: forcing fused-captured rows through the tiled path gives 92%; splitting tiled batches
+  into 16-row halves gives 0.4%. Selected sets matched the fp64 reference in every row without corrupted pools.
+- Deviations: graph mode off during capture (the indexer is not an eager-break op in this build, so a probe cannot run
+  under graphs; the route depends only on row count); the capture needed its one permitted retry. Rows are correlated
+  (8 requests, 3 questions). 0.7.0 was replayed on 0.9.1's model state, not run.
+- 1.16 GPU-hours. Receipts: [`phase2-stage2/`](phase2-stage2) (probe diff, replay driver, analysis); raw captures are
+  local, hashed in [`RAW-SHA256SUMS-phase2-3.txt`](RAW-SHA256SUMS-phase2-3.txt).
+
+### Phase 3: column-511 intervention
+
+Amendment 10c. (i) `B12X_INDEXER_TWO_LEVEL_FOLD=0` (configuration only) and (ii) requesting the kernel's selected scores
+and moving the lowest-scoring selected pool into column 511 before the slice (27 changed lines, one file).
+
+| Intervention | Offline, stored stage-2 inputs | In place, one server run (eager) |
+|---|---|---|
+| (i) fold off | not met: weakest pool in column 511 in 39.8% of tiled rows (the order is still unsorted, from another path) | not run |
+| (ii) move the lowest-scoring pool last | met: 100% of tiled rows, 3 repeats; selected set unchanged in 34,032 of 34,032 rows | met: 100% of 10,164 tiled and 2,332 fused rows |
+
+- Source confirms the mechanism: with the default two-level fold the tiled path sees exactly 512 candidates in one live
+  slice and takes a quick-exit branch that emits them in arbitrary order.
+- Requesting scores only adds the value stores; route and output order are unchanged. Captured in a CUDA graph and
+  replayed, identical to eager (offline). No measurable throughput cost at 8 requests (eager).
+- "Fused route unchanged" (amendment 10c) is read as "same selection, nothing worse": on the fused route (ii) changes
+  which pool is dropped in about 2.6% of rows, always to the lowest-scoring one. Under a byte-identical reading that
+  part is not met.
+- 0.58 GPU-hours. Receipts: [`phase3/`](phase3) (fix diff, offline and in-place analyses, throughput).
+
+### Kpool tail ring
+
+Amendments 10c-10f. In stage 2's second capture, 16 index-K pools on GPU 1 were byte-identical across two different
+requests, some decoding as NaN. A CPU forensic pass showed they were raw indexer key and gate rows for tail-ring slots 4-7
+(shared prompt positions 12-15), written through the tail-ring view into blocks then owned by other requests; the
+seed-stride and spec-ring fixes behave as intended and the DCP1 tail-compaction fix writes no cache.
+
+- Cause (CPU trace with the real kernels, then GPU unit test): this build's hybrid model state builds attention metadata
+  without `positions`, which upstream vLLM has passed since GLM-5.3-Flash support landed. Without positions the tail
+  group's intended slot mapping never runs; the generic mapping sends position p ≥ 8 to tail-table column p // 8,
+  normally the shared null block. Stale ids come from the model runner's start-up warm-up, which gives every runner row a
+  two-block tail entry that is never cleared. No block-table staging race (25,000 steps against a CPU shadow).
+- Consequences on GPU (unit test): a pool completed across two steps is compressed from another request's keys
+  (relative error 0.17 and 0.73); a stale column plus a prefill from position 0 reproduces the stage-2 signature exactly.
+- Shipped graph mode, unmodified 0.9.1, one run: 98% of tail writes went to the null block on each rank; 6 events wrote
+  into live attention blocks. With positions passed plus a two-line in-place write so replayed graphs read the mapping:
+  0 null-block writes, 0 foreign writes; 104 of 104 requests completed; throughput unchanged (88.3 tok/s at 8 requests).
+- The same omission is in 0.7.0's source; there, with two ranks splitting tokens by parity, completed pools would be
+  corrupted even with one request (inferred from code, not measured). By itself it is therefore not a difference
+  between the engines. The fix tested lacks upstream's `own_block != 0` guard and also changes the sparse-MLA causal
+  length source for batches that are not pure decode; both are noted for the next step.
+- 1.16 GPU-hours. Receipts: [`tail-ring/`](tail-ring) (guard and fix diffs, unit test, CPU mechanism, run summaries).
+
+### Comparison with upstream vLLM
+
+All three releases report vLLM `0.1.dev20051+g487ecf187` (2026-08-25), a commit on a GLM development branch that is not an
+ancestor of upstream main; several files are vendored from another fork. A CPU audit of the GLM-5.3 paths (indexer, kpool,
+sparse MLA, KDA and mamba alignment, DFlash2, model runner) against upstream found no further reachable correctness
+divergence beyond the items above; about 60 upstream fixes the build lacks are unreachable under these configurations or
+are speed and feature work. Two divergences outside those paths affect every release and were not tested:
+
+| Item | Detail | Status |
+|---|---|---|
+| Router logits | on this GPU family the MoE router's fp32-output path is not enabled, so routing logits are computed in bf16 although the checkpoint asks for fp32 routing; upstream enabled it for this family (#54048) | untested; same in all releases |
+| SwiGLU clamp | the routed experts' path never receives `swiglu_limit` (10); shared experts and dense layers are clamped; an earlier clamp A/B patched a path this quant does not run and is not evidence either way | untested; same in all releases |
+
+Neither can explain a difference between 0.7.0 and 0.9.1.
 
 ## Open questions
 
@@ -471,7 +553,8 @@ Stated with their evidence so far.
 | Question | Evidence so far |
 |---|---|
 | Does generation-vs-prefill disagreement at long context bear on completion? | The 8,000-15,999-token measure covers continuation after the reply had ended (amendment 7); no positive evidence either way. |
-| Does the column-511 drop discard well-ranked pools on real serving inputs, and does that touch completion? | Stage 1 (synthetic inputs): yes on 0.9.1's tiled path, rarely on 0.7.0's at long context. Real inputs and completion untested. |
+| Does the column-511 fix change completion? | Localized defect removed (phase 3); completion untested. It is the only defect found that differs between the engines in the direction of the gap. |
+| Do the tail-ring fix, the router precision or the SwiGLU clamp change completion or accuracy? | All affect both engines; untested. |
 | Do legitimate numerical differences shift how often long deliberation runs past the cap? | Non-completion is a low-rate tail event (about 1 in 10 fresh draws at these caps on two hard questions); small pilots cannot resolve rates near 2.7% vs 0.7% of replies. |
 | Which part of the 0.7.0 layout bundle goes with the higher disagreement? | Step 6 changed EP, DCP, MLA ownership, KV record, draft pages and the top-k merge path together, and still differs from stock 0.7.0 in the top-k merge path, draft depth (×3 vs ×5), vision and engine code. Inconclusive by component. |
 | Why does prompt 0 not follow the other prompts in step 6? | One prompt, two runs; inconclusive. |
@@ -486,9 +569,12 @@ Stated with their evidence so far.
 
 ## Next steps
 
-Per amendment 10: Phase 2 (one discriminating kernel fixture, ceiling 1.5 GPU-hours) and, only on an actionable result,
-Phase 3 (reproduce, smallest correct intervention, ceiling 1.5). 3.0 GPU-hours of the approved 17.1 remain. No full GPQA
-pass and no further behavioural pilot until a localized defect or a separately budgeted distributional comparison exists.
+Proposed, not yet approved: finish the defect checks within the current authorization (the tail fix with upstream's
+guard, separated from the causal-length change; an observe-only run for the router precision and workspace locking;
+the SwiGLU clamp on the path this quant runs; a CPU check of 0.7.0's two-rank tail ring), then a single GPQA arm,
+three passes, of 0.9.1 with only the column-511 fix against the existing 0.9.1 records, with reading rules fixed before
+data. 3.99 GPU-hours remain of the 21.1 authorized for defect verification; the GPQA arm (about 11.5) would need new
+authorization.
 
 ## Recompute
 

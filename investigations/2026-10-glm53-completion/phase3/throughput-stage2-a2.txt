@@ -1,0 +1,14 @@
+tiled-T3: 8 requests, 1600 generated tokens in 32.3s wall = 49.5 tok/s (includes remainder prefill)
+    15:33:17Z prompt  8611.8 gen    4.8 running 5 waiting 3
+    15:33:27Z prompt  3428.0 gen   42.2 running 8 waiting 0
+    15:33:37Z prompt     0.0 gen   87.3 running 7 waiting 0
+    15:33:47Z prompt     0.0 gen   25.8 running 2 waiting 6
+    Running=8 windows: gen [42.2]; of which prompt-free: []
+tiled-T4: 8 requests, 1600 generated tokens in 31.4s wall = 50.9 tok/s (includes remainder prefill)
+    15:33:47Z prompt     0.0 gen   25.8 running 2 waiting 6
+    15:33:57Z prompt  4474.9 gen   17.8 running 8 waiting 0
+    15:34:07Z prompt  1201.3 gen   83.5 running 8 waiting 0
+    15:34:17Z prompt     0.0 gen   58.7 running 0 waiting 0
+    Running=8 windows: gen [17.8, 83.5]; of which prompt-free: []
+tiled-T3: layer-3 32-row pure-decode step interval median 229.8 ms, p10 212.8 ms, n=43 (probe-captured steps included)
+tiled-T4: layer-3 32-row pure-decode step interval median 226.6 ms, p10 211.7 ms, n=41 (probe-captured steps included)

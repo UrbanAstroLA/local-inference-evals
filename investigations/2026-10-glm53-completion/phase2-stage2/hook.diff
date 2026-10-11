@@ -1,0 +1,200 @@
+--- a/vllm/model_executor/layers/sparse_attn_indexer_kpool.py
++++ b/vllm/model_executor/layers/sparse_attn_indexer_kpool.py
+@@ -60,6 +60,169 @@
+ MXFP4_BLOCK_SIZE = 32
+ 
+ 
++# ---- col511-probe (observe-only; inert unless GLM53_COL511_PROBE_DIR is set) ----
++# Records, for sampled pure-decode steps, the exact inputs and the output pool order of the
++# B12x paged pool top-k (before the engine keeps pool_ids[:, :511]). Reads engine tensors only
++# (index_select / view / .cpu() copies); never writes to them; never changes selection.
++# Capture is armed by the file <dir>/ENABLE (its content is recorded as the phase tag).
++_COL511_PROBE_DIR = os.environ.get("GLM53_COL511_PROBE_DIR", "")
++_COL511_STATE: dict = {
++    "checked": -1e9, "enabled": False, "tag": "", "captures": 0, "calls": {},
++    "errors": 0, "index": None, "seq": 0,
++}
++
++
++def _col511_probe_enabled() -> bool:
++    import time as _time
++
++    st = _COL511_STATE
++    now = _time.monotonic()
++    if now - st["checked"] > 0.5:
++        st["checked"] = now
++        try:
++            with open(os.path.join(_COL511_PROBE_DIR, "ENABLE")) as fh:
++                st["tag"] = fh.read().strip()
++            st["enabled"] = True
++        except OSError:
++            st["enabled"] = False
++    return st["enabled"]
++
++
++def _col511_route(q_fp8, block_table, rows, select_k):
++    """Same caps as _run_b12x_paged_topk builds; host-side plan only (no launch)."""
++    try:
++        from b12x.attention.dsa_indexer.scratch import (
++            INDEXER_SOURCE_LAYOUT_PAGED as _LP,
++            B12XIndexerScratchCaps as _Caps,
++            plan_indexer_scratch as _plan,
++        )
++
++        plan = _plan(
++            _Caps(
++                device=q_fp8.device,
++                source_layout=_LP,
++                num_q_heads=int(q_fp8.shape[1]),
++                max_q_rows=int(rows),
++                max_page_table_width=int(block_table.shape[1]),
++                topk=int(select_k),
++                mode="decode",
++                shared_page_table=False,
++            )
++        )
++        lay = plan.layout
++        return (
++            str(getattr(lay, "route", "?")),
++            getattr(lay, "fused_ctas_per_group", None),
++            getattr(lay, "fused_merge_threshold", None),
++        )
++    except Exception as exc:  # noqa: BLE001
++        return ("plan-error:" + repr(exc)[:200], None, None)
++
++
++def _col511_probe(
++    *, layer, q_fp8, weights, kv_cache_raw, seq_lens, block_table, pool_topk,
++    dec_seq, select_k, num_decodes, next_n, has_prefill, num_prefills,
++    requires_padding, active_width,
++):
++    st = _COL511_STATE
++    if st["errors"] >= 5:
++        return
++    try:
++        if torch.cuda.is_available() and torch.cuda.is_current_stream_capturing():
++            return
++        if not _col511_probe_enabled():
++            return
++        import json as _json
++        import time as _time
++
++        rank = (
++            int(torch.distributed.get_rank())
++            if torch.distributed.is_available() and torch.distributed.is_initialized()
++            else 0
++        )
++        cnt = st["calls"].get(layer, 0)
++        st["calls"][layer] = cnt + 1
++        every = max(1, int(os.environ.get("GLM53_COL511_PROBE_EVERY", "1")))
++        max_caps = int(os.environ.get("GLM53_COL511_PROBE_MAX_CAPTURES", "200"))
++        pure_only = os.environ.get("GLM53_COL511_PROBE_PURE_ONLY", "1") == "1"
++        rows = int(q_fp8.shape[0])
++        route, ctas, merge_thr = _col511_route(q_fp8, block_table, rows, select_k)
++        capture = (
++            cnt % every == 0
++            and st["captures"] < max_caps
++            and not (pure_only and has_prefill)
++            and not requires_padding
++        )
++        os.makedirs(_COL511_PROBE_DIR, exist_ok=True)
++        meta = dict(
++            t=_time.time(), tag=st["tag"], rank=rank, pid=os.getpid(), layer=str(layer),
++            call=cnt, rows=rows, num_decodes=int(num_decodes), next_n=int(next_n),
++            has_prefill=bool(has_prefill), num_prefills=int(num_prefills),
++            requires_padding=bool(requires_padding), route=route, ctas_per_group=ctas,
++            merge_threshold=merge_thr, width=int(block_table.shape[1]),
++            select_k=int(select_k), active_width_is_none=active_width is None,
++            q_dtype=str(q_fp8.dtype), w_dtype=str(weights.dtype),
++            kv_shape=list(kv_cache_raw.shape), kv_stride=list(kv_cache_raw.stride()),
++            captured=bool(capture), file=None,
++        )
++        if capture:
++            sl = seq_lens.to(device="cpu", dtype=torch.int64)
++            npages = (sl + 63) // 64
++            maxp = int(npages.max().item()) if rows > 0 else 0
++            bt = block_table[:, :maxp].to(device="cpu", dtype=torch.int64)
++            need = torch.arange(maxp).unsqueeze(0) < npages.unsqueeze(1)
++            uniq = torch.unique(bt[need])
++            chunks = []
++            for part in uniq.split(512):
++                g = kv_cache_raw.index_select(0, part.to(kv_cache_raw.device))
++                chunks.append(g.to("cpu").reshape(int(part.numel()), -1))
++            pages = (
++                torch.cat(chunks, 0)
++                if chunks
++                else torch.empty((0, 0), dtype=torch.uint8)
++            )
++            fname = "c511_r%d_p%d_%06d.pt" % (rank, os.getpid(), st["seq"])
++            st["seq"] += 1
++            rec = dict(
++                meta,
++                q=q_fp8.view(torch.uint8).to("cpu").clone(),
++                w=weights.to("cpu").clone(),
++                seq_lens=sl,
++                dec_seq=dec_seq.to("cpu", torch.int64),
++                bt=bt,
++                page_ids=uniq,
++                pages=pages,
++                out=pool_topk.to("cpu").clone(),
++                active_width=(
++                    None if active_width is None else active_width.to("cpu").clone()
++                ),
++            )
++            rec["file"] = fname
++            meta["file"] = fname
++            torch.save(rec, os.path.join(_COL511_PROBE_DIR, fname))
++            st["captures"] += 1
++        if st["index"] is None:
++            st["index"] = open(
++                os.path.join(_COL511_PROBE_DIR, "index_r%d_p%d.jsonl" % (rank, os.getpid())),
++                "a",
++            )
++        st["index"].write(_json.dumps(meta) + "\n")
++        st["index"].flush()
++    except Exception as exc:  # noqa: BLE001
++        st["errors"] += 1
++        logger.warning("col511-probe error %d: %r", st["errors"], exc)
++        try:
++            import traceback as _tb
++
++            with open(os.path.join(_COL511_PROBE_DIR, "errors_p%d.txt" % os.getpid()), "a") as fh:
++                fh.write(_tb.format_exc() + "\n")
++        except Exception:  # noqa: BLE001
++            pass
++
++
++# ---- end col511-probe ----
++
++
+ def _use_b12x_kpool_indexer() -> bool:
+     raw = os.environ.get("VLLM_USE_B12X_KPOOL_INDEXER")
+     if raw is not None:
+@@ -1005,6 +1168,27 @@
+                 if dec_seq.ndim == 2:
+                     dec_seq = dec_seq[:, -1]
+                 dec_seq = dec_seq.to(torch.int32)
++            if _COL511_PROBE_DIR and use_b12x_kpool:
++                # col511-probe: observe-only, before the 511-column slice.
++                _col511_probe(
++                    layer=k_cache_prefix,
++                    q_fp8=padded_q_quant_decode_tokens.reshape(
++                        num_rows, *padded_q_quant_decode_tokens.shape[2:]
++                    ),
++                    weights=padded_weights[:num_rows].reshape(num_rows, -1),
++                    kv_cache_raw=kv_cache_raw,
++                    seq_lens=b12x_seq_lens[:num_rows],
++                    block_table=b12x_block_table[:num_rows],
++                    pool_topk=pool_topk,
++                    dec_seq=dec_seq,
++                    select_k=select_k,
++                    num_decodes=attn_metadata_narrowed.num_decodes,
++                    next_n=next_n,
++                    has_prefill=has_prefill,
++                    num_prefills=attn_metadata_narrowed.num_prefills,
++                    requires_padding=decode_metadata.requires_padding,
++                    active_width=getattr(decode_metadata, "active_width", None),
++                )
+             out = expand_pools_and_append_tail(
+                 pool_ids[:, : select_k - 1], dec_seq, index_kpool
+             )

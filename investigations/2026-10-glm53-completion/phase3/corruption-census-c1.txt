@@ -1,0 +1,16 @@
+== dup_census3
+attempt, GPU rank, layer: captures flagged / captures; (request, pool, offset-in-page) with cross-document identical K bytes
+('probe-c1', 0, 3) 0/48 0 []
+('probe-c1', 0, 7) 0/48 0 []
+('probe-c1', 0, 11) 0/48 0 []
+('probe-c1', 0, 15) 0/48 0 []
+('probe-c1', 0, 19) 0/48 0 []
+('probe-c1', 0, 23) 0/48 0 []
+('probe-c1', 1, 27) 0/48 0 []
+('probe-c1', 1, 31) 0/48 0 []
+('probe-c1', 1, 35) 0/48 0 []
+('probe-c1', 1, 39) 0/48 0 []
+('probe-c1', 1, 43) 0/48 0 []
+== nan_census3
+rows with NaN pools / rows, by attempt, GPU rank, request:
+NaN pool ids by attempt, layer, request:

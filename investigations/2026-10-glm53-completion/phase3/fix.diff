@@ -1,0 +1,52 @@
+--- a/vllm/model_executor/layers/sparse_attn_indexer_kpool.py	2026-10-11 08:59:25.052944514 -0700
++++ b/vllm/model_executor/layers/sparse_attn_indexer_kpool.py	2026-10-11 08:59:25.038561743 -0700
+@@ -60,6 +60,21 @@
+ MXFP4_BLOCK_SIZE = 32
+ 
+ 
++def _move_lowest_selected_pool_last(
++    pool_topk: torch.Tensor, pool_scores: torch.Tensor
++) -> None:
++    """col511-fix: the decode branch keeps pool_topk[:, : select_k - 1], and no
++    b12x top-k route orders its output, so move each row's lowest-scoring selected pool
++    into the last column (swap). The selected set is unchanged. Fixed shapes, no host
++    sync (CUDA-graph safe). Unfilled slots (-1, score -inf) are lowest and go last first.
++    """
++    last = pool_topk.shape[1] - 1
++    low = torch.argmin(pool_scores, dim=1, keepdim=True)
++    low_ids = torch.gather(pool_topk, 1, low)
++    pool_topk.scatter_(1, low, pool_topk[:, last:].clone())
++    pool_topk[:, last:] = low_ids
++
++
+ def _use_b12x_kpool_indexer() -> bool:
+     raw = os.environ.get("VLLM_USE_B12X_KPOOL_INDEXER")
+     if raw is not None:
+@@ -898,13 +913,12 @@
+                 cp_kv_cache_interleave_size = int(
+                     cfg.parallel_config.cp_kv_cache_interleave_size
+                 )
+-            topk_scores = None
+-            if dcp_world_size > 1:
+-                topk_scores = torch.empty(
+-                    (num_rows, select_k),
+-                    dtype=torch.float32,
+-                    device=pool_topk.device,
+-                )
++            # col511-fix: request the selected scores on every DCP size.
++            topk_scores = torch.empty(
++                (num_rows, select_k),
++                dtype=torch.float32,
++                device=pool_topk.device,
++            )
+             _run_b12x_paged_topk(
+                 q_fp8=padded_q_quant_decode_tokens.reshape(
+                     num_rows, *padded_q_quant_decode_tokens.shape[2:]
+@@ -929,6 +943,7 @@
+                 dcp_rank=dcp_rank,
+                 cp_kv_cache_interleave_size=cp_kv_cache_interleave_size,
+             )
++            _move_lowest_selected_pool_last(topk_dst, topk_scores)
+         else:
+             logits = fp8_fp4_paged_mqa_logits(
+                 (padded_q_quant_cast, padded_q_scale),
