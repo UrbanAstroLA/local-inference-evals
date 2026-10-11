@@ -282,3 +282,49 @@ layout; 0.9.1 DFlash2 x3), prefix caching off, two runs each, alternating engine
 2,048-7,999 and 8,000-15,999. Question: does 0.9.1's decode drift from its prefill more than 0.7.0's as context grows?
 Rule: a difference counts only if both runs of one engine lie outside the range of both runs of the other in the
 8,000-15,999 bin; the other bins are reported. Budget about 1.5 wall-hours.
+
+**Amendment 5 (2026-10-10, after step 4, before step 5 data; adopts the independent assessment of 2026-10-10).**
+Wording: step 4 shows that stock 0.7.0 has greater disagreement between speculative generation and chunked-prefill
+rescoring on its own generated histories; steps 1-3 did not separate the configurations under their screening rules.
+Prefill is not a correctness oracle, overlapping ranges are not equivalence, and lower KL is not evidence of better completion.
+Budget: about 4.82 GPU-hours remain; reserve about 2.2 for step 5 and spend the rest on one follow-up chosen from its result.
+No full GPQA pass in this stage.
+
+Step 5. Question: does applying the two kpool fixes reduce stock 0.7.0's long-context disagreement? Comparison: stock 0.7.0
+(DFlash2 x5, EP2/DCP2; the two step-4 runs) vs the same stack with only the two kpool backports (the locally built
+kpool-backport image, sha256:f68e47a0…; verified 2026-10-10: only attention.py (tail-ring sizing) and kpool_compress.py
+differ from stock, the latter byte-identical to the 0.9.0/0.9.1 file; kernel tests 33/33). 0.9.1 is context only.
+Conditions: protocol decode-prefill-consistency/v2 (16,000 tokens, prompts 0-5, DFlash2 x5, prefix caching off,
+concurrency 1, existing seeds), two runs; measurement starts only after the container's startup warm-up has finished
+(its ready file exists), checked in the log. Primary clean subset: prompts 1-5 for stock, corrected and 0.9.1 (step 4's
+prompt 0 overlapped warm-up); prompt 0 reported separately; step 4's preregistered verdict is unchanged. The client keeps
+token ids and decode/prefill log probabilities locally (trace mode); only hashes and numeric summaries are published.
+Primary bin: 8,000-15,999. Report aggregate KL for prompts 1-5, per-prompt KL per repeat, sampled-token log-probability
+disagreement, top-1 agreement, other bins as secondary. Reading rule (exploratory screen): if both corrected aggregates lie
+below both stock aggregates and the reduction holds in most prompts (at least 4 of 5 per repeat), nominate the kpool
+bundle as affecting the measured discrepancy; if ranges overlap or reductions are inconsistent, unresolved under this
+screen; if corrected values remain at stock level, these repairs did not explain the discrepancy under this protocol.
+Nearness to 0.9.1 is descriptive only. Follow-ups: A (falls) targeted stock-vs-corrected behavioral pilot on 2-3
+score-driving prompt/seed pairs plus one control, x5 and layout fixed, GPQA sampling, pre-set 16K or 32K cap, unfinished =
+right-censored; B (stays elevated) frozen-score indexer fixture; C (mixed) fixed-history rescoring across builds.
+
+**Amendment 6 (2026-10-10, after step 5, before step 6 data).** Step 5 result (rule of amendment 5; warm-up gated,
+first request 0.4-0.6 s after the ready file): prompts 1-5, positions 8,000-15,999, aggregate KL corrected 0.7.0 0.0439 and
+0.0390 vs stock 0.0558 and 0.0243 (0.9.1 context 0.0142, 0.0119); lower than both stock repeats in 2 and 1 of 5 prompts.
+Verdict: the corrected values remain at stock level; these repairs did not explain the discrepancy under this protocol.
+Cost 0.81 wall-hours (1.62 GPU-hours); about 3.2 GPU-hours remain. Branch B applies. Before the engineering-heavy
+frozen-score fixture, step 6 (no new code): tpurtell 0.9.1 image with v0.7.0's parallel layout (ENABLE_EXPERT_PARALLEL=1,
+DECODE_CONTEXT_PARALLEL_SIZE=2, so MLA ownership off and 656-byte records; VLLM_B12X_DCP_TOPK_OWNER_EXCHANGE=0, the
+global top-k merge fallback, because the owner exchange fails on this fork) at DFlash2 x3, protocol v2, two runs,
+warm-up gated, traces local. Comparison: 0.9.1 at its default DCP1 layout (step 4, x3). Question: does the v0.7.0 layout
+on 0.9.1 kernels reproduce stock 0.7.0's long-context disagreement? Reading rule (prompts 1-5, 8,000-15,999): if both
+step-6 aggregates lie above both 0.9.1-default aggregates and inside or above the stock-0.7.0 range, with the increase in
+at least 4 of 5 prompts per repeat, nominate the layout bundle (DCP2/EP2/ownership off/record format/top-k merge path) as
+affecting the discrepancy; if both stay within the 0.9.1-default range, nominate the 0.7.0 kernel/engine code instead;
+otherwise unresolved. The bundle is not split into components by this step.
+
+**Amendment 6a (2026-10-10, written while step 6 was running, before any step-6 data was inspected; replaces the
+interpretation clauses of amendment 6, not its measurement or thresholds).** If step-6 disagreement rises as defined: the
+old layout bundle can reproduce the discrepancy on newer code; this does not identify which layout component causes it.
+If it stays within the 0.9.1-default range: the bundle alone does not reproduce the discrepancy under these conditions;
+old kernel code or a kernel-layout interaction remains possible. Otherwise: unresolved under this screen.

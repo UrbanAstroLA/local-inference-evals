@@ -152,11 +152,11 @@
   }
  ],
  "restricted_material": "Prompt text, replies, reasoning text and token sequences are not published. Local copies are indexed outside this repository by path and hash.",
- "arms": "see phase1.steps (Phase 0 was CPU only)",
+ "arms": "see phase1.steps and phase1.screens (Phase 0 was CPU only)",
  "phase1": {
   "protocols": [
    "decode-prefill-consistency/v1 (steps 1-3: 12 prompts, 2,600 tokens)",
-   "decode-prefill-consistency/v2 (step 4: prompts 0-5, 16,000 tokens)"
+   "decode-prefill-consistency/v2 (steps 4-6: prompts 0-5, 16,000 tokens; steps 5-6 start after the start-up warm-up and keep traces locally)"
   ],
   "common": "GPQA Diamond doc ids as listed in each run, request seed 1234 + doc id, concurrency 1, prefix caching off, one fresh server per run; the client sends the same prompt token ids to both engines, so the chat template does not enter",
   "measure": "mean kl_top20 over a region's positions (all prompts of the run pooled); regions by causal length i",
@@ -354,6 +354,144 @@
       "2026-10-10_glm53-flash_k3.25-v0.7.0-nospec-nocache_decode-prefill-r1",
       "2026-10-10_glm53-flash_k3.25-v0.7.0-nospec-nocache_decode-prefill-r2"
      ]
+    }
+   ]
+  },
+  "screens": {
+   "note": "Steps 5-6 (PLAN.md amendments 5, 6 and 6a): exploratory screens on a clean subset, read per amendment rather than by the range rule of steps 1-4.",
+   "subset": {
+    "prompts": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "bin": "8,000-15,999",
+    "why": "prompt 0 overlapped the start-up warm-up in step 4; it is reported separately"
+   },
+   "measures": [
+    "aggregate KL (mean kl_top20 over the subset's positions, prompts pooled)",
+    "KL per prompt per run",
+    "mean abs_dlp (sampled-token log-probability disagreement)",
+    "top-1 agreement",
+    "other bins (secondary)",
+    "prompt 0 (separately)"
+   ],
+   "steps": [
+    {
+     "step": 5,
+     "amendment": "5",
+     "question": "Does applying the two kpool fixes reduce stock 0.7.0's long-context disagreement?",
+     "test": "0.7.0 + kpool fixes, DFlash2 x5",
+     "reference": "0.7.0 as shipped, DFlash2 x5 (step 4)",
+     "context": "0.9.1 as shipped, DFlash2 x3 (step 4)",
+     "groups": {
+      "0.7.0 + kpool fixes, DFlash2 x5": [
+       "2026-10-10_glm53-flash_k3.25-v0.7.0-kpoolfix-dflash5-nocache_decode-prefill-16k-r1",
+       "2026-10-10_glm53-flash_k3.25-v0.7.0-kpoolfix-dflash5-nocache_decode-prefill-16k-r2"
+      ],
+      "0.7.0 as shipped, DFlash2 x5 (step 4)": [
+       "2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-16k-r1",
+       "2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-16k-r2"
+      ],
+      "0.9.1 as shipped, DFlash2 x3 (step 4)": [
+       "2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-16k-r1",
+       "2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-16k-r2"
+      ]
+     },
+     "rule": "if both corrected aggregates lie below both stock aggregates and the reduction holds in most prompts (at least 4 of 5 per repeat), nominate the kpool bundle as affecting the measured discrepancy; if ranges overlap or reductions are inconsistent, unresolved under this screen; if corrected values remain at stock level, these repairs did not explain the discrepancy under this protocol. Nearness to 0.9.1 is descriptive only.",
+     "reading": "a reduction in a prompt: the corrected run's KL for that prompt lies below both stock runs' KL for it; at stock level: every corrected aggregate at or above the lower end of the stock range",
+     "stated": {
+      "amendment": "6",
+      "test": [
+       0.0439,
+       0.039
+      ],
+      "reference": [
+       0.0558,
+       0.0243
+      ],
+      "context": [
+       0.0142,
+       0.0119
+      ],
+      "prompts_below_both_reference": [
+       2,
+       1
+      ]
+     },
+     "image": {
+      "local_build": "sha256:f68e47a0eedc4895478c28750620e9529fe6fb76964913fa3aef83ea4ab1adc0",
+      "base": "ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629",
+      "differs_from_base": [
+       "attention.py (tail-ring sizing)",
+       "kpool_compress.py (byte-identical to the v0.9.0 and v0.9.1 file)"
+      ]
+     },
+     "traces_sha256": {
+      "2026-10-10_glm53-flash_k3.25-v0.7.0-kpoolfix-dflash5-nocache_decode-prefill-16k-r1": {
+       "0": "f12a872868445ebc75dec8ad830571e6010e9ae789b73d2cd194bb57b3284389",
+       "1": "869026b0fca757490724b408fe4a08d1955acd89f3b4f5e309fa839cf8eb912a",
+       "2": "0293358f353faee96d68708cd173b3550c9996884121caed4be8315760eddab0",
+       "3": "efa66f35e63eb3d60bce7bc5407d3fc1a479acae84e2bc6a15e1f54777628cd5",
+       "4": "56507431fe50c4ef2b5df18a4378bb0486b1c342b18d3e18d7cae61e67142ea8",
+       "5": "e1b43419cc5ad4a087f7c2ad632330ecc158aa7dd4682eef2a5ca86a0cf69201"
+      },
+      "2026-10-10_glm53-flash_k3.25-v0.7.0-kpoolfix-dflash5-nocache_decode-prefill-16k-r2": {
+       "0": "c8303415f3725435069ce63cfd26664eea608beb4267e1adcebe38e2839ed229",
+       "1": "36dea0bee15c85136ad5e0bc5feae27c063fd3cdd01ee1014f36f7fd90791c99",
+       "2": "85b00dad5293756dc77d0e86498e87669b372989586893683f4a6263f2b34c16",
+       "3": "2c7ed1f7101b0acd9a6d19babad3212fe64d6afbaa9fd498870036af046fd53b",
+       "4": "b02b68cb745fd80a28e580d43f06ef4e2d07bdf8992d66ab6d7b6ed16df5bae0",
+       "5": "8764ef5ed2a186a1eb2e6b2a2172ed78f15186f8825cefc0fbbb1c22961a3e8a"
+      }
+     }
+    },
+    {
+     "step": 6,
+     "amendment": "6 and 6a",
+     "question": "Does the v0.7.0 layout on 0.9.1 kernels reproduce stock 0.7.0's long-context disagreement?",
+     "test": "0.9.1, 0.7.0 layout, DFlash2 x3",
+     "reference": "0.9.1 as shipped, DFlash2 x3 (step 4)",
+     "context": "0.7.0 as shipped, DFlash2 x5 (step 4)",
+     "groups": {
+      "0.9.1, 0.7.0 layout, DFlash2 x3": [
+       "2026-10-10_glm53-flash_k3.25-v0.9.1-ep2dcp2-dflash3-nocache_decode-prefill-16k-r1",
+       "2026-10-10_glm53-flash_k3.25-v0.9.1-ep2dcp2-dflash3-nocache_decode-prefill-16k-r2"
+      ],
+      "0.9.1 as shipped, DFlash2 x3 (step 4)": [
+       "2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-16k-r1",
+       "2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-16k-r2"
+      ],
+      "0.7.0 as shipped, DFlash2 x5 (step 4)": [
+       "2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-16k-r1",
+       "2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-16k-r2"
+      ]
+     },
+     "rule": "if both step-6 aggregates lie above both 0.9.1-default aggregates and inside or above the stock-0.7.0 range, with the increase in at least 4 of 5 prompts per repeat, nominate the layout bundle (DCP2/EP2/ownership off/record format/top-k merge path) as affecting the discrepancy; if both stay within the 0.9.1-default range, nominate the 0.7.0 kernel/engine code instead; otherwise unresolved. The bundle is not split into components by this step.",
+     "interpretation_6a": "If step-6 disagreement rises as defined: the old layout bundle can reproduce the discrepancy on newer code; this does not identify which layout component causes it. If it stays within the 0.9.1-default range: the bundle alone does not reproduce the discrepancy under these conditions; old kernel code or a kernel-layout interaction remains possible. Otherwise: unresolved under this screen.",
+     "reading": "an increase in a prompt: the step-6 run's KL for that prompt lies above both 0.9.1-default runs' KL for it",
+     "deviation": "VLLM_B12X_DCP_TOPK_OWNER_EXCHANGE=0 (global top-k merge instead of stock 0.7.0's PCIe owner exchange); vision off and DFlash2 x3 as 0.9.1 ships",
+     "stated": {},
+     "traces_sha256": {
+      "2026-10-10_glm53-flash_k3.25-v0.9.1-ep2dcp2-dflash3-nocache_decode-prefill-16k-r1": {
+       "0": "f1cd651e3841a645d57d48bf36ef7c637318338d3b21331d16281a646ec30e0a",
+       "1": "04bea7119609f3d9d041598e9491b1453124c61840ca2c1518a76801000f45c8",
+       "2": "35d68af5ee1ee360d672ff945baa5008628b6dc6e2bd1fcdba6c2a5054571b07",
+       "3": "23aa430f342df928e423fb4db1d78f85569d78b47ba2b7828e55f9b39edd6002",
+       "4": "8d95b292e323cab42736e4ae833509c7b76c835da25bea4f8997d4c621119e40",
+       "5": "ca5d78ad9c1a7bf8d3feac55d9645d4764136997cc0a9e14b0a034a77a20a60e"
+      },
+      "2026-10-10_glm53-flash_k3.25-v0.9.1-ep2dcp2-dflash3-nocache_decode-prefill-16k-r2": {
+       "0": "4133425efe0c250740ce6dd39a5124fc2c0cb06f99f4362347936c8f524740fe",
+       "1": "c4a170cf0a1ca6522494494442f8341abbd327db6c0485a582e252144a35a618",
+       "2": "018cd744165e6ba8ee2762248db165a1e14826dcf2fcaa56e8bd414295e9f50b",
+       "3": "46dd9edc4392c1d9b2dc0276bfc1a4b53160540c2deed0a80c751ee5013eac51",
+       "4": "8a52fc7d574210955fd5ee2a620b64cc56a4f0ba1cf579627bfa3459f5f4d5ec",
+       "5": "c5b96fc651e9ed71e737fc39315959dc23a03eecf983129ba15c62b16d154d3b"
+      }
+     }
     }
    ]
   }

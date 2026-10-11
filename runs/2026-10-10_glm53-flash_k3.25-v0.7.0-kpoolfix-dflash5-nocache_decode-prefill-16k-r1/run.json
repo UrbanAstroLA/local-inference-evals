@@ -1,0 +1,10 @@
+{
+ "id": "2026-10-10_glm53-flash_k3.25-v0.7.0-kpoolfix-dflash5-nocache_decode-prefill-16k-r1",
+ "config": "glm53-flash/k3.25-v0.7.0-kpoolfix-dflash5-nocache",
+ "protocol": "decode-prefill-consistency/v2",
+ "date": "2026-10-10",
+ "software": {
+  "client": "tools/clients/decode_prefill_consistency.py"
+ },
+ "notes": "GPQA Diamond doc ids 0, 1, 2, 3, 4, 5 (lm-eval prompt_hash 0: 6b01485ca6c3d2cc, 1: 769b3781775e1b23, 2: 09d7adceb2186f10, 3: 0beeb08fdff9a3e1, 4: 96ec0c33934b7154, 5: 4dc7f71fe5c9bce2), 16000 generated tokens each at concurrency 1, request seed 1234 + doc id. Positions, regions and comparison values only; no token ids or text. Values rounded to 6 decimals. Completion investigation, Phase 1 step 5 (PLAN.md amendment 5): tpurtell 0.7.0 with only the two kpool backports, run 1 of 2 at 16,000 tokens. Fresh server. Measurement started only after the engine's start-up warm-up had finished: the client waited for the container's ready file and sent prompt 0 0.6 s after it; every server status line in the client's time window shows at most one running request. Server-log figures cover that window, from the container settings check to the last prompt. The client kept each prompt's token ids and decode and prefill log-probabilities locally (trace mode; restricted, not published); sha256 of each trace's JSON, by doc id: 0: f12a872868445ebc, 1: 869026b0fca75749, 2: 0293358f353faee9, 3: efa66f35e63eb3d6, 4: 56507431fe50c4ef, 5: e1b43419cc5ad4a0. Server log figures (server_log.jsonl; summary.json 'server'): KV pool 2,808,855 tokens; mean acceptance length 2.71, draft acceptance rate 0.335 (whole window; the warm-up had finished before it); 0 preemption log lines."
+}

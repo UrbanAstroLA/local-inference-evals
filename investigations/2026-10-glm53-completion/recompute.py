@@ -6,7 +6,8 @@
 Reads runs/*/results.jsonl through tools/analyze.py. Phase 0 publishes no new rows: it re-reads the two three-pass 3.25bpw
 GPQA records (tpurtell 0.7.0, DFlash2 x5; tpurtell 0.9.1, DFlash2 x3), and the 4bpw TR3 (Brandon) record on 0.9.1 for reference.
 Phase 1 (steps 1-4, decode vs prefill) reads the decode-prefill runs named in manifest.json "phase1", applies each step's
-rule (PLAN.md amendments 1-4) and the costs in costs.jsonl.
+rule (PLAN.md amendments 1-4) and the costs in costs.jsonl. Steps 5-6 (manifest.json "phase1.screens") apply the reading
+rules of amendments 5, 6 and 6a to prompts 1-5, positions 8,000-15,999, and report the secondary measures.
 """
 import json, sys
 from pathlib import Path
@@ -197,20 +198,130 @@ for pr in P1["cross_step"]["pairs"]:
     print(f"  across steps, {pr['engine']}, below 2,044, without prompt 0: on {rng(on)}, off {rng(off)}: "
           + (f"every on run above every off run, by {gap:.5f}" if side == "higher" else "ranges overlap"))
 
+# ---------------------------------------------------------------- Phase 1 steps 5-6 (PLAN.md amendments 5, 6 and 6a)
+SC = P1["screens"]
+SUB, SBIN = SC["subset"]["prompts"], SC["subset"]["bin"]
+print(f"\n# Phase 1 steps 5-6: prompts {SUB[0]}-{SUB[-1]}, positions {SBIN} (manifest.json 'phase1.screens')\n")
+
+
+def sel(rid, docs, region):
+    lo, hi = BOUNDS[region]
+    return [r for r in rows(rid) if r["doc_id"] in docs and lo <= r["i"] <= hi]
+
+
+def mean_of(rs, key):
+    v = [r[key] for r in rs if r[key] is not None]
+    return sum(v) / len(v)
+
+
+agg = lambda rid, docs=tuple(SUB), region=SBIN: mean_of(sel(rid, docs, region), "kl_top20")
+per_prompt = lambda rid: [agg(rid, (d,)) for d in SUB]
+PLAN = " ".join((HERE / "PLAN.md").read_text().split())
+
+
+def screen_table(st):
+    cols = ["KL, prompts 1-5"] + [f"Prompt {d}" for d in SUB] + ["Sampled-token abs dlp", "Top-1 agreement", "Prompt 0"]
+    val = lambda rid: ([agg(rid)] + per_prompt(rid) + [mean_of(sel(rid, SUB, SBIN), "abs_dlp"), mean_of(sel(rid, SUB, SBIN), "top1_agree"),
+                                                       agg(rid, (0,))])
+    out = ["| Run | Group | " + " | ".join(cols) + " |", "|---|---|" + "---:|" * len(cols)]
+    for g, rids in st["groups"].items():
+        out += [f"| {run_link(rid)} | {g} | " + " | ".join(f"{x:.4f}" for x in val(rid)) + " |" for rid in rids]
+    out += [f"| **range** | {g} | " + " | ".join(rng([val(r)[k] for r in rids]) for k in range(len(cols))) + " |" for g, rids in st["groups"].items()]
+    return "\n".join(out)
+
+
+def bins_table(st):
+    regs = ["0-2,043", "2,048-7,999", "8,000-15,999", "16,000 and above"]
+    out = ["| Run | Group | " + " | ".join(f"KL {r}" for r in regs) + " |", "|---|---|" + "---:|" * len(regs)]
+    for g, rids in st["groups"].items():
+        out += [f"| {run_link(rid)} | {g} | " + " | ".join(f"{agg(rid, tuple(SUB), r):.4f}" for r in regs) + " |" for rid in rids]
+    return "\n".join(out)
+
+
+def screen_verdict(st):
+    T, R = st["groups"][st["test"]], st["groups"][st["reference"]]
+    t, r = [agg(x) for x in T], [agg(x) for x in R]
+    pr = [per_prompt(x) for x in R]
+    if st["step"] == 5:     # amendment 5: reduction = below both stock runs, per prompt
+        n = [sum(per_prompt(x)[k] < min(p[k] for p in pr) for k in range(len(SUB))) for x in T]
+        if max(t) < min(r) and min(n) >= 4:
+            v = "the kpool bundle is nominated as affecting the measured discrepancy"
+        elif min(t) >= min(r):
+            v = "the corrected values remain at stock level; these repairs did not explain the discrepancy under this protocol"
+        else:
+            v = "unresolved under this screen"
+        return v, t, r, n
+    C = st["groups"][st["context"]]
+    c = [agg(x) for x in C]
+    n = [sum(per_prompt(x)[k] > max(p[k] for p in pr) for k in range(len(SUB))) for x in T]
+    if min(t) > max(r) and min(t) >= min(c) and min(n) >= 4:      # amendment 6 rule, amendment 6a wording
+        v = ("rise condition met: the old layout bundle can reproduce the discrepancy on newer code; "
+             "this does not identify which layout component causes it")
+    elif min(r) <= min(t) and max(t) <= max(r):
+        v = ("stays within the 0.9.1-default range: the bundle alone does not reproduce the discrepancy under these conditions; "
+             "old kernel code or a kernel-layout interaction remains possible")
+    else:
+        v = "unresolved under this screen"
+    return v, t, r, n
+
+
+sv = {}
+for st in SC["steps"]:
+    print(f"## Step {st['step']} (amendment {st['amendment']}): {st['question']}")
+    check(f"step {st['step']}: rule quoted in manifest.json appears verbatim in PLAN.md", st["rule"] in PLAN)
+    tab = screen_table(st); print(tab)
+    check(f"step {st['step']}: primary table appears verbatim in README.md", tab in README)
+    v, t, r, n = screen_verdict(st); sv[st["step"]] = (v, t, r, n)
+    word = "below" if st["step"] == 5 else "above"
+    line = (f"Prompts in which a {'corrected' if st['step'] == 5 else 'step-6'} run lies {word} both "
+            f"{'stock' if st['step'] == 5 else '0.9.1-default'} runs: " + ", ".join(f"{k} of {len(SUB)} (r{i + 1})" for i, k in enumerate(n)) + ".")
+    print("\n" + line)
+    check(f"step {st['step']}: per-prompt count sentence appears in README.md", line in README)
+    print(f"Verdict: {v}.")
+    check(f"step {st['step']}: verdict appears in README.md", v in README)
+    print("\nSecondary bins, prompts 1-5:")
+    tab = bins_table(st); print(tab)
+    check(f"step {st['step']}: secondary-bin table appears verbatim in README.md", tab in README)
+    for key, got in (("test", t), ("reference", r)):
+        if key in st["stated"]:
+            check(f"step {st['step']}: {key} aggregates as quoted in amendment {st['stated']['amendment']} {st['stated'][key]}",
+                  all(abs(a - b) < 6e-5 for a, b in zip(got, st["stated"][key])))
+    if "context" in st["stated"]:
+        got = [agg(x) for x in st["groups"][st["context"]]]
+        check(f"step {st['step']}: context aggregates as quoted in amendment {st['stated']['amendment']} {st['stated']['context']}",
+              all(abs(a - b) < 6e-5 for a, b in zip(got, st["stated"]["context"])))
+    if "prompts_below_both_reference" in st["stated"]:
+        check(f"step {st['step']}: per-prompt counts as quoted in amendment {st['stated']['amendment']}", n == st["stated"]["prompts_below_both_reference"])
+    print()
+check("step 5: corrected values remain at stock level", sv[5][0].startswith("the corrected values remain at stock level"))
+check("step 6: rise condition met (both above both 0.9.1-default runs, inside or above the stock range, 4+ of 5 prompts per run)",
+      sv[6][0].startswith("rise condition met"))
+for st in SC["steps"]:
+    rs = [agg(x, tuple(SUB), "8,000-15,999") for x in st["groups"][st["test"]]]
+    t2 = [mean_of([r for r in rows(x) if r["doc_id"] in SUB and r["i"] >= 8000], "kl_top20") for x in st["groups"][st["test"]]]
+    print(f"  step {st['step']}, the bin taken to the end of each trace (8,000 and above): " + ", ".join(f"{v:.4f}" for v in t2)
+          + f" (rule bin: {', '.join(f'{v:.4f}' for v in rs)})")
+
 print("\n## Cost (costs.jsonl): GPU-hours = 2 x wall hours, server start to stop, one arm at a time")
+from decimal import Decimal, ROUND_HALF_UP
+hours = lambda wall_s, gpus=1: str((Decimal(wall_s * gpus) / 3600).quantize(Decimal("0.01"), ROUND_HALF_UP))   # exact, half up
 cost = {c["step"]: c for c in map(json.loads, (HERE / "costs.jsonl").read_text().splitlines()) if c.get("phase") == 1}
 print("| step | arms | wall hours | GPU-hours |"); print("|---|---:|---:|---:|")
-for st in P1["steps"]:
+for st in P1["steps"] + SC["steps"]:
     c = cost.get(st["step"])
     if not c:
         print(f"| {st['step']} | - | not recorded | |"); fails.append(f"cost of step {st['step']}"); continue
-    w = sum(a["wall_s"] for a in c["arms"]) / 3600
-    print(f"| {st['step']} | {len(c['arms'])} | {w:.2f} | {c['allocated_gpus'] * w:.2f} |")
+    ws = sum(a["wall_s"] for a in c["arms"]); w = ws / 3600
+    print(f"| {st['step']} | {len(c['arms'])} | {hours(ws)} | {hours(ws, c['allocated_gpus'])} |")
     check(f"step {st['step']} cost: arms are this step's new runs, hours add up",
           {a["run"] for a in c["arms"]} <= {r for g in st["groups"].values() for r in g}
           and abs(c["wall_hours"] - round(w, 3)) < 1e-9 and abs(c["gpu_hours"] - round(c["allocated_gpus"] * w, 3)) < 1e-9)
-tw = sum(a["wall_s"] for c in cost.values() for a in c["arms"]) / 3600
-print(f"| all | {sum(len(c['arms']) for c in cost.values())} | {tw:.2f} | {2 * tw:.2f} |")
+tws = sum(a["wall_s"] for c in cost.values() for a in c["arms"])
+print(f"| all | {sum(len(c['arms']) for c in cost.values())} | {hours(tws)} | {hours(tws, 2)} |")
+s14 = sum(a["wall_s"] for k, c in cost.items() if k <= 4 for a in c["arms"])
+check("steps 1-4: 7.18 GPU-hours; steps 5 and 6: 1.62 and 1.75; total 10.55, within the plan's 12 GPU-hour discovery ceiling",
+      (hours(s14, 2), hours(sum(a["wall_s"] for a in cost[5]["arms"]), 2), hours(sum(a["wall_s"] for a in cost[6]["arms"]), 2), hours(tws, 2))
+      == ("7.18", "1.62", "1.75", "10.55") and tws * 2 / 3600 <= 12)
 
 print("\n## Checks (checks.jsonl)")
 for line in (HERE / "checks.jsonl").read_text().splitlines():

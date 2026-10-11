@@ -4,10 +4,11 @@ With the same 3.25bpw weights, tpurtell 0.7.0 (DFlash2 ×5) left 4 of 594 GPQA a
 (DFlash2 ×3) left 16. This investigation asks why, and whether a small, correct change to 0.9.1 recovers the
 difference. Quantization is held fixed.
 
-**Status:** Phase 0 done (existing data only, no GPU time). Phase 1 steps 1-4 done (decode vs prefill, 7.18 GPU-hours).
+**Status:** Phase 0 done (existing data only, no GPU time). Phase 1 steps 1-6 done (decode vs prefill, 10.55 GPU-hours).
+No step has tested completion.
 Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#dated-amendments).
 **Fast path:** [answer](#answer) · [evidence](#evidence) · [configuration diff](#what-differs-between-the-two-servers) ·
-[Phase 1](#phase-1) · [limits](#limits) · [next steps](#next-steps) · [recompute](#recompute)
+[Phase 1](#phase-1) · [open questions](#open-questions) · [limits](#limits) · [next steps](#next-steps) · [recompute](#recompute)
 
 ## Answer
 
@@ -17,8 +18,10 @@ Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#d
 | Every empty answer with a request log ran to the 327,680-token cap, except one that stopped after 38 tokens (0.9.1, question 12, pass 1). No server or transport errors. | **Descriptive** |
 | Most of the 0.9.1 empty answers that cost points are on questions that finish well under the cap in other passes. | **Descriptive** |
 | The two servers differ in draft depth, parallel layout, KV record, MLA ownership, draft-slot sharing, vision and engine code at once. Sampler, rejection test, KDA code, parsers, weights and rendered prompts are the same. | **Descriptive** |
-| Decode vs prefill (Phase 1): no step found 0.9.1's decode agreeing worse with its own prefill than 0.7.0's. At 8,000-15,999 tokens 0.7.0's agreed worse. Below 2,044 tokens disagreement is higher with speculation on than off, in both engines. | **Descriptive** |
-| Which difference causes the completion gap. | **Open** |
+| Decode vs prefill (Phase 1 steps 1-4): no step found 0.9.1's decode agreeing worse with its own prefill than 0.7.0's. At 8,000-15,999 tokens 0.7.0's agreed worse. Below 2,044 tokens disagreement is higher with speculation on than off, in both engines. | **Descriptive** |
+| The two kpool fixes on 0.7.0 (step 5): its disagreement at 8,000-15,999 tokens stays at stock level. These repairs did not explain the difference under this protocol. | **Descriptive** (exploratory screen) |
+| 0.9.1 with 0.7.0's parallel layout (step 6): its disagreement at 8,000-15,999 tokens rises to stock 0.7.0's level. The old layout bundle can reproduce the difference on newer code; which part of the bundle does is not identified. | **Descriptive** (exploratory screen) |
+| Which difference causes the completion gap. No step has tested completion. | **Open** |
 
 Splitting the score by completion is not a causal comparison. It says where the difference sits, not what produces it.
 
@@ -107,8 +110,8 @@ hashes of files read from the two images without running them.
 Does each engine compute the same next-token distribution when it decodes a token as when it re-reads the same tokens
 by prefill? Measured with [`decode-prefill-consistency/v1`](../../protocols/decode-prefill-consistency/v1.md)
 (12 prompts × 2,600 tokens) and [`v2`](../../protocols/decode-prefill-consistency/v2.md) (prompts 0-5 × 16,000
-tokens). Number: mean KL over the shared top-20 tokens, all prompts of a run pooled (lower = decode agrees more closely
-with prefill). Each step's reading rule was written in [`PLAN.md`](PLAN.md#dated-amendments) before that step's data.
+tokens). Number: mean KL over the shared top-20 tokens, all prompts of a run pooled (steps 5-6: prompts 1-5; lower =
+decode agrees more closely with prefill). Each step's reading rule was written in [`PLAN.md`](PLAN.md#dated-amendments) before that step's data.
 Both engines received the same prompt token ids, so the chat template does not enter.
 
 | Step | Question | Verdict under the step's rule | GPU-hours |
@@ -117,11 +120,15 @@ Both engines received the same prompt token ids, so the chat template does not e
 | [2](#step-2) | 0.9.1: DFlash2 ×5 vs ×3 | No difference in either region | 1.61 |
 | [3](#step-3) | Speculation on: 0.7.0 ×5 vs 0.9.1 ×3 and ×5 | No difference in either region | 0.84 |
 | [4](#step-4) | 16,000 tokens, both engines as shipped | 8,000-15,999: both 0.7.0 runs above both 0.9.1 runs, by 0.0081: 0.7.0 as shipped drifts further from its prefill with context. Other bins, reported only: the same order | 3.19 |
+| [5](#step-5) | 16,000 tokens: 0.7.0 with the two kpool fixes vs 0.7.0 as shipped | The corrected values remain at stock level: these repairs did not explain the discrepancy under this protocol | 1.62 |
+| [6](#step-6) | 16,000 tokens: 0.9.1 with 0.7.0's parallel layout vs 0.9.1 as shipped | Rise condition met: the old layout bundle can reproduce the discrepancy on newer code; no component identified | 1.75 |
 | [Across steps](#across-steps) | Speculation on vs off, below 2,044 tokens | Descriptive: in both engines every speculation-on run lies above every speculation-off run | |
 
-Total 3.59 wall hours, 7.18 GPU-hours. **Grade: descriptive.** These steps measure agreement along each run's own
+Total 5.27 wall hours, 10.55 GPU-hours. **Grade: descriptive.** These steps measure agreement along each run's own
 trajectory; they do not measure completion. No step found 0.9.1 agreeing worse than 0.7.0. Where a rule found a
-difference (step 1 from 2,048, by a hairline; step 4), 0.7.0 agreed worse.
+difference (step 1 from 2,048, by a hairline; step 4), 0.7.0 agreed worse. Steps 5 and 6 are exploratory screens on
+prompts 1-5 at 8,000-15,999 tokens: the kpool fixes left 0.7.0's disagreement where it was, and 0.7.0's layout raised
+0.9.1's.
 
 <details>
 <summary>What the measure can and cannot see</summary>
@@ -130,8 +137,9 @@ difference (step 1 from 2,048, by a hairline; step 4), 0.7.0 agreed worse.
   differ in a region's mean by up to about 4× among these runs, so each rule compares ranges of runs, not single
   numbers.
 - KL over the shared top-20 tokens ignores probability outside their intersection (PLAN.md, Phase 2 item 4).
-- In every run, including the 2026-10-08/09 0.9.1 runs, the engine's start-up warm-up requests (up to 16) ran during the
-  first minute of prompt 0; later prompts ran alone. Without prompt 0, step 1's separation from 2,048 disappears
+- In every run of steps 1-4, including the 2026-10-08/09 0.9.1 runs, the engine's start-up warm-up requests (up to 16)
+  ran during the first minute of prompt 0; later prompts ran alone. Steps 5-6 started measuring after the warm-up and
+  leave prompt 0 out of their rules. Without prompt 0, step 1's separation from 2,048 disappears
   (ranges overlap); the other verdicts are unchanged, and the across-steps separation narrows to the fifth decimal for
   0.9.1 ([recompute](#recompute)).
 - From 2,048 the reference is the server's chunked prefill over cached context (2,048-token chunks), not a single pass.
@@ -229,12 +237,140 @@ only: the same order from 2,048 to 7,999 (by 0.0105) and, by 0.0003, below 2,044
   0.009-0.027. The 0.7.0 excess is spread over prompts, not one prompt.
 - Positions from 16,000 (the causal length includes the 124-365-token prompt) are outside the rule's bins and shown for
   completeness.
-- A candidate mechanism, not yet tested: the two upstream kpool issues present in stock 0.7.0 and fixed in 0.9.0 and
-  later ([`FINDINGS.md`](../../FINDINGS.md) item 1).
+- A candidate mechanism, then untested: the two upstream kpool issues present in stock 0.7.0 and fixed in 0.9.0 and
+  later ([`FINDINGS.md`](../../FINDINGS.md) item 1). [Step 5](#step-5) tested it.
 - The bin ends at 15,999 as amendment 4 states. Taking it to the end of each trace instead (including positions from
   16,000) gives 0.0646 and 0.0232 for 0.7.0 and 0.0153 and 0.0144 for 0.9.1; the verdict is the same.
 - Six prompts and two runs per engine. Whether agreement at this length relates to completion is open: 0.7.0 left fewer
   answers empty while agreeing worse here.
+
+</details>
+
+### Step 5
+
+**Question.** Does applying the two kpool fixes reduce stock 0.7.0's long-context disagreement? tpurtell 0.7.0 with
+only the two kpool backports, otherwise as shipped (EP2/DCP2, DFlash2 ×5), two runs at 16,000 tokens on prompts 0-5,
+against the two stock 0.7.0 runs of step 4. 0.9.1 (step 4) is context only. Measurement started after the engine's
+start-up warm-up had finished (first request 0.4-0.6 s after its ready file). Token ids and log-probabilities were kept
+locally; only their hashes are published ([`manifest.json`](manifest.json)).
+**Rule (amendment 5).** Prompts 1-5, positions 8,000-15,999 (step 4's prompt 0 overlapped the warm-up; reported
+separately). "if both corrected aggregates lie below both stock aggregates and the reduction holds in most prompts (at
+least 4 of 5 per repeat), nominate the kpool bundle as affecting the measured discrepancy; if ranges overlap or
+reductions are inconsistent, unresolved under this screen; if corrected values remain at stock level, these repairs did
+not explain the discrepancy under this protocol. Nearness to 0.9.1 is descriptive only."
+
+KL, sampled-token log-probability difference (abs dlp) and top-1 agreement at positions 8,000-15,999; prompts 1-5
+pooled, each prompt, and prompt 0 separately:
+
+| Run | Group | KL, prompts 1-5 | Prompt 1 | Prompt 2 | Prompt 3 | Prompt 4 | Prompt 5 | Sampled-token abs dlp | Top-1 agreement | Prompt 0 |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| [2026-10-10 16k-r1](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-kpoolfix-dflash5-nocache_decode-prefill-16k-r1/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-kpoolfix-dflash5-nocache_decode-prefill-16k-r1/summary.json)) | 0.7.0 + kpool fixes, DFlash2 x5 | 0.0439 | 0.0232 | 0.0498 | 0.1021 | 0.0236 | 0.0206 | 0.1468 | 0.9405 | 0.0256 |
+| [2026-10-10 16k-r2](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-kpoolfix-dflash5-nocache_decode-prefill-16k-r2/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-kpoolfix-dflash5-nocache_decode-prefill-16k-r2/summary.json)) | 0.7.0 + kpool fixes, DFlash2 x5 | 0.0390 | 0.0601 | 0.0453 | 0.0565 | 0.0273 | 0.0057 | 0.1375 | 0.9413 | 0.0454 |
+| [2026-10-10 16k-r1](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-16k-r1/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-16k-r1/summary.json)) | 0.7.0 as shipped, DFlash2 x5 (step 4) | 0.0558 | 0.0397 | 0.0396 | 0.0251 | 0.1396 | 0.0349 | 0.1707 | 0.9360 | 0.1004 |
+| [2026-10-10 16k-r2](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-16k-r2/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-16k-r2/summary.json)) | 0.7.0 as shipped, DFlash2 x5 (step 4) | 0.0243 | 0.0320 | 0.0265 | 0.0187 | 0.0182 | 0.0261 | 0.0892 | 0.9566 | 0.0186 |
+| [2026-10-10 16k-r1](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-16k-r1/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-16k-r1/summary.json)) | 0.9.1 as shipped, DFlash2 x3 (step 4) | 0.0142 | 0.0230 | 0.0112 | 0.0131 | 0.0123 | 0.0113 | 0.0715 | 0.9630 | 0.0206 |
+| [2026-10-10 16k-r2](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-16k-r2/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-16k-r2/summary.json)) | 0.9.1 as shipped, DFlash2 x3 (step 4) | 0.0119 | 0.0092 | 0.0128 | 0.0099 | 0.0107 | 0.0169 | 0.0652 | 0.9653 | 0.0269 |
+| **range** | 0.7.0 + kpool fixes, DFlash2 x5 | 0.0390-0.0439 | 0.0232-0.0601 | 0.0453-0.0498 | 0.0565-0.1021 | 0.0236-0.0273 | 0.0057-0.0206 | 0.1375-0.1468 | 0.9405-0.9413 | 0.0256-0.0454 |
+| **range** | 0.7.0 as shipped, DFlash2 x5 (step 4) | 0.0243-0.0558 | 0.0320-0.0397 | 0.0265-0.0396 | 0.0187-0.0251 | 0.0182-0.1396 | 0.0261-0.0349 | 0.0892-0.1707 | 0.9360-0.9566 | 0.0186-0.1004 |
+| **range** | 0.9.1 as shipped, DFlash2 x3 (step 4) | 0.0119-0.0142 | 0.0092-0.0230 | 0.0112-0.0128 | 0.0099-0.0131 | 0.0107-0.0123 | 0.0113-0.0169 | 0.0652-0.0715 | 0.9630-0.9653 | 0.0206-0.0269 |
+
+Prompts in which a corrected run lies below both stock runs: 2 of 5 (r1), 1 of 5 (r2).
+
+**Verdict.** By the rule, the corrected values remain at stock level; these repairs did not explain the discrepancy under this protocol.
+Both corrected aggregates (0.0390, 0.0439) lie inside the stock range (0.0243-0.0558), and the reduction holds in 2 and
+1 of 5 prompts where the rule asks for 4. The result matches two of amendment 5's clauses: the ranges overlap
+("unresolved under this screen") and the corrected values remain at stock level ("these repairs did not explain the
+discrepancy"). The second label was chosen in amendment 6, after step 5's data was seen. Under either label, no
+reduction was shown. Descriptive
+only: both corrected runs lie above both 0.9.1 runs. **Cost** 0.81 wall hours, 1.62 GPU-hours.
+
+<details>
+<summary>Step 5 notes</summary>
+
+Other bins, prompts 1-5 (reported only):
+
+| Run | Group | KL 0-2,043 | KL 2,048-7,999 | KL 8,000-15,999 | KL 16,000 and above |
+|---|---|---:|---:|---:|---:|
+| [2026-10-10 16k-r1](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-kpoolfix-dflash5-nocache_decode-prefill-16k-r1/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-kpoolfix-dflash5-nocache_decode-prefill-16k-r1/summary.json)) | 0.7.0 + kpool fixes, DFlash2 x5 | 0.0115 | 0.0269 | 0.0439 | 0.0519 |
+| [2026-10-10 16k-r2](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-kpoolfix-dflash5-nocache_decode-prefill-16k-r2/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-kpoolfix-dflash5-nocache_decode-prefill-16k-r2/summary.json)) | 0.7.0 + kpool fixes, DFlash2 x5 | 0.0079 | 0.0189 | 0.0390 | 0.0352 |
+| [2026-10-10 16k-r1](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-16k-r1/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-16k-r1/summary.json)) | 0.7.0 as shipped, DFlash2 x5 (step 4) | 0.0104 | 0.0301 | 0.0558 | 0.1318 |
+| [2026-10-10 16k-r2](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-16k-r2/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-16k-r2/summary.json)) | 0.7.0 as shipped, DFlash2 x5 (step 4) | 0.0170 | 0.0244 | 0.0243 | 0.0181 |
+| [2026-10-10 16k-r1](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-16k-r1/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-16k-r1/summary.json)) | 0.9.1 as shipped, DFlash2 x3 (step 4) | 0.0096 | 0.0145 | 0.0142 | 0.0138 |
+| [2026-10-10 16k-r2](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-16k-r2/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-16k-r2/summary.json)) | 0.9.1 as shipped, DFlash2 x3 (step 4) | 0.0103 | 0.0145 | 0.0119 | 0.0151 |
+
+- Abs dlp and top-1 agreement in the rule's bin give the same picture as KL: the corrected runs lie inside the stock
+  range.
+- Prompt 0 was warm-up gated here but not in step 4, so the two are not a like-for-like pair: corrected 0.0256 and
+  0.0454, stock 0.1004 and 0.0186.
+- Taking the bin to the end of each trace (8,000 and above) gives 0.0441 and 0.0389 for the corrected runs; same verdict.
+- The patched image differs from stock 0.7.0 only in `attention.py` (tail-ring sizing) and `kpool_compress.py`
+  (byte-identical to the 0.9.0 and 0.9.1 file); kpool kernel tests 33 of 33
+  ([run](../../runs/2026-10-05_glm53-flash_k3.25-v0.7.0-kpoolfix-dflash5_kpool-kernel-tests/)).
+- One configuration's runs spread widely by prompt (prompt 5: 0.0206 and 0.0057). Five prompts and two runs per arm.
+
+</details>
+
+### Step 6
+
+**Question.** Does the v0.7.0 parallel layout on 0.9.1's kernels reproduce stock 0.7.0's long-context disagreement?
+tpurtell 0.9.1 with v0.7.0's layout: EP2 routed experts and DCP2, which on 0.9.1 also means no MLA layer ownership,
+656-byte KV records and separate draft pages. DFlash2 ×3 and vision off, as 0.9.1 ships. Two runs at 16,000 tokens on
+prompts 0-5, warm-up gated (first request 0.6-0.9 s after the ready file), traces local, against 0.9.1 at its default
+DCP1 layout (step 4, ×3). No new code.
+**Deviation from stock 0.7.0.** `VLLM_B12X_DCP_TOPK_OWNER_EXCHANGE=0`: the top-k owner exchange 0.7.0 uses fails on
+this fork, so the top-k merge gathers every rank's candidates instead. Same selection rule, different transport; as in
+the looping investigation's layout-bisection arm D.
+**Rule (amendment 6; interpretation replaced by amendment 6a).** Same measure as step 5. "if both step-6 aggregates lie
+above both 0.9.1-default aggregates and inside or above the stock-0.7.0 range, with the increase in at least 4 of 5
+prompts per repeat, nominate the layout bundle (DCP2/EP2/ownership off/record format/top-k merge path) as affecting the
+discrepancy; if both stay within the 0.9.1-default range, nominate the 0.7.0 kernel/engine code instead; otherwise
+unresolved. The bundle is not split into components by this step." Amendment 6a: "If step-6 disagreement rises as
+defined: the old layout bundle can reproduce the discrepancy on newer code; this does not identify which layout
+component causes it."
+
+| Run | Group | KL, prompts 1-5 | Prompt 1 | Prompt 2 | Prompt 3 | Prompt 4 | Prompt 5 | Sampled-token abs dlp | Top-1 agreement | Prompt 0 |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| [2026-10-10 16k-r1](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-ep2dcp2-dflash3-nocache_decode-prefill-16k-r1/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-ep2dcp2-dflash3-nocache_decode-prefill-16k-r1/summary.json)) | 0.9.1, 0.7.0 layout, DFlash2 x3 | 0.0604 | 0.0803 | 0.0241 | 0.0661 | 0.0306 | 0.1007 | 0.1755 | 0.9291 | 0.0067 |
+| [2026-10-10 16k-r2](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-ep2dcp2-dflash3-nocache_decode-prefill-16k-r2/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-ep2dcp2-dflash3-nocache_decode-prefill-16k-r2/summary.json)) | 0.9.1, 0.7.0 layout, DFlash2 x3 | 0.0309 | 0.0153 | 0.0413 | 0.0276 | 0.0158 | 0.0544 | 0.1106 | 0.9454 | 0.0203 |
+| [2026-10-10 16k-r1](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-16k-r1/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-16k-r1/summary.json)) | 0.9.1 as shipped, DFlash2 x3 (step 4) | 0.0142 | 0.0230 | 0.0112 | 0.0131 | 0.0123 | 0.0113 | 0.0715 | 0.9630 | 0.0206 |
+| [2026-10-10 16k-r2](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-16k-r2/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-16k-r2/summary.json)) | 0.9.1 as shipped, DFlash2 x3 (step 4) | 0.0119 | 0.0092 | 0.0128 | 0.0099 | 0.0107 | 0.0169 | 0.0652 | 0.9653 | 0.0269 |
+| [2026-10-10 16k-r1](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-16k-r1/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-16k-r1/summary.json)) | 0.7.0 as shipped, DFlash2 x5 (step 4) | 0.0558 | 0.0397 | 0.0396 | 0.0251 | 0.1396 | 0.0349 | 0.1707 | 0.9360 | 0.1004 |
+| [2026-10-10 16k-r2](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-16k-r2/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-16k-r2/summary.json)) | 0.7.0 as shipped, DFlash2 x5 (step 4) | 0.0243 | 0.0320 | 0.0265 | 0.0187 | 0.0182 | 0.0261 | 0.0892 | 0.9566 | 0.0186 |
+| **range** | 0.9.1, 0.7.0 layout, DFlash2 x3 | 0.0309-0.0604 | 0.0153-0.0803 | 0.0241-0.0413 | 0.0276-0.0661 | 0.0158-0.0306 | 0.0544-0.1007 | 0.1106-0.1755 | 0.9291-0.9454 | 0.0067-0.0203 |
+| **range** | 0.9.1 as shipped, DFlash2 x3 (step 4) | 0.0119-0.0142 | 0.0092-0.0230 | 0.0112-0.0128 | 0.0099-0.0131 | 0.0107-0.0123 | 0.0113-0.0169 | 0.0652-0.0715 | 0.9630-0.9653 | 0.0206-0.0269 |
+| **range** | 0.7.0 as shipped, DFlash2 x5 (step 4) | 0.0243-0.0558 | 0.0320-0.0397 | 0.0265-0.0396 | 0.0187-0.0251 | 0.0182-0.1396 | 0.0261-0.0349 | 0.0892-0.1707 | 0.9360-0.9566 | 0.0186-0.1004 |
+
+Prompts in which a step-6 run lies above both 0.9.1-default runs: 5 of 5 (r1), 4 of 5 (r2).
+
+**Verdict.** By the rule, rise condition met: the old layout bundle can reproduce the discrepancy on newer code; this does not identify which layout component causes it.
+Both step-6 aggregates (0.0309, 0.0604) lie above both 0.9.1-default runs (0.0119-0.0142); one lies inside and one
+above the stock 0.7.0 range (0.0243-0.0558). The bundle changes expert parallelism, context parallelism, MLA ownership,
+the KV record, draft pages and the top-k merge path at once. DCP1 with MLA layer ownership is the layout tpurtell's
+later releases ship; this step finds that the older layout bundle shows more generation-vs-prefill disagreement under
+this protocol, not that either layout is defective. **Cost** 0.88 wall hours, 1.75 GPU-hours.
+
+<details>
+<summary>Step 6 notes</summary>
+
+Other bins, prompts 1-5 (reported only):
+
+| Run | Group | KL 0-2,043 | KL 2,048-7,999 | KL 8,000-15,999 | KL 16,000 and above |
+|---|---|---:|---:|---:|---:|
+| [2026-10-10 16k-r1](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-ep2dcp2-dflash3-nocache_decode-prefill-16k-r1/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-ep2dcp2-dflash3-nocache_decode-prefill-16k-r1/summary.json)) | 0.9.1, 0.7.0 layout, DFlash2 x3 | 0.0202 | 0.0452 | 0.0604 | 0.0667 |
+| [2026-10-10 16k-r2](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-ep2dcp2-dflash3-nocache_decode-prefill-16k-r2/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-ep2dcp2-dflash3-nocache_decode-prefill-16k-r2/summary.json)) | 0.9.1, 0.7.0 layout, DFlash2 x3 | 0.0195 | 0.0215 | 0.0309 | 0.0222 |
+| [2026-10-10 16k-r1](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-16k-r1/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-16k-r1/summary.json)) | 0.9.1 as shipped, DFlash2 x3 (step 4) | 0.0096 | 0.0145 | 0.0142 | 0.0138 |
+| [2026-10-10 16k-r2](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-16k-r2/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-16k-r2/summary.json)) | 0.9.1 as shipped, DFlash2 x3 (step 4) | 0.0103 | 0.0145 | 0.0119 | 0.0151 |
+| [2026-10-10 16k-r1](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-16k-r1/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-16k-r1/summary.json)) | 0.7.0 as shipped, DFlash2 x5 (step 4) | 0.0104 | 0.0301 | 0.0558 | 0.1318 |
+| [2026-10-10 16k-r2](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-16k-r2/) ([summary](../../runs/2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-16k-r2/summary.json)) | 0.7.0 as shipped, DFlash2 x5 (step 4) | 0.0170 | 0.0244 | 0.0243 | 0.0181 |
+
+- Below 2,044 the step-6 runs (0.0202, 0.0195) also lie above both 0.9.1-default runs and both stock 0.7.0 runs.
+- Abs dlp and top-1 agreement in the rule's bin follow KL: both step-6 runs lie outside the 0.9.1-default range, inside
+  or beyond the stock range.
+- Prompt 0 does not follow the other prompts: 0.0067 and 0.0203, below both 0.9.1-default runs (0.0206 and 0.0269,
+  whose prompt 0 overlapped the warm-up).
+- Taking the bin to the end of each trace gives 0.0605 and 0.0307; same verdict.
+- Draft depth: ×3 here and in the 0.9.1 default; stock 0.7.0 runs ×5. On 0.9.1, step 2 found no ×5 vs ×3 difference
+  at 2,600 tokens.
 
 </details>
 
@@ -251,6 +387,16 @@ with speculation on than off, in both engines:
 From 2,048 tokens the speculation-on and speculation-off ranges overlap in both engines. Whether this difference bears on
 completion is open.
 
+## Open questions
+
+Stated with their evidence so far.
+
+| Question | Evidence so far |
+|---|---|
+| Does generation-vs-prefill disagreement at long context bear on completion? | No step measured completion. 0.7.0 as shipped left fewer GPQA answers empty while agreeing worse at 8,000-15,999 tokens (step 4). |
+| Which part of the 0.7.0 layout bundle goes with the higher disagreement? | Step 6 changed EP, DCP, MLA ownership, KV record, draft pages and the top-k merge path together, and still differs from stock 0.7.0 in the top-k merge path, draft depth (×3 vs ×5), vision and engine code. Inconclusive by component. |
+| Why does prompt 0 not follow the other prompts in step 6? | One prompt, two runs; inconclusive. |
+
 ## Limits
 
 - No reasoning text, token ids or draft-acceptance histories are kept for GPQA runs. The original trajectories cannot
@@ -265,7 +411,7 @@ Ranked by expected information per GPU-hour. GPU-hours = 2 × allocated wall hou
 
 | # | Step | GPU-hours | Engineering | Why |
 |---|---|---:|---|---|
-| 1 | Decode-vs-prefill protocol on the 0.7.0 image, against the existing 0.9.1 runs | ~1 | none (existing client) | Done as [Phase 1](#phase-1) steps 1-4 (7.18 GPU-hours, with speculation and 16,000-token follow-ups) |
+| 1 | Decode-vs-prefill protocol on the 0.7.0 image, against the existing 0.9.1 runs | ~1 | none (existing client) | Done as [Phase 1](#phase-1) steps 1-6 (10.55 GPU-hours, with speculation, 16,000-token, kpool and layout follow-ups) |
 | 2 | Speculative commit/rollback invariants at 3 and 5 draft tokens on 0.9.1 (plan 1A) | ~2 | 1-2 days (forced-acceptance hook) | The plan's first priority; checks state after rejections across pool and page boundaries |
 | 3 | Indexer selection and 511-pool slice on frozen scores (plan 1B) | ~1 | about a day (extends the kpool tools) | Selection ties and the slice interact differently in the two layouts |
 | 4 | Fresh fixtures from score-driving pairs (q109 seed 1234, q55 seed 1235) and a short control, 16K cap | ~1-2 | small | Better fixtures than question 79, which fails on every configuration |
@@ -276,10 +422,10 @@ No full GPQA pass until a candidate change exists.
 ## Recompute
 
 ```bash
-python3 investigations/2026-10-glm53-completion/recompute.py   # Phase 0 decomposition; Phase 1 tables, verdicts, costs; checks
+python3 investigations/2026-10-glm53-completion/recompute.py   # Phase 0 decomposition; Phase 1 tables, verdicts (steps 1-6), costs; checks
 python3 tools/analyze.py gpqa-join                              # the joined decomposition alone
 ```
 
 Files: [`PLAN.md`](PLAN.md) (frozen plan), [`manifest.json`](manifest.json) (pinned commits, images, records and
-hashes; Phase 1 runs and rules), [`checks.jsonl`](checks.jsonl) (Phase 0 and 1 checks), [`costs.jsonl`](costs.jsonl) (compute and engineering
+hashes; Phase 1 runs and rules; trace hashes for steps 5-6), [`checks.jsonl`](checks.jsonl) (Phase 0 and 1 checks), [`costs.jsonl`](costs.jsonl) (compute and engineering
 time). Local copies of replies and logs are indexed by hash and kept out of this repository.

@@ -17,12 +17,22 @@ PROMPT_IDS is a JSON file {"ids": {"<doc_id>": [token ids]}}: the gpqa-diamond/v
 served chat template (add_generation_prompt, enable_thinking=True). It is derived from the dataset and not published.
 
 Usage: decode_prefill_consistency.py PROMPT_IDS OUT.json [--prompts 0,1,2,3,4,5] [--n 2600] [--base http://127.0.0.1:8001]
+                                    [--trace-dir DIR]
 Stdlib only. The published rows rename dlp/top1/kl_int to abs_dlp/top1_agree/kl_top20 (see SCHEMA.md).
+
+OUT.json also records per-prompt timing (epoch seconds: generation start and end, end of re-scoring) under "timing".
+--trace-dir (optional, added 2026-10-10): also write each prompt's token ids and its decode and prefill log-probabilities to
+DIR/prompt<doc id>.json.gz, and record the sha256 of each trace's JSON under "traces" in OUT.json. Traces contain token
+sequences derived from the dataset; keep them local. Without --trace-dir nothing else is written, "traces" is empty, and
+the requests, rows and summary are unchanged.
 """
 
 import argparse
+import gzip
+import hashlib
 import json
 import math
+import os
 import time
 import urllib.request
 
@@ -73,10 +83,14 @@ def main():
     ap.add_argument("--prompts", default="0,1,2,3,4,5")
     ap.add_argument("--n", type=int, default=2600)
     ap.add_argument("--base", default="http://127.0.0.1:8001")
+    ap.add_argument("--trace-dir", default=None,
+                    help="optional: keep per-prompt token ids and decode/prefill logprobs here (local only; restricted)")
     a = ap.parse_args()
     ids_all = json.load(open(a.prompt_ids))["ids"]
     model = model_id(a.base)
     rows = []
+    timing = []
+    traces = {}
     for p in a.prompts.split(","):
         prompt = ids_all[p]
         t0 = time.time()
@@ -84,12 +98,27 @@ def main():
             "model": model, "prompt": prompt, "max_tokens": a.n, "temperature": 1.0, "top_p": 1.0,
             "seed": 1234 + int(p), "logprobs": 20, "ignore_eos": True,
             "return_tokens_as_token_ids": True, "return_token_ids": True})
+        t1 = time.time()
         ch = g["choices"][0]
         lp = ch["logprobs"]
         gen = ch.get("token_ids") or [tid(t) for t in lp["tokens"]]
         full = list(prompt) + list(gen)
         pre_a = prompt_lp(a.base, model, full[:2048])
         pre_b = prompt_lp(a.base, model, full) if len(full) > 2048 else []
+        timing.append({"prompt": p, "gen_start": t0, "gen_end": t1, "prefill_end": time.time(), "tokens": len(gen)})
+        if a.trace_dir:
+            os.makedirs(a.trace_dir, exist_ok=True)
+            tr = {"model": model, "prompt_id": p, "seed": 1234 + int(p), "n": a.n, "prompt_ids": list(prompt), "gen_ids": list(gen),
+                  "decode_token_logprobs": lp["token_logprobs"],
+                  "decode_top_logprobs": [None if t is None else {str(tid(k)): v for k, v in t.items()} for t in lp["top_logprobs"]],
+                  "prefill_first2048": [None if d is None else {str(k): v for k, v in d.items()} for d in pre_a],
+                  "prefill_full": [None if d is None else {str(k): v for k, v in d.items()} for d in pre_b],
+                  "timing": timing[-1]}
+            fn = os.path.join(a.trace_dir, f"prompt{p}.json.gz")
+            raw = json.dumps(tr).encode()
+            with gzip.open(fn, "wb") as fh:
+                fh.write(raw)
+            traces[p] = {"file": os.path.basename(fn), "sha256_json": hashlib.sha256(raw).hexdigest()}
         for j, tok in enumerate(gen):
             i = len(prompt) + j                    # absolute index of the generated token
             src = pre_a if i < 2048 else pre_b
@@ -114,7 +143,8 @@ def main():
             s["nkl"] += 1
     table = {k: {"n": s["n"], "mean_abs_dlp": s["dlp"] / s["n"], "top1_agree": s["top1"] / s["n"],
                  "mean_kl_int": (s["kl"] / s["nkl"]) if s["nkl"] else None} for k, s in sorted(summ.items())}
-    json.dump({"model": model, "n": a.n, "prompts": a.prompts, "summary": table, "rows": rows}, open(a.out, "w"))
+    json.dump({"model": model, "n": a.n, "prompts": a.prompts, "summary": table, "rows": rows, "timing": timing,
+               "traces": traces}, open(a.out, "w"))
     for k, v in table.items():
         print(f"{k:16s} n={v['n']:6d} |dlp|={v['mean_abs_dlp']:.5f} top1={v['top1_agree']:.4f} kl={v['mean_kl_int']}")
 

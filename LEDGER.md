@@ -64,6 +64,10 @@ What was asked, run, found, corrected and withdrawn, in date order.
 - Completion investigation, [Phase 1](investigations/2026-10-glm53-completion/README.md#phase-1) (12 decode-vs-prefill
   runs, 7.18 GPU-hours): no step found 0.9.1's decode agreeing worse with its prefill than 0.7.0's; at 8,000-15,999
   tokens 0.7.0's agreed worse. Below 2,044 tokens disagreement is higher with speculation on, in both engines.
+- Completion investigation, Phase 1 [steps 5-6](investigations/2026-10-glm53-completion/README.md#step-5) (4 runs, 3.37
+  GPU-hours): with the two kpool fixes, 0.7.0's disagreement at 8,000-15,999 tokens stayed at stock level. 0.9.1 with
+  0.7.0's parallel layout rose to stock 0.7.0's level: that layout bundle can reproduce the difference on newer code,
+  without saying which part of it does. Neither step measured completion.
 - Correction: earlier text said both servers loaded the same vendored chat template. They did not. 0.7.0 served the
   checkpoint's own template, 0.9.1 the corrected Z.ai template. Both render all 198 GPQA prompts byte-identically, so
   no number changes.

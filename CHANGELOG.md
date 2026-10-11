@@ -1,5 +1,32 @@
 # Changelog
 
+## 2026-10-10 (completion investigation, Phase 1 steps 5-6): kpool fixes on 0.7.0; 0.7.0's layout on 0.9.1
+
+Contents: 65 runs (4 new), 13 comparisons. No earlier run, number or grade changed.
+
+- **4 new decode-vs-prefill runs** (`decode-prefill-consistency/v2`, 16,000 tokens, 2026-10-10), each on a fresh server
+  and started after the engine's start-up warm-up: tpurtell 0.7.0 + kpool fixes (DFlash2 ×5, 2 runs) and tpurtell 0.9.1
+  with 0.7.0's parallel layout (DFlash2 ×3, 2 runs).
+- **New configs** `k3.25-v0.7.0-kpoolfix-dflash5-nocache` and `k3.25-v0.9.1-ep2dcp2-dflash3-nocache` (top-k owner
+  exchange off, as in the layout bisection's arm D; stated in the config).
+- **Client** `tools/clients/decode_prefill_consistency.py`: per-prompt timing in its output and an opt-in `--trace-dir`
+  that keeps token ids and log-probabilities locally and records their sha256. Without it, requests, rows and summary
+  are unchanged. Dated note in protocol v2.
+- **Completion investigation**: steps 5 and 6 in the Phase 1 section, PLAN.md amendments 5, 6 and 6a (each written before
+  its step's data), Answer table and new open questions, steps 5-6 and trace hashes in `manifest.json`, costs and checks
+  appended, `recompute.py` extended to reproduce both steps' numbers and verdicts.
+
+<details>
+<summary>Verdicts (prompts 1-5, positions 8,000-15,999)</summary>
+
+- Step 5: corrected 0.7.0 0.0439 and 0.0390 against stock 0.0558 and 0.0243; the corrected values remain at stock
+  level, so these repairs did not explain the discrepancy under this protocol.
+- Step 6: 0.9.1 with 0.7.0's layout 0.0604 and 0.0309 against 0.9.1 as shipped 0.0142 and 0.0119, higher in 5 and 4 of
+  5 prompts; the old layout bundle can reproduce the discrepancy on newer code, without identifying which component.
+- 3.37 GPU-hours (1.62 + 1.75); Phase 1 total 10.55.
+
+</details>
+
 ## 2026-10-10 (completion investigation, Phase 1 steps 1-4): decode vs prefill on both engines
 
 Contents: 61 runs (12 new), 13 comparisons. No earlier run, number or grade changed.
