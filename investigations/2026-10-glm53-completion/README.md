@@ -4,11 +4,14 @@ With the same 3.25bpw weights, tpurtell 0.7.0 (DFlash2 ×5) left 4 of 594 GPQA a
 (DFlash2 ×3) left 16. This investigation asks why, and whether a small, correct change to 0.9.1 recovers the
 difference. Quantization is held fixed.
 
-**Status:** Phase 0 done (existing data only, no GPU time). Phase 1 steps 1-6 done (decode vs prefill, 10.55 GPU-hours).
-No step has tested completion.
+**Status:** Phase 0 done (existing data only). Phase 1 steps 1-6 done (decode vs prefill, 10.55 GPU-hours); a trace audit
+then showed their long-context measure covers continuation after the model had already stopped. Completion pilot and
+fresh-seed replication done (3.55 GPU-hours). Kernel and DCP source audit done (CPU only); stage 1 of the selection-order fixture met its
+pre-set criterion; stage 2 next (amendments 10, 10a). Cumulative 14.20 GPU-hours.
 Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#dated-amendments).
 **Fast path:** [answer](#answer) · [evidence](#evidence) · [configuration diff](#what-differs-between-the-two-servers) ·
-[Phase 1](#phase-1) · [open questions](#open-questions) · [limits](#limits) · [next steps](#next-steps) · [recompute](#recompute)
+[Phase 1](#phase-1) · [completion pilot](#completion-pilot-and-replication) ·
+[prior probes](#prior-probes-read-before-proposing-new-work) · [kernel and DCP audit](#kernel-and-dcp-source-audit) · [open questions](#open-questions) · [limits](#limits) · [next steps](#next-steps) · [recompute](#recompute)
 
 ## Answer
 
@@ -21,7 +24,10 @@ Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#d
 | Decode vs prefill (Phase 1 steps 1-4): no step found 0.9.1's decode agreeing worse with its own prefill than 0.7.0's. At 8,000-15,999 tokens 0.7.0's agreed worse. Below 2,044 tokens disagreement is higher with speculation on than off, in both engines. | **Descriptive** |
 | The two kpool fixes on 0.7.0 (step 5): its disagreement at 8,000-15,999 tokens stays at stock level. These repairs did not explain the difference under this protocol. | **Descriptive** (exploratory screen) |
 | 0.9.1 with 0.7.0's parallel layout (step 6): its disagreement at 8,000-15,999 tokens rises to stock 0.7.0's level. The old layout bundle can reproduce the difference on newer code; which part of the bundle does is not identified. | **Descriptive** (exploratory screen) |
-| Which difference causes the completion gap. No step has tested completion. | **Open** |
+| Trace audit (amendment 7): in all 24 retained step-5/6 traces the model ended its reply at 637-5,377 tokens; the 8,000-15,999-token measure of steps 4-6 is entirely forced continuation after that point, so it says nothing about non-completion. | **Descriptive** |
+| Completion pilot and replication (amendments 8-9): 0.9.1's default layout vs the 0.9.1 EP2/DCP2 diagnostic bundle, 24 requests per arm on three target questions and a control. Default layout 2 of 10 fresh-seed target draws unanswered at the cap, bundle 0 of 10 (one-sided p ≈ 0.24); 0 vs 0 on the 8 replication draws per arm. No useful separation. | **Descriptive** |
+| Kernel and DCP source audit (amendment 10a): no defect unique to 0.9.1 found in attention, the DCP combine, record readers, graphs or scratch; the known indexer write defects are on 0.7.0's side and fixed in 0.9.1. | **Descriptive** (source reading) |
+| Which difference causes the completion gap. | **Open** |
 
 Splitting the score by completion is not a causal comparison. It says where the difference sits, not what produces it.
 
@@ -387,13 +393,86 @@ with speculation on than off, in both engines:
 From 2,048 tokens the speculation-on and speculation-off ranges overlap in both engines. Whether this difference bears on
 completion is open.
 
+## Completion pilot and replication
+
+Amendments 8-9. 0.9.1 default layout (A) vs the 0.9.1 EP2/DCP2 diagnostic bundle (B), DFlash2 ×3, temperature 1.0,
+top_p 0.95, normal stopping, 8 requests in flight, caps 65,536 (q55, q109, q144 control) and 131,072 (q170). The same
+seed on different layouts is not a matched trajectory, so arm-to-arm pairs are separate draws. Receipts:
+[`pilot/`](pilot), [`replication/`](replication).
+
+| Run | Requests per arm | A unanswered at cap | B unanswered at cap | Note |
+|---|---|---|---|---|
+| Pilot, original seeds | 4 | 0 | 0 | the original 327,680-token failures did not recur |
+| Pilot, fresh seeds | 4 | 2 (q109, q170) | 0 | each one draw; within chance (p ≈ 0.23); B answered later in 3 of 4 pairs where both answered |
+| Replication, 4 new fresh seeds on q109 and q170 | 8 | 0 | 0 | B longer on q109, shorter on q170 |
+
+The two capped replies were not loops (repeated 200-character windows 0-1%, steady compression): the model reached the
+target answer repeatedly in its reasoning and kept reopening it. Pilot 2.01 GPU-hours, replication 1.54.
+
+## Prior probes (read before proposing new work)
+
+Behavioural and kernel probes already run on these engines. Screens with a fixed seed on every repeat are withdrawn and
+listed only so they are not repeated as if new.
+
+| Probe | What it varied | Result | Status |
+|---|---|---|---|
+| [Component screen, q88](../../comparisons/glm53-flash-v091-component-screen-doc88/README.md) (2026-10-09, seeds 5001-5012) | On 0.9.1: EP2 experts; 656 B record (NOPE off); MLA ownership tp with slot sharing off | failed to finish: 656 B 4/24 vs 528 B 4/24; EP2 3/24 vs 5/24; ownership tp 3/24 vs 5/24; no candidate at this size | valid; sized for large effects only |
+| Component screen, q79 (same date and seeds; [`FINDINGS.md`](../../FINDINGS.md) items 13-14) | 0.9.1 vs the 0.7.0 image with its own layout at 3 draft tokens | 9/12 vs 9/12 failed to finish | valid; one question |
+| [kpool kernel tests](../../protocols/kpool-kernel-tests) | upstream `test_kpool_decode_update_batched` on the release images | 4 cases fail on 0.7.0 and 0.8.0 (tail ring, seed stride); pass with the fixes in 0.9.1 | valid |
+| Step 5 (this investigation) | 0.7.0 with both kpool fixes | decode-vs-prefill disagreement unchanged; that measure is post-completion (amendment 7) | valid, measure limited |
+| Step 6, pilot, replication (this investigation) | 0.9.1 with 0.7.0's parallel layout bundle | no reproducible completion benefit | valid |
+| 0.8.0 GPQA, ×5 drafts with slot sharing off vs ×3 with sharing | draft depth and sharing together | no completion improvement | single passes |
+| [kpool k1 screen](../2026-10-glm53-kpool-tail/preregistration-kpool-screen.md) (2026-10-04), [layout bisection](../2026-10-glm53-looping/preregistration/WITHDRAWN.md) (2026-10-07/08) | 1 vs 3 drafts; 0.9.0 vs 0.7.0 layout | withdrawn: seed 1234 on every repeat | do not cite rates |
+
+## Kernel and DCP source audit
+
+Amendments 10-10a. CPU only: the installed vLLM and B12x kernel source of the three releases (0.7.0 B12x `fe054789`;
+0.8.0 and 0.9.1 `7fcc094e`), read by three independent audits (indexer selection; DCP attention; kernel dispatch and
+storage), each citing file and line.
+
+| Area | Finding |
+|---|---|
+| Attention and DCP combine | 0.7.0 (DCP2, 656 B records) and 0.9.1 (one rank per MLA layer, 528 B records) compute the same attention up to floating-point order; the cross-rank combine has no invalid-weight path found |
+| Kernel library update | changes rounding and summation order on the paths these engines run, and the top-k kernels' internal merge |
+| Indexer write defects | tail ring with five drafts and tail-seed stride: 0.7.0/0.8.0 only, fixed in 0.9.1 |
+| Indexer selection | every version selects the exact top 512 compressed-key pools by score (apart from ties), then keeps output columns 0-510 to fit the newest 1-3 tokens; no top-k path sorts its output, so the dropped column is not guaranteed to be the weakest pool; which kernel path supplies it differs by version and by requests in flight. Upstream vLLM keeps all 512. |
+| Also noted, not tested | a default-on two-GPU all-reduce transport new in 0.8.0 without a runnable correctness test; the engine's own K4 records show teacher-forced NLL about 0.007 higher from 0.8.0 on (one 0.7.1 pass) |
+
+### Phase 2, stage 1: which pool is dropped
+
+Each release's own top-k kernels, driven on one GPU with frozen synthetic inputs (no model, no server), against an fp64
+reference computed from the same quantized bytes. Rank 0 is the best pool; the reference drops rank 511. Share of rows
+where the dropped pool ranked better than 480 (well inside the selection), 5 repeats per input:
+
+| Path | When it runs | 1,024 pools | 4,096 | 16,384 | 30,000 |
+|---|---|---|---|---|---|
+| 0.9.1 tiled | more than 16 rows: 5-8 requests in flight at 3 draft tokens | 94% | 97% | 98% | 2% |
+| 0.9.1 fused | up to 16 rows: 1-4 requests in flight | 0% | 0% | 1% | 0.5% |
+| 0.7.0 per rank, then cross-rank merge | every decode step | 17-21% | 4-5% | 3-6% | 1-3% |
+
+- On 0.9.1's tiled path the dropped pool is effectively random within the top 512 (median rank about 250) up to 16,384
+  pools (about 65,000 tokens). 0.7.0 mostly drops near the boundary at long context.
+- The selected set always matched the reference apart from boundary ties (0 mismatches in 113,360 row-repeats); output
+  order varied between repeats on every row.
+- At exactly 512 pools (2,048-2,051 tokens) every path drops an arbitrary pool.
+- Pre-set criterion (amendment 10a) met. This shows a selection-order difference on synthetic inputs only: not yet on real
+  serving inputs, not a completion effect, and not an explanation of the GPQA gap. Inferred mechanism for the tiled path: a
+  fold over 16,384-pool slices that, with one live slice, sees exactly 512 candidates and emits them unsorted.
+- The reference rule (keep the 511 highest-scoring pools) is this investigation's; the engine's source does not state
+  which pool should be dropped, and upstream vLLM keeps all 512.
+
+0.10 GPU-hours. Receipts: [`phase2-stage1/`](phase2-stage1) (driver, analysis, per-cell summaries, hashes of the raw rows).
+Stage 2 (in place on real serving inputs, observe-only) is next.
+
 ## Open questions
 
 Stated with their evidence so far.
 
 | Question | Evidence so far |
 |---|---|
-| Does generation-vs-prefill disagreement at long context bear on completion? | No step measured completion. 0.7.0 as shipped left fewer GPQA answers empty while agreeing worse at 8,000-15,999 tokens (step 4). |
+| Does generation-vs-prefill disagreement at long context bear on completion? | The 8,000-15,999-token measure covers continuation after the reply had ended (amendment 7); no positive evidence either way. |
+| Does the column-511 drop discard well-ranked pools on real serving inputs, and does that touch completion? | Stage 1 (synthetic inputs): yes on 0.9.1's tiled path, rarely on 0.7.0's at long context. Real inputs and completion untested. |
+| Do legitimate numerical differences shift how often long deliberation runs past the cap? | Non-completion is a low-rate tail event (about 1 in 10 fresh draws at these caps on two hard questions); small pilots cannot resolve rates near 2.7% vs 0.7% of replies. |
 | Which part of the 0.7.0 layout bundle goes with the higher disagreement? | Step 6 changed EP, DCP, MLA ownership, KV record, draft pages and the top-k merge path together, and still differs from stock 0.7.0 in the top-k merge path, draft depth (×3 vs ×5), vision and engine code. Inconclusive by component. |
 | Why does prompt 0 not follow the other prompts in step 6? | One prompt, two runs; inconclusive. |
 
@@ -407,17 +486,9 @@ Stated with their evidence so far.
 
 ## Next steps
 
-Ranked by expected information per GPU-hour. GPU-hours = 2 × allocated wall hours. Estimates, not measurements.
-
-| # | Step | GPU-hours | Engineering | Why |
-|---|---|---:|---|---|
-| 1 | Decode-vs-prefill protocol on the 0.7.0 image, against the existing 0.9.1 runs | ~1 | none (existing client) | Done as [Phase 1](#phase-1) steps 1-6 (10.55 GPU-hours, with speculation, 16,000-token, kpool and layout follow-ups) |
-| 2 | Speculative commit/rollback invariants at 3 and 5 draft tokens on 0.9.1 (plan 1A) | ~2 | 1-2 days (forced-acceptance hook) | The plan's first priority; checks state after rejections across pool and page boundaries |
-| 3 | Indexer selection and 511-pool slice on frozen scores (plan 1B) | ~1 | about a day (extends the kpool tools) | Selection ties and the slice interact differently in the two layouts |
-| 4 | Fresh fixtures from score-driving pairs (q109 seed 1234, q55 seed 1235) and a short control, 16K cap | ~1-2 | small | Better fixtures than question 79, which fails on every configuration |
-| 5 | Mixed-projection MoE fidelity, EP2 vs rank-sliced (plan 1C) | ~1 | days | Highest engineering cost |
-
-No full GPQA pass until a candidate change exists.
+Per amendment 10: Phase 2 (one discriminating kernel fixture, ceiling 1.5 GPU-hours) and, only on an actionable result,
+Phase 3 (reproduce, smallest correct intervention, ceiling 1.5). 3.0 GPU-hours of the approved 17.1 remain. No full GPQA
+pass and no further behavioural pilot until a localized defect or a separately budgeted distributional comparison exists.
 
 ## Recompute
 

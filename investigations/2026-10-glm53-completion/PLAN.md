@@ -397,3 +397,80 @@ fresh seed (5 per case per arm), labelled as pooled. Reported with the exact one
 over the 8 new requests per arm is below 0.05; (2) observation still requiring replication if the direction holds in both
 cases without reaching that; (3) no useful separation otherwise. Requests are draws within two fixtures; results do not
 generalize beyond these questions, and the same seed on different layouts is not a matched trajectory.
+
+**Amendment 10 (2026-10-11, written by the operator before data).** Kernel and DCP investigation. Objective: explain why
+stock 0.7.0 completed more GPQA replies than 0.9.1 on the same K3.25 weights, and identify a correct intervention if
+possible, by direct examination of attention/indexer kernels and DCP execution. No further speculative-decoding pilot at
+this stage. Basis: draft depth 3 to 5 (with sharing changed) did not improve completion in the surviving 0.8.0 GPQA
+comparison; the serving and short-context probes found no speculative mechanism; the rejected-draft kpool corruption is
+repaired and tested; the old-layout behavioural intervention gave no reproducible benefit; the long-context KL result
+measured forced continuation after natural completion. Kernel/DCP mechanisms remain plausible because they have not been
+isolated; limited exploration is a reason to inspect them, not evidence that they are the cause.
+
+Budget reconciliation: read additively, the approved ceilings are 12 + 4 + 1.1 = 17.1 GPU-hours; 14.10 consumed, 3.0
+remain. (Amendment 9's "cumulative ceiling 15.65" counted Tranche 1 from consumption rather than from the discovery
+allocation; the additive reading is the operator's and supersedes it.) No new GPU time requested. Allocation: Phase 1
+source and provenance audit, CPU only; Phase 2, one discriminating kernel/DCP fixture, ceiling 1.5 GPU-hours; Phase 3,
+replication or intervention test, up to the remaining 1.5, only if Phase 2 is actionable. Ceilings include startup,
+warm-up, measurement, shutdown and invalid runs; engineering time tracked separately.
+
+Phase 1: source-backed comparison of 0.7.0, 0.8.0 and 0.9.1 covering (1) sparse MLA indexer selection: pool eligibility
+and incomplete tail, selected-pool count including the 511-pool slice, local vs global top-k, ties, ordering and
+duplicates, owner exchange vs global-merge fallback; (2) DCP attention: token ownership and positions, cache writes, reads
+and addressing, pool/ring/page boundaries, normalization and cross-rank combination, accumulation precision and reduction
+order; (3) kernel dispatch and storage: kernels actually executed per configuration, KV record readers and writers,
+graph vs eager, scratch initialization and reuse, kernel changes in the newer backend. Expert partitioning kept separate
+from attention partitioning; settings that must change together documented. Per difference: source location and version,
+existing tests and coverage, a concrete failure mechanism, the cheapest distinguishing test. No assumption that a newer
+kernel can be transplanted into the older engine.
+
+Phase 2: one controlled fixture on identical inputs and histories, in priority order where the audit supports it:
+(A) indexer selection on frozen scores and eligibility masks against a small explicit reference (ties, tails, count
+boundaries, cross-rank merge, owner exchange vs fallback; a different tie choice is a defect only if it violates the
+intended rule); (B) DCP attention on semantically identical queries, caches and positions, comparing eligible and
+selected tokens, normalization, rank-local contributions and combined output against a validated reference (neither
+prefill nor the older engine is automatically an oracle); (C) committed-state replay of one identical history, only for
+accumulated-write, ownership or reuse mechanisms (a newly built cache tests reads and selection, not incremental writes).
+Controls: effective configuration verified from logs and dispatch; repeatability or tolerance within each path; weights,
+history and inputs fixed; one compatible component at a time; inseparable settings labelled as a bundle; legitimate
+floating-point variation distinguished from invariant failure; intermediate receipts and trace hashes kept. The
+generation-vs-prefill KL sweep is not repeated; forced post-completion continuations are not evidence about non-completion.
+
+Phase 3: the reserve is spent only on an actionable result (reproducible invariant violation; incorrect selection or
+addressing against a validated reference; a difference localized to one operation beyond its measured repeatability and
+tolerance): reproduce on another input or boundary, test the smallest correct intervention, confirm it removes the
+localized problem. Expected numerical variation is documented, not followed by an automatic behavioural pilot. With no
+actionable difference, the tranche stops and remaining uncertainty is reported. Further GPU time requires a concrete
+proposal (mechanism and evidence, competing explanations, the distinguishing observation, measured throughput and maximum
+GPU-hours, why a shorter fixture cannot answer). If the remaining question is whether legitimate numerical differences
+change rare completion tails, that is stated explicitly and needs a separately budgeted distributional comparison.
+Conclusions kept separate: (1) a kernel or state-management defect exists; (2) its correction changes completion on
+selected fixtures; (3) it explains or closes the representative GPQA completion gap.
+
+**Amendment 10a (2026-10-11, coordinator, Phase 1 complete, before Phase 2 data).** Phase 1 result: three independent
+source audits (indexer selection; DCP attention; kernel dispatch and storage) found no defect unique to 0.9.1 in the
+attention math, DCP combine, record readers or graph/scratch handling; attention differs between 0.7.0 and 0.9.1 only by
+floating-point ordering. Known indexer write defects (tail-seed stride, 4-slot tail ring with five drafts) are 0.7.0/0.8.0
+only and fixed in 0.9.1, so they cannot explain 0.9.1 completing less. One selection defect candidate is common to all
+versions and was flagged by all three audits: the engine asks the top-k kernels for 512 compressed-key pools, then keeps
+output columns 0-510 to make room for the 0-3 newest tail tokens. No top-k path sorts its output, so the dropped column is
+not guaranteed to be the lowest-scoring pool; which kernel path supplies it differs by version and by the number of
+requests in flight (0.9.1: rewritten fused cooperative merge with up to 4 requests, tiled with 5-8; 0.7.0: per-rank top-k
+then a cross-rank merge). Upstream vLLM keeps all 512 pools (2,051 columns), so the drop is specific to this engine.
+Other candidates recorded and not selected for Phase 2: the default-on two-GPU remote-push all-reduce transport new in
+0.8.0 (no runnable correctness test); a teacher-forced NLL rise of about 0.007 from 0.7.1 to 0.8.0+ in the engine's own K4
+records (one 0.7.1 pass); 528-byte record writer equivalence (unverified, expected rounding only).
+
+Phase 2 fixture (type A, indexer selection), chosen because it is the only identified mechanism that changes which context
+is attended at long lengths, whose supplying path differs between the engines, and that can be tested on frozen inputs
+against an explicit reference. Reference, fixed now: the intended selection is the 511 highest-scoring complete pools by
+exact fp32 score, plus the 0-3 tail tokens; a tie at the 511/512 boundary may be resolved either way. Stage 1 (one GPU, no
+model, ceiling 0.2 GPU-hours): drive each release's real top-k paths (0.7.0: tiled and fused serial per rank plus the
+cross-rank merge; 0.9.1: fused cooperative and tiled) with frozen inputs at pool counts from 512 to 30,000 and 1-64 rows,
+including constructed boundary rows (exactly 512 candidates above a coarse bin edge; plateaus straddling rank 512), each
+input repeated to measure run-to-run variation; record the reference rank of the pool in column 511 and selected-set
+equality. Actionable: column 511 holds a pool ranked well inside the top 511 (not a boundary tie) at a non-negligible rate
+on any shipped path. Not actionable: column 511 always holds the 512th pool or a boundary tie. Stage 2, only if Stage 1 is
+actionable (ceiling 1.3 GPU-hours, remainder of Phase 2): the same measurement in place on real serving inputs through an
+observe-only hook on 0.9.1 and 0.7.0, at the concurrency mix of a GPQA pass. A finding would establish conclusion (1) at
+most; it would not by itself show a completion effect.

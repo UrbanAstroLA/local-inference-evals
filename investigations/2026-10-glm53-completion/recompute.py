@@ -318,10 +318,20 @@ for st in P1["steps"] + SC["steps"]:
           and abs(c["wall_hours"] - round(w, 3)) < 1e-9 and abs(c["gpu_hours"] - round(c["allocated_gpus"] * w, 3)) < 1e-9)
 tws = sum(a["wall_s"] for c in cost.values() for a in c["arms"])
 print(f"| all | {sum(len(c['arms']) for c in cost.values())} | {hours(tws)} | {hours(tws, 2)} |")
-s14 = sum(a["wall_s"] for k, c in cost.items() if k <= 4 for a in c["arms"])
+tws1 = sum(a["wall_s"] for k, c in cost.items() if isinstance(k, int) for a in c["arms"])   # Phase 1 steps
+s14 = sum(a["wall_s"] for k, c in cost.items() if isinstance(k, int) and k <= 4 for a in c["arms"])
 check("steps 1-4: 7.18 GPU-hours; steps 5 and 6: 1.62 and 1.75; total 10.55, within the plan's 12 GPU-hour discovery ceiling",
-      (hours(s14, 2), hours(sum(a["wall_s"] for a in cost[5]["arms"]), 2), hours(sum(a["wall_s"] for a in cost[6]["arms"]), 2), hours(tws, 2))
-      == ("7.18", "1.62", "1.75", "10.55") and tws * 2 / 3600 <= 12)
+      (hours(s14, 2), hours(sum(a["wall_s"] for a in cost[5]["arms"]), 2), hours(sum(a["wall_s"] for a in cost[6]["arms"]), 2), hours(tws1, 2))
+      == ("7.18", "1.62", "1.75", "10.55") and tws1 * 2 / 3600 <= 12)
+later = {k: c for k, c in cost.items() if not isinstance(k, int)}   # Tranche 1 runs (amendments 8-9), labelled by name
+for k, c in later.items():
+    print(f"  {k}: {hours(sum(a['wall_s'] for a in c['arms']), 2)} GPU-hours")
+gh = {k: c["gpu_hours"] for k, c in later.items()}
+check("pilot 2.01 and replication 1.54 GPU-hours (two GPUs each); later runs logged with their own GPU counts",
+      [hours(sum(a["wall_s"] for a in c["arms"]), 2) for k, c in later.items() if c["allocated_gpus"] == 2] == ["2.01", "1.54"]
+      and all(abs(c["gpu_hours"] - round(c["allocated_gpus"] * sum(a["wall_s"] for a in c["arms"]) / 3600, 3)) < 1e-9 for c in later.values()))
+allcost = [json.loads(l) for l in (HERE / "costs.jsonl").read_text().splitlines()]
+print(f"  cumulative GPU-hours, every ledger entry: {sum(c['gpu_hours'] for c in allcost):.2f}")
 
 print("\n## Checks (checks.jsonl)")
 for line in (HERE / "checks.jsonl").read_text().splitlines():
