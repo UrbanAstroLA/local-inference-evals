@@ -375,3 +375,25 @@ stop ['</s>'] as in the GPQA task, local reasoning text). Manifest sha256 prefix
 Launch note (coordinator): after the runner started and before arm A's client started, the client was changed to record
 requests open at the time limit as finish_reason 'time_limit' with partial text, and to record time to first chunk. Request
 bodies, seeds, caps and order were unchanged. Neither arm reached its time limit. Results: `pilot/table.md`, `pilot/report.json`.
+
+**Amendment 9 (2026-10-11, approved by the operator before data).** Fresh-seed replication of the pilot's two target
+observations (q109 and q170: arm A censored at the cap, arm B answered, one draw each). Arms, weights, prompts, sampler,
+draft depth, stopping, warm-up gate, concurrency 8 and caps are exactly as in amendment 8. Frozen manifest (sha256 prefix
+c6b10710ce414be4), fresh seeds following one rule (7000 + 100k + question, k = 2..5): q170 seeds 7270, 7370, 7470, 7570, cap
+131,072; q109 seeds 7209, 7309, 7409, 7509, cap 65,536; submitted together in that order. No control: the pilot's control
+was unchanged in both arms, and adding it would put more than 8 requests in flight; execution is checked by the gate record
+and scheduling counts.
+
+GPU provisioning: up to 1.1 GPU-hours beyond Tranche 1 (12.56 used, 1.99 left in Tranche 1; cumulative ceiling 15.65). Estimate from
+the pilot's measurements: about 58 tok/s per request with 8 running and about 75 with 4, startup 10-13 min per arm;
+expected about 2.5 GPU-hours, worst case (every request to its cap) about 3.1. Each arm is stopped 46 min after server
+start; requests open then are recorded as censored by the time limit, distinct from the token cap. Replication ceiling
+3.1 GPU-hours.
+
+Analysis, fixed before data. Per case and arm: valid final answers by the cap out of 4, and tokens to answer, compared at
+the common thresholds (32k and 64k; 128k for q170). Primary: the 8 new requests per arm. Secondary: pooled with the pilot's
+fresh seed (5 per case per arm), labelled as pooled. Reported with the exact one-sided test over requests. Classification:
+(1) reproducible behavioural candidate if arm B has fewer censored replies than arm A in both cases and the one-sided p
+over the 8 new requests per arm is below 0.05; (2) observation still requiring replication if the direction holds in both
+cases without reaching that; (3) no useful separation otherwise. Requests are draws within two fixtures; results do not
+generalize beyond these questions, and the same seed on different layouts is not a matched trajectory.
