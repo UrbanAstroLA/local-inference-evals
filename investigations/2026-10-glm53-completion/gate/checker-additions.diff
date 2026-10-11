@@ -1,0 +1,111 @@
+--- a/sparse_attn_indexer_kpool.py (candidate)
++++ b/sparse_attn_indexer_kpool.py (verification)
+@@ -58,6 +58,14 @@
+ 
+ # MXFP4 layout: 2 values packed per byte, ue8m0 (1-byte) scale per block of 32.
+ MXFP4_BLOCK_SIZE = 32
++
++# ---- col511check (observe-only; inert unless GLM53_COL511CHECK=device) ----
++try:
++    from vllm import col511check as _c511
++except Exception:  # noqa: BLE001
++    _c511 = None
++_C511_ON = _c511 is not None and _c511.ENABLED
++# ---- end col511check ----
+ 
+ 
+ def _move_lowest_selected_pool_last(
+@@ -659,11 +667,30 @@
+                     row_starts=chunk.cu_seqlen_ks,
+                 )
+ 
++            _c511_ctx = None
++            if _C511_ON and index_kpool > 1 and positions is not None:  # col511check
++                _c511_ctx = _c511.pre(
++                    k_cache_prefix, 2, has_decode, pool_topk,
++                    _prefill_selected_pool_scores(logits, pool_topk, chunk.cu_seqlen_ks),
++                    (chunk.cu_seqlen_ke - chunk.cu_seqlen_ks)[: pool_topk.shape[0]],
++                    torch.ones(pool_topk.shape[0], dtype=torch.bool, device=pool_topk.device),
++                )
+             if index_kpool > 1 and positions is not None and dcp_world_size == 1:
+                 # col511-fix (prefill): the slice below keeps select_k - 1 pools.
+                 _move_lowest_selected_pool_last(
+                     pool_topk,
+                     _prefill_selected_pool_scores(logits, pool_topk, chunk.cu_seqlen_ks),
++                )
++            if _c511_ctx is not None:  # col511check
++                _c511.post(
++                    _c511_ctx, pool_topk,
++                    scores_direct=_prefill_selected_pool_scores(
++                        logits, pool_topk, chunk.cu_seqlen_ks
++                    ),
++                    sample=_c511.prefill_sampler(
++                        q_slice, weights[chunk.token_start : chunk.token_end],
++                        k_quant, k_scale_cast, chunk.cu_seqlen_ks,
++                    ),
+                 )
+             if index_kpool > 1:
+                 pool_ids = pool_topk.to(torch.int64)
+@@ -686,6 +713,14 @@
+                 topk_indices_buffer[
+                     chunk.token_start : chunk.token_end, : expanded.shape[-1]
+                 ] = expanded
++                if _c511_ctx is not None and positions is not None:  # col511check
++                    _c511.consumer(
++                        _c511_ctx,
++                        topk_indices_buffer[
++                            chunk.token_start : chunk.token_end, : expanded.shape[-1]
++                        ],
++                        q_seq,
++                    )
+ 
+     if has_decode:
+         decode_metadata = attn_metadata_narrowed.decode
+@@ -920,6 +955,7 @@
+             and not decode_metadata.requires_padding
+             and b12x_seq_lens.dim() == 1
+         )
++        _c511_dctx = None  # col511check
+         if use_b12x_kpool:
+             _ensure_b12x_sparse_indexer_supported()
+             cfg = get_current_vllm_config_or_none()
+@@ -963,8 +999,28 @@
+                 dcp_rank=dcp_rank,
+                 cp_kv_cache_interleave_size=cp_kv_cache_interleave_size,
+             )
++            if _C511_ON and index_kpool > 1:  # col511check
++                _c511_q = padded_q_quant_decode_tokens.reshape(
++                    num_rows, *padded_q_quant_decode_tokens.shape[2:]
++                )
++                _c511_dctx = _c511.pre(
++                    k_cache_prefix,
++                    _c511.decode_route(_c511_q, b12x_block_table, num_rows, select_k),
++                    has_prefill, topk_dst, topk_scores, b12x_seq_lens[:num_rows],
++                    b12x_seq_lens[:num_rows] > 0,
++                )
+             _move_lowest_selected_pool_last(topk_dst, topk_scores)
++            if _c511_dctx is not None:  # col511check
++                _c511.post(
++                    _c511_dctx, topk_dst,
++                    sample=_c511.decode_sampler(
++                        _c511_q, padded_weights[:num_rows].reshape(num_rows, -1),
++                        kv_cache_raw, b12x_block_table[:num_rows],
++                    ),
++                )
+         else:
++            if _C511_ON:  # col511check
++                _c511.fallback_call()
+             logits = fp8_fp4_paged_mqa_logits(
+                 (padded_q_quant_cast, padded_q_scale),
+                 kv_cache_quant_view,
+@@ -1052,6 +1108,10 @@
+                 out.reshape(batch_size, -1, out.shape[-1]), decode_lens
+             )
+         topk_indices_buffer[: out.shape[0], : out.shape[-1]] = out
++        if _c511_dctx is not None and index_kpool > 1 and positions is not None:  # col511check
++            _c511.consumer(
++                _c511_dctx, topk_indices_buffer[: out.shape[0], : out.shape[-1]], dec_seq
++            )
+ 
+     return topk_indices_buffer
+ 

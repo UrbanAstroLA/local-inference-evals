@@ -559,3 +559,74 @@ shipped-graph-mode guard run on unmodified 0.9.1 and one with the positions back
 GPU-hours for T1-T3). In parallel, a CPU-only audit compares the fork's vLLM with upstream vLLM on the GLM-5.3-Flash paths,
 because every defect found so far sits where the fork departs from or lags upstream. A completion test of the column-511
 fix needs its own proposal afterwards.
+
+**Amendment 11 (2026-10-11; adopts the independent assessment "validate column-511 correction, then test completion").**
+Terminology: the intervention is a correction to the engine's 511-pool selection policy (discard the lowest-scoring
+selected pool), not a restoration of upstream's 512-pool policy. Established: the engine truncates an unordered 512-pool
+selection to 511; the discarded pool differs substantially between kernel paths; identical-input route interventions
+reproduce the difference; moving the lowest-scoring selected pool last removes the localized error. Not established: its
+effect on completion or accuracy, or how much of the engine gap it explains.
+Within the remaining defect-verification authorization (3.99 GPU-hours), in priority order: (1) column-511 correction
+verified in a full server under the shipped graph configuration (gate, below); (2) the tail fix completed with
+upstream's ownership guard and with the causal-length change isolated; (3) CPU confirmation of 0.7.0's two-rank
+tail-ring mechanism. Deferred: SwiGLU NLL study, router precision, workspace diagnostics (absent a concrete suspected
+violation).
+Gate before the GPQA arm: the column-511-only build in a full server, shipped graph mode, existing fixtures (no new
+free-running pilot), covering tiled and fused routes, transitions between them as requests finish, the captured batch
+sizes, mixed prefill/decode execution, valid unfilled slots and boundary ties. Confirm: the selected set before
+truncation is preserved; the discarded pool is the lowest-scoring valid selected pool within the documented tolerance;
+graph replay uses current scores and indices; no unintended patch or effective configuration change. Corrupted/NaN rows
+reported separately (the correction does not repair the tail ring).
+Completion arm (needs operator authorization of up to 13 additional GPU-hours; startup, warm-up, shutdown and invalid runs
+count): 0.9.1 K3.25 with the column-511 correction only; three complete GPQA passes; original protocol, seeds,
+concurrency, sampling and 327,680-token cap; shipped graph mode; tail, router and clamp changes excluded. Image, patch,
+configuration and analysis frozen before generation; no stopping or extension on interim scores. Comparator: the existing
+clean 0.9.1 three-pass record, with an explicit historical-control limitation, after verifying image ancestry and
+installed dependencies, weights, rendered prompts, tokenizer, parser, effective server settings, sampling, admission
+policy, warm-up procedure and GPU/software environment; execution differences recorded. A positive result supports
+improvement relative to the recorded baseline only; a contemporaneous control is priced separately before any definitive
+gap-explanation claim.
+Analysis: primary = empty replies across all 594 question-passes, question-clustered comparison with the baseline, effect
+estimate with uncertainty interval; exact test and direction fixed before data (a power statement must state its
+alternative and clustering model; total counts alone do not determine a clustered p-value). Secondary: raw and stated
+correctness across all requests (not answered-only), rescued and newly introduced empties, cap exhaustion vs premature
+stopping, completion-length distribution, GPU-hours and throughput, kernel-route exposure where measurable without
+changing execution. Reading rules: large reduction supported by the prespecified analysis = evidence the correction
+contributes to better completion relative to the recorded baseline; moderate reduction without precision = inconclusive,
+no automatic further pass; little improvement or deterioration = the localized correction stands but is not supported as
+the dominant completion explanation. The 6 / 7-12 / 13 bands are operational thresholds, not causal boundaries. A
+nonsignificant accuracy test does not establish no accuracy cost.
+Separately: finish the tail fix; prepare minimal reproductions and patch evidence for both defects; any issue or PR is a
+separate operator-authorized action, stating completion impact as untested.
+
+**Amendment 11a (2026-10-11, operator, before gate data).** Conditional authorization: if the gate passes and the
+comparator audit is clean, proceed with the three-pass, correction-only GPQA evaluation under a 13 GPU-hour ceiling; no
+further small completion pilot. If the gate fails, the remaining verification allocation is spent resolving that failure
+before the long run. The gate must establish: (1) the instrumentation observes actual shipped graph execution without
+forcing an eager fallback; (2) the frozen patch covers every affected selection branch, preserving the selection before
+truncation and discarding the weakest selected pool; (3) corrupted/NaN rows remain separately reported; the unresolved
+tail-ring defect limits what a negative completion result could exclude; (4) the comparator audit finds no material
+unexplained configuration difference. Analysis note: the exact sign-flip test against the historical record relies on an
+exchangeability assumption; matching recipes and seeds does not make the comparison a randomized experiment, and the
+write-up says so.
+
+**Amendment 11b (2026-10-11, operator decisions and freeze, before any arm data).** Gate result: PASS on all four
+amendment 11a conditions (graph-mode observation without eager fallback; every selection branch covered, the prefill
+branch included after the gate found rows with exactly 512 candidates returned in index order; NaN-byte rows reported
+separately; server-level configuration identical to the historical run). Comparator audit: no material unexplained
+configuration difference, given the two conditions below. Operator decisions: ceiling raised to 18.5 occupied GPU-hours
+(the comparator's three passes measured 16.59; the earlier 13 rested on an estimate that omitted pass 1's session);
+the comparator's session split is mirrored (pass 1 on a fresh server, then passes 2-3 on a fresh server); a strong
+signal is required: 7-12 empties with one-sided p < 0.05 reads as a modest, statistically detectable reduction and NOT
+as support for the correction explaining the gap (only at most 6 empties with p < 0.05 reads as support); desktop
+graphics load on GPU 1 accepted and logged. Frozen: image id sha256:047ea60d1b40bdd93782459c43889c5718bb102a51887dfc3cf8788421715678
+(FROM release a9e985c0; changed file sparse_attn_indexer_kpool.py sha256
+9104be37c8cb876a436f5fac11401c4abdb254529a6c37f3dca8121f41a5b61d; diff sha256
+1ca405f24a439ff66366de2081bcbaafb027f11cf4d6e8c0ea36e02ff54e42dc); recipe glm53-flash-exl3-k3.25@tpurtell+v0.9.1+col511fix
+(env.sh sha256 0ac18e584ceff1cc7bc6aac642923e7b792a9415589aa879ac0d909ca8a58b9d; only IMAGE differs from the comparator's
+recipe); runner sha256 05024b67d6ff9ca1a89e3302991229c9d49f7024a90fa82fd245127e5df121bf; analysis spec sha256
+523ec22806059f2eb384fa2225af2db4d8b3c64a3b3f4d94ebed8312bb12d610 and script sha256
+b5b13ce2155085ca46fb24877f12b7cd0a5cdd16eb4cf19012958e7b86ae0033 (primary: one-sided exact sign-flip on per-question
+differences in empty replies, comparator minus arm, over 198 questions; effect with a 20,000-replicate question bootstrap,
+seed 20261011; exchangeability assumption and historical-control limitation stated). The arm starts after the tail-fix
+verification runs release the GPUs.

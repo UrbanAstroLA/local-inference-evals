@@ -1,0 +1,180 @@
+
+==================== c511_p338.jsonl rank=0 polls=33 checker_errors=0 records=346 fallback_calls=0
+  DSA layers seen: [3, 7, 11, 15, 19, 23]
+  branch/mode: calls | valid rows | full | unfilled | NaN rows | PRE lowest / tie / NOT lowest (below>=32) | POST set changed / not lowest / tie | unfilled valid in c511 pre->post | consumer mismatch / checked | stale | ind rows: pre ok tol / post ok tol / kernel oob
+  decode_fused  none         :    1878 |    19104 |    18888 |    216 |    0 | 18073/123/692 (3.66%; ge32 86) | 0/0/123 | 0->0 | 0/19104 | 0 | 3478: 3385/3478/0
+  decode_tiled  none         :    1146 |    27624 |    27480 |    144 |    0 | 1148/123/26209 (95.37%; ge32 23728) | 0/0/178 | 0->0 | 0/27624 | 0 | 2157: 89/2157/0
+  prefill       none         :    4662 |  8517666 |  8098416 | 419250 |    0 | 8074198/23018/1200 (0.01%; ge32 1200) | 0/0/23018 | 0->0 | 0/8517666 | 0 | 8512: 8512/8512/0
+  decode_fused  piecewise    :      30 |      120 |        0 |    120 |    0 | 0/0/0 (n/a; ge32 0) | 0/0/0 | 0->0 | 0/120 | 0 | 0: 0/0/0
+  decode_tiled  piecewise    :       6 |      120 |        0 |    120 |    0 | 0/0/0 (n/a; ge32 0) | 0/0/0 | 0->0 | 0/120 | 0 | 0: 0/0/0
+  decode_fused  full         :    7680 |    79152 |    71784 |   7368 |    0 | 69084/420/2280 (3.18%; ge32 293) | 0/0/421 | 0->0 | 0/79152 | 0 | 12057: 11803/12057/0
+  decode_tiled  full         :    7524 |   282024 |   153360 | 128664 |    0 | 6553/353/146454 (95.50%; ge32 132260) | 0/0/660 | 0->0 | 0/282024 | 0 | 10210: 509/10210/0
+  decode_fused  capture_phase:      78 |       42 |        0 |     42 |   42 | 0/0/0 (n/a; ge32 0) | 0/0/0 | 0->42 | 0/42 | 0 | 0: 0/0/0
+  decode_tiled  capture_phase:     108 |      684 |        0 |    684 |  304 | 0/0/0 (n/a; ge32 0) | 0/0/0 | 0->304 | 0/684 | 12 | 0: 0/0/0
+  integrity: {'rows_dup': 0, 'rows_nvalid_mismatch': 0, 'rows_id_out_of_range': 0, 'rows_slot_score_inconsistent': 0, 'seq_pool_mismatch': 726, 'post_score_lookup_mismatch': 0, 'ind_nan_rows': 2748}
+  per rows (mode, branch, rows, mixed): calls, valid rows, PRE not lowest, POST not lowest, set changed
+    capture_phase decode_fused  rows=  1 mixed=0 calls=     12 valid=       0 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    capture_phase decode_fused  rows=  2 mixed=0 calls=     12 valid=       0 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    capture_phase decode_fused  rows=  4 mixed=0 calls=     18 valid=       6 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=6 consumer_mm=0
+    capture_phase decode_fused  rows=  8 mixed=0 calls=     18 valid=      12 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=12 consumer_mm=0
+    capture_phase decode_fused  rows= 16 mixed=0 calls=     18 valid=      24 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=24 consumer_mm=0
+    capture_phase decode_tiled  rows= 24 mixed=0 calls=     18 valid=      36 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=36 consumer_mm=0
+    capture_phase decode_tiled  rows= 32 mixed=0 calls=     18 valid=      48 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=48 consumer_mm=0
+    capture_phase decode_tiled  rows= 40 mixed=0 calls=     18 valid=      60 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=60 consumer_mm=0
+    capture_phase decode_tiled  rows= 48 mixed=0 calls=     18 valid=      72 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=72 consumer_mm=0
+    capture_phase decode_tiled  rows= 56 mixed=0 calls=     18 valid=     180 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=88 consumer_mm=0
+    capture_phase decode_tiled  rows= 64 mixed=0 calls=     18 valid=     288 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    full          decode_fused  rows=  4 mixed=0 calls=   2118 valid=    8472 pre_not_lowest=    247 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    full          decode_fused  rows=  8 mixed=0 calls=   1392 valid=   11136 pre_not_lowest=    256 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    full          decode_fused  rows= 16 mixed=0 calls=   4170 valid=   59544 pre_not_lowest=   1777 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    full          decode_tiled  rows= 24 mixed=0 calls=   1620 valid=   34752 pre_not_lowest=  29982 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    full          decode_tiled  rows= 32 mixed=0 calls=   3924 valid=  122160 pre_not_lowest= 116472 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    full          decode_tiled  rows= 40 mixed=0 calls=     30 valid=    1128 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    full          decode_tiled  rows= 48 mixed=0 calls=     30 valid=    1392 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    full          decode_tiled  rows= 56 mixed=0 calls=     24 valid=    1296 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    full          decode_tiled  rows= 64 mixed=0 calls=   1896 valid=  121296 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    none          decode_fused  rows=  4 mixed=1 calls=    366 valid=    1464 pre_not_lowest=     68 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    none          decode_fused  rows=  8 mixed=1 calls=    576 valid=    4608 pre_not_lowest=    150 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    none          decode_fused  rows= 12 mixed=1 calls=    486 valid=    5832 pre_not_lowest=    205 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    none          decode_fused  rows= 16 mixed=1 calls=    450 valid=    7200 pre_not_lowest=    269 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    none          decode_tiled  rows= 20 mixed=1 calls=    354 valid=    7080 pre_not_lowest=   6690 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    none          decode_tiled  rows= 24 mixed=1 calls=    408 valid=    9792 pre_not_lowest=   9225 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    none          decode_tiled  rows= 28 mixed=1 calls=    384 valid=   10752 pre_not_lowest=  10294 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    none          prefill       rows= 65 mixed=0 calls=   1698 valid= 2849316 pre_not_lowest=    408 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    none          prefill       rows= 65 mixed=1 calls=   2964 valid= 5668350 pre_not_lowest=    792 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    piecewise     decode_fused  rows=  1 mixed=0 calls=      6 valid=       6 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    piecewise     decode_fused  rows=  2 mixed=0 calls=      6 valid=      12 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    piecewise     decode_fused  rows=  4 mixed=1 calls=      6 valid=      24 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    piecewise     decode_fused  rows=  5 mixed=0 calls=      6 valid=      30 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    piecewise     decode_fused  rows=  8 mixed=1 calls=      6 valid=      48 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    piecewise     decode_tiled  rows= 20 mixed=1 calls=      6 valid=     120 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+  FULL reconciliation (layers on rank = 6): rows: device calls | runner FULL replays x layers
+      4:     2118 |    353 x 6 =     2118  MATCH
+      8:     1392 |    232 x 6 =     1392  MATCH
+     16:     4170 |    695 x 6 =     4170  MATCH
+     24:     1620 |    270 x 6 =     1620  MATCH
+     32:     3924 |    654 x 6 =     3924  MATCH
+     40:       30 |      5 x 6 =       30  MATCH
+     48:       30 |      5 x 6 =       30  MATCH
+     56:       24 |      4 x 6 =       24  MATCH
+     64:     1896 |    316 x 6 =     1896  MATCH
+  python-executed checker calls (mode, branch, capturing): {('none', 'decode_fused', False): 1878, ('none', 'decode_tiled', False): 1146, ('none', 'prefill', False): 4662, ('piecewise', 'decode_fused', False): 30, ('piecewise', 'decode_tiled', False): 6, ('full', 'decode_fused', True): 18, ('full', 'decode_tiled', True): 36, ('capture_phase', 'decode_fused', False): 78, ('capture_phase', 'decode_tiled', False): 108}
+  runner piecewise runs by tokens: {'1': 2, '2': 2, '4': 1, '8': 2, '16': 1, '24': 1, '32': 1, '40': 1, '48': 5, '56': 3, '64': 2}
+  failure records: 346 flags {4: 346}
+     {'flags': 4, 'call_idx': 4, 'layer': 15, 'mode': 3, 'branch': 1, 'rows': 56, 'row': 27, 'c511_post': 0, 'below_post': 0, 'n_valid': 1, 'n_cand': 1}
+     {'flags': 4, 'call_idx': 4, 'layer': 15, 'mode': 3, 'branch': 1, 'rows': 56, 'row': 31, 'c511_post': 0, 'below_post': 0, 'n_valid': 1, 'n_cand': 1}
+     {'flags': 4, 'call_idx': 4, 'layer': 15, 'mode': 3, 'branch': 1, 'rows': 56, 'row': 35, 'c511_post': 0, 'below_post': 0, 'n_valid': 1, 'n_cand': 1}
+     {'flags': 4, 'call_idx': 4, 'layer': 15, 'mode': 3, 'branch': 1, 'rows': 56, 'row': 39, 'c511_post': 0, 'below_post': 0, 'n_valid': 1, 'n_cand': 1}
+     {'flags': 4, 'call_idx': 4, 'layer': 15, 'mode': 3, 'branch': 1, 'rows': 56, 'row': 43, 'c511_post': 0, 'below_post': 0, 'n_valid': 1, 'n_cand': 1}
+     {'flags': 4, 'call_idx': 4, 'layer': 15, 'mode': 3, 'branch': 1, 'rows': 56, 'row': 47, 'c511_post': 0, 'below_post': 0, 'n_valid': 1, 'n_cand': 1}
+     {'flags': 4, 'call_idx': 4, 'layer': 15, 'mode': 3, 'branch': 1, 'rows': 56, 'row': 51, 'c511_post': 0, 'below_post': 0, 'n_valid': 1, 'n_cand': 1}
+     {'flags': 4, 'call_idx': 4, 'layer': 15, 'mode': 3, 'branch': 1, 'rows': 56, 'row': 55, 'c511_post': 0, 'below_post': 0, 'n_valid': 1, 'n_cand': 1}
+  ring layer 3: 3075 decode steps; post_bad rows 55; pre_not_lowest rows 30352
+    route switches fused<->tiled: {('tiled', 'fused'): 26, ('fused', 'tiled'): 25}
+    (mode, route, rows, mixed) step counts: [(('cap', 'fused', 1, 0), 2), (('cap', 'fused', 2, 0), 2), (('cap', 'fused', 4, 0), 3), (('cap', 'fused', 8, 0), 3), (('cap', 'fused', 16, 0), 3), (('cap', 'tiled', 24, 0), 3), (('cap', 'tiled', 32, 0), 3), (('cap', 'tiled', 40, 0), 3), (('cap', 'tiled', 48, 0), 3), (('cap', 'tiled', 56, 0), 3), (('cap', 'tiled', 64, 0), 3), (('eager', 'fused', 4, 1), 61), (('eager', 'fused', 8, 1), 96), (('eager', 'fused', 12, 1), 81), (('eager', 'fused', 16, 1), 75), (('eager', 'tiled', 20, 1), 59), (('eager', 'tiled', 24, 1), 68), (('eager', 'tiled', 28, 1), 64), (('full', 'fused', 4, 0), 353), (('full', 'fused', 8, 0), 232), (('full', 'fused', 16, 0), 695), (('full', 'tiled', 24, 0), 270), (('full', 'tiled', 32, 0), 654), (('full', 'tiled', 40, 0), 5), (('full', 'tiled', 48, 0), 5), (('full', 'tiled', 56, 0), 4), (('full', 'tiled', 64, 0), 316), (('pw', 'fused', 1, 0), 1), (('pw', 'fused', 2, 0), 1), (('pw', 'fused', 4, 1), 1), (('pw', 'fused', 5, 0), 1), (('pw', 'fused', 8, 1), 1), (('pw', 'tiled', 20, 1), 1)]
+    step-to-step transitions (top 30): [(('full:fused:16', 'full:fused:8'), 25), (('full:fused:8', 'full:fused:4'), 25), (('eager:fused:4', 'eager:fused:8'), 24), (('eager:fused:8', 'eager:fused:12'), 24), (('full:tiled:24', 'full:fused:16'), 21), (('full:tiled:32', 'full:tiled:24'), 20), (('eager:fused:16', 'eager:tiled:20'), 19), (('eager:fused:12', 'eager:fused:16'), 18), (('eager:tiled:20', 'eager:tiled:24'), 18), (('eager:tiled:24', 'eager:tiled:28'), 17), (('eager:tiled:28', 'full:tiled:32'), 17), (('eager:fused:12', 'full:fused:16'), 6), (('full:tiled:48', 'full:tiled:40'), 3), (('full:tiled:40', 'full:tiled:32'), 3), (('full:fused:16', 'full:fused:4'), 3), (('cap:tiled:64', 'cap:tiled:56'), 2), (('cap:tiled:56', 'cap:tiled:48'), 2), (('cap:tiled:48', 'cap:tiled:40'), 2), (('cap:tiled:40', 'cap:tiled:32'), 2), (('cap:tiled:32', 'cap:tiled:24'), 2), (('cap:tiled:24', 'cap:fused:16'), 2), (('cap:fused:16', 'cap:fused:8'), 2), (('cap:fused:8', 'cap:fused:4'), 2), (('eager:fused:12', 'full:tiled:64'), 2), (('full:tiled:64', 'full:tiled:56'), 2), (('full:tiled:56', 'full:tiled:48'), 2), (('full:tiled:64', 'full:tiled:48'), 2), (('cap:fused:4', 'cap:fused:2'), 1), (('cap:fused:2', 'cap:fused:1'), 1), (('cap:fused:1', 'cap:tiled:64'), 1)]
+  per-phase deltas (calls by branch|mode|mixed):
+    warm     calls={'decode_fused|none|mixed=1': 108, 'decode_tiled|none|mixed=1': 66, 'prefill|none|mixed=0': 1074, 'decode_fused|piecewise|mixed=0': 18, 'decode_fused|piecewise|mixed=1': 12, 'decode_tiled|piecewise|mixed=1': 6, 'decode_fused|full|mixed=0': 1014, 'decode_tiled|full|mixed=0': 2496, 'decode_fused|capture_phase|mixed=0': 78, 'decode_tiled|capture_phase|mixed=0': 108, 'prefill|none|mixed=1': 144} pre_not_lowest_rows=12111 post_not_lowest_rows=0
+    F        calls={'decode_fused|none|mixed=1': 546, 'decode_tiled|none|mixed=1': 228, 'prefill|none|mixed=0': 202, 'prefill|none|mixed=1': 774, 'decode_fused|full|mixed=0': 2418, 'decode_tiled|full|mixed=0': 1200} pre_not_lowest_rows=34065 post_not_lowest_rows=0
+    S        calls={'decode_fused|none|mixed=1': 480, 'decode_tiled|none|mixed=1': 402, 'prefill|none|mixed=0': 146, 'prefill|none|mixed=1': 864, 'decode_fused|full|mixed=0': 1530, 'decode_tiled|full|mixed=0': 1746} pre_not_lowest_rows=60735 post_not_lowest_rows=0
+    D        calls={'decode_fused|none|mixed=1': 330, 'decode_tiled|none|mixed=1': 264, 'prefill|none|mixed=0': 120, 'prefill|none|mixed=1': 582, 'decode_fused|full|mixed=0': 1518, 'decode_tiled|full|mixed=0': 1050} pre_not_lowest_rows=34952 post_not_lowest_rows=0
+    T        calls={'decode_fused|none|mixed=1': 414, 'decode_tiled|none|mixed=1': 186, 'prefill|none|mixed=0': 156, 'prefill|none|mixed=1': 600, 'decode_fused|full|mixed=0': 1200, 'decode_tiled|full|mixed=0': 1032} pre_not_lowest_rows=34972 post_not_lowest_rows=0
+
+==================== c511_p372.jsonl rank=1 polls=33 checker_errors=0 records=321 fallback_calls=0
+  DSA layers seen: [27, 31, 35, 39, 43]
+  branch/mode: calls | valid rows | full | unfilled | NaN rows | PRE lowest / tie / NOT lowest (below>=32) | POST set changed / not lowest / tie | unfilled valid in c511 pre->post | consumer mismatch / checked | stale | ind rows: pre ok tol / post ok tol / kernel oob
+  decode_fused  none         :    1565 |    15920 |    15740 |    180 |    0 | 15140/99/501 (3.18%; ge32 72) | 0/0/99 | 0->0 | 0/15920 | 0 | 2101: 2048/2101/0
+  decode_tiled  none         :     955 |    23020 |    22900 |    120 |    0 | 1225/58/21617 (94.40%; ge32 19420) | 0/0/153 | 0->0 | 0/23020 | 0 | 1323: 37/1323/0
+  prefill       none         :    3885 |  7098055 |  6748680 | 349375 |    0 | 6699688/47992/1000 (0.01%; ge32 1000) | 0/0/47993 | 0->0 | 0/7098055 | 0 | 5905: 5905/5905/0
+  decode_fused  piecewise    :      25 |      100 |        0 |    100 |    0 | 0/0/0 (n/a; ge32 0) | 0/0/0 | 0->0 | 0/100 | 0 | 0: 0/0/0
+  decode_tiled  piecewise    :       5 |      100 |        0 |    100 |    0 | 0/0/0 (n/a; ge32 0) | 0/0/0 | 0->0 | 0/100 | 0 | 0: 0/0/0
+  decode_fused  full         :    6400 |    65960 |    59820 |   6140 |    0 | 57163/720/1937 (3.24%; ge32 260) | 0/0/720 | 0->0 | 0/65960 | 0 | 7226: 7032/7226/0
+  decode_tiled  full         :    6270 |   235020 |   127800 | 107220 |    0 | 6844/502/120454 (94.25%; ge32 108671) | 0/0/1088 | 0->0 | 0/235020 | 0 | 6389: 284/6389/0
+  decode_fused  capture_phase:      65 |       35 |        0 |     35 |   35 | 0/0/0 (n/a; ge32 0) | 0/0/0 | 0->35 | 0/35 | 0 | 0: 0/0/0
+  decode_tiled  capture_phase:      90 |      570 |        0 |    570 |  286 | 0/0/0 (n/a; ge32 0) | 0/0/0 | 0->286 | 0/570 | 10 | 0: 0/0/0
+  integrity: {'rows_dup': 0, 'rows_nvalid_mismatch': 0, 'rows_id_out_of_range': 0, 'rows_slot_score_inconsistent': 0, 'seq_pool_mismatch': 605, 'post_score_lookup_mismatch': 0, 'ind_nan_rows': 9691}
+  per rows (mode, branch, rows, mixed): calls, valid rows, PRE not lowest, POST not lowest, set changed
+    capture_phase decode_fused  rows=  1 mixed=0 calls=     10 valid=       0 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    capture_phase decode_fused  rows=  2 mixed=0 calls=     10 valid=       0 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    capture_phase decode_fused  rows=  4 mixed=0 calls=     15 valid=       5 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=5 consumer_mm=0
+    capture_phase decode_fused  rows=  8 mixed=0 calls=     15 valid=      10 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=10 consumer_mm=0
+    capture_phase decode_fused  rows= 16 mixed=0 calls=     15 valid=      20 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=20 consumer_mm=0
+    capture_phase decode_tiled  rows= 24 mixed=0 calls=     15 valid=      30 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=30 consumer_mm=0
+    capture_phase decode_tiled  rows= 32 mixed=0 calls=     15 valid=      40 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=40 consumer_mm=0
+    capture_phase decode_tiled  rows= 40 mixed=0 calls=     15 valid=      50 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=50 consumer_mm=0
+    capture_phase decode_tiled  rows= 48 mixed=0 calls=     15 valid=      60 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=60 consumer_mm=0
+    capture_phase decode_tiled  rows= 56 mixed=0 calls=     15 valid=     150 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=66 consumer_mm=0
+    capture_phase decode_tiled  rows= 64 mixed=0 calls=     15 valid=     240 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=40 consumer_mm=0
+    full          decode_fused  rows=  4 mixed=0 calls=   1765 valid=    7060 pre_not_lowest=    202 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    full          decode_fused  rows=  8 mixed=0 calls=   1160 valid=    9280 pre_not_lowest=    264 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    full          decode_fused  rows= 16 mixed=0 calls=   3475 valid=   49620 pre_not_lowest=   1471 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    full          decode_tiled  rows= 24 mixed=0 calls=   1350 valid=   28960 pre_not_lowest=  24488 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    full          decode_tiled  rows= 32 mixed=0 calls=   3270 valid=  101800 pre_not_lowest=  95966 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    full          decode_tiled  rows= 40 mixed=0 calls=     25 valid=     940 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    full          decode_tiled  rows= 48 mixed=0 calls=     25 valid=    1160 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    full          decode_tiled  rows= 56 mixed=0 calls=     20 valid=    1080 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    full          decode_tiled  rows= 64 mixed=0 calls=   1580 valid=  101080 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    none          decode_fused  rows=  4 mixed=1 calls=    305 valid=    1220 pre_not_lowest=     37 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    none          decode_fused  rows=  8 mixed=1 calls=    480 valid=    3840 pre_not_lowest=    105 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    none          decode_fused  rows= 12 mixed=1 calls=    405 valid=    4860 pre_not_lowest=    140 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    none          decode_fused  rows= 16 mixed=1 calls=    375 valid=    6000 pre_not_lowest=    219 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    none          decode_tiled  rows= 20 mixed=1 calls=    295 valid=    5900 pre_not_lowest=   5510 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    none          decode_tiled  rows= 24 mixed=1 calls=    340 valid=    8160 pre_not_lowest=   7604 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    none          decode_tiled  rows= 28 mixed=1 calls=    320 valid=    8960 pre_not_lowest=   8503 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    none          prefill       rows= 65 mixed=0 calls=   1415 valid= 2374430 pre_not_lowest=    340 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    none          prefill       rows= 65 mixed=1 calls=   2470 valid= 4723625 pre_not_lowest=    660 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    piecewise     decode_fused  rows=  1 mixed=0 calls=      5 valid=       5 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    piecewise     decode_fused  rows=  2 mixed=0 calls=      5 valid=      10 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    piecewise     decode_fused  rows=  4 mixed=1 calls=      5 valid=      20 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    piecewise     decode_fused  rows=  5 mixed=0 calls=      5 valid=      25 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    piecewise     decode_fused  rows=  8 mixed=1 calls=      5 valid=      40 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+    piecewise     decode_tiled  rows= 20 mixed=1 calls=      5 valid=     100 pre_not_lowest=      0 post_not_lowest=0 set_changed=0 unf_post=0 consumer_mm=0
+  FULL reconciliation (layers on rank = 5): rows: device calls | runner FULL replays x layers
+      4:     1765 |    353 x 5 =     1765  MATCH
+      8:     1160 |    232 x 5 =     1160  MATCH
+     16:     3475 |    695 x 5 =     3475  MATCH
+     24:     1350 |    270 x 5 =     1350  MATCH
+     32:     3270 |    654 x 5 =     3270  MATCH
+     40:       25 |      5 x 5 =       25  MATCH
+     48:       25 |      5 x 5 =       25  MATCH
+     56:       20 |      4 x 5 =       20  MATCH
+     64:     1580 |    316 x 5 =     1580  MATCH
+  python-executed checker calls (mode, branch, capturing): {('none', 'decode_fused', False): 1565, ('none', 'decode_tiled', False): 955, ('none', 'prefill', False): 3885, ('piecewise', 'decode_fused', False): 25, ('piecewise', 'decode_tiled', False): 5, ('full', 'decode_fused', True): 15, ('full', 'decode_tiled', True): 30, ('capture_phase', 'decode_fused', False): 65, ('capture_phase', 'decode_tiled', False): 90}
+  runner piecewise runs by tokens: {'1': 2, '2': 2, '4': 1, '8': 2, '16': 1, '24': 1, '32': 1, '40': 1, '48': 5, '56': 3, '64': 2}
+  failure records: 321 flags {4: 321}
+     {'flags': 4, 'call_idx': 23, 'layer': 31, 'mode': 3, 'branch': 1, 'rows': 64, 'row': 3, 'c511_post': 0, 'below_post': 0, 'n_valid': 1, 'n_cand': 1}
+     {'flags': 4, 'call_idx': 23, 'layer': 31, 'mode': 3, 'branch': 1, 'rows': 64, 'row': 7, 'c511_post': 0, 'below_post': 0, 'n_valid': 1, 'n_cand': 1}
+     {'flags': 4, 'call_idx': 23, 'layer': 31, 'mode': 3, 'branch': 1, 'rows': 64, 'row': 11, 'c511_post': 0, 'below_post': 0, 'n_valid': 1, 'n_cand': 1}
+     {'flags': 4, 'call_idx': 23, 'layer': 31, 'mode': 3, 'branch': 1, 'rows': 64, 'row': 15, 'c511_post': 0, 'below_post': 0, 'n_valid': 1, 'n_cand': 1}
+     {'flags': 4, 'call_idx': 23, 'layer': 31, 'mode': 3, 'branch': 1, 'rows': 64, 'row': 19, 'c511_post': 0, 'below_post': 0, 'n_valid': 1, 'n_cand': 1}
+     {'flags': 4, 'call_idx': 23, 'layer': 31, 'mode': 3, 'branch': 1, 'rows': 64, 'row': 23, 'c511_post': 0, 'below_post': 0, 'n_valid': 1, 'n_cand': 1}
+     {'flags': 4, 'call_idx': 23, 'layer': 31, 'mode': 3, 'branch': 1, 'rows': 64, 'row': 27, 'c511_post': 0, 'below_post': 0, 'n_valid': 1, 'n_cand': 1}
+     {'flags': 4, 'call_idx': 23, 'layer': 31, 'mode': 3, 'branch': 1, 'rows': 64, 'row': 31, 'c511_post': 0, 'below_post': 0, 'n_valid': 1, 'n_cand': 1}
+  ring layer 27: 3075 decode steps; post_bad rows 55; pre_not_lowest rows 28878
+    route switches fused<->tiled: {('tiled', 'fused'): 26, ('fused', 'tiled'): 25}
+    (mode, route, rows, mixed) step counts: [(('cap', 'fused', 1, 0), 2), (('cap', 'fused', 2, 0), 2), (('cap', 'fused', 4, 0), 3), (('cap', 'fused', 8, 0), 3), (('cap', 'fused', 16, 0), 3), (('cap', 'tiled', 24, 0), 3), (('cap', 'tiled', 32, 0), 3), (('cap', 'tiled', 40, 0), 3), (('cap', 'tiled', 48, 0), 3), (('cap', 'tiled', 56, 0), 3), (('cap', 'tiled', 64, 0), 3), (('eager', 'fused', 4, 1), 61), (('eager', 'fused', 8, 1), 96), (('eager', 'fused', 12, 1), 81), (('eager', 'fused', 16, 1), 75), (('eager', 'tiled', 20, 1), 59), (('eager', 'tiled', 24, 1), 68), (('eager', 'tiled', 28, 1), 64), (('full', 'fused', 4, 0), 353), (('full', 'fused', 8, 0), 232), (('full', 'fused', 16, 0), 695), (('full', 'tiled', 24, 0), 270), (('full', 'tiled', 32, 0), 654), (('full', 'tiled', 40, 0), 5), (('full', 'tiled', 48, 0), 5), (('full', 'tiled', 56, 0), 4), (('full', 'tiled', 64, 0), 316), (('pw', 'fused', 1, 0), 1), (('pw', 'fused', 2, 0), 1), (('pw', 'fused', 4, 1), 1), (('pw', 'fused', 5, 0), 1), (('pw', 'fused', 8, 1), 1), (('pw', 'tiled', 20, 1), 1)]
+    step-to-step transitions (top 30): [(('full:fused:16', 'full:fused:8'), 25), (('full:fused:8', 'full:fused:4'), 25), (('eager:fused:4', 'eager:fused:8'), 24), (('eager:fused:8', 'eager:fused:12'), 24), (('full:tiled:24', 'full:fused:16'), 21), (('full:tiled:32', 'full:tiled:24'), 20), (('eager:fused:16', 'eager:tiled:20'), 19), (('eager:fused:12', 'eager:fused:16'), 18), (('eager:tiled:20', 'eager:tiled:24'), 18), (('eager:tiled:24', 'eager:tiled:28'), 17), (('eager:tiled:28', 'full:tiled:32'), 17), (('eager:fused:12', 'full:fused:16'), 6), (('full:tiled:48', 'full:tiled:40'), 3), (('full:tiled:40', 'full:tiled:32'), 3), (('full:fused:16', 'full:fused:4'), 3), (('cap:tiled:64', 'cap:tiled:56'), 2), (('cap:tiled:56', 'cap:tiled:48'), 2), (('cap:tiled:48', 'cap:tiled:40'), 2), (('cap:tiled:40', 'cap:tiled:32'), 2), (('cap:tiled:32', 'cap:tiled:24'), 2), (('cap:tiled:24', 'cap:fused:16'), 2), (('cap:fused:16', 'cap:fused:8'), 2), (('cap:fused:8', 'cap:fused:4'), 2), (('eager:fused:12', 'full:tiled:64'), 2), (('full:tiled:64', 'full:tiled:56'), 2), (('full:tiled:56', 'full:tiled:48'), 2), (('full:tiled:64', 'full:tiled:48'), 2), (('cap:fused:4', 'cap:fused:2'), 1), (('cap:fused:2', 'cap:fused:1'), 1), (('cap:fused:1', 'cap:tiled:64'), 1)]
+  per-phase deltas (calls by branch|mode|mixed):
+    warm     calls={'decode_fused|none|mixed=1': 90, 'decode_tiled|none|mixed=1': 55, 'prefill|none|mixed=0': 897, 'decode_fused|piecewise|mixed=0': 15, 'decode_fused|piecewise|mixed=1': 10, 'decode_tiled|piecewise|mixed=1': 5, 'decode_fused|full|mixed=0': 845, 'decode_tiled|full|mixed=0': 2080, 'decode_fused|capture_phase|mixed=0': 65, 'decode_tiled|capture_phase|mixed=0': 90, 'prefill|none|mixed=1': 120} pre_not_lowest_rows=9988 post_not_lowest_rows=0
+    F        calls={'decode_fused|none|mixed=1': 275, 'decode_tiled|none|mixed=1': 50, 'prefill|none|mixed=0': 115, 'prefill|none|mixed=1': 325, 'decode_fused|full|mixed=0': 1190, 'decode_tiled|full|mixed=0': 230} pre_not_lowest_rows=7181 post_not_lowest_rows=0
+    D        calls={'decode_fused|none|mixed=1': 620, 'decode_tiled|none|mixed=1': 475, 'prefill|none|mixed=0': 205, 'prefill|none|mixed=1': 1080, 'decode_fused|full|mixed=0': 2725, 'decode_tiled|full|mixed=0': 2125} pre_not_lowest_rows=65712 post_not_lowest_rows=0
+    T        calls={'decode_fused|none|mixed=1': 310, 'decode_tiled|none|mixed=1': 150, 'prefill|none|mixed=0': 117, 'prefill|none|mixed=1': 460, 'decode_fused|full|mixed=0': 810, 'decode_tiled|full|mixed=0': 845} pre_not_lowest_rows=28744 post_not_lowest_rows=0
+    S        calls={'decode_fused|none|mixed=1': 270, 'decode_tiled|none|mixed=1': 225, 'prefill|none|mixed=0': 81, 'prefill|none|mixed=1': 485, 'decode_fused|full|mixed=0': 830, 'decode_tiled|full|mixed=0': 990} pre_not_lowest_rows=33884 post_not_lowest_rows=0
+
+==================== totals over ranks (branch, mode)
+  decode_fused  none          calls=3443 valid_rows=35024 clean_full=34628 unfilled=396 nan_rows=0 | PRE not lowest 1193 (3.45%), tie 222, below>=32 158 (0.46%), unfilled-valid-c511 0 | POST set_changed 0 not_lowest 0 tie 222 unfilled-valid-c511 0 | consumer 0/35024 stale 0 | ind 5579: pre_ok_tol 5433 post_ok_tol 5579 post_ok_exact 5579 kernel_oob 0/2856448
+  decode_tiled  none          calls=2101 valid_rows=50644 clean_full=50380 unfilled=264 nan_rows=0 | PRE not lowest 47826 (94.93%), tie 181, below>=32 43148 (85.65%), unfilled-valid-c511 0 | POST set_changed 0 not_lowest 0 tie 331 unfilled-valid-c511 0 | consumer 0/50644 stale 0 | ind 3480: pre_ok_tol 126 post_ok_tol 3480 post_ok_exact 3480 kernel_oob 0/1781760
+  prefill       none          calls=8547 valid_rows=15615721 clean_full=14847096 unfilled=768625 nan_rows=0 | PRE not lowest 2200 (0.01%), tie 71010, below>=32 2200 (0.01%), unfilled-valid-c511 0 | POST set_changed 0 not_lowest 0 tie 71011 unfilled-valid-c511 0 | consumer 0/15615721 stale 0 | ind 14417: pre_ok_tol 14417 post_ok_tol 14417 post_ok_exact 14417 kernel_oob 0/7381504
+  decode_fused  piecewise     calls=55 valid_rows=220 clean_full=0 unfilled=220 nan_rows=0 | PRE not lowest 0 (n/a), tie 0, below>=32 0 (n/a), unfilled-valid-c511 0 | POST set_changed 0 not_lowest 0 tie 0 unfilled-valid-c511 0 | consumer 0/220 stale 0 | ind 0: pre_ok_tol 0 post_ok_tol 0 post_ok_exact 0 kernel_oob 0/0
+  decode_tiled  piecewise     calls=11 valid_rows=220 clean_full=0 unfilled=220 nan_rows=0 | PRE not lowest 0 (n/a), tie 0, below>=32 0 (n/a), unfilled-valid-c511 0 | POST set_changed 0 not_lowest 0 tie 0 unfilled-valid-c511 0 | consumer 0/220 stale 0 | ind 0: pre_ok_tol 0 post_ok_tol 0 post_ok_exact 0 kernel_oob 0/0
+  decode_fused  full          calls=14080 valid_rows=145112 clean_full=131604 unfilled=13508 nan_rows=0 | PRE not lowest 4217 (3.20%), tie 1140, below>=32 553 (0.42%), unfilled-valid-c511 0 | POST set_changed 0 not_lowest 0 tie 1141 unfilled-valid-c511 0 | consumer 0/145112 stale 0 | ind 19283: pre_ok_tol 18835 post_ok_tol 19283 post_ok_exact 19281 kernel_oob 0/9872896
+  decode_tiled  full          calls=13794 valid_rows=517044 clean_full=281160 unfilled=235884 nan_rows=0 | PRE not lowest 266908 (94.93%), tie 855, below>=32 240931 (85.69%), unfilled-valid-c511 0 | POST set_changed 0 not_lowest 0 tie 1748 unfilled-valid-c511 0 | consumer 0/517044 stale 0 | ind 16599: pre_ok_tol 793 post_ok_tol 16599 post_ok_exact 16599 kernel_oob 0/8498688
+  decode_fused  capture_phase calls=143 valid_rows=77 clean_full=0 unfilled=77 nan_rows=77 | PRE not lowest 0 (n/a), tie 0, below>=32 0 (n/a), unfilled-valid-c511 0 | POST set_changed 0 not_lowest 0 tie 0 unfilled-valid-c511 77 | consumer 0/77 stale 0 | ind 0: pre_ok_tol 0 post_ok_tol 0 post_ok_exact 0 kernel_oob 0/0
+  decode_tiled  capture_phase calls=198 valid_rows=1254 clean_full=0 unfilled=1254 nan_rows=590 | PRE not lowest 0 (n/a), tie 0, below>=32 0 (n/a), unfilled-valid-c511 0 | POST set_changed 0 not_lowest 0 tie 0 unfilled-valid-c511 590 | consumer 0/1254 stale 22 | ind 0: pre_ok_tol 0 post_ok_tol 0 post_ok_exact 0 kernel_oob 0/0
+
+==================== throughput (aggregate completion tokens / phase wall)
+  T: phases=6 median 84.5 tok/s [83.3-86.0], per-request median 11.0
+  F: phases=6 median 56.4 tok/s [56.2-57.9], per-request median 14.53
+  D: phases=6 median 72.3 tok/s [71.3-73.7], per-request median 10.12
+  S: phases=6 median 84.7 tok/s [84.4-87.0], per-request median 15.39
+  requests: 176, errors 0, finish {'length': 176}

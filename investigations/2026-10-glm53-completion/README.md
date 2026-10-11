@@ -7,8 +7,9 @@ difference. Quantization is held fixed.
 **Status:** Phase 0 done (existing data only). Phase 1 steps 1-6 done (decode vs prefill, 10.55 GPU-hours); a trace audit
 then showed their long-context measure covers continuation after the model had already stopped. Completion pilot and
 fresh-seed replication done (3.55 GPU-hours). Kernel and DCP source audit done (CPU only). Two localized defects found and verified on GPU, each
-with a fix that removes the localized problem; neither has been tested for an effect on completion (amendments 10-10f).
-Cumulative 17.11 GPU-hours.
+with a fix that removes the localized problem (amendments 10-10f). The column-511 correction passed a gate in the shipped
+graph configuration, and a three-pass GPQA arm with that correction only is running against the existing 0.9.1 record,
+with its analysis frozen beforehand (amendments 11-11b). Cumulative 18.97 GPU-hours before the arm.
 Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#dated-amendments).
 **Fast path:** [answer](#answer) · [evidence](#evidence) · [configuration diff](#what-differs-between-the-two-servers) ·
 [Phase 1](#phase-1) · [completion pilot](#completion-pilot-and-replication) ·
@@ -525,11 +526,45 @@ seed-stride and spec-ring fixes behave as intended and the DCP1 tail-compaction 
 - Shipped graph mode, unmodified 0.9.1, one run: 98% of tail writes went to the null block on each rank; 6 events wrote
   into live attention blocks. With positions passed plus a two-line in-place write so replayed graphs read the mapping:
   0 null-block writes, 0 foreign writes; 104 of 104 requests completed; throughput unchanged (88.3 tok/s at 8 requests).
-- The same omission is in 0.7.0's source; there, with two ranks splitting tokens by parity, completed pools would be
-  corrupted even with one request (inferred from code, not measured). By itself it is therefore not a difference
-  between the engines. The fix tested lacks upstream's `own_block != 0` guard and also changes the sparse-MLA causal
-  length source for batches that are not pure decode; both are noted for the next step.
+- The same omission is in 0.7.0's source. A CPU harness running each release's real kernels (synthetic scheduler and
+  keys) finds 100% of decode-completed pools wrong on 0.7.0 at 1, 2 and 8 requests, against 0% / 47-57% / 78-90% on
+  0.9.1; with positions passed, 0.9.1 is 0% and 0.7.0 keeps errors from its own ring-size and seed bugs (fixed in 0.9.1).
+  0.7.0 is the more affected engine, so this defect does not explain its better completion.
+- Completed fix (amendment 11): positions, upstream's `own_block != 0` guard and the graph-safe write, in two variants:
+  T leaves the sparse-MLA causal-length source unchanged, U also switches it as upstream does. One shipped-graph run each:
+  0 null-block, 0 foreign and 0 attention-block writes on both ranks; all requests completed. Receipts:
+  [`tail-fix/`](tail-fix) (diffs, 17 CPU tests, run summaries, two-rank harness).
 - 1.16 GPU-hours. Receipts: [`tail-ring/`](tail-ring) (guard and fix diffs, unit test, CPU mechanism, run summaries).
+
+### Gate: column-511 correction in the shipped graph configuration
+
+Amendments 11-11a. One full server run of the candidate build plus an observe-only device checker, existing fixtures,
+shipped FULL_AND_PIECEWISE graphs.
+
+| Condition | Result |
+|---|---|
+| Observes real graph execution, no eager fallback | for every FULL batch size on both ranks, checker calls = FULL replays x DSA layers; graph counts equal the historical run's; 0 checker errors, 0 fallbacks, 0 host syncs |
+| Every affected selection branch covered | the prefill branch was also affected (rows with exactly 512 candidates come back in index order, so the newest pool was dropped; 2,200 rows) and is now corrected; decode rows in mixed batches use the decode branch. After correction: 0 changed selections, 0 rows with a non-lowest pool in column 511, 0 valid pools in unfilled slots, attention's token buffer matched in 16.4 M rows; fp64 re-score of about 59,000 clean sampled rows 100% |
+| Corrupted rows reported separately | at least one selected pool with NaN bytes in 7.9% (rank 0) and 32.5% (rank 1) of sampled decode rows: the tail-ring defect, not repaired by this correction; it limits what a negative completion result can exclude |
+| Configuration | 23/23 API arguments, 33/33 engine fields and 27/27 VLLM_* variables identical to the historical run |
+
+Before correction in this run: tiled route 94.9% of rows, fused 3.2-3.5%. 0.72 GPU-hours. Receipts: [`gate/`](gate)
+(result, frozen manifest, correction diff, checker, analysis, configuration comparison).
+
+### Completion arm (running)
+
+Amendments 11a-11b. 0.9.1 K3.25 with the column-511 correction only (image built from the release digest, one changed
+file); three GPQA passes under the original protocol, seeds 1234/1235/1236, 8 concurrent, 327,680-token cap, shipped graph
+mode, mirroring the comparator's session split; ceiling 18.5 GPU-hours. Comparator: the existing clean 0.9.1 record, a
+historical control ([comparator audit](arm-col511-plan/COMPARATOR-AUDIT.md): no material unexplained difference).
+Analysis frozen before data ([`arm-col511-plan/`](arm-col511-plan)): one-sided exact sign-flip test on per-question
+differences in empty replies (it assumes exchangeability; matching recipes and seeds does not make this a randomized
+experiment), question-bootstrap interval, secondary accuracy across all requests. Reading: at most 6 empties with
+p < 0.05 supports a contribution relative to the recorded baseline; 7-12 with p < 0.05 is a modest reduction, not support
+for explaining the gap; otherwise inconclusive or not supported. Power under stated alternatives (question-clustered
+beta-binomial, conditional on the comparator): 0.82-0.87 if the arm matches 0.7.0's per-question rates, 0.95 for a 75%
+reduction, 0.51 for 50%. Dry runs reproduce the published 0.7.0 vs 0.9.1 comparison. Public copies replace local paths;
+[`PUBLIC-COPIES-11b.txt`](PUBLIC-COPIES-11b.txt) lists frozen and public hashes.
 
 ### Comparison with upstream vLLM
 
@@ -569,12 +604,10 @@ Stated with their evidence so far.
 
 ## Next steps
 
-Proposed, not yet approved: finish the defect checks within the current authorization (the tail fix with upstream's
-guard, separated from the causal-length change; an observe-only run for the router precision and workspace locking;
-the SwiGLU clamp on the path this quant runs; a CPU check of 0.7.0's two-rank tail ring), then a single GPQA arm,
-three passes, of 0.9.1 with only the column-511 fix against the existing 0.9.1 records, with reading rules fixed before
-data. 3.99 GPU-hours remain of the 21.1 authorized for defect verification; the GPQA arm (about 11.5) would need new
-authorization.
+The arm finishes in about 8 hours; it is analysed with the frozen script and read by the frozen rules. A positive result
+supports improvement relative to the recorded baseline only; a contemporaneous control would be priced separately before
+any claim that the correction explains the gap. Minimal reproductions and patches for both defects are prepared; offering
+them upstream is a separate decision. Deferred: router precision, SwiGLU clamp, workspace locking.
 
 ## Recompute
 

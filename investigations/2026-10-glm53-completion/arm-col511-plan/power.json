@@ -1,0 +1,174 @@
+{
+ "model": {
+  "comparator_counts_hist": {
+   "0": 187,
+   "1": 6,
+   "2": 5,
+   "3": 0
+  },
+  "comparator_total": 16,
+  "v070_counts_hist": {
+   "0": 194,
+   "1": 4,
+   "2": 0,
+   "3": 0
+  },
+  "v070_total": 4,
+  "fit_comparator_0.9.1": {
+   "mu": 0.026137350462846553,
+   "s": 2.0417379446695296,
+   "a": 0.0533656202131195,
+   "b": 1.98837232445641,
+   "loglik": -51.96304418125749,
+   "icc_rho": 0.3287594191841682,
+   "at_bound": false,
+   "pooled_rate": 0.026936026936026935
+  },
+  "fit_0.7.0": {
+   "mu": 0.006734006734006734,
+   "s": 100000.0,
+   "a": 673.4006734006733,
+   "b": 99326.59932659933,
+   "loglik": -19.594432667538058,
+   "icc_rho": 9.99990000099999e-06,
+   "at_bound": true,
+   "pooled_rate": 0.006734006734006734
+  },
+  "fit_0.7.0_variant_b": {
+   "a": 0.01374907706848168,
+   "b": 2.027988867601048
+  },
+  "comparator_posterior_expected_total": 15.81,
+  "v070_posterior_expected_total_a": 4.0,
+  "v070_posterior_expected_total_b": 4.0
+ },
+ "test": "analysis_col511.signflip, one-sided, alpha 0.05; R1 = arm empties <= 6 and one-sided p < 0.05",
+ "seed": 20261011,
+ "results": [
+  {
+   "alternative": "null: arm p_q = comparator p_q (size under the conditional design)",
+   "sims": 20000,
+   "conditional": {
+    "P_sig": 0.0226,
+    "mc_se_sig": 0.0011,
+    "P_R1": 0.0058,
+    "mc_se_R1": 0.0005,
+    "P_le6": 0.0058,
+    "mc_se_le6": 0.0005,
+    "P_b7_12": 0.2054,
+    "mc_se_b7_12": 0.0029,
+    "P_ge13": 0.7887,
+    "mc_se_ge13": 0.0029,
+    "mean_arm_total": 15.83
+   },
+   "resample_both": {
+    "P_sig": 0.0326,
+    "mc_se_sig": 0.0013,
+    "P_R1": 0.0026,
+    "mc_se_R1": 0.0004,
+    "mean_cmp_total": 15.83,
+    "mean_arm_total": 15.83
+   }
+  },
+  {
+   "alternative": "(i-a) arm p_q = 0.7.0 EB per-question estimates, own beta-binomial fit",
+   "sims": 20000,
+   "conditional": {
+    "P_sig": 0.8188,
+    "mc_se_sig": 0.0027,
+    "P_R1": 0.8186,
+    "mc_se_R1": 0.0027,
+    "P_le6": 0.8913,
+    "mc_se_le6": 0.0022,
+    "P_b7_12": 0.1085,
+    "mc_se_b7_12": 0.0022,
+    "P_ge13": 0.0002,
+    "mc_se_ge13": 0.0001,
+    "mean_arm_total": 3.99
+   },
+   "resample_both": {
+    "P_sig": 0.7092,
+    "mc_se_sig": 0.0032,
+    "P_R1": 0.6836,
+    "mc_se_R1": 0.0033,
+    "mean_cmp_total": 15.82,
+    "mean_arm_total": 3.99
+   }
+  },
+  {
+   "alternative": "(i-b) arm p_q = 0.7.0 per-question estimates, 0.7.0 mean with the 0.9.1 fit's concentration",
+   "sims": 20000,
+   "conditional": {
+    "P_sig": 0.8705,
+    "mc_se_sig": 0.0024,
+    "P_R1": 0.8551,
+    "mc_se_R1": 0.0025,
+    "P_le6": 0.875,
+    "mc_se_le6": 0.0023,
+    "P_b7_12": 0.1246,
+    "mc_se_b7_12": 0.0023,
+    "P_ge13": 0.0003,
+    "mc_se_ge13": 0.0001,
+    "mean_arm_total": 4.01
+   },
+   "resample_both": {
+    "P_sig": 0.7202,
+    "mc_se_sig": 0.0032,
+    "P_R1": 0.6889,
+    "mc_se_R1": 0.0033,
+    "mean_cmp_total": 15.78,
+    "mean_arm_total": 4.01
+   }
+  },
+  {
+   "alternative": "(ii) uniform 50% reduction of each comparator p_q",
+   "sims": 20000,
+   "conditional": {
+    "P_sig": 0.5142,
+    "mc_se_sig": 0.0035,
+    "P_R1": 0.3343,
+    "mc_se_R1": 0.0033,
+    "P_le6": 0.3353,
+    "mc_se_le6": 0.0033,
+    "P_b7_12": 0.6048,
+    "mc_se_b7_12": 0.0035,
+    "P_ge13": 0.0599,
+    "mc_se_ge13": 0.0017,
+    "mean_arm_total": 7.86
+   },
+   "resample_both": {
+    "P_sig": 0.4722,
+    "mc_se_sig": 0.0035,
+    "P_R1": 0.2359,
+    "mc_se_R1": 0.003,
+    "mean_cmp_total": 15.81,
+    "mean_arm_total": 7.86
+   }
+  },
+  {
+   "alternative": "(iii) uniform 75% reduction of each comparator p_q",
+   "sims": 20000,
+   "conditional": {
+    "P_sig": 0.9487,
+    "mc_se_sig": 0.0016,
+    "P_R1": 0.8971,
+    "mc_se_R1": 0.0021,
+    "P_le6": 0.8982,
+    "mc_se_le6": 0.0021,
+    "P_b7_12": 0.1014,
+    "mc_se_b7_12": 0.0021,
+    "P_ge13": 0.0003,
+    "mc_se_ge13": 0.0001,
+    "mean_arm_total": 3.92
+   },
+   "resample_both": {
+    "P_sig": 0.8451,
+    "mc_se_sig": 0.0026,
+    "P_R1": 0.7853,
+    "mc_se_R1": 0.0029,
+    "mean_cmp_total": 15.78,
+    "mean_arm_total": 3.92
+   }
+  }
+ ]
+}

@@ -1,0 +1,6 @@
+null: arm p_q = comparator p_q (size under the conditional design): conditional P(p<0.05)=0.0226 (se 0.0011), P(R1)=0.0058, mean arm empties 15.83; resample-both P(p<0.05)=0.0326 (se 0.0013)
+(i-a) arm p_q = 0.7.0 EB per-question estimates, own beta-binomial fit: conditional P(p<0.05)=0.8188 (se 0.0027), P(R1)=0.8186, mean arm empties 3.99; resample-both P(p<0.05)=0.7092 (se 0.0032)
+(i-b) arm p_q = 0.7.0 per-question estimates, 0.7.0 mean with the 0.9.1 fit's concentration: conditional P(p<0.05)=0.8705 (se 0.0024), P(R1)=0.8551, mean arm empties 4.01; resample-both P(p<0.05)=0.7202 (se 0.0032)
+(ii) uniform 50% reduction of each comparator p_q: conditional P(p<0.05)=0.5142 (se 0.0035), P(R1)=0.3343, mean arm empties 7.86; resample-both P(p<0.05)=0.4722 (se 0.0035)
+(iii) uniform 75% reduction of each comparator p_q: conditional P(p<0.05)=0.9487 (se 0.0016), P(R1)=0.8971, mean arm empties 3.92; resample-both P(p<0.05)=0.8451 (se 0.0026)
+{

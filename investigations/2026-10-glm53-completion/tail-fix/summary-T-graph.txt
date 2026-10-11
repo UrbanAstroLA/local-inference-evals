@@ -1,0 +1,3 @@
+rank -1: source=None writes=None null_alias=None foreign=None attn_collision=None tail_collision=None stale_col_rows=None shadow_div=None prefwd dev/null/foreign=None/None/None eager_violation_lines=0 staged_anomalies=0 guard_errors=0
+rank 0: source=compute_kpool_tail_slot_mapping writes=298320 null_alias=0 foreign=0 attn_collision=0 tail_collision=0 stale_col_rows=16 shadow_div=0 prefwd dev/null/foreign=987021/986123/898 eager_violation_lines=0 staged_anomalies=17 guard_errors=0
+rank 1: source=compute_kpool_tail_slot_mapping writes=248600 null_alias=0 foreign=0 attn_collision=0 tail_collision=0 stale_col_rows=16 shadow_div=0 prefwd dev/null/foreign=987021/986179/842 eager_violation_lines=0 staged_anomalies=17 guard_errors=0
