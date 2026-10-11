@@ -1,0 +1,126 @@
+{
+ "prompts": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11
+ ],
+ "positions": 31200,
+ "by_region": {
+  "2044-2047": {
+   "positions": 48,
+   "mean_abs_dlp": 0.03242,
+   "top1_agree": 0.9792,
+   "mean_kl_top20": 0.00867
+  },
+  "2044-2047|mod0": {
+   "positions": 12,
+   "mean_abs_dlp": 0.00324,
+   "top1_agree": 1.0,
+   "mean_kl_top20": 0.00131
+  },
+  "2044-2047|mod1": {
+   "positions": 12,
+   "mean_abs_dlp": 0.04955,
+   "top1_agree": 0.9167,
+   "mean_kl_top20": 0.01425
+  },
+  "2044-2047|mod2": {
+   "positions": 12,
+   "mean_abs_dlp": 0.03836,
+   "top1_agree": 1.0,
+   "mean_kl_top20": 0.00787
+  },
+  "2044-2047|mod3": {
+   "positions": 12,
+   "mean_abs_dlp": 0.03854,
+   "top1_agree": 1.0,
+   "mean_kl_top20": 0.01127
+  },
+  "ge2048": {
+   "positions": 9229,
+   "mean_abs_dlp": 0.06669,
+   "top1_agree": 0.9624,
+   "mean_kl_top20": 0.01654
+  },
+  "ge2048|mod0": {
+   "positions": 2312,
+   "mean_abs_dlp": 0.06482,
+   "top1_agree": 0.9654,
+   "mean_kl_top20": 0.01359
+  },
+  "ge2048|mod1": {
+   "positions": 2309,
+   "mean_abs_dlp": 0.06522,
+   "top1_agree": 0.9597,
+   "mean_kl_top20": 0.01711
+  },
+  "ge2048|mod2": {
+   "positions": 2305,
+   "mean_abs_dlp": 0.06656,
+   "top1_agree": 0.961,
+   "mean_kl_top20": 0.0186
+  },
+  "ge2048|mod3": {
+   "positions": 2303,
+   "mean_abs_dlp": 0.07015,
+   "top1_agree": 0.9635,
+   "mean_kl_top20": 0.01689
+  },
+  "lt2044": {
+   "positions": 21923,
+   "mean_abs_dlp": 0.05315,
+   "top1_agree": 0.9707,
+   "mean_kl_top20": 0.0106
+  },
+  "lt2044|mod0": {
+   "positions": 5476,
+   "mean_abs_dlp": 0.05706,
+   "top1_agree": 0.9691,
+   "mean_kl_top20": 0.01089
+  },
+  "lt2044|mod1": {
+   "positions": 5479,
+   "mean_abs_dlp": 0.05414,
+   "top1_agree": 0.9697,
+   "mean_kl_top20": 0.01173
+  },
+  "lt2044|mod2": {
+   "positions": 5483,
+   "mean_abs_dlp": 0.05135,
+   "top1_agree": 0.9725,
+   "mean_kl_top20": 0.01063
+  },
+  "lt2044|mod3": {
+   "positions": 5485,
+   "mean_abs_dlp": 0.05005,
+   "top1_agree": 0.9714,
+   "mean_kl_top20": 0.00916
+  }
+ },
+ "server": {
+  "kv_pool_tokens": 2808855,
+  "kv_memory_gib_per_gpu": [
+   15.78
+  ],
+  "max_num_seqs": 16,
+  "status_lines": 33,
+  "waiting_below_max_seqs": 0,
+  "max_running": 16,
+  "peak_kv_usage_pct": 78.8,
+  "mean_gen_tok_s_8plus_running": 328.2,
+  "intervals_8plus_running": 4,
+  "mean_acceptance_length": 3.114,
+  "acceptance_rate": 0.4165,
+  "events": {},
+  "first_error_s": null
+ }
+}

@@ -247,4 +247,38 @@ The common-completion table is a derived calculation from S2. Experiment priorit
 
 ## Dated amendments
 
-None yet.
+**Amendment 1 (2026-10-10, written before any Phase 1 data).** First GPU step: decode-vs-prefill consistency
+(`decode-prefill-consistency/v1`, 12 prompts, seeds 1234 + prompt, 2,600 tokens, concurrency 1, prefix caching off,
+speculation off) on the tpurtell 0.7.0 image, two runs, plus one fresh run on 0.9.1 to add to its two runs of 2026-10-08.
+Question: does the 0.7.0 generation path agree with its own prefill re-scoring better or worse than 0.9.1's?
+Reading rule: compare mean shared-top-20 KL below 2,044 and from 2,048 tokens. A difference counts only if every 0.7.0
+run lies outside the range of all 0.9.1 runs in the same region (and vice versa); otherwise "no difference beyond
+run-to-run variation". Speculation off isolates the attention and expert paths from speculative execution; draft depth
+is a separate step. Budget: about 1 wall-hour (about 2 occupied GPU-hours), counted in costs.jsonl.
+
+**Amendment 2 (2026-10-10, after step 1, before step 2 data).** Step 1 result (rule of amendment 1): below 2,044 tokens
+the 0.7.0 and 0.9.1 ranges overlap (0.0061-0.0104 vs 0.0072-0.0077); from 2,048 tokens both 0.7.0 runs (0.0142, 0.0145)
+lie just above all three 0.9.1 runs (0.0053-0.0139), a hairline separation in the direction of 0.7.0 agreeing worse.
+Cost 0.77 wall-hours (1.54 GPU-hours). Step 2: the same test on 0.9.1 with speculation on, DFlash2 x5 (two runs) vs x3
+(one new run plus the 2026-10-08 run), prefix caching off. Question: does deeper speculation change what the model
+computes along its own trajectory? Rule: a difference counts only if both x5 runs lie outside the range of both x3 runs
+in the same region; the speculation-off runs of step 1 (0.9.1) give the reference range. Budget about 1 wall-hour.
+
+**Amendment 3 (2026-10-10, after step 2, before step 3 data).** Step 2 result (rule of amendment 2): DFlash2 x5 and x3
+overlap in both regions (below 2,044: x5 0.0100-0.0206, x3 0.0105-0.0131; from 2,048: x5 0.0066-0.0268, x3 0.0115-0.0186).
+Not targeted by the rule but recorded here before further data: below 2,044 tokens every speculation-on run on 0.9.1
+(0.0100-0.0206, four runs) lies above every speculation-off run (0.0072-0.0077, three runs); from 2,048 they overlap.
+Cost 0.80 wall-hours (1.61 GPU-hours). Step 3: the same test on tpurtell 0.7.0 as shipped, speculation on, DFlash2 x5,
+prefix caching off, two runs. Question: is 0.7.0's speculation-on agreement better than 0.9.1's? Rule: a difference
+counts only if both 0.7.0 runs lie outside the range of all four 0.9.1 speculation-on runs (x3 and x5) in the same region;
+the comparison is engine as shipped vs engine as shipped plus x5 on 0.9.1. Budget about 0.6 wall-hours.
+
+**Amendment 4 (2026-10-10, after step 3, before step 4 data).** Step 3 result (rule of amendment 3): 0.7.0 with
+speculation on (x5) lies inside the range of 0.9.1's four speculation-on runs in both regions (below 2,044: 0.0106-0.0138
+vs 0.0100-0.0206; from 2,048: 0.0135-0.0165 vs 0.0066-0.0268): no difference. Speculation raises the disagreement in both
+engines (0.7.0 below 2,044: off 0.0061-0.0104, on 0.0106-0.0138). Cost 0.42 wall-hours (0.84 GPU-hours).
+Step 4: the same client at 16,000 generated tokens, prompts 0-5, both engines as shipped (0.7.0 DFlash2 x5 with its
+layout; 0.9.1 DFlash2 x3), prefix caching off, two runs each, alternating engines. Positions are binned 0-2,043,
+2,048-7,999 and 8,000-15,999. Question: does 0.9.1's decode drift from its prefill more than 0.7.0's as context grows?
+Rule: a difference counts only if both runs of one engine lie outside the range of both runs of the other in the
+8,000-15,999 bin; the other bins are reported. Budget about 1.5 wall-hours.

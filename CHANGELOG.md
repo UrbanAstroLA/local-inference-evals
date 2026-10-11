@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-10-10 (completion investigation, Phase 1 steps 1-4): decode vs prefill on both engines
+
+Contents: 61 runs (12 new), 13 comparisons. No earlier run, number or grade changed.
+
+- **12 new decode-vs-prefill runs** (2026-10-10), each on a fresh server, with numeric server-log fields
+  (`server_log.jsonl`): tpurtell 0.7.0 with speculation off (2 runs) and on (DFlash2 ×5, 2 runs); tpurtell 0.9.1 with
+  speculation off (a third run), DFlash2 ×5 (2 runs) and ×3 (a second run); and both engines as shipped at 16,000 tokens
+  (2 runs each).
+- **New configs** `k3.25-v0.7.0-nospec-nocache`, `k3.25-v0.7.0-dflash5-nocache`, `k3.25-v0.9.1-dflash5-nocache`.
+- **New protocol `decode-prefill-consistency/v2`**: v1 at 16,000 generated tokens on prompts 0-5, with context-length
+  bins in the summary (`by_bin`). v1 is unchanged. `tools/verify.py` recomputes the bins; `SCHEMA.md` lists them.
+- **Completion investigation**: new Phase 1 section in its `README.md` (question, rule, runs, numbers, verdict and cost
+  per step), PLAN.md amendments 1-4 (each written before its step's data), Phase 1 arms in `manifest.json`, costs and
+  checks appended, and `recompute.py` extended to reproduce every Phase 1 number and verdict and to check that the
+  README's tables match.
+- The looping page's decode-vs-prefill figure keeps to that investigation's runs (2026-10-07 to 10-09).
+
 ## 2026-10-10 (completion investigation, Phase 0): existing data only; one correction; no data or number changed
 
 Contents unchanged: 49 runs, 13 comparisons.

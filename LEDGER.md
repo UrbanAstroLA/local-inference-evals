@@ -61,6 +61,9 @@ What was asked, run, found, corrected and withdrawn, in date order.
 - New [completion investigation](investigations/2026-10-glm53-completion/README.md), Phase 0 (existing data, no GPU):
   0.7.0's higher GPQA score comes entirely from question-passes 0.9.1 left empty. Where both answered (577 of 594),
   raw accuracy is identical (516 vs 516).
+- Completion investigation, [Phase 1](investigations/2026-10-glm53-completion/README.md#phase-1) (12 decode-vs-prefill
+  runs, 7.18 GPU-hours): no step found 0.9.1's decode agreeing worse with its prefill than 0.7.0's; at 8,000-15,999
+  tokens 0.7.0's agreed worse. Below 2,044 tokens disagreement is higher with speculation on, in both engines.
 - Correction: earlier text said both servers loaded the same vendored chat template. They did not. 0.7.0 served the
   checkpoint's own template, 0.9.1 the corrected Z.ai template. Both render all 198 GPQA prompts byte-identically, so
   no number changes.

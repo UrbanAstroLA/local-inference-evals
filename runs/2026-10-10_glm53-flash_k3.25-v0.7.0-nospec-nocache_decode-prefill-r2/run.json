@@ -1,0 +1,10 @@
+{
+ "id": "2026-10-10_glm53-flash_k3.25-v0.7.0-nospec-nocache_decode-prefill-r2",
+ "config": "glm53-flash/k3.25-v0.7.0-nospec-nocache",
+ "protocol": "decode-prefill-consistency/v1",
+ "date": "2026-10-10",
+ "software": {
+  "client": "tools/clients/decode_prefill_consistency.py"
+ },
+ "notes": "GPQA Diamond doc ids 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 (lm-eval prompt_hash 0: 6b01485ca6c3d2cc, 1: 769b3781775e1b23, 2: 09d7adceb2186f10, 3: 0beeb08fdff9a3e1, 4: 96ec0c33934b7154, 5: 4dc7f71fe5c9bce2, 6: 7bf2017d92a86d6b, 7: d9358b727c61208a, 8: c9dc339ca995be06, 9: 035a5051b294095e, 10: 5158772fd4612dbf, 11: 5d00b1e84ad8db71), 2600 generated tokens each at concurrency 1, request seed 1234 + doc id. Positions, regions and comparison values only; no token ids or text. Values rounded to 6 decimals. Completion investigation, Phase 1 step 1 (PLAN.md amendment 1): run 2 of 2 of this configuration. Fresh server. The engine's start-up warm-up requests overlapped the start of prompt 0 (up to 16 requests running in its first minute); every later prompt ran alone. Server-log figures cover the client's time window, from the container settings check to the last prompt. Server log figures (server_log.jsonl; summary.json 'server'): KV pool 4,824,736 tokens; 0 preemption log lines."
+}

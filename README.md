@@ -17,7 +17,7 @@ evaluating the runtimes and quants, and the confounds that can move accuracy or 
 | [Confounds](https://urbanastrola.github.io/local-inference-evals/confounds.html) | What else can move a result, and how the runs control for it | [`CONFOUNDS.md`](CONFOUNDS.md) |
 | [Ledger](https://urbanastrola.github.io/local-inference-evals/ledger.html) | What was run, found, corrected and withdrawn, and when | [`LEDGER.md`](LEDGER.md) |
 | [Investigation](https://urbanastrola.github.io/local-inference-evals/looping.html) | Why some hard questions do not finish | [`investigations/2026-10-glm53-looping`](investigations/2026-10-glm53-looping) |
-| [Completion audit](investigations/2026-10-glm53-completion/README.md) | Why 0.7.0 left fewer GPQA answers empty than 0.9.1 (Phase 0: existing data only) | [`investigations/2026-10-glm53-completion`](investigations/2026-10-glm53-completion) |
+| [Completion audit](investigations/2026-10-glm53-completion/README.md) | Why 0.7.0 left fewer GPQA answers empty than 0.9.1 (Phase 0: existing data; Phase 1: decode vs prefill on both engines) | [`investigations/2026-10-glm53-completion`](investigations/2026-10-glm53-completion) |
 | [Method](https://urbanastrola.github.io/local-inference-evals/method.html) | Grades, scoring, intervals, receipts, glossary | [`protocols/`](protocols), [`DATASHEET.md`](DATASHEET.md) |
 
 **The DCP1 tail issue and its fix** (tpurtell PR #6, released in tpurtell 0.9.1):

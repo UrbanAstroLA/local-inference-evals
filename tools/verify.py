@@ -17,6 +17,8 @@ RUN_KEYS = {"id", "config", "protocol", "date", "software", "notes"}
 SINGLE_DRAW = ("hard-prompt-screen/v0", "hard-prompt-screen/v1")
 # Descriptive config fields that follow from others (repo, version, patches), so comparisons do not check them.
 DESCRIPTIVE = ("id", "notes", "model.label", "engine.series", "engine.equivalent_to", "engine.built_on")
+# decode-prefill-consistency/v2 context-length bins over the causal length i (inclusive bounds); 2,044-2,047 is in none
+DP_BINS = (("0-2043", 0, 2043), ("2048-7999", 2048, 7999), ("8000-15999", 8000, 15999), ("ge16000", 16000, 10 ** 9))
 fails = []
 
 
@@ -165,14 +167,19 @@ def summarize(protocol, rs):
         return {"tests": len(rs), "passed": c["passed"], "failed": c["failed"], "skipped": c["skipped"],
                 "failed_tests": sorted(r["test"] for r in rs if r["outcome"] == "failed")}
     if fam == "decode-prefill-consistency":
+        def stats(sel):
+            kl = [r["kl_top20"] for r in sel if r["kl_top20"] is not None]
+            return {"positions": len(sel), "mean_abs_dlp": round(sum(r["abs_dlp"] or 0.0 for r in sel) / len(sel), 5),
+                    "top1_agree": round(sum(r["top1_agree"] for r in sel) / len(sel), 4),
+                    "mean_kl_top20": round(sum(kl) / len(kl), 5) if kl else None}
         out = {}
         for key in sorted({f"{r['region']}|mod{r['mod4']}" for r in rs} | {r["region"] for r in rs}):
-            sel = [r for r in rs if key in (r["region"], f"{r['region']}|mod{r['mod4']}")]
-            kl = [r["kl_top20"] for r in sel if r["kl_top20"] is not None]
-            out[key] = {"positions": len(sel), "mean_abs_dlp": round(sum(r["abs_dlp"] or 0.0 for r in sel) / len(sel), 5),
-                        "top1_agree": round(sum(r["top1_agree"] for r in sel) / len(sel), 4),
-                        "mean_kl_top20": round(sum(kl) / len(kl), 5) if kl else None}
-        return {"prompts": sorted({r["doc_id"] for r in rs}), "positions": len(rs), "by_region": out}
+            out[key] = stats([r for r in rs if key in (r["region"], f"{r['region']}|mod{r['mod4']}")])
+        summ = {"prompts": sorted({r["doc_id"] for r in rs}), "positions": len(rs), "by_region": out}
+        if protocol == "decode-prefill-consistency/v2":     # context-length bins over i (protocols/decode-prefill-consistency/v2.md)
+            summ["by_bin"] = {b: stats([r for r in rs if lo <= r["i"] <= hi]) for b, lo, hi in DP_BINS
+                              if any(lo <= r["i"] <= hi for r in rs)}
+        return summ
     if fam == "kpool-tail-index":
         out = {}
         for lay in sorted({r["layout"] for r in rs}):

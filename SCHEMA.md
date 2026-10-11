@@ -75,6 +75,8 @@ Wilson interval `non_ok_ci95`.
 
 **decode-prefill-consistency/v1:** `doc_id`, `i` (position = causal length of the decode step), `mod4`, `region`
 (`lt2044`, `2044-2047`, `ge2048`), `abs_dlp`, `top1_agree`, `kl_top20` (null when fewer than 2 shared top-20 tokens).
+**decode-prefill-consistency/v2:** the same rows at 16,000 generated tokens; the summary adds `by_bin` over `i`
+(`0-2043`, `2048-7999`, `8000-15999`, `ge16000`).
 
 **kpool-tail-index/v1:** `layout` (packed / scattered), `length`, `nsa_len`, `selected`, `attended`, `tail`,
 `tail_cols_before_mask`, `tail_cols_after_mask`, `tail_attended`, `n_dropped`, `equals_dense_prefix` (null above 2,047),

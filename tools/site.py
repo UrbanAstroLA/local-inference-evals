@@ -814,7 +814,8 @@ def decode_prefill_fig(runs):
     """Two panels on one scale, one per position region: the run without the fix, the runs with it, then speculation on."""
     order = lambda m: (bool(m["cfg"]["serving"]["speculative"]["tokens"]), bool(m["cfg"]["engine"]["patches"]) or m["cfg"]["engine"]["version"] != "v0.9.0",
                        m["cfg"]["engine"]["version"], m["id"])
-    dps = sorted((m for m in runs.values() if m["protocol"] == "decode-prefill-consistency/v1"), key=order)
+    # the looping investigation's runs (2026-10-07 to 10-09); later decode-prefill runs belong to the completion investigation
+    dps = sorted((m for m in runs.values() if m["protocol"] == "decode-prefill-consistency/v1" and m["date"] <= "2026-10-09"), key=order)
     panels, ktr = [], []
     for reg, rname in (("lt2044", "i < 2,044"), ("ge2048", "i ≥ 2,048")):
         kd = []

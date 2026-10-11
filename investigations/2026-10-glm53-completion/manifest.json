@@ -3,7 +3,7 @@
  "question": "Why does tpurtell 0.7.0 (DFlash2 x5) return more final GPQA answers than tpurtell 0.9.1 (DFlash2 x3) with the same 3.25bpw weights?",
  "frozen": "2026-10-10",
  "plan": "PLAN.md",
- "phase": 0,
+ "phase": 1,
  "snapshot": {
   "evaluation_repository": {
    "repo": "UrbanAstroLA/local-inference-evals",
@@ -152,5 +152,210 @@
   }
  ],
  "restricted_material": "Prompt text, replies, reasoning text and token sequences are not published. Local copies are indexed outside this repository by path and hash.",
- "arms": "none yet (Phase 0 is CPU only)"
+ "arms": "see phase1.steps (Phase 0 was CPU only)",
+ "phase1": {
+  "protocols": [
+   "decode-prefill-consistency/v1 (steps 1-3: 12 prompts, 2,600 tokens)",
+   "decode-prefill-consistency/v2 (step 4: prompts 0-5, 16,000 tokens)"
+  ],
+  "common": "GPQA Diamond doc ids as listed in each run, request seed 1234 + doc id, concurrency 1, prefix caching off, one fresh server per run; the client sends the same prompt token ids to both engines, so the chat template does not enter",
+  "measure": "mean kl_top20 over a region's positions (all prompts of the run pooled); regions by causal length i",
+  "steps": [
+   {
+    "step": 1,
+    "amendment": 1,
+    "question": "With speculation off, does 0.7.0's decode agree with its own prefill better or worse than 0.9.1's?",
+    "groups": {
+     "0.7.0, speculation off": [
+      "2026-10-10_glm53-flash_k3.25-v0.7.0-nospec-nocache_decode-prefill-r1",
+      "2026-10-10_glm53-flash_k3.25-v0.7.0-nospec-nocache_decode-prefill-r2"
+     ],
+     "0.9.1, speculation off": [
+      "2026-10-08_glm53-flash_k3.25-v0.9.1-nospec-nocache_decode-prefill",
+      "2026-10-09_glm53-flash_k3.25-v0.9.1-nospec-nocache_decode-prefill",
+      "2026-10-10_glm53-flash_k3.25-v0.9.1-nospec-nocache_decode-prefill-r3"
+     ]
+    },
+    "a": "0.7.0, speculation off",
+    "b": "0.9.1, speculation off",
+    "regions": [
+     "below 2,044",
+     "from 2,048"
+    ],
+    "rule": "every run of one group outside the range of all runs of the other, per region",
+    "stated": {
+     "below 2,044": {
+      "0.7.0, speculation off": [
+       0.0061,
+       0.0104
+      ],
+      "0.9.1, speculation off": [
+       0.0072,
+       0.0077
+      ]
+     },
+     "from 2,048": {
+      "0.7.0, speculation off": [
+       0.0142,
+       0.0145
+      ],
+      "0.9.1, speculation off": [
+       0.0053,
+       0.0139
+      ]
+     }
+    }
+   },
+   {
+    "step": 2,
+    "amendment": 2,
+    "question": "On 0.9.1, does DFlash2 x5 change decode-vs-prefill agreement compared with x3?",
+    "groups": {
+     "0.9.1, DFlash2 x5": [
+      "2026-10-10_glm53-flash_k3.25-v0.9.1-dflash5-nocache_decode-prefill-r1",
+      "2026-10-10_glm53-flash_k3.25-v0.9.1-dflash5-nocache_decode-prefill-r2"
+     ],
+     "0.9.1, DFlash2 x3": [
+      "2026-10-08_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill",
+      "2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-r2"
+     ],
+     "0.9.1, speculation off (reference)": [
+      "2026-10-08_glm53-flash_k3.25-v0.9.1-nospec-nocache_decode-prefill",
+      "2026-10-09_glm53-flash_k3.25-v0.9.1-nospec-nocache_decode-prefill",
+      "2026-10-10_glm53-flash_k3.25-v0.9.1-nospec-nocache_decode-prefill-r3"
+     ]
+    },
+    "a": "0.9.1, DFlash2 x5",
+    "b": "0.9.1, DFlash2 x3",
+    "regions": [
+     "below 2,044",
+     "from 2,048"
+    ],
+    "rule": "both x5 runs outside the range of both x3 runs, per region",
+    "stated": {
+     "below 2,044": {
+      "0.9.1, DFlash2 x5": [
+       0.01,
+       0.0206
+      ],
+      "0.9.1, DFlash2 x3": [
+       0.0105,
+       0.0131
+      ]
+     },
+     "from 2,048": {
+      "0.9.1, DFlash2 x5": [
+       0.0066,
+       0.0268
+      ],
+      "0.9.1, DFlash2 x3": [
+       0.0115,
+       0.0186
+      ]
+     }
+    }
+   },
+   {
+    "step": 3,
+    "amendment": 3,
+    "question": "Is 0.7.0's speculation-on agreement (as shipped, x5) better than 0.9.1's (x3 and x5)?",
+    "groups": {
+     "0.7.0, DFlash2 x5": [
+      "2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-r1",
+      "2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-r2"
+     ],
+     "0.9.1, speculation on (x3 and x5)": [
+      "2026-10-08_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill",
+      "2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-r2",
+      "2026-10-10_glm53-flash_k3.25-v0.9.1-dflash5-nocache_decode-prefill-r1",
+      "2026-10-10_glm53-flash_k3.25-v0.9.1-dflash5-nocache_decode-prefill-r2"
+     ]
+    },
+    "a": "0.7.0, DFlash2 x5",
+    "b": "0.9.1, speculation on (x3 and x5)",
+    "regions": [
+     "below 2,044",
+     "from 2,048"
+    ],
+    "rule": "both 0.7.0 runs outside the range of all four 0.9.1 speculation-on runs, per region",
+    "stated": {
+     "below 2,044": {
+      "0.7.0, DFlash2 x5": [
+       0.0106,
+       0.0138
+      ],
+      "0.9.1, speculation on (x3 and x5)": [
+       0.01,
+       0.0206
+      ]
+     },
+     "from 2,048": {
+      "0.7.0, DFlash2 x5": [
+       0.0135,
+       0.0165
+      ],
+      "0.9.1, speculation on (x3 and x5)": [
+       0.0066,
+       0.0268
+      ]
+     }
+    }
+   },
+   {
+    "step": 4,
+    "amendment": 4,
+    "question": "Does 0.9.1's decode drift from its prefill more than 0.7.0's as context grows (16,000 tokens, both as shipped)?",
+    "groups": {
+     "0.7.0, DFlash2 x5, 16,000 tokens": [
+      "2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-16k-r1",
+      "2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-16k-r2"
+     ],
+     "0.9.1, DFlash2 x3, 16,000 tokens": [
+      "2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-16k-r1",
+      "2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-16k-r2"
+     ]
+    },
+    "a": "0.7.0, DFlash2 x5, 16,000 tokens",
+    "b": "0.9.1, DFlash2 x3, 16,000 tokens",
+    "regions": [
+     "0-2,043",
+     "2,048-7,999",
+     "8,000-15,999"
+    ],
+    "rule_region": "8,000-15,999",
+    "rule": "both runs of one engine outside the range of both runs of the other in the 8,000-15,999 bin; other bins reported",
+    "stated": {}
+   }
+  ],
+  "cross_step": {
+   "observation": "below 2,044 tokens, speculation-on runs vs speculation-off runs within each engine (descriptive; not a rule of any amendment)",
+   "pairs": [
+    {
+     "engine": "0.9.1",
+     "on": [
+      "2026-10-08_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill",
+      "2026-10-10_glm53-flash_k3.25-v0.9.1-dflash3-nocache_decode-prefill-r2",
+      "2026-10-10_glm53-flash_k3.25-v0.9.1-dflash5-nocache_decode-prefill-r1",
+      "2026-10-10_glm53-flash_k3.25-v0.9.1-dflash5-nocache_decode-prefill-r2"
+     ],
+     "off": [
+      "2026-10-08_glm53-flash_k3.25-v0.9.1-nospec-nocache_decode-prefill",
+      "2026-10-09_glm53-flash_k3.25-v0.9.1-nospec-nocache_decode-prefill",
+      "2026-10-10_glm53-flash_k3.25-v0.9.1-nospec-nocache_decode-prefill-r3"
+     ]
+    },
+    {
+     "engine": "0.7.0",
+     "on": [
+      "2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-r1",
+      "2026-10-10_glm53-flash_k3.25-v0.7.0-dflash5-nocache_decode-prefill-r2"
+     ],
+     "off": [
+      "2026-10-10_glm53-flash_k3.25-v0.7.0-nospec-nocache_decode-prefill-r1",
+      "2026-10-10_glm53-flash_k3.25-v0.7.0-nospec-nocache_decode-prefill-r2"
+     ]
+    }
+   ]
+  }
+ }
 }
