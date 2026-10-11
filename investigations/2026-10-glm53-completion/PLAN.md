@@ -328,3 +328,50 @@ interpretation clauses of amendment 6, not its measurement or thresholds).** If 
 old layout bundle can reproduce the discrepancy on newer code; this does not identify which layout component causes it.
 If it stays within the 0.9.1-default range: the bundle alone does not reproduce the discrepancy under these conditions;
 old kernel code or a kernel-layout interaction remains possible. Otherwise: unresolved under this screen.
+
+**Amendment 7 (2026-10-10; adopts the independent next-stage assessment of 2026-10-10).** Priorities: a targeted
+behavioral comparison before any further subdivision of the generation-vs-prefill (KL) discrepancy; GPU time in tranches
+(Tranche 1: up to +4 GPU-hours, ceiling 16; Tranche 2 conditional, up to +8, ceiling 24); the step-6 configuration is
+named the "0.9.1 EP2/DCP2 diagnostic bundle" (global top-k merge fallback instead of stock's owner exchange; x3 drafts).
+Exploratory CPU trace audit (existing step-5 and step-6 traces, 24 traces; primary results unchanged): ignore_eos in this
+vLLM build only disables stopping (no end-token masking without min_tokens). Termination tokens: <|endoftext|> 154820,
+<|user|> 154827, <|observation|> 154829; reasoning close </think> 154842. In all 24 traces the model closed its reasoning
+and emitted a terminator at 637-5,377 generated tokens; 100% of the 8,000-15,999 bin is forced continuation after the first
+natural termination (repeated synthetic turns, up to 93 terminators). Step-5 and step-6 disagreement in that bin: 0.0404
+and 0.0403. Step-4 runs kept no traces; the same prompts, seeds and settings make the same pattern likely there but it is
+not verified. Decision per the assessment: the long-context discrepancy of steps 4-6 measures forced post-answer
+continuation; its component bisection is deprioritized as an explanation for non-completion. The behavioral pilot remains
+necessary; its manifest will be frozen in amendment 8 before it runs.
+
+**Amendment 8 (2026-10-10, written by the operator before the pilot; recorded verbatim in substance).** Completion pilot
+and staged GPU authorization. Objective: determine whether the 0.9.1 diagnostic EP2/DCP2 bundle changes useful completion
+behaviour relative to 0.9.1's default layout; the earlier post-completion KL discrepancy does not establish a mechanism.
+Tranche 1 approved: up to 4 additional occupied GPU-hours; earlier GPU time stays in the cumulative ledger; this pilot has a
+3 GPU-hour ceiling including startup, warm-up, measurement, shutdown and invalid runs. No further tranche is authorized.
+Frozen manifest (case, original seed, fresh seed, output cap, both arms): q55 1235 7055 65,536; q109 1234 7109 65,536;
+q170 1236 7170 131,072; q144 control 1234 7144 65,536. Arms: A 0.9.1 default layout; B 0.9.1 diagnostic EP2/DCP2 bundle.
+Both: identical weights, rendered prompts, parser and sampler; DFlash2 x3; temperature 1.0, top_p 0.95; normal stopping, no
+ignore_eos, no early loop termination; warm-up gated; concurrency 8 (the original evaluation's), the two seed groups being
+analysis groups submitted together. Record admission order, active-request counts, cache waits and interruptions.
+Primary: valid final answer by each case's cap; output tokens to first valid final answer. Secondary: completion by 32k and
+64k (and 128k for q170); correctness, reasoning-close position, finish reason; repetition vs substantive reasoning; GPU-hours
+and tokens. Unanswered at the cap = right-censored, not equivalent to the original 327,680-token failures. Arms compared at
+common thresholds within each case; caps not pooled. Interpretation and next-expenditure rules as written by the operator
+(multiple-case improvement incl. fresh seeds -> replication or focused component test; single original seed -> fresh-seed
+replication first; both finish -> original conditions not reproduced; both censored -> inspect traces before longer runs;
+B worse -> deprioritize; control changes -> investigate before interpreting rescues). No KL experiments, full GPQA pass or
+new tranche on an inconclusive result. Report: 1 reproducible behavioural candidate, 2 fixture-specific observation, or
+3 no useful separation within the window.
+
+Pre-launch record (coordinator, before data): measured throughput 446 tok/s aggregate with 8 running (0.9.1 default, its
+GPQA passes, median of 1,616 status lines); single-stream 113 tok/s (default) vs 98-100 (bundle) at 16k. Worst case per arm
+(every request to its cap: 655,360 tokens): about 20 min with 8 running, then the two q170 requests alone about 11-13 min,
+plus about 9-10 min startup: about 40-45 min per arm, about 2.7-3.0 GPU-hours for both. To hold the 3 GPU-hour ceiling,
+each arm is stopped at 45 minutes after its server start; requests still running then are recorded as censored by the time
+limit (distinct from the token cap). KV: default 4,707,515 and bundle 3,199,879 tokens vs at most about 660,000 needed;
+max_model_len 1,048,576 covers prompt plus 131,072. Client: streaming chat client (manifest seeds and caps, early stop off,
+stop ['</s>'] as in the GPQA task, local reasoning text). Manifest sha256 prefix 33d2f8fb5cd5b60d.
+
+Launch note (coordinator): after the runner started and before arm A's client started, the client was changed to record
+requests open at the time limit as finish_reason 'time_limit' with partial text, and to record time to first chunk. Request
+bodies, seeds, caps and order were unchanged. Neither arm reached its time limit. Results: `pilot/table.md`, `pilot/report.json`.
