@@ -1,0 +1,11 @@
+# sha256 of local files not published: the seed-1235 pass's raw server log and container inspection, the local
+# README written before the run (superseded by the public README), and the pass's lm-eval samples, lm-eval results file
+# and recording-proxy request log (the samples and the request log hold GPQA question and reply text). Paths relative to
+# the local screen2 folder, or under <gpqa-runs> (the local GPQA run directory), with the same substitutions as the
+# public copies.
+5e157d697135d265635c6332a6964bbaae8864198f921243543a958fe91e58e0  ./run-s1235/server-s2.log
+3e7391070a750cf990eb8712145cebe09fe42f6be437e463ec084cf6b6857f08  ./run-s1235/inspect-s2.json
+ac2156544c877c1c02fcefb6be1da07f1249ab9e56953bcc6950760fb3cb91ff  ./README.md
+d3eb4fa745c70ee8a91133e3d12e238a83e8aa9487f7989e3b42d6f157fa9c92  <gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234__pass2/wrldsuksgo2mars__GLM-5.3-Flash-EXL3-K3.25-v1/samples_gpqa_diamond_thinking_2026-10-12T13-26-20.620348.jsonl
+c716361c776e3839aef9eca69d8ec479e996c3baff6ab8f433d336714d8505e4  <gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234__pass2/wrldsuksgo2mars__GLM-5.3-Flash-EXL3-K3.25-v1/results_2026-10-12T13-26-20.620348.json
+76088d5d13e62eba3c65e38f286cd21ddc6113b7bf6709bf929e51b92ef80bc9  <gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234.s2.requests.jsonl

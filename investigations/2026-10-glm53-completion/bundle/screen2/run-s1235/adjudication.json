@@ -1,0 +1,10 @@
+{
+ "what": "Stated-answer adjudication of the bundle seed-1235 pass (amendment 15), by the existing rules (gpqa-diamond/v1 correct_stated; export_evals hand-read rules). Ids and verdicts only; no reply text.",
+ "rows": [
+  {"doc": 64, "hedged": false, "reason": "commits to a single option"},
+  {"doc": 94, "hedged": true, "reason": "names one option, then states two options are both correct if multiple answers are allowed: no single committed option"},
+  {"doc": 110, "hedged": false, "reason": "commits to a single option"},
+  {"doc": 113, "hedged": false, "reason": "commits to a single option"},
+  {"doc": 179, "hedged": false, "reason": "commits to a single option; later mentions of other options explain distractors"}
+ ]
+}

@@ -6,7 +6,9 @@ the gate data were inspected (below). One GPQA pass with the bundle (seed 1234, 
 was valid and left **3 of 198 replies empty, all at the 327,680-token cap**: category **SIMILAR / NO CLEAR SEPARATION**
 under rules frozen before generation. Per those rules the bundle is deprioritised as a completion remedy within this
 allocation. This is not a finding that the included corrections lack behavioural effects. Cost: gate 1.6403 of 2.0,
-screen 4.841 of 7.5 occupied GPU-hours.
+screen 4.841 of 7.5 occupied GPU-hours. A second pass of the unchanged bundle at seed 1235 (amendments 15-15c) also left
+3 of 198 empty against 5 in the matching stock pass: modest improvement, no clear separation under its own frozen rules;
+the seed-1234 screen keeps its category ([`screen2/`](screen2), 4.541 GPU-hours).
 
 Plan and rules: [`../PLAN.md`](../PLAN.md#dated-amendments), amendments 14-14e. Design and the gate review:
 [`PROPOSAL.md`](PROPOSAL.md) (with two addenda). Investigation page:
@@ -155,6 +157,15 @@ adjudication complete: 2 rows (docs 58 and 98), each commits to a single option,
   luck across earlier GPQA runs, and will raise it with the independent assessor. The note is not an authorization, and
   no further GPU work is authorized.
 
+### Second pass, seed 1235
+
+Proposed by the independent assessment and authorized as one pass (amendments 15-15a); runner and analysis frozen before
+generation (amendment 15b); result in amendment 15c. Valid; 3 of 198 empty, all at the cap; no accuracy concern on the
+stock-0.9.1 family standard (raw 168, stated 169); category MODEST IMPROVEMENT, NO CLEAR SEPARATION. Against the stock
+record's seed-1235 pass (5 empty): 2 rescued, 0 newly empty, raw −8, stated −9. Both bundle passes against the matching
+stock passes, EXPLORATORY: 6 vs 10 empty of 396 (reduction 1.01 points, 95% 0.00 to 2.27; one-sided p = 0.11). Full
+write-up, session-condition comparison, thresholds and receipts: [`screen2/`](screen2).
+
 ## Files
 
 - [`PROPOSAL.md`](PROPOSAL.md): build, CPU tests, gate and screen design, D5/D6 decisions, the gate review and the
@@ -169,6 +180,8 @@ adjudication complete: 2 rows (docs 58 and 98), each commits to a single option,
   production-image check; probe divergence.
 - [`screen/`](screen): analysis, runner, power simulation, dry runs on the column-511 arm's pass 1, the result before
   (`screen-result.*`) and after (`screen-result-final.*`) adjudication, the adjudication ids, cost.
+- [`screen2/`](screen2): the seed-1235 pass (amendments 15-15c), with its own README, raw hash list and cost line;
+  its public copies are listed in [`../PUBLIC-COPIES-15.txt`](../PUBLIC-COPIES-15.txt).
 - [`costs.jsonl`](costs.jsonl), [`screen/costs.jsonl`](screen/costs.jsonl): cost lines as logged.
 - [`RAW-SHA256SUMS-bundle.txt`](RAW-SHA256SUMS-bundle.txt): sha256 of files kept local (server logs, request files,
   client and probe records, capture and observer records, container inspection, pre-flight listings, build logs, full

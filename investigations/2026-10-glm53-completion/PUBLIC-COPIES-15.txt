@@ -1,0 +1,11 @@
+Public copies of the seed-1235 bundle pass (amendments 15-15c) with local absolute paths and the local eval-chain script
+name replaced by placeholders (<runs>, <gpqa-runs>, <stacks>, <recipes>, <eval-tools>, <this-repo>). The 'local' column
+is the sha256 of the file that ran or was frozen (the amendment 15b hashes and the result files' script_sha256 and
+analysis_col511_sha256 refer to it). analysis_col511.py is the existing public copy of arm-col511-plan/analysis_col511.py
+(PUBLIC-COPIES-11b.txt), byte-identical to it. Every other file copied from the local folder is published unchanged;
+README.md and RAW-SHA256SUMS-screen2.txt are written for this repository.
+file	local_sha256	public_sha256
+bundle/screen2/gpqa-bundle-screen-s1235.sh	39ff7616e385546c35939eed2c914b7fc8478145347314ee6f4a014391b2c0f7	d5d703b172308a0331b86ffbe40a476f85e753f3780ec213f20a0ad192ad7668
+bundle/screen2/screen2_analysis.py	cc3d300032cd831deea233c7e2251477b807170cbee4f80a4bd611efafef11c7	9a4922fe1d60cee1e8c488e68ee315d062cc0a825571ac9ae44e78325dfffda5
+bundle/screen2/analysis_col511.py	b5b13ce2155085ca46fb24877f12b7cd0a5cdd16eb4cf19012958e7b86ae0033	cb8cec894323d91e5a422b3046ab42a17a38874223a5317185372cb8476318c7
+bundle/screen2/screen2-run.log	c93ef5bd8d7000eb438e348089a4fe065d7b3dd8cb0d781e4605e52f47d76788	f88e933decb250be56a45b50538b55c66ebd3d5515aee496439e1e4346c0dc2f

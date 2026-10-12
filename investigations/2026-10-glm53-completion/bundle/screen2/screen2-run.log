@@ -1,0 +1,7 @@
+2026-10-12T11:10:12-07:00 second bundle pass (seed 1235) start; recipe glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234; ceiling 7.5 GPU-h (13500 s wall)
+recording http://127.0.0.1:8001 on 127.0.0.1:8002 -> <gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234.s2.requests.jsonl
+2026-10-12T13:26:21-07:00 chain rc=0
+pass 1 unchanged
+analysis rc=0 (3 = invalid pass; category PROVISIONAL until --adjudication)
+no GLM container running
+2026-10-12T13:26:34-07:00 SECOND PASS DONE; total wall 8182s, 4.541 GPU-h

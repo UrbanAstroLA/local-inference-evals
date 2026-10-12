@@ -1,0 +1,450 @@
+{
+ "label": "bundle d1234 second pass (seed 1235), adjudicated",
+ "valid": true,
+ "checks": [
+  [
+   "bundle d1234 second pass (seed 1235), adjudicated pass 1: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "bundle d1234 second pass (seed 1235), adjudicated pass 1: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "bundle d1234 second pass (seed 1235), adjudicated pass 1: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "bundle d1234 second pass (seed 1235), adjudicated pass 1: every request HTTP 200, seed 1235, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "bundle d1234 second pass (seed 1235), adjudicated pass 1: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 record pass 2: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.9.1 record pass 2: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.9.1 record pass 2: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.9.1 record pass 2: every request HTTP 200, seed 1235, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 record pass 2: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 record: rows derived here reproduce the published rows (594 rows; empty, raw, strict, stated, hashes, finish reason, tokens)",
+   true,
+   "0 field mismatches"
+  ],
+  [
+   "col511 arm pass 2: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "col511 arm pass 2: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "col511 arm pass 2: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "col511 arm pass 2: every request HTTP 200, seed 1235, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "col511 arm pass 2: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.7.0 record (context) pass 2: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.7.0 record (context) pass 2: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.7.0 record (context) pass 2: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.7.0 record (context) pass 2: every request HTTP 200, seed 1235, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.7.0 record (context) pass 2: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "bundle screen 1 (seed 1234) pass 1: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "bundle screen 1 (seed 1234) pass 1: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "bundle screen 1 (seed 1234) pass 1: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "bundle screen 1 (seed 1234) pass 1: every request HTTP 200, seed 1234, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "bundle screen 1 (seed 1234) pass 1: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "prompts identical to record pass 2 (messages_sha256, 198 questions)",
+   true,
+   "0 differ"
+  ],
+  [
+   "prompts identical to arm pass 2 (messages_sha256, 198 questions)",
+   true,
+   "0 differ"
+  ],
+  [
+   "no execution/stopping errors (finish reason stop or length on every request)",
+   true,
+   "[]"
+  ],
+  [
+   "server: one start, no illegal memory access / preemption / NaN lines in the request window",
+   true,
+   "{\"preemption_lines\": 0, \"illegal_memory_access_lines\": 0, \"nan_warning_lines\": 0}"
+  ]
+ ],
+ "script_sha256": "cc3d300032cd831deea233c7e2251477b807170cbee4f80a4bd611efafef11c7",
+ "analysis_col511_sha256": "b5b13ce2155085ca46fb24877f12b7cd0a5cdd16eb4cf19012958e7b86ae0033",
+ "accuracy_standard": {
+  "family_raw": [
+   169,
+   176,
+   171,
+   164,
+   170,
+   171
+  ],
+  "family_stated": [
+   170,
+   178,
+   174,
+   165,
+   176,
+   174
+  ],
+  "raw_mean": 170.17,
+  "raw_sd": 3.87,
+  "stated_mean": 172.83,
+  "stated_sd": 4.67,
+  "material": "raw <= 158 or stated <= 159 or premature stops >= 2",
+  "concern": "raw 159-163"
+ },
+ "part_A_new_pass": {
+  "empties": 3,
+  "causes": {
+   "cap_exhaustion": 3
+  },
+  "category": "MODEST IMPROVEMENT, NO CLEAR SEPARATION",
+  "category_if_adjudication_complete": "MODEST IMPROVEMENT, NO CLEAR SEPARATION",
+  "adjudication_complete": true,
+  "adjudicated_docs": [
+   64,
+   94,
+   110,
+   113,
+   179
+  ],
+  "flags_family_standard": {
+   "material_concern": false,
+   "accuracy_concern": false,
+   "detail": {
+    "raw": 168,
+    "stated": 169,
+    "premature_stops": 0
+   }
+  },
+  "sensitivity_matched_offsets_vs_record_pass2": {
+   "baseline_raw": 176,
+   "baseline_stated": 178,
+   "flag": false,
+   "concern": true,
+   "rule": "flag raw <= 165 or stated <= 167 or >= 2 premature; concern raw 166-170"
+  },
+  "versus": {
+   "record pass 2 (primary, seed 1235)": {
+    "baseline_empties": 5,
+    "baseline_causes": {
+     "cap_exhaustion": 5,
+     "premature_stop": 0,
+     "not_logged": 0,
+     "other_finish": 0
+    },
+    "rescued": [
+     55,
+     81
+    ],
+    "newly_empty": [],
+    "empty_in_both": [
+     79,
+     121,
+     147
+    ],
+    "baseline_raw": 176,
+    "baseline_stated": 178,
+    "raw_diff": -8,
+    "stated_diff": -9,
+    "raw_only_screen_correct": 6,
+    "raw_only_baseline_correct": 14
+   },
+   "col511 arm pass 2 (secondary, seed 1235)": {
+    "baseline_empties": 5,
+    "baseline_causes": {
+     "cap_exhaustion": 5,
+     "premature_stop": 0,
+     "not_logged": 0,
+     "other_finish": 0
+    },
+    "rescued": [
+     74,
+     108,
+     120,
+     127,
+     186
+    ],
+    "newly_empty": [
+     79,
+     121,
+     147
+    ],
+    "empty_in_both": [],
+    "baseline_raw": 170,
+    "baseline_stated": 176,
+    "raw_diff": -2,
+    "stated_diff": -7,
+    "raw_only_screen_correct": 13,
+    "raw_only_baseline_correct": 15
+   },
+   "0.7.0 pass 2 (context, seed 1235)": {
+    "baseline_empties": 3,
+    "baseline_causes": {
+     "cap_exhaustion": 3,
+     "premature_stop": 0,
+     "not_logged": 0,
+     "other_finish": 0
+    },
+    "rescued": [
+     81
+    ],
+    "newly_empty": [
+     147
+    ],
+    "empty_in_both": [
+     79,
+     121
+    ],
+    "baseline_raw": 175,
+    "baseline_stated": 178,
+    "raw_diff": -7,
+    "stated_diff": -9,
+    "raw_only_screen_correct": 5,
+    "raw_only_baseline_correct": 12
+   }
+  },
+  "secondary": {
+   "raw_correct_all_198": 168,
+   "stated_correct_all_198": 169,
+   "stated_differs_from_raw_rows": [
+    64,
+    94,
+    110,
+    113,
+    179
+   ],
+   "answered_completion_tokens": {
+    "p10": 806,
+    "p25": 1168,
+    "p50": 3145,
+    "p75": 12424,
+    "p90": 31953,
+    "p99": 93304,
+    "max": 116281,
+    "n": 195
+   },
+   "answered_above_32k_64k_128k_200k": [
+    19,
+    3,
+    0,
+    0
+   ],
+   "timing": {
+    "per_pass": {
+     "pass1": {
+      "window_h": 2.0515,
+      "completion_tokens": 3040269,
+      "aggregate_tok_s": 411.7,
+      "median_request_tok_s_answered": 58.0
+     }
+    },
+    "request_window_h_total": 2.0515,
+    "request_window_gpu_h": 4.103,
+    "occupied": null,
+    "gpu_hours_used": 4.541,
+    "gpu_hours_source": "override",
+    "raw_correct_per_gpu_hour": 37.0,
+    "stated_correct_per_gpu_hour": 37.22,
+    "kernel_route_exposure_client_side": {
+     "pass1": {
+      "busy_h": 2.0515,
+      "share_busy_inflight_1to4": 0.1567,
+      "share_busy_inflight_5plus": 0.8433,
+      "max_inflight": 8,
+      "mean_share_of_request_life_inflight_1to4": {
+       "empty": 0.179,
+       "answered": 0.0005
+      }
+     }
+    }
+   },
+   "server": {
+    "log": "server-s2.log",
+    "sha256": "5e157d697135d265635c6332a6964bbaae8864198f921243543a958fe91e58e0",
+    "server_starts": 1,
+    "cited_block": 0,
+    "non_default_args_sha256": "7025a96888a67642741db00aaecb9cbf786c2ba67cc4ded7d67c1cf4e909dcc5",
+    "model_snapshots": [
+     "0490d2f708b12145f6516555ab066aaeb401cd21",
+     "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+    ],
+    "vllm_version": [
+     "0.1.dev20051+g487ecf187"
+    ],
+    "env_names_logged_sha256": "f85d9d360488c02bc9ba2bbb33b86319201cfad14cd4c6a9ccb312539ec1313e",
+    "kv_pool_tokens": [
+     4707515
+    ],
+    "cudagraph_mode": [
+     "FULL_AND_PIECEWISE"
+    ],
+    "release_warmups_logged": 9,
+    "status": {
+     "lines": 738,
+     "max_running": 8,
+     "lines_waiting": 0,
+     "peak_kv_usage_pct": 31.9,
+     "mean_gen_tok_s_8plus_running": 437.2,
+     "share_lines_running_1to4": 0.1572,
+     "share_lines_running_5plus": 0.8428
+    },
+    "in_window": {
+     "preemption_lines": 0,
+     "illegal_memory_access_lines": 0,
+     "nan_warning_lines": 0
+    }
+   }
+  }
+ },
+ "part_B_exploratory_combined": {
+  "vs_record_passes_1_2": {
+   "label": "EXPLORATORY (bundle seeds 1234+1235 vs stock record seeds 1234+1235): follow-up chosen after inspecting the first screen; historical controls",
+   "question_passes_per_side": 396,
+   "bundle_empties": 6,
+   "comparator_empties": 10,
+   "empty_signflip_cmp_minus_bundle": {
+    "T": 4,
+    "m_nonzero": 6,
+    "p_one_sided": 0.109375,
+    "p_two_sided": 0.21875,
+    "null_patterns": 64
+   },
+   "empty_rate_reduction_points": 1.01,
+   "empty_rate_reduction_ci95_points": [
+    0.0,
+    2.27
+   ],
+   "questions_d_pos": 5,
+   "questions_d_neg": 1,
+   "raw_diff_points": -0.76,
+   "raw_diff_ci95_points": [
+    -3.79,
+    2.27
+   ],
+   "raw_signflip_two_sided_reference": 0.7512554675340652,
+   "stated_diff_points": -0.76,
+   "stated_diff_ci95_points": [
+    -3.54,
+    2.02
+   ]
+  },
+  "vs_arm_passes_1_2": {
+   "label": "EXPLORATORY (bundle seeds 1234+1235 vs column-511 arm seeds 1234+1235): follow-up chosen after inspecting the first screen; historical controls",
+   "question_passes_per_side": 396,
+   "bundle_empties": 6,
+   "comparator_empties": 9,
+   "empty_signflip_cmp_minus_bundle": {
+    "T": 3,
+    "m_nonzero": 9,
+    "p_one_sided": 0.25390625,
+    "p_two_sided": 0.5078125,
+    "null_patterns": 512
+   },
+   "empty_rate_reduction_points": 0.76,
+   "empty_rate_reduction_ci95_points": [
+    -0.76,
+    2.27
+   ],
+   "questions_d_pos": 6,
+   "questions_d_neg": 3,
+   "raw_diff_points": 2.02,
+   "raw_diff_ci95_points": [
+    -1.77,
+    6.06
+   ],
+   "raw_signflip_two_sided_reference": 0.37673963338602334,
+   "stated_diff_points": 1.01,
+   "stated_diff_ci95_points": [
+    -2.53,
+    4.55
+   ]
+  }
+ }
+}

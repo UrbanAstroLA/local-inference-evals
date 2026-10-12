@@ -820,3 +820,56 @@ remedy within this allocation; this is not a claim that the included fixes lack 
 Operator note (not an authorization): the operator considers another pass warranted, because seed 1234 has shown
 seed-luck effects across the many GPQA runs performed, and will convey this to the independent assessor. No further GPU
 work is authorized by this note.
+
+**Amendment 15 (2026-10-12; independent assessment "one additional bundle pass for seed sensitivity"; proposal pending a
+separate operator budget decision; recorded before any seed-1235 bundle data).** The seed-1234 screen stays classified
+SIMILAR / NO CLEAR SEPARATION; nothing is reclassified. Proposed: the unchanged frozen bundle (image 08d1cb90…) on all 198
+questions with seed 1235 (the next protocol seed, chosen by protocol order, not by scores); primary comparator the stock
+0.9.1 record's seed-1235 pass; secondary the column-511 arm's seed-1235 pass; original sampling, parser, concurrency and
+cap; shipped graph mode; fresh server and verified warm-up; matching the comparator's session conditions (documented);
+traces and complete logs kept; stated adjudication before interpretation. Budget: one pass, about 5-6 occupied GPU-hours,
+7.5 watchdog, startup/warm-up/shutdown included, no automatic retry or third pass. A new-seed stock-plus-bundle comparison
+(two passes) is deferred as a possible confirmation step. Analysis frozen before generation: primary empties (cap
+exhaustion vs premature stop) and rescued/newly empty against the matching-seed baseline; secondary raw and stated
+correctness on all requests, completion lengths, GPU-hours and throughput; accuracy-concern and regression thresholds stated
+relative to the matching baseline or an absolute standard, with the choice explained (seed-1234 count thresholds not reused
+silently); the new pass reported separately; both bundle passes against their matching stock passes, question-clustered,
+labelled exploratory (the follow-up was chosen after inspecting the first screen). Decision rules: at most 2 empties with no
+accuracy/stopping concern → promising follow-up signal, stronger confirmation proposed before ablation or any
+completion-benefit claim; modest improvement without clear separation → report direction and uncertainty, no automatic pass;
+similar or worse, or a material accuracy concern → deprioritise the bundle as a completion remedy for now and continue
+targeted source/frozen-input work without another serial screen. No outcome attributes effects to an individual correction.
+Limits: does not establish that seed 1234 was biased, prove a general improvement, explain the 0.7.0 advantage, or
+establish equivalence if negative; any confirmation prefers a contemporaneous control on prespecified seeds.
+
+**Amendment 15a (2026-10-12, operator authorization).** One bundle pass at seed 1235 is authorized as proposed in
+amendment 15: about 5-6 occupied GPU-hours, ceiling 7.5 (watchdog), startup, warm-up and shutdown included, no automatic
+retry and no third pass. It launches after the runner and the analysis are prepared, checked and their hashes recorded here.
+
+**Amendment 15b (2026-10-12, coordinator; freeze before seed-1235 generation).** Session conditions: the bundle pass runs
+as pass 2 on a fresh server (the eval chain skips the existing pass-1 directory), request seed 1235, lm-eval seed 1236,
+task hash 87e807b3b27c, concurrency 8, timeout 10,800, 3 retries, 327,680 cap — the same as the stock record's and the
+column-511 arm's seed-1235 passes (each pass 2, first on a fresh server); documented differences: the comparators continued
+to pass 3 (after pass 2 ended), repository commit, and the record pass 1's implicit seed. Primary comparator: record pass 2
+(5 empties, all cap; raw 176; stated 178); secondary: arm pass 2 (5; 170; 176); context: 0.7.0 pass 2 (3; 175; 178).
+Accuracy thresholds (deciding): a stated absolute standard from the six stock-family passes (record and arm passes 1-3;
+raw mean 170.2, SD 3.9; stated mean 172.8, SD 4.6): material concern raw ≤ 158 or stated ≤ 159 (mean − 3 SD) or 2+ premature
+stops; accuracy concern raw 159-163 (below every family pass). Offsets from the single matched baseline are not deciding
+because record pass 2 is the family's best pass (176 raw) and would place a typical pass in the concern band about half
+the time with no accuracy change (the dry run on the arm's pass 2 shows this); the offset readout (flag raw ≤ 165 or stated
+≤ 167; concern raw 166-170) is reported alongside. Categories: SIMILAR OR WORSE for a material concern or E ≥ 5; PROMISING
+FOLLOW-UP SIGNAL for E ≤ 2 without an accuracy concern; MODEST IMPROVEMENT, NO CLEAR SEPARATION for E = 3-4 or E ≤ 2 with a
+concern. Combined analysis of both bundle passes against the matching stock passes, question-clustered, labelled
+EXPLORATORY. Frozen: runner gpqa-bundle-screen-s1235.sh sha256 39ff7616e385546c35939eed2c914b7fc8478145347314ee6f4a014391b2c0f7;
+analysis screen2_analysis.py sha256 cc3d300032cd831deea233c7e2251477b807170cbee4f80a4bd611efafef11c7; image and recipe as in
+amendment 14d. Budget estimate 5.0-6.0 occupied GPU-hours; ceiling 7.5.
+
+**Amendment 15c (2026-10-12; seed-1235 result recorded after the frozen analysis).** The bundle's seed-1235 pass (pass 2,
+fresh server, frozen image, runner and analysis) is valid; pass 1 unchanged. Empty replies 3 of 198, all at the cap; no
+material or accuracy concern under the family standard (raw 168, stated 169 after adjudication of 5 rows, one hedged);
+the matched-offset readout (not deciding) shows "concern". Category: MODEST IMPROVEMENT, NO CLEAR SEPARATION (E = 3).
+Against record pass 2 (seed 1235, 5 empties): 2 rescued, 0 newly empty; raw −8, stated −9. Against arm pass 2: 5 rescued,
+3 newly empty. 0.7.0 pass 2 (context): 3 empties. EXPLORATORY combined (both bundle passes vs the matching stock passes,
+396 question-passes per side): empties 6 vs 10, reduction 1.01 points (95% question bootstrap 0.00 to 2.27), one-sided
+sign-flip p = 0.11; raw −0.76 points (−3.79 to +2.27). Cost 4.54 occupied GPU-hours. Per amendment 15: report direction and
+uncertainty; no automatic additional pass.

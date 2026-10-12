@@ -957,8 +957,8 @@ def looping(runs):
               'The two differ in several ways at once, so the cause is open (<a href="confounds.html#7-several-changes-between-releases-at-once">confounds</a>). '
               f'The <a href="{REPO}/blob/main/investigations/2026-10-glm53-completion/README.md">completion investigation</a> follows this question: it '
               'found localized engine defects (<a href="index.html#engine-issues">issues and fixes</a>); a three-pass GPQA arm with the column-511 correction alone '
-              'left 15 answers empty vs 16, so that defect is not supported as the explanation, and one pass with four corrections together left 3 of 198 '
-              'empty: similar to the baselines, no clear separation. '
+              'left 15 answers empty vs 16, so that defect is not supported as the explanation, and two passes with four corrections together left 3 and 3 '
+              'of 198 empty against 5 and 5 in the matching 0.9.1 passes: no clear separation. '
               'Tables and the per-question grid: <a href="index.html#gpqa">Results</a>.</p>'
             + '<h2 id="seeds">Seeds and the earlier screens</h2><p>The earlier screens sent seed 1234 on every repeat. Their rates were withdrawn on '
               '2026-10-09 and replaced by the component screen above (<a href="ledger.html#withdrawn-and-what-replaced-it">ledger</a>; why: '
@@ -1130,8 +1130,8 @@ def build():
          f'Against 3.25bpw 0.9.1, the higher score comes entirely from {jtip}: where both answered ({len(jn["both"])} of {jn["n"]}), raw '
          f'accuracy is identical ({jn["a_correct_flexible_both"]} vs {jn["b_correct_flexible_both"]}; stated {jn["a_correct_stated_both"]} vs '
          f'{jn["b_correct_stated_both"]}). Why 0.7.0 leads is open: the <a href="{REPO}/tree/main/investigations/2026-10-glm53-completion">investigation</a> '
-         'has found localized engine defects; a GPQA arm with the column-511 correction alone did not measurably change completion, and one pass '
-         'with four corrections together was similar to the baselines, with no clear separation.',
+         'has found localized engine defects; a GPQA arm with the column-511 correction alone did not measurably change completion, and two passes '
+         'with four corrections together left 3 and 3 answers empty against 5 and 5, with no clear separation.',
          "Descriptive",
          "Question-clustered tests, 0.7.0 vs 3.25bpw 0.9.1: raw p = {:.2f}, stated p = {:.2f}; vs 4bpw 0.9.1: raw p = {:.2f}, stated p = {:.2f}. "
          "Every 95% interval includes zero.".format(*[analyze.records(g["k3.25-v0.7.0-dflash5"], g[b], k)["p_cluster"]
@@ -1141,13 +1141,14 @@ def build():
          "Descriptive", "Three configurations, three passes each", '<a href="#records">chart</a>'),
         (f'<b>tpurtell 0.7.0 as shipped left fewer questions unanswered than 0.9.1:</b> {e7["a"]} vs {e7["b"]} empty answers of {e7["n"]} (3.25bpw). '
          'The cause is open; a three-pass GPQA arm on 0.9.1 with the column-511 correction alone left 15 empty vs 16, so that defect is not '
-         'supported as the explanation; one pass with four corrections together left 3 of 198 empty against 5 and 4 in the matching pass of the '
-         '0.9.1 record and the arm (similar, no clear separation).', "Supported",
+         'supported as the explanation; two passes with four corrections together left 3 and 3 of 198 empty against 5 and 5 in the matching '
+         'passes of the 0.9.1 record (no clear separation).', "Supported",
          f"Question-clustered test p = {e7['p_cluster']:.3f}. Raised by pass 1; passes 2-3 alone {e7b['a']} vs {e7b['b']} (p = {e7b['p_cluster']:.2f}). "
          "0.7.0 differs from 0.9.1 in draft depth, layout, kernels, vision and KV pool at once. The arm is compared with the existing 0.9.1 record, "
          "a historical control, under an analysis frozen before data: one-sided p = 0.50; empties moved between questions (10 rescued, 9 newly empty). "
-         "The gap rests on one three-pass record per engine; whether 0.7.0's rate reproduces has not been tested. The four-correction pass is one "
-         "pass at seed 1234 against historical controls, read by rules frozen before generation.",
+         "The gap rests on one three-pass record per engine; whether 0.7.0's rate reproduces has not been tested. The four-correction passes are "
+         "single passes at seeds 1234 and 1235 against historical controls, each read by rules frozen before generation; combined (exploratory: "
+         "the second pass was chosen after the first; seeds reused) 6 vs 10 empty of 396, one-sided p = 0.11. 0.7.0 left 0 and 3 at those seeds.",
          '<a href="#records-compare">comparisons</a> · <a href="confounds.html#7-several-changes-between-releases-at-once">confounds</a>'),
         (f'<b>3.25bpw and 4bpw TR3 (Brandon) perform alike on 0.9.1</b>, in accuracy and in completion. 4bpw\'s KV pool holds about 4 requests '
          'at the token cap.', "Descriptive",
@@ -1165,8 +1166,8 @@ def build():
         ('<b>Four more, found by the completion investigation, have fixes prepared (not released):</b> the 511-pool truncation of the indexer\'s '
          'top-k can discard a well-ranked pool (column 511), the kpool tail ring is written without token positions, the MoE router\'s logits '
          'are computed in bf16 on this GPU family, and the routed experts never receive the SwiGLU limit. The column-511 correction did not '
-         'measurably change completion in a three-pass GPQA arm (15 vs 16 empty of 594); one pass with all four corrections together left 3 of 198 '
-         'empty (similar, no clear separation); none of the other three was tested alone.', "Supported",
+         'measurably change completion in a three-pass GPQA arm (15 vs 16 empty of 594); two passes with all four corrections together left 3 and 3 '
+         'of 198 empty against 5 and 5 (no clear separation); none of the other three was tested alone.', "Supported",
          "Localized defects, verified on GPU. Column 511: on 0.9.1's tiled route a pool ranked better than 480 of 512 is discarded in 88.1% of "
          "live decode rows (0.7.0's path: 6.9%). Tail ring: 98% of tail writes go to a shared null block on 0.9.1 (all releases affected, "
          "0.7.0 more). Router: the fp32-output computation selects a different top-8 expert set on 3.15% of token-layer rows. SwiGLU limit: "
@@ -1262,8 +1263,8 @@ def build():
            + '<h2 id="engine-issues">Engine issues found during evaluation, and their fixes</h2><p>The first three are fixed in tpurtell 0.9.1. DCP1 '
              'with MLA layer ownership is tpurtell\'s design; it holds about 1.5x the KV cache of v0.7.0\'s DCP2 layout. Their effect on answers '
              'is unmeasured (descriptive). The last four were found by the completion investigation on 2026-10-11 and are present in every '
-             'release; fixes are prepared and verified locally, not released. One GPQA pass with all four together left 3 of 198 answers empty, '
-             'similar to the baselines with no clear separation; their effects on answers one at a time are untested.</p>' + issues
+             'release; fixes are prepared and verified locally, not released. Two GPQA passes with all four together left 3 and 3 of 198 answers '
+             'empty against 5 and 5 in the matching 0.9.1 passes, with no clear separation; their effects on answers one at a time are untested.</p>' + issues
            + f'<h3 id="kernels">Kernel tests: {up_un[0]}/{up_un[1]} without the kpool fixes, {up_pa[0]}/{up_pa[1]} with them (supported)</h3>'
              '<p>vLLM\'s own regression tests for the kpool kernels, plus a rejected-draft reproduction, run inside each engine image.</p>' + per_image
            + more("Every test", '<div id="kernel-grid"></div>' + table(["Test"] + [engine_label(m["cfg"]) for m in km], ktr)))

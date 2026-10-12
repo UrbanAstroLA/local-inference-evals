@@ -1,0 +1,35 @@
+{
+ "what": "DRY RUN ONLY: the col511 arm's pass-2 hand reads, standing in for the second screen's adjudication file",
+ "rows": [
+  {
+   "doc": 4,
+   "hedged": false,
+   "source": "arm-col511/adjudications.json"
+  },
+  {
+   "doc": 64,
+   "hedged": false,
+   "source": "arm-col511/adjudications.json"
+  },
+  {
+   "doc": 72,
+   "hedged": false,
+   "source": "arm-col511/adjudications.json"
+  },
+  {
+   "doc": 110,
+   "hedged": false,
+   "source": "arm-col511/adjudications.json"
+  },
+  {
+   "doc": 152,
+   "hedged": false,
+   "source": "arm-col511/adjudications.json"
+  },
+  {
+   "doc": 170,
+   "hedged": false,
+   "source": "arm-col511/adjudications.json"
+  }
+ ]
+}

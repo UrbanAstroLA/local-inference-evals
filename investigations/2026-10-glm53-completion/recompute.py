@@ -333,13 +333,16 @@ check("pilot 2.01 and replication 1.54 GPU-hours (two GPUs each); later runs log
 allcost = [json.loads(l) for l in (HERE / "costs.jsonl").read_text().splitlines()]
 print(f"  cumulative GPU-hours, every ledger entry: {sum(c['gpu_hours'] for c in allcost):.2f}")
 st = lambda prefix: [c for c in allcost if str(c.get("step", "")).startswith(prefix)]
-sa, bg, bs = st("stage A verification"), st("bundle gate"), st("bundle screen")
+sa, bg, bs, b2 = st("stage A verification"), st("bundle gate"), st("bundle screen"), st("bundle seed-1235 pass")
 print(f"  stage A {sum(c['gpu_hours'] for c in sa):.4f} ({len(sa)} entries), bundle gate {sum(c['gpu_hours'] for c in bg):.4f}, "
-      f"bundle screen {sum(c['gpu_hours'] for c in bs):.3f}")
-check("stage A 0.6929 of 2.0, bundle gate 1.6403 of 2.0 (arms add up), screen 4.841 of 7.5; cumulative 43.25 GPU-hours",
+      f"bundle screen {sum(c['gpu_hours'] for c in bs):.3f}, bundle seed-1235 pass {sum(c['gpu_hours'] for c in b2):.3f}")
+check("stage A 0.6929 of 2.0, bundle gate 1.6403 of 2.0 (arms add up), screen 4.841 of 7.5, seed-1235 pass 4.541 of 7.5 "
+      "(2 GPUs x 8,174 s); cumulative 47.79 GPU-hours",
       round(sum(c["gpu_hours"] for c in sa), 4) == 0.6929 and round(sum(c["gpu_hours"] for c in bg), 4) == 1.6403
       and all(abs(c["gpu_hours"] - round(sum(a["gpu_hours"] for a in c["arms"]), 4)) < 1e-9 for c in bg)
-      and round(sum(c["gpu_hours"] for c in bs), 3) == 4.841 and f"{sum(c['gpu_hours'] for c in allcost):.2f}" == "43.25")
+      and round(sum(c["gpu_hours"] for c in bs), 3) == 4.841 and len(b2) == 1 and b2[0]["gpu_hours"] == 4.541
+      and b2[0]["gpu_hours"] == round(2 * sum(a["wall_s"] for a in b2[0]["arms"]) / 3600, 3)
+      and f"{sum(c['gpu_hours'] for c in allcost):.2f}" == "47.79")
 
 print("\n## Checks (checks.jsonl)")
 for line in (HERE / "checks.jsonl").read_text().splitlines():

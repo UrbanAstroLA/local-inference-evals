@@ -22,6 +22,7 @@ the runs control for it now, and its status. Only confounds this repository has 
 | [Post-completion continuation](#15-long-context-decode-vs-prefill-measures-continuation-after-the-reply) | A decode-vs-prefill bin can lie entirely after the reply ended | Stated with the measure; not used as evidence about completion | Stated limit |
 | [Long-context greedy non-repeatability](#16-long-context-greedy-non-repeatability) | Two identical long-context requests diverge, so a single pass or a repeat is not a fixed point | Short-prompt repeatability used where a control needs determinism; outcomes compared over many draws | Measured; mechanism open |
 | [Batch-size-dependent routing weights](#17-batch-size-dependent-routing-weights-e1) | The same token gets slightly different expert weights in large and small batches | Offline checks invoke the router at the serving batch size | Measured; effect on outputs untested |
+| [Seed reuse across engines](#18-seed-reuse-across-engines) | A comparison at a historical seed looks paired, or like a fresh-seed estimate, when it is neither | Matched seeds and session conditions documented; analyses take the question as the unit; combinations of follow-up passes labelled exploratory | Stated limit |
 
 ## 1. Shared request seed across repeats
 
@@ -435,5 +436,37 @@ decode batches here stay far below 1,024 rows.
   1.2e-7 at ≤ 1,024 rows (12,408 rows) and 1.4e-6 above (91,200 rows; maximum 1.1e-3).
 - Found because a router invocation on a 64-row window failed a bitwise control that the serving-sized invocation
   passes on every record ([stage A](investigations/2026-10-glm53-completion/README.md#stage-a-verification-d3-d4-d5)).
+
+</details>
+
+## 18. Seed reuse across engines
+
+**Effect.** GPQA pass *p* sends request seed 1233 + *p* on every engine, so a later engine is compared at the same seeds
+as the recorded one. The same seed gives the same sampling stream, but the trajectory follows it only until the first
+computational difference: once logits differ, the sampled tokens and everything after them differ. A different engine at
+the same seed is therefore a different draw, not a paired copy of the recorded reply; and because the seeds were already
+used, and in the bundle's case the follow-up seed was run after the first result had been seen, a comparison at historical
+seeds is not a fresh-seed estimate of a rate.
+
+**Control.** Seeds and session conditions are matched and documented so that prompts, sampling parameters and client
+behaviour do not differ. Analyses take the question as the unit (sign-flip tests and bootstraps over questions), and
+rescued and newly empty replies are reported both ways. Combinations of passes chosen after inspecting earlier data are
+labelled exploratory. The completion plan notes that a confirmation would prefer a contemporaneous control on new
+prespecified seeds.
+
+**Status.** Stated limit. It applies to the completion arm and to both bundle passes, which reuse the seeds of the 0.9.1
+and 0.7.0 records.
+
+<details>
+<summary>Evidence</summary>
+
+- The bundle's D3 correction alone changes the top-8 expert set on about 3% of token × layer rows
+  ([stage A](investigations/2026-10-glm53-completion/README.md#stage-a-verification-d3-d4-d5)), so bundle replies diverge
+  from the stock engine's early in a reply.
+- Even the same engine is not a fixed point at long context ([16](#16-long-context-greedy-non-repeatability)).
+- Bundle passes at seeds 1234 and 1235: each left 3 empty replies against 5 in the stock record's matching pass, and the
+  sets of empty questions differ from the comparators' (against the record, seed 1234: 3 rescued, 1 newly empty; seed
+  1235: 2 rescued, 0 newly empty; against the column-511 arm at seed 1235: 5 rescued, 3 newly empty)
+  ([second pass](investigations/2026-10-glm53-completion/README.md#second-pass-seed-1235)).
 
 </details>

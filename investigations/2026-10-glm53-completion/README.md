@@ -18,7 +18,10 @@ locking (D5) is not exercised in this workload. A bundle of four corrections (D1
 [passed its gate](#bundle-gate-d1d2d3d4-on-091) (D4 reachable in served kernels), with two criteria revised after the
 gate data were inspected, and [one GPQA pass](#one-pass-gpqa-screen) with it left 3
 of 198 replies empty, all at the cap: similar, no clear separation under rules frozen before generation (amendments
-14-14e). Cumulative 43.25 GPU-hours; occupied GPU-hours of the three K3.25 records are
+14-14e). A [second pass at seed 1235](#second-pass-seed-1235) (amendments 15-15c) also left 3 of 198 empty, all at the
+cap, against 5 in the matching stock pass: modest improvement, no clear separation, with no accuracy concern on the
+frozen family standard. An exploratory combination of both passes gives 6 vs 10 empty of 396 (one-sided p = 0.11). Cumulative 47.79 GPU-hours;
+occupied GPU-hours of the three K3.25 records are
 [reconstructed from start-to-stop timings](#occupied-gpu-hours-of-the-three-k325-records). A replication of stock
 0.7.0's record stays deferred, not authorized (amendments 12, 14); nothing further is scheduled.
 Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#dated-amendments).
@@ -28,7 +31,7 @@ Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#d
 [column-511 stages](#phase-2-stage-1-which-pool-is-dropped) · [phase 3](#phase-3-column-511-intervention) · [tail ring](#kpool-tail-ring) ·
 [gate](#gate-column-511-correction-in-the-shipped-graph-configuration) · [completion arm](#completion-arm) · [upstream comparison](#comparison-with-upstream-vllm) ·
 [stage A](#stage-a-verification-d3-d4-d5) · [defect matrix](#defect-matrix-d1-d6) · [bundle gate](#bundle-gate-d1d2d3d4-on-091) ·
-[screen](#one-pass-gpqa-screen) · [observations recorded separately](#observations-recorded-separately) ·
+[screen](#one-pass-gpqa-screen) · [second pass](#second-pass-seed-1235) · [observations recorded separately](#observations-recorded-separately) ·
 [open questions](#open-questions) · [limits](#limits) · [next steps](#next-steps) · [recompute](#recompute)
 
 ## Answer
@@ -49,7 +52,7 @@ Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#d
 | Kpool tail ring (amendments 10d-10e): this build does not pass token positions to the attention metadata, so from position 8 the tail ring is written to a shared null block (98% of tail writes in shipped graph mode) and, through stale ids left by the runner's start-up warm-up, occasionally into live attention blocks. The same omission is in 0.7.0's source. Passing positions as upstream vLLM does, with a graph-safe write, removes it (0 stray writes). | **Supported** (localized defect; graph mode) |
 | Completion arm (amendments 11a-11b): 0.9.1 with the column-511 selection correction alone, three GPQA passes, against the existing 0.9.1 record (a historical control), analysis frozen before data. Empty replies 15 vs 16 of 594 (one-sided p = 0.50); raw accuracy 85.0% vs 86.9% (interval includes zero). The correction stands as a correctness fix but is not supported as the dominant completion explanation. | **Descriptive** (historical control) |
 | Router logits (stage A, amendments 13-14): every release computes the MoE router's logits in bf16 on this GPU family. On 1,593 captured records (103,608 token × layer rows) of 0.9.1 in shipped graph mode, the fp32-output computation selects a different top-8 expert set on 3.15% of rows (95% over 176 requests 3.01-3.29%; over 8 histories 2.90-3.50%) and different routing weights on every row; it lies within the stated tolerance of an fp64 reference on every logit, offline and as served. | **Supported** (computational effect); completion **untested** alone |
-| Correctness bundle (amendments 14-14e): D1+D2+D3+D4 on 0.9.1 passed its gate (two criteria revised after the gate data were inspected; the original criteria failed as specified). One GPQA pass (seed 1234): 3 of 198 empty, all at the cap, against 5 and 4 in pass 1 of the 0.9.1 record and the column-511 arm (0.7.0: 0). Frozen category: similar / no clear separation. | **Descriptive** (one pass, historical controls) |
+| Correctness bundle (amendments 14-15c): D1+D2+D3+D4 on 0.9.1 passed its gate (two criteria revised after the gate data were inspected; the original criteria failed as specified). Two GPQA passes, each read by rules frozen before its generation: seed 1234, 3 of 198 empty against 5 in the matching stock 0.9.1 pass (category similar / no clear separation, amendment 14c); seed 1235, 3 of 198 against 5 (category modest improvement, no clear separation, amendment 15b; no accuracy concern on the family standard). All six empties at the cap. Column-511 arm 4 and 5; 0.7.0 (context) 0 and 3. Exploratory combination (follow-up chosen after the first pass; historical controls; seeds reused): 6 vs 10 empty of 396, reduction 1.01 points (95% 0.00 to 2.27), one-sided p = 0.11; raw −0.76 points (−3.79 to +2.27). | **Descriptive** (two passes, historical controls; combination exploratory) |
 | Recorded separately: the served router's weights depend on batch size (E1); greedy decoding of the stock 0.9.1 release is not repeatable at long context (short prompts are); NaN-byte index rows are absent with the bundle, against thousands in the 2026-10-11 gate. | **Descriptive** ([observations](#observations-recorded-separately)) |
 | What produces the completion gap, and whether the tail-ring fix, router precision or the SwiGLU clamp changes completion on its own. | **Open** |
 
@@ -446,6 +449,7 @@ listed only so they are not repeated as if new.
 | Step 5 (this investigation) | 0.7.0 with both kpool fixes | decode-vs-prefill disagreement unchanged; that measure is post-completion (amendment 7) | valid, measure limited |
 | Step 6, pilot, replication (this investigation) | 0.9.1 with 0.7.0's parallel layout bundle | no reproducible completion benefit | valid |
 | [Bundle screen](#one-pass-gpqa-screen) (this investigation, 2026-10-12) | 0.9.1 with D1+D2+D3+D4 together, one GPQA pass at seed 1234 | 3 of 198 empty vs 5 (0.9.1 record) and 4 (column-511 arm) in pass 1; similar, no clear separation | valid; one pass, historical controls |
+| [Bundle second pass](#second-pass-seed-1235) (this investigation, 2026-10-12) | the same bundle, one GPQA pass at seed 1235 | 3 of 198 empty vs 5 (0.9.1 record) and 5 (column-511 arm) at seed 1235; modest improvement, no clear separation; both passes combined (exploratory) 6 vs 10 of 396 | valid; one pass, historical controls; chosen after the first screen |
 | 0.8.0 GPQA, ×5 drafts with slot sharing off vs ×3 with sharing | draft depth and sharing together | no completion improvement | single passes |
 | [kpool k1 screen](../2026-10-glm53-kpool-tail/preregistration-kpool-screen.md) (2026-10-04), [layout bisection](../2026-10-glm53-looping/preregistration/WITHDRAWN.md) (2026-10-07/08) | 1 vs 3 drafts; 0.9.0 vs 0.7.0 layout | withdrawn: seed 1234 on every repeat | do not cite rates |
 
@@ -738,18 +742,18 @@ the container's /run (fixed).
 
 ### Defect matrix (D1-D6)
 
-Status after stage A, the bundle gate and the screen. D1 and D2 are items 4a-4b of [`FINDINGS.md`](../../FINDINGS.md).
+Status after stage A, the bundle gate and the two bundle passes. D1 and D2 are items 4a-4b of [`FINDINGS.md`](../../FINDINGS.md).
 
 | Defect | Implementation omission | Exercised | Computational effect | Correction verified | Completion |
 |---|---|---|---|---|---|
-| D1 column-511 selection | yes: the engine keeps 511 of 512 selected pools and no top-k path sorts its output | yes: 88.1% of live tiled decode rows discard a pool ranked better than 480; prefill rows with exactly 512 candidates | yes: which selected pool attention misses | yes: offline, in place, shipped graphs (gate 2026-10-11), and in the bundle gate (0 violations) | tested alone: no measurable change (15 vs 16 empty of 594); bundle screen: similar / no clear separation |
-| D2 tail ring without positions | yes: attention metadata built without positions | yes: 98% of tail writes to the null block in shipped graph mode, 6 events writing into live attention blocks | yes: completed pools from other requests' keys (CPU harness, GPU unit test) | yes: 0 null-block, foreign or attention-block writes (two variants; bundle gate); NaN-byte index rows 0 in the bundle gate | untested alone; bundle screen: similar / no clear separation |
-| D3 router logits in bf16 | yes | yes, every MoE layer | yes: 3.15% of top-8 sets, weights on every row | yes: offline (stage A) and as served (bundle gate, bitwise reproduction, within τ_d of fp64) | untested alone; bundle screen: similar / no clear separation |
-| D4 routed SwiGLU limit not passed | yes | path exercised; whether activations exceed 10 not measured | limit 1 changes outputs (reachability only); effect of 10 not measured | plans carry 10 and the session's compiled kernels carry (True, 10) (bundle gate, criterion revised after data) | untested alone; bundle screen: similar / no clear separation |
+| D1 column-511 selection | yes: the engine keeps 511 of 512 selected pools and no top-k path sorts its output | yes: 88.1% of live tiled decode rows discard a pool ranked better than 480; prefill rows with exactly 512 candidates | yes: which selected pool attention misses | yes: offline, in place, shipped graphs (gate 2026-10-11), and in the bundle gate (0 violations) | tested alone: no measurable change (15 vs 16 empty of 594); bundle passes (seeds 1234, 1235): 3 and 3 empty vs 5 and 5, no clear separation |
+| D2 tail ring without positions | yes: attention metadata built without positions | yes: 98% of tail writes to the null block in shipped graph mode, 6 events writing into live attention blocks | yes: completed pools from other requests' keys (CPU harness, GPU unit test) | yes: 0 null-block, foreign or attention-block writes (two variants; bundle gate); NaN-byte index rows 0 in the bundle gate | untested alone; bundle passes (seeds 1234, 1235): 3 and 3 empty vs 5 and 5, no clear separation |
+| D3 router logits in bf16 | yes | yes, every MoE layer | yes: 3.15% of top-8 sets, weights on every row | yes: offline (stage A) and as served (bundle gate, bitwise reproduction, within τ_d of fp64) | untested alone; bundle passes (seeds 1234, 1235): 3 and 3 empty vs 5 and 5, no clear separation |
+| D4 routed SwiGLU limit not passed | yes | path exercised; whether activations exceed 10 not measured | limit 1 changes outputs (reachability only); effect of 10 not measured | plans carry 10 and the session's compiled kernels carry (True, 10) (bundle gate, criterion revised after data) | untested alone; bundle passes (seeds 1234, 1235): 3 and 3 empty vs 5 and 5, no clear separation |
 | D5 workspace not locked after capture | yes (source) | not exercised in this workload (stage A; bundle gate s1) | — | not run; left out of the bundle | untested |
 | D6 stale warm-up tail block ids | yes (source; 16 stale rows per rank measured) | the source of D2's foreign writes without D2; unreachable under D2 (stale columns never read) | — | CPU only; left out of the bundle | untested |
 
-"Bundle screen" is one GPQA pass of D1+D2+D3+D4 together; it attributes nothing to an individual correction.
+"Bundle passes" are two GPQA passes of D1+D2+D3+D4 together, against the matching stock 0.9.1 passes; they attribute nothing to an individual correction.
 
 ### Bundle gate: D1+D2+D3+D4 on 0.9.1
 
@@ -804,6 +808,57 @@ category SIMILAR / NO CLEAR SEPARATION.**
   historical controls; matched seeds do not make paired replies once computation diverges.
 - The plan records an operator note after the result: the operator considers another pass warranted, citing seed-1234
   luck seen across earlier GPQA runs, and will raise it with the independent assessor. It is not an authorization.
+  The independent assessment then proposed one more pass for seed sensitivity (amendment 15), authorized as one pass
+  (amendment 15a). The seed-1234 screen keeps its classification.
+
+#### Second pass, seed 1235
+
+Amendments 15-15c; receipts and the full write-up [`bundle/screen2/`](bundle/screen2). The unchanged frozen bundle
+(same image, recipe and diff), all 198 questions, original protocol, seed 1235 (the next protocol seed, chosen by
+protocol order), run as protocol pass 2 on a fresh server, the same session conditions as the comparators' seed-1235
+passes (documented differences: the comparators continued into pass 3 afterwards; repository commit). Runner
+(`39ff7616…`) and analysis (`cc3d3000…`) hashes recorded before generation (amendment 15b); 7.5 GPU-hour watchdog; no
+retry, no third pass.
+
+Rules frozen before generation. Primary comparator: the stock 0.9.1 record's seed-1235 pass (E = 5); categories by E:
+similar or worse for a material concern or E ≥ 5; promising follow-up signal for E ≤ 2 without an accuracy concern;
+modest improvement, no clear separation otherwise. Accuracy thresholds (deciding) are an absolute standard from the six
+stock-0.9.1 passes (record and arm passes 1-3; raw mean 170.2, SD 3.9; stated mean 172.8, SD 4.6): material concern raw
+≤ 158 or stated ≤ 159 or 2 or more premature stops; accuracy concern raw 159-163. Offsets from the single matched pass
+are reported but not deciding, because that pass is the family's best (raw 176) and would put a typical pass in the
+concern band about half the time with no accuracy change; the dry run labels the arm's own seed-1235 pass (raw 170) "concern".
+The category names are amendment 15's: the same E = 3 against 5 was "similar / no clear separation" under the first
+screen's rules (amendment 14c).
+
+**Result: valid (30 of 30 checks); 3 of 198 replies empty, all at the cap (0 premature); no material or accuracy concern
+on the family standard; category MODEST IMPROVEMENT, NO CLEAR SEPARATION.**
+
+| Seed 1235 | Bundle | 0.9.1 record (primary) | Column-511 arm (secondary) | 0.7.0 (context) |
+|---|---:|---:|---:|---:|
+| Empty replies | 3 (3 cap) | 5 (5 cap) | 5 (5 cap) | 3 (3 cap) |
+| Rescued / newly empty with the bundle | | 2 (q55, q81) / 0 | 5 (q74, q108, q120, q127, q186) / 3 (q79, q121, q147) | 1 (q81) / 1 (q147) |
+| Raw / stated correct (secondary) | 168 / 169 | 176 / 178 | 170 / 176 | 175 / 178 |
+
+- Stated-answer adjudication complete before the category: 5 rows (docs 64, 94, 110, 113, 179); doc 94 hedged.
+- Against the matched stock pass: raw −8, stated −9 (single pass, secondary, no significance claim). The matched-offset
+  readout, not deciding, shows "concern"; 168 lies inside the six-pass family's range (164-176).
+- Answered completion tokens: median 3,145, maximum 116,281. 4.541 occupied GPU-hours (2 GPUs × 8,174 s; ceiling 7.5).
+- Per amendment 15, direction and uncertainty are reported; no further pass follows automatically.
+
+#### Both passes against the matching stock passes (exploratory)
+
+EXPLORATORY: the second pass was chosen after the first had been inspected; the controls are historical; each bundle pass
+reuses its comparators' seed, which matches the sampling stream only until the computation diverges, so the replies are
+not paired copies ([confounds](../../CONFOUNDS.md#18-seed-reuse-across-engines)). Question-clustered; 396
+question-passes per side.
+
+| Bundle seeds 1234 + 1235 vs | Empty | Empty-rate reduction, points (95%) | Sign-flip p, one-sided | Raw difference, points (95%) |
+|---|---|---|---|---|
+| 0.9.1 record, passes 1-2 | 6 vs 10 | 1.01 (0.00 to 2.27) | 0.11 | −0.76 (−3.79 to +2.27) |
+| Column-511 arm, passes 1-2 | 6 vs 9 | 0.76 (−0.76 to +2.27) | 0.25 | +2.02 (−1.77 to +6.06) |
+
+By seed: bundle 3 and 3, stock record 5 and 5, column-511 arm 4 and 5, stock 0.7.0 (context) 0 and 3. Stated differences
+and two-sided values are in the [frozen output](bundle/screen2/run-s1235/screen2-result-final.json).
 
 ### Observations recorded separately
 
@@ -822,10 +877,11 @@ Stated with their evidence so far.
 | Question | Evidence so far |
 |---|---|
 | Does generation-vs-prefill disagreement at long context bear on completion? | The 8,000-15,999-token measure covers continuation after the reply had ended (amendment 7); no positive evidence either way. |
-| What produces the completion gap between 0.7.0 and 0.9.1? | The column-511 drop, the only defect found that differed between the engines in the direction of the gap, is not supported as its explanation: with the correction alone 0.9.1 left 15 empty replies vs 16 ([completion arm](#completion-arm)). The tail ring affects 0.7.0 more, which does not exclude an accidental completion benefit from incorrect computation; its role is untested. The layout bundle showed no reproducible benefit (pilot and replication); router precision and the SwiGLU clamp are the same in all releases. One GPQA pass of 0.9.1 with D1-D4 together left 3 of 198 empty against 5 and 4 in pass 1 of the 0.9.1 record and the column-511 arm (0.7.0 pass 1: 0): similar, no clear separation, one pass ([screen](#one-pass-gpqa-screen)). The gap itself (4 vs 16) rests on one three-pass record per engine. The corrected 0.9.1 arm's 15 empty replies resemble the 0.9.1 record's 16, with empties moving between questions, but it ran a modified engine, so it is not a replication of the unmodified 0.9.1 record. Whether either record's rate reproduces on its unmodified engine has not been tested. Open. |
+| What produces the completion gap between 0.7.0 and 0.9.1? | The column-511 drop, the only defect found that differed between the engines in the direction of the gap, is not supported as its explanation: with the correction alone 0.9.1 left 15 empty replies vs 16 ([completion arm](#completion-arm)). The tail ring affects 0.7.0 more, which does not exclude an accidental completion benefit from incorrect computation; its role is untested. The layout bundle showed no reproducible benefit (pilot and replication); router precision and the SwiGLU clamp are the same in all releases. One GPQA pass of 0.9.1 with D1-D4 together left 3 of 198 empty against 5 and 4 in pass 1 of the 0.9.1 record and the column-511 arm (0.7.0 pass 1: 0): similar, no clear separation, one pass ([screen](#one-pass-gpqa-screen)); a second pass at seed 1235 left 3 against 5 and 5 (0.7.0: 3): modest improvement, no clear separation ([second pass](#second-pass-seed-1235)). The gap itself (4 vs 16) rests on one three-pass record per engine. The corrected 0.9.1 arm's 15 empty replies resemble the 0.9.1 record's 16, with empties moving between questions, but it ran a modified engine, so it is not a replication of the unmodified 0.9.1 record. Whether either record's rate reproduces on its unmodified engine has not been tested. Open. |
 | Does the column-511 correction cost accuracy? | Raw -1.85 points (95% -5.05 to +1.35), stated -1.18 (-4.04 to +1.52), against a historical control; not significant, which does not establish no cost. Inconclusive. |
-| Do the tail-ring fix, the router precision or the SwiGLU clamp change completion or accuracy? | All affect both engines. Each has a verified computational correction (D2, D3) or a reachable one (D4); none was tested alone in GPQA. Together with D1, one pass: 3 empty of 198, raw 174 and stated 176 (single pass, secondary), similar to the baselines' pass 1 with no clear separation. Untested individually; interactions untested. |
-| Does the bundle's empty count differ from the baselines' beyond seed-to-seed variation? | One pass at seed 1234; simulated P(E ≤ 2) is 0.078 with no change and 0.85-0.86 at 0.7.0-like rates. Rescued and newly empty replies vs both baselines are listed in the [screen](#one-pass-gpqa-screen). Inconclusive. |
+| Do the tail-ring fix, the router precision or the SwiGLU clamp change completion or accuracy? | All affect both engines. Each has a verified computational correction (D2, D3) or a reachable one (D4); none was tested alone in GPQA. Together with D1, two passes: 3 and 3 empty of 198 against 5 and 5 in the matching stock passes; raw 174 and 168, stated 176 and 169 (single passes, secondary); no clear separation in either. Untested individually; interactions untested. |
+| Does the bundle's empty count differ from the baselines' beyond seed-to-seed variation? | Two passes (seeds 1234 and 1235): 3 and 3 empty against 5 and 5 in the matching stock 0.9.1 passes and 4 and 5 in the column-511 arm's. Exploratory combination (follow-up chosen after the first pass; historical controls; seeds reused): 6 vs 10 of 396, reduction 1.01 points (95% 0.00 to 2.27), one-sided p = 0.11; against the arm 6 vs 9. Rescued and newly empty replies are listed per pass ([screen](#one-pass-gpqa-screen), [second pass](#second-pass-seed-1235)). Inconclusive. |
+| Do the bundle's corrections account for the historical gap to 0.7.0? | The bundle corrects verified defects and shows a modest, consistent reduction in empty replies at two seeds (3 and 3 vs 5 and 5 in the matching stock passes); not established. Stock 0.7.0's lower rate (0 and 3 at the same seeds) is not reached, and three of the four corrections (D2, D3, D4) make 0.9.1 more correct than 0.7.0 rather than more like it, so other contributors to the historical gap likely remain unidentified. A cumulative effect of several small corrections is a working hypothesis, not a result. |
 | Why does greedy decoding of 0.9.1 diverge between identical long-context requests? | Short prompts repeat bitwise for 96 tokens; 4,240- and 16,240-token prompts diverge at token 3 in the stock release, also with identical prefix-cache coverage; divergences fell on low-margin steps (chosen-token probability 0.30-0.66; runner-up not recorded). Mechanism not identified ([observations](#observations-recorded-separately)). |
 | Does E1 (batch-size-dependent routing weights) affect outputs? | Weights differ by up to 1.1e-3 relative above about 1,024 rows; expert ids unchanged on the captured rows; inferred exposure prefill only. Untested. |
 | Do legitimate numerical differences shift how often long deliberation runs past the cap? | Non-completion is a low-rate tail event (about 1 in 10 fresh draws at these caps on two hard questions); small pilots cannot resolve rates near 2.7% vs 0.7% of replies. |
@@ -839,17 +895,21 @@ Stated with their evidence so far.
 - The records change several things at once (table above). None was varied alone in GPQA.
 - The completion difference rests on 13 vs 1 question-passes. The question was raised by pass 1.
 - Questions are doc ids; questions, replies and prompts are not published.
-- The bundle screen is one pass against historical controls; its rules allocate resources and make no significance or
-  equivalence claim. Two gate criteria were revised after the gate data were inspected (amendment 14c).
+- The bundle passes are two single passes against historical controls; their rules allocate resources and make no
+  significance or equivalence claim. The second pass was chosen after the first had been inspected, so their combination
+  is exploratory, and each reuses its comparators' seed. Two gate criteria were revised after the gate data were
+  inspected (amendment 14c).
 - FULL-graph decode coverage of the router-precision measurement is by source inspection only.
 
 ## Next steps
 
-Nothing further is scheduled. Under the screen's frozen rules the bundle is deprioritised as a completion remedy within
-this allocation (amendment 14c; for this category the plan's follow-up is source or controlled-input work, none of it
-scheduled). The stock 0.7.0 replication stays deferred and is not authorized (amendments 12, 14). An
-operator note recorded after the screen (another pass considered warranted) is not an authorization. Open, with their
-evidence above: what produces the completion gap; whether 0.7.0's rate of empty replies reproduces; whether the tail-ring
+Nothing further is scheduled. The first screen's frozen category (amendment 14c) stands. For the second pass's category
+amendment 15 prescribes reporting direction and uncertainty with no automatic further pass. The plan notes that
+confirmation, if pursued, would prefer a contemporaneous stock control on new prespecified seeds (amendment 15); none is
+authorized. The stock 0.7.0 replication stays deferred and is not
+authorized (amendments 12, 14). Open, with their
+evidence above: what produces the completion gap; whether the bundle's lower count of empty replies holds beyond two
+seeds; whether 0.7.0's rate of empty replies reproduces; whether the tail-ring
 fix, router precision or the SwiGLU clamp change completion or accuracy individually; whether the column-511 correction
 costs accuracy; why long-context greedy decoding is not repeatable; whether E1 affects outputs. Minimal reproductions and
 patches are prepared; offering them upstream is a separate decision.

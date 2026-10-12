@@ -1,5 +1,32 @@
 # Changelog
 
+## 2026-10-12, afternoon (completion investigation, amendments 15-15c): second bundle pass, seed 1235
+
+Contents unchanged: 65 runs, 13 comparisons. No earlier run or number changed; grades unchanged (item 4e stays
+descriptive, now covering two passes); the seed-1234 screen keeps its category.
+
+- **`PLAN.md`**: amendments 15 (proposal), 15a (authorization), 15b (freeze) and 15c (result).
+
+- **Second bundle pass** (new `bundle/screen2/`): the unchanged frozen bundle, one GPQA pass at seed 1235 (protocol pass 2,
+  fresh server, the comparators' session conditions), runner and analysis frozen before generation. Valid; 3 of 198
+  empty, all at the cap; no material or accuracy concern on the six-pass stock-0.9.1 family standard (raw 168, stated
+  169); category MODEST IMPROVEMENT, NO CLEAR SEPARATION. Against the record's seed-1235 pass (5 empty): 2 rescued, 0
+  newly empty, raw −8, stated −9; matched-offset readout (not deciding) "concern". Exploratory combination of both
+  bundle passes against the matching stock passes: 6 vs 10 empty of 396 (one-sided p = 0.11). Published: runner,
+  analysis, arm loaders (unchanged public copy), dry run, results before and after adjudication, adjudication ids and
+  verdicts, watchdog and GPU logs, runner output, cost line, a README; the server log, container inspection, samples,
+  request log and the local pre-run README are hashed in `RAW-SHA256SUMS-screen2.txt`. 4.541 GPU-hours.
+- **`PUBLIC-COPIES-15.txt`**: local and public sha256 of the copies with paths replaced; amendment 15b hashes refer to the
+  local files.
+- **`costs.jsonl`**: one entry appended (4.541). Cumulative 47.79 GPU-hours; `recompute.py` checks the new total.
+- **Investigation README**: status line, answer table (the bundle row covers both passes), fast path, prior probes,
+  defect matrix, the screen section (second pass and the exploratory combined table), open questions (one added, as
+  evidence only), limits, next steps (nothing scheduled). **`bundle/README.md`**: pointer to the second pass.
+- **`FINDINGS.md`**: item 4e and its note, item 7 and its note, open questions.
+- **`LEDGER.md`**: dated entry for the second pass.
+- **`CONFOUNDS.md`**: new entry 18 (seed reuse across engines).
+- **Top-level README** and **site** (`tools/site.py`: summary lines and the engine-issues text); pages regenerated.
+
 ## 2026-10-12 (completion investigation, amendments 13a-14e): stage A final, correctness bundle gate, one-pass screen
 
 Contents unchanged: 65 runs, 13 comparisons. No earlier run, number or grade changed except as listed.

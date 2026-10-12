@@ -276,6 +276,25 @@ What was asked, run, found, corrected and withdrawn, in date order.
 - 4.84 of 7.5 GPU-hours. The investigation's cumulative total: 43.25 GPU-hours. Nothing further is scheduled.
   [Screen](investigations/2026-10-glm53-completion/README.md#one-pass-gpqa-screen).
 
+**2026-10-12, afternoon. Second GPQA pass of the bundle, seed 1235 (amendments 15-15c).**
+- The independent assessment proposed one more pass of the unchanged bundle for seed sensitivity (amendment 15); the
+  operator authorized one pass, no retry and no third pass (amendment 15a). The seed-1234 screen keeps its category.
+- Frozen before generation (amendment 15b): runner and analysis hashes; session conditions matching the comparators'
+  seed-1235 passes (protocol pass 2, first pass of a fresh server); primary comparator the stock 0.9.1 record's seed-1235
+  pass (5 empty); accuracy thresholds as an absolute standard from the six stock-0.9.1 passes, with offsets from the single
+  matched pass reported but not deciding (that pass is the family's best); new category names.
+- Valid. 3 of 198 replies empty, all at the cap; no material or accuracy concern on the family standard (raw 168, stated
+  169; 5 rows adjudicated, one hedged). Category: **MODEST IMPROVEMENT, NO CLEAR SEPARATION**. Against the record's
+  seed-1235 pass: 2 rescued, 0 newly empty, raw −8, stated −9; the matched-offset readout (not deciding) shows "concern".
+  Against the column-511 arm's: 5 rescued, 3 newly empty. 0.7.0's seed-1235 pass (context): 3 empty.
+- EXPLORATORY (chosen after the first screen; historical controls; seeds reused): both bundle passes against the matching
+  stock passes, 6 vs 10 empty of 396, reduction 1.01 points (95% 0.00 to 2.27), one-sided p = 0.11; raw −0.76 points
+  (−3.79 to +2.27). Against the arm: 6 vs 9; raw +2.02 (−1.77 to +6.06).
+- Per amendment 15: direction and uncertainty reported; no automatic further pass. The plan notes that any confirmation
+  would prefer a contemporaneous stock control on new prespecified seeds.
+- 4.541 of 7.5 GPU-hours (one session, 2 GPUs × 8,174 s). The investigation's cumulative total: 47.79 GPU-hours. Nothing
+  further is scheduled. [Second pass](investigations/2026-10-glm53-completion/README.md#second-pass-seed-1235).
+
 ## Withdrawn, and what replaced it
 
 > **Withdrawal notice (2026-10-09).** The earlier hard-question screens (`hard-prompt-screen` v0 and v1, 2026-09-30 to

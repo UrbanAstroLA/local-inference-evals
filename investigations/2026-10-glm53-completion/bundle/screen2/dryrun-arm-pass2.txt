@@ -1,0 +1,304 @@
+{
+ "label": "DRY RUN: col511 arm pass 2 (seed 1235) standing in for the bundle's second pass",
+ "valid": true,
+ "script_sha256": "cc3d300032cd831deea233c7e2251477b807170cbee4f80a4bd611efafef11c7",
+ "analysis_col511_sha256": "b5b13ce2155085ca46fb24877f12b7cd0a5cdd16eb4cf19012958e7b86ae0033",
+ "accuracy_standard": {
+  "family_raw": [
+   169,
+   176,
+   171,
+   164,
+   170,
+   171
+  ],
+  "family_stated": [
+   170,
+   178,
+   174,
+   165,
+   176,
+   174
+  ],
+  "raw_mean": 170.17,
+  "raw_sd": 3.87,
+  "stated_mean": 172.83,
+  "stated_sd": 4.67,
+  "material": "raw <= 158 or stated <= 159 or premature stops >= 2",
+  "concern": "raw 159-163"
+ },
+ "part_A_new_pass": {
+  "empties": 5,
+  "causes": {
+   "cap_exhaustion": 5
+  },
+  "category": "SIMILAR OR WORSE",
+  "category_if_adjudication_complete": "SIMILAR OR WORSE",
+  "adjudication_complete": true,
+  "adjudicated_docs": [
+   4,
+   64,
+   72,
+   110,
+   152,
+   170
+  ],
+  "flags_family_standard": {
+   "material_concern": false,
+   "accuracy_concern": false,
+   "detail": {
+    "raw": 170,
+    "stated": 176,
+    "premature_stops": 0
+   }
+  },
+  "sensitivity_matched_offsets_vs_record_pass2": {
+   "baseline_raw": 176,
+   "baseline_stated": 178,
+   "flag": false,
+   "concern": true,
+   "rule": "flag raw <= 165 or stated <= 167 or >= 2 premature; concern raw 166-170"
+  },
+  "versus": {
+   "record pass 2 (primary, seed 1235)": {
+    "baseline_empties": 5,
+    "baseline_causes": {
+     "cap_exhaustion": 5,
+     "premature_stop": 0,
+     "not_logged": 0,
+     "other_finish": 0
+    },
+    "rescued": [
+     55,
+     79,
+     81,
+     121,
+     147
+    ],
+    "newly_empty": [
+     74,
+     108,
+     120,
+     127,
+     186
+    ],
+    "empty_in_both": [],
+    "baseline_raw": 176,
+    "baseline_stated": 178,
+    "raw_diff": -6,
+    "stated_diff": -2,
+    "raw_only_screen_correct": 11,
+    "raw_only_baseline_correct": 17
+   },
+   "col511 arm pass 2 (secondary, seed 1235)": {
+    "baseline_empties": 5,
+    "baseline_causes": {
+     "cap_exhaustion": 5,
+     "premature_stop": 0,
+     "not_logged": 0,
+     "other_finish": 0
+    },
+    "rescued": [],
+    "newly_empty": [],
+    "empty_in_both": [
+     74,
+     108,
+     120,
+     127,
+     186
+    ],
+    "baseline_raw": 170,
+    "baseline_stated": 176,
+    "raw_diff": 0,
+    "stated_diff": 0,
+    "raw_only_screen_correct": 0,
+    "raw_only_baseline_correct": 0
+   },
+   "0.7.0 pass 2 (context, seed 1235)": {
+    "baseline_empties": 3,
+    "baseline_causes": {
+     "cap_exhaustion": 3,
+     "premature_stop": 0,
+     "not_logged": 0,
+     "other_finish": 0
+    },
+    "rescued": [
+     79,
+     81,
+     121
+    ],
+    "newly_empty": [
+     74,
+     108,
+     120,
+     127,
+     186
+    ],
+    "empty_in_both": [],
+    "baseline_raw": 175,
+    "baseline_stated": 178,
+    "raw_diff": -5,
+    "stated_diff": -2,
+    "raw_only_screen_correct": 10,
+    "raw_only_baseline_correct": 15
+   }
+  },
+  "secondary": {
+   "raw_correct_all_198": 170,
+   "stated_correct_all_198": 176,
+   "stated_differs_from_raw_rows": [
+    4,
+    64,
+    72,
+    110,
+    152,
+    170
+   ],
+   "answered_completion_tokens": {
+    "p10": 831,
+    "p25": 1202,
+    "p50": 3092,
+    "p75": 11910,
+    "p90": 31663,
+    "p99": 144948,
+    "max": 194679,
+    "n": 193
+   },
+   "answered_above_32k_64k_128k_200k": [
+    19,
+    9,
+    2,
+    0
+   ],
+   "timing": {
+    "per_pass": {
+     "pass1": {
+      "window_h": 2.7275,
+      "completion_tokens": 4130363,
+      "aggregate_tok_s": 420.7,
+      "median_request_tok_s_answered": 57.4
+     }
+    },
+    "request_window_h_total": 2.7275,
+    "request_window_gpu_h": 5.455,
+    "occupied": null,
+    "gpu_hours_used": null,
+    "gpu_hours_source": null,
+    "raw_correct_per_gpu_hour": null,
+    "stated_correct_per_gpu_hour": null,
+    "kernel_route_exposure_client_side": {
+     "pass1": {
+      "busy_h": 2.7275,
+      "share_busy_inflight_1to4": 0.1784,
+      "share_busy_inflight_5plus": 0.8216,
+      "max_inflight": 8,
+      "mean_share_of_request_life_inflight_1to4": {
+       "empty": 0.2061,
+       "answered": 0.0012
+      }
+     }
+    }
+   },
+   "server": {
+    "log": "server-s2.log",
+    "sha256": "f4d51b2dc67b37d4435759cdc9d051ff1e5e76b4df13981e4e0423d1484c2b9f",
+    "server_starts": 1,
+    "cited_block": 0,
+    "non_default_args_sha256": "7025a96888a67642741db00aaecb9cbf786c2ba67cc4ded7d67c1cf4e909dcc5",
+    "model_snapshots": [
+     "0490d2f708b12145f6516555ab066aaeb401cd21",
+     "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+    ],
+    "vllm_version": [
+     "0.1.dev20051+g487ecf187"
+    ],
+    "env_names_logged_sha256": "f85d9d360488c02bc9ba2bbb33b86319201cfad14cd4c6a9ccb312539ec1313e",
+    "kv_pool_tokens": [
+     4707515
+    ],
+    "cudagraph_mode": [
+     "FULL_AND_PIECEWISE"
+    ],
+    "release_warmups_logged": 9,
+    "status": {
+     "lines": 982,
+     "max_running": 8,
+     "lines_waiting": 0,
+     "peak_kv_usage_pct": 37.2,
+     "mean_gen_tok_s_8plus_running": 454.8,
+     "share_lines_running_1to4": 0.1782,
+     "share_lines_running_5plus": 0.8208
+    },
+    "in_window": {
+     "preemption_lines": 0,
+     "illegal_memory_access_lines": 0,
+     "nan_warning_lines": 0
+    }
+   }
+  }
+ },
+ "part_B_exploratory_combined": {
+  "vs_record_passes_1_2": {
+   "label": "EXPLORATORY (bundle seeds 1234+1235 vs stock record seeds 1234+1235): follow-up chosen after inspecting the first screen; historical controls",
+   "question_passes_per_side": 396,
+   "bundle_empties": 8,
+   "comparator_empties": 10,
+   "empty_signflip_cmp_minus_bundle": {
+    "T": 2,
+    "m_nonzero": 10,
+    "p_one_sided": 0.376953125,
+    "p_two_sided": 0.75390625,
+    "null_patterns": 1024
+   },
+   "empty_rate_reduction_points": 0.51,
+   "empty_rate_reduction_ci95_points": [
+    -1.01,
+    2.02
+   ],
+   "questions_d_pos": 6,
+   "questions_d_neg": 4,
+   "raw_diff_points": -0.25,
+   "raw_diff_ci95_points": [
+    -3.54,
+    3.03
+   ],
+   "raw_signflip_two_sided_reference": 1.0,
+   "stated_diff_points": 1.01,
+   "stated_diff_ci95_points": [
+    -1.77,
+    4.04
+   ]
+  },
+  "vs_arm_passes_1_2": {
+   "label": "EXPLORATORY (bundle seeds 1234+1235 vs column-511 arm seeds 1234+1235): follow-up chosen after inspecting the first screen; historical controls",
+   "question_passes_per_side": 396,
+   "bundle_empties": 8,
+   "comparator_empties": 9,
+   "empty_signflip_cmp_minus_bundle": {
+    "T": 1,
+    "m_nonzero": 1,
+    "p_one_sided": 0.5,
+    "p_two_sided": 1.0,
+    "null_patterns": 2
+   },
+   "empty_rate_reduction_points": 0.25,
+   "empty_rate_reduction_ci95_points": [
+    0.0,
+    0.76
+   ],
+   "questions_d_pos": 1,
+   "questions_d_neg": 0,
+   "raw_diff_points": 2.53,
+   "raw_diff_ci95_points": [
+    0.51,
+    4.55
+   ],
+   "raw_signflip_two_sided_reference": 0.0308837890625,
+   "stated_diff_points": 2.78,
+   "stated_diff_ci95_points": [
+    0.76,
+    4.8
+   ]
+  }
+ }
+}
