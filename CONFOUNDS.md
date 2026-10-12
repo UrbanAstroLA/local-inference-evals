@@ -13,7 +13,7 @@ the runs control for it now, and its status. Only confounds this repository has 
 | [Question selection](#6-hard-questions-chosen-from-seed-1234-data) | Hard questions look harder than they are | Rates per question; no benchmark-wide claim | Stated limit |
 | [Changes bundled in a release](#7-several-changes-between-releases-at-once) | A release difference cannot be pinned to one change | Labels name the release as shipped; component screen; completion investigation | Open |
 | [Published scores](#8-published-scores-use-other-weights-and-harnesses) | Gaps mix quantization, harness, scoring and runtime | Context only, never ranked | Stated limit |
-| [Requests in flight and the top-k route](#9-requests-in-flight-and-the-top-k-route) | Decides which pool the 511-pool slice discards, so what the model attends | Concurrency fixed per protocol and stated in labels; the completion arm matches its comparator's 8 | Measured; effect on completion open |
+| [Requests in flight and the top-k route](#9-requests-in-flight-and-the-top-k-route) | Decides which pool the 511-pool slice discards, so what the model attends | Concurrency fixed per protocol and stated in labels; the completion arm matched its comparator's 8 | Measured; no measurable change in completion with the correction (one arm) |
 | [Kpool tail-ring positions omission](#10-kpool-tail-ring-positions-omission) | Other requests' keys enter completed pools, more with more requests in flight | Present in every record compared here; fix prepared, in no GPQA run | Measured; effect open |
 | [NaN-byte index rows](#11-nan-byte-index-rows) | Selected pools whose stored bytes are not valid keys | Reported separately by the gate | Measured in one run |
 | [Historical control](#12-historical-control-for-the-completion-arm) | A later run differs from a recorded baseline in more than the change | Comparator audit; analysis frozen before data | Stated limit |
@@ -172,8 +172,10 @@ differ in several ways at once.
   source.
 - It found two localized defects: the column-511 drop ([9](#9-requests-in-flight-and-the-top-k-route)), the only one
   found that differs between the engines in the direction of the gap, and the tail-ring omission
-  ([10](#10-kpool-tail-ring-positions-omission)), which affects 0.7.0 more. Whether either accounts for any of the gap
-  is open; a GPQA arm with the column-511 correction alone is running.
+  ([10](#10-kpool-tail-ring-positions-omission)), which affects 0.7.0 more. A GPQA arm with the column-511 correction
+  alone left 15 empty replies vs 16 on 0.9.1, so that defect is not supported as the explanation of the gap
+  ([completion arm](investigations/2026-10-glm53-completion/README.md#completion-arm)). Whether the tail ring accounts
+  for any of it is untested; what produces the gap is open.
 
 </details>
 
@@ -199,12 +201,14 @@ GLM-5.3 engines that use B12x top-k kernels: runs at different concurrency, or e
 different batch sizes, differ in this as well.
 
 **Control.** Concurrency is fixed by each protocol and shown in labels when a run departs from it
-([3](#3-kv-saturation)). The completion arm runs at 8, as its comparator did; its frozen analysis approximates route
-exposure from client-side in-flight counts, which does not measure the in-engine route. The column-511 correction
+([3](#3-kv-saturation)). The completion arm ran at 8, as its comparator did; its frozen analysis approximates route
+exposure from client-side in-flight counts, which does not measure the in-engine route (76-84% of busy time with 5 or
+more requests in flight). The column-511 correction
 always discards the lowest-scoring selected pool, so the discarded pool no longer depends on the route.
 
-**Status.** Measured: a localized defect (supported). Its effect on completion is open; a GPQA arm with the correction
-is running.
+**Status.** Measured: a localized defect (supported). A three-pass GPQA arm with the correction left 15 empty replies vs
+16 of 594 (one-sided p = 0.50): a correctness fix with no measurable change in completion
+([completion arm](investigations/2026-10-glm53-completion/README.md#completion-arm)).
 
 <details>
 <summary>Evidence</summary>
@@ -304,8 +308,9 @@ file; weights, prompts, tokenizer, parsers, sampling, seeds, concurrency, admiss
 the session split (pass 1, then passes 2-3, each on a fresh server) is mirrored; desktop graphics on the second GPU are
 logged, not controlled. The analysis, frozen before data, states exchangeability as an assumption.
 
-**Status.** Stated limit. Under the frozen reading rules a positive result supports improvement relative to the
-recorded baseline only, not an explanation of the 0.7.0-0.9.1 gap.
+**Status.** Stated limit. The arm's result (15 vs 16 empty replies) was read as R3 under the frozen rules: the
+localized correction stands but is not supported as the dominant completion explanation. Exchangeability with the
+recorded baseline remains an assumption.
 
 <details>
 <summary>Evidence</summary>

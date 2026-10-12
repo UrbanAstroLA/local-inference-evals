@@ -55,7 +55,8 @@ separately and is shown for reference only. No correction for multiple compariso
   *Later (2026-10-11):* followed up in the
   [completion investigation](../../investigations/2026-10-glm53-completion/README.md), which found two localized engine
   defects ([`FINDINGS.md`](../../FINDINGS.md) items 4a-4b); this 0.9.1 record is the historical comparator of its
-  running GPQA arm with the column-511 correction.
+  GPQA arm with the column-511 correction, which left 15 empty answers vs this record's 16
+  ([completion arm](../../investigations/2026-10-glm53-completion/README.md#completion-arm)).
 - **3.25bpw and 4bpw TR3 (Brandon) on 0.9.1 show no measurable difference** in accuracy or in empty answers
   (descriptive). The 4bpw record ran at 4 concurrent requests, the 3.25bpw record at 8.
 - **Which questions.** Questions 79 and 81 came back empty in all three records; 88, 127 and 147 in both 0.9.1 records and

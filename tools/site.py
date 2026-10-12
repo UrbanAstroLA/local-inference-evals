@@ -956,7 +956,8 @@ def looping(runs):
               f'empty, 0.9.1 left {e7["b"]} (3.25bpw; supported). Accuracy does not differ measurably (clustered p = {a7["p_cluster"]:.2f}). '
               'The two differ in several ways at once, so the cause is open (<a href="confounds.html#7-several-changes-between-releases-at-once">confounds</a>). '
               f'The <a href="{REPO}/blob/main/investigations/2026-10-glm53-completion/README.md">completion investigation</a> follows this question: it '
-              'found two localized engine defects (<a href="index.html#engine-issues">issues and fixes</a>), and a GPQA arm testing one correction is running. '
+              'found two localized engine defects (<a href="index.html#engine-issues">issues and fixes</a>); a three-pass GPQA arm with the column-511 correction alone '
+              'left 15 answers empty vs 16, so that defect is not supported as the explanation. '
               'Tables and the per-question grid: <a href="index.html#gpqa">Results</a>.</p>'
             + '<h2 id="seeds">Seeds and the earlier screens</h2><p>The earlier screens sent seed 1234 on every repeat. Their rates were withdrawn on '
               '2026-10-09 and replaced by the component screen above (<a href="ledger.html#withdrawn-and-what-replaced-it">ledger</a>; why: '
@@ -1128,7 +1129,7 @@ def build():
          f'Against 3.25bpw 0.9.1, the higher score comes entirely from {jtip}: where both answered ({len(jn["both"])} of {jn["n"]}), raw '
          f'accuracy is identical ({jn["a_correct_flexible_both"]} vs {jn["b_correct_flexible_both"]}; stated {jn["a_correct_stated_both"]} vs '
          f'{jn["b_correct_stated_both"]}). Why 0.7.0 leads is open: the <a href="{REPO}/tree/main/investigations/2026-10-glm53-completion">investigation</a> '
-         'has found two localized engine defects, and a GPQA arm testing one correction is running.',
+         'has found two localized engine defects; a GPQA arm with the column-511 correction alone did not measurably change completion.',
          "Descriptive",
          "Question-clustered tests, 0.7.0 vs 3.25bpw 0.9.1: raw p = {:.2f}, stated p = {:.2f}; vs 4bpw 0.9.1: raw p = {:.2f}, stated p = {:.2f}. "
          "Every 95% interval includes zero.".format(*[analyze.records(g["k3.25-v0.7.0-dflash5"], g[b], k)["p_cluster"]
@@ -1137,10 +1138,12 @@ def build():
         (f'<b>One pass varies by {sp[0]:.1f}-{sp[-1]:.1f} points</b> between passes with their own seeds: as much as configurations differ.',
          "Descriptive", "Three configurations, three passes each", '<a href="#records">chart</a>'),
         (f'<b>tpurtell 0.7.0 as shipped left fewer questions unanswered than 0.9.1:</b> {e7["a"]} vs {e7["b"]} empty answers of {e7["n"]} (3.25bpw). '
-         'The cause is open; a three-pass GPQA arm with the column-511 correction alone is running.', "Supported",
+         'The cause is open; a three-pass GPQA arm on 0.9.1 with the column-511 correction alone left 15 empty vs 16, so that defect is not '
+         'supported as the explanation.', "Supported",
          f"Question-clustered test p = {e7['p_cluster']:.3f}. Raised by pass 1; passes 2-3 alone {e7b['a']} vs {e7b['b']} (p = {e7b['p_cluster']:.2f}). "
          "0.7.0 differs from 0.9.1 in draft depth, layout, kernels, vision and KV pool at once. The arm is compared with the existing 0.9.1 record, "
-         "a historical control, under an analysis frozen before data; no result yet.",
+         "a historical control, under an analysis frozen before data: one-sided p = 0.50; empties moved between questions (10 rescued, 9 newly empty). "
+         "The gap rests on one three-pass record per engine; whether 0.7.0's rate reproduces has not been tested.",
          '<a href="#records-compare">comparisons</a> · <a href="confounds.html#7-several-changes-between-releases-at-once">confounds</a>'),
         (f'<b>3.25bpw and 4bpw TR3 (Brandon) perform alike on 0.9.1</b>, in accuracy and in completion. 4bpw\'s KV pool holds about 4 requests '
          'at the token cap.', "Descriptive",
@@ -1156,8 +1159,8 @@ def build():
          f"Without the kpool fixes {up_un[0]}/{up_un[1]}. Index check: the tail issue is gone with the fix; decode-vs-prefill KL below 2,044 tokens "
          f"{kl0:.3f} → {kl1:.3f}. Effect on answers: unmeasured (descriptive).", '<a href="#engine-issues">issues and fixes</a>'),
         ('<b>Two more, found by the completion investigation, have fixes prepared (not released):</b> the 511-pool truncation of the indexer\'s '
-         'top-k can discard a well-ranked pool (column 511), and the kpool tail ring is written without token positions. Whether either '
-         'changes completion is open.', "Supported",
+         'top-k can discard a well-ranked pool (column 511), and the kpool tail ring is written without token positions. The column-511 '
+         'correction did not measurably change completion in a three-pass GPQA arm (15 vs 16 empty of 594); whether the tail-ring fix does is untested.', "Supported",
          "Localized defects, verified on GPU. Column 511: on 0.9.1's tiled route a pool ranked better than 480 of 512 is discarded in 88.1% of "
          "live decode rows (0.7.0's path: 6.9%). Tail ring: 98% of tail writes go to a shared null block on 0.9.1 (all releases affected, "
          "0.7.0 more). Each fix removes its localized problem.", '<a href="#engine-issues">issues and fixes</a>')])
@@ -1176,7 +1179,8 @@ def build():
          "correction prepared: discard the lowest-scoring selected pool", "not released",
          tip("<b>Supported</b>", "0.9.1 tiled route (5-8 requests in flight): a pool ranked better than 480 of 512 discarded in 88.1% of 9,944 live decode "
              "rows; 0.7.0's path 6.9% on the same bytes. With the correction: 100% of rows correct, selection unchanged, also under the shipped "
-             "CUDA graphs. Effect on completion: open; a GPQA arm is running")
+             "CUDA graphs. Effect on completion: a three-pass GPQA arm with the correction left 15 empty answers vs 16 of 594 "
+             "(one-sided p = 0.50): a correctness fix that did not move completion behaviour")
          + f' · <a href="{REPO}/blob/main/investigations/2026-10-glm53-completion/README.md#phase-2-stage-2-real-inputs">record</a>'],
         ["Attention metadata built without token positions: the kpool tail ring is written to a shared null block from position 8, and "
          "occasionally into other requests' blocks", "during this evaluation (all releases; upstream vLLM passes positions)",

@@ -1,5 +1,27 @@
 # Changelog
 
+## 2026-10-11, evening (completion investigation): completion arm finished; every page updated with its result
+
+Contents unchanged: 65 runs, 13 comparisons. No earlier run, number or grade changed.
+
+- **Completion arm result** (`investigations/2026-10-glm53-completion/arm-col511-result/`): output of the frozen
+  analysis script, run unchanged (`result-col511.md`, `result-col511.json` with local paths replaced by placeholders),
+  per-session costs and the GPU load log. All validity checks passed. Empty replies 15 vs 16 of 594 (one-sided p = 0.50;
+  reduction +0.17 points, 95% -1.01 to +1.35); reading R3: the column-511 correction stands as a correctness fix but is
+  not supported as the dominant completion explanation. Raw accuracy 85.0% vs 86.9% (-1.85 points, 95% -5.05 to +1.35),
+  not significant. 17.11 GPU-hours; `costs.jsonl` appended (cumulative 36.08).
+- **Completion investigation README**: status line; an Answer row for the arm (descriptive; the column-511 localized-defect
+  row stays supported); section "Completion arm (running)" renamed "Completion arm" with the result, reading, secondary
+  measures, cost and limits; open questions and next steps (nothing further scheduled).
+- **Anchor**: links to `#completion-arm-running` now point to `#completion-arm` (FINDINGS, LEDGER, the investigation
+  README).
+- **`FINDINGS.md`**: item 4a carries the arm result; item 7, its note and the open questions updated.
+- **`LEDGER.md`**: "Running." replaced by a pointer to a new entry dated 2026-10-11, evening, with the result and cost.
+- **`CONFOUNDS.md`**: entries 7, 9 and 12 and the summary row for 9 updated.
+- **Forward pointers**: looping investigation ("Why is open", open question 2), `comparisons/README.md`, the three-pass
+  GPQA comparison, the top-level README.
+- **Site** (`tools/site.py`): the lines that said an arm was running now give its result; pages regenerated.
+
 ## 2026-10-11 (completion investigation, amendments 7-11b): ledger, confounds, findings and site brought up to date; completion arm running
 
 Contents unchanged: 65 runs, 13 comparisons. No earlier run, number or grade changed; no arm result is reported.

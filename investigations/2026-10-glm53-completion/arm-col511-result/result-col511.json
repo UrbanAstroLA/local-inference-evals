@@ -1,0 +1,919 @@
+{
+ "accuracy_all_requests": {
+  "correct_flexible": {
+   "arm_correct": 505,
+   "arm_pct_mean": 85.01683501683502,
+   "arm_pct_per_pass": {
+    "pass1": 82.82828282828282,
+    "pass2": 85.85858585858585,
+    "pass3": 86.36363636363636
+   },
+   "bootstrap_seed": 20261012,
+   "ci95_points": [
+    -5.05050505050505,
+    1.3468013468013467
+   ],
+   "cmp_correct": 516,
+   "cmp_pct_mean": 86.86868686868686,
+   "cmp_pct_per_pass": {
+    "pass1": 85.35353535353535,
+    "pass2": 88.88888888888889,
+    "pass3": 86.36363636363636
+   },
+   "diff_points_arm_minus_cmp": -1.8518518518518519,
+   "questions_arm_more": 20,
+   "questions_cmp_more": 29,
+   "signflip_two_sided_p_reference": 0.296073882655012
+  },
+  "correct_stated": {
+   "arm_correct": 515,
+   "arm_pct_mean": 86.7003367003367,
+   "arm_pct_per_pass": {
+    "pass1": 83.33333333333333,
+    "pass2": 88.88888888888889,
+    "pass3": 87.87878787878788
+   },
+   "bootstrap_seed": 20261013,
+   "ci95_points": [
+    -4.04040404040404,
+    1.5151515151515151
+   ],
+   "cmp_correct": 522,
+   "cmp_pct_mean": 87.87878787878788,
+   "cmp_pct_per_pass": {
+    "pass1": 85.85858585858585,
+    "pass2": 89.8989898989899,
+    "pass3": 87.87878787878788
+   },
+   "diff_points_arm_minus_cmp": -1.1784511784511784,
+   "questions_arm_more": 19,
+   "questions_cmp_more": 22,
+   "signflip_two_sided_p_reference": 0.47895092544786166
+  },
+  "note": "A nonsignificant accuracy test does not establish no accuracy cost; read the interval.",
+  "stated_status": {
+   "arm_rows_hedged_by_hand": 0,
+   "arm_rows_stated_differs_from_flexible": 12,
+   "cmp_rows_stated_differs_from_flexible": 8,
+   "rule": "arm correct_stated is final only after every row where it differs from flexible-extract is read by hand (protocol)"
+  }
+ },
+ "adjudicator": {
+  "current_source_sha256": "731f27d4a436805baae367096db8b039ae2d723f7944dda52f81fd2a96d017f6",
+  "frozen_sha256": "731f27d4a436805baae367096db8b039ae2d723f7944dda52f81fd2a96d017f6",
+  "source": "<local exporter export_evals.py>",
+  "source_unchanged": true
+ },
+ "checks": [
+  [
+   "0.9.1 K3.25 DFlash2 x3 + column-511 selection correction (image 047ea60d) pass 1: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 + column-511 selection correction (image 047ea60d) pass 1: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 + column-511 selection correction (image 047ea60d) pass 1: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 + column-511 selection correction (image 047ea60d) pass 1: every request HTTP 200, seed 1234, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 + column-511 selection correction (image 047ea60d) pass 1: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 + column-511 selection correction (image 047ea60d) pass 2: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 + column-511 selection correction (image 047ea60d) pass 2: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 + column-511 selection correction (image 047ea60d) pass 2: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 + column-511 selection correction (image 047ea60d) pass 2: every request HTTP 200, seed 1235, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 + column-511 selection correction (image 047ea60d) pass 2: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 + column-511 selection correction (image 047ea60d) pass 3: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 + column-511 selection correction (image 047ea60d) pass 3: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 + column-511 selection correction (image 047ea60d) pass 3: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 + column-511 selection correction (image 047ea60d) pass 3: every request HTTP 200, seed 1236, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 + column-511 selection correction (image 047ea60d) pass 3: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 1: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 1: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 1: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 1: every request HTTP 200, seed 1234, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 1: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 2: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 2: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 2: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 2: every request HTTP 200, seed 1235, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 2: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 3: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 3: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 3: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 3: every request HTTP 200, seed 1236, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 3: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record): rows derived here reproduce the published rows (594 rows; empty, raw, strict, stated, hashes, finish reason, tokens)",
+   true,
+   "0 field mismatches"
+  ],
+  [
+   "both arms have all 594 question-passes",
+   true,
+   "arm 594, cmp 594"
+  ],
+  [
+   "(question, pass) pairs agree on seed",
+   true,
+   "0 mismatches"
+  ],
+  [
+   "(question, pass) pairs agree on prompt_hash",
+   true,
+   "0 mismatches"
+  ],
+  [
+   "(question, pass) pairs agree on doc_hash",
+   true,
+   "0 mismatches"
+  ],
+  [
+   "(question, pass) pairs agree on target_hash",
+   true,
+   "0 mismatches"
+  ],
+  [
+   "(question, pass) pairs agree on messages_sha256",
+   true,
+   "0 mismatches"
+  ],
+  [
+   "server-rendered prompt token counts agree where both logged",
+   true,
+   "594 compared, 0 differ"
+  ],
+  [
+   "stated adjudicator source unchanged since freeze (informative)",
+   true,
+   "731f27d4a436805baae367096db8b039ae2d723f7944dda52f81fd2a96d017f6"
+  ]
+ ],
+ "dry_run": null,
+ "empties_paired": {
+  "answered_in_both_raw": {
+   "arm": 498,
+   "cmp": 508,
+   "n": 569
+  },
+  "both_empty": {
+   "ids": [
+    "q79p3",
+    "q81p3",
+    "q88p1",
+    "q127p1",
+    "q127p3",
+    "q147p3"
+   ],
+   "n": 6
+  },
+  "introduced_cmp_answered_arm_empty": {
+   "cmp_raw_correct_lost": 8,
+   "cmp_stated_correct_lost": 8,
+   "ids": [
+    "q69p3",
+    "q74p2",
+    "q79p1",
+    "q108p2",
+    "q120p2",
+    "q127p2",
+    "q157p3",
+    "q170p1",
+    "q186p2"
+   ],
+   "n": 9
+  },
+  "note": "Pairs share prompt and request seed; generations under different engines are not matched trajectories. Descriptive.",
+  "rescued_cmp_empty_arm_answered": {
+   "arm_raw_correct": 7,
+   "arm_stated_correct": 7,
+   "ids": [
+    "q12p1",
+    "q55p2",
+    "q79p2",
+    "q81p2",
+    "q88p3",
+    "q109p1",
+    "q120p1",
+    "q121p2",
+    "q147p2",
+    "q170p3"
+   ],
+   "n": 10
+  }
+ },
+ "ends_and_lengths": {
+  "arm": {
+   "answered_above": {
+    "131072": 4,
+    "200000": 1,
+    "32768": 55,
+    "65536": 28
+   },
+   "answered_but_length_finish": 0,
+   "completion_tokens_all_logged": {
+    "max": 327680,
+    "n": 594,
+    "p10": 821,
+    "p25": 1269,
+    "p50": 3609,
+    "p75": 12643,
+    "p90": 43367,
+    "p99": 327680
+   },
+   "completion_tokens_answered": {
+    "max": 213174,
+    "n": 579,
+    "p10": 816,
+    "p25": 1250,
+    "p50": 3387,
+    "p75": 11910,
+    "p90": 32020,
+    "p99": 117982
+   },
+   "completion_tokens_total_logged": 12311300,
+   "empties_by_end": {
+    "cap_exhaustion": 15,
+    "not_logged": 0,
+    "other_finish": 0,
+    "premature_stop": 0
+   },
+   "finish_reason_all_logged": {
+    "length": 15,
+    "stop": 579
+   },
+   "logged_rows": 594,
+   "premature_stops": []
+  },
+  "cmp": {
+   "answered_above": {
+    "131072": 4,
+    "200000": 2,
+    "32768": 62,
+    "65536": 24
+   },
+   "answered_but_length_finish": 0,
+   "completion_tokens_all_logged": {
+    "max": 327680,
+    "n": 594,
+    "p10": 804,
+    "p25": 1244,
+    "p50": 3744,
+    "p75": 13736,
+    "p90": 41940,
+    "p99": 327680
+   },
+   "completion_tokens_answered": {
+    "max": 274150,
+    "n": 578,
+    "p10": 801,
+    "p25": 1239,
+    "p50": 3508,
+    "p75": 12947,
+    "p90": 35394,
+    "p99": 109684
+   },
+   "completion_tokens_total_logged": 12305429,
+   "empties_by_end": {
+    "cap_exhaustion": 15,
+    "not_logged": 0,
+    "other_finish": 0,
+    "premature_stop": 1
+   },
+   "finish_reason_all_logged": {
+    "length": 15,
+    "stop": 579
+   },
+   "logged_rows": 594,
+   "premature_stops": [
+    {
+     "completion_tokens": 38,
+     "id": "q12p1"
+    }
+   ]
+  },
+  "paired_mean_tokens_arm_minus_cmp": {
+   "ci95": [
+    -3481.4410774410776,
+    3470.747474747475
+   ],
+   "estimate": 9.883838383838384,
+   "note": "all logged requests incl. cap exhaustions; descriptive",
+   "questions": 198
+  }
+ },
+ "gpus": 2,
+ "inputs": {
+  "arm": {
+   "reqlogs": {
+    "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+col511fix.s1.requests.jsonl": "afd60e414fb4d6fdc37c601c3df893d630d7e292e57dc5997f5129c24f3aa772",
+    "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+col511fix.s2.requests.jsonl": "d8e7044954c53ea3c97db20c3bb89e9b91f68cc8f7caafce056e19ac1e92324a"
+   },
+   "samples": {
+    "pass1": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+col511fix__pass1",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1235,
+      "seed_arg": 1234,
+      "timeout": 10800
+     },
+     "sha256": "463c42a319dce116aab2916695bc96a56e51d19c92f9c8d551a12b0f22e64dce"
+    },
+    "pass2": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+col511fix__pass2",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1236,
+      "seed_arg": 1235,
+      "timeout": 10800
+     },
+     "sha256": "1df6043cccb0cccab6bbf0a2bcdf58630d19a30e8a46afad97d5670c0a995bcf"
+    },
+    "pass3": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+col511fix__pass3",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1237,
+      "seed_arg": 1236,
+      "timeout": 10800
+     },
+     "sha256": "1d00ade555e2567fb4b2b272a6e149c669458803d7f2fe81478fd2842984e351"
+    }
+   }
+  },
+  "cmp": {
+   "published": {
+    "file": "results.jsonl",
+    "sha256": "9d2f57c9c4c1c5fe0833f5d534a290bfc61793101ca0f5cf1cf6bb04cbc970b2"
+   },
+   "reqlogs": {
+    "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps.requests.jsonl": "dbe4520b3ea49c21a40985511da3b0b71770ac781e9d9a1bbdd72cfd423c8f5f",
+    "glm53-flash-exl3-k3.25@tpurtell+v0.9.1.requests.jsonl": "ecba3773ba0fc520957f640f3e45e20e450ad831da474306d668a26b46cd8493"
+   },
+   "samples": {
+    "pass1": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps__pass1",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1235,
+      "seed_arg": null,
+      "timeout": 10800
+     },
+     "sha256": "be5c567defff894ac898e7e90ea2149e4fd5ff64486216a6c26f736efb447fc1"
+    },
+    "pass2": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps__pass2",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1236,
+      "seed_arg": 1235,
+      "timeout": 10800
+     },
+     "sha256": "c9105163deefe174f6b903caaa6344650ac8cd589d58f1a3b9a03d7199546920"
+    },
+    "pass3": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps__pass3",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1237,
+      "seed_arg": 1236,
+      "timeout": 10800
+     },
+     "sha256": "bcaa1e011ce13b202205e12f37f399f57bdf39ad4b83ee8bdd885c8715d728b7"
+    }
+   }
+  }
+ },
+ "labels": {
+  "arm": "0.9.1 K3.25 DFlash2 x3 + column-511 selection correction (image 047ea60d)",
+  "cmp": "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record)"
+ },
+ "primary": {
+  "arm_empties": 15,
+  "arm_empty_rate": 0.025252525252525252,
+  "band": ">= 13 (operational band: little improvement or deterioration)",
+  "cmp_empties": 16,
+  "cmp_empty_rate": 0.026936026936026935,
+  "d_nonzero_by_question": {
+   "108": -1,
+   "109": 1,
+   "12": 1,
+   "121": 1,
+   "127": -1,
+   "147": 1,
+   "157": -1,
+   "186": -1,
+   "55": 1,
+   "69": -1,
+   "74": -1,
+   "81": 1,
+   "88": 1
+  },
+  "effect_empty_rate_reduction": {
+   "bootstrap": {
+    "method": "percentile",
+    "replicates": 20000,
+    "seed": 20261011,
+    "unit": "question (all passes, both arms)"
+   },
+   "ci95": [
+    -0.010101010101010102,
+    0.013468013468013467
+   ],
+   "estimate": 0.0016835016835016834
+  },
+  "n_question_passes": 594,
+  "per_pass": {
+   "pass1": {
+    "arm": 4,
+    "cmp": 5
+   },
+   "pass2": {
+    "arm": 5,
+    "cmp": 5
+   },
+   "pass3": {
+    "arm": 6,
+    "cmp": 6
+   }
+  },
+  "questions_d_negative": 6,
+  "questions_d_positive": 7,
+  "questions_with_any_empty": {
+   "arm": 12,
+   "cmp": 11
+  },
+  "reading": "R3: little improvement or deterioration = the localized correction stands but is not supported as the dominant completion explanation",
+  "relative_reduction": {
+   "ci95": [
+    -0.5714285714285714,
+    0.4347826086956522
+   ],
+   "estimate": 0.0625,
+   "replicates_undefined": 0,
+   "seed": 20261014
+  },
+  "test": {
+   "T": 1,
+   "alpha": 0.05,
+   "direction": "one-sided, reduction (T large)",
+   "m_nonzero": 13,
+   "null_patterns": 8192,
+   "p_one_sided": 0.5,
+   "p_two_sided": 1.0,
+   "statistic": "T = sum over 198 questions of d_q = (cmp empties_q - arm empties_q)"
+  }
+ },
+ "script_sha256": "b5b13ce2155085ca46fb24877f12b7cd0a5cdd16eb4cf19012958e7b86ae0033",
+ "server": {
+  "arm": [
+   {
+    "cited_block": 0,
+    "cudagraph_mode": [
+     "FULL_AND_PIECEWISE"
+    ],
+    "env_names_logged_sha256": "f85d9d360488c02bc9ba2bbb33b86319201cfad14cd4c6a9ccb312539ec1313e",
+    "in_window": {
+     "illegal_memory_access_lines": 0,
+     "nan_warning_lines": 0,
+     "preemption_lines": 0
+    },
+    "kv_pool_tokens": [
+     4707515
+    ],
+    "log": "server-s1.log",
+    "model_snapshots": [
+     "0490d2f708b12145f6516555ab066aaeb401cd21",
+     "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+    ],
+    "non_default_args_sha256": "7025a96888a67642741db00aaecb9cbf786c2ba67cc4ded7d67c1cf4e909dcc5",
+    "release_warmups_logged": 9,
+    "server_starts": 1,
+    "sha256": "a2b3f12d94f6b75b4b8bd63473c06e878534a827c5a9a9bd0d22b935c4010d51",
+    "status": {
+     "lines": 962,
+     "lines_waiting": 0,
+     "max_running": 8,
+     "mean_gen_tok_s_8plus_running": 444.5,
+     "peak_kv_usage_pct": 37.5,
+     "share_lines_running_1to4": 0.2391,
+     "share_lines_running_5plus": 0.7609
+    },
+    "vllm_version": [
+     "0.1.dev20051+g487ecf187"
+    ]
+   },
+   {
+    "cited_block": 0,
+    "cudagraph_mode": [
+     "FULL_AND_PIECEWISE"
+    ],
+    "env_names_logged_sha256": "f85d9d360488c02bc9ba2bbb33b86319201cfad14cd4c6a9ccb312539ec1313e",
+    "in_window": {
+     "illegal_memory_access_lines": 0,
+     "nan_warning_lines": 0,
+     "preemption_lines": 0
+    },
+    "kv_pool_tokens": [
+     4707515
+    ],
+    "log": "server-s2.log",
+    "model_snapshots": [
+     "0490d2f708b12145f6516555ab066aaeb401cd21",
+     "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+    ],
+    "non_default_args_sha256": "7025a96888a67642741db00aaecb9cbf786c2ba67cc4ded7d67c1cf4e909dcc5",
+    "release_warmups_logged": 9,
+    "server_starts": 1,
+    "sha256": "f4d51b2dc67b37d4435759cdc9d051ff1e5e76b4df13981e4e0423d1484c2b9f",
+    "status": {
+     "lines": 1970,
+     "lines_waiting": 0,
+     "max_running": 8,
+     "mean_gen_tok_s_8plus_running": 455.0,
+     "peak_kv_usage_pct": 41.4,
+     "share_lines_running_1to4": 0.1716,
+     "share_lines_running_5plus": 0.8279
+    },
+    "vllm_version": [
+     "0.1.dev20051+g487ecf187"
+    ]
+   }
+  ],
+  "cmp": [
+   {
+    "cited_block": 0,
+    "cudagraph_mode": [
+     "FULL_AND_PIECEWISE"
+    ],
+    "env_names_logged_sha256": "f85d9d360488c02bc9ba2bbb33b86319201cfad14cd4c6a9ccb312539ec1313e",
+    "in_window": {
+     "illegal_memory_access_lines": 0,
+     "nan_warning_lines": 0,
+     "preemption_lines": 0
+    },
+    "kv_pool_tokens": [
+     4707515
+    ],
+    "log": "glm53-flash-exl3-k3.25@tpurtell+v0.9.1.server.log",
+    "model_snapshots": [
+     "0490d2f708b12145f6516555ab066aaeb401cd21",
+     "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+    ],
+    "non_default_args_sha256": "7025a96888a67642741db00aaecb9cbf786c2ba67cc4ded7d67c1cf4e909dcc5",
+    "release_warmups_logged": 9,
+    "server_starts": 1,
+    "sha256": "0ef6aaff01c06204755a2647c9dadadff65b46b2e4086d0de6b8fd09d7ef8b61",
+    "status": {
+     "lines": 853,
+     "lines_waiting": 0,
+     "max_running": 8,
+     "mean_gen_tok_s_8plus_running": 459.4,
+     "peak_kv_usage_pct": 39.6,
+     "share_lines_running_1to4": 0.0492,
+     "share_lines_running_5plus": 0.9496
+    },
+    "vllm_version": [
+     "0.1.dev20051+g487ecf187"
+    ]
+   },
+   {
+    "cited_block": 0,
+    "cudagraph_mode": [
+     "FULL_AND_PIECEWISE"
+    ],
+    "env_names_logged_sha256": "f85d9d360488c02bc9ba2bbb33b86319201cfad14cd4c6a9ccb312539ec1313e",
+    "in_window": {
+     "illegal_memory_access_lines": 0,
+     "nan_warning_lines": 0,
+     "preemption_lines": 0
+    },
+    "kv_pool_tokens": [
+     4707515
+    ],
+    "log": "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps.server.log",
+    "model_snapshots": [
+     "0490d2f708b12145f6516555ab066aaeb401cd21",
+     "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+    ],
+    "non_default_args_sha256": "7025a96888a67642741db00aaecb9cbf786c2ba67cc4ded7d67c1cf4e909dcc5",
+    "release_warmups_logged": 9,
+    "server_starts": 1,
+    "sha256": "0e05caefa4ab0538957cbf2d90acf296a11bf5e5204e6f0d9fb2b373d35b622e",
+    "status": {
+     "lines": 1988,
+     "lines_waiting": 0,
+     "max_running": 8,
+     "mean_gen_tok_s_8plus_running": 447.7,
+     "peak_kv_usage_pct": 41.6,
+     "share_lines_running_1to4": 0.16,
+     "share_lines_running_5plus": 0.84
+    },
+    "vllm_version": [
+     "0.1.dev20051+g487ecf187"
+    ]
+   }
+  ]
+ },
+ "spec_sha256": "523ec22806059f2eb384fa2225af2db4d8b3c64a3b3f4d94ebed8312bb12d610",
+ "timing": {
+  "arm": {
+   "gpu_hours_source": "override",
+   "gpu_hours_used": 17.107,
+   "kernel_route_exposure_client_side": {
+    "pass1": {
+     "busy_h": 2.6717,
+     "max_inflight": 8,
+     "mean_share_of_request_life_inflight_1to4": {
+      "answered": 0.0073,
+      "empty": 0.2672
+     },
+     "share_busy_inflight_1to4": 0.2394,
+     "share_busy_inflight_5plus": 0.7606
+    },
+    "pass2": {
+     "busy_h": 2.7275,
+     "max_inflight": 8,
+     "mean_share_of_request_life_inflight_1to4": {
+      "answered": 0.0012,
+      "empty": 0.2061
+     },
+     "share_busy_inflight_1to4": 0.1784,
+     "share_busy_inflight_5plus": 0.8216
+    },
+    "pass3": {
+     "busy_h": 2.7437,
+     "max_inflight": 8,
+     "mean_share_of_request_life_inflight_1to4": {
+      "answered": 0.0017,
+      "empty": 0.1928
+     },
+     "share_busy_inflight_1to4": 0.1646,
+     "share_busy_inflight_5plus": 0.8354
+    }
+   },
+   "occupied": {
+    "gpu_hours": 17.101,
+    "sessions": [
+     {
+      "done": "2026-10-11T15:51:15-07:00",
+      "log": "2026-10-11-glm53-flash-exl3-k3.25@tpurtell+v0.9.1+col511fix",
+      "ready_after_s": 695,
+      "start": "2026-10-11T12:59:10-07:00",
+      "wall_h": 2.8681
+     },
+     {
+      "done": "2026-10-11T21:32:17-07:00",
+      "log": "2026-10-11-glm53-flash-exl3-k3.25@tpurtell+v0.9.1+col511fix",
+      "ready_after_s": 740,
+      "start": "2026-10-11T15:51:20-07:00",
+      "wall_h": 5.6825
+     }
+    ],
+    "wall_h": 8.5506
+   },
+   "per_pass": {
+    "pass1": {
+     "aggregate_tok_s": 405.0,
+     "completion_tokens": 3895297,
+     "median_request_tok_s_answered": 58.9,
+     "window_h": 2.6717
+    },
+    "pass2": {
+     "aggregate_tok_s": 420.7,
+     "completion_tokens": 4130363,
+     "median_request_tok_s_answered": 57.4,
+     "window_h": 2.7275
+    },
+    "pass3": {
+     "aggregate_tok_s": 433.9,
+     "completion_tokens": 4285640,
+     "median_request_tok_s_answered": 58.5,
+     "window_h": 2.7437
+    }
+   },
+   "raw_correct_per_gpu_hour": 29.52,
+   "request_window_gpu_h": 16.286,
+   "request_window_h_total": 8.1429,
+   "stated_correct_per_gpu_hour": 30.1
+  },
+  "cmp": {
+   "gpu_hours_source": "chain logs",
+   "gpu_hours_used": 16.593,
+   "kernel_route_exposure_client_side": {
+    "pass1": {
+     "busy_h": 2.3673,
+     "max_inflight": 8,
+     "mean_share_of_request_life_inflight_1to4": {
+      "answered": 0.0018,
+      "empty": 0.033
+     },
+     "share_busy_inflight_1to4": 0.0503,
+     "share_busy_inflight_5plus": 0.9497
+    },
+    "pass2": {
+     "busy_h": 2.729,
+     "max_inflight": 8,
+     "mean_share_of_request_life_inflight_1to4": {
+      "answered": 0.0048,
+      "empty": 0.0835
+     },
+     "share_busy_inflight_1to4": 0.1428,
+     "share_busy_inflight_5plus": 0.8572
+    },
+    "pass3": {
+     "busy_h": 2.7931,
+     "max_inflight": 8,
+     "mean_share_of_request_life_inflight_1to4": {
+      "answered": 0.0027,
+      "empty": 0.2047
+     },
+     "share_busy_inflight_1to4": 0.1772,
+     "share_busy_inflight_5plus": 0.8228
+    }
+   },
+   "occupied": {
+    "gpu_hours": 16.593,
+    "sessions": [
+     {
+      "done": "2026-10-08T20:01:06-07:00",
+      "log": "2026-10-08-glm53-flash-exl3-k3.25@tpurtell+v0.9.1",
+      "ready_after_s": 725,
+      "start": "2026-10-08T17:26:47-07:00",
+      "wall_h": 2.5719
+     },
+     {
+      "done": "2026-10-09T18:02:00-07:00",
+      "log": "2026-10-09-glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps",
+      "ready_after_s": 709,
+      "start": "2026-10-09T12:18:31-07:00",
+      "wall_h": 5.7247
+     }
+    ],
+    "wall_h": 8.2966
+   },
+   "per_pass": {
+    "pass1": {
+     "aggregate_tok_s": 447.2,
+     "completion_tokens": 3810906,
+     "median_request_tok_s_answered": 58.1,
+     "window_h": 2.3673
+    },
+    "pass2": {
+     "aggregate_tok_s": 431.9,
+     "completion_tokens": 4243257,
+     "median_request_tok_s_answered": 57.4,
+     "window_h": 2.729
+    },
+    "pass3": {
+     "aggregate_tok_s": 422.8,
+     "completion_tokens": 4251266,
+     "median_request_tok_s_answered": 57.7,
+     "window_h": 2.7931
+    }
+   },
+   "raw_correct_per_gpu_hour": 31.1,
+   "request_window_gpu_h": 15.779,
+   "request_window_h_total": 7.8894,
+   "stated_correct_per_gpu_hour": 31.46
+  }
+ },
+ "valid": true
+}

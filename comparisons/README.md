@@ -26,9 +26,10 @@ The completion investigation's other receipts are not comparisons in this format
 inputs, or run as pilots and fixtures outside `runs/`) and stay in its folder: [`pilot/`](../investigations/2026-10-glm53-completion/pilot),
 [`replication/`](../investigations/2026-10-glm53-completion/replication), [`audits/`](../investigations/2026-10-glm53-completion/audits), [`phase2-stage1/`](../investigations/2026-10-glm53-completion/phase2-stage1),
 [`phase2-stage2/`](../investigations/2026-10-glm53-completion/phase2-stage2), [`phase3/`](../investigations/2026-10-glm53-completion/phase3), [`tail-ring/`](../investigations/2026-10-glm53-completion/tail-ring),
-[`tail-fix/`](../investigations/2026-10-glm53-completion/tail-fix), [`gate/`](../investigations/2026-10-glm53-completion/gate) and [`arm-col511-plan/`](../investigations/2026-10-glm53-completion/arm-col511-plan) (the frozen analysis
-of the running completion arm, whose comparator is the 0.9.1 record in
-[`glm53-flash-gpqa-records`](glm53-flash-gpqa-records)). Findings 4a-4b and 7.
+[`tail-fix/`](../investigations/2026-10-glm53-completion/tail-fix), [`gate/`](../investigations/2026-10-glm53-completion/gate), [`arm-col511-plan/`](../investigations/2026-10-glm53-completion/arm-col511-plan) (the frozen analysis
+of the completion arm, whose comparator is the 0.9.1 record in
+[`glm53-flash-gpqa-records`](glm53-flash-gpqa-records)) and [`arm-col511-result/`](../investigations/2026-10-glm53-completion/arm-col511-result)
+(its result). Findings 4a-4b and 7.
 
 ## Format and rules
 

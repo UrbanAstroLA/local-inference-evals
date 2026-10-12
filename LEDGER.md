@@ -161,10 +161,30 @@ What was asked, run, found, corrected and withdrawn, in date order.
 - Correction (server starts): notes made while preparing the arm described the comparator's passes 2-3 server log as
   holding more than one server start ("first server block" in the gate result and the frozen analysis). It holds one;
   the frozen analysis script counts one start in each comparator log (dry runs). Nothing compared changes.
-- [Completion arm](investigations/2026-10-glm53-completion/README.md#completion-arm-running) started in the afternoon:
+- [Completion arm](investigations/2026-10-glm53-completion/README.md#completion-arm) started in the afternoon:
   0.9.1 with the column-511 correction only, three GPQA passes (request seeds 1234-1236, 8 concurrent, 327,680-token
-  cap, shipped graph mode), the comparator's session split mirrored, ceiling 18.5 GPU-hours. Running. Nothing about
-  its outcome is reported until it has finished and been analysed with the frozen script and read by the frozen rules.
+  cap, shipped graph mode), the comparator's session split mirrored, ceiling 18.5 GPU-hours. It finished in the evening
+  (next entry). Nothing about its outcome is reported until it has finished and been analysed with the frozen script and
+  read by the frozen rules.
+
+**2026-10-11, evening. The completion arm's result.**
+- [Completion arm](investigations/2026-10-glm53-completion/README.md#completion-arm) finished and was analysed with the
+  frozen script, run unchanged ([receipts](investigations/2026-10-glm53-completion/arm-col511-result)). Every frozen
+  validity check passed: seeds and sampling as specified, no re-sent request, all 594 (question, pass) pairs matching on
+  prompt, doc, target and message hashes and prompt token counts, the same server-argument fingerprint, and the
+  comparator's published rows reproduced.
+- Empty replies 15 of 594 (2.53%) with the correction vs 16 (2.69%) on the comparator; per pass 4/5/6 vs 5/5/6; all 15
+  at the token cap. One-sided exact sign-flip p = 0.50 over 13 questions that differ; reduction +0.17 points, 95%
+  question-bootstrap interval -1.01 to +1.35. Reading R3: the localized correction stands but is not supported as the
+  dominant completion explanation. Empties moved between questions: 10 question-passes rescued, 9 newly empty.
+- Secondary: raw accuracy 85.0% vs 86.9% (-1.85 points, 95% -5.05 to +1.35), stated 86.7% vs 87.9% (-1.18, -4.04 to
+  +1.52; final after the usual hand read of 12 arm rows); not significant, which does not establish no accuracy cost.
+  Answered completion lengths unchanged (median 3,387 vs 3,508 tokens). 76-84% of busy time had 5 or more requests in
+  flight, so the corrected tiled path was heavily exercised.
+- In short: the column-511 change is a correctness fix that did not move completion behaviour. Limits: a historical
+  control (exchangeability assumed, not randomized); the tail-ring defect, present in both records, limits what this
+  negative result can exclude.
+- 17.11 GPU-hours (ceiling 18.5). The investigation's cumulative total: 36.08 GPU-hours. Nothing further is scheduled.
 
 ## Withdrawn, and what replaced it
 

@@ -8,14 +8,16 @@ difference. Quantization is held fixed.
 then showed their long-context measure covers continuation after the model had already stopped. Completion pilot and
 fresh-seed replication done (3.55 GPU-hours). Kernel and DCP source audit done (CPU only). Two localized defects found and verified on GPU, each
 with a fix that removes the localized problem (amendments 10-10f). The column-511 correction passed a gate in the shipped
-graph configuration, and a three-pass GPQA arm with that correction only is running against the existing 0.9.1 record,
-with its analysis frozen beforehand (amendments 11-11b). Cumulative 18.97 GPU-hours before the arm.
+graph configuration, and a three-pass GPQA arm with that correction only has finished against the existing 0.9.1 record,
+analysed with the script frozen beforehand (amendments 11-11b): 15 vs 16 empty replies of 594, so the correction stands
+but is not supported as the dominant completion explanation ([completion arm](#completion-arm)). Cumulative 36.08
+GPU-hours.
 Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#dated-amendments).
 **Fast path:** [answer](#answer) · [evidence](#evidence) · [configuration diff](#what-differs-between-the-two-servers) ·
 [Phase 1](#phase-1) · [completion pilot](#completion-pilot-and-replication) ·
 [prior probes](#prior-probes-read-before-proposing-new-work) · [kernel and DCP audit](#kernel-and-dcp-source-audit) ·
 [column-511 stages](#phase-2-stage-1-which-pool-is-dropped) · [phase 3](#phase-3-column-511-intervention) · [tail ring](#kpool-tail-ring) ·
-[gate](#gate-column-511-correction-in-the-shipped-graph-configuration) · [completion arm](#completion-arm-running) · [upstream comparison](#comparison-with-upstream-vllm) · [open questions](#open-questions) · [limits](#limits) · [next steps](#next-steps) · [recompute](#recompute)
+[gate](#gate-column-511-correction-in-the-shipped-graph-configuration) · [completion arm](#completion-arm) · [upstream comparison](#comparison-with-upstream-vllm) · [open questions](#open-questions) · [limits](#limits) · [next steps](#next-steps) · [recompute](#recompute)
 
 ## Answer
 
@@ -33,7 +35,8 @@ Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#d
 | Kernel and DCP source audit (amendment 10a): no defect unique to 0.9.1 found in attention, the DCP combine, record readers, graphs or scratch; the known indexer write defects are on 0.7.0's side and fixed in 0.9.1. | **Descriptive** (source reading) |
 | Column-511 drop, real inputs (amendment 10b): 0.9.1's tiled top-k path discards a pool ranked better than 480 of 512 in 88.1% of 9,944 live decode rows; 0.7.0's path does so in 6.9% of rows on the identical bytes. A fix that moves the lowest-scoring selected pool into the discarded column removes it (100% of rows, offline and in place; selection unchanged). | **Supported** (localized defect; eager mode) |
 | Kpool tail ring (amendments 10d-10e): this build does not pass token positions to the attention metadata, so from position 8 the tail ring is written to a shared null block (98% of tail writes in shipped graph mode) and, through stale ids left by the runner's start-up warm-up, occasionally into live attention blocks. The same omission is in 0.7.0's source. Passing positions as upstream vLLM does, with a graph-safe write, removes it (0 stray writes). | **Supported** (localized defect; graph mode) |
-| Whether either fix changes completion, and whether the column-511 drop explains the completion gap. | **Open** |
+| Completion arm (amendments 11a-11b): 0.9.1 with the column-511 selection correction alone, three GPQA passes, against the existing 0.9.1 record (a historical control), analysis frozen before data. Empty replies 15 vs 16 of 594 (one-sided p = 0.50); raw accuracy 85.0% vs 86.9% (interval includes zero). The correction stands as a correctness fix but is not supported as the dominant completion explanation. | **Descriptive** (historical control) |
+| Whether the tail-ring fix changes completion, and what produces the completion gap. | **Open** |
 
 Splitting the score by completion is not a causal comparison. It says where the difference sits, not what produces it.
 
@@ -553,20 +556,50 @@ shipped FULL_AND_PIECEWISE graphs.
 Before correction in this run: tiled route 94.9% of rows, fused 3.2-3.5%. 0.72 GPU-hours. Receipts: [`gate/`](gate)
 (result, frozen manifest, correction diff, checker, analysis, configuration comparison).
 
-### Completion arm (running)
+### Completion arm
 
-Amendments 11a-11b. 0.9.1 K3.25 with the column-511 correction only (image built from the release digest, one changed
-file); three GPQA passes under the original protocol, seeds 1234/1235/1236, 8 concurrent, 327,680-token cap, shipped graph
-mode, mirroring the comparator's session split; ceiling 18.5 GPU-hours. Comparator: the existing clean 0.9.1 record, a
-historical control ([comparator audit](arm-col511-plan/COMPARATOR-AUDIT.md): no material unexplained difference).
-Analysis frozen before data ([`arm-col511-plan/`](arm-col511-plan)): one-sided exact sign-flip test on per-question
-differences in empty replies (it assumes exchangeability; matching recipes and seeds does not make this a randomized
-experiment), question-bootstrap interval, secondary accuracy across all requests. Reading: at most 6 empties with
-p < 0.05 supports a contribution relative to the recorded baseline; 7-12 with p < 0.05 is a modest reduction, not support
-for explaining the gap; otherwise inconclusive or not supported. Power under stated alternatives (question-clustered
-beta-binomial, conditional on the comparator): 0.82-0.87 if the arm matches 0.7.0's per-question rates, 0.95 for a 75%
-reduction, 0.51 for 50%. Dry runs reproduce the published 0.7.0 vs 0.9.1 comparison. Public copies replace local paths;
-[`PUBLIC-COPIES-11b.txt`](PUBLIC-COPIES-11b.txt) lists frozen and public hashes.
+Amendments 11a-11b. 0.9.1 K3.25 with the column-511 selection correction only (image built from the release digest, one
+changed file); three GPQA passes under the original protocol, seeds 1234/1235/1236, 8 concurrent, 327,680-token cap,
+shipped graph mode, mirroring the comparator's session split. Comparator: the existing clean 0.9.1 record, a historical
+control ([comparator audit](arm-col511-plan/COMPARATOR-AUDIT.md): no material unexplained difference). Analysed with the
+script frozen before data ([`arm-col511-plan/`](arm-col511-plan), sha256 `b5b13ce2…`), run unchanged, and read by the
+frozen rules.
+
+**Result: the column-511 change is a correctness fix that did not move completion behaviour.** Empty replies 15 vs 16 of
+594; reading R3: the localized correction stands but is not supported as the dominant completion explanation.
+
+| Of 594 question-passes | 0.9.1 + column-511 correction | 0.9.1 (comparator) |
+|---|---:|---:|
+| Empty replies | 15 (2.53%) | 16 (2.69%) |
+| Per pass 1 / 2 / 3 | 4 / 5 / 6 | 5 / 5 / 6 |
+| Ran to the 327,680-token cap | 15 | 15 |
+| Stopped early | 0 | 1 (q12 p1, 38 tokens) |
+| Questions with any empty reply | 12 | 11 |
+| Raw correct (all 594) | 505 (85.0%) | 516 (86.9%) |
+| Stated correct (all 594, audited method) | 515 (86.7%) | 522 (87.9%) |
+| Answered completion tokens, median | 3,387 | 3,508 |
+
+- **Validity:** every frozen check passed: seeds 1234/1235/1236 and sampling as specified, no re-sent request, all 594
+  (question, pass) pairs match on prompt, doc, target and message hashes and on server-rendered prompt token counts, the
+  same server-argument fingerprint, and the comparator rows derived by the script reproduce the published rows.
+- **Primary:** 13 questions differ in empty replies (7 more often empty on the comparator, 6 on the arm). Exact one-sided
+  sign-flip p = 0.50. Empty-rate reduction +0.17 points, 95% question-bootstrap interval -1.01 to +1.35. 15 empties falls
+  in the frozen band of 13 or more (little improvement or deterioration), reading R3.
+- **Empties moved between questions:** 10 question-passes empty on the comparator were answered by the arm, 9 answered on
+  the comparator were empty on the arm, 6 were empty in both.
+- **Secondary (accuracy):** raw -1.85 points (95% -5.05 to +1.35), stated -1.18 points (95% -4.04 to +1.52). Not
+  significant, which does not establish that the correction costs no accuracy; read the intervals. The stated figure is
+  final after the usual hand read of the 12 arm rows where stated and raw differ.
+- **Route exposure:** 76-84% of busy time per pass had 5 or more requests in flight (client-side approximation), so the
+  corrected tiled path was heavily exercised. Answered completion lengths are unchanged.
+- **Cost:** 17.11 GPU-hours (ceiling 18.5). Cumulative for the investigation: 36.08 GPU-hours.
+- **Limits:** a historical control: exchangeability is assumed, not designed; matching recipes and seeds does not make
+  this a randomized experiment. The tail-ring defect is present in both records, which limits what this negative result
+  can exclude. Corrupted (NaN-byte) index rows are not measurable from GPQA outputs.
+
+Receipts: [`arm-col511-result/`](arm-col511-result) (frozen script output `result-col511.md` and `.json`, session costs,
+GPU load log). Public copies of the plan files replace local paths; [`PUBLIC-COPIES-11b.txt`](PUBLIC-COPIES-11b.txt)
+lists frozen and public hashes.
 
 ### Comparison with upstream vLLM
 
@@ -590,7 +623,8 @@ Stated with their evidence so far.
 | Question | Evidence so far |
 |---|---|
 | Does generation-vs-prefill disagreement at long context bear on completion? | The 8,000-15,999-token measure covers continuation after the reply had ended (amendment 7); no positive evidence either way. |
-| Does the column-511 fix change completion? | Localized defect removed (phase 3); completion untested. It is the only defect found that differs between the engines in the direction of the gap. |
+| What produces the completion gap between 0.7.0 and 0.9.1? | The column-511 drop, the only defect found that differed between the engines in the direction of the gap, is not supported as its explanation: with the correction alone 0.9.1 left 15 empty replies vs 16 ([completion arm](#completion-arm)). The tail ring affects 0.7.0 more; the layout bundle showed no reproducible benefit (pilot and replication); router precision and the SwiGLU clamp are the same in all releases. The gap itself (4 vs 16) rests on one three-pass record per engine; 0.9.1 reproduced its own rate (15 vs 16) while empties moved between questions; whether 0.7.0's rate reproduces has not been tested. Open. |
+| Does the column-511 correction cost accuracy? | Raw -1.85 points (95% -5.05 to +1.35), stated -1.18 (-4.04 to +1.52), against a historical control; not significant, which does not establish no cost. Inconclusive. |
 | Do the tail-ring fix, the router precision or the SwiGLU clamp change completion or accuracy? | All affect both engines; untested. |
 | Do legitimate numerical differences shift how often long deliberation runs past the cap? | Non-completion is a low-rate tail event (about 1 in 10 fresh draws at these caps on two hard questions); small pilots cannot resolve rates near 2.7% vs 0.7% of replies. |
 | Which part of the 0.7.0 layout bundle goes with the higher disagreement? | Step 6 changed EP, DCP, MLA ownership, KV record, draft pages and the top-k merge path together, and still differs from stock 0.7.0 in the top-k merge path, draft depth (×3 vs ×5), vision and engine code. Inconclusive by component. |
@@ -606,10 +640,10 @@ Stated with their evidence so far.
 
 ## Next steps
 
-The arm finishes in about 8 hours; it is analysed with the frozen script and read by the frozen rules. A positive result
-supports improvement relative to the recorded baseline only; a contemporaneous control would be priced separately before
-any claim that the correction explains the gap. Minimal reproductions and patches for both defects are prepared; offering
-them upstream is a separate decision. Deferred: router precision, SwiGLU clamp, workspace locking.
+Nothing further is scheduled. The arm has been analysed with the frozen script and read by the frozen rules (R3). Open,
+with their evidence above: what produces the completion gap; whether 0.7.0's rate of empty replies reproduces; whether the
+tail-ring fix, router precision or the SwiGLU clamp change completion or accuracy; whether the column-511 correction costs
+accuracy. Minimal reproductions and patches for both defects are prepared; offering them upstream is a separate decision.
 
 ## Recompute
 

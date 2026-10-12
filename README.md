@@ -17,14 +17,15 @@ evaluating the runtimes and quants, and the confounds that can move accuracy or 
 | [Confounds](https://urbanastrola.github.io/local-inference-evals/confounds.html) | What else can move a result, and how the runs control for it | [`CONFOUNDS.md`](CONFOUNDS.md) |
 | [Ledger](https://urbanastrola.github.io/local-inference-evals/ledger.html) | What was run, found, corrected and withdrawn, and when | [`LEDGER.md`](LEDGER.md) |
 | [Investigation](https://urbanastrola.github.io/local-inference-evals/looping.html) | Why some hard questions do not finish | [`investigations/2026-10-glm53-looping`](investigations/2026-10-glm53-looping) |
-| [Completion investigation](investigations/2026-10-glm53-completion/README.md) | Why 0.7.0 left fewer GPQA answers empty than 0.9.1: decode vs prefill, a completion pilot, a kernel and DCP source audit, two localized defects with fixes prepared, and a three-pass GPQA arm with one correction (running) | [`investigations/2026-10-glm53-completion`](investigations/2026-10-glm53-completion) |
+| [Completion investigation](investigations/2026-10-glm53-completion/README.md) | Why 0.7.0 left fewer GPQA answers empty than 0.9.1: decode vs prefill, a completion pilot, a kernel and DCP source audit, two localized defects with fixes prepared, and a three-pass GPQA arm with one correction (finished: no measurable change in completion) | [`investigations/2026-10-glm53-completion`](investigations/2026-10-glm53-completion) |
 | [Method](https://urbanastrola.github.io/local-inference-evals/method.html) | Grades, scoring, intervals, receipts, glossary | [`protocols/`](protocols), [`DATASHEET.md`](DATASHEET.md) |
 
 **The DCP1 tail issue and its fix** (tpurtell PR #6, released in tpurtell 0.9.1):
 [record](investigations/2026-10-glm53-looping/README.md#the-dcp1-tail-issue-and-its-fix).
 **Two further engine issues found during evaluation, fixes prepared locally (not released):** the column-511 drop
 ([`FINDINGS.md`](FINDINGS.md#1-engine-issues-found-during-evaluation-and-their-fixes) item 4a) and the kpool tail ring
-written without token positions (item 4b; upstream vLLM passes them). Whether either changes completion is open.
+written without token positions (item 4b; upstream vLLM passes them). The column-511 correction did not measurably
+change completion in a three-pass GPQA arm (15 vs 16 empty of 594); whether the tail-ring fix does is untested.
 
 ## Labels
 

@@ -237,8 +237,9 @@ GPQA is a whole-benchmark record, not a looping test: each pass is one draw per 
   p = 0.009). Accuracy does not differ measurably (clustered p = 0.41).
 - **Why is open.** The two differ in several ways at once ([confounds](../../CONFOUNDS.md#7-several-changes-between-releases-at-once)).
   *Later (2026-10-11):* the [completion investigation](../2026-10-glm53-completion/README.md) follows this question. It found two localized engine
-  defects; one, the column-511 drop, differs between the engines in the direction of the gap, and a GPQA arm testing its
-  correction is running. Which difference matters is still open.
+  defects; one, the column-511 drop, differs between the engines in the direction of the gap, but a GPQA arm with its
+  correction alone left 15 empty answers vs 16, so it is not supported as the explanation
+  ([completion arm](../2026-10-glm53-completion/README.md#completion-arm)). Which difference matters is still open.
 - **Weights on 0.9.1: descriptive.** 3.25bpw and 4bpw TR3 (Brandon) leave about as many unanswered (16 vs 17).
 
 <details>
@@ -285,8 +286,9 @@ Each states the question and the evidence so far.
    inconclusive.
    *Later (2026-10-11):* continued in the [completion investigation](../2026-10-glm53-completion/README.md#open-questions): no step found 0.9.1's decode
    agreeing worse with its prefill than 0.7.0's; a pilot of 0.7.0's layout bundle on 0.9.1 gave no useful separation;
-   two localized defects were found (the column-511 drop and the kpool tail ring), and a GPQA arm with the column-511
-   correction alone is running. Still inconclusive.
+   two localized defects were found (the column-511 drop and the kpool tail ring); a GPQA arm with the column-511
+   correction alone left 15 empty answers vs 16, so that defect is not supported as the explanation
+   ([completion arm](../2026-10-glm53-completion/README.md#completion-arm)). Still inconclusive.
 3. **Does the DCP1 tail fix change answers, or how often hard questions fail to finish?** It changes decode numerics in
    the first 2,044 tokens; the loops observed are stopped far later; GPQA (one pass per release) and tool calling (two
    repeats) show no difference beyond noise.
