@@ -1,0 +1,44 @@
+83c83
+< 4450afcad6a2d17db744ac5bca762be1cfcbdfd900b33b033834f784f13f041c  /etc/hostname
+---
+> f6bd2e0ca8dce9dfd36f89b9295bfcdc0542118519ecba3bd6fda805c786424f  /etc/hostname
+111353c111353
+< 404c7af4271d377fd6b7c8bb94218d831e7c47ec445a1072062808d897365601  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/__pycache__/sparse_attn_indexer_kpool.cpython-312.pyc
+---
+> c6101a64a42fed111a35a0e8f0b4578979f7cf15ff5bc993dc3f6c53660e3fd7  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/__pycache__/sparse_attn_indexer_kpool.cpython-312.pyc
+111886c111886
+< 599416828378e9d1994a6daecbb23d12a2715f5105b086871792b6e1f302d3d1  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/fused_moe/router/__pycache__/gate_linear.cpython-312.pyc
+---
+> 7aca0f67eab5714471a6cf42bf2d460eb71ff8e2192a99ec1b9bff8f73e1362b  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/fused_moe/router/__pycache__/gate_linear.cpython-312.pyc
+111899c111899
+< 6fca8c7fba361ac79418dd56d6d3c281ef04f34ebfdd2044cb1d12e1fa9e70d7  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/fused_moe/router/gate_linear.py
+---
+> 2499ee679a3a8816f45eb4034a039770c90cccdcf720a38dca5d4aa10e275c2a  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/fused_moe/router/gate_linear.py
+112067c112067
+< 418c47e853cdcc94b2cd08180b9c6eae401af39c67060886d69c4368e18e04b5  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/quantization/__pycache__/exl3.cpython-312.pyc
+---
+> 4a365d17cf828d7a1988c3e1f55dce642493f417815833e1ed9d21205ec6ea8b  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/quantization/__pycache__/exl3.cpython-312.pyc
+112160c112160
+< 3b4ca47cb1168bffebcfe3cf1db48daf86691c140cbf40f9c1f3aa6ad6a444d9  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/quantization/exl3.py
+---
+> b40344e2b4bd583a670ddecc643de01afbfa0e35e6a960a259275dedf8e246cb  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/quantization/exl3.py
+112554c112554
+< e7935f2a9b8ecbc75410defff571d9940ad2abf511286bf0936d0c324936df39  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py
+---
+> 9104be37c8cb876a436f5fac11401c4abdb254529a6c37f3dca8121f41a5b61d  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py
+116565c116565
+< 4b258f7a81990596efa1f4e973080d07183031f34f2873b71ddebee18ad6983a  /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/__pycache__/indexer.cpython-312.pyc
+---
+> 8c0b6965b4f7cf08926132cf8ac4cb4fb5f0acd42a50e4a0bca9dc1e0d1a5b91  /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/__pycache__/indexer.cpython-312.pyc
+116587c116587
+< 67449677b787f37e31f69de97269097907ebda395879eb67d0b2ebb991a2f0dc  /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/indexer.py
+---
+> 00989c503028216cb349b506ccd7d4dc752bc9a54425a25b901c4905d95f5e0b  /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/indexer.py
+117090c117090
+< 0964e6b976a29792814448bb74ab349ef0b378b12ad0697908d93b0136a2d73e  /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_states/__pycache__/mamba_hybrid.cpython-312.pyc
+---
+> 64c1a549b97dc96c6eaf7f4600b0f9d828cc33856306572cddf622b54ea1e2ff  /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_states/__pycache__/mamba_hybrid.cpython-312.pyc
+117096c117096
+< 82968af5e104f99f8f9d15c5eb8c15c13640f7b6ab8e2bd1580b0c49e9cf9968  /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_states/mamba_hybrid.py
+---
+> 049238f99b3c77cb23dc0abbbf25d140817c40c5abbf5cfe6a319f8f410ca085  /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_states/mamba_hybrid.py

@@ -1,0 +1,13 @@
+E1_swiglu_mentions_in_exl3: 0
+E2_Caps_calls: [{'line': 2952, 'has_swiglu_limit': False}]
+E3_compile_mixed_trellis_calls: [{'line': 2737, 'has_swiglu_limit': False}]
+M1_model_passes_swiglu_limit_to_FusedMoE: [{'line': 237, 'has': True}]
+M2_RoutedExperts_stores_swiglu_limit: True
+B1_TPMoEScratchCaps_has_swiglu_limit: True
+B2_plan_tp_moe_scratch_forwards_caps_swiglu_limit: True
+B3_projection_mixed_launch_passes_swiglu_limit: True
+config_swiglu_limit: 10.0
+
+illustration (synthetic activations, std 4): entries beyond the limit 1.86%; max |difference| elsewhere 2.4e-07 (float rounding only), where beyond the limit 118.82
+
+REPRODUCED: the model provides swiglu_limit and the B12x planner accepts it, but the EXL3 MoE method passes it to neither the projection-mixed Caps nor the expert-mixed compiler

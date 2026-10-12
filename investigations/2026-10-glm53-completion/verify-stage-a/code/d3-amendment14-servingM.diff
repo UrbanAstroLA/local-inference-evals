@@ -1,0 +1,128 @@
+--- d3_router_compare.attempt3.py	2026-10-12 00:31:07.591821427 -0700
++++ d3_router_compare.py	2026-10-12 00:31:17.470280357 -0700
+@@ -1,5 +1,11 @@
+ #!/usr/bin/env python3
+-"""D3 offline comparison (PLAN.md amendments 13 / 13a): router logits from three labelled
++"""APPLIED under PLAN.md amendment 14 (before any D3 comparison): routing in control (c) and the
++corrected routing in phase 2 are invoked with the serving batch row count M (captured rows at
++[a, a+r), zero padding, server alignment, same router configuration), exactly as the GEMM in
++control (b), because the served fused grouped_topk's weights depend on the batch row count
++(finding E1; offline attempt 3).  Criterion of control (c) unchanged (bitwise); stop rule unchanged.
++
++D3 offline comparison (PLAN.md amendments 13 / 13a): router logits from three labelled
+ computations on the identical captured gate inputs, routed by the engine's own router.
+ 
+   SHIPPED   "shipped: bf16-result GEMM cast to fp32"  - the engine's GateLinear on SM120 (tier 6)
+@@ -55,6 +61,25 @@
+             "corrected-vs-reference top-8 disagreement inside the margin band 0.5*max_e tau_d,e "
+             "(sigmoid is 1/4-Lipschitz, the bias is common); within tau_worst but not tau_d = "
+             "inconclusive; beyond tau_worst = wrong computation.")
++NORM_NOTE = (
++    "Normalisation and x2.5 scaling, like-for-like. Served path (= shipped routing, and the corrected "
++    "routing, both through the same engine call at serving M): GroupedTopKRouter._compute_routing "
++    "(fused_moe/router/grouped_topk_router.py:337-349) -> grouped_topk (:80-108; "
++    "VLLM_USE_FUSED_MOE_GROUPED_TOPK=1, envs.py:1625) -> fused_grouped_topk (:28-71) -> "
++    "ops.grouped_topk(logits, n_group=1, topk_group=1, topk=8, renormalize=True, "
++    "routed_scaling_factor=2.5, e_score_correction_bias, scoring_func=1) (:43-52; _custom_ops.py:2470-2500): "
++    "sigmoid, bias used for selection only, renormalisation and the x2.5 scaling all inside the fused "
++    "kernel; nothing is applied afterwards on this path (the post-hoc '*= routed_scaling_factor' at "
++    ":314-315 belongs to the invalid-grouping fallback, not taken: 288 experts, 1 group), and no "
++    "output-side scaling (apply_routed_scale_to_output=False, models/glm5next/nvidia/model.py:170,252). "
++    "Measured: every captured row's weights sum to 2.5 (within 1e-6). Reference (fp64, selection and E1 "
++    "only): sigmoid(logits)+bias selects the top-8, weights = unbiased sigmoid of the selected, "
++    "renormalised to 1, x2.5 (route_ref64). Order inside the fused kernel (renormalise then scale, or "
++    "the reverse) is not visible (kernel source not in the image); both give weights summing to 2.5.")
++E1_NOTE = ("Finding E1 (engine, separate from D3): the served fused grouped_topk computes routing weights "
++           "differently by batch row count (switch between 1,025 and 1,139 rows, offline attempt 3); ids "
++           "unaffected on the captured rows. Reported as served-weight accuracy against the fp64 "
++           "re-statement, split at M <= 1024 / M > 1024; no workaround beyond invoking at the serving M.")
+ FULL_DECODE_NOTE = ("FULL-graph decode steps are covered by source inspection only (not measured): the "
+                     "capture runs on eager forwards; measuring inside FULL graphs would add nodes to the "
+                     "captured graphs, i.e. modify execution")
+@@ -273,6 +298,7 @@
+ 
+ # ------------------------------------------------------------------ control (c) diagnostics
+ CREC = []          # per-record control (c) classification (all records)
++E1 = collections.defaultdict(list)   # served-weight relative error vs fp64, by batch-size regime
+ CDIAG_FILES = []   # failing records selected for the detailed routing diagnostic
+ 
+ 
+@@ -316,6 +342,16 @@
+     return lg
+ 
+ 
++def route_serving_shape(router, logits_rows, m, a, ptr_mod256, ids_dtype, device):
++    """The engine router invoked as in serving: one call on the M-row batch (model.py:276-279 ->
++    moe_runner.py:596), the rows of interest at [a, a+r), returning those rows."""
++    r = logits_rows.shape[0]
++    lg = aligned_logits(logits_rows, m, a, ptr_mod256, device)
++    hs = torch.zeros(m, H, dtype=torch.bfloat16, device=device)
++    w, i = router.select_experts(hidden_states=hs, router_logits=lg, topk_indices_dtype=ids_dtype)
++    return w[a:a + r], i[a:a + r]
++
++
+ def diagnose_routing(f, router, device):
+     """Why does the engine router on the captured shipped logits not reproduce the consumed routing?
+     Repeatability, batch shape (window vs serving M, other sizes), padding content, alignment,
+@@ -460,8 +496,12 @@
+                 if len(diag) < 20:
+                     diag.append(dict(file=os.path.basename(f), layer=layer, **diagnose(rec, gate, device, cap)))
+             if "topk_ids" in rec:
+-                w_e, i_e = router.select_experts(hidden_states=rec["x"].to(device), router_logits=cap,
+-                                                 topk_indices_dtype=rec["topk_ids"].dtype)
++                sg = torch.sigmoid(rec[logits_key(rec)].double()).gather(1, rec["topk_ids"].long())
++                ref_w = sg / sg.sum(dim=1, keepdim=True) * SCALE
++                E1[("M<=1024" if m <= 1024 else "M>1024")].append(
++                    ((rec["topk_weights"].double() - ref_w).abs() / ref_w).max(dim=1).values)
++                w_e, i_e = route_serving_shape(router, cap, m, a, rec["meta"].get("logits_ptr_mod256"),
++                                               rec["topk_ids"].dtype, device)
+                 cls_c = classify_routing(rec["topk_ids"], rec["topk_weights"], i_e.cpu(), w_e.cpu())
+                 okc = cls_c["rows_set_differ"] == 0 and cls_c["rows_same_set_weights_not_bitwise"] == 0
+             else:
+@@ -534,8 +574,8 @@
+             tot["d_ship_violations"] += int((es > t).sum())
+             tot["logits"] += int(ec.numel())
+             ids_s, w_s = rec["topk_ids"].cpu(), rec["topk_weights"].cpu()   # consumed (== engine on SHIPPED by (c))
+-            w_c, i_c = router.select_experts(hidden_states=x.to(device), router_logits=corr,
+-                                             topk_indices_dtype=rec["topk_ids"].dtype)
++            w_c, i_c = route_serving_shape(router, corr, m, a, meta.get("logits_ptr_mod256"),
++                                           rec["topk_ids"].dtype, device)
+             ids_c, w_c = i_c.cpu(), w_c.cpu()
+             ids64, _ = route_ref64(ref, b)
+             nd = sets_differ(ids_s, ids_c)
+@@ -641,6 +681,12 @@
+                                                  examples=fails["c"][:20]),
+                records=len(files0), rows=nrows, seconds=round(time.time() - t0, 1))
+     labels = dict(shipped=LABEL_SHIPPED, corrected=LABEL_CORRECTED, reference=LABEL_REFERENCE)
++    e1 = dict(note=E1_NOTE)
++    for k, v in sorted(E1.items()):
++        t = torch.cat(v)
++        e1[k] = dict(rows=int(t.numel()), rel_err_median=float(t.median()),
++                     rel_err_p99=float(torch.quantile(t, 0.99)), rel_err_max=float(t.max()))
++    ctl["router_invocation"] = "serving-shaped: one call on the M-row batch, captured rows at [a, a+r), zero padding, server alignment (amendment 14)"
+     if fails["c"] and CDIAG_FILES:
+         for f, layer in CDIAG_FILES:
+             try:
+@@ -660,7 +706,7 @@
+                 ("window_ok" if row["ok"] else "window_failed")] += 1
+         ctl["c_routing_reproduced_exactly"]["classification"] = dict(agg)
+     if fails["a"] or fails["b"] or fails["c"]:
+-        json.dump(dict(stopped=True, labels=labels, controls=ctl, diagnostics=diag,
++        json.dump(dict(stopped=True, labels=labels, controls=ctl, diagnostics=diag, finding_E1=e1, normalisation=NORM_NOTE,
+                        note="exact-reproduction control failed: investigate batching, shape, alignment, "
+                             "dispatch and repeatability (diagnostics); tolerances are not relaxed"),
+                   open(os.path.join(out_dir, "d3_controls_failed.json"), "w"), indent=1, default=str)
+@@ -679,11 +725,13 @@
+                verified_correction_offline=bool(d_ok),
+                completion_effect="untested; expert flips and weight changes are not evidence of a completion effect")
+     summary = dict(stopped=False, labels=labels, tolerance_d=TAU_NOTE, full_graph_decode=FULL_DECODE_NOTE,
++                   normalisation=NORM_NOTE, finding_E1=e1,
+                    corrected_impl=CORRECTED_IMPL["impl"], router_info=rinfo0, controls=ctl,
+                    control_d=dict(ok=d_ok, state=d_state, **d), classification=cls,
+                    **{k: v for k, v in eff.items() if k not in ("d_corrected_vs_reference",)})
+     json.dump(summary, open(os.path.join(out_dir, "d3_summary.json"), "w"), indent=1, default=str)
+     print(json.dumps(dict(classification=cls, rows=eff["rows"], flips=eff["flips"], control_d=summary["control_d"],
++                          finding_E1=e1, controls=ctl,
+                           bootstrap=eff["bootstrap_clustered"]), indent=1, default=str))
+     return summary
+ 

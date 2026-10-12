@@ -1,0 +1,320 @@
+{
+ "A_mamba_hybrid_build_attn_metadata_kwargs": [
+  "attn_groups",
+  "block_tables",
+  "dcp_local_seq_lens",
+  "for_cudagraph_capture",
+  "kv_cache_config",
+  "max_query_len",
+  "max_seq_len",
+  "model_specific_attn_metadata",
+  "num_reqs",
+  "num_tokens",
+  "query_start_loc_cpu",
+  "query_start_loc_gpu",
+  "rswa_prefix_lens",
+  "seq_lens",
+  "seq_lens_cpu_upper_bound",
+  "slot_mappings"
+ ],
+ "A_positions_passed": false,
+ "A_tail_build_gated_on_positions": true,
+ "A_build_attn_metadata_positions_default": "None",
+ "B_slot_mapping_positions_None": [
+  616,
+  617,
+  618,
+  619,
+  620,
+  621,
+  622,
+  623,
+  3864,
+  3865,
+  3866,
+  3867,
+  3868,
+  3869,
+  3870,
+  3871,
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  4,
+  5,
+  6,
+  7
+ ],
+ "B_blocks_positions_None": [
+  77,
+  77,
+  77,
+  77,
+  77,
+  77,
+  77,
+  77,
+  483,
+  483,
+  483,
+  483,
+  483,
+  483,
+  483,
+  483,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
+ ],
+ "B_blocks_positions_given": [
+  77,
+  77,
+  77,
+  77,
+  77,
+  77,
+  77,
+  77,
+  77,
+  77,
+  77,
+  77,
+  77,
+  77,
+  77,
+  77,
+  77,
+  77,
+  77,
+  77,
+  77,
+  77,
+  77,
+  77,
+  88,
+  88,
+  88,
+  88
+ ],
+ "C_seed_error": null,
+ "C_tail_slot_mapping_prefill": [
+  616,
+  617,
+  618,
+  619,
+  620,
+  621,
+  622,
+  623,
+  3864,
+  3865,
+  3866,
+  3867,
+  3868,
+  3869,
+  3870,
+  3871,
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7
+ ],
+ "C_writes": [
+  {
+   "block": 0,
+   "half": "K",
+   "slot": 4,
+   "position": 20,
+   "byte_offset_in_page": 1024
+  },
+  {
+   "block": 0,
+   "half": "K",
+   "slot": 5,
+   "position": 21,
+   "byte_offset_in_page": 1280
+  },
+  {
+   "block": 0,
+   "half": "K",
+   "slot": 6,
+   "position": 22,
+   "byte_offset_in_page": 1536
+  },
+  {
+   "block": 0,
+   "half": "K",
+   "slot": 7,
+   "position": 23,
+   "byte_offset_in_page": 1792
+  },
+  {
+   "block": 0,
+   "half": "score",
+   "slot": 4,
+   "position": 20,
+   "byte_offset_in_page": 3072
+  },
+  {
+   "block": 0,
+   "half": "score",
+   "slot": 5,
+   "position": 21,
+   "byte_offset_in_page": 3328
+  },
+  {
+   "block": 0,
+   "half": "score",
+   "slot": 6,
+   "position": 22,
+   "byte_offset_in_page": 3584
+  },
+  {
+   "block": 0,
+   "half": "score",
+   "slot": 7,
+   "position": 23,
+   "byte_offset_in_page": 3840
+  },
+  {
+   "block": 77,
+   "half": "K",
+   "slot": 4,
+   "position": 4,
+   "byte_offset_in_page": 1024
+  },
+  {
+   "block": 77,
+   "half": "K",
+   "slot": 5,
+   "position": 5,
+   "byte_offset_in_page": 1280
+  },
+  {
+   "block": 77,
+   "half": "K",
+   "slot": 6,
+   "position": 6,
+   "byte_offset_in_page": 1536
+  },
+  {
+   "block": 77,
+   "half": "K",
+   "slot": 7,
+   "position": 7,
+   "byte_offset_in_page": 1792
+  },
+  {
+   "block": 77,
+   "half": "score",
+   "slot": 4,
+   "position": 4,
+   "byte_offset_in_page": 3072
+  },
+  {
+   "block": 77,
+   "half": "score",
+   "slot": 5,
+   "position": 5,
+   "byte_offset_in_page": 3328
+  },
+  {
+   "block": 77,
+   "half": "score",
+   "slot": 6,
+   "position": 6,
+   "byte_offset_in_page": 3584
+  },
+  {
+   "block": 77,
+   "half": "score",
+   "slot": 7,
+   "position": 7,
+   "byte_offset_in_page": 3840
+  },
+  {
+   "block": 483,
+   "half": "K",
+   "slot": 4,
+   "position": 12,
+   "byte_offset_in_page": 1024
+  },
+  {
+   "block": 483,
+   "half": "K",
+   "slot": 5,
+   "position": 13,
+   "byte_offset_in_page": 1280
+  },
+  {
+   "block": 483,
+   "half": "K",
+   "slot": 6,
+   "position": 14,
+   "byte_offset_in_page": 1536
+  },
+  {
+   "block": 483,
+   "half": "K",
+   "slot": 7,
+   "position": 15,
+   "byte_offset_in_page": 1792
+  },
+  {
+   "block": 483,
+   "half": "score",
+   "slot": 4,
+   "position": 12,
+   "byte_offset_in_page": 3072
+  },
+  {
+   "block": 483,
+   "half": "score",
+   "slot": 5,
+   "position": 13,
+   "byte_offset_in_page": 3328
+  },
+  {
+   "block": 483,
+   "half": "score",
+   "slot": 6,
+   "position": 14,
+   "byte_offset_in_page": 3584
+  },
+  {
+   "block": 483,
+   "half": "score",
+   "slot": 7,
+   "position": 15,
+   "byte_offset_in_page": 3840
+  }
+ ],
+ "C_block483_nonzero_256B_units": [
+  4,
+  5,
+  6,
+  7,
+  12,
+  13,
+  14,
+  15
+ ]
+}

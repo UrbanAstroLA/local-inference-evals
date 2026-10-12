@@ -1,0 +1,68 @@
+{
+ "observer_present": true,
+ "capture_model_seen": true,
+ "resizes_by_rank_phase_class": {
+  "r0:pre_capture:pre-capture (no captured graph yet)": 1,
+  "r1:pre_capture:pre-capture (no captured graph yet)": 2
+ },
+ "events_after_profiling": [],
+ "capture_bindings": {
+  "0": {
+   "bindings": 10,
+   "distinct_ptrs": 1,
+   "by_mode_and_batch": {
+    "NONE:None": 10
+   },
+   "callers": [
+    "b12x_mla_sparse.py:2156:_borrow_workspaces",
+    "sparse_attn_indexer.py:1114:_run_b12x_paged_topk"
+   ],
+   "ws_at_end": {
+    "state": [
+     [
+      640533302272,
+      2215641088
+     ]
+    ],
+    "locked": false
+   }
+  },
+  "1": {
+   "bindings": 10,
+   "distinct_ptrs": 1,
+   "by_mode_and_batch": {
+    "NONE:None": 10
+   },
+   "callers": [
+    "b12x_mla_sparse.py:2156:_borrow_workspaces",
+    "sparse_attn_indexer.py:1114:_run_b12x_paged_topk"
+   ],
+   "ws_at_end": {
+    "state": [
+     [
+      632257514496,
+      2215641088
+     ]
+    ],
+    "locked": false
+   }
+  }
+ },
+ "debug_log_lines": 6,
+ "debug_log_head": [
+  "(Worker_TP0 pid=338) INFO 10-12 06:46:49 [workspace.py:182] [WORKSPACE DEBUG] Resized workspace from 'b12x_mla_sparse.py:2156:_borrow_workspaces': 0.00 MB -> 256.52 MB (ubatch 0)",
+  "(Worker_TP1 pid=372) INFO 10-12 06:46:49 [workspace.py:182] [WORKSPACE DEBUG] Resized workspace from 'b12x_mla_sparse.py:2156:_borrow_workspaces': 0.00 MB -> 256.52 MB (ubatch 0)",
+  "(Worker_TP0 pid=338) INFO 10-12 06:50:09 [workspace.py:182] [WORKSPACE DEBUG] Resized workspace from 'sparse_attn_indexer_kpool.py:300:sparse_attn_indexer_kpool': 256.52 MB -> 2113.00 MB (ubatch 0)",
+  "(Worker_TP1 pid=372) INFO 10-12 06:50:17 [workspace.py:182] [WORKSPACE DEBUG] Resized workspace from 'sparse_attn_indexer_kpool.py:300:sparse_attn_indexer_kpool': 256.52 MB -> 2113.00 MB (ubatch 0)",
+  "(Worker_TP0 pid=338) INFO 10-12 06:56:21 [model_runner.py:1033] Graph capturing finished in 154 secs, took 0.57 GiB",
+  "(Worker_TP1 pid=372) INFO 10-12 06:56:21 [model_runner.py:1033] Graph capturing finished in 154 secs, took 0.56 GiB"
+ ],
+ "caveat": "address-level result: captured bindings are workspace views handed out by WorkspaceManager while a stream was capturing; a resize alone does not establish graph corruption, and an invalidated address establishes retained freed memory, not a corrupted replay",
+ "classification": {
+  "confirmed_omission": "from source (V2: no lock_workspace; warmup_kernels after capture_model)",
+  "exercised": "not exercised in this workload",
+  "demonstrated_computational_effect": "not measured (needs a replay touching reused freed memory)",
+  "verified_correction": "not run",
+  "completion_effect": "untested"
+ }
+}

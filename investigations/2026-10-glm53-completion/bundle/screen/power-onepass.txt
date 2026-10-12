@@ -1,0 +1,35 @@
+null: bundle p_q = 0.9.1 record p_q (EB posterior): mean E 5.27; P(E<=2)=0.0782 (se 0.0012); P(E=3)=0.1172; P(E>=4)=0.8046; P(McNemar vs record pass 1 p<0.05)=0.0027
+worse: 1.5 x each 0.9.1 p_q: mean E 7.82; P(E<=2)=0.0056 (se 0.0003); P(E=3)=0.0176; P(E>=4)=0.9768; P(McNemar vs record pass 1 p<0.05)=0.0
+(ii) uniform 50% reduction of each 0.9.1 p_q: mean E 2.63; P(E<=2)=0.504 (se 0.0022); P(E=3)=0.2277; P(E>=4)=0.2683; P(McNemar vs record pass 1 p<0.05)=0.0608
+(iii) uniform 75% reduction of each 0.9.1 p_q: mean E 1.31; P(E<=2)=0.8587 (se 0.0016); P(E=3)=0.1026; P(E>=4)=0.0387; P(McNemar vs record pass 1 p<0.05)=0.2603
+(i-a) 0.7.0-like: 0.7.0 EB per-question estimates, own fit: mean E 1.33; P(E<=2)=0.8503 (se 0.0016); P(E=3)=0.1028; P(E>=4)=0.0469; P(McNemar vs record pass 1 p<0.05)=0.262
+(i-b) 0.7.0-like: 0.7.0 mean with the 0.9.1 fit's concentration: mean E 1.33; P(E<=2)=0.8619 (se 0.0015); P(E=3)=0.1027; P(E>=4)=0.0355; P(McNemar vs record pass 1 p<0.05)=0.2424
+(iv) complete removal of empties (p_q = 0): mean E 0.0; P(E<=2)=1.0 (se 0.0); P(E=3)=0.0; P(E>=4)=0.0; P(McNemar vs record pass 1 p<0.05)=1.0
+{
+ "fit_0.9.1_record": {
+  "mu": 0.026137350462846553,
+  "s": 2.0417379446695296,
+  "a": 0.0533656202131195,
+  "b": 1.98837232445641,
+  "loglik": -51.96304418125749,
+  "icc_rho": 0.3287594191841682,
+  "at_bound": false,
+  "pooled_rate": 0.026936026936026935
+ },
+ "fit_0.7.0_record": {
+  "mu": 0.006734006734006734,
+  "s": 100000.0,
+  "a": 673.4006734006733,
+  "b": 99326.59932659933,
+  "loglik": -19.594432667538058,
+  "icc_rho": 9.99990000099999e-06,
+  "at_bound": true,
+  "pooled_rate": 0.006734006734006734
+ },
+ "record_total_3_passes": 16,
+ "v070_total_3_passes": 4,
+ "record_pass1_empties": 5,
+ "null_expected_per_pass": 5.27,
+ "v070_expected_per_pass_a": 1.33,
+ "v070_expected_per_pass_b": 1.33
+}

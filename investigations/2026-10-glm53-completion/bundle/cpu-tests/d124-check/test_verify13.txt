@@ -1,0 +1,16 @@
+PASS inert_by_default
+PASS install
+PASS capture_device_and_pool_target
+PASS not_armed_no_record
+PASS arm
+PASS select_rule
+PASS observe_only_gate_and_apply
+PASS records_on_disk
+PASS capture_skip
+PASS mode_not_none_and_no_ctx
+PASS meta_tensors
+PASS workspace_observer
+PASS runner_and_router_wrappers
+PASS ast_no_host_sync
+PASS no_engine_writes_in_module
+15 passed, 0 failed (tmp /tmp/v13test_iqr_nw_u)

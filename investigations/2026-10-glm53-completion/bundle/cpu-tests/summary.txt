@@ -1,0 +1,28 @@
+image ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07
+image local/glm53-v0.9.1-bundle-d124:local sha256:0e970204890e4f353ff375b53f2307c8738e5fa15d8195029f950d990c9ebbfe
+image local/glm53-v0.9.1-bundle-d1234:local sha256:08d1cb902ddb888f679b972714168bb7c0d2333b4c1865f3ebf860baa2f46548
+D1_test_col511_cpu                 d124     rc=0   ALL PASS
+D1_fixture_cpucheck                d124     rc=0   [07:38:41] cpucheck OK
+D1_test_col511_cpu                 d1234    rc=0   ALL PASS
+D1_fixture_cpucheck                d1234    rc=0   [07:38:47] cpucheck OK
+D2_test_fix_release                release  rc=0   17/17 met expectation in 0.2s
+D2_scenarios_release               release  rc=0   6/6 passed in 3.1s
+D2_mechanism_release               release  rc=0   MECHANISM_REPRODUCED
+D2_test_fix_U                      d124     rc=0   17/17 met expectation in 0.2s
+D2_scenarios                       d124     rc=0   6/6 passed in 3.1s
+D2_test_fix_U                      d1234    rc=0   17/17 met expectation in 0.2s
+D2_scenarios                       d1234    rc=0   6/6 passed in 3.1s
+D3_release                         release  rc=0   REPRODUCED: SM12x router logits go through bf16 (tier 6)
+D3_absent_expect_release           d124     rc=0   REPRODUCED: SM12x router logits go through bf16 (tier 6)
+D3_installed_expect_patched        d1234    rc=0   PATCH CHECK PASS: SM12x router GEMM dispatches to tier 5, fp32 output (tier 5 is CUDA/ROCm-only and is not exe
+D4_release                         release  rc=0   REPRODUCED: the model provides swiglu_limit and the B12x planner accepts it, but the EXL3 MoE method passes it
+D4_installed_expect_patched        d124     rc=0   PATCH CHECK PASS: swiglu_limit reaches every Caps(...) and compile_mixed_trellis(...) call (static; kernel beh
+D4_installed_expect_patched        d1234    rc=0   PATCH CHECK PASS: swiglu_limit reaches every Caps(...) and compile_mixed_trellis(...) call (static; kernel beh
+D5_excluded_expect_release         d124     rc=0   REPRODUCED: V2 captures graphs, then runs warmup_kernels and serves with the workspace unlocked; an unlocked m
+D6_excluded_expect_release         d124     rc=0   REPRODUCED: warm-up reserves up to 4 tail blocks per request (contract 1); the stale id 484 stays in column 1 
+D5_excluded_expect_release         d1234    rc=0   REPRODUCED: V2 captures graphs, then runs warmup_kernels and serves with the workspace unlocked; an unlocked m
+D6_excluded_expect_release         d1234    rc=0   REPRODUCED: warm-up reserves up to 4 tail blocks per request (contract 1); the stale id 484 stays in column 1 
+done 2026-10-12T07:41:45Z
+d124-check sha256:5dd7f8a3466a: c511check rc=0 (7 passed, 0 failed: []); tailguard rc=0 (22/22 passed); verify13 rc=0 (15 passed, 0 fail); test_fix U rc=0 (17/17 met expectation in 0.2s); d4limit rc=0 (9 PASS, done: 0 failed [])
+d1234-check sha256:b61793817388: c511check rc=0 (7 passed, 0 failed: []); tailguard rc=0 (22/22 passed); verify13 rc=0 (15 passed, 0 fail); test_fix U rc=0 (17/17 met expectation in 0.2s); d4limit rc=0 (9 PASS, done: 0 failed [])
+d124-check: all observers together: done: 0 failed []; d1234-check: done: 0 failed []

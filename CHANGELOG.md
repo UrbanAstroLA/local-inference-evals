@@ -1,5 +1,40 @@
 # Changelog
 
+## 2026-10-12 (completion investigation, amendments 13a-14e): stage A final, correctness bundle gate, one-pass screen
+
+Contents unchanged: 65 runs, 13 comparisons. No earlier run, number or grade changed except as listed.
+
+- **Stage A final** (`verify-stage-a/`, new `offline-a4/`): D3 controls (a)-(d) pass on all 1,593 records, control (c)
+  with the serving-shaped router invocation adopted in amendment 14 before any comparison. The fp32-output router
+  computation selects a different top-8 expert set on 3.15% of token × layer rows (95% over 176 requests 3.01-3.29%, over
+  8 histories 2.90-3.50%; by layer 1.2-6.6%, by execution type 3.0-3.2%) and different weights on every row; the corrected
+  path lies within τ_d of fp64 everywhere. FULL-graph decode covered by source only. Stage A 0.6929 of 2.0 GPU-hours.
+  The stage A proposal copy gains its attempt-4 results; code gains the attempt-4 script, its diff and its CPU tests.
+- **Bundle gate** (new `bundle/`): D1-D4 on 0.9.1; summaries, diffs, manifests, verdict and analysis outputs, code, D3 as
+  served, D4 compile-cache evidence, production-image check, probe divergence (token strings withheld). Raw logs, request
+  files, capture and probe records and the local GPQA fixture are hashed in `RAW-SHA256SUMS-bundle.txt`. Two original
+  criteria failed as specified and were revised after inspecting gate data (amendment 14c). 1.6403 GPU-hours.
+- **One-pass screen** (`bundle/screen/`): valid; 3 of 198 empty, all at the cap; SIMILAR / NO CLEAR SEPARATION under the
+  frozen rules; rescued and newly empty replies against both baselines; secondary raw 174 / stated 176 (single pass, not
+  a decision input). 4.841 GPU-hours.
+- **`costs.jsonl`**: three entries appended (stage A attempt 4 0.0106, bundle gate 1.6403, screen 4.841); the earlier
+  stage A entry is unchanged. Cumulative 43.25 GPU-hours; `recompute.py` checks the new totals.
+- **`PUBLIC-COPIES-14.txt`**: local and public sha256 of every file whose public copy replaces local paths, image-name
+  prefixes or module names; frozen hashes in amendment 14d refer to the local files.
+- **Investigation README**: status line, answer table, fast path, prior probes, stage A (final), a D1-D6 defect matrix,
+  bundle gate, screen, observations recorded separately (E1, long-context greedy non-repeatability of the stock
+  release, NaN-byte index rows), open questions, limits, next steps (nothing further scheduled).
+- **`FINDINGS.md`**: items 4c (router precision), 4d (SwiGLU limit), 4e (bundle screen), 4f (E1) and 19a (long-context
+  non-repeatability); item 4b, item 7 and its note, open questions.
+- **`LEDGER.md`**: the stage A entry moved from the end of the page into the timeline and completed; dated entries for
+  the gate and the screen; owned corrections (the D4 compiled-kernel check's unverified assumption in the gate
+  preparation; the coordinator's misstatement of the 16,240-token probe's cache coverage; three vs four early stops);
+  three rows in "Figures corrected along the way".
+- **`CONFOUNDS.md`**: entries 5, 11 and 13 updated; new entries 16 (long-context greedy non-repeatability) and 17
+  (batch-size-dependent routing weights, E1).
+- **Top-level README** and **site** (`tools/site.py`: summary lines and two rows in the engine-issues table); pages
+  regenerated.
+
 ## 2026-10-11, late (completion investigation, amendment 12): final stated figure, reconstructed GPU-hours, two corrections
 
 Contents unchanged: 65 runs, 13 comparisons. No run, number or grade changed except as listed; CPU only, no GPU.

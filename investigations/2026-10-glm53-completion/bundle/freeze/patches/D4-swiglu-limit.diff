@@ -1,0 +1,31 @@
+PROPOSED PATCH - UNTESTED ON GPU.
+Pass the model's swiglu_limit (stored by FusedMoE on the RoutedExperts layer) to the B12x planner of
+the rank-sliced / projection-mixed EXL3 runtime (TPMoEScratchCaps.swiglu_limit, which B12x threads into
+the projection-mixed Trellis launch) and to the expert-mixed Trellis compiler (compile_mixed_trellis's
+swiglu_limit argument). Upstream vLLM's FusedMoE receives swiglu_limit for this model
+(models/glm5next/common/model.py); upstream has no vendored EXL3 path, so there is no upstream patch
+to port. Against the 0.9.1 package; applies with `patch -p1` from the directory that contains vllm/.
+Checked on CPU only (applies; static plumbing check, see expected/). Not run on a GPU: whether the
+kernels apply the clamp as the vLLM reference does, and any output, accuracy or speed effect, are not
+measured. The runtime cache keys do not include the limit; all layers of this model share one value.
+
+--- a/vllm/model_executor/layers/quantization/exl3.py
++++ b/vllm/model_executor/layers/quantization/exl3.py
+@@ -2751,6 +2751,7 @@
+                 force_tile_config=mixed["tile_config"],
+                 rotation_input_dtype=("bf16" if x.dtype == torch.bfloat16 else "fp16"),
+                 route_ids_dtype=topk_ids.dtype,
++                swiglu_limit=getattr(layer, "swiglu_limit", None),
+             )
+             return {
+                 "capacity": capacity,
+@@ -2966,6 +2967,9 @@
+                     if bf16_epilogue
+                     else torch.float32
+                 ),
++                # Routed-expert SwiGLU clamp from the model config
++                # (swiglu_limit); FusedMoE stores it on the layer.
++                swiglu_limit=getattr(layer, "swiglu_limit", None),
+                 **mixed_launch_caps,
+             )
+             plan = api.plan(caps)

@@ -1,0 +1,13 @@
+ready after 778s
+43:(APIServer pid=59) INFO 10-12 09:02:21 [vllm.py:1336] Auto-enabling VLLM_USE_BREAKABLE_CUDAGRAPH=1. Set VLLM_USE_BREAKABLE_CUDAGRAPH=0 to opt out.
+47:(EngineCore pid=250) INFO 10-12 09:02:33 [core.py:122] Initializing a V1 LLM engine (v0.1.dev20051+g487ecf187) with config: model='/model-repo/snapshots/0490d2f708b12145f6516555ab066aaeb401cd21', speculative_config=SpeculativeConfig(method='dflash', model='/draft-repo/snapshots/bf582e4eacc1810f76
+237:(Worker_TP0 pid=338) INFO 10-12 09:07:50 [exl3.py:3122] EXL3 rank-sliced runtime planned: Trellis m=1..32 block_m=8, prefill trellis block_m=64 arena=262.6MiB capacity=1024 chunk=128 topk=8
+243:(EngineCore pid=250) INFO 10-12 09:08:01 [kv_cache_utils.py:2299] GPU KV cache size: 4,707,515 tokens, Maximum concurrency for 1,048,576 tokens per request: 4.49x
+401:(Worker_TP1 pid=372) INFO 10-12 09:13:53 [model_runner.py:1033] Graph capturing finished in 155 secs, took 0.55 GiB
+402:(Worker_TP0 pid=338) INFO 10-12 09:13:53 [model_runner.py:1033] Graph capturing finished in 155 secs, took 0.56 GiB
+{"kind": "installed", "override_on": true, "override": 1.0, "raw": "1", "inspect": true, "pid": 338}
+{"kind": "override_applied", "method": "_rank_sliced_runtime", "original": 10.0, "original_absent": false, "override": 1.0, "pid": 338}
+{"kind": "plan_limits", "method": "_rank_sliced_runtime", "runtime_id": 126472784961024, "layer_limit": 10.0, "n_hits": 6, "values": ["1.0"], "owners": ["TPMoEPlan.swiglu_limit=1.0", "TPMoEScratchCaps.swiglu_limit=1.0", "_TPCoreWorkspacePlan.swiglu_limit=1.0"], "pid": 338}
+{"kind": "installed", "override_on": true, "override": 1.0, "raw": "1", "inspect": true, "pid": 372}
+{"kind": "override_applied", "method": "_rank_sliced_runtime", "original": 10.0, "original_absent": false, "override": 1.0, "pid": 372}
+{"kind": "plan_limits", "method": "_rank_sliced_runtime", "runtime_id": 140177975159552, "layer_limit": 10.0, "n_hits": 6, "values": ["1.0"], "owners": ["TPMoEPlan.swiglu_limit=1.0", "TPMoEScratchCaps.swiglu_limit=1.0", "_TPCoreWorkspacePlan.swiglu_limit=1.0"], "pid": 372}

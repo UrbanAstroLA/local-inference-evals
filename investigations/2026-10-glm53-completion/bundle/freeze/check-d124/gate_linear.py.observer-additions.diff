@@ -1,0 +1,22 @@
+--- a/gate_linear.py
++++ b/gate_linear.py
+@@ -273,3 +273,19 @@
+     op_func=fp32_router_gemm_dispatch_impl,
+     fake_impl=fp32_router_gemm_dispatch_fake,
+ )
++
++
++# --- verify13 (observe-only capture; inert unless GLM53_VERIFY13=1) ---
++import os as _v13_os  # noqa: E402
++
++if _v13_os.environ.get("GLM53_VERIFY13", "").strip() == "1":
++    from vllm import verify13_capture as _v13  # noqa: E402
++
++    _v13.install(GateLinear)
++
++# --- d4limit (verification image only; inert unless GLM53_D4_LIMIT_OVERRIDE or GLM53_D4_INSPECT is set) ---
++if (_v13_os.environ.get("GLM53_D4_LIMIT_OVERRIDE", "").strip()
++        or _v13_os.environ.get("GLM53_D4_INSPECT", "").strip() == "1"):
++    from vllm import d4limit as _d4l  # noqa: E402
++
++    _d4l.install_on_gate(GateLinear)

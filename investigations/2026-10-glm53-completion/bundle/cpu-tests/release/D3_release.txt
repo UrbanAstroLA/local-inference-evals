@@ -1,0 +1,16 @@
+
+[installed gate_linear.py (release)] GateLinear(4096, 288, out_dtype=float32), bf16 weight: tier per device (tiers 1-2 reported unavailable on CPU)
+  SM120 (RTX PRO 6000, RTX 50xx)   cublas_fp32_out=False m=8: 6 F.linear in weight dtype (bf16), then .to(fp32) m=64: 6 F.linear in weight dtype (bf16), then .to(fp32)
+  SM121 (GB10)                     cublas_fp32_out=False m=8: 6 F.linear in weight dtype (bf16), then .to(fp32) m=64: 6 F.linear in weight dtype (bf16), then .to(fp32)
+  SM90 (Hopper)                    cublas_fp32_out=True  m=8: 5 torch.mm(out_dtype=fp32)                       m=64: 5 torch.mm(out_dtype=fp32)
+  SM100 (B200)                     cublas_fp32_out=True  m=8: 5 torch.mm(out_dtype=fp32)                       m=64: 5 torch.mm(out_dtype=fp32)
+
+[rounding] input: router weight, bias and post-attention norm of layer 5 from the checkpoint; 4096 synthetic tokens
+  GateLinear.forward on emulated SM120: output dtype torch.float32; every value is a bf16 value: True; equal to the bf16 rounding of the fp32-output logits in 100.0% of entries (the rest differ in the last bit: accumulation order)
+  vs fp32-output logits: max |diff| 1.449e-02, median relative error 1.35e-03, max relative error 1.11e-01 (bf16 unit roundoff 3.9e-03)
+
+[routing, illustrative] sigmoid + bias, top-8 of 288, renormalised, x2.5
+  tokens whose expert set differs (bf16-rounded vs fp32 logits): 116 of 4096 (2.83%)
+  max routing-weight difference where the set is equal: 3.905e-04
+
+REPRODUCED: SM12x router logits go through bf16 (tier 6)

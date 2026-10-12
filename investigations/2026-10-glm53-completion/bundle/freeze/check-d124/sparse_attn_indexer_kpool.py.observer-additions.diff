@@ -1,0 +1,51 @@
+--- a/sparse_attn_indexer_kpool.py
++++ b/sparse_attn_indexer_kpool.py
+@@ -59,6 +59,14 @@
+ # MXFP4 layout: 2 values packed per byte, ue8m0 (1-byte) scale per block of 32.
+ MXFP4_BLOCK_SIZE = 32
+ 
++# ---- tailguard (observe-only; inert unless GLM53_TAILGUARD is set) ----
++try:
++    from vllm import kpool_tailguard as _tailguard
++except Exception:  # noqa: BLE001
++    _tailguard = None
++_TAILGUARD_ON = _tailguard is not None and _tailguard.ENABLED
++# ---- end tailguard ----
++
+ # ---- col511check (observe-only; inert unless GLM53_COL511CHECK=device) ----
+ try:
+     from vllm import col511check as _c511
+@@ -476,6 +484,16 @@
+                         # maps to a different tail block (1 block/req) or is
+                         # past the batch. Writes are one-per-token to distinct
+                         # pos % kpool offsets, so the result is identical.
++                        if _TAILGUARD_ON:  # tailguard: observe-only
++                            _tailguard.check_call(
++                                "seed",
++                                k_cache_prefix,
++                                tail_kv_cache,
++                                tail_meta.slot_mapping[prefill_slice],
++                                None if positions is None else positions[prefill_slice],
++                                num_decode_tokens,
++                                index_kpool,
++                            )
+                         kpool_seed_tail_cache(
+                             tail_kv_cache,
+                             k[prefill_slice],
+@@ -857,6 +875,16 @@
+                 # provided. Inputs are already grouped per request (uniform:
+                 # view; non-uniform: _scatter_decode_tokens_by_request padded to
+                 # [B, lmax]) — no per-token .contiguous() copies needed.
++                if _TAILGUARD_ON:  # tailguard: observe-only
++                    _tailguard.check_call(
++                        "stash",
++                        k_cache_prefix,
++                        tail_kv_cache,
++                        tail_meta.slot_mapping[:num_decode_tokens],
++                        positions[:num_decode_tokens],
++                        0,
++                        index_kpool,
++                    )
+                 kpool_decode_update_and_maybe_write_cache_batched(
+                     kv_cache_raw,
+                     tail_kv_cache,

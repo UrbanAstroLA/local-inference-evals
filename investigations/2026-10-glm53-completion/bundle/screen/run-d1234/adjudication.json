@@ -1,0 +1,7 @@
+{
+ "what": "Stated-answer adjudication of the bundle screen pass (amendment 14c), by the existing rules (gpqa-diamond/v1 correct_stated; export_evals stated_ok hand-read rules). Ids and verdicts only; no reply text.",
+ "rows": [
+  {"doc": 58, "hedged": false, "reason": "commits to a single option; flexible-extract took an option mentioned after the commitment"},
+  {"doc": 98, "hedged": false, "reason": "commits to a single option; flexible-extract took a non-option token"}
+ ]
+}

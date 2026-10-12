@@ -245,6 +245,105 @@ control invoked the router on the R-row window, not on the M-row serving batch.
 
 Stage A total in costs.jsonl after attempt 3: 0.6823 GPU-hours: smoke 0.0133 + 0.0136, server 0.6417, offline 0.0003 + 0.0067 + 0.0067.
 
+## Stage A results: offline attempt 4 (amendment 14, serving-shaped router invocation)
+
+**Run.** Image `sha256:648c2764549368ec6a0b5d89c0c8e56113fa37c5ef84e4f9871e100265bc7d52`; its vllm tree is identical
+to the serving image ff6c8542… (`build/image-file-diff.txt`). The script diff is `offline/d3-amendment14-servingM.diff`.
+CPU tests: 15/15 and 5/5. 38 s = 0.0106 GPU-hours, rc 0. Stage A total in `costs.jsonl`: **0.6929 of 2.0 GPU-hours**.
+
+**Router invocation (amendment 14).** Control (c) and the corrected routing in phase 2 call the engine's router once
+on the M-row batch:
+
+- the captured rows sit at [a, a+R), the other rows are zero, and the buffer has the server's alignment;
+- the router configuration is the server's (`router_info`);
+- the bitwise criterion and the stop rule are unchanged.
+
+**Normalisation and the ×2.5 routed_scaling_factor, like-for-like** (also written into `d3_summary.json`,
+`normalisation`).
+
+- **Shipped and corrected routing** both come from the same engine call: `GroupedTopKRouter._compute_routing`
+  (`fused_moe/router/grouped_topk_router.py:337-349`) → `grouped_topk` (:80-108, with
+  `VLLM_USE_FUSED_MOE_GROUPED_TOPK`=1, `envs.py:1625`) → `fused_grouped_topk` (:28-71) → `ops.grouped_topk(logits,
+  1, 1, 8, renormalize=True, routed_scaling_factor=2.5, e_score_correction_bias, scoring_func=1)` (:43-52;
+  `_custom_ops.py:2470-2500`).
+  - Sigmoid, bias for selection only, renormalisation and the ×2.5 all happen inside the fused kernel.
+  - Nothing is applied afterwards: the `*= routed_scaling_factor` at :314-315 belongs to the invalid-grouping fallback,
+    which is not taken.
+  - There is no output-side scale (`apply_routed_scale_to_output=False`, `model.py:170, 252`).
+  - Measured: every captured row's weights sum to 2.5.
+- **The fp64 reference** (used for selection and for E1 only): sigmoid + bias selects the top-8; the weights are the
+  unbiased sigmoids, renormalised and ×2.5.
+- Whether the fused kernel renormalises then scales, or the reverse, is not visible.
+
+### Controls (all pass on all 1,593 records, 103,608 rows)
+
+| control | result |
+|---|---|
+| (a) dispatch, bf16-valued shipped logits, weight/bias sha256 (both ranks) | pass |
+| (b) offline shipped == captured shipped logits, bitwise | 1,593 / 1,593 records |
+| (c) engine routing at serving M == consumed ids/weights, bitwise | **1,593 / 1,593 records**; 103,608 rows exact (0 set differences, 0 weight differences) |
+| (d) corrected vs fp64 within τ_d = 2⁻¹⁴·S + 2⁻²⁴·\|ref\| | pass: 0 of 29,839,104 logits beyond τ_d (and 0 beyond τ_worst); max \|corrected − ref\| / S = 7.6e-7 (τ_d/S ≈ 6.1e-5); 0 corrected-vs-fp64 top-8 disagreements; ran as `torch.mm(out_dtype=fp32)` |
+| shipped vs fp64 (contrast) | 21,553,853 of 29,839,104 logits (72%) beyond τ_d; max \|shipped − ref\| / S = 1.7e-3; 3,262 top-8 disagreements with fp64 |
+
+### D3 effect (shipped "bf16-result GEMM cast to fp32" vs corrected "fp32-output GEMM, #54048 form")
+
+- **Membership flips:** 3,262 of 103,608 token × layer rows, i.e. **3.15%**. 3,260 rows swap one expert and 2 rows
+  swap two. Every flip coincides with a shipped-vs-fp64 disagreement, and corrected agrees with fp64 everywhere.
+- **Uncertainty** (95%, percentile bootstrap over clusters, 2,000 replicates):
+
+  | clusters | n | flip rate CI | mean routing-L1 CI |
+  |---|---|---|---|
+  | histories (prompt lengths 4,240 … 120,217 tokens) | 8 | 2.90-3.50% | 0.0132-0.0159 |
+  | requests | 176 | 3.01-3.29% | 0.0138-0.0150 |
+
+  With only 8 histories, the history interval is coarse.
+- **Routing-weight changes:** every row's weights change (L1 > 0 on 103,608 rows).
+  - Median L1 between dense routing vectors: about 0.0018.
+  - On rows whose expert set is unchanged, the per-row max |Δw| has p99 about 0.0016 (weights sum to 2.5).
+- **By execution type** (`d3_by_type.csv`):
+
+  | batch kind | row kind | rows | flips | rate | i.i.d. Wilson 95% (descriptive) |
+  |---|---|---|---|---|---|
+  | prefill_only | prefill | 37,356 | 1,153 | 3.09% | 2.92-3.27% |
+  | mixed | prefill | 50,456 | 1,630 | 3.23% | 3.08-3.39% |
+  | mixed | decode | 15,796 | 479 | 3.03% | 2.78-3.31% |
+
+  Decode-only eager batches did not occur.
+- **By layer** (`d3_by_layer.csv`; about 2,368-4,869 rows per layer): 1.22% (layer 21) to 6.63% (layer 3). Layers 3
+  and 7-9 are highest (5.4-6.6%), and layers 20-23 and 43-44 lowest (1.2-2.2%). `d3_by_layer_type.csv` crosses layer
+  with execution type.
+- **Near-boundary margins** (corrected 8th−9th biased-score gap): median 0.0023-0.0103 by layer, about 0.0056-0.0059
+  by execution type. On flipped rows the median is 0.00014-0.00034, which is within the bf16-rounding perturbation.
+
+### Finding E1 (engine, separate from D3)
+
+The served fused grouped_topk computes routing **weights** differently by batch row count. The switch lies between
+1,025 and 1,139 rows; the ids are unaffected on the captured rows. Served weights compared with the fp64 re-statement:
+
+| batch rows | rows | median relative error | p99 | max |
+|---|---|---|---|---|
+| M ≤ 1,024 | 12,408 | 1.2e-7 | 3.3e-7 | 7.5e-7 |
+| M > 1,024 | 91,200 | 1.4e-6 | 3.9e-6 | 1.1e-3 |
+
+No workaround was applied beyond invoking at the serving M. Completion effect: untested.
+
+### Coverage and limits
+
+- FULL-graph decode steps are covered by **source inspection only (not measured)**. Decode rows were measured only in
+  mixed eager batches.
+- The fixture is the col511-gate workload over 8 long documents, not a GPQA distribution.
+- **D3 classification:**
+  - confirmed omission, exercised (eager prefill and mixed batches), demonstrated computational effect, and verified
+    correction (offline): all yes;
+  - **completion effect: untested**; flips and weight changes do not establish a completion benefit or explain the gap.
+
+### D5 and D4 in the same run
+
+- **D5:** "not exercised in this workload". 10 capture bindings per rank. The only resizes (r0: 1, r1: 2) were during
+  profiling, before any graph existed.
+- **D4:** the frozen inputs are sufficient for Stage B: 1,593 records per rank, all paired, nothing missing. Plan
+  branches: 2,850 "prefill_plan tiled by 1024" and 336 "prefill_plan".
+
 ## D3 router precision
 
 ### Source confirmation

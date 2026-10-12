@@ -1,0 +1,115 @@
+{
+ "run": "<runs>/bundle/gate-runs/s3-d1234-a1",
+ "mode": "s3",
+ "bundle": "d1234",
+ "checks": {
+  "V1 client completed every planned phase": {
+   "ok": true,
+   "detail": "phases seen ['P']"
+  },
+  "V2 zero request errors": {
+   "ok": true,
+   "detail": "0 of 12"
+  },
+  "V3 fixed-length requests finish by length": {
+   "ok": true,
+   "detail": "0 of 0 not 'length'"
+  },
+  "V4 no stopping errors (finish not stop/length, or stop with zero tokens)": {
+   "ok": true,
+   "detail": "odd finishes 0, zero-token stops 0, of 12 free-running requests"
+  },
+  "V5 server log free of execution, memory and engine errors": {
+   "ok": true,
+   "detail": "{\"traceback\": 0, \"illegal_memory_access\": 0, \"cuda_error\": 0, \"oom\": 0, \"workspace_locked\": 0, \"assertion\": 0, \"preemption\": 0, \"nan_warn\": 0, \"engine_dead\": 0}"
+  },
+  "V6 one server start (no restart)": {
+   "ok": true,
+   "detail": "non-default args lines 1"
+  },
+  "V7 effective configuration = historical record (args, engine config, graph captures 11/9/9)": {
+   "ok": true,
+   "detail": "identical [('23', '23'), ('33', '33')]; graphs [('Capturing CUDA graphs (PIECEWISE)', '11', '11'), ('Capturing CUDA graphs (FULL)', '9', '9'), ('Capturing dflash2 CUDA graphs (FULL)', '9', '9')]; VLLM env only here ['[]']"
+  },
+  "V9 served engine files = the frozen bundle files (sha256 prefixes)": {
+   "ok": true,
+   "detail": "{\"sparse_attn_indexer_kpool.py\": [\"fae1127c\", \"fae1127c\"], \"indexer.py\": [\"00989c50\", \"00989c50\"], \"mamba_hybrid.py\": [\"049238f9\", \"049238f9\"], \"exl3.py\": [\"b40344e2\", \"b40344e2\"], \"gate_linear.py\": [\"02ba8104\", \"02ba8104\"]}"
+  },
+  "P1 D4 probe repeatable within the session (both rounds identical on all 6 prompts)": {
+   "ok": false,
+   "detail": "{\"q0\": {\"1\": [\"698d5fc5dfe0\", 96], \"2\": [\"698d5fc5dfe0\", 96]}, \"q1\": {\"1\": [\"47efd3d36de5\", 96], \"2\": [\"47efd3d36de5\", 96]}, \"q2\": {\"1\": [\"6c2c8850a262\", 96], \"2\": [\"6c2c8850a262\", 96]}, \"q3\": {\"1\": [\"6911e4bcbf18\", 96], \"2\": [\"6911e4bcbf18\", 96]}, \"r7\": {\"1\": [\"b037d8ea2caf\", 96], \"2\": [\"3715d8f0951f\", 96]}, \"r5\": {\"1\": [\"9ad246fa4f6c\", 96], \"2\": [\"90d3ee96134f\", 96]}}"
+  },
+  "P2 limit-1 override applied on both ranks over the layer's 10.0, and the plans carry 1.0": {
+   "ok": true,
+   "detail": "[('_rank_sliced_runtime', 10.0, 1.0), ('_rank_sliced_runtime', 10.0, 1.0)]; plans [['1.0'], ['1.0']]"
+  }
+ },
+ "info": {
+  "empty_replies_short_context": 0,
+  "kv_pool_tokens": [
+   4707515
+  ],
+  "probe": {
+   "q0": {
+    "1": [
+     "698d5fc5dfe0",
+     96
+    ],
+    "2": [
+     "698d5fc5dfe0",
+     96
+    ]
+   },
+   "q1": {
+    "1": [
+     "47efd3d36de5",
+     96
+    ],
+    "2": [
+     "47efd3d36de5",
+     96
+    ]
+   },
+   "q2": {
+    "1": [
+     "6c2c8850a262",
+     96
+    ],
+    "2": [
+     "6c2c8850a262",
+     96
+    ]
+   },
+   "q3": {
+    "1": [
+     "6911e4bcbf18",
+     96
+    ],
+    "2": [
+     "6911e4bcbf18",
+     96
+    ]
+   },
+   "r7": {
+    "1": [
+     "b037d8ea2caf",
+     96
+    ],
+    "2": [
+     "3715d8f0951f",
+     96
+    ]
+   },
+   "r5": {
+    "1": [
+     "9ad246fa4f6c",
+     96
+    ],
+    "2": [
+     "90d3ee96134f",
+     96
+    ]
+   }
+  }
+ }
+}

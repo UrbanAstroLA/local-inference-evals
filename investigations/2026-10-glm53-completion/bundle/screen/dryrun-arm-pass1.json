@@ -1,0 +1,429 @@
+{
+ "label": "DRY RUN: col511 arm pass 1 standing in for the screen pass",
+ "valid": true,
+ "checks": [
+  [
+   "DRY RUN: col511 arm pass 1 standing in for the screen pass pass 1: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "DRY RUN: col511 arm pass 1 standing in for the screen pass pass 1: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "DRY RUN: col511 arm pass 1 standing in for the screen pass pass 1: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "DRY RUN: col511 arm pass 1 standing in for the screen pass pass 1: every request HTTP 200, seed 1234, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "DRY RUN: col511 arm pass 1 standing in for the screen pass pass 1: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 record pass 1 pass 1: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.9.1 record pass 1 pass 1: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.9.1 record pass 1 pass 1: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.9.1 record pass 1 pass 1: every request HTTP 200, seed 1234, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 record pass 1 pass 1: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 record pass 1 pass 2: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.9.1 record pass 1 pass 2: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.9.1 record pass 1 pass 2: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.9.1 record pass 1 pass 2: every request HTTP 200, seed 1235, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 record pass 1 pass 2: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 record pass 1 pass 3: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.9.1 record pass 1 pass 3: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.9.1 record pass 1 pass 3: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.9.1 record pass 1 pass 3: every request HTTP 200, seed 1236, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 record pass 1 pass 3: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "col511 arm pass 1 pass 1: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "col511 arm pass 1 pass 1: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "col511 arm pass 1 pass 1: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "col511 arm pass 1 pass 1: every request HTTP 200, seed 1234, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "col511 arm pass 1 pass 1: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "col511 arm pass 1 pass 2: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "col511 arm pass 1 pass 2: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "col511 arm pass 1 pass 2: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "col511 arm pass 1 pass 2: every request HTTP 200, seed 1235, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "col511 arm pass 1 pass 2: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "col511 arm pass 1 pass 3: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "col511 arm pass 1 pass 3: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "col511 arm pass 1 pass 3: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "col511 arm pass 1 pass 3: every request HTTP 200, seed 1236, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "col511 arm pass 1 pass 3: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.7.0 pass 1 (context) pass 1: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.7.0 pass 1 (context) pass 1: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "prompts identical to 0.9.1 record pass 1 (messages_sha256, 198 questions)",
+   true,
+   "0 differ"
+  ],
+  [
+   "prompts identical to col511 arm pass 1 (messages_sha256, 198 questions)",
+   true,
+   "0 differ"
+  ],
+  [
+   "no execution/stopping errors (finish reason stop or length on every request)",
+   true,
+   "[]"
+  ],
+  [
+   "server: one start, no illegal memory access / preemption / NaN lines in the request window",
+   true,
+   "{\"preemption_lines\": 0, \"illegal_memory_access_lines\": 0, \"nan_warning_lines\": 0}"
+  ]
+ ],
+ "script_sha256": "9c799f260ddcc54739fea3864884f55f33cf0e2cef1fcab32758d6a4e59106cb",
+ "analysis_col511_sha256": "b5b13ce2155085ca46fb24877f12b7cd0a5cdd16eb4cf19012958e7b86ae0033",
+ "primary": {
+  "empties": 4,
+  "causes": {
+   "cap_exhaustion": 4
+  },
+  "category": "SIMILAR OR WORSE",
+  "category_if_adjudication_complete": "SIMILAR OR WORSE",
+  "adjudication_complete": true,
+  "adjudicated_docs": [
+   98,
+   102,
+   159
+  ],
+  "flags": {
+   "regression_flag": false,
+   "accuracy_concern": false,
+   "regression_detail": {
+    "raw_le_158": false,
+    "stated_le_159": false,
+    "premature_stops": 0
+   }
+  },
+  "versus": {
+   "0.9.1 record pass 1": {
+    "baseline_empties": 5,
+    "baseline_causes": {
+     "cap_exhaustion": 4,
+     "premature_stop": 1,
+     "not_logged": 0,
+     "other_finish": 0
+    },
+    "rescued": [
+     12,
+     109,
+     120
+    ],
+    "newly_empty": [
+     79,
+     170
+    ],
+    "empty_in_both": [
+     88,
+     127
+    ],
+    "baseline_raw": 169,
+    "baseline_stated": 170,
+    "raw_diff": -5,
+    "stated_diff": -5,
+    "raw_discordant_screen_only_vs_baseline_only": [
+     8,
+     13
+    ],
+    "mcnemar_two_sided_raw_reference": {
+     "T": -5,
+     "m_nonzero": 21,
+     "p_one_sided": 0.9053764343261719,
+     "p_two_sided": 0.38331031799316406,
+     "null_patterns": 2097152
+    }
+   },
+   "col511 arm pass 1": {
+    "baseline_empties": 4,
+    "baseline_causes": {
+     "cap_exhaustion": 4,
+     "premature_stop": 0,
+     "not_logged": 0,
+     "other_finish": 0
+    },
+    "rescued": [],
+    "newly_empty": [],
+    "empty_in_both": [
+     79,
+     88,
+     127,
+     170
+    ],
+    "baseline_raw": 164,
+    "baseline_stated": 165,
+    "raw_diff": 0,
+    "stated_diff": 0,
+    "raw_discordant_screen_only_vs_baseline_only": [
+     0,
+     0
+    ],
+    "mcnemar_two_sided_raw_reference": {
+     "T": 0,
+     "m_nonzero": 0,
+     "p_one_sided": 1.0,
+     "p_two_sided": 1.0,
+     "null_patterns": 1
+    }
+   },
+   "0.7.0 pass 1 (context)": {
+    "baseline_empties": 0,
+    "baseline_causes": {
+     "cap_exhaustion": 0,
+     "premature_stop": 0,
+     "not_logged": 0,
+     "other_finish": 0
+    },
+    "rescued": [],
+    "newly_empty": [
+     79,
+     88,
+     127,
+     170
+    ],
+    "empty_in_both": [],
+    "baseline_raw": 174,
+    "baseline_stated": 177,
+    "raw_diff": -10,
+    "stated_diff": -12,
+    "raw_discordant_screen_only_vs_baseline_only": [
+     8,
+     18
+    ],
+    "mcnemar_two_sided_raw_reference": {
+     "T": -10,
+     "m_nonzero": 26,
+     "p_one_sided": 0.9855203628540039,
+     "p_two_sided": 0.07551869750022888,
+     "null_patterns": 67108864
+    }
+   }
+  }
+ },
+ "secondary": {
+  "raw_correct_all_198": 164,
+  "stated_correct_all_198": 165,
+  "stated_differs_from_raw_rows": [
+   98,
+   102,
+   159
+  ],
+  "answered_completion_tokens": {
+   "p10": 804,
+   "p25": 1269,
+   "p50": 3752,
+   "p75": 10628,
+   "p90": 33073,
+   "p99": 158242,
+   "max": 213174,
+   "n": 194
+  },
+  "answered_above_32k_64k_128k_200k": [
+   20,
+   9,
+   2,
+   1
+  ],
+  "timing": {
+   "per_pass": {
+    "pass1": {
+     "window_h": 2.6717,
+     "completion_tokens": 3895297,
+     "aggregate_tok_s": 405.0,
+     "median_request_tok_s_answered": 58.9
+    }
+   },
+   "request_window_h_total": 2.6717,
+   "request_window_gpu_h": 5.343,
+   "occupied": null,
+   "gpu_hours_used": 5.74,
+   "gpu_hours_source": "override",
+   "raw_correct_per_gpu_hour": 28.57,
+   "stated_correct_per_gpu_hour": 28.75,
+   "kernel_route_exposure_client_side": {
+    "pass1": {
+     "busy_h": 2.6717,
+     "share_busy_inflight_1to4": 0.2394,
+     "share_busy_inflight_5plus": 0.7606,
+     "max_inflight": 8,
+     "mean_share_of_request_life_inflight_1to4": {
+      "empty": 0.2672,
+      "answered": 0.0073
+     }
+    }
+   }
+  },
+  "server": {
+   "log": "server-s1.log",
+   "sha256": "a2b3f12d94f6b75b4b8bd63473c06e878534a827c5a9a9bd0d22b935c4010d51",
+   "server_starts": 1,
+   "cited_block": 0,
+   "non_default_args_sha256": "7025a96888a67642741db00aaecb9cbf786c2ba67cc4ded7d67c1cf4e909dcc5",
+   "model_snapshots": [
+    "0490d2f708b12145f6516555ab066aaeb401cd21",
+    "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+   ],
+   "vllm_version": [
+    "0.1.dev20051+g487ecf187"
+   ],
+   "env_names_logged_sha256": "f85d9d360488c02bc9ba2bbb33b86319201cfad14cd4c6a9ccb312539ec1313e",
+   "kv_pool_tokens": [
+    4707515
+   ],
+   "cudagraph_mode": [
+    "FULL_AND_PIECEWISE"
+   ],
+   "release_warmups_logged": 9,
+   "status": {
+    "lines": 962,
+    "max_running": 8,
+    "lines_waiting": 0,
+    "peak_kv_usage_pct": 37.5,
+    "mean_gen_tok_s_8plus_running": 444.5,
+    "share_lines_running_1to4": 0.2391,
+    "share_lines_running_5plus": 0.7609
+   },
+   "in_window": {
+    "preemption_lines": 0,
+    "illegal_memory_access_lines": 0,
+    "nan_warning_lines": 0
+   }
+  }
+ }
+}

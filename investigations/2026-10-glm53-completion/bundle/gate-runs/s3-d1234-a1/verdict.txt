@@ -1,0 +1,13 @@
+[ok] V1 client completed every planned phase: phases seen ['P']
+[ok] V2 zero request errors: 0 of 12
+[ok] V3 fixed-length requests finish by length: 0 of 0 not 'length'
+[ok] V4 no stopping errors (finish not stop/length, or stop with zero tokens): odd finishes 0, zero-token stops 0, of 12 free-running requests
+[ok] V5 server log free of execution, memory and engine errors: {"traceback": 0, "illegal_memory_access": 0, "cuda_error": 0, "oom": 0, "workspace_locked": 0, "assertion": 0, "preemption": 0, "nan_warn": 0, "engine_dead": 0}
+[ok] V6 one server start (no restart): non-default args lines 1
+[ok] V7 effective configuration = historical record (args, engine config, graph captures 11/9/9): identical [('23', '23'), ('33', '33')]; graphs [('Capturing CUDA graphs (PIECEWISE)', '11', '11'), ('Capturing CUDA graphs (FULL)', '9', '9'), ('Capturing dflash2 CUDA graphs (FULL)', '9', '9')]; VLLM env only here ['[]']
+[info] KV pool [4707515] (historical 4707515; observers may reduce it in s1)
+[ok] V9 served engine files = the frozen bundle files (sha256 prefixes): {"sparse_attn_indexer_kpool.py": ["fae1127c", "fae1127c"], "indexer.py": ["00989c50", "00989c50"], "mamba_hybrid.py": ["049238f9", "049238f9"], "exl3.py": ["b40344e2", "b40344e2"], "gate_linear.py": ["02ba8104", "02ba8104"]}
+[FAIL] P1 D4 probe repeatable within the session (both rounds identical on all 6 prompts): {"q0": {"1": ["698d5fc5dfe0", 96], "2": ["698d5fc5dfe0", 96]}, "q1": {"1": ["47efd3d36de5", 96], "2": ["47efd3d36de5", 96]}, "q2": {"1": ["6c2c8850a262", 96], "2": ["6c2c8850a262", 96]}, "q3": {"1": ["6911e4bcbf18", 96], "2": ["6911e4bcbf18", 96]}, "r7": {"1": ["b037d8ea2caf", 96], "2": ["3715d8f0951f", 96]}, "r5": {"1": ["9ad246fa4f6c", 96], "2": ["90d3ee96134f", 96]}}
+[ok] P2 limit-1 override applied on both ranks over the layer's 10.0, and the plans carry 1.0: [('_rank_sliced_runtime', 10.0, 1.0), ('_rank_sliced_runtime', 10.0, 1.0)]; plans [['1.0'], ['1.0']]
+
+SESSION s3 d1234: FAILED: P1 D4 probe repeatable within the session (both rounds identical on all 6 prompts)

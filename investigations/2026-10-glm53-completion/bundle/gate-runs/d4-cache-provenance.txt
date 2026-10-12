@@ -1,0 +1,10 @@
+entries: total 264 | before s1 132 | in s1 window 66 | in s3 window 66 | other 0
+s1 limits Counter({((True, 10.0), (True, 10.0), (True, 10.0)): 66}) mtime range 2026-10-12T08:43:01.307077+00:00 2026-10-12T08:44:34.175241+00:00 devices Counter({'95feac2b': 33, '7ff903e9': 33})
+s1 size_m per device {'95feac2b': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 1024], '7ff903e9': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 1024]}
+s3 limits Counter({((True, 1.0), (True, 1.0), (True, 1.0)): 66}) mtime range 2026-10-12T09:06:16.302042+00:00 2026-10-12T09:07:48.420228+00:00 devices Counter({'7ff903e9': 33, '95feac2b': 33})
+s3 size_m per device {'95feac2b': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 1024], '7ff903e9': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 1024]}
+s1 keys present before s1 (exact): 0
+any (True,10.0) entry before s1: 0
+s1 keys whose limit-neutral form equals a pre-gate (release) key on the same GPU: 66 of 66
+s3 keys whose limit-neutral form equals an s1 key (same plans, limit 1): 66 of 66
+pre-gate release size_m per device: {'95feac2b': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 1024], '7ff903e9': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 1024]}

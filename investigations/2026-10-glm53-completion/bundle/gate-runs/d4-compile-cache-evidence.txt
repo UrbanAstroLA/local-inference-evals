@@ -1,0 +1,11 @@
+mixed-trellis compiled kernels in the b12x on-disk compile cache (<cache>/vllm-v090/b12x/compile, mounted as /root/.cache),
+grouped by write hour (UTC), GPU, and (has_swiglu_limit, swiglu_limit) of the driver / tier0 / tier1 W4A16FusedMoeKernel cache keys
+(kernel.py:6493-6508 __cache_key__ positions 10-11), activation; gate s1 ran 08:38-09:01Z (limit 10), s3 09:02-09:15Z (limit-1 override).
+ 33  ('2026-10-07T15', '7ff903e9', (False, 0.0), (False, 0.0), (False, 0.0), 'silu')
+ 33  ('2026-10-07T15', '95feac2b', (False, 0.0), (False, 0.0), (False, 0.0), 'silu')
+ 33  ('2026-10-07T19', '7ff903e9', (False, 0.0), (False, 0.0), (False, 0.0), 'silu')
+ 33  ('2026-10-07T19', '95feac2b', (False, 0.0), (False, 0.0), (False, 0.0), 'silu')
+ 33  ('2026-10-12T08', '7ff903e9', (True, 10.0), (True, 10.0), (True, 10.0), 'silu')
+ 33  ('2026-10-12T08', '95feac2b', (True, 10.0), (True, 10.0), (True, 10.0), 'silu')
+ 33  ('2026-10-12T09', '7ff903e9', (True, 1.0), (True, 1.0), (True, 1.0), 'silu')
+ 33  ('2026-10-12T09', '95feac2b', (True, 1.0), (True, 1.0), (True, 1.0), 'silu')

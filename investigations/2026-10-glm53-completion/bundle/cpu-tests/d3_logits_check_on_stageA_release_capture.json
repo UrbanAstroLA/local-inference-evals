@@ -1,0 +1,39 @@
+{
+ "gate_info_lines": 84,
+ "tiers_by_rank": {
+  "0": [
+   "6 F.linear(bf16) then .to(out_dtype)"
+  ],
+  "1": [
+   "6 F.linear(bf16) then .to(out_dtype)"
+  ]
+ },
+ "layers_by_rank": {
+  "0": 42,
+  "1": 42
+ },
+ "device_capability": [
+  "[12, 0]"
+ ],
+ "weight_dtype": [
+  "torch.bfloat16"
+ ],
+ "records": 3186,
+ "rows": 207216,
+ "rows_bf16_valued": 207216,
+ "values": 59678208,
+ "values_bf16_representable": 59678208,
+ "by_batch_kind": {
+  "prefill_only": {
+   "rows": 74712,
+   "rows_bf16_valued": 74712
+  },
+  "mixed": {
+   "rows": 132504,
+   "rows_bf16_valued": 132504
+  }
+ },
+ "label_note": "key logits_shipped re-labelled: served GateLinear output (tier per gate_info)",
+ "share_rows_bf16_valued": 1.0,
+ "share_values_bf16_representable": 1.0
+}

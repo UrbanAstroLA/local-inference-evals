@@ -1,0 +1,6 @@
+PASS col511 checker and tail guard enabled in the kpool module
+PASS both BlockTables wrappers installed (chained)
+PASS verify13 installed on GateLinear and its deferred wrappers  [['apply:Exl3MoEMethod', 'deferred', 'gate_linear', 'router:FusedMoERouter', 'runner_v2_capture_model', 'runner_v2_prepare_inputs', 'worker_warmup_kernels', 'workspace']]
+PASS d4limit (inspect) wrapped both EXL3 planners after verify13's apply wrapper
+PASS hooked GateLinear forward runs with every observer enabled (CPU)
+done: 0 failed []

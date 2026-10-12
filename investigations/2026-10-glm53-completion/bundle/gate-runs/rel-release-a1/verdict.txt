@@ -1,0 +1,12 @@
+[ok] V1 client completed every planned phase: phases seen ['P']
+[ok] V2 zero request errors: 0 of 12
+[ok] V3 fixed-length requests finish by length: 0 of 0 not 'length'
+[ok] V4 no stopping errors (finish not stop/length, or stop with zero tokens): odd finishes 0, zero-token stops 0, of 12 free-running requests
+[ok] V5 server log free of execution, memory and engine errors: {"traceback": 0, "illegal_memory_access": 0, "cuda_error": 0, "oom": 0, "workspace_locked": 0, "assertion": 0, "preemption": 0, "nan_warn": 0, "engine_dead": 0}
+[ok] V6 one server start (no restart): non-default args lines 1
+[ok] V7 effective configuration = historical record (args, engine config, graph captures 11/9/9): identical [('23', '23'), ('33', '33')]; graphs [('Capturing CUDA graphs (PIECEWISE)', '11', '11'), ('Capturing CUDA graphs (FULL)', '9', '9'), ('Capturing dflash2 CUDA graphs (FULL)', '9', '9')]; VLLM env only here ['[]']
+[info] KV pool [4707515] (historical 4707515; observers may reduce it in s1)
+[ok] V9 served engine files = the frozen bundle files (sha256 prefixes): {"sparse_attn_indexer_kpool.py": ["e7935f2a", "e7935f2a"], "indexer.py": ["67449677", "67449677"], "mamba_hybrid.py": ["82968af5", "82968af5"], "exl3.py": ["3b4ca47c", "3b4ca47c"], "gate_linear.py": ["6fca8c7f", "6fca8c7f"]}
+[FAIL] P1 D4 probe repeatable within the session (both rounds identical on all 6 prompts): {"q0": {"1": ["1ae47d423209", 96], "2": ["1ae47d423209", 96]}, "q1": {"1": ["7fff2a57d2a4", 96], "2": ["7fff2a57d2a4", 96]}, "q2": {"1": ["c22b0f6bf5b1", 96], "2": ["c22b0f6bf5b1", 96]}, "q3": {"1": ["b135365e04bc", 96], "2": ["b135365e04bc", 96]}, "r7": {"1": ["a5ea795ab65e", 96], "2": ["eb5aeb840186", 96]}, "r5": {"1": ["09d992105edd", 96], "2": ["fb6d62effcbd", 96]}}
+
+SESSION rel release: FAILED: P1 D4 probe repeatable within the session (both rounds identical on all 6 prompts)

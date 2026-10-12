@@ -956,8 +956,9 @@ def looping(runs):
               f'empty, 0.9.1 left {e7["b"]} (3.25bpw; supported). Accuracy does not differ measurably (clustered p = {a7["p_cluster"]:.2f}). '
               'The two differ in several ways at once, so the cause is open (<a href="confounds.html#7-several-changes-between-releases-at-once">confounds</a>). '
               f'The <a href="{REPO}/blob/main/investigations/2026-10-glm53-completion/README.md">completion investigation</a> follows this question: it '
-              'found two localized engine defects (<a href="index.html#engine-issues">issues and fixes</a>); a three-pass GPQA arm with the column-511 correction alone '
-              'left 15 answers empty vs 16, so that defect is not supported as the explanation. '
+              'found localized engine defects (<a href="index.html#engine-issues">issues and fixes</a>); a three-pass GPQA arm with the column-511 correction alone '
+              'left 15 answers empty vs 16, so that defect is not supported as the explanation, and one pass with four corrections together left 3 of 198 '
+              'empty: similar to the baselines, no clear separation. '
               'Tables and the per-question grid: <a href="index.html#gpqa">Results</a>.</p>'
             + '<h2 id="seeds">Seeds and the earlier screens</h2><p>The earlier screens sent seed 1234 on every repeat. Their rates were withdrawn on '
               '2026-10-09 and replaced by the component screen above (<a href="ledger.html#withdrawn-and-what-replaced-it">ledger</a>; why: '
@@ -1129,7 +1130,8 @@ def build():
          f'Against 3.25bpw 0.9.1, the higher score comes entirely from {jtip}: where both answered ({len(jn["both"])} of {jn["n"]}), raw '
          f'accuracy is identical ({jn["a_correct_flexible_both"]} vs {jn["b_correct_flexible_both"]}; stated {jn["a_correct_stated_both"]} vs '
          f'{jn["b_correct_stated_both"]}). Why 0.7.0 leads is open: the <a href="{REPO}/tree/main/investigations/2026-10-glm53-completion">investigation</a> '
-         'has found two localized engine defects; a GPQA arm with the column-511 correction alone did not measurably change completion.',
+         'has found localized engine defects; a GPQA arm with the column-511 correction alone did not measurably change completion, and one pass '
+         'with four corrections together was similar to the baselines, with no clear separation.',
          "Descriptive",
          "Question-clustered tests, 0.7.0 vs 3.25bpw 0.9.1: raw p = {:.2f}, stated p = {:.2f}; vs 4bpw 0.9.1: raw p = {:.2f}, stated p = {:.2f}. "
          "Every 95% interval includes zero.".format(*[analyze.records(g["k3.25-v0.7.0-dflash5"], g[b], k)["p_cluster"]
@@ -1139,11 +1141,13 @@ def build():
          "Descriptive", "Three configurations, three passes each", '<a href="#records">chart</a>'),
         (f'<b>tpurtell 0.7.0 as shipped left fewer questions unanswered than 0.9.1:</b> {e7["a"]} vs {e7["b"]} empty answers of {e7["n"]} (3.25bpw). '
          'The cause is open; a three-pass GPQA arm on 0.9.1 with the column-511 correction alone left 15 empty vs 16, so that defect is not '
-         'supported as the explanation.', "Supported",
+         'supported as the explanation; one pass with four corrections together left 3 of 198 empty against 5 and 4 in the matching pass of the '
+         '0.9.1 record and the arm (similar, no clear separation).', "Supported",
          f"Question-clustered test p = {e7['p_cluster']:.3f}. Raised by pass 1; passes 2-3 alone {e7b['a']} vs {e7b['b']} (p = {e7b['p_cluster']:.2f}). "
          "0.7.0 differs from 0.9.1 in draft depth, layout, kernels, vision and KV pool at once. The arm is compared with the existing 0.9.1 record, "
          "a historical control, under an analysis frozen before data: one-sided p = 0.50; empties moved between questions (10 rescued, 9 newly empty). "
-         "The gap rests on one three-pass record per engine; whether 0.7.0's rate reproduces has not been tested.",
+         "The gap rests on one three-pass record per engine; whether 0.7.0's rate reproduces has not been tested. The four-correction pass is one "
+         "pass at seed 1234 against historical controls, read by rules frozen before generation.",
          '<a href="#records-compare">comparisons</a> · <a href="confounds.html#7-several-changes-between-releases-at-once">confounds</a>'),
         (f'<b>3.25bpw and 4bpw TR3 (Brandon) perform alike on 0.9.1</b>, in accuracy and in completion. 4bpw\'s KV pool holds about 4 requests '
          'at the token cap.', "Descriptive",
@@ -1158,12 +1162,16 @@ def build():
          f'masking issue (0.9.1). The 0.9.0 and 0.9.1 images pass {up_pa[0]} of {up_pa[1]} upstream kernel tests.', "Supported",
          f"Without the kpool fixes {up_un[0]}/{up_un[1]}. Index check: the tail issue is gone with the fix; decode-vs-prefill KL below 2,044 tokens "
          f"{kl0:.3f} → {kl1:.3f}. Effect on answers: unmeasured (descriptive).", '<a href="#engine-issues">issues and fixes</a>'),
-        ('<b>Two more, found by the completion investigation, have fixes prepared (not released):</b> the 511-pool truncation of the indexer\'s '
-         'top-k can discard a well-ranked pool (column 511), and the kpool tail ring is written without token positions. The column-511 '
-         'correction did not measurably change completion in a three-pass GPQA arm (15 vs 16 empty of 594); whether the tail-ring fix does is untested.', "Supported",
+        ('<b>Four more, found by the completion investigation, have fixes prepared (not released):</b> the 511-pool truncation of the indexer\'s '
+         'top-k can discard a well-ranked pool (column 511), the kpool tail ring is written without token positions, the MoE router\'s logits '
+         'are computed in bf16 on this GPU family, and the routed experts never receive the SwiGLU limit. The column-511 correction did not '
+         'measurably change completion in a three-pass GPQA arm (15 vs 16 empty of 594); one pass with all four corrections together left 3 of 198 '
+         'empty (similar, no clear separation); none of the other three was tested alone.', "Supported",
          "Localized defects, verified on GPU. Column 511: on 0.9.1's tiled route a pool ranked better than 480 of 512 is discarded in 88.1% of "
          "live decode rows (0.7.0's path: 6.9%). Tail ring: 98% of tail writes go to a shared null block on 0.9.1 (all releases affected, "
-         "0.7.0 more). Each fix removes its localized problem.", '<a href="#engine-issues">issues and fixes</a>')])
+         "0.7.0 more). Router: the fp32-output computation selects a different top-8 expert set on 3.15% of token-layer rows. SwiGLU limit: "
+         "reachable in the served kernels; whether it engages was not measured. Each fix removes its localized problem.",
+         '<a href="#engine-issues">issues and fixes</a>')])
     issues = table(["Issue", "Found", "Fix", "Released in", "Evidence"], [
         ["Prefill wrote 2 KB of keys into another block's indexer region (kpool)", "upstream vLLM (vllm#57477)",
          'upstream fix, ported in <a href="https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/5">tpurtell PR #5</a>', "tpurtell 0.9.0",
@@ -1186,8 +1194,19 @@ def build():
          "occasionally into other requests' blocks", "during this evaluation (all releases; upstream vLLM passes positions)",
          "upstream behaviour backported: positions, ownership guard, graph-safe write", "not released",
          tip("<b>Supported</b>", "Unmodified 0.9.1 in shipped graph mode: 98% of tail writes to the null block, 6 into live attention blocks; with "
-             "the fix 0 and 0. 0.7.0 is more affected (CPU harness). Effect on completion: untested")
-         + f' · <a href="{REPO}/blob/main/investigations/2026-10-glm53-completion/README.md#kpool-tail-ring">record</a>']])
+             "the fix 0 and 0. 0.7.0 is more affected (CPU harness). Effect on completion: untested alone")
+         + f' · <a href="{REPO}/blob/main/investigations/2026-10-glm53-completion/README.md#kpool-tail-ring">record</a>'],
+        ["The MoE router's logits are computed in bf16 on this GPU family, although the checkpoint asks for fp32 routing",
+         "during this evaluation (all releases; upstream vLLM fixed it in vllm#54048)", "upstream fix ported: fp32-output router GEMM", "not released",
+         tip("<b>Supported</b>", "0.9.1, 1,593 captured records: the fp32-output computation selects a different top-8 expert set on 3.15% of "
+             "token-layer rows and different weights on every row; the correction is within tolerance of fp64 on every logit, offline and as "
+             "served. Effect on completion: untested alone")
+         + f' · <a href="{REPO}/blob/main/investigations/2026-10-glm53-completion/README.md#stage-a-verification-d3-d4-d5">record</a>'],
+        ["The routed experts never receive the checkpoint's SwiGLU limit (10) on the EXL3 projection-mixed path",
+         "during this evaluation (all releases)", "correction prepared: pass the limit to the B12x plans", "not released",
+         tip("<b>Supported</b> (reachability)", "With the correction the served kernels are compiled with the limit, and a limit of 1 changes "
+             "greedy outputs. Whether the limit of 10 engages was not measured. Effect on completion: untested alone")
+         + f' · <a href="{REPO}/blob/main/investigations/2026-10-glm53-completion/README.md#bundle-gate-d1d2d3d4-on-091">record</a>']])
     idx = (f'<h1>GLM-5.3-Flash on 2x RTX PRO 6000: results</h1>'
            f'<p class="lede">Accuracy, completion, speed, KV capacity and kernel tests of GLM-5.3-Flash EXL3 quants on tpurtell\'s vLLM-based engine, '
            f'under fixed, versioned protocols. Every number links to its receipts. What else can move a result: '
@@ -1242,8 +1261,9 @@ def build():
            + table(["Configuration", "KV pool, tokens", "Receipts"], kvt, numeric=(1,))
            + '<h2 id="engine-issues">Engine issues found during evaluation, and their fixes</h2><p>The first three are fixed in tpurtell 0.9.1. DCP1 '
              'with MLA layer ownership is tpurtell\'s design; it holds about 1.5x the KV cache of v0.7.0\'s DCP2 layout. Their effect on answers '
-             'is unmeasured (descriptive). The last two were found by the completion investigation on 2026-10-11 and are present in every '
-             'release; fixes are prepared and verified locally, not released, and their effect on answers is untested.</p>' + issues
+             'is unmeasured (descriptive). The last four were found by the completion investigation on 2026-10-11 and are present in every '
+             'release; fixes are prepared and verified locally, not released. One GPQA pass with all four together left 3 of 198 answers empty, '
+             'similar to the baselines with no clear separation; their effects on answers one at a time are untested.</p>' + issues
            + f'<h3 id="kernels">Kernel tests: {up_un[0]}/{up_un[1]} without the kpool fixes, {up_pa[0]}/{up_pa[1]} with them (supported)</h3>'
              '<p>vLLM\'s own regression tests for the kpool kernels, plus a rejected-draft reproduction, run inside each engine image.</p>' + per_image
            + more("Every test", '<div id="kernel-grid"></div>' + table(["Test"] + [engine_label(m["cfg"]) for m in km], ktr)))

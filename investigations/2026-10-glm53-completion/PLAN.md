@@ -706,3 +706,117 @@ specific fix's behavioural value); computational effects alone do not establish 
 occupied GPU-hours including startup, warm-up, smoke, offline work and invalid attempts, with the runner's budget gate.
 Stage B and the stock 0.7.0 replication are not authorized. Stage A runs after the amendment 13a controls are built in and
 CPU-tested.
+
+**Amendment 14 (2026-10-12; adopts the independent assessment "verified correctness bundle, one-pass screen", after the
+operator's input; recorded before any D3 precision-comparison result is computed).**
+(1) D3: control (c) and the corrected comparison invoke the router as serving does (one call on the serving M rows, rows in
+place, server alignment and router configuration), keeping the bitwise criterion and the stop rule; every record is
+verified (the 60-record diagnostic is supporting evidence only); normalization and the location of the x2.5 scaling are
+documented for the reference and serving computations; offline attempt 4 runs within stage A's existing ceiling; E1 is
+recorded separately and no router batch-shape workaround enters the bundle without an independent justification.
+(2) Minimal verified bundle on 0.9.1: D1 column-511 correction; D2 canonical positions/ownership/graph-safe mapping
+correction; D3 fp32-output router correction if its verification passes; D4 the checkpoint's SwiGLU limit 10 on the
+projection-mixed path after a minimal real-weight execution check (limit 1 may establish reachability; 10 is the
+candidate); D5 only if its backport is straightforward and verified against the runner's actual workspace lifecycle,
+otherwise left out and documented as unexercised in stage A; D6 not separately prioritised (unreachable under D2). No limit
+tuning, alternative routing heuristics or unrelated performance changes. D1 stays despite its negative standalone result
+because its interaction with corrected context contents is untested.
+(3) Gate before the screen: each correction verified active; actual K3.25 weights and shipped graph execution; short
+contexts, mixed batches and request reuse where relevant; no new execution, memory or stopping errors; throughput measured
+to price the run; image, diff, hashes and effective configuration frozen. Prefer existing runtime fixtures over a one-day
+standalone harness for D4.
+(4) One representative GPQA pass, separately costed and authorized: all 198 questions, original sampling, parser,
+concurrency and 327,680-token cap, a prespecified seed matching an existing baseline pass, normal stopping, the documented
+server lifecycle and warm-up gate; budget from reconstructed timings and the candidate's measured throughput (a
+baseline-sized pass is roughly 5-6 GPU-hours; identical runtime is not assumed); traces kept locally where permitted.
+Primary: empty replies with cap exhaustion separated from premature stopping; rescued and newly empty replies. Secondary:
+raw and adjudicated correctness on every request, completion lengths, occupied GPU-hours, execution validity, throughput.
+Screening decision rules frozen before generation.
+(5) After the screen: clear promising behaviour without an obvious correctness regression → confirm before attribution
+(a prespecified additional seed/control comparison; contemporaneous stock control vs more representative passes chosen on
+measured cost), then ablate by removing one component at a time from the bundle, accounting for dependent fixes and
+interactions; similar or worse → deprioritise the bundle as the next completion remedy, start other source and
+frozen-input investigations, no serial small completion pilots, and no conclusion that included corrections lack effects,
+that interactions are absent, or that a new kernel or MoE defect exists; mixed (e.g. fewer empties, worse accuracy) →
+report the tradeoff and uncertainty, not success. The screen supports a resource-allocation decision, not equivalence.
+(6) A successful bundle can give a useful corrected engine without explaining the historical gap; the stock 0.7.0
+replication stays relevant to that question and is deferred, not automatically funded; deeper kernel/MoE work targets
+specific uncovered invariants or observed discrepancies.
+
+**Amendment 14a (2026-10-12, operator authorization).** The operator authorizes running the bundle gate and the one-pass
+GPQA screen as planned in amendment 14 without a separate proposal review. Ceilings set by the coordinator from measured
+timings, before any bundle data: gate at most 1.5 occupied GPU-hours (the comparable gate session measured 0.70); screen
+at most 7.5 occupied GPU-hours (pass-1 sessions measured 5.15 for the 0.9.1 record and 5.74 for the column-511 arm; about
+30% margin for an unmeasured throughput change, startup, warm-up and shutdown). One invalid gate attempt may be repeated
+within its ceiling; an invalid screen session stops the screen and is reported, with no automatic retry. Sequence: gate on
+the candidate (D1+D2+D3+D4, plus D5 only if the bundle preparation justifies it); if the gate passes, the image, diff,
+hashes, effective configuration and screening decision rules are frozen here before generation; then one pass. If the gate
+fails, no screen runs.
+
+**Amendment 14b (2026-10-12, coordinator, before any gate data).** The gate design returned by the bundle preparation
+estimates 1.25-1.69 occupied GPU-hours for the two required sessions (s1: all corrections active, short contexts, mixed
+batches, request reuse, errors, throughput lower bound; s3: the D4 limit-1 reachability check against limit 10), above the
+1.5 set in amendment 14a without that design. The gate ceiling is set to 2.0; the optional production-image throughput
+session (s2) is not run (the screen measures its own throughput and its 7.5 ceiling is enforced by a watchdog). D5 is left
+out of the bundle (unexercised in stage A; the backport moves kernel warm-up before capture and would turn any unforeseen
+workspace growth into an error); D6 is unreachable under D2. Candidate: D1+D2+D3+D4 (image id 08d1cb90…).
+
+**Amendment 14c (2026-10-12; independent review of the bundle gate, adopted by the operator; before any screen data).**
+Gate verdict: PASS for proceeding to the one-pass screen, subject to the checks below. The original gate failures are
+retained: "D4 compiled kernels" (runtime-walk criterion) and "P1 probe repeatable" (long-context) failed as specified, for
+the candidate and, for P1, also for the stock release; both criterion revisions were made after inspecting gate data and
+the original criteria are not described as met. Accepted revisions: D4, session-specific compiled-kernel evidence in place
+of an unreachable runtime attribute, provided the cache keys belong to the candidate's actual compiled plans and not to
+pre-existing entries (combined evidence: serving plans carry limit 10; corresponding compiled kernels carry (True, 10);
+the limit-1 intervention changes repeatable short-prompt outputs); P1, short-prompt repeatability, with stock-release
+long-context non-repeatability documented as a limitation (no claim of long-context numerical equivalence, of no additional
+bundle variability, or of a demonstrated near-tie mechanism). To resolve before launch from existing records: (1) classify
+the three early stops in the gate's GPQA-shaped phase (valid answered stops → throughput unusable, readiness intact;
+missing answers or parser errors → investigate first); (2) confirm completed D3 numerical verification of the fp32 path as
+served (dispatch tier and non-bf16-valued outputs alone are insufficient); (3) confirm the production image's engine files
+match the verified candidate with observers absent. No extra server session solely for throughput; the 7.5 GPU-hour
+watchdog stays and actual cost is reported.
+Screening rules (resource-allocation rules, not significance or equivalence claims): E = empty replies of 198. Clear
+promising: E ≤ 2, no regression flag and no accuracy concern. Mixed: E ≤ 3 with a regression flag or an accuracy concern.
+Similar / no clear separation: E = 3 without either. Similar or worse: E ≥ 4 (any accompanying regression reported
+separately). Regression flags: raw correct ≤ 158, stated ≤ 159, or 2+ premature stops; accuracy concern: raw 159-163
+(an otherwise promising result with raw 159-163 is mixed). Stated-answer adjudication completed before the final category.
+Simulation reporting distinguishes the probability of meeting the empty-count threshold from the probability of the
+complete clear-promising rule, which is labelled as such only if accuracy and stopping conditions are modelled.
+Follow-up: clear promising → prespecified confirmation before ablation, stronger confirmation standard, historical-control
+limitation reported; mixed → resolve the correctness/stopping concern before attribution work; similar or worse →
+deprioritise the bundle as a completion remedy within this allocation, start other source or controlled-input work, no
+claim that every included fix lacks behavioural effects. An invalid or watchdog-truncated run is not a completed one-pass
+result; no automatic retry.
+
+**Amendment 14d (2026-10-12, coordinator; pre-launch items resolved and screen frozen, before generation).** (1) The
+GPQA-shaped gate phase had four early stops, not three (docs 16, 19, 21, 22: 726-4,096 tokens): each has non-empty final
+content and reasoning, no request or HTTP error; the gate client stored no reply text, so "answered" means non-empty final
+content (the answer parser was not run); these questions stop at similar lengths, correctly, in the 0.9.1 record and the
+column-511 arm. Readiness intact; that phase's throughput is unusable. (2) D3 as served: on 1,000 captured records (69,344
+rows, both ranks), fp32-output dispatch on all layers; offline torch.mm(x, W.T, out_dtype=fp32) at the serving batch size
+reproduces the served logits bitwise (1,000/1,000); 0 logits outside τ_d of fp64 (max error/S 6.8e-7), 0 top-8
+disagreements; routing at serving batch size reproduces the consumed routing bitwise (69,344/69,344); 0.0075 GPU-hours.
+(3) The production image's five engine files equal the frozen candidate files, with no observer code; the check image
+differs only by additions, inert unless enabled. (4) The 66 kernel cache entries with (True, 10.0) were written during s1
+by the candidate's plans (inside s1's window; none with limit 10.0 existed before; same shapes as release keys apart from
+the limit). Gate total 1.6403 of 2.0 GPU-hours. Frozen: image sha256:08d1cb902ddb888f679b972714168bb7c0d2333b4c1865f3ebf860baa2f46548;
+combined diff 949b2301c906e0d499c17978b5adf4bd8a0ce03ed01011073c51bdb99e6ddad8; recipe
+glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234 (env.sh 3125683b01ba74a2d41745d8000fe40918c031511d8d43e098c08f8e845b15c5;
+only IMAGE differs); screen_analysis.py 9c799f260ddcc54739fea3864884f55f33cf0e2cef1fcab32758d6a4e59106cb (amendment 14c
+categories; PROVISIONAL until stated adjudication); runner gpqa-bundle-screen.sh
+e8caf211698071d7bbbd51d8d5c00a7015ec1bca26106238b55dd70a574c6746 (one pass, seed 1234, 7.5 GPU-hour watchdog, no retry).
+Power reported as P(E ≤ 2) only (0.078 no change; 0.85-0.86 0.7.0-like; 0.50 for 50% fewer); accuracy and stopping not
+modelled.
+
+**Amendment 14e (2026-10-12; screen result recorded after the frozen analysis, and operator note).** The one-pass screen
+(seed 1234, all 198 questions, original protocol, frozen image and analysis) is valid: empty replies 3 of 198, all at the
+cap, no premature stop; no regression flag and no accuracy concern; stated-answer adjudication complete (2 rows, neither
+hedged). Category under amendment 14c: SIMILAR / NO CLEAR SEPARATION (E = 3). Against pass 1 of the 0.9.1 record: 3
+rescued, 1 newly empty; against pass 1 of the column-511 arm: 1 rescued, 0 newly empty; 0.7.0 pass 1 (context): 0 empty.
+Secondary (single pass, not a decision input): raw correct 174 (record pass 1 169, arm pass 1 164, 0.7.0 pass 1 174);
+stated 176. Cost 4.84 occupied GPU-hours (ceiling 7.5). Per amendment 14c the bundle is deprioritised as a completion
+remedy within this allocation; this is not a claim that the included fixes lack behavioural effects.
+Operator note (not an authorization): the operator considers another pass warranted, because seed 1234 has shown
+seed-luck effects across the many GPQA runs performed, and will convey this to the independent assessor. No further GPU
+work is authorized by this note.

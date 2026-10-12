@@ -1,0 +1,265 @@
+{
+ "design": "one pass, 198 questions; P(E<=2), P(E=3), P(E>=4) only (amendment 14c empty-count thresholds); accuracy and stopping conditions NOT modelled: these are not P(clear promising rule)",
+ "model": {
+  "fit_0.9.1_record": {
+   "mu": 0.026137350462846553,
+   "s": 2.0417379446695296,
+   "a": 0.0533656202131195,
+   "b": 1.98837232445641,
+   "loglik": -51.96304418125749,
+   "icc_rho": 0.3287594191841682,
+   "at_bound": false,
+   "pooled_rate": 0.026936026936026935
+  },
+  "fit_0.7.0_record": {
+   "mu": 0.006734006734006734,
+   "s": 100000.0,
+   "a": 673.4006734006733,
+   "b": 99326.59932659933,
+   "loglik": -19.594432667538058,
+   "icc_rho": 9.99990000099999e-06,
+   "at_bound": true,
+   "pooled_rate": 0.006734006734006734
+  },
+  "record_total_3_passes": 16,
+  "v070_total_3_passes": 4,
+  "record_pass1_empties": 5,
+  "null_expected_per_pass": 5.27,
+  "v070_expected_per_pass_a": 1.33,
+  "v070_expected_per_pass_b": 1.33
+ },
+ "seed": 20261012,
+ "results": [
+  {
+   "alternative": "null: bundle p_q = 0.9.1 record p_q (EB posterior)",
+   "sims": 50000,
+   "mean_empties": 5.27,
+   "labels": {
+    "P_cp": "P(E <= 2) only",
+    "P_mid": "P(E == 3) only",
+    "P_sw": "P(E >= 4)",
+    "not_modelled": "accuracy and stopping conditions; not P(clear promising rule)"
+   },
+   "P_E_hist_0..10,11+": [
+    0.0027,
+    0.0171,
+    0.0584,
+    0.1172,
+    0.1755,
+    0.1938,
+    0.1759,
+    0.123,
+    0.0731,
+    0.0382,
+    0.0156,
+    0.0094
+   ],
+   "P_cp": 0.0782,
+   "mc_se_cp": 0.0012,
+   "P_mid": 0.1172,
+   "mc_se_mid": 0.0014,
+   "P_sw": 0.8046,
+   "mc_se_sw": 0.0018,
+   "P_mcn_sig": 0.0027,
+   "mc_se_mcn_sig": 0.0002
+  },
+  {
+   "alternative": "worse: 1.5 x each 0.9.1 p_q",
+   "sims": 50000,
+   "mean_empties": 7.82,
+   "labels": {
+    "P_cp": "P(E <= 2) only",
+    "P_mid": "P(E == 3) only",
+    "P_sw": "P(E >= 4)",
+    "not_modelled": "accuracy and stopping conditions; not P(clear promising rule)"
+   },
+   "P_E_hist_0..10,11+": [
+    0.0,
+    0.0008,
+    0.0048,
+    0.0176,
+    0.0458,
+    0.0896,
+    0.1364,
+    0.1655,
+    0.1706,
+    0.1417,
+    0.1014,
+    0.1257
+   ],
+   "P_cp": 0.0056,
+   "mc_se_cp": 0.0003,
+   "P_mid": 0.0176,
+   "mc_se_mid": 0.0006,
+   "P_sw": 0.9768,
+   "mc_se_sw": 0.0007,
+   "P_mcn_sig": 0.0,
+   "mc_se_mcn_sig": 0.0
+  },
+  {
+   "alternative": "(ii) uniform 50% reduction of each 0.9.1 p_q",
+   "sims": 50000,
+   "mean_empties": 2.63,
+   "labels": {
+    "P_cp": "P(E <= 2) only",
+    "P_mid": "P(E == 3) only",
+    "P_sw": "P(E >= 4)",
+    "not_modelled": "accuracy and stopping conditions; not P(clear promising rule)"
+   },
+   "P_E_hist_0..10,11+": [
+    0.0608,
+    0.1847,
+    0.2585,
+    0.2277,
+    0.1522,
+    0.0731,
+    0.0299,
+    0.01,
+    0.0025,
+    0.0005,
+    0.0001,
+    0.0
+   ],
+   "P_cp": 0.504,
+   "mc_se_cp": 0.0022,
+   "P_mid": 0.2277,
+   "mc_se_mid": 0.0019,
+   "P_sw": 0.2683,
+   "mc_se_sw": 0.002,
+   "P_mcn_sig": 0.0608,
+   "mc_se_mcn_sig": 0.0011
+  },
+  {
+   "alternative": "(iii) uniform 75% reduction of each 0.9.1 p_q",
+   "sims": 50000,
+   "mean_empties": 1.31,
+   "labels": {
+    "P_cp": "P(E <= 2) only",
+    "P_mid": "P(E == 3) only",
+    "P_sw": "P(E >= 4)",
+    "not_modelled": "accuracy and stopping conditions; not P(clear promising rule)"
+   },
+   "P_E_hist_0..10,11+": [
+    0.2603,
+    0.3591,
+    0.2393,
+    0.1026,
+    0.0298,
+    0.0072,
+    0.0015,
+    0.0001,
+    0.0001,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "P_cp": 0.8587,
+   "mc_se_cp": 0.0016,
+   "P_mid": 0.1026,
+   "mc_se_mid": 0.0014,
+   "P_sw": 0.0387,
+   "mc_se_sw": 0.0009,
+   "P_mcn_sig": 0.2603,
+   "mc_se_mcn_sig": 0.002
+  },
+  {
+   "alternative": "(i-a) 0.7.0-like: 0.7.0 EB per-question estimates, own fit",
+   "sims": 50000,
+   "mean_empties": 1.33,
+   "labels": {
+    "P_cp": "P(E <= 2) only",
+    "P_mid": "P(E == 3) only",
+    "P_sw": "P(E >= 4)",
+    "not_modelled": "accuracy and stopping conditions; not P(clear promising rule)"
+   },
+   "P_E_hist_0..10,11+": [
+    0.262,
+    0.3537,
+    0.2346,
+    0.1028,
+    0.0348,
+    0.01,
+    0.0018,
+    0.0002,
+    0.0001,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "P_cp": 0.8503,
+   "mc_se_cp": 0.0016,
+   "P_mid": 0.1028,
+   "mc_se_mid": 0.0014,
+   "P_sw": 0.0469,
+   "mc_se_sw": 0.0009,
+   "P_mcn_sig": 0.262,
+   "mc_se_mcn_sig": 0.002
+  },
+  {
+   "alternative": "(i-b) 0.7.0-like: 0.7.0 mean with the 0.9.1 fit's concentration",
+   "sims": 50000,
+   "mean_empties": 1.33,
+   "labels": {
+    "P_cp": "P(E <= 2) only",
+    "P_mid": "P(E == 3) only",
+    "P_sw": "P(E >= 4)",
+    "not_modelled": "accuracy and stopping conditions; not P(clear promising rule)"
+   },
+   "P_E_hist_0..10,11+": [
+    0.2424,
+    0.3685,
+    0.2509,
+    0.1027,
+    0.0289,
+    0.0057,
+    0.0009,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "P_cp": 0.8619,
+   "mc_se_cp": 0.0015,
+   "P_mid": 0.1027,
+   "mc_se_mid": 0.0014,
+   "P_sw": 0.0355,
+   "mc_se_sw": 0.0008,
+   "P_mcn_sig": 0.2424,
+   "mc_se_mcn_sig": 0.0019
+  },
+  {
+   "alternative": "(iv) complete removal of empties (p_q = 0)",
+   "sims": 50000,
+   "mean_empties": 0.0,
+   "labels": {
+    "P_cp": "P(E <= 2) only",
+    "P_mid": "P(E == 3) only",
+    "P_sw": "P(E >= 4)",
+    "not_modelled": "accuracy and stopping conditions; not P(clear promising rule)"
+   },
+   "P_E_hist_0..10,11+": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "P_cp": 1.0,
+   "mc_se_cp": 0.0,
+   "P_mid": 0.0,
+   "mc_se_mid": 0.0,
+   "P_sw": 0.0,
+   "mc_se_sw": 0.0,
+   "P_mcn_sig": 1.0,
+   "mc_se_mcn_sig": 0.0
+  }
+ ]
+}

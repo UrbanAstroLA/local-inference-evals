@@ -212,6 +212,70 @@ What was asked, run, found, corrected and withdrawn, in date order.
 - Proposed, not authorized: a repeatability run of stock 0.7.0's record (original image and settings, the recorded
   per-pass seeds, the original session split), with its analysis frozen before any run. Nothing is running.
 
+<a id="2026-10-12-early-morning-stage-a-verification-of-d3-d4-d5-in-progress"></a>
+
+**2026-10-12, early morning. Stage A verification of D3, D4, D5 (amendments 13-14).**
+- One observe-only server session (shipped graph mode) on the gate fixture and offline comparisons on identical captured
+  inputs. D5: omission confirmed, not exercised in this workload (resizes only during profiling). D4: omission and kernel
+  support for the limit confirmed; effect not measured. D3: the bf16 fallback is confirmed in the server.
+- Offline attempt 3 stopped at control (c): calling the router on the 64-row capture window does not reproduce the
+  consumed weights, because the served router's weights depend on batch size (new observation E1; expert selection
+  unaffected). Amendment 14, written before any D3 comparison was computed, has control (c) and the corrected comparison
+  invoke the router as serving does; the criterion stays bitwise.
+- Offline attempt 4: controls (a)-(d) pass on all 1,593 records (103,608 token × layer rows). The fp32-output computation
+  selects a different top-8 expert set on 3.15% of rows (95% over 176 requests 3.01-3.29%; over 8 histories
+  2.90-3.50%), different weights on every row; by layer 1.2-6.6%, by execution type 3.0-3.2%. The corrected computation
+  lies within τ_d of fp64 on every logit. FULL-graph decode is covered by source inspection only. Completion untested.
+- Two tooling faults (pageable capture buffer; offline mount over /run) were found by the smoke and offline steps and
+  fixed before any comparison.
+- 0.6929 of 2.0 GPU-hours (the 0.68 logged while in progress plus 0.0106 for attempt 4).
+  [Stage A](investigations/2026-10-glm53-completion/README.md#stage-a-verification-d3-d4-d5).
+
+**2026-10-12, early morning. Correctness bundle gate (amendments 14-14d).**
+- An independent assessment was adopted (amendment 14): a minimal verified bundle on 0.9.1 (D1 column-511 correction, D2
+  tail-ring positions, D3 fp32-output router, D4 SwiGLU limit 10), a gate, then one GPQA pass. D5 was left out (not
+  exercised; its backport reorders warm-up and capture); D6 is unreachable under D2. The operator authorized the gate and
+  the screen (amendment 14a).
+- s1 (all corrections, observers on) passed every check as specified apart from two: D1 on every checked row including
+  FULL-graph replays, D2 with 0 stray tail writes, D3 with fp32-output dispatch on every layer, D4 plans at 10, no
+  execution, memory or stopping errors, configuration identical to the historical 0.9.1 record.
+- Failed as specified: "D4 compiled kernels" and "P1 probe repeatable" (the 4,240- and 16,240-token probe prompts are not
+  greedy-repeatable, in the bundle and in a stock-release control run for the review). Both criteria were revised after
+  the gate data were inspected (amendment 14c): D4 by session-specific compiled-kernel evidence (66 kernels with limit 10
+  written during s1 by the candidate's plans, none before), P1 by short-prompt repeatability. The original criteria are
+  not described as met. D4 is reachable: a limit of 1 changes 6 of 6 probe outputs.
+- Before launch (amendment 14d): D3 verified as served (bitwise reproduction of the served logits on 1,000 records, 0
+  logits outside τ_d of fp64); the production image's engine files equal the frozen candidate's; the GPQA-shaped phase's
+  early stops all have non-empty final content.
+- Recorded separately: long-context greedy non-repeatability of the stock release; NaN-byte index rows 0 with the bundle
+  against thousands in the 2026-10-11 gate (the tail-ring fix inferred as the cause).
+- Correction (gate preparation): the D4 compiled-kernel check walked the plan objects for the kernel's limit fields. It had
+  been CPU-tested only with a stand-in kernel object placed in a plan; that the runtime keeps the compiled kernel objects
+  was assumed, not verified. It does not keep them, so the criterion could not be met as specified.
+- Correction (coordinator): the coordinator's first description of the probe data gave the 16,240-token prompt's
+  prefix-cache coverage as identical in both rounds. It differed in s3 and in the release control (0 vs 8,704 tokens cached) and was identical
+  only in s1. The 4,240-token prompt's coverage was identical in every session, and it diverged in every session.
+- Correction (count): the gate review (amendment 14c) counted three early stops in the GPQA-shaped phase; the client
+  records hold four (docs 16, 19, 21, 22). All four have non-empty final content.
+- 1.6403 of 2.0 GPU-hours (s1 0.7711, s3 0.4506, release control 0.4111, D3 as served 0.0075; one failed start at 0).
+  [Bundle gate](investigations/2026-10-glm53-completion/README.md#bundle-gate-d1d2d3d4-on-091).
+
+**2026-10-12, morning. One-pass GPQA screen of the bundle (amendments 14d-14e).**
+- Frozen before generation: image, combined diff, recipe, analysis and runner hashes, and resource-allocation rules by the
+  number of empty replies E of 198 (clear promising E ≤ 2 without a regression flag or accuracy concern; similar / no
+  clear separation E = 3 without either; similar or worse E ≥ 4).
+- Valid. 3 of 198 replies empty, all at the 327,680-token cap, no premature stop; no regression flag, no accuracy
+  concern; stated-answer adjudication complete (2 rows, neither hedged). Category: **SIMILAR / NO CLEAR SEPARATION**.
+- Against pass 1 (seed 1234) of the 0.9.1 record (5 empty): 3 rescued, 1 newly empty; of the column-511 arm (4 empty): 1
+  rescued, 0 newly empty; 0.7.0's pass 1 (context): 0 empty. Secondary, single pass, not a decision input: raw 174,
+  stated 176 of 198.
+- Under the frozen rules the bundle is deprioritised as a completion remedy within this allocation; this is not a claim
+  that the included corrections lack behavioural effects. The plan records an operator note: another pass is considered
+  warranted (seed-1234 luck across earlier GPQA runs), to be raised with the independent assessor; it is not an
+  authorization.
+- 4.84 of 7.5 GPU-hours. The investigation's cumulative total: 43.25 GPU-hours. Nothing further is scheduled.
+  [Screen](investigations/2026-10-glm53-completion/README.md#one-pass-gpqa-screen).
+
 ## Withdrawn, and what replaced it
 
 > **Withdrawal notice (2026-10-09).** The earlier hard-question screens (`hard-prompt-screen` v0 and v1, 2026-09-30 to
@@ -285,15 +349,8 @@ every configuration tested. Not a rate (`tools/analyze.py screen-single`).
 | GPU-hour ceiling for the completion arm | 13 | 18.5 | the estimate left out pass 1's server session; the comparator's three passes occupied 16.59 (amendment 11b) |
 | Occupied GPU-hours of the 0.9.1 K3.25 three-pass record | 16.59 | 16.63 | 16.59 ran from chain start to chain done; reconstructed from server start to stop (2026-10-11) |
 | Occupied GPU-hours of the 0.7.0 K3.25 three-pass record | about 15.5 (planning figure) | 22.97 | the planning figure was the passes 2-3 session alone; pass 1 ran in its own session (7.44) |
+| GPU-hour ceiling for the bundle gate | 1.5 | 2.0 | 1.5 was set before the gate design existed; its estimate for the two required sessions was 1.25-1.69 (amendment 14b, before any gate data) |
+| Early stops in the bundle gate's GPQA-shaped phase | three | four (docs 16, 19, 21, 22) | counted from the client records before launch (amendment 14d) |
+| Prefix-cache coverage of the 16,240-token probe prompt between rounds | identical | identical only in s1; 0 vs 8,704 tokens cached in s3 and in the release control | misstated in the coordinator's first description of the gate data |
 
 </details>
-
-### 2026-10-12, early morning: stage A verification of D3, D4, D5 (in progress)
-
-Amendments 13-13b. One observe-only server session (shipped graph mode) and offline comparisons; 0.68 of 2.0 GPU-hours.
-D5: omission confirmed, not exercised in this workload. D4: omission and kernel reachability confirmed; effect not
-measured. D3: the bf16 fallback is confirmed in the server; the comparison stopped at an exact-reproduction control
-because the served router's weights depend on batch size (new observation E1; expert selection unaffected); a correction
-of the control's router invocation awaits review. Two tooling faults (pageable capture buffer; offline mount over /run)
-were found by the smoke and offline steps and fixed before any comparison.
-[Investigation](investigations/2026-10-glm53-completion/README.md#stage-a-verification-d3-d4-d5-in-progress).

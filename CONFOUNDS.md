@@ -15,11 +15,13 @@ the runs control for it now, and its status. Only confounds this repository has 
 | [Published scores](#8-published-scores-use-other-weights-and-harnesses) | Gaps mix quantization, harness, scoring and runtime | Context only, never ranked | Stated limit |
 | [Requests in flight and the top-k route](#9-requests-in-flight-and-the-top-k-route) | Decides which pool the 511-pool slice discards, so what the model attends | Concurrency fixed per protocol and stated in labels; the completion arm matched its comparator's 8 | Measured; no measurable change in completion with the correction (one arm) |
 | [Kpool tail-ring positions omission](#10-kpool-tail-ring-positions-omission) | Other requests' keys enter completed pools, more with more requests in flight | Present in every record compared here; fix prepared, in no GPQA run | Measured; effect open |
-| [NaN-byte index rows](#11-nan-byte-index-rows) | Selected pools whose stored bytes are not valid keys | Reported separately by the gate | Measured in one run |
+| [NaN-byte index rows](#11-nan-byte-index-rows) | Selected pools whose stored bytes are not valid keys | Reported separately by the gates | Measured in two gate runs: present without the tail-ring fix, absent with it |
 | [Historical control](#12-historical-control-for-the-completion-arm) | A later run differs from a recorded baseline in more than the change | Comparator audit; analysis frozen before data | Stated limit |
-| [Router precision and routed-expert clamp](#13-router-precision-and-the-routed-expert-swiglu-clamp) | Numerical departures from upstream vLLM in every release | None | Untested |
+| [Router precision and routed-expert clamp](#13-router-precision-and-the-routed-expert-swiglu-clamp) | Numerical departures from upstream vLLM in every release | Corrections verified (router) or reachable (clamp); in no release | Computational effect measured (router); completion untested alone |
 | [Graph vs eager execution](#14-graph-vs-eager-execution-for-instrumentation) | A probe that cannot run under CUDA graphs measures in eager mode | Gate and tail-ring runs checked under the shipped graphs | Controlled for the gate |
 | [Post-completion continuation](#15-long-context-decode-vs-prefill-measures-continuation-after-the-reply) | A decode-vs-prefill bin can lie entirely after the reply ended | Stated with the measure; not used as evidence about completion | Stated limit |
+| [Long-context greedy non-repeatability](#16-long-context-greedy-non-repeatability) | Two identical long-context requests diverge, so a single pass or a repeat is not a fixed point | Short-prompt repeatability used where a control needs determinism; outcomes compared over many draws | Measured; mechanism open |
+| [Batch-size-dependent routing weights](#17-batch-size-dependent-routing-weights-e1) | The same token gets slightly different expert weights in large and small batches | Offline checks invoke the router at the serving batch size | Measured; effect on outputs untested |
 
 ## 1. Shared request seed across repeats
 
@@ -133,6 +135,9 @@ noise floor.
   130 generated tokens. Their means differ by up to about 2x; single prompts by up to about 6x
   ([`comparisons/glm53-flash-v091-decode-prefill-repeat`](comparisons/glm53-flash-v091-decode-prefill-repeat)).
 - So greedy parity cannot certify that speculative decoding is exact on this stack.
+- Short and long contexts differ: in the bundle gate's release control, 124-158-token prompts repeated bitwise for 96
+  greedy tokens within one server session, while 4,240- and 16,240-token prompts diverged at token 3
+  ([16](#16-long-context-greedy-non-repeatability)).
 
 </details>
 
@@ -286,8 +291,9 @@ stay finite (inferred: its max with 0 maps NaN dot products to 0), so such pools
 **Control.** None in the released engines. The gate reported them separately from its selection checks. The column-511
 correction does not repair them.
 
-**Status.** Measured in one gate run; not measurable from GPQA outputs. They limit what a negative completion result
-for the column-511 correction could exclude.
+**Status.** Measured in two gate runs: present in the 2026-10-11 gate (column-511 correction only), absent in the
+2026-10-12 bundle gate (with the tail-ring fix). Not measurable from GPQA outputs. They limit what the negative
+completion result for the column-511 correction alone could exclude; the bundle screen ran without them (inferred).
 
 <details>
 <summary>Evidence</summary>
@@ -297,6 +303,9 @@ for the column-511 correction could exclude.
 - The gate attributes them, by inference, to the tail-ring family: mainly on rank 1, persisting in prefix-cached blocks.
 - In stage 2 the same family showed as 16 index-K pools byte-identical across two different requests.
 - Receipts: [gate result](investigations/2026-10-glm53-completion/gate/RESULT.md).
+- Bundle gate (2026-10-12; column-511, tail-ring, router and clamp corrections), the same fp64 re-score: 0 such rows in
+  every branch on both ranks. The tail-ring fix (D2) is inferred as the cause; it was not varied alone
+  ([bundle gate](investigations/2026-10-glm53-completion/bundle/README.md)).
 
 </details>
 
@@ -335,11 +344,19 @@ is not enabled, so routing logits are computed in bf16 although the checkpoint a
 it for this family, vllm#54048). The routed experts never receive the checkpoint's `swiglu_limit` (10); shared experts
 and dense layers are clamped.
 
-**Control.** None. Both are the same in all releases, so neither can explain a difference between 0.7.0 and 0.9.1;
-both can enter any comparison with other runtimes or with published scores ([8](#8-published-scores-use-other-weights-and-harnesses)).
+**Control.** None in the released engines. Both are the same in all releases, so neither can explain a difference
+between 0.7.0 and 0.9.1; both can enter any comparison with other runtimes or with published scores
+([8](#8-published-scores-use-other-weights-and-harnesses)).
 
-**Status.** Untested. An earlier clamp comparison patched a path this quant does not run and is not evidence either
-way ([upstream comparison](investigations/2026-10-glm53-completion/README.md#comparison-with-upstream-vllm)).
+**Status.** Router: computational effect measured. On 1,593 captured records of 0.9.1 (103,608 token × layer rows), the
+bf16 logits select a different top-8 expert set than the fp32-output computation on 3.15% of rows (95% over requests
+3.01-3.29%) and different weights on every row; the correction is within tolerance of fp64, offline and as served
+([stage A](investigations/2026-10-glm53-completion/README.md#stage-a-verification-d3-d4-d5)). Clamp: the limit reaches the
+served kernels (a limit of 1 changes outputs); whether the checkpoint's 10 engages was not measured. Completion: one GPQA
+pass with both corrections and the two indexer fixes together left 3 of 198 empty, similar to the baselines with no
+clear separation ([screen](investigations/2026-10-glm53-completion/README.md#one-pass-gpqa-screen)); neither was tested
+alone. An earlier clamp comparison patched a path this quant does not run and is not evidence either way
+([upstream comparison](investigations/2026-10-glm53-completion/README.md#comparison-with-upstream-vllm)).
 
 ## 14. Graph vs eager execution for instrumentation
 
@@ -370,3 +387,53 @@ long-context bins are not used as evidence about non-completion.
 **Status.** Stated limit. Step 4 kept no traces (the same pattern is likely, not verified). Where the 2,600-token v1
 traces cross the end of the reply was not audited
 ([amendment 7](investigations/2026-10-glm53-completion/PLAN.md#dated-amendments)).
+
+## 16. Long-context greedy non-repeatability
+
+**Effect.** On the stock tpurtell 0.9.1 release, two identical long-context requests sent one at a time with greedy
+decoding diverge within a few tokens; short prompts do not. Any single-pass comparison, and any repeat used as a control,
+inherits this: a matched seed or a greedy rerun is not a fixed point at long context, so two passes can differ without
+any change to the engine.
+
+**Control.** Where a control needs determinism (the bundle gate's D4 probe), only short prompts are used, where the
+release repeats bitwise. Completion and accuracy are compared over many draws and passes, never by single replies.
+
+**Status.** Measured in one release-control session and two bundle sessions. Mechanism not identified; no claim of a
+near-tie mechanism, of long-context numerical equivalence between builds, or that the bundle adds no variability.
+
+<details>
+<summary>Evidence</summary>
+
+- Release control (bundle gate, 2026-10-12): 4 GPQA prompts of 124-158 tokens, 96 greedy tokens, two rounds: bitwise
+  identical. Long-context prompts of 4,240 and 16,240 tokens: first divergence at token 3, with nonzero log-probability
+  differences on every token before it. The 4,240-token prompt had identical prefix-cache coverage (0 cached) in both
+  rounds of every session; the 16,240-token prompt's coverage differed between rounds in the release control and in s3,
+  and was identical only in s1.
+- Bundle sessions: first divergence at tokens 3-75.
+- At divergence the chosen token's probability was 0.30-0.66; only the chosen token's log-probability was recorded, so the
+  margin to the runner-up is bounded, not measured.
+- Receipts: [bundle gate](investigations/2026-10-glm53-completion/bundle/README.md) (`gate-runs/probe-divergence.json`;
+  token strings withheld because the long prompts are model reasoning on GPQA questions).
+
+</details>
+
+## 17. Batch-size-dependent routing weights (E1)
+
+**Effect.** On 0.9.1 the served fused MoE router computes routing weights differently by batch row count: the same token
+gets slightly different expert weights above about 1,024 rows than below. Expert ids were unchanged on the captured rows.
+
+**Control.** Offline reproductions invoke the router as serving does, at the serving batch size (stage A from offline
+attempt 4; the bundle gate's D3 check). No workaround entered the correctness bundle.
+
+**Status.** Measured in stage A; effect on outputs and completion untested. Inferred exposure: prefill chunks only, since
+decode batches here stay far below 1,024 rows.
+
+<details>
+<summary>Evidence</summary>
+
+- Stage A: the switch lies between 1,025 and 1,139 rows. Against an fp64 recomputation, median relative weight error
+  1.2e-7 at ≤ 1,024 rows (12,408 rows) and 1.4e-6 above (91,200 rows; maximum 1.1e-3).
+- Found because a router invocation on a 64-row window failed a bitwise control that the serving-sized invocation
+  passes on every record ([stage A](investigations/2026-10-glm53-completion/README.md#stage-a-verification-d3-d4-d5)).
+
+</details>

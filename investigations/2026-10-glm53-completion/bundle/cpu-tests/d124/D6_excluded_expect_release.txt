@@ -1,0 +1,9 @@
+A  tail spec contract: max_num_blocks_per_req = 1, max_admission_blocks_per_request = 1
+A  warm-up reservation, lookahead 0: tokens [5, 9, 13, 17, 21, 25] -> tail blocks [1, 2, 2, 3, 3, 4]
+A  warm-up reservation, lookahead 3: tokens [5, 9, 13, 17, 21, 25] -> tail blocks [1, 2, 2, 3, 3, 4]
+A  warm-up reservation, lookahead 6: tokens [5, 9, 13, 17, 21, 25] -> tail blocks [2, 2, 3, 3, 4, 4]
+B  row after warm-up: [483, 484, 485, 486]; after a real request reuses it: [77, 484, 485, 486] (num_blocks = 1); BlockTables methods that clear rows: none
+C  generic mapping, positions 0-23 -> blocks [77, 77, 77, 77, 77, 77, 77, 77, 484, 484, 484, 484, 484, 484, 484, 484, 485, 485, 485, 485, 485, 485, 485, 485]
+D  circular mapping (positions passed), positions 0-23 -> blocks [77, 77, 77, 77, 77, 77, 77, 77, 77, 77, 77, 77, 77, 77, 77, 77, 77, 77, 77, 77, 77, 77, 77, 77]
+
+REPRODUCED: warm-up reserves up to 4 tail blocks per request (contract 1); the stale id 484 stays in column 1 and the generic mapping writes positions 8-15 into it; the circular mapping does not read it

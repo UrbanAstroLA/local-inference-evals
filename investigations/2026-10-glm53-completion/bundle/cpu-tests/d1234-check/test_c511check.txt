@@ -1,0 +1,8 @@
+PASS {"test": "eager_fix", "ok": true, "calls": 1, "rows_valid": 7, "rows_full": 6, "rows_unfilled": 1, "rows_nan": 0, "rows_dup": 0, "rows_nvalid_mismatch": 0, "rows_id_out_of_range": 0, "rows_slot_score_inconsistent": 0, "pre_lowest": 0, "pre_tie": 0, "pre_not_lowest": 6, "pre_below_1_3": 0, "pre_below_4_31": 0, "pre_below_ge32": 6, "pre_unfilled_valid_in_col511": 1, "post_set_changed": 0, "post_lowest": 6, "post_tie": 0, "post_not_lowest": 0, "post_unfilled_valid_in_col511": 0, "consumer_rows_checked": 7, "consumer_mismatch": 0, "stale_digest": 0, "ind_rows": 1, "ind_pre_ok_exact": 0, "ind_pre_ok_tol": 0, "ind_post_ok_exact": 1, "ind_post_ok_tol": 1, "ind_kernel_pools_checked": 512, "ind_kernel_out_of_bound": 0, "ind_nan_rows": 0, "seq_pool_mismatch": 0, "post_score_lookup_mismatch": 0, "rows_full_nan_excluded": 0}
+PASS {"test": "neg_nofix_detected", "ok": true, "post_not_lowest": 6}
+PASS {"test": "neg_set_change_detected", "ok": true, "post_set_changed": 1}
+PASS {"test": "neg_consumer_stale_detected", "ok": true, "consumer_mismatch": 7}
+PASS {"test": "nan_row_separated", "ok": true, "rows_nan": 1}
+PASS {"test": "stale_digest_detects_repeat", "ok": true, "stale_digest": 1}
+PASS {"test": "prefill_helper", "ok": true, "source": "cpu-emulation", "pre_c511": [511, 511, 138, 576, -1, 572], "pre_not_lowest": 5, "post_not_lowest": 0, "rows_full": 5, "rows_unfilled": 1, "pre_lowest": 0, "post_score_lookup_mismatch": 0}
+7 passed, 0 failed: []

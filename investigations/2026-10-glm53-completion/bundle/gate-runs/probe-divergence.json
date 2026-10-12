@@ -1,0 +1,170 @@
+{
+ "rel-release-a1/q0": {
+  "first_divergence": null,
+  "pre_div_max_abs_dlogprob": 0.0,
+  "pre_div_steps_with_nonzero_dlogprob": "0/96",
+  "token0_abs_dlogprob": 0.0
+ },
+ "rel-release-a1/q1": {
+  "first_divergence": null,
+  "pre_div_max_abs_dlogprob": 0.0,
+  "pre_div_steps_with_nonzero_dlogprob": "0/96",
+  "token0_abs_dlogprob": 0.0
+ },
+ "rel-release-a1/q2": {
+  "first_divergence": null,
+  "pre_div_max_abs_dlogprob": 0.0,
+  "pre_div_steps_with_nonzero_dlogprob": "0/96",
+  "token0_abs_dlogprob": 0.0
+ },
+ "rel-release-a1/q3": {
+  "first_divergence": null,
+  "pre_div_max_abs_dlogprob": 0.0,
+  "pre_div_steps_with_nonzero_dlogprob": "0/96",
+  "token0_abs_dlogprob": 0.0
+ },
+ "rel-release-a1/r7": {
+  "first_divergence": 3,
+  "pre_div_max_abs_dlogprob": 0.0527,
+  "pre_div_steps_with_nonzero_dlogprob": "3/3",
+  "token0_abs_dlogprob": 0.0,
+  "round1": {
+   "token": "<withheld>",
+   "p": 0.491
+  },
+  "round2": {
+   "token": "<withheld>",
+   "p": 0.656
+  },
+  "abs_dlogprob_at_div": 0.29,
+  "steps_before_div_with_chosen_p_below_0_6": 1
+ },
+ "rel-release-a1/r5": {
+  "first_divergence": 3,
+  "pre_div_max_abs_dlogprob": 0.1261,
+  "pre_div_steps_with_nonzero_dlogprob": "3/3",
+  "token0_abs_dlogprob": 0.0588,
+  "round1": {
+   "token": "<withheld>",
+   "p": 0.414
+  },
+  "round2": {
+   "token": "<withheld>",
+   "p": 0.313
+  },
+  "abs_dlogprob_at_div": 0.279,
+  "steps_before_div_with_chosen_p_below_0_6": 0
+ },
+ "s1-d1234-a1/q0": {
+  "first_divergence": null,
+  "pre_div_max_abs_dlogprob": 0.0,
+  "pre_div_steps_with_nonzero_dlogprob": "0/96",
+  "token0_abs_dlogprob": 0.0
+ },
+ "s1-d1234-a1/q1": {
+  "first_divergence": null,
+  "pre_div_max_abs_dlogprob": 0.0,
+  "pre_div_steps_with_nonzero_dlogprob": "0/96",
+  "token0_abs_dlogprob": 0.0
+ },
+ "s1-d1234-a1/q2": {
+  "first_divergence": null,
+  "pre_div_max_abs_dlogprob": 0.0,
+  "pre_div_steps_with_nonzero_dlogprob": "0/96",
+  "token0_abs_dlogprob": 0.0
+ },
+ "s1-d1234-a1/q3": {
+  "first_divergence": null,
+  "pre_div_max_abs_dlogprob": 0.0,
+  "pre_div_steps_with_nonzero_dlogprob": "0/96",
+  "token0_abs_dlogprob": 0.0
+ },
+ "s1-d1234-a1/r7": {
+  "first_divergence": 75,
+  "pre_div_max_abs_dlogprob": 0.16,
+  "pre_div_steps_with_nonzero_dlogprob": "74/75",
+  "token0_abs_dlogprob": 0.0,
+  "round1": {
+   "token": "<withheld>",
+   "p": 0.558
+  },
+  "round2": {
+   "token": "<withheld>",
+   "p": 0.576
+  },
+  "abs_dlogprob_at_div": 0.032,
+  "steps_before_div_with_chosen_p_below_0_6": 3
+ },
+ "s1-d1234-a1/r5": {
+  "first_divergence": 3,
+  "pre_div_max_abs_dlogprob": 0.1465,
+  "pre_div_steps_with_nonzero_dlogprob": "3/3",
+  "token0_abs_dlogprob": 0.0217,
+  "round1": {
+   "token": "<withheld>",
+   "p": 0.296
+  },
+  "round2": {
+   "token": "<withheld>",
+   "p": 0.348
+  },
+  "abs_dlogprob_at_div": 0.159,
+  "steps_before_div_with_chosen_p_below_0_6": 0
+ },
+ "s3-d1234-a1/q0": {
+  "first_divergence": null,
+  "pre_div_max_abs_dlogprob": 0.0,
+  "pre_div_steps_with_nonzero_dlogprob": "0/96",
+  "token0_abs_dlogprob": 0.0
+ },
+ "s3-d1234-a1/q1": {
+  "first_divergence": null,
+  "pre_div_max_abs_dlogprob": 0.0,
+  "pre_div_steps_with_nonzero_dlogprob": "0/96",
+  "token0_abs_dlogprob": 0.0
+ },
+ "s3-d1234-a1/q2": {
+  "first_divergence": null,
+  "pre_div_max_abs_dlogprob": 0.0,
+  "pre_div_steps_with_nonzero_dlogprob": "0/96",
+  "token0_abs_dlogprob": 0.0
+ },
+ "s3-d1234-a1/q3": {
+  "first_divergence": null,
+  "pre_div_max_abs_dlogprob": 0.0,
+  "pre_div_steps_with_nonzero_dlogprob": "0/96",
+  "token0_abs_dlogprob": 0.0
+ },
+ "s3-d1234-a1/r7": {
+  "first_divergence": 23,
+  "pre_div_max_abs_dlogprob": 0.256,
+  "pre_div_steps_with_nonzero_dlogprob": "23/23",
+  "token0_abs_dlogprob": 0.0749,
+  "round1": {
+   "token": "<withheld>",
+   "p": 0.323
+  },
+  "round2": {
+   "token": "<withheld>",
+   "p": 0.318
+  },
+  "abs_dlogprob_at_div": 0.015,
+  "steps_before_div_with_chosen_p_below_0_6": 6
+ },
+ "s3-d1234-a1/r5": {
+  "first_divergence": 3,
+  "pre_div_max_abs_dlogprob": 0.1364,
+  "pre_div_steps_with_nonzero_dlogprob": "3/3",
+  "token0_abs_dlogprob": 0.0736,
+  "round1": {
+   "token": "<withheld>",
+   "p": 0.326
+  },
+  "round2": {
+   "token": "<withheld>",
+   "p": 0.329
+  },
+  "abs_dlogprob_at_div": 0.009,
+  "steps_before_div_with_chosen_p_below_0_6": 1
+ }
+}

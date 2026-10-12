@@ -1,0 +1,253 @@
+{
+ "run": "<runs>/bundle/gate-runs/s1-d1234-a1",
+ "mode": "s1",
+ "bundle": "d1234",
+ "checks": {
+  "V1 client completed every planned phase": {
+   "ok": true,
+   "detail": "phases seen ['D-rep0', 'D-rep1', 'F-rep0', 'F-rep1', 'F-rep2', 'F-rep3', 'G', 'P', 'Q', 'Qreuse', 'S-rep0', 'S-rep1']..."
+  },
+  "V2 zero request errors": {
+   "ok": true,
+   "detail": "0 of 140"
+  },
+  "V3 fixed-length requests finish by length": {
+   "ok": true,
+   "detail": "0 of 88 not 'length'"
+  },
+  "V4 no stopping errors (finish not stop/length, or stop with zero tokens)": {
+   "ok": true,
+   "detail": "odd finishes 0, zero-token stops 0, of 52 free-running requests"
+  },
+  "V5 server log free of execution, memory and engine errors": {
+   "ok": true,
+   "detail": "{\"traceback\": 0, \"illegal_memory_access\": 0, \"cuda_error\": 0, \"oom\": 0, \"workspace_locked\": 0, \"assertion\": 0, \"preemption\": 0, \"nan_warn\": 0, \"engine_dead\": 0}"
+  },
+  "V6 one server start (no restart)": {
+   "ok": true,
+   "detail": "non-default args lines 1"
+  },
+  "V7 effective configuration = historical record (args, engine config, graph captures 11/9/9)": {
+   "ok": true,
+   "detail": "identical [('23', '23'), ('33', '33')]; graphs [('Capturing CUDA graphs (PIECEWISE)', '11', '11'), ('Capturing CUDA graphs (FULL)', '9', '9'), ('Capturing dflash2 CUDA graphs (FULL)', '9', '9')]; VLLM env only here ['[]']"
+  },
+  "V9 served engine files = the frozen bundle files (sha256 prefixes)": {
+   "ok": true,
+   "detail": "{\"sparse_attn_indexer_kpool.py\": [\"fae1127c\", \"fae1127c\"], \"indexer.py\": [\"00989c50\", \"00989c50\"], \"mamba_hybrid.py\": [\"049238f9\", \"049238f9\"], \"exl3.py\": [\"b40344e2\", \"b40344e2\"], \"gate_linear.py\": [\"02ba8104\", \"02ba8104\"]}"
+  },
+  "D1 column-511: lowest selected pool in column 511 on every checked row, set unchanged, consumers read it": {
+   "ok": true,
+   "detail": "violations {}; fp64 post-ok/rows {'decode_fused|none': (3234, 3234), 'decode_tiled|none': (1859, 1859), 'prefill|none': (10010, 10010), 'decode_fused|piecewise': (0, 0), 'decode_fused|full': (47069, 47069), 'decode_tiled|full': (28237, 28237)}"
+  },
+  "D1 coverage: decode fused + decode tiled + prefill observed, incl. FULL-graph replays; FULL reconciliation; 0 checker errors / eager fallbacks": {
+   "ok": true,
+   "detail": "branches ['decode_fused', 'decode_tiled', 'prefill'], modes ['capture_phase', 'full', 'none', 'piecewise'], reconciliation True, errors+fallbacks 0, ranks ['0', '1']"
+  },
+  "D2 tail ring: circular mapping used; 0 null-block, foreign, attention-block, tail collisions, divergence, guard errors": {
+   "ok": true,
+   "detail": "{\"0\": [\"compute_kpool_tail_slot_mapping\", {\"writes\": 998640, \"null_alias\": 0, \"foreign\": 0, \"attn_collision\": 0, \"tail_collision\": 0, \"shadow_divergence\": 0, \"stale_col_rows\": 16}], \"1\": [\"compute_kpool_tail_slot_mapping\", {\"writes\": 832200, \"null_alias\": 0, \"foreign\": 0, \"attn_collision\": 0, \"tail_collision\": 0, \"shadow_divergence\": 0, \"stale_col_rows\": 16}]}"
+  },
+  "D3 router: every layer on both ranks dispatches tier 5; served logits not bf16-valued (<= 0.1% of rows)": {
+   "ok": true,
+   "detail": "tiers {'0': ['5 torch.mm(out_dtype=fp32)'], '1': ['5 torch.mm(out_dtype=fp32)']}; rows 69344, bf16-valued share 0.0; by batch kind {'prefill_only': {'rows': 32856, 'rows_bf16_valued': 0}, 'mixed': {'rows': 36488, 'rows_bf16_valued': 0}}"
+  },
+  "D4 plans: layer limit 10, every B12x plan (caps / launch plan / core) carries 10.0 on both ranks; projection-mixed EXL3 path": {
+   "ok": true,
+   "detail": "plans [(0, 'trellis_plan', 10.0, 10.0, 10.0), (0, 'prefill_plan', 10.0, 10.0, 10.0), (0, 'trellis_plan', 10.0, 10.0, 10.0), (0, 'prefill_plan', 10.0, 10.0, 10.0), (0, 'trellis_plan', 10.0, 10.0, 10.0), (0, 'prefill_plan', 10.0, 10.0, 10.0)]"
+  },
+  "D4 compiled kernels: plan-object walk finds has_swiglu_limit True and only the value 10.0 (both ranks)": {
+   "ok": false,
+   "detail": "[('_rank_sliced_runtime', 6, ['10.0']), ('_rank_sliced_runtime', 6, ['10.0'])]"
+  },
+  "O1 verify13 capture healthy (installed both ranks, records only from eager forwards, no hook errors)": {
+   "ok": true,
+   "detail": "summaries 48, hook errors 0"
+  },
+  "P1 D4 probe repeatable within the session (both rounds identical on all 6 prompts)": {
+   "ok": false,
+   "detail": "{\"q0\": {\"1\": [\"e705960ca1e4\", 96], \"2\": [\"e705960ca1e4\", 96]}, \"q1\": {\"1\": [\"1854a9629800\", 96], \"2\": [\"1854a9629800\", 96]}, \"q2\": {\"1\": [\"3ecf3c5b523d\", 96], \"2\": [\"3ecf3c5b523d\", 96]}, \"q3\": {\"1\": [\"a997a1718d15\", 96], \"2\": [\"a997a1718d15\", 96]}, \"r7\": {\"1\": [\"05ce6ba2753e\", 96], \"2\": [\"641bcd763cfa\", 96]}, \"r5\": {\"1\": [\"57d5fdf42792\", 96], \"2\": [\"b5b87b6842d8\", 96]}}"
+  }
+ },
+ "info": {
+  "empty_replies_short_context": 17,
+  "kv_pool_tokens": [
+   4707515
+  ],
+  "throughput_T8_F4": [
+   82.2,
+   55.1
+  ],
+  "throughput_ratio_vs_reference": {
+   "tailguard graph-a1 (release + tail guard)": [
+    0.931,
+    0.929
+   ],
+   "tailfix U-graph-a1 (D2 U + tail guard)": [
+    0.928,
+    0.923
+   ]
+  },
+  "G_aggregate_tok_s": 244.7,
+  "serverlog_mean_gen_tok_s_8plus_running": 251.0,
+  "s2_needed_for_pricing": true,
+  "D1_capture_phase_counts": {
+   "decode_fused|capture_phase": {
+    "calls": 143,
+    "rows_valid": 77,
+    "rows_full": 0,
+    "rows_unfilled": 77,
+    "rows_nan": 77,
+    "rows_full_nan_excluded": 0,
+    "rows_dup": 0,
+    "rows_nvalid_mismatch": 0,
+    "rows_id_out_of_range": 0,
+    "rows_slot_score_inconsistent": 0,
+    "pre_lowest": 0,
+    "pre_tie": 0,
+    "pre_not_lowest": 0,
+    "pre_below_1_3": 0,
+    "pre_below_4_31": 0,
+    "pre_below_ge32": 0,
+    "pre_unfilled_valid_in_col511": 0,
+    "post_set_changed": 0,
+    "post_lowest": 0,
+    "post_tie": 0,
+    "post_not_lowest": 0,
+    "post_unfilled_valid_in_col511": 77,
+    "consumer_rows_checked": 77,
+    "consumer_mismatch": 0,
+    "stale_digest": 0,
+    "ind_rows": 0,
+    "ind_pre_ok_exact": 0,
+    "ind_pre_ok_tol": 0,
+    "ind_post_ok_exact": 0,
+    "ind_post_ok_tol": 0,
+    "ind_kernel_pools_checked": 0,
+    "ind_kernel_out_of_bound": 0,
+    "ind_nan_rows": 0,
+    "seq_pool_mismatch": 77,
+    "post_score_lookup_mismatch": 0
+   },
+   "decode_tiled|capture_phase": {
+    "calls": 198,
+    "rows_valid": 1254,
+    "rows_full": 0,
+    "rows_unfilled": 1254,
+    "rows_nan": 646,
+    "rows_full_nan_excluded": 0,
+    "rows_dup": 0,
+    "rows_nvalid_mismatch": 0,
+    "rows_id_out_of_range": 0,
+    "rows_slot_score_inconsistent": 0,
+    "pre_lowest": 0,
+    "pre_tie": 0,
+    "pre_not_lowest": 0,
+    "pre_below_1_3": 0,
+    "pre_below_4_31": 0,
+    "pre_below_ge32": 0,
+    "pre_unfilled_valid_in_col511": 0,
+    "post_set_changed": 0,
+    "post_lowest": 0,
+    "post_tie": 0,
+    "post_not_lowest": 0,
+    "post_unfilled_valid_in_col511": 646,
+    "consumer_rows_checked": 1254,
+    "consumer_mismatch": 0,
+    "stale_digest": 22,
+    "ind_rows": 0,
+    "ind_pre_ok_exact": 0,
+    "ind_pre_ok_tol": 0,
+    "ind_post_ok_exact": 0,
+    "ind_post_ok_tol": 0,
+    "ind_kernel_pools_checked": 0,
+    "ind_kernel_out_of_bound": 0,
+    "ind_nan_rows": 0,
+    "seq_pool_mismatch": 1254,
+    "post_score_lookup_mismatch": 0
+   }
+  },
+  "D1_nan_index_rows": {
+   "decode_fused|none": 0,
+   "decode_tiled|none": 0,
+   "prefill|none": 0,
+   "decode_fused|piecewise": 0,
+   "decode_fused|full": 0,
+   "decode_tiled|full": 0,
+   "decode_fused|capture_phase": 0,
+   "decode_tiled|capture_phase": 0
+  },
+  "D1_unfilled_rows": {
+   "decode_fused|none": 440,
+   "decode_tiled|none": 4752,
+   "prefill|none": 428065,
+   "decode_fused|piecewise": 220,
+   "decode_fused|full": 72391,
+   "decode_tiled|full": 1074469,
+   "decode_fused|capture_phase": 77,
+   "decode_tiled|capture_phase": 1254
+  },
+  "D5_classification": "not exercised in this workload",
+  "probe": {
+   "q0": {
+    "1": [
+     "e705960ca1e4",
+     96
+    ],
+    "2": [
+     "e705960ca1e4",
+     96
+    ]
+   },
+   "q1": {
+    "1": [
+     "1854a9629800",
+     96
+    ],
+    "2": [
+     "1854a9629800",
+     96
+    ]
+   },
+   "q2": {
+    "1": [
+     "3ecf3c5b523d",
+     96
+    ],
+    "2": [
+     "3ecf3c5b523d",
+     96
+    ]
+   },
+   "q3": {
+    "1": [
+     "a997a1718d15",
+     96
+    ],
+    "2": [
+     "a997a1718d15",
+     96
+    ]
+   },
+   "r7": {
+    "1": [
+     "05ce6ba2753e",
+     96
+    ],
+    "2": [
+     "641bcd763cfa",
+     96
+    ]
+   },
+   "r5": {
+    "1": [
+     "57d5fdf42792",
+     96
+    ],
+    "2": [
+     "b5b87b6842d8",
+     96
+    ]
+   }
+  }
+ }
+}

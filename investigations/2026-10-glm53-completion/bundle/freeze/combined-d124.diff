@@ -1,0 +1,149 @@
+--- a/vllm/model_executor/layers/quantization/exl3.py
++++ b/vllm/model_executor/layers/quantization/exl3.py
+@@ -2751,6 +2751,7 @@
+                 force_tile_config=mixed["tile_config"],
+                 rotation_input_dtype=("bf16" if x.dtype == torch.bfloat16 else "fp16"),
+                 route_ids_dtype=topk_ids.dtype,
++                swiglu_limit=getattr(layer, "swiglu_limit", None),
+             )
+             return {
+                 "capacity": capacity,
+@@ -2966,6 +2967,9 @@
+                     if bf16_epilogue
+                     else torch.float32
+                 ),
++                # Routed-expert SwiGLU clamp from the model config
++                # (swiglu_limit); FusedMoE stores it on the layer.
++                swiglu_limit=getattr(layer, "swiglu_limit", None),
+                 **mixed_launch_caps,
+             )
+             plan = api.plan(caps)
+--- a/vllm/model_executor/layers/sparse_attn_indexer_kpool.py
++++ b/vllm/model_executor/layers/sparse_attn_indexer_kpool.py
+@@ -60,6 +60,35 @@
+ MXFP4_BLOCK_SIZE = 32
+ 
+ 
++def _move_lowest_selected_pool_last(
++    pool_topk: torch.Tensor, pool_scores: torch.Tensor
++) -> None:
++    """col511-fix: the decode branch keeps pool_topk[:, : select_k - 1], and no
++    b12x top-k route orders its output, so move each row's lowest-scoring selected pool
++    into the last column (swap). The selected set is unchanged. Fixed shapes, no host
++    sync (CUDA-graph safe). Unfilled slots (-1, score -inf) are lowest and go last first.
++    """
++    last = pool_topk.shape[1] - 1
++    low = torch.argmin(pool_scores, dim=1, keepdim=True)
++    low_ids = torch.gather(pool_topk, 1, low)
++    pool_topk.scatter_(1, low, pool_topk[:, last:].clone())
++    pool_topk[:, last:] = low_ids
++
++
++def _prefill_selected_pool_scores(
++    logits: torch.Tensor, pool_topk: torch.Tensor, row_starts: torch.Tensor
++) -> torch.Tensor:
++    """col511-fix (prefill): top_k_per_row_prefill returns pool ids relative to
++    each row's start and leaves rows with exactly select_k candidates in index order, so
++    gather the selected pools' scores from the logits it ranked. Unfilled slots (-1) get
++    -inf. Fixed shapes, no host sync.
++    """
++    ids = pool_topk.to(torch.int64)
++    cols = ids.clamp(min=0) + row_starts[: ids.shape[0]].to(torch.int64)[:, None]
++    scores = torch.gather(logits, 1, cols.clamp(max=logits.shape[1] - 1))
++    return torch.where(ids >= 0, scores, torch.full_like(scores, float("-inf")))
++
++
+ def _use_b12x_kpool_indexer() -> bool:
+     raw = os.environ.get("VLLM_USE_B12X_KPOOL_INDEXER")
+     if raw is not None:
+@@ -630,6 +659,12 @@
+                     row_starts=chunk.cu_seqlen_ks,
+                 )
+ 
++            if index_kpool > 1 and positions is not None and dcp_world_size == 1:
++                # col511-fix (prefill): the slice below keeps select_k - 1 pools.
++                _move_lowest_selected_pool_last(
++                    pool_topk,
++                    _prefill_selected_pool_scores(logits, pool_topk, chunk.cu_seqlen_ks),
++                )
+             if index_kpool > 1:
+                 pool_ids = pool_topk.to(torch.int64)
+                 if positions is not None:
+@@ -898,13 +933,12 @@
+                 cp_kv_cache_interleave_size = int(
+                     cfg.parallel_config.cp_kv_cache_interleave_size
+                 )
+-            topk_scores = None
+-            if dcp_world_size > 1:
+-                topk_scores = torch.empty(
+-                    (num_rows, select_k),
+-                    dtype=torch.float32,
+-                    device=pool_topk.device,
+-                )
++            # col511-fix: request the selected scores on every DCP size.
++            topk_scores = torch.empty(
++                (num_rows, select_k),
++                dtype=torch.float32,
++                device=pool_topk.device,
++            )
+             _run_b12x_paged_topk(
+                 q_fp8=padded_q_quant_decode_tokens.reshape(
+                     num_rows, *padded_q_quant_decode_tokens.shape[2:]
+@@ -929,6 +963,7 @@
+                 dcp_rank=dcp_rank,
+                 cp_kv_cache_interleave_size=cp_kv_cache_interleave_size,
+             )
++            _move_lowest_selected_pool_last(topk_dst, topk_scores)
+         else:
+             logits = fp8_fp4_paged_mqa_logits(
+                 (padded_q_quant_cast, padded_q_scale),
+--- a/vllm/v1/attention/backends/mla/indexer.py
++++ b/vllm/v1/attention/backends/mla/indexer.py
+@@ -551,9 +551,10 @@
+     ``slot = own_block * kpool + pos % kpool`` instead, which is the layout
+     the tail kernels and ``KpoolTailManager`` are designed around.
+ 
+-    Pure torch (no Triton, no device sync): the indexer op consumes the tail
+-    slot mapping on its eager break, so the returned tensor need not be the
+-    persistent ``BlockTables`` buffer.
++    Pure torch (no Triton, no device sync). The indexer op is not an eager
++    break under FULL CUDA graphs, so the caller copies the result into the
++    persistent per-group slot-mapping buffer that replayed graphs read.
++    Requests on the null block (dummy and padding rows) get PAD (-1).
+     """
+     out = slot_mapping.clone()
+     if num_actual_tokens == 0:
+@@ -565,7 +566,10 @@
+     req = req.clamp_(min=0, max=num_reqs - 1)
+     own_block = block_table[:num_reqs, 0].index_select(0, req).to(torch.int64)
+     pos = positions[:num_actual_tokens].to(torch.int64)
+-    out[:num_actual_tokens] = own_block * kpool + torch.remainder(pos, kpool)
++    # Every scheduled request owns a tail block; the runners give dummy and
++    # padding requests the null block, which must never be written.
++    slots = own_block * kpool + torch.remainder(pos, kpool)
++    out[:num_actual_tokens] = torch.where(own_block != 0, slots, -1)
+     return out
+ 
+ 
+@@ -623,6 +627,11 @@
+                 common_attn_metadata.num_reqs,
+                 self.kv_cache_spec.block_size,
+             )
++            # FULL CUDA graph replay reads the capture-time address, so the
++            # circular mapping must live in the persistent per-group buffer
++            # (a view of BlockTables.slot_mappings), not in a fresh tensor.
++            common_attn_metadata.slot_mapping.copy_(slot_mapping)
++            slot_mapping = common_attn_metadata.slot_mapping
+         return DeepseekV32IndexerMetadata(
+             seq_lens=common_attn_metadata.seq_lens,
+             max_seq_len=common_attn_metadata.max_seq_len,
+--- a/vllm/v1/worker/gpu/model_states/mamba_hybrid.py
++++ b/vllm/v1/worker/gpu/model_states/mamba_hybrid.py
+@@ -364,6 +364,7 @@
+             kv_cache_config=kv_cache_config,
+             seq_lens_cpu_upper_bound=seq_lens_cpu_upper_bound,
+             dcp_local_seq_lens=input_batch.dcp_local_seq_lens,
++            positions=input_batch.positions,
+             model_specific_attn_metadata=mamba_attn_metadata,
+             for_cudagraph_capture=for_capture,
+             rswa_prefix_lens=input_batch.prompt_lens,

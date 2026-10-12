@@ -1,0 +1,11 @@
+PASS inert by default (no import, no wrapper)  [W1012 08:16:49.170000 8 torch/utils/cpp_extension.py:178] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda']
+PASS limit is read only inside _rank_sliced_runtime and _mixed_rank_sliced_runtime  [['_mixed_rank_sliced_runtime', '_rank_sliced_runtime']]
+PASS override '1': planners see 1.0; attribute restored; absent attribute stays absent  [{'proj': 1.0, 'mixed': 1.0}]
+PASS override 'none': planners see None; attribute restored; absent attribute stays absent  [{'proj': None, 'mixed': None}]
+PASS override '10': planners see 10.0; attribute restored; absent attribute stays absent  [{'proj': 10.0, 'mixed': 10.0}]
+PASS inspect mode: no override applied, plan walk logs caps and kernel limits (values 10.0 / True)  [{'kind': 'plan_limits', 'method': '_rank_sliced_runtime', 'runtime_id': 127893782927552, 'layer_limit': 10.0, 'n_hits': 6, 'values': ['10.0', 'True'], 'owners': ['Caps.swiglu_limit=10.0', 'K.has_swiglu_limit=True', 'K.swiglu_limit=10.0'], 'pid': 7}]
+PASS negative override refused
+PASS gate_linear.py carries the guarded d4limit block
+PASS deferred install at first GateLinear construction wraps both planners  [WARNING 10-12 08:17:02 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+deferred ok
+done: 0 failed []

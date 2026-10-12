@@ -1,0 +1,20 @@
+release file: correction helpers present = False
+A PASS decode random: set unchanged=True, column 511 = lowest-scoring pool=True, <=2 columns changed=True
+A PASS decode minimum at column 100: set unchanged=True, column 511 = lowest-scoring pool=True, <=2 columns changed=True
+A PASS decode unfilled slots: set unchanged=True, column 511 = lowest-scoring pool=True, <=2 columns changed=True
+A PASS decode tied minimum: set unchanged=True, column 511 = lowest-scoring pool=True, <=2 columns changed=True
+A PASS decode minimum already last: set unchanged=True, column 511 = lowest-scoring pool=True, <=2 columns changed=True
+C release prefill row of 300: column 511 = -1 (unfilled), nothing selected is dropped
+C release prefill row of 512: column 511 holds pool 511, rank 119 of 0-511 among the selected (511 = lowest); the slice drops it
+C release prefill row of 512: column 511 holds pool 511, rank 363 of 0-511 among the selected (511 = lowest); the slice drops it
+C release prefill row of 513: column 511 holds pool 43, rank 511 of 0-511 among the selected (511 = lowest); the slice drops it
+C release prefill row of 2000: column 511 holds pool 893, rank 511 of 0-511 among the selected (511 = lowest); the slice drops it
+C release prefill row of 2000: column 511 holds pool 229, rank 511 of 0-511 among the selected (511 = lowest); the slice drops it
+B PASS prefill score gather: relative ids + row start, -inf for -1, no NaN from outside the row=True
+B PASS prefill row of 300: set unchanged=True, column 511 = -1=True
+B PASS prefill row of 512: set unchanged=True, column 511 holds pool 287, rank 511 (lowest-scoring selected pool)
+B PASS prefill row of 512: set unchanged=True, column 511 holds pool 116, rank 511 (lowest-scoring selected pool)
+B PASS prefill row of 513: set unchanged=True, column 511 holds pool 43, rank 511 (lowest-scoring selected pool)
+B PASS prefill row of 2000: set unchanged=True, column 511 holds pool 893, rank 511 (lowest-scoring selected pool)
+B PASS prefill row of 2000: set unchanged=True, column 511 holds pool 229, rank 511 (lowest-scoring selected pool)
+ALL PASS

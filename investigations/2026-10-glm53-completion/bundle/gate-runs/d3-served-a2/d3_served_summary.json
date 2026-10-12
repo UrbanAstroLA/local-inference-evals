@@ -1,0 +1,76 @@
+{
+ "labels": {
+  "served": "captured GateLinear output in the bundle server (legacy key logits_shipped)",
+  "corrected": "corrected: fp32-output GEMM (upstream #54048 form)",
+  "engine": "bundle's patched GateLinear recomputed offline",
+  "reference": "reference: fp64"
+ },
+ "corrected_impl": "torch.mm(out_dtype=fp32)",
+ "tolerance_d": "Two fixed tolerances per logit, S = sum_k |x_k*w_k| (fp64). Hard bound, any summation algorithm: tau_worst = K*2^-23*S + 2^-24*|ref| with K=4096 (bf16 x bf16 products are exact in fp32, 8+8 significand bits <= 24; K-1 fp32 additions, each <= 1 ulp even if truncating, first-order Higham gamma_{K-1}). Verification tolerance: tau_d = 2^-14*S + 2^-24*|ref|: a tensor-core GEMM with fp32 accumulators updates the accumulator K/16 = 256 times (<= 2^-15*S, one ulp each incl. truncation), doubled for the error inside each 16-product chunk and any split-K reduction. Pass = every corrected logit within tau_d and every corrected-vs-reference top-8 disagreement inside the margin band 0.5*max_e tau_d,e (sigmoid is 1/4-Lipschitz, the bias is common); within tau_worst but not tau_d = inconclusive; beyond tau_worst = wrong computation.",
+ "counts": {
+  "A0_layer_ranks_checked": 84,
+  "records": 1000,
+  "rows": 69344,
+  "rows_served_bf16_valued": 0,
+  "Aprime_records_bitwise": 1000,
+  "engine_records_bitwise": 1000,
+  "D_logits": 19971072,
+  "D_tau_d_violations": 0,
+  "D_tau_worst_violations": 0,
+  "D_top8_disagreements": 0,
+  "D_top8_disagreements_outside_band": 0,
+  "C_records_exact": 1000,
+  "C_rows_exact": 69344,
+  "batch_prefill_only": 32856,
+  "batch_mixed": 36488
+ },
+ "max_served_err_over_sum_abs_xw": 6.790402491261248e-07,
+ "controls": {
+  "A0_dispatch_and_hashes": {
+   "ok": true,
+   "failures": []
+  },
+  "Aprime_corrected_reproduces_served_bitwise": {
+   "ok": true,
+   "records": 1000,
+   "failures": []
+  },
+  "engine_gate_reproduces_served_bitwise": true,
+  "D_served_within_tau_d": {
+   "ok": true,
+   "logits": 19971072,
+   "violations": 0,
+   "tau_worst_violations": 0,
+   "top8_disagreements": 0,
+   "outside_band": 0
+  },
+  "C_routing_reproduced_bitwise": {
+   "ok": true,
+   "records_exact": 1000,
+   "failures": []
+  }
+ },
+ "seconds": 20.6,
+ "router_info": {
+  "kind": "router_info",
+  "cls": "GroupedTopKRouter",
+  "topk_indices_dtype": "torch.int64",
+  "bias_ptr": 221198987776,
+  "top_k": 8,
+  "global_num_experts": 288,
+  "num_expert_group": 1,
+  "topk_group": 1,
+  "renormalize": true,
+  "scoring_func": "sigmoid",
+  "routed_scaling_factor": 2.5,
+  "num_fused_shared_experts": 0,
+  "VLLM_USE_FUSED_MOE_GROUPED_TOPK": true,
+  "VLLM_BATCH_INVARIANT": false,
+  "VLLM_MOE_ROUTING_SIMULATION_STRATEGY": "",
+  "eplb": false,
+  "t": 1791794577.9649,
+  "rank": 0,
+  "pid": 338
+ },
+ "verdict": "PASS"
+}

@@ -11,15 +11,25 @@ with a fix that removes the localized problem (amendments 10-10f). The column-51
 graph configuration, and a three-pass GPQA arm with that correction only has finished against the existing 0.9.1 record,
 analysed with the script frozen beforehand (amendments 11-11b): 15 vs 16 empty replies of 594, so the correction stands
 but is not supported as the dominant completion explanation ([completion arm](#completion-arm)); the 12 stated-answer
-rows were read by hand and the stated figure is final. Cumulative 36.08 GPU-hours; occupied GPU-hours of the three
-K3.25 records are [reconstructed from start-to-stop timings](#occupied-gpu-hours-of-the-three-k325-records). A replication
-of stock 0.7.0's record is proposed and not authorized (amendment 12); nothing further is running.
+rows were read by hand and the stated figure is final. [Stage A verification](#stage-a-verification-d3-d4-d5) is complete
+(amendments 13-14): the router's bf16 logits (D3) change top-8 expert membership on 3.15% of token × layer rows and the
+fp32-output correction is verified; the routed SwiGLU limit omission (D4) is confirmed, its effect not measured; workspace
+locking (D5) is not exercised in this workload. A bundle of four corrections (D1-D4) on 0.9.1
+[passed its gate](#bundle-gate-d1d2d3d4-on-091) (D4 reachable in served kernels), with two criteria revised after the
+gate data were inspected, and [one GPQA pass](#one-pass-gpqa-screen) with it left 3
+of 198 replies empty, all at the cap: similar, no clear separation under rules frozen before generation (amendments
+14-14e). Cumulative 43.25 GPU-hours; occupied GPU-hours of the three K3.25 records are
+[reconstructed from start-to-stop timings](#occupied-gpu-hours-of-the-three-k325-records). A replication of stock
+0.7.0's record stays deferred, not authorized (amendments 12, 14); nothing further is scheduled.
 Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#dated-amendments).
 **Fast path:** [answer](#answer) · [evidence](#evidence) · [configuration diff](#what-differs-between-the-two-servers) ·
 [Phase 1](#phase-1) · [completion pilot](#completion-pilot-and-replication) ·
 [prior probes](#prior-probes-read-before-proposing-new-work) · [kernel and DCP audit](#kernel-and-dcp-source-audit) ·
 [column-511 stages](#phase-2-stage-1-which-pool-is-dropped) · [phase 3](#phase-3-column-511-intervention) · [tail ring](#kpool-tail-ring) ·
-[gate](#gate-column-511-correction-in-the-shipped-graph-configuration) · [completion arm](#completion-arm) · [upstream comparison](#comparison-with-upstream-vllm) · [open questions](#open-questions) · [limits](#limits) · [next steps](#next-steps) · [recompute](#recompute)
+[gate](#gate-column-511-correction-in-the-shipped-graph-configuration) · [completion arm](#completion-arm) · [upstream comparison](#comparison-with-upstream-vllm) ·
+[stage A](#stage-a-verification-d3-d4-d5) · [defect matrix](#defect-matrix-d1-d6) · [bundle gate](#bundle-gate-d1d2d3d4-on-091) ·
+[screen](#one-pass-gpqa-screen) · [observations recorded separately](#observations-recorded-separately) ·
+[open questions](#open-questions) · [limits](#limits) · [next steps](#next-steps) · [recompute](#recompute)
 
 ## Answer
 
@@ -38,7 +48,10 @@ Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#d
 | Column-511 drop, real inputs (amendment 10b): 0.9.1's tiled top-k path discards a pool ranked better than 480 of 512 in 88.1% of 9,944 live decode rows; 0.7.0's path does so in 6.9% of rows on the identical bytes. A fix that moves the lowest-scoring selected pool into the discarded column removes it (100% of rows, offline and in place; selection unchanged). | **Supported** (localized defect; eager mode) |
 | Kpool tail ring (amendments 10d-10e): this build does not pass token positions to the attention metadata, so from position 8 the tail ring is written to a shared null block (98% of tail writes in shipped graph mode) and, through stale ids left by the runner's start-up warm-up, occasionally into live attention blocks. The same omission is in 0.7.0's source. Passing positions as upstream vLLM does, with a graph-safe write, removes it (0 stray writes). | **Supported** (localized defect; graph mode) |
 | Completion arm (amendments 11a-11b): 0.9.1 with the column-511 selection correction alone, three GPQA passes, against the existing 0.9.1 record (a historical control), analysis frozen before data. Empty replies 15 vs 16 of 594 (one-sided p = 0.50); raw accuracy 85.0% vs 86.9% (interval includes zero). The correction stands as a correctness fix but is not supported as the dominant completion explanation. | **Descriptive** (historical control) |
-| Whether the tail-ring fix changes completion, and what produces the completion gap. | **Open** |
+| Router logits (stage A, amendments 13-14): every release computes the MoE router's logits in bf16 on this GPU family. On 1,593 captured records (103,608 token × layer rows) of 0.9.1 in shipped graph mode, the fp32-output computation selects a different top-8 expert set on 3.15% of rows (95% over 176 requests 3.01-3.29%; over 8 histories 2.90-3.50%) and different routing weights on every row; it lies within the stated tolerance of an fp64 reference on every logit, offline and as served. | **Supported** (computational effect); completion **untested** alone |
+| Correctness bundle (amendments 14-14e): D1+D2+D3+D4 on 0.9.1 passed its gate (two criteria revised after the gate data were inspected; the original criteria failed as specified). One GPQA pass (seed 1234): 3 of 198 empty, all at the cap, against 5 and 4 in pass 1 of the 0.9.1 record and the column-511 arm (0.7.0: 0). Frozen category: similar / no clear separation. | **Descriptive** (one pass, historical controls) |
+| Recorded separately: the served router's weights depend on batch size (E1); greedy decoding of the stock 0.9.1 release is not repeatable at long context (short prompts are); NaN-byte index rows are absent with the bundle, against thousands in the 2026-10-11 gate. | **Descriptive** ([observations](#observations-recorded-separately)) |
+| What produces the completion gap, and whether the tail-ring fix, router precision or the SwiGLU clamp changes completion on its own. | **Open** |
 
 Splitting the score by completion is not a causal comparison. It says where the difference sits, not what produces it.
 
@@ -432,6 +445,7 @@ listed only so they are not repeated as if new.
 | [kpool kernel tests](../../protocols/kpool-kernel-tests) | upstream `test_kpool_decode_update_batched` on the release images | 4 cases fail on 0.7.0 and 0.8.0 (tail ring, seed stride); pass with the fixes in 0.9.1 | valid |
 | Step 5 (this investigation) | 0.7.0 with both kpool fixes | decode-vs-prefill disagreement unchanged; that measure is post-completion (amendment 7) | valid, measure limited |
 | Step 6, pilot, replication (this investigation) | 0.9.1 with 0.7.0's parallel layout bundle | no reproducible completion benefit | valid |
+| [Bundle screen](#one-pass-gpqa-screen) (this investigation, 2026-10-12) | 0.9.1 with D1+D2+D3+D4 together, one GPQA pass at seed 1234 | 3 of 198 empty vs 5 (0.9.1 record) and 4 (column-511 arm) in pass 1; similar, no clear separation | valid; one pass, historical controls |
 | 0.8.0 GPQA, ×5 drafts with slot sharing off vs ×3 with sharing | draft depth and sharing together | no completion improvement | single passes |
 | [kpool k1 screen](../2026-10-glm53-kpool-tail/preregistration-kpool-screen.md) (2026-10-04), [layout bisection](../2026-10-glm53-looping/preregistration/WITHDRAWN.md) (2026-10-07/08) | 1 vs 3 drafts; 0.9.0 vs 0.7.0 layout | withdrawn: seed 1234 on every repeat | do not cite rates |
 
@@ -657,44 +671,149 @@ All three releases report vLLM `0.1.dev20051+g487ecf187` (2026-08-25), a commit 
 ancestor of upstream main; several files are vendored from another fork. A CPU audit of the GLM-5.3 paths (indexer, kpool,
 sparse MLA, KDA and mamba alignment, DFlash2, model runner) against upstream found no further reachable correctness
 divergence beyond the items above; about 60 upstream fixes the build lacks are unreachable under these configurations or
-are speed and feature work. Two divergences outside those paths affect every release and were not tested:
+are speed and feature work. Two divergences outside those paths affect every release; neither has been tested alone for completion:
 
 | Item | Detail | Status |
 |---|---|---|
-| Router logits | on this GPU family the MoE router's fp32-output path is not enabled, so routing logits are computed in bf16 although the checkpoint asks for fp32 routing; upstream enabled it for this family (vllm#54048) | untested; same in all releases |
-| SwiGLU clamp | the routed experts' path never receives `swiglu_limit` (10); shared experts and dense layers are clamped; an earlier clamp A/B patched a path this quant does not run and is not evidence either way | untested; same in all releases |
+| Router logits | on this GPU family the MoE router's fp32-output path is not enabled, so routing logits are computed in bf16 although the checkpoint asks for fp32 routing; upstream enabled it for this family (vllm#54048) | same in all releases; computational effect measured in [stage A](#stage-a-verification-d3-d4-d5) (3.15% of top-8 sets); completion untested alone |
+| SwiGLU clamp | the routed experts' path never receives `swiglu_limit` (10); shared experts and dense layers are clamped; an earlier clamp A/B patched a path this quant does not run and is not evidence either way | same in all releases; reachable in served kernels ([bundle gate](#bundle-gate-d1d2d3d4-on-091)); whether limit 10 engages not measured; completion untested alone |
 
 Neither can explain a difference between 0.7.0 and 0.9.1.
 
-### Stage A verification: D3, D4, D5 (in progress)
+<a id="stage-a-verification-d3-d4-d5-in-progress"></a>
 
-Amendments 13-13b; receipts [`verify-stage-a/`](verify-stage-a). One observe-only server session in shipped graph mode on
-the gate fixture, then offline comparisons on identical captured inputs. 0.68 of 2.0 GPU-hours used.
+### Stage A verification: D3, D4, D5
+
+Amendments 13-14; receipts [`verify-stage-a/`](verify-stage-a). One observe-only server session in shipped graph mode on
+the gate fixture (long contexts of 4,240-120,217 tokens), then offline comparisons on identical captured inputs.
+**0.6929 of 2.0 GPU-hours** (smoke 2 attempts, server 1, offline 4 attempts; costs in
+[`verify-stage-a/costs.jsonl`](verify-stage-a/costs.jsonl)).
 
 | Defect | Confirmed omission | Exercised in this workload | Computational effect | Correction verified | Completion |
 |---|---|---|---|---|---|
-| D3 router logits in bf16 on SM12x | yes: the gate runs the bf16 fallback (`F.linear`, then cast) with all six fast-path flags off, confirmed in the server | yes (every MoE layer) | pending: comparison stopped at an exact-reproduction control, see below | pending | untested |
-| D4 routed SwiGLU limit not passed | yes: projection-mixed path; the layer holds 10, the serving plans none | path exercised; whether activations exceed the limit not measured | not measured (Stage B, not authorized) | no | untested |
+| D3 router logits in bf16 on SM12x | yes: the gate runs the bf16 fallback (`F.linear`, then cast) with all six fast-path flags off, confirmed in the server | yes (every MoE layer; eager prefill and mixed batches measured) | yes: top-8 membership differs on 3.15% of token × layer rows; routing weights on every row | yes, offline: within τ_d of fp64 on every logit (and as served, [bundle gate](#bundle-gate-d1d2d3d4-on-091)) | untested alone |
+| D4 routed SwiGLU limit not passed | yes: projection-mixed path; the layer holds 10, the serving plans none | path exercised; whether activations exceed the limit not measured | not measured here (frozen inputs kept for it) | not here (see the bundle gate) | untested alone |
 | D5 workspace not locked after graph capture | yes: never locked | not exercised in this workload: resizes only during profiling, before any graph existed; none after capture or in serving | — | — | untested |
 
-D3 control (c), "the engine's router applied to the captured logits reproduces the consumed expert ids and weights
-exactly", failed on 1,425 of 1,593 records (controls (a) dispatch/hashes and (b) bitwise logit reproduction passed on all).
-Diagnosis ([`offline-a3/`](verify-stage-a/offline-a3)): expert sets identical on all 103,608 rows; no misalignment, no
-post-routing transformation, no nondeterminism; the control called the router on the 64-row capture window while serving
-calls it once on the whole batch, and the served fused router computes routing weights differently above roughly 1,024
-rows (all passing records had at most 1,024 rows, all failing ones at least 1,139; at the serving batch size the router
-reproduces the captured routing bitwise on 60 of 60 sampled failing records). A correction that invokes the router as
-serving does, with the exact criterion unchanged, is prepared and not applied pending review. No shipped-vs-corrected
-comparison has been computed.
+**D3 controls** ([`offline-a4/`](verify-stage-a/offline-a4), all on 1,593 of 1,593 records, 103,608 rows): (a)
+dispatch, bf16-valued shipped logits and weight hashes on both ranks; (b) the offline shipped computation reproduces the
+captured logits bitwise; (c) the engine's router, invoked as serving does (one call on the serving batch rows, rows in
+place, server alignment and router configuration), reproduces the consumed expert ids and weights bitwise; (d) the
+corrected computation (`torch.mm(out_dtype=fp32)`, the upstream form) lies within τ_d = 2⁻¹⁴·S + 2⁻²⁴·|ref| of an fp64
+reference on all 29,839,104 logits (maximum error/S 7.6e-7), with no top-8 disagreement. The serving-shaped invocation in
+(c) was adopted in amendment 14, before any D3 comparison was computed; the criterion stayed bitwise. Offline attempt 3 had
+stopped at (c) on 1,425 records: there the control called the router on the 64-row capture window, and the served fused
+router computes weights differently above about 1,024 rows (E1, below); expert sets were identical on every row
+([`offline-a3/`](verify-stage-a/offline-a3)).
 
-Engine observation E1 (separate from D3; no completion claim): routing weights from the served fused router depend on
-batch size. Expert ids are unchanged on these rows; weights differ by up to 1.1e-3 relative, and against an fp64
-recomputation large-batch weights are about 10x less accurate (median relative error 1.4e-6 vs 1.2e-7). Batches that
-large occur in prefill chunks (inferred exposure: prefill only).
+**D3 effect** (shipped "bf16-result GEMM cast to fp32" vs corrected "fp32-output GEMM"):
+
+| | Rows | Top-8 membership differs | 95% interval |
+|---|---:|---:|---|
+| All | 103,608 | 3,262 (3.15%) | 3.01-3.29% (bootstrap over 176 requests); 2.90-3.50% (over 8 histories) |
+| Prefill-only batches, prefill rows | 37,356 | 3.09% | 2.92-3.27% (rows as i.i.d., descriptive) |
+| Mixed batches, prefill rows | 50,456 | 3.23% | 3.08-3.39% (descriptive) |
+| Mixed batches, decode rows | 15,796 | 3.03% | 2.78-3.31% (descriptive) |
+| By layer (42 layers) | 2,368-4,869 each | 1.2% (layer 21) to 6.6% (layer 3) | [`d3_by_layer.csv`](verify-stage-a/offline-a4/d3_by_layer.csv) |
+
+- 3,260 rows swap one expert, 2 rows swap two. Every flip coincides with a shipped-vs-fp64 disagreement; the shipped
+  logits lie outside τ_d of fp64 on 72% of logits (maximum error/S 1.7e-3).
+- Routing weights differ on every row (median L1 between routing vectors about 0.0018; on rows with an unchanged set,
+  p99 of the largest weight change about 0.0016, weights summing to 2.5).
+- Near-boundary margins: the corrected gap between the 8th and 9th expert score has median 0.0023-0.0103 by layer;
+  on flipped rows 0.00014-0.00034, within the bf16 rounding perturbation.
+- Rows are not independent serving draws; the intervals above cluster by request and by history. The fixture is 8 long
+  documents, not a GPQA distribution.
+- Coverage: FULL-graph decode steps are covered by source inspection only (the capture runs on eager forwards; measuring
+  inside FULL graphs would add graph nodes). Decode rows were measured in mixed eager batches.
+- Expert flips and weight changes do not establish a completion effect or explain the gap.
+
+D4: the frozen inputs (1,593 records per rank, all paired, nothing missing) are sufficient for a later unclamped vs
+limit-10 comparison; none was run. D5: 10 capture bindings per rank; the only resizes (rank 0 once, rank 1 twice) were
+during profiling.
 
 Stage A also found and fixed two problems in its own tooling before any D3 comparison: the capture buffer was allocated in
 pageable memory in the smoke harness (fixed; pinned memory now enforced), and the offline runner mounted the captures over
 the container's /run (fixed).
+
+### Defect matrix (D1-D6)
+
+Status after stage A, the bundle gate and the screen. D1 and D2 are items 4a-4b of [`FINDINGS.md`](../../FINDINGS.md).
+
+| Defect | Implementation omission | Exercised | Computational effect | Correction verified | Completion |
+|---|---|---|---|---|---|
+| D1 column-511 selection | yes: the engine keeps 511 of 512 selected pools and no top-k path sorts its output | yes: 88.1% of live tiled decode rows discard a pool ranked better than 480; prefill rows with exactly 512 candidates | yes: which selected pool attention misses | yes: offline, in place, shipped graphs (gate 2026-10-11), and in the bundle gate (0 violations) | tested alone: no measurable change (15 vs 16 empty of 594); bundle screen: similar / no clear separation |
+| D2 tail ring without positions | yes: attention metadata built without positions | yes: 98% of tail writes to the null block in shipped graph mode, 6 events writing into live attention blocks | yes: completed pools from other requests' keys (CPU harness, GPU unit test) | yes: 0 null-block, foreign or attention-block writes (two variants; bundle gate); NaN-byte index rows 0 in the bundle gate | untested alone; bundle screen: similar / no clear separation |
+| D3 router logits in bf16 | yes | yes, every MoE layer | yes: 3.15% of top-8 sets, weights on every row | yes: offline (stage A) and as served (bundle gate, bitwise reproduction, within τ_d of fp64) | untested alone; bundle screen: similar / no clear separation |
+| D4 routed SwiGLU limit not passed | yes | path exercised; whether activations exceed 10 not measured | limit 1 changes outputs (reachability only); effect of 10 not measured | plans carry 10 and the session's compiled kernels carry (True, 10) (bundle gate, criterion revised after data) | untested alone; bundle screen: similar / no clear separation |
+| D5 workspace not locked after capture | yes (source) | not exercised in this workload (stage A; bundle gate s1) | — | not run; left out of the bundle | untested |
+| D6 stale warm-up tail block ids | yes (source; 16 stale rows per rank measured) | the source of D2's foreign writes without D2; unreachable under D2 (stale columns never read) | — | CPU only; left out of the bundle | untested |
+
+"Bundle screen" is one GPQA pass of D1+D2+D3+D4 together; it attributes nothing to an individual correction.
+
+### Bundle gate: D1+D2+D3+D4 on 0.9.1
+
+Amendments 14-14d; receipts and the full write-up: [`bundle/`](bundle). Candidate image built from the 0.9.1 release
+digest with D1 (column-511 correction), D2 (positions, ownership guard, graph-safe tail write), D3 (fp32-output router)
+and D4 (`swiglu_limit` 10 on the projection-mixed path); D5 left out (not exercised; its backport reorders warm-up and
+capture), D6 unreachable under D2. No limit tuning, routing heuristic or performance change. Three shipped-graph sessions
+(s1 all corrections with observers; s3 D4 limit 1; a stock-release probe control) and one offline check: **1.6403 of 2.0
+GPU-hours**.
+
+- **Passed as specified (s1):** validity and errors (0 of 140 request errors, no engine, memory or stopping errors,
+  configuration identical to the historical 0.9.1 record); D1 (lowest selected pool in column 511 on every checked row
+  including FULL-graph replays, fp64 agreement); D2 (0 null-block, foreign, attention-block or tail collisions); D3
+  (fp32-output dispatch on 42 layers × 2 ranks, 0 of 69,344 rows bf16-valued); D4 plans at 10.0; D5 not exercised.
+- **Failed as specified:** "D4 compiled kernels" (a walk of the plan objects could not reach the compiled kernels, which
+  the runtime does not retain) and "P1 probe repeatable" (both greedy rounds identical on all 6 probe prompts: the two
+  long-context prompts diverged, in the bundle and in the stock release).
+- **Revised after inspecting gate data** (amendment 14c; the original criteria are not described as met): D4 by
+  session-specific compiled-kernel evidence (66 kernels with (True, 10.0) written inside s1's window by the candidate's
+  plans, none with limit 10 before; s3's with (True, 1.0)); P1 by short-prompt repeatability (met in s1 and s3), with
+  long-context non-repeatability reported as a limitation.
+- **D4 reachable:** limit 1 vs 10 changes 6 of 6 probe outputs within 16 tokens; the 4 bitwise-repeatable short prompts
+  diverge at tokens 0-2.
+- **D3 as served:** on 1,000 captured records (69,344 rows), `torch.mm(x, W.T, out_dtype=fp32)` at the serving batch size
+  reproduces the served logits bitwise; 0 logits outside τ_d of fp64; routing reproduces the consumed routing bitwise.
+- **Before launch:** the GPQA-shaped phase's four early stops (docs 16, 19, 21, 22) have non-empty final content and no
+  errors (readiness intact; that phase's throughput unusable); the production image's engine files equal the frozen
+  candidate's, with no observer code.
+
+### One-pass GPQA screen
+
+Amendments 14c-14e; receipts [`bundle/screen/`](bundle/screen). The frozen candidate image, all 198 questions, original
+protocol (temperature 1.0, top_p 0.95, 8 concurrent, 327,680-token cap, normal stopping), seed 1234, the analysis and
+category rules frozen before generation, a 7.5 GPU-hour watchdog, no retry.
+
+**Result: valid; 3 of 198 replies empty, all at the cap (no premature stop); no regression flag, no accuracy concern;
+category SIMILAR / NO CLEAR SEPARATION.**
+
+| Pass 1, seed 1234 | Bundle | 0.9.1 record | Column-511 arm | 0.7.0 (context) |
+|---|---:|---:|---:|---:|
+| Empty replies | 3 (3 cap) | 5 (4 cap, 1 premature) | 4 (4 cap) | 0 |
+| Rescued / newly empty with the bundle | | 3 (q12, q109, q120) / 1 (q79) | 1 (q170) / 0 | 0 / 3 (q79, q88, q127) |
+| Raw / stated correct (secondary) | 174 / 176 | 169 / 170 | 164 / 165 | 174 / 177 |
+
+- Stated-answer adjudication complete before the category: 2 rows (docs 58 and 98), each commits to one option; neither
+  hedged.
+- Secondary figures are a single pass and not a decision input; no significance claim is made for them.
+- Answered completion tokens: median 3,907, maximum 101,893. 4.84 occupied GPU-hours (ceiling 7.5).
+- Under amendment 14c the bundle is deprioritised as a completion remedy within this allocation. This is not a claim that
+  the included corrections lack behavioural effects or that their interactions are absent.
+- Limits: one pass of a low-rate outcome (P(E ≤ 2) simulated at 0.078 with no change and 0.85-0.86 at 0.7.0-like rates);
+  historical controls; matched seeds do not make paired replies once computation diverges.
+- The plan records an operator note after the result: the operator considers another pass warranted, citing seed-1234
+  luck seen across earlier GPQA runs, and will raise it with the independent assessor. It is not an authorization.
+
+### Observations recorded separately
+
+Evidence only; no completion claim.
+
+| Observation | Evidence | Status |
+|---|---|---|
+| E1: the served fused router's routing weights depend on batch size | Stage A: expert ids unchanged on the captured rows; weights switch between 1,025 and 1,139 rows; against an fp64 recomputation, median relative error 1.2e-7 at ≤ 1,024 rows (12,408 rows) and 1.4e-6 above (91,200 rows; maximum 1.1e-3). Batches that large occur in prefill chunks (inferred exposure: prefill only). | Measured; no workaround in the bundle; completion untested |
+| Long-context greedy non-repeatability of the stock 0.9.1 release | Bundle gate release control, one request at a time, temperature 0, two rounds: 4 GPQA prompts of 124-158 tokens give bitwise identical 96-token outputs; prompts of 4,240 and 16,240 tokens diverge at token 3, with log-probability differences on every token before divergence; the 4,240-token prompt with identical prefix-cache coverage in both rounds. Same pattern in the bundle sessions (first divergence at tokens 3-75). Divergences occurred where the chosen token's probability was 0.30-0.66; only the chosen token's log-probability was kept, so the margin is bounded, not measured. | Mechanism not identified ([confounds](../../CONFOUNDS.md#16-long-context-greedy-non-repeatability)) |
+| NaN-byte index rows | 0 in every branch in the bundle gate's s1; in the 2026-10-11 gate (column-511 correction only), selected pools with NaN bytes in 7.9% / 32.5% of sampled decode rows on ranks 0 / 1 | D2 inferred as the cause; not varied alone |
 
 ## Open questions
 
@@ -703,9 +822,12 @@ Stated with their evidence so far.
 | Question | Evidence so far |
 |---|---|
 | Does generation-vs-prefill disagreement at long context bear on completion? | The 8,000-15,999-token measure covers continuation after the reply had ended (amendment 7); no positive evidence either way. |
-| What produces the completion gap between 0.7.0 and 0.9.1? | The column-511 drop, the only defect found that differed between the engines in the direction of the gap, is not supported as its explanation: with the correction alone 0.9.1 left 15 empty replies vs 16 ([completion arm](#completion-arm)). The tail ring affects 0.7.0 more, which does not exclude an accidental completion benefit from incorrect computation; its role is untested. The layout bundle showed no reproducible benefit (pilot and replication); router precision and the SwiGLU clamp are the same in all releases. The gap itself (4 vs 16) rests on one three-pass record per engine. The corrected 0.9.1 arm's 15 empty replies resemble the 0.9.1 record's 16, with empties moving between questions, but it ran a modified engine, so it is not a replication of the unmodified 0.9.1 record. Whether either record's rate reproduces on its unmodified engine has not been tested. Open. |
+| What produces the completion gap between 0.7.0 and 0.9.1? | The column-511 drop, the only defect found that differed between the engines in the direction of the gap, is not supported as its explanation: with the correction alone 0.9.1 left 15 empty replies vs 16 ([completion arm](#completion-arm)). The tail ring affects 0.7.0 more, which does not exclude an accidental completion benefit from incorrect computation; its role is untested. The layout bundle showed no reproducible benefit (pilot and replication); router precision and the SwiGLU clamp are the same in all releases. One GPQA pass of 0.9.1 with D1-D4 together left 3 of 198 empty against 5 and 4 in pass 1 of the 0.9.1 record and the column-511 arm (0.7.0 pass 1: 0): similar, no clear separation, one pass ([screen](#one-pass-gpqa-screen)). The gap itself (4 vs 16) rests on one three-pass record per engine. The corrected 0.9.1 arm's 15 empty replies resemble the 0.9.1 record's 16, with empties moving between questions, but it ran a modified engine, so it is not a replication of the unmodified 0.9.1 record. Whether either record's rate reproduces on its unmodified engine has not been tested. Open. |
 | Does the column-511 correction cost accuracy? | Raw -1.85 points (95% -5.05 to +1.35), stated -1.18 (-4.04 to +1.52), against a historical control; not significant, which does not establish no cost. Inconclusive. |
-| Do the tail-ring fix, the router precision or the SwiGLU clamp change completion or accuracy? | All affect both engines; untested. |
+| Do the tail-ring fix, the router precision or the SwiGLU clamp change completion or accuracy? | All affect both engines. Each has a verified computational correction (D2, D3) or a reachable one (D4); none was tested alone in GPQA. Together with D1, one pass: 3 empty of 198, raw 174 and stated 176 (single pass, secondary), similar to the baselines' pass 1 with no clear separation. Untested individually; interactions untested. |
+| Does the bundle's empty count differ from the baselines' beyond seed-to-seed variation? | One pass at seed 1234; simulated P(E ≤ 2) is 0.078 with no change and 0.85-0.86 at 0.7.0-like rates. Rescued and newly empty replies vs both baselines are listed in the [screen](#one-pass-gpqa-screen). Inconclusive. |
+| Why does greedy decoding of 0.9.1 diverge between identical long-context requests? | Short prompts repeat bitwise for 96 tokens; 4,240- and 16,240-token prompts diverge at token 3 in the stock release, also with identical prefix-cache coverage; divergences fell on low-margin steps (chosen-token probability 0.30-0.66; runner-up not recorded). Mechanism not identified ([observations](#observations-recorded-separately)). |
+| Does E1 (batch-size-dependent routing weights) affect outputs? | Weights differ by up to 1.1e-3 relative above about 1,024 rows; expert ids unchanged on the captured rows; inferred exposure prefill only. Untested. |
 | Do legitimate numerical differences shift how often long deliberation runs past the cap? | Non-completion is a low-rate tail event (about 1 in 10 fresh draws at these caps on two hard questions); small pilots cannot resolve rates near 2.7% vs 0.7% of replies. |
 | Which part of the 0.7.0 layout bundle goes with the higher disagreement? | Step 6 changed EP, DCP, MLA ownership, KV record, draft pages and the top-k merge path together, and still differs from stock 0.7.0 in the top-k merge path, draft depth (×3 vs ×5), vision and engine code. Inconclusive by component. |
 | Why does prompt 0 not follow the other prompts in step 6? | One prompt, two runs; inconclusive. |
@@ -717,15 +839,20 @@ Stated with their evidence so far.
 - The records change several things at once (table above). None was varied alone in GPQA.
 - The completion difference rests on 13 vs 1 question-passes. The question was raised by pass 1.
 - Questions are doc ids; questions, replies and prompts are not published.
+- The bundle screen is one pass against historical controls; its rules allocate resources and make no significance or
+  equivalence claim. Two gate criteria were revised after the gate data were inspected (amendment 14c).
+- FULL-graph decode coverage of the router-precision measurement is by source inspection only.
 
 ## Next steps
 
-Nothing further is scheduled. The arm has been analysed with the frozen script and read by the frozen rules (R3), and its
-stated figure is final. A repeatability run of stock 0.7.0's record under its recorded seeds is proposed and not
-authorized (amendment 12). Open,
-with their evidence above: what produces the completion gap; whether 0.7.0's rate of empty replies reproduces; whether the
-tail-ring fix, router precision or the SwiGLU clamp change completion or accuracy; whether the column-511 correction costs
-accuracy. Minimal reproductions and patches for both defects are prepared; offering them upstream is a separate decision.
+Nothing further is scheduled. Under the screen's frozen rules the bundle is deprioritised as a completion remedy within
+this allocation (amendment 14c; for this category the plan's follow-up is source or controlled-input work, none of it
+scheduled). The stock 0.7.0 replication stays deferred and is not authorized (amendments 12, 14). An
+operator note recorded after the screen (another pass considered warranted) is not an authorization. Open, with their
+evidence above: what produces the completion gap; whether 0.7.0's rate of empty replies reproduces; whether the tail-ring
+fix, router precision or the SwiGLU clamp change completion or accuracy individually; whether the column-511 correction
+costs accuracy; why long-context greedy decoding is not repeatable; whether E1 affects outputs. Minimal reproductions and
+patches are prepared; offering them upstream is a separate decision.
 
 ## Recompute
 

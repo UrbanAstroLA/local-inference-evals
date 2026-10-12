@@ -1,0 +1,76 @@
+# Production image vs frozen candidate files, observers absent (PLAN.md amendment 14c item 3), 2026-10-12T14:52:09Z
+production local/glm53-v0.9.1-bundle-d1234:local id sha256:08d1cb902ddb888f679b972714168bb7c0d2333b4c1865f3ebf860baa2f46548
+check      local/glm53-v0.9.1-bundle-d1234-check:local id sha256:b61793817388bc42b2477df4bbde5aca61df0567cf7c88ab29061633b06282ba
+## per-file sha256: production image vs freeze/build-d1234/files (frozen candidate files)
+MATCH model_executor/layers/sparse_attn_indexer_kpool.py production=9104be37c8cb876a436f5fac11401c4abdb254529a6c37f3dca8121f41a5b61d frozen=9104be37c8cb876a436f5fac11401c4abdb254529a6c37f3dca8121f41a5b61d
+MATCH v1/attention/backends/mla/indexer.py production=00989c503028216cb349b506ccd7d4dc752bc9a54425a25b901c4905d95f5e0b frozen=00989c503028216cb349b506ccd7d4dc752bc9a54425a25b901c4905d95f5e0b
+MATCH v1/worker/gpu/model_states/mamba_hybrid.py production=049238f99b3c77cb23dc0abbbf25d140817c40c5abbf5cfe6a319f8f410ca085 frozen=049238f99b3c77cb23dc0abbbf25d140817c40c5abbf5cfe6a319f8f410ca085
+MATCH model_executor/layers/quantization/exl3.py production=b40344e2b4bd583a670ddecc643de01afbfa0e35e6a960a259275dedf8e246cb frozen=b40344e2b4bd583a670ddecc643de01afbfa0e35e6a960a259275dedf8e246cb
+MATCH model_executor/layers/fused_moe/router/gate_linear.py production=2499ee679a3a8816f45eb4034a039770c90cccdcf720a38dca5d4aa10e275c2a frozen=2499ee679a3a8816f45eb4034a039770c90cccdcf720a38dca5d4aa10e275c2a
+## observer modules / observer code in the production image (expect none)
+local_* modules: 0
+files referencing observer code: 0
+D1 correction markers (expect 4): 4
+## whole-image manifest: production vs release (from freeze/manifests, /etc/hostname excluded)
+< 404c7af4271d377f vllm/model_executor/layers/__pycache__/sparse_attn_indexer_kpool.cpython-312.pyc
+> c6101a64a42fed11 vllm/model_executor/layers/__pycache__/sparse_attn_indexer_kpool.cpython-312.pyc
+< 599416828378e9d1 vllm/model_executor/layers/fused_moe/router/__pycache__/gate_linear.cpython-312.pyc
+> 7aca0f67eab57144 vllm/model_executor/layers/fused_moe/router/__pycache__/gate_linear.cpython-312.pyc
+< 6fca8c7fba361ac7 vllm/model_executor/layers/fused_moe/router/gate_linear.py
+> 2499ee679a3a8816 vllm/model_executor/layers/fused_moe/router/gate_linear.py
+< 418c47e853cdcc94 vllm/model_executor/layers/quantization/__pycache__/exl3.cpython-312.pyc
+> 4a365d17cf828d7a vllm/model_executor/layers/quantization/__pycache__/exl3.cpython-312.pyc
+< 3b4ca47cb1168bff vllm/model_executor/layers/quantization/exl3.py
+> b40344e2b4bd583a vllm/model_executor/layers/quantization/exl3.py
+< e7935f2a9b8ecbc7 vllm/model_executor/layers/sparse_attn_indexer_kpool.py
+> 9104be37c8cb876a vllm/model_executor/layers/sparse_attn_indexer_kpool.py
+< 4b258f7a81990596 vllm/v1/attention/backends/mla/__pycache__/indexer.cpython-312.pyc
+> 8c0b6965b4f7cf08 vllm/v1/attention/backends/mla/__pycache__/indexer.cpython-312.pyc
+< 67449677b787f37e vllm/v1/attention/backends/mla/indexer.py
+> 00989c503028216c vllm/v1/attention/backends/mla/indexer.py
+< 0964e6b976a29792 vllm/v1/worker/gpu/model_states/__pycache__/mamba_hybrid.cpython-312.pyc
+> 64c1a549b97dc96c vllm/v1/worker/gpu/model_states/__pycache__/mamba_hybrid.cpython-312.pyc
+< 82968af5e104f99f vllm/v1/worker/gpu/model_states/mamba_hybrid.py
+> 049238f99b3c77cb vllm/v1/worker/gpu/model_states/mamba_hybrid.py
+## check image vs production: engine-file differences are additions only
+model_executor/layers/sparse_attn_indexer_kpool.py: -0 +88 lines
+model_executor/layers/fused_moe/router/gate_linear.py: -0 +16 lines
+IDENTICAL v1/attention/backends/mla/indexer.py
+IDENTICAL v1/worker/gpu/model_states/mamba_hybrid.py
+IDENTICAL model_executor/layers/quantization/exl3.py
+check-image whole-tree differences vs production (dist-packages, /opt):
+> 0940b1f381195ced /opt/bundle-check/additions_only.py
+> 90ae3113e5557166 /opt/bundle-check/col511check.py
+> 49597e4556dcd104 /opt/bundle-check/d4limit.py
+> 414f5b5c1993d772 /opt/bundle-check/kpool_tailguard.py
+> 96dcd5e36bd75497 /opt/bundle-check/verify13_capture.py
+> 2499ee679a3a8816 /opt/bundle-check/bundle_gate_linear.py
+> 9104be37c8cb876a /opt/bundle-check/bundle_sparse_attn_indexer_kpool.py
+> 02ba81040d01dfba /opt/bundle-check/gate_linear.py
+> 75f5a2a3cb221697 /opt/bundle-check/gate_linear.py.observer-additions.diff
+> fae1127c1e7dee3d /opt/bundle-check/sparse_attn_indexer_kpool.py
+> 366007fac1dc3d84 /opt/bundle-check/sparse_attn_indexer_kpool.py.observer-additions.diff
+> 366007fac1dc3d84 /opt/bundle-check/tailguard.diff
+> dca478211946490c /opt/bundle-check/test_c511check.py
+> d611ac667445a3e4 /opt/bundle-check/test_d4limit.py
+> cffcff2cb1114602 /opt/bundle-check/test_fix.py
+> b81bfb25d58f1af4 /opt/bundle-check/test_tailguard.py
+> 731302e24f8d09e6 /opt/bundle-check/test_verify13.py
+> e70c0ef701103773 vllm/__pycache__/col511check.cpython-312.pyc
+> 2cda8e8ed1c88c99 vllm/__pycache__/d4limit.cpython-312.pyc
+> 7fb7838e1676400f vllm/__pycache__/kpool_tailguard.cpython-312.pyc
+> 7f11da80ee6d7cc0 vllm/__pycache__/verify13_capture.cpython-312.pyc
+> 90ae3113e5557166 vllm/col511check.py
+> 49597e4556dcd104 vllm/d4limit.py
+> 414f5b5c1993d772 vllm/kpool_tailguard.py
+> 96dcd5e36bd75497 vllm/verify13_capture.py
+< c6101a64a42fed11 vllm/model_executor/layers/__pycache__/sparse_attn_indexer_kpool.cpython-312.pyc
+> c91fb41231d6ac88 vllm/model_executor/layers/__pycache__/sparse_attn_indexer_kpool.cpython-312.pyc
+< 7aca0f67eab57144 vllm/model_executor/layers/fused_moe/router/__pycache__/gate_linear.cpython-312.pyc
+> 7f69a7bbd0cbf3b6 vllm/model_executor/layers/fused_moe/router/__pycache__/gate_linear.cpython-312.pyc
+< 2499ee679a3a8816 vllm/model_executor/layers/fused_moe/router/gate_linear.py
+> 02ba81040d01dfba vllm/model_executor/layers/fused_moe/router/gate_linear.py
+< 9104be37c8cb876a vllm/model_executor/layers/sparse_attn_indexer_kpool.py
+> fae1127c1e7dee3d vllm/model_executor/layers/sparse_attn_indexer_kpool.py
+## check image: observers inert with their variables unset (fresh interpreter)
+INERT: col511check, tailguard, verify13, d4limit all off; no class patched

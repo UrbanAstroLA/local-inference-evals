@@ -1,0 +1,125 @@
+{
+ "classification": {
+  "confirmed_omission": true,
+  "exercised": true,
+  "controls_abc_pass": true,
+  "demonstrated_computational_effect": true,
+  "routing_weights_changed": true,
+  "verified_correction_offline": true,
+  "completion_effect": "untested; expert flips and weight changes are not evidence of a completion effect"
+ },
+ "rows": 103608,
+ "flips": 3262,
+ "control_d": {
+  "ok": true,
+  "state": "pass",
+  "violations": 0,
+  "violations_of_tau_worst": 0,
+  "logits": 29839104,
+  "max_rel_err_over_sum_abs_xw": 7.643548463932946e-07,
+  "selection_disagreements": 0,
+  "disagreements_outside_band": 0
+ },
+ "finding_E1": {
+  "note": "Finding E1 (engine, separate from D3): the served fused grouped_topk computes routing weights differently by batch row count (switch between 1,025 and 1,139 rows, offline attempt 3); ids unaffected on the captured rows. Reported as served-weight accuracy against the fp64 re-statement, split at M <= 1024 / M > 1024; no workaround beyond invoking at the serving M.",
+  "M<=1024": {
+   "rows": 12408,
+   "rel_err_median": 1.2342733235538244e-07,
+   "rel_err_p99": 3.313396931861246e-07,
+   "rel_err_max": 7.536264081845614e-07
+  },
+  "M>1024": {
+   "rows": 91200,
+   "rel_err_median": 1.3555017182872772e-06,
+   "rel_err_p99": 3.855283410385614e-06,
+   "rel_err_max": 0.001108639543568781
+  }
+ },
+ "controls": {
+  "a_dispatch_and_hashes": {
+   "ok": true,
+   "failures": []
+  },
+  "b_shipped_reproduced_bitwise": {
+   "ok": true,
+   "records_failed": 0,
+   "examples": []
+  },
+  "c_routing_reproduced_exactly": {
+   "ok": true,
+   "records_failed": 0,
+   "examples": [],
+   "classification": {
+    "rows": 103608,
+    "rows_set_differ": 0,
+    "members_differ": 0,
+    "rows_same_set_weights_not_bitwise": 0,
+    "rows_exact": 103608,
+    "records_ok": 1593,
+    "window_ok": 1579,
+    "full_ok": 14
+   }
+  },
+  "records": 1593,
+  "rows": 103608,
+  "seconds": 13.5,
+  "router_invocation": "serving-shaped: one call on the M-row batch, captured rows at [a, a+r), zero padding, server alignment (amendment 14)"
+ },
+ "bootstrap": {
+  "history": {
+   "clusters": 8,
+   "flip_rate_ci95": [
+    0.029024041469300207,
+    0.03499933359989338
+   ],
+   "mean_l1_ci95": [
+    0.013229797648073994,
+    0.015863269537050483
+   ],
+   "rows_per_cluster": {
+    "prompt_len=120217": 18776,
+    "prompt_len=64478": 17828,
+    "prompt_len=64217": 15782,
+    "prompt_len=16478": 14832,
+    "prompt_len=32478": 11104,
+    "prompt_len=16240": 8676,
+    "prompt_len=4240": 8494,
+    "prompt_len=8240": 8116
+   }
+  },
+  "request": {
+   "clusters": 176,
+   "flip_rate_ci95": [
+    0.03011034361646081,
+    0.032876044272931594
+   ],
+   "mean_l1_ci95": [
+    0.013810166460299313,
+    0.015022847438761672
+   ],
+   "rows_per_cluster": {
+    "cmpl-a8f9339af2488a56-0-b955e8d0": 5824,
+    "cmpl-9f647080775818d1-0-b73fb7f7": 5760,
+    "cmpl-881769505d80b949-0-9fa92473": 3392,
+    "cmpl-a4cfa911eb2178c6-0-b34bfb9a": 2880,
+    "cmpl-9e7b5371d0c3e6f2-0-93fa016d": 1472,
+    "cmpl-8aa10561f994896d-0-8b5a4f1f": 1408,
+    "cmpl-904710de51ae2bfa-0-9e63d88b": 900,
+    "cmpl-81ff4c95b5c457b7-0-a103fc6b": 844,
+    "cmpl-815f9f0b74db6180-0-9e1a4190": 836,
+    "cmpl-adfecae0bcc70284-0-a911ec66": 836,
+    "cmpl-8166483d499bd6c2-0-abb1ceef": 780,
+    "cmpl-9cec1601626be6b5-0-88a9e4cc": 780,
+    "cmpl-a3e66b25925cedff-0-ba4a6f32": 772,
+    "cmpl-934aee8d70f20400-0-91d0d193": 772,
+    "cmpl-ad375ed5e323dfd9-0-ad6bc013": 764,
+    "cmpl-9276d39ee938a55d-0-a830607c": 724,
+    "cmpl-86c2615ee04df56f-0-bb9e4a4c": 716,
+    "cmpl-9f22c14682e73f35-0-b6c30f12": 716,
+    "cmpl-b97661d189442a03-0-9b922dc4": 716,
+    "cmpl-b05dca603cdae48b-0-b9febac6": 712
+   }
+  }
+ }
+}
+{"inventory": {"r0_records": 1593, "r0_rows": 103608, "r0_with_out": 1593, "r0_same_x": 1593, "r1_records": 1593, "r1_rows": 103608, "r1_with_out": 1593, "r1_same_x": 1593}, "rank_pairs": 1593, "missing_tensors": {"x": 0, "topk_ids": 0, "topk_weights": 0, "out": 0}, "plan_branches": {"prefill_plan tiled by 1024": 2850, "prefill_plan": 336}, "swiglu_limit_on_layer": ["10.0"], "sufficient_for_stage_b": true}
