@@ -677,3 +677,32 @@ confirmed implementation omission; exercised in the tested workload; demonstrate
 correction; completion effect untested. Then one next experiment is selected (stock 0.7.0 reproduction, or a narrowly
 defined corrected 0.9.1 candidate). No completion benefit is inferred from expert flips, activation differences or
 likelihood changes alone; bundling fixes into one explanatory experiment loses individual attribution and must say so.
+
+**Amendment 13a (2026-10-11; independent review of the amendment 13 proposal, before any stage-A data).** Recommended:
+Stage A only, at most 2.0 occupied GPU-hours (startup, warm-up, smoke, offline work and invalid attempts included; the
+runner's refusal to exceed the ceiling kept); Stage B and the stock 0.7.0 replication not approved (the 35 GPU-hour
+maximum is not authorized; any later request uses reconstructed timings and handles invalid runs separately, with no
+automatic large retry allocation). D3 controls: label captured logits by computation ("bf16-result logits cast to fp32"
+vs logits from the intended fp32-output GEMM); verify actual dispatch and matching weights, that the offline shipped
+computation reproduces the captured computation, that captured logits reproduce the routing actually consumed, and that
+the corrected computation approaches the fp64 reference within tolerances stated before data; if an exact-reproduction
+control fails, investigate batching, shape, dispatch and repeatability rather than relaxing it after seeing results;
+report membership flips and routing-weight changes by layer and execution type, near-boundary margins, descriptive row
+counts and uncertainty that respects shared request/history dependence (rows are not independent serving draws); FULL-graph
+decode coverage is by source inspection only unless measured, stated explicitly. D4: stage A establishes omission and
+reachability, not the real-weight effect; frozen inputs sufficient for the intended comparison are preserved with the
+serving path that produced them documented. D5: resizing observed across capture, post-capture warm-up and serving; for any
+event, establish whether it invalidates an address retained by a captured graph (a resize alone does not establish graph
+corruption); no event = "not exercised in this workload". Stage B afterwards: not built automatically; first price the
+smallest comparison using existing B12x/runtime facilities (unclamped vs limit 10; limit 1 as reachability control; limits
+7 and 5 deferred); if a new harness is still needed, state what decision its output would change and report engineering
+cost separately from GPU cost; element-level engagement and an EXL3 decoder deferred. Deliverable: an updated defect
+matrix (measured vs inferred execution coverage, correction verification, computational effect, remaining completion
+uncertainty, actual GPU and engineering costs) and the smallest next step that can change a concrete decision, naming one
+next large experiment with its exact objective (stock 0.7.0 replication for repeatability, or a corrected 0.9.1 arm for a
+specific fix's behavioural value); computational effects alone do not establish a completion benefit or explain the gap.
+
+**Amendment 13b (2026-10-11, operator authorization).** Stage A authorized as recommended in amendment 13a: at most 2.0
+occupied GPU-hours including startup, warm-up, smoke, offline work and invalid attempts, with the runner's budget gate.
+Stage B and the stock 0.7.0 replication are not authorized. Stage A runs after the amendment 13a controls are built in and
+CPU-tested.

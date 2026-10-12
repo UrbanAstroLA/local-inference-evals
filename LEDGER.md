@@ -287,3 +287,13 @@ every configuration tested. Not a rate (`tools/analyze.py screen-single`).
 | Occupied GPU-hours of the 0.7.0 K3.25 three-pass record | about 15.5 (planning figure) | 22.97 | the planning figure was the passes 2-3 session alone; pass 1 ran in its own session (7.44) |
 
 </details>
+
+### 2026-10-12, early morning: stage A verification of D3, D4, D5 (in progress)
+
+Amendments 13-13b. One observe-only server session (shipped graph mode) and offline comparisons; 0.68 of 2.0 GPU-hours.
+D5: omission confirmed, not exercised in this workload. D4: omission and kernel reachability confirmed; effect not
+measured. D3: the bf16 fallback is confirmed in the server; the comparison stopped at an exact-reproduction control
+because the served router's weights depend on batch size (new observation E1; expert selection unaffected); a correction
+of the control's router invocation awaits review. Two tooling faults (pageable capture buffer; offline mount over /run)
+were found by the smoke and offline steps and fixed before any comparison.
+[Investigation](investigations/2026-10-glm53-completion/README.md#stage-a-verification-d3-d4-d5-in-progress).

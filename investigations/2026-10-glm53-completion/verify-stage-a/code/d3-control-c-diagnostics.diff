@@ -1,0 +1,169 @@
+--- <scratch>/verify13/offline/d3_router_compare.attempt2.py	2026-10-12 00:09:23.812033280 -0700
++++ <scratch>/verify13/offline/d3_router_compare.py	2026-10-12 00:09:23.820925216 -0700
+@@ -271,6 +271,120 @@
+     raise KeyError("record has no 'logits_shipped' tensor (unlabelled logits are not accepted)")
+ 
+ 
++# ------------------------------------------------------------------ control (c) diagnostics
++CREC = []          # per-record control (c) classification (all records)
++CDIAG_FILES = []   # failing records selected for the detailed routing diagnostic
++
++
++def classify_routing(ci, cw, ei, ew):
++    """Captured (consumed) routing vs engine routing of the same logits: (i) id sets differ,
++    (ii) same sets but weights not bitwise (ulp stats), positional order, weight-sum stats."""
++    nd = sets_differ(ci, ei)
++    same = nd == 0
++    Dc = torch.zeros(ci.shape[0], E, dtype=torch.float32).scatter_(1, ci.long(), cw.float())
++    De = torch.zeros(ci.shape[0], E, dtype=torch.float32).scatter_(1, ei.long(), ew.float())
++    beq = (Dc.view(torch.int32) == De.view(torch.int32)).all(dim=1)
++    wrows = same & ~beq
++    out = dict(rows=int(ci.shape[0]), rows_set_differ=int((nd > 0).sum()),
++               members_differ=int(nd.sum()), rows_same_set_weights_not_bitwise=int(wrows.sum()),
++               rows_exact=int((same & beq).sum()),
++               rows_same_order=int((ci.long() == ei.long()).all(dim=1).sum()),
++               captured_wsum_minus_2p5_max=float((cw.double().sum(1) - SCALE).abs().max()),
++               engine_wsum_minus_2p5_max=float((ew.double().sum(1) - SCALE).abs().max()))
++    if bool(wrows.any()):
++        u = (Dc[wrows].view(torch.int32).long() - De[wrows].view(torch.int32).long()).abs()
++        u = u[u > 0]
++        a = (Dc[wrows] - De[wrows]).abs()
++        out.update(ulp_max=int(u.max()), ulp_median=float(u.double().median()),
++                   ulp_hist={str(k): int((u == k).sum()) for k in (1, 2, 3, 4)} | {">4": int((u > 4).sum())},
++                   w_max_abs=float(a.max()), w_max_rel=float((a / De[wrows].abs().clamp_min(1e-30)).max()))
++    return out
++
++
++def aligned_logits(win: torch.Tensor, m: int, a: int, ptr_mod256, device, fill="zero", seed=0):
++    """M-row fp32 logits with the captured rows at [a, a+r), base at the in-server residue mod 256."""
++    off = (int(ptr_mod256) // 4) if ptr_mod256 is not None else 0
++    buf = torch.zeros(m * E + 64, dtype=torch.float32, device=device)
++    lg = buf[off:off + m * E].view(m, E)
++    if fill == "random":
++        g = torch.Generator(device="cpu").manual_seed(seed)
++        lg.copy_((torch.randn(m, E, generator=g) * 2.0).to(device))
++    elif fill == "tile":
++        reps = (m + win.shape[0] - 1) // win.shape[0]
++        lg.copy_(win.to(device).repeat(reps, 1)[:m])
++    lg[a:a + win.shape[0]] = win.to(device)
++    return lg
++
++
++def diagnose_routing(f, router, device):
++    """Why does the engine router on the captured shipped logits not reproduce the consumed routing?
++    Repeatability, batch shape (window vs serving M, other sizes), padding content, alignment,
++    row misalignment (+-1), and transformations (order, scaling)."""
++    rec = torch.load(f)
++    meta = rec["meta"]
++    m, a, r = meta["m"], meta["a"], meta["r"]
++    cap = rec["logits_shipped"]
++    ci, cw = rec["topk_ids"], rec["topk_weights"]
++    dt = ci.dtype
++    x = rec["x"].to(device)
++
++    def route(lg, rows=None):
++        hs = torch.zeros(lg.shape[0], H, dtype=torch.bfloat16, device=device) if lg.shape[0] != r else x
++        w, i = router.select_experts(hidden_states=hs, router_logits=lg, topk_indices_dtype=dt)
++        if rows is not None:
++            w, i = w[rows], i[rows]
++        return i.cpu(), w.cpu()
++
++    out = dict(file=os.path.basename(f), m=m, a=a, r=r, logits_ptr_mod256=meta.get("logits_ptr_mod256"),
++               batch_kind=(meta.get("rows") or {}).get("batch_kind"))
++    with torch.no_grad():
++        i1, w1 = route(cap.to(device).contiguous())
++        i2, w2 = route(cap.to(device).contiguous())
++        out["repeatable_window"] = bool(torch.equal(i1, i2) and torch.equal(w1, w2))
++        out["window_vs_captured"] = classify_routing(ci, cw, i1, w1)
++        sl = slice(a, a + r)
++        pm = meta.get("logits_ptr_mod256")
++        iz, wz = route(aligned_logits(cap, m, a, pm, device), sl)
++        out["serving_M_zero_pad_vs_captured"] = classify_routing(ci, cw, iz, wz)
++        iz2, wz2 = route(aligned_logits(cap, m, a, pm, device), sl)
++        out["repeatable_serving_M"] = bool(torch.equal(iz, iz2) and torch.equal(wz, wz2))
++        ir, wr = route(aligned_logits(cap, m, a, pm, device, fill="random", seed=1), sl)
++        out["serving_M_random_pad_equals_zero_pad"] = bool(torch.equal(iz, ir) and torch.equal(wz, wr))
++        it, wt = route(aligned_logits(cap, m, a, pm, device, fill="tile"), sl)
++        out["serving_M_tiled_pad_equals_zero_pad"] = bool(torch.equal(iz, it) and torch.equal(wz, wt))
++        i0, w0 = route(aligned_logits(cap, m, a, 0, device), sl)
++        out["serving_M_alignment0_equals_server_alignment"] = bool(torch.equal(iz, i0) and torch.equal(wz, w0))
++        sizes = {}
++        for mm in sorted({r, 2 * r, 128, 256, 512, 1024, 2048, m}):
++            if mm < r:
++                continue
++            ii, ww = route(aligned_logits(cap, mm, 0, pm, device), slice(0, r))
++            c = classify_routing(ci, cw, ii, ww)
++            sizes[str(mm)] = dict(exact_rows=c["rows_exact"], set_differ=c["rows_set_differ"],
++                                  weights_not_bitwise=c["rows_same_set_weights_not_bitwise"])
++        out["by_batch_rows_window_at_0"] = sizes
++        # (iii) row misalignment: does captured row i match engine row i+-1 better?
++        for sh in (-1, 1):
++            if r > 1:
++                a_ = ci[max(0, sh):r + min(0, sh)]
++                b_ = i1[max(0, -sh):r + min(0, -sh)]
++                out[f"shift{sh:+d}_set_match_rows"] = int((sets_differ(a_, b_) == 0).sum())
++        # (iv) transformations
++        out["captured_order_equals_engine_order_rows"] = int((ci.long() == i1.long()).all(dim=1).sum())
++        same = sets_differ(ci, i1) == 0
++        if bool(same.any()):
++            Dc = dense(ci, cw)[same]
++            De = dense(i1, w1)[same]
++            ratio = (Dc.sum(1) / De.sum(1))
++            out["captured_over_engine_weight_sum_ratio_minmax"] = [float(ratio.min()), float(ratio.max())]
++        sel = torch.sigmoid(cap.double()) + 0.0
++        top = torch.topk(sel, K + 1, dim=1).values
++        nd = sets_differ(ci, i1)
++        if bool((nd > 0).any()):
++            out["unbiased_sigmoid_gap8_9_at_set_differ_rows"] = (top[:, K - 1] - top[:, K])[nd > 0].tolist()[:20]
++    return out
++
++
+ # ------------------------------------------------------------------ phase 1: controls (a)-(c)
+ def diagnose(rec, gate, device, cap):
+     """Why does the offline SHIPPED computation differ from the captured one?  Never relaxes (b)."""
+@@ -348,12 +462,17 @@
+             if "topk_ids" in rec:
+                 w_e, i_e = router.select_experts(hidden_states=rec["x"].to(device), router_logits=cap,
+                                                  topk_indices_dtype=rec["topk_ids"].dtype)
+-                okc = bool((sets_differ(rec["topk_ids"], i_e.cpu()) == 0).all()) and bool(torch.equal(
+-                    dense(rec["topk_ids"], rec["topk_weights"]), dense(i_e.cpu(), w_e.cpu())))
++                cls_c = classify_routing(rec["topk_ids"], rec["topk_weights"], i_e.cpu(), w_e.cpu())
++                okc = cls_c["rows_set_differ"] == 0 and cls_c["rows_same_set_weights_not_bitwise"] == 0
+             else:
+-                okc = False
++                okc, cls_c = False, dict(missing_routing=True)
++            CREC.append(dict(file=os.path.basename(f), layer=layer, m=m, a=a, r=r, ok=okc,
++                             batch_kind=(rec["meta"].get("rows") or {}).get("batch_kind"),
++                             logits_ptr_mod256=rec["meta"].get("logits_ptr_mod256"), **cls_c))
+             if not okc:
+                 fails["c"].append(os.path.basename(f))
++                if len(CDIAG_FILES) < 60:
++                    CDIAG_FILES.append((f, layer))
+     return by_layer, cache, fails, diag, nrows
+ 
+ 
+@@ -522,6 +641,24 @@
+                                                  examples=fails["c"][:20]),
+                records=len(files0), rows=nrows, seconds=round(time.time() - t0, 1))
+     labels = dict(shipped=LABEL_SHIPPED, corrected=LABEL_CORRECTED, reference=LABEL_REFERENCE)
++    if fails["c"] and CDIAG_FILES:
++        for f, layer in CDIAG_FILES:
++            try:
++                diag.append(dict(control="c", **diagnose_routing(f, cache[layer][3], device)))
++            except Exception as exc:  # noqa: BLE001
++                diag.append(dict(control="c", file=os.path.basename(f), error=repr(exc)))
++    if CREC:
++        with open(os.path.join(out_dir, "d3_control_c_records.jsonl"), "w") as fh:
++            for row in CREC:
++                fh.write(json.dumps(row, default=str) + "\n")
++        agg = collections.Counter()
++        for row in CREC:
++            for k in ("rows", "rows_set_differ", "members_differ", "rows_same_set_weights_not_bitwise", "rows_exact"):
++                agg[k] += int(row.get(k, 0) or 0)
++            agg["records_ok" if row["ok"] else "records_failed"] += 1
++            agg[("full_ok" if row["ok"] else "full_failed") if row["m"] == row["r"] else
++                ("window_ok" if row["ok"] else "window_failed")] += 1
++        ctl["c_routing_reproduced_exactly"]["classification"] = dict(agg)
+     if fails["a"] or fails["b"] or fails["c"]:
+         json.dump(dict(stopped=True, labels=labels, controls=ctl, diagnostics=diag,
+                        note="exact-reproduction control failed: investigate batching, shape, alignment, "

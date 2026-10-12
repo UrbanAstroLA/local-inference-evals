@@ -666,6 +666,36 @@ are speed and feature work. Two divergences outside those paths affect every rel
 
 Neither can explain a difference between 0.7.0 and 0.9.1.
 
+### Stage A verification: D3, D4, D5 (in progress)
+
+Amendments 13-13b; receipts [`verify-stage-a/`](verify-stage-a). One observe-only server session in shipped graph mode on
+the gate fixture, then offline comparisons on identical captured inputs. 0.68 of 2.0 GPU-hours used.
+
+| Defect | Confirmed omission | Exercised in this workload | Computational effect | Correction verified | Completion |
+|---|---|---|---|---|---|
+| D3 router logits in bf16 on SM12x | yes: the gate runs the bf16 fallback (`F.linear`, then cast) with all six fast-path flags off, confirmed in the server | yes (every MoE layer) | pending: comparison stopped at an exact-reproduction control, see below | pending | untested |
+| D4 routed SwiGLU limit not passed | yes: projection-mixed path; the layer holds 10, the serving plans none | path exercised; whether activations exceed the limit not measured | not measured (Stage B, not authorized) | no | untested |
+| D5 workspace not locked after graph capture | yes: never locked | not exercised in this workload: resizes only during profiling, before any graph existed; none after capture or in serving | — | — | untested |
+
+D3 control (c), "the engine's router applied to the captured logits reproduces the consumed expert ids and weights
+exactly", failed on 1,425 of 1,593 records (controls (a) dispatch/hashes and (b) bitwise logit reproduction passed on all).
+Diagnosis ([`offline-a3/`](verify-stage-a/offline-a3)): expert sets identical on all 103,608 rows; no misalignment, no
+post-routing transformation, no nondeterminism; the control called the router on the 64-row capture window while serving
+calls it once on the whole batch, and the served fused router computes routing weights differently above roughly 1,024
+rows (all passing records had at most 1,024 rows, all failing ones at least 1,139; at the serving batch size the router
+reproduces the captured routing bitwise on 60 of 60 sampled failing records). A correction that invokes the router as
+serving does, with the exact criterion unchanged, is prepared and not applied pending review. No shipped-vs-corrected
+comparison has been computed.
+
+Engine observation E1 (separate from D3; no completion claim): routing weights from the served fused router depend on
+batch size. Expert ids are unchanged on these rows; weights differ by up to 1.1e-3 relative, and against an fp64
+recomputation large-batch weights are about 10x less accurate (median relative error 1.4e-6 vs 1.2e-7). Batches that
+large occur in prefill chunks (inferred exposure: prefill only).
+
+Stage A also found and fixed two problems in its own tooling before any D3 comparison: the capture buffer was allocated in
+pageable memory in the smoke harness (fixed; pinned memory now enforced), and the offline runner mounted the captures over
+the container's /run (fixed).
+
 ## Open questions
 
 Stated with their evidence so far.

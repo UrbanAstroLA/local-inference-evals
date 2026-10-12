@@ -1,0 +1,50 @@
+{
+ "stopped": true,
+ "labels": {
+  "shipped": "shipped: bf16-result GEMM cast to fp32",
+  "corrected": "corrected: fp32-output GEMM (upstream #54048 form)",
+  "reference": "reference: fp64"
+ },
+ "controls": {
+  "a_dispatch_and_hashes": {
+   "ok": true,
+   "failures": []
+  },
+  "b_shipped_reproduced_bitwise": {
+   "ok": true,
+   "records_failed": 0,
+   "examples": []
+  },
+  "c_routing_reproduced_exactly": {
+   "ok": false,
+   "records_failed": 1425,
+   "examples": [
+    "f0000144_l03.pt",
+    "f0000165_l03.pt",
+    "f0000207_l03.pt",
+    "f0000228_l03.pt",
+    "f0000249_l03.pt",
+    "f0000291_l03.pt",
+    "f0000333_l03.pt",
+    "f0000354_l03.pt",
+    "f0000396_l03.pt",
+    "f0000438_l03.pt",
+    "f0000459_l03.pt",
+    "f0000501_l03.pt",
+    "f0000522_l03.pt",
+    "f0000543_l03.pt",
+    "f0000564_l03.pt",
+    "f0000585_l03.pt",
+    "f0000606_l03.pt",
+    "f0000627_l03.pt",
+    "f0000648_l03.pt",
+    "f0000669_l03.pt"
+   ]
+  },
+  "records": 1593,
+  "rows": 103608,
+  "seconds": 14.4
+ },
+ "diagnostics": [],
+ "note": "exact-reproduction control failed: investigate batching, shape, alignment, dispatch and repeatability (diagnostics); tolerances are not relaxed"
+}

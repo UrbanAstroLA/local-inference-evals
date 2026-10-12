@@ -1,0 +1,65 @@
+--- verify13_capture.py.smoke1	2026-10-11 23:41:56.910170089 -0700
++++ verify13_capture.py	2026-10-11 23:42:26.487521408 -0700
+@@ -636,10 +636,11 @@
+     while True:
+         try:
+             if (not S.armed and not S.disarmed and os.path.exists(arm)
+-                    and (S.dev is not None or not torch.cuda.is_available())):
++                    and pool_target(S.dev, torch.cuda.is_available()) is not None):
+                 _alloc_pool()
+                 S.armed = S.pool is not None
+                 _log(dict(kind="armed", ok=S.armed, fwd=S.fwd, slabs=NSLABS, slab_bytes=SLAB_BYTES,
++                          pool_pinned=S.pool_pinned, dev=str(S.dev),
+                           every=EVERY, stride=STRIDE, full_rows=FULL_ROWS, win_rows=WIN_ROWS,
+                           max_bytes=MAX_BYTES, cap_out=CAP_OUT))
+             if S.armed and os.path.exists(disarm):
+@@ -669,13 +670,27 @@
+             time.sleep(0.5)
+ 
+ 
++def pool_target(dev, cuda_available: bool):
++    """Where the slab pool may live.  With CUDA present it must be pinned host memory for the
++    device the gate actually runs on (a pageable destination would make every non_blocking
++    device->host copy synchronous); until a CUDA forward has been seen there is no target."""
++    if cuda_available:
++        return "pinned" if (dev is not None and getattr(dev, "type", None) == "cuda") else None
++    return "pageable"   # CPU-only (tests): copies are synchronous anyway
++
++
+ def _alloc_pool() -> None:
+     if S.pool is not None:
+         return
+     try:
+-        if S.dev is not None and S.dev.type == "cuda":
++        target = pool_target(S.dev, torch.cuda.is_available())
++        if target is None:
++            return
++        if target == "pinned":
+             torch.cuda.set_device(S.dev)
+             pool = torch.empty((NSLABS, SLAB_BYTES), dtype=torch.uint8, pin_memory=True)
++            if not pool.is_pinned():
++                raise RuntimeError("pinned slab pool allocation returned pageable memory")
+         else:
+             pool = torch.empty((NSLABS, SLAB_BYTES), dtype=torch.uint8)
+         free = queue.Queue()
+@@ -751,7 +766,10 @@
+ 
+ 
+ def _ensure_writer(dev) -> None:
+-    if S.dev is None and dev is not None:
++    # Only a CUDA device may become the capture device.  GateLinear can be constructed on
++    # the CPU and moved later (smoke attempt 1: S.dev became cpu at __init__ and the slab
++    # pool was then allocated pageable); the first CUDA forward sets the device instead.
++    if S.dev is None and dev is not None and getattr(dev, "type", None) == "cuda":
+         S.dev = dev
+     if S.writer is None:
+         S.writer = threading.Thread(target=_writer_loop, name="verify13-writer", daemon=True)
+@@ -1014,7 +1032,7 @@
+     def forward(self, x):
+         out = orig_forward(self, x)
+         try:
+-            if S.dev is None and x.device.type == "cuda":
++            if (S.dev is None or S.dev.type != "cuda") and x.device.type == "cuda":
+                 S.dev = x.device
+             on_gate(self, x, out)
+         except Exception as exc:  # noqa: BLE001

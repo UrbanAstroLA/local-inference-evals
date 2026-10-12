@@ -1,0 +1,60 @@
+startup lines: gate 524, historical 520
+
+## non-default args (API server)
+identical keys: 23 of 23
+
+## engine config line
+identical fields: 33 of 33
+
+## VLLM_* environment variables reported by vLLM
+only gate: []
+only hist: []
+common: 27
+
+## configuration-bearing startup lines (numbers masked) present in only one log
+only gate: INFO [WORKSPACE DEBUG] Resized workspace from 'bNx_mla_sparse.py:N:_borrow_workspaces': N MB -> N MB (ubatch N)
+only gate: INFO [WORKSPACE DEBUG] Resized workspace from 'sparse_attn_indexer_kpool.py:N:sparse_attn_indexer_kpool': N MB -> N MB (ubatch N)
+only gate: INFO world_size=N rank=N local_rank=N distributed_init_method=file:///tmp/vllm_dist_faeNdNaNaNaNaNafcfNcdceN backend=nccl
+only hist: (Worker_TPN ) N-N-N N:N:N  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:N): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`N-N-N N:N:N  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:N): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilel
+only hist: (Worker_TPN ) N-N-N N:N:N  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:N): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`N-N-N N:N:N  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:N): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+only hist: INFO world_size=N rank=N local_rank=N distributed_init_method=file:///tmp/vllm_dist_NbNcNfNdNdNfdNaN backend=nccl
+
+## key lines (gate | historical)
+- cudagraph_mode: SAME
+    gate: ["cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>"]
+- cudagraph_capture_sizes: SAME
+    gate: ["cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64]"]
+- Breakable CUDA graph: SAME
+    gate: ['INFO Breakable CUDA graph enabled']
+- Using B12x fused paged: SAME
+    gate: ['INFO Using B12x fused paged score+top-k for GLM kpool decode.']
+- mla_owned: SAME
+    gate: ['INFO glm53-placement ledger {"gib": {"dense_mlp": 0.422, "draft": 1.533, "embed": 0.201, "kda_attention": 4.398, "layer_other": 0.133, "lm_head": 0.591, "mla_attention": 1.396, "other": 0.0, "routed_experts": 0.0, "router": 0.092, "shared_e', 'INFO glm53-placement ledger {"gib": {"dense_mlp": 0.422, "draft": 1.533, "embed": 0.981, "kda_attention": 4.398, "layer_other": 0.133, "lm_head": 0.591, "mla_attention": 1.163, "other": 0.0, "routed_experts": 0.0, "router": 0.092, "shared_e']
+- VLLM_GLM53_MLA_OWNERS: SAME
+    gate: ['WARNING Unknown vLLM environment variable detected: VLLM_GLM53_MLA_OWNERS']
+- NOPE: SAME
+    gate: ['WARNING Unknown vLLM environment variable detected: VLLM_GLM53_NOPE_RECORD']
+- kv_gmem_stride: SAME
+    gate: ['INFO B12X GLM MLA KV format: KV_FP8_ROPE=0 kv_gmem_stride=528 kv_cache_dtype=fp8_ds_mla']
+- DSA indexer decode path: SAME
+    gate: ['INFO DSA indexer decode path: use_flattening=True supports_varlen=False (next_n=4, use_fp4_indexer_cache=False)']
+- decode_context_parallel: SAME
+    gate: ['decode_context_parallel_size=1']
+- enable_prefix_caching: SAME
+    gate: ["enable_prefix_caching': True", 'enable_prefix_caching=True']
+- num_spec_tokens: SAME
+    gate: ['num_spec_tokens=3)']
+- Capturing CUDA graphs (FULL): DIFFERENT
+    gate: ['Capturing CUDA graphs (FULL):   0%|          | 0/9 [00:00<?, ?it/s]', 'Capturing CUDA graphs (FULL):  11%|█         | 1/9 [00:00<00:06,  1.16it/s]', 'Capturing CUDA graphs (FULL):  22%|██▏       | 2/9 [00:01<00:04,  1.47it/s]']
+    hist: ['Capturing CUDA graphs (FULL):   0%|          | 0/9 [00:00<?, ?it/s]', 'Capturing CUDA graphs (FULL):  11%|█         | 1/9 [00:00<00:07,  1.13it/s]', 'Capturing CUDA graphs (FULL):  22%|██▏       | 2/9 [00:01<00:04,  1.49it/s]']
+- max_num_seqs: SAME
+    gate: ["max_num_seqs': 16"]
+- max_num_batched_tokens: SAME
+    gate: ['max_num_batched_tokens to accommodate the additional draft token slots, or decrease num_speculative_tokens.', "max_num_batched_tokens': 2048"]
+
+## graph captures (progress-bar totals)
+- Capturing CUDA graphs (PIECEWISE): gate completed [11] | hist completed [11]
+- Capturing CUDA graphs (FULL): gate completed [9] | hist completed [9]
+- Capturing dflash2 CUDA graphs (FULL): gate completed [9] | hist completed [9]
+- Profiling CUDA graph memory (PIECEWISE): gate completed [] | hist completed []
+- Profiling CUDA graph memory (FULL): gate completed [] | hist completed []

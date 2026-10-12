@@ -1,0 +1,6 @@
+12a13
+> 96dcd5e36bd75497b823a817ae2b08602db7eef1e20c0f7ab54d883c2872fe9c  vllm/verify13_capture.py
+1082c1083
+< 6fca8c7fba361ac79418dd56d6d3c281ef04f34ebfdd2044cb1d12e1fa9e70d7  vllm/model_executor/layers/fused_moe/router/gate_linear.py
+---
+> d892ebaf492f916c3a844bb502bc34695cd38c25b882e410513f283d76effd32  vllm/model_executor/layers/fused_moe/router/gate_linear.py
