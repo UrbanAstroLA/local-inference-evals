@@ -172,7 +172,8 @@ differ in several ways at once.
   source.
 - It found two localized defects: the column-511 drop ([9](#9-requests-in-flight-and-the-top-k-route)), the only one
   found that differs between the engines in the direction of the gap, and the tail-ring omission
-  ([10](#10-kpool-tail-ring-positions-omission)), which affects 0.7.0 more. A GPQA arm with the column-511 correction
+  ([10](#10-kpool-tail-ring-positions-omission)), which affects 0.7.0 more; that does not exclude an accidental
+  completion benefit from incorrect computation. A GPQA arm with the column-511 correction
   alone left 15 empty replies vs 16 on 0.9.1, so that defect is not supported as the explanation of the gap
   ([completion arm](investigations/2026-10-glm53-completion/README.md#completion-arm)). Whether the tail ring accounts
   for any of it is untested; what produces the gap is open.
@@ -247,7 +248,9 @@ upstream does, upstream's ownership guard, a write that replayed graphs read) is
 completion arm excludes it by design, so the arm and its comparator carry the same defect.
 
 **Status.** Measured: a localized defect (supported). Its effect on completion or accuracy is untested. 0.7.0 is the
-more affected engine, so this defect does not explain its better completion.
+more affected engine; greater corruption there does not exclude an accidental completion benefit from incorrect
+computation, so the defect's role in 0.7.0's better completion is untested (corrected 2026-10-11: this entry earlier
+said the defect does not explain it; see the [ledger](LEDGER.md)).
 
 <details>
 <summary>Evidence</summary>
@@ -310,7 +313,8 @@ logged, not controlled. The analysis, frozen before data, states exchangeability
 
 **Status.** Stated limit. The arm's result (15 vs 16 empty replies) was read as R3 under the frozen rules: the
 localized correction stands but is not supported as the dominant completion explanation. Exchangeability with the
-recorded baseline remains an assumption.
+recorded baseline remains an assumption. The arm's rate resembles the record's, but the arm ran a modified engine, so it
+is not a replication of the unmodified 0.9.1 record.
 
 <details>
 <summary>Evidence</summary>

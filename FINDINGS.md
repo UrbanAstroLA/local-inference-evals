@@ -80,7 +80,8 @@ requests, some decoding as NaN: raw indexer key and gate rows written through th
 other requests, from stale tail ids left by the runner's start-up warm-up. Upstream vLLM has passed positions since
 GLM-5.3-Flash support landed. On a CPU harness with each release's real kernels, the share of decode-completed pools
 that differ from the request's own keys is 0% / 47-57% / 78-90% on 0.9.1 at 1 / 2 / 8 requests, and 100% on 0.7.0 at
-all three; 0.7.0 is the more affected engine, so this defect does not explain its better completion. Shipped graph
+all three; 0.7.0 is the more affected engine, which does not exclude an accidental completion benefit from incorrect
+computation: the defect's role in completion is untested. Shipped graph
 mode, unmodified 0.9.1: 6 events wrote into live attention blocks. The fix (positions, upstream's ownership guard and
 a graph-safe write) gave 0 null-block, 0 foreign and 0 attention-block writes in two variants; all requests completed;
 throughput unchanged. The gate found at least one selected pool with NaN bytes in 7.9% (rank 0) and 32.5% (rank 1) of
@@ -135,12 +136,15 @@ metadata call where this omission sits. Prepared locally, not released, and excl
    so it does not bear on completion. A completion pilot and replication of 0.9.1's default layout against 0.7.0's
    layout bundle on 0.9.1 gave no useful separation. A source audit found no defect unique to 0.9.1 in attention or the
    DCP combine, and two localized defects (items 4a-4b): the column-511 drop, which differs between the engines in the
-   direction of the gap, and the tail-ring omission, which affects 0.7.0 more. A three-pass GPQA arm on 0.9.1 with the
+   direction of the gap, and the tail-ring omission, which affects 0.7.0 more (its role in completion is untested). A
+   three-pass GPQA arm on 0.9.1 with the
    column-511 correction alone, against this 0.9.1 record as a historical control and read by rules frozen before data,
    left 15 empty replies vs 16 (one-sided p = 0.50); empties moved between questions (10 rescued, 9 newly empty). The
    column-511 drop is therefore not supported as the explanation of the gap
    ([completion arm](investigations/2026-10-glm53-completion/README.md#completion-arm)). The gap itself rests on one
-   three-pass record per engine; 0.9.1 reproduced its own rate, and whether 0.7.0's rate reproduces has not been tested.
+   three-pass record per engine. The corrected arm's 15 resembles the 0.9.1 record's 16, but it ran a modified engine
+   and is not a replication of the unmodified record; whether either engine's rate reproduces unmodified has not been
+   tested.
    Item 7a, pair by pair (same question, pass and request seed): 0.7.0 was right where 0.9.1 came back empty in 8
    question-passes (q12 pass 1, q55 pass 2, q81 pass 3, q88 passes 1 and 3, q109 pass 1, q120 pass 1, q170 pass 3), and
    never the other way. This splits the score by completion; it is not a causal comparison.
@@ -240,8 +244,8 @@ Stated with their evidence. Grade: **open**.
 | Question | Evidence so far |
 |---|---|
 | What drives non-completion on questions 88 and 79? | Items 13-14: no tested runtime part moved either, at a size where only very large effects could show. |
-| What makes tpurtell 0.7.0 as shipped leave fewer GPQA questions unanswered than 0.9.1? | Item 7: 4 vs 16 of 594, almost all at the 327,680-token cap; several differences at once, none varied alone in GPQA. The component screen ran the 0.7.0 image at three draft tokens on question 79 only, where it failed as often as 0.9.1 (9 of 12 each). The [completion investigation](investigations/2026-10-glm53-completion/README.md) found two localized defects (items 4a-4b): the column-511 drop, the only one that differed in the direction of the gap, is not supported as its explanation (arm: 15 vs 16 empty); the tail ring affects 0.7.0 more. A pilot of 0.7.0's layout bundle on 0.9.1 gave no useful separation; router precision and the SwiGLU clamp are the same in all releases. The gap rests on one three-pass record per engine; 0.9.1 reproduced its own rate (15 vs 16) while empties moved between questions; whether 0.7.0's rate reproduces has not been tested. Which difference matters is inconclusive. |
-| Does the column-511 correction change completion or accuracy? | Item 4a: the localized defect is removed. A three-pass GPQA arm with this correction alone, against the existing 0.9.1 record (a historical control) and read by rules frozen before data, left 15 vs 16 empty replies of 594 (one-sided p = 0.50): not supported as the dominant completion explanation. Raw accuracy -1.85 points (95% -5.05 to +1.35); inconclusive for accuracy. The tail-ring defect, present in both records, limits what this negative result can exclude ([completion arm](investigations/2026-10-glm53-completion/README.md#completion-arm)). |
+| What makes tpurtell 0.7.0 as shipped leave fewer GPQA questions unanswered than 0.9.1? | Item 7: 4 vs 16 of 594, almost all at the 327,680-token cap; several differences at once, none varied alone in GPQA. The component screen ran the 0.7.0 image at three draft tokens on question 79 only, where it failed as often as 0.9.1 (9 of 12 each). The [completion investigation](investigations/2026-10-glm53-completion/README.md) found two localized defects (items 4a-4b): the column-511 drop, the only one that differed in the direction of the gap, is not supported as its explanation (arm: 15 vs 16 empty); the tail ring affects 0.7.0 more, which does not exclude an accidental completion benefit; its role is untested. A pilot of 0.7.0's layout bundle on 0.9.1 gave no useful separation; router precision and the SwiGLU clamp are the same in all releases. The gap rests on one three-pass record per engine. The corrected 0.9.1 arm (15) resembles the 0.9.1 record (16), with empties moving between questions, but it ran a modified engine and is not a replication of the unmodified record; whether either engine's rate reproduces unmodified has not been tested. Which difference matters is inconclusive. |
+| Does the column-511 correction change completion or accuracy? | Item 4a: the localized defect is removed. A three-pass GPQA arm with this correction alone, against the existing 0.9.1 record (a historical control) and read by rules frozen before data, left 15 vs 16 empty replies of 594 (one-sided p = 0.50): not supported as the dominant completion explanation. Raw accuracy -1.85 points (95% -5.05 to +1.35), stated -1.18 (95% -4.04 to +1.52, final after the hand read); inconclusive for accuracy. The tail-ring defect, present in both records, limits what this negative result can exclude ([completion arm](investigations/2026-10-glm53-completion/README.md#completion-arm)). |
 | Do the tail-ring fix, the router's bf16 logits or the routed-expert SwiGLU clamp change completion or accuracy? | All three affect every release (the tail ring 0.7.0 more); untested ([confounds](CONFOUNDS.md#10-kpool-tail-ring-positions-omission), [13](CONFOUNDS.md#13-router-precision-and-the-routed-expert-swiglu-clamp)). |
 | Does generation-vs-prefill disagreement at long context bear on completion? | The completion investigation's 8,000-15,999-token measure covers continuation after the reply had ended (its amendment 7); no evidence either way ([confounds](CONFOUNDS.md#15-long-context-decode-vs-prefill-measures-continuation-after-the-reply)). |
 | Do other releases or layouts differ in non-completion across the benchmark? | Only pass 1 exists for the other configurations: 0 to 9 empty answers of 198, no paired difference at p < 0.05 (item 10). 3.25bpw and 4bpw TR3 (Brandon) on 0.9.1: no measurable difference over three passes (16 vs 17; item 6). |

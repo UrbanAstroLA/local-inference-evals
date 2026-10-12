@@ -636,3 +636,44 @@ specification's description of the treatment (section 1) cites the phase-3 decod
 frozen treatment is the image recorded in amendment 11b, whose correction also covers the prefill branch (`gate/candidate.diff`,
 frozen sha256 1ca405f2…). The image id and diff hash in amendment 11b govern; the analysis itself (statistics, data, reading
 rules) does not depend on this reference and is unchanged. The frozen file is not edited.
+
+**Amendment 12 (2026-10-11; adopts the independent assessment "establish whether the old-engine advantage
+reproduces").** The column-511 completion experiment is closed: the localized selection correction and its reproduction
+evidence are kept; no further completion run is bought for this correction alone (cap exhaustions 15 vs 15, empties 15 vs
+16, rescued and newly empty replies largely offset, no demonstrated accuracy benefit). CPU-only finishing work: complete
+the 12 stated-answer adjudications; finalize the result and cost ledger; replace obsolete runtime estimates with
+reconstructed occupied GPU-hours; correct two interpretation statements (the corrected 0.9.1 arm resembles the historical
+rate but is not an unmodified-engine replication; greater corruption in 0.7.0 does not exclude an accidental completion
+benefit from incorrect computation). Defect reproductions prepared for review; sending them upstream is a separate
+operator decision (held: more data and further correctness fixes may be bundled). Proposed next GPU work, not authorized:
+replicate stock 0.7.0's representative completion record (original image and effective settings incl. draft depth 5,
+same weights and rendered prompts, original protocol, concurrency and cap, verified warm-up, documented session
+lifecycle, three complete passes, the original per-pass seeds; described as repeatability under the recorded seeds, not a
+fresh-seed estimate), with analysis and interpretation frozen before running, and a request for time only after the old
+run's start-to-stop timings are reconstructed, the earlier estimate verified, a maximum budget stated (startup and
+invalid runs included) and any discrepancy explained. Outcomes: substantially fewer empties again → replication support,
+then the tail-mapping/DCP interaction on 0.7.0 becomes the concrete candidate (smallest valid correction, its separate ring
+and seed-stride defects accounted for; corruption is never restored as a remedy); movement toward the newer engine's
+count → the original gap is reported as not reproduced, without claiming equivalence, and no expensive bisection without a
+reproducible target; ambiguous → report uncertainty and stop this allocation. Kept separate: correcting real defects;
+repeatability of the engine difference; its mechanism; improving representative completion while preserving correctness.
+
+**Amendment 13 (2026-10-11; adopts the independent assessment "verify remaining defects cheaply"; the operator agrees
+verification comes before another baseline).** Objective: determine which remaining implementation omissions are exercised
+and alter computation, and use that to choose the next behavioural experiment. The full 0.7.0 replication (amendment 12)
+is deferred until this bounded verification is complete. Order: D3 router precision (verify the intended fp32 router path
+on SM12x; identical captured inputs through the shipped and the corrected computation, not a cast of rounded logits;
+report top-8 membership and routing-weight differences); D4 routed-expert SwiGLU clamp (confirm the patch reaches the
+projection-mixed K3.25 path; check it against the intended clamp semantics; identical frozen inputs, unclamped vs limit 10;
+how often the clamp engages and its output effect; a limit-1 smoke test establishes reachability only; no NLL campaign
+yet); D5 workspace locking (observe resizing after graph capture on existing fixtures; if absent, report "not exercised in
+this workload", not "ruled out"); D2/D6 close verification (reuse existing evidence; document the final patch and
+stale-entry handling; add tests only for uncovered conditions). Efficiency: source checks and fixtures before any GPU
+allocation; reuse captured inputs; combine compatible observe-only captures in one server session; isolated comparisons
+offline; no in-place modification of captured execution without validated graph safety. A costed proposal of at most 2
+occupied GPU-hours (startup and warm-up included) is requested before running; no GPU work is authorized now. If
+substantial new instrumentation is needed, stop and report the engineering cost first. Deliverable per defect:
+confirmed implementation omission; exercised in the tested workload; demonstrated computational effect; verified
+correction; completion effect untested. Then one next experiment is selected (stock 0.7.0 reproduction, or a narrowly
+defined corrected 0.9.1 candidate). No completion benefit is inferred from expert flips, activation differences or
+likelihood changes alone; bundling fixes into one explanatory experiment loses individual attribution and must say so.

@@ -127,8 +127,9 @@ What was asked, run, found, corrected and withdrawn, in date order.
   attention blocks. With positions passed and a graph-safe write: 0 and 0; 104 of 104 requests completed; throughput
   unchanged.
 - A CPU harness running each release's real kernels: 0.7.0 gets 100% of decode-completed pools wrong at 1, 2 and 8
-  requests in flight; 0.9.1 0% at 1, 47-57% at 2 and 78-90% at 8. 0.7.0 is the more affected engine, so this defect
-  does not explain its better completion. The investigation's total: 17.11 GPU-hours.
+  requests in flight; 0.9.1 0% at 1, 47-57% at 2 and 78-90% at 8. 0.7.0 is the more affected engine; that does not
+  exclude a role in its better completion, which is untested (corrected; see 2026-10-11, late). The investigation's
+  total: 17.11 GPU-hours.
 
 **2026-10-11. Upstream comparison, gate, completed tail fix, and the completion arm.**
 - [Comparison with upstream vLLM](investigations/2026-10-glm53-completion/README.md#comparison-with-upstream-vllm)
@@ -156,8 +157,8 @@ What was asked, run, found, corrected and withdrawn, in date order.
   p < 0.05 is a modest reduction, not support for explaining the gap; otherwise inconclusive or not supported. Power
   0.82-0.87 if the arm matches 0.7.0's per-question rates, 0.95 for a 75% reduction, 0.51 for 50%.
 - Correction (cost): amendment 11 asked for up to 13 GPU-hours for the arm. That estimate left out pass 1's separate
-  server session; the comparator's three passes had occupied 16.59 GPU-hours. The ceiling was raised to 18.5 before
-  launch.
+  server session; the comparator's three passes had occupied 16.59 GPU-hours (chain start to chain done; 16.63 from
+  server start to stop, reconstructed later: see 2026-10-11, late). The ceiling was raised to 18.5 before launch.
 - Correction (server starts): notes made while preparing the arm described the comparator's passes 2-3 server log as
   holding more than one server start ("first server block" in the gate result and the frozen analysis). It holds one;
   the frozen analysis script counts one start in each comparator log (dry runs). Nothing compared changes.
@@ -178,13 +179,38 @@ What was asked, run, found, corrected and withdrawn, in date order.
   question-bootstrap interval -1.01 to +1.35. Reading R3: the localized correction stands but is not supported as the
   dominant completion explanation. Empties moved between questions: 10 question-passes rescued, 9 newly empty.
 - Secondary: raw accuracy 85.0% vs 86.9% (-1.85 points, 95% -5.05 to +1.35), stated 86.7% vs 87.9% (-1.18, -4.04 to
-  +1.52; final after the usual hand read of 12 arm rows); not significant, which does not establish no accuracy cost.
+  +1.52; final after the hand read of 12 arm rows, see 2026-10-11, late); not significant, which does not establish no
+  accuracy cost.
   Answered completion lengths unchanged (median 3,387 vs 3,508 tokens). 76-84% of busy time had 5 or more requests in
   flight, so the corrected tiled path was heavily exercised.
 - In short: the column-511 change is a correctness fix that did not move completion behaviour. Limits: a historical
   control (exchangeability assumed, not randomized); the tail-ring defect, present in both records, limits what this
   negative result can exclude.
 - 17.11 GPU-hours (ceiling 18.5). The investigation's cumulative total: 36.08 GPU-hours. Nothing further is scheduled.
+
+**2026-10-11, late. Finishing work (amendment 12; CPU only, no GPU).**
+- An independent assessment was adopted (amendment 12): the column-511 completion experiment is closed; the correction
+  and its reproduction evidence are kept; no further completion run is bought for it alone.
+- Stated answers, final: the 12 arm rows where the stated answer differs from raw were read by hand under the
+  protocol's rules. All 12 commit to a single option, the one the adjudicator read; none is hedged. The frozen script,
+  re-run unchanged, gives the same figure: stated 515 of 594 (86.7%) vs 522 (87.9%), -1.18 points (95% -4.04 to +1.52).
+  Ids and categories are in the
+  [completion arm section](investigations/2026-10-glm53-completion/README.md#completion-arm).
+- [Occupied GPU-hours reconstructed](investigations/2026-10-glm53-completion/README.md#occupied-gpu-hours-of-the-three-k325-records)
+  from start-to-stop timings (2 GPUs x server start to server stop, per session): 0.7.0 record 22.97 (pass 1 7.44,
+  passes 2-3 15.53), 0.9.1 record 16.63 (5.15 + 11.48), completion arm 17.11 (5.74 + 11.37). The cost ledger is
+  unchanged: cumulative 36.08 GPU-hours.
+- Correction (cost): the 0.9.1 record's 16.59 GPU-hours ran from chain start to chain done and left out the server's
+  shutdown; start to stop it is 16.63. A planning figure of about 15.5 GPU-hours for the 0.7.0 three-pass record came
+  from its passes 2-3 session alone; with pass 1's session it occupied 22.97.
+- Correction (interpretation): the corrected 0.9.1 arm's 15 empty replies were described as 0.9.1 reproducing its own
+  rate. The arm resembles the 0.9.1 record's rate (16), but it ran a modified engine; it is not a replication of the
+  unmodified 0.9.1 record.
+- Correction (interpretation): the tail-ring defect was described as not explaining 0.7.0's better completion because
+  0.7.0 is the more affected engine. Greater corruption in 0.7.0 does not exclude an accidental completion benefit from
+  incorrect computation; the defect's role in completion is untested.
+- Proposed, not authorized: a repeatability run of stock 0.7.0's record (original image and settings, the recorded
+  per-pass seeds, the original session split), with its analysis frozen before any run. Nothing is running.
 
 ## Withdrawn, and what replaced it
 
@@ -257,5 +283,7 @@ every configuration tested. Not a rate (`tools/analyze.py screen-single`).
 | Which pool the 511-pool slice discards | among the lowest-scored, because the top-k emits winners first (code reading) | not guaranteed: no top-k path sorts its output; on 0.9.1's tiled route a pool ranked better than 480 of 512 in 88.1% of live decode rows | measured on 2026-10-11 (completion investigation, stage 2) |
 | Completion investigation, cumulative GPU-hour ceiling after amendment 9 | 15.65 | 17.1 (the approved ceilings added) | amendment 9 counted Tranche 1 from consumption rather than from the discovery allocation (amendment 10) |
 | GPU-hour ceiling for the completion arm | 13 | 18.5 | the estimate left out pass 1's server session; the comparator's three passes occupied 16.59 (amendment 11b) |
+| Occupied GPU-hours of the 0.9.1 K3.25 three-pass record | 16.59 | 16.63 | 16.59 ran from chain start to chain done; reconstructed from server start to stop (2026-10-11) |
+| Occupied GPU-hours of the 0.7.0 K3.25 three-pass record | about 15.5 (planning figure) | 22.97 | the planning figure was the passes 2-3 session alone; pass 1 ran in its own session (7.44) |
 
 </details>

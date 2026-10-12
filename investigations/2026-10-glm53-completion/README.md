@@ -10,8 +10,10 @@ fresh-seed replication done (3.55 GPU-hours). Kernel and DCP source audit done (
 with a fix that removes the localized problem (amendments 10-10f). The column-511 correction passed a gate in the shipped
 graph configuration, and a three-pass GPQA arm with that correction only has finished against the existing 0.9.1 record,
 analysed with the script frozen beforehand (amendments 11-11b): 15 vs 16 empty replies of 594, so the correction stands
-but is not supported as the dominant completion explanation ([completion arm](#completion-arm)). Cumulative 36.08
-GPU-hours.
+but is not supported as the dominant completion explanation ([completion arm](#completion-arm)); the 12 stated-answer
+rows were read by hand and the stated figure is final. Cumulative 36.08 GPU-hours; occupied GPU-hours of the three
+K3.25 records are [reconstructed from start-to-stop timings](#occupied-gpu-hours-of-the-three-k325-records). A replication
+of stock 0.7.0's record is proposed and not authorized (amendment 12); nothing further is running.
 Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#dated-amendments).
 **Fast path:** [answer](#answer) · [evidence](#evidence) · [configuration diff](#what-differs-between-the-two-servers) ·
 [Phase 1](#phase-1) · [completion pilot](#completion-pilot-and-replication) ·
@@ -534,7 +536,10 @@ seed-stride and spec-ring fixes behave as intended and the DCP1 tail-compaction 
 - The same omission is in 0.7.0's source. A CPU harness running each release's real kernels (synthetic scheduler and
   keys) finds 100% of decode-completed pools wrong on 0.7.0 at 1, 2 and 8 requests, against 0% / 47-57% / 78-90% on
   0.9.1; with positions passed, 0.9.1 is 0% and 0.7.0 keeps errors from its own ring-size and seed bugs (fixed in 0.9.1).
-  0.7.0 is the more affected engine, so this defect does not explain its better completion.
+  0.7.0 is the more affected engine. That does not exclude a role in its better completion: greater corruption could
+  still change completion by accident, through incorrect computation. The defect's effect on completion is untested
+  (corrected 2026-10-11; this line earlier said the defect does not explain 0.7.0's better completion; see the
+  [ledger](../../LEDGER.md)).
 - Completed fix (amendment 11): positions, upstream's `own_block != 0` guard and the graph-safe write, in two variants:
   T leaves the sparse-MLA causal-length source unchanged, U also switches it as upstream does. One shipped-graph run each:
   0 null-block, 0 foreign and 0 attention-block writes on both ranks; all requests completed. Receipts:
@@ -588,18 +593,63 @@ frozen rules.
 - **Empties moved between questions:** 10 question-passes empty on the comparator were answered by the arm, 9 answered on
   the comparator were empty on the arm, 6 were empty in both.
 - **Secondary (accuracy):** raw -1.85 points (95% -5.05 to +1.35), stated -1.18 points (95% -4.04 to +1.52). Not
-  significant, which does not establish that the correction costs no accuracy; read the intervals. The stated figure is
-  final after the usual hand read of the 12 arm rows where stated and raw differ.
+  significant, which does not establish that the correction costs no accuracy; read the intervals.
+- **Stated figure, final:** the 12 arm rows where the stated answer differs from raw were read by hand under the
+  protocol's rules (q98p1, q102p1, q159p1, q4p2, q64p2, q72p2, q110p2, q152p2, q170p2, q70p3, q98p3, q134p3). Each
+  commits to a single option, the one the adjudicator read; none is hedged. In 5 raw extraction took a parenthesised
+  token that is not an option label (a stereodescriptor or a formula group), in 4 an option mentioned after the reply's
+  commitment, and in 3 it found no parenthesised label. 11 raise the stated score above raw and 1 lowers it. The frozen
+  script, re-run unchanged with no hedged rows, gives the same output: stated 515 of 594 (86.7%) vs 522 (87.9%),
+  -1.18 points (95% -4.04 to +1.52), now final.
 - **Route exposure:** 76-84% of busy time per pass had 5 or more requests in flight (client-side approximation), so the
   corrected tiled path was heavily exercised. Answered completion lengths are unchanged.
-- **Cost:** 17.11 GPU-hours (ceiling 18.5). Cumulative for the investigation: 36.08 GPU-hours.
+- **Cost:** 17.11 occupied GPU-hours (2 GPUs x server start to stop, two sessions; ceiling 18.5); per-session timings
+  [below](#occupied-gpu-hours-of-the-three-k325-records). Cumulative for the investigation: 36.08 GPU-hours. The frozen
+  script's comparator figure, 16.593, runs from chain start to chain done and leaves out each session's shutdown;
+  start to stop it is 16.63.
 - **Limits:** a historical control: exchangeability is assumed, not designed; matching recipes and seeds does not make
   this a randomized experiment. The tail-ring defect is present in both records, which limits what this negative result
   can exclude. Corrupted (NaN-byte) index rows are not measurable from GPQA outputs.
 
-Receipts: [`arm-col511-result/`](arm-col511-result) (frozen script output `result-col511.md` and `.json`, session costs,
-GPU load log). Public copies of the plan files replace local paths; [`PUBLIC-COPIES-11b.txt`](PUBLIC-COPIES-11b.txt)
+Receipts: [`arm-col511-result/`](arm-col511-result) (frozen script output `result-col511.md` and `.json`; the final
+run after the hand read, `result-col511-final.md` and `.json`, identical in content; session costs, GPU load log). Public copies of the plan files replace local paths; [`PUBLIC-COPIES-11b.txt`](PUBLIC-COPIES-11b.txt)
 lists frozen and public hashes.
+
+### Occupied GPU-hours of the three K3.25 records
+
+Reconstructed after the arm (amendment 12), CPU only, from logs already on disk. **Occupied** = 2 GPUs x (server start
+to server stop): start is the eval chain's start, which stops any old container and launches the server; stop is the
+first logged event at or after which the container was stopped. Startup, compilation, warm-up, idle time and shutdown
+count. Times are local (UTC-7).
+
+| Record, session (passes) | Start | Ready | First request | Last request ends | Stop | Wall h | GPU-h |
+|---|---|---|---|---|---|---:|---:|
+| tpurtell 0.7.0 · DFlash2 ×5, 2026-09-29 (1) | 06:51:39 | 07:00:54 | 07:01:03 | 10:34:37 | 10:34:58 | 3.722 | 7.44 |
+| tpurtell 0.7.0 · DFlash2 ×5, 2026-10-10 (2-3) | 00:59:36 | 01:07:54 | 01:08:04 | 08:45:28 | 08:45:31 | 7.765 | 15.53 |
+| **0.7.0 record, three passes** | | | | | | 11.487 | **22.97** |
+| tpurtell 0.9.1 · DFlash2 ×3, 2026-10-08 (1) | 17:26:47 | 17:38:52 | 17:39:03 | 20:01:05 | 20:01:12 | 2.574 | 5.15 |
+| tpurtell 0.9.1 · DFlash2 ×3, 2026-10-09 (2-3) | 12:18:31 | 12:30:20 | 12:30:31 | 18:01:59 | 18:02:53 | 5.739 | 11.48 |
+| **0.9.1 record, three passes** | | | | | | 8.313 | **16.63** |
+| 0.9.1 + column-511 correction, 2026-10-11 session 1 (1) | 12:59:09 | 13:10:45 | 13:10:56 | 15:51:14 | 15:51:20 | 2.870 | 5.74 |
+| 0.9.1 + column-511 correction, 2026-10-11 session 2 (2-3) | 15:51:20 | 16:03:40 | 16:03:51 | 21:32:16 | 21:32:22 | 5.684 | 11.37 |
+| **Completion arm, three passes** | | | | | | 8.554 | **17.11** |
+
+Sources per session: the eval-chain log (start, "ready after" seconds, chain done), the passive request log (first
+request start, last request end) and the driver log that stopped the server. 0.7.0 pass 1 has neither a server log nor
+a request log: its first and last request come from lm-eval's log (generation started 07:01:03, 198 of 198 done after
+3:33:34, results saved 10:34:37), its ready time from the chain that re-attached to the running server at 06:59:53
+("ready after 61s"), and its stop from the next eval chain's start at 10:34:58, whose first action stops the container;
+the few seconds that stop itself took are not timed (the other sessions' stop times are taken after the stop returned). The 0.9.1 passes 2-3 stop is an upper bound by up to 7 s: the driver noticed the
+chain's end on its 60-second poll at 18:02:46 and stopped the server before its next log line at 18:02:53.
+
+Estimates these replace:
+- The 0.9.1 record's three passes were given as 16.59 GPU-hours (amendment 11b; the frozen script's 16.593): chain
+  start to chain done, which leaves out the time to stop the server (6 s and 53 s). Start to stop: 16.63.
+- Amendment 11's arm estimate (up to 13 GPU-hours) matched the 0.9.1 passes 2-3 session alone (11.48) and left out pass
+  1's session (5.15); corrected before launch (amendment 11b, [ledger](../../LEDGER.md)). The arm occupied 17.11.
+- A planning figure of about 15.5 GPU-hours for the 0.7.0 three-pass record came from its passes 2-3 server session
+  alone (15.53). With pass 1's session the record occupied 22.97. 0.7.0's passes take longer than 0.9.1's (request
+  windows 3.56 h for pass 1 and 7.62 h for passes 2-3, against 2.37 h and 5.52 h).
 
 ### Comparison with upstream vLLM
 
@@ -623,7 +673,7 @@ Stated with their evidence so far.
 | Question | Evidence so far |
 |---|---|
 | Does generation-vs-prefill disagreement at long context bear on completion? | The 8,000-15,999-token measure covers continuation after the reply had ended (amendment 7); no positive evidence either way. |
-| What produces the completion gap between 0.7.0 and 0.9.1? | The column-511 drop, the only defect found that differed between the engines in the direction of the gap, is not supported as its explanation: with the correction alone 0.9.1 left 15 empty replies vs 16 ([completion arm](#completion-arm)). The tail ring affects 0.7.0 more; the layout bundle showed no reproducible benefit (pilot and replication); router precision and the SwiGLU clamp are the same in all releases. The gap itself (4 vs 16) rests on one three-pass record per engine; 0.9.1 reproduced its own rate (15 vs 16) while empties moved between questions; whether 0.7.0's rate reproduces has not been tested. Open. |
+| What produces the completion gap between 0.7.0 and 0.9.1? | The column-511 drop, the only defect found that differed between the engines in the direction of the gap, is not supported as its explanation: with the correction alone 0.9.1 left 15 empty replies vs 16 ([completion arm](#completion-arm)). The tail ring affects 0.7.0 more, which does not exclude an accidental completion benefit from incorrect computation; its role is untested. The layout bundle showed no reproducible benefit (pilot and replication); router precision and the SwiGLU clamp are the same in all releases. The gap itself (4 vs 16) rests on one three-pass record per engine. The corrected 0.9.1 arm's 15 empty replies resemble the 0.9.1 record's 16, with empties moving between questions, but it ran a modified engine, so it is not a replication of the unmodified 0.9.1 record. Whether either record's rate reproduces on its unmodified engine has not been tested. Open. |
 | Does the column-511 correction cost accuracy? | Raw -1.85 points (95% -5.05 to +1.35), stated -1.18 (-4.04 to +1.52), against a historical control; not significant, which does not establish no cost. Inconclusive. |
 | Do the tail-ring fix, the router precision or the SwiGLU clamp change completion or accuracy? | All affect both engines; untested. |
 | Do legitimate numerical differences shift how often long deliberation runs past the cap? | Non-completion is a low-rate tail event (about 1 in 10 fresh draws at these caps on two hard questions); small pilots cannot resolve rates near 2.7% vs 0.7% of replies. |
@@ -640,7 +690,9 @@ Stated with their evidence so far.
 
 ## Next steps
 
-Nothing further is scheduled. The arm has been analysed with the frozen script and read by the frozen rules (R3). Open,
+Nothing further is scheduled. The arm has been analysed with the frozen script and read by the frozen rules (R3), and its
+stated figure is final. A repeatability run of stock 0.7.0's record under its recorded seeds is proposed and not
+authorized (amendment 12). Open,
 with their evidence above: what produces the completion gap; whether 0.7.0's rate of empty replies reproduces; whether the
 tail-ring fix, router precision or the SwiGLU clamp change completion or accuracy; whether the column-511 correction costs
 accuracy. Minimal reproductions and patches for both defects are prepared; offering them upstream is a separate decision.

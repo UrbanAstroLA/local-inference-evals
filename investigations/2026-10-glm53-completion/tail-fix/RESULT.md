@@ -77,6 +77,7 @@ cap 2,400 s, cost line to `tailfix/costs.jsonl`, outputs to
 scratchpad `kdcp/tailfix/`).
 
 Expected about 0.6 GPU-h each (T1 0.568, T3 0.584 on the same workload), 1.2 GPU-h for both; cap 1.33 per run.
+Measured (`../costs.jsonl`, server start to stop): T 0.58, U 0.57, 1.15 GPU-h for both.
 Pass criteria as amendment 10e (zero writes outside the own block, zero null-block aliasing, no new guard
 violations, all requests complete), plus throughput via `../tailguard/throughput_tg.py`. The guard does not
 observe the MLA causal-length source; a T vs U difference would have to be measured separately.
@@ -112,7 +113,9 @@ Share of decode-completed pools whose index-K differs from the compression of th
 - Measured: the kernel outcomes on this harness. Inferred: that serving behaves the same (real scheduling,
   acceptance, GPU program races, stale warm-up columns and real block ids are not modelled).
 - Reading (inferred): this defect affects every 0.7.0 decode-built pool and 0.9.1's only with 2+ requests, so
-  it cannot explain 0.7.0's better completion by 0.9.1 being more affected. Completion effects are untested.
+  it cannot explain 0.7.0's better completion by 0.9.1 being more affected. Greater corruption in 0.7.0 does not
+  exclude an accidental completion benefit from incorrect computation either; completion effects are untested
+  (sentence added 2026-10-11, amendment 12).
 
 Files: `ring070/{two_rank_tailring.py,run_all.sh,v0*-a*.json,v0*-a*.log,summary.md}`.
 

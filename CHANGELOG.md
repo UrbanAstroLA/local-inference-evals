@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-10-11, late (completion investigation, amendment 12): final stated figure, reconstructed GPU-hours, two corrections
+
+Contents unchanged: 65 runs, 13 comparisons. No run, number or grade changed except as listed; CPU only, no GPU.
+
+- **Completion arm, stated answers final** (`arm-col511-result/`): the 12 arm rows where the stated answer differs from
+  raw were read by hand under the protocol's rules; all commit to a single option, none hedged. The frozen script,
+  re-run unchanged, gives identical output (`result-col511-final.md`, `result-col511-final.json`): stated 515 vs 522 of
+  594, -1.18 points (95% -4.04 to +1.52). The receipts README lists ids, verdicts and categories (no reply text).
+- **Occupied GPU-hours reconstructed** (investigation README, new section): start, ready, first and last request and
+  stop per server session for the 0.7.0 and 0.9.1 K3.25 records and the arm; 22.97, 16.63 and 17.11 GPU-hours. Replaces
+  16.59 (chain start to chain done) for the 0.9.1 record and a planning figure of about 15.5 (one session) for 0.7.0.
+  `costs.jsonl` unchanged (cumulative 36.08). `tail-fix/RESULT.md` gains its measured cost beside the estimate.
+- **Two interpretation corrections**, owned in `LEDGER.md` (new entry and two rows in "Figures corrected along the
+  way"): the corrected 0.9.1 arm resembles the 0.9.1 record's rate but ran a modified engine, so it is not a replication
+  of the unmodified record; greater tail-ring corruption in 0.7.0 does not exclude an accidental completion benefit, and
+  the defect's role is untested. Edited in the investigation README, `FINDINGS.md` (items 4b and 7, open questions),
+  `CONFOUNDS.md` (entries 7, 10 and 12), `LEDGER.md` and `tail-fix/RESULT.md`.
+- **Site** regenerated.
+
 ## 2026-10-11, evening (completion investigation): completion arm finished; every page updated with its result
 
 Contents unchanged: 65 runs, 13 comparisons. No earlier run, number or grade changed.
