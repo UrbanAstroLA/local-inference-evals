@@ -1,0 +1,186 @@
+{
+ "M>1024": {
+  "A block: u=s, butterfly, 2.5/S then *u (fp32)": {
+   "rows": 91200,
+   "rows_bitwise": 0,
+   "elems": 729600,
+   "elems_bitwise": 41288,
+   "ulp_p50": 6,
+   "ulp_p99": 34,
+   "ulp_max": 17254,
+   "rows_bitwise_frac": 0.0
+  },
+  "B warp: u=(s+b)-b, butterfly, 2.5/S then *u (fp32)": {
+   "rows": 91200,
+   "rows_bitwise": 89389,
+   "elems": 729600,
+   "elems_bitwise": 715126,
+   "ulp_p50": 0,
+   "ulp_p99": 4,
+   "ulp_max": 110,
+   "rows_bitwise_frac": 0.9801
+  },
+  "C u=s, sequential sum": {
+   "rows": 91200,
+   "rows_bitwise": 0,
+   "elems": 729600,
+   "elems_bitwise": 39196,
+   "ulp_p50": 6,
+   "ulp_p99": 34,
+   "ulp_max": 17254,
+   "rows_bitwise_frac": 0.0
+  },
+  "D u=s, (u*2.5)/S": {
+   "rows": 91200,
+   "rows_bitwise": 0,
+   "elems": 729600,
+   "elems_bitwise": 38596,
+   "ulp_p50": 6,
+   "ulp_p99": 34,
+   "ulp_max": 17254,
+   "rows_bitwise_frac": 0.0
+  },
+  "E u=s, (u/S)*2.5": {
+   "rows": 91200,
+   "rows_bitwise": 0,
+   "elems": 729600,
+   "elems_bitwise": 37403,
+   "ulp_p50": 6,
+   "ulp_p99": 34,
+   "ulp_max": 17253,
+   "rows_bitwise_frac": 0.0
+  },
+  "F u=s, fp64 renormalisation (fl32(s*2.5)/(S+1e-20) in fp64)": {
+   "rows": 91200,
+   "rows_bitwise": 0,
+   "elems": 729600,
+   "elems_bitwise": 38596,
+   "ulp_p50": 6,
+   "ulp_p99": 34,
+   "ulp_max": 17254,
+   "rows_bitwise_frac": 0.0
+  },
+  "G fp16 sigmoid, else as A": {
+   "rows": 91200,
+   "rows_bitwise": 0,
+   "elems": 729600,
+   "elems_bitwise": 94,
+   "ulp_p50": 1738,
+   "ulp_p99": 5921,
+   "ulp_max": 26612,
+   "rows_bitwise_frac": 0.0
+  },
+  "H bf16 scale factor": {
+   "rows": 91200,
+   "rows_bitwise": 0,
+   "elems": 729600,
+   "elems_bitwise": 14,
+   "ulp_p50": 15737,
+   "ulp_p99": 47657,
+   "ulp_max": 64048,
+   "rows_bitwise_frac": 0.0
+  },
+  "I bf16 output weights": {
+   "rows": 91200,
+   "rows_bitwise": 0,
+   "elems": 729600,
+   "elems_bitwise": 12,
+   "ulp_p50": 16418,
+   "ulp_p99": 32442,
+   "ulp_max": 39205,
+   "rows_bitwise_frac": 0.0
+  }
+ },
+ "M<=1024": {
+  "A block: u=s, butterfly, 2.5/S then *u (fp32)": {
+   "rows": 12408,
+   "rows_bitwise": 7703,
+   "elems": 99264,
+   "elems_bitwise": 87041,
+   "ulp_p50": 0,
+   "ulp_p99": 3,
+   "ulp_max": 16,
+   "rows_bitwise_frac": 0.6208
+  },
+  "B warp: u=(s+b)-b, butterfly, 2.5/S then *u (fp32)": {
+   "rows": 12408,
+   "rows_bitwise": 0,
+   "elems": 99264,
+   "elems_bitwise": 5498,
+   "ulp_p50": 6,
+   "ulp_p99": 34,
+   "ulp_max": 278,
+   "rows_bitwise_frac": 0.0
+  },
+  "C u=s, sequential sum": {
+   "rows": 12408,
+   "rows_bitwise": 4525,
+   "elems": 99264,
+   "elems_bitwise": 55787,
+   "ulp_p50": 0,
+   "ulp_p99": 3,
+   "ulp_max": 18,
+   "rows_bitwise_frac": 0.3647
+  },
+  "D u=s, (u*2.5)/S": {
+   "rows": 12408,
+   "rows_bitwise": 377,
+   "elems": 99264,
+   "elems_bitwise": 57082,
+   "ulp_p50": 0,
+   "ulp_p99": 3,
+   "ulp_max": 17,
+   "rows_bitwise_frac": 0.0304
+  },
+  "E u=s, (u/S)*2.5": {
+   "rows": 12408,
+   "rows_bitwise": 298,
+   "elems": 99264,
+   "elems_bitwise": 56715,
+   "ulp_p50": 0,
+   "ulp_p99": 3,
+   "ulp_max": 17,
+   "rows_bitwise_frac": 0.024
+  },
+  "F u=s, fp64 renormalisation (fl32(s*2.5)/(S+1e-20) in fp64)": {
+   "rows": 12408,
+   "rows_bitwise": 377,
+   "elems": 99264,
+   "elems_bitwise": 57082,
+   "ulp_p50": 0,
+   "ulp_p99": 3,
+   "ulp_max": 17,
+   "rows_bitwise_frac": 0.0304
+  },
+  "G fp16 sigmoid, else as A": {
+   "rows": 12408,
+   "rows_bitwise": 0,
+   "elems": 99264,
+   "elems_bitwise": 12,
+   "ulp_p50": 1768,
+   "ulp_p99": 5884,
+   "ulp_max": 9189,
+   "rows_bitwise_frac": 0.0
+  },
+  "H bf16 scale factor": {
+   "rows": 12408,
+   "rows_bitwise": 0,
+   "elems": 99264,
+   "elems_bitwise": 0,
+   "ulp_p50": 15750,
+   "ulp_p99": 47999,
+   "ulp_max": 62461,
+   "rows_bitwise_frac": 0.0
+  },
+  "I bf16 output weights": {
+   "rows": 12408,
+   "rows_bitwise": 0,
+   "elems": 99264,
+   "elems_bitwise": 0,
+   "ulp_p50": 16395,
+   "ulp_p99": 32442,
+   "ulp_max": 32768,
+   "rows_bitwise_frac": 0.0
+  }
+ }
+}

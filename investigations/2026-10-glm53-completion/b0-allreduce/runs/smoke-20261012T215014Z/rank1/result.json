@@ -1,0 +1,353 @@
+{
+ "profile": "smoke",
+ "seed": 20261012,
+ "env": {
+  "VLLM_ENABLE_PCIE_ALLREDUCE": "1",
+  "VLLM_PCIE_ALLREDUCE_BACKEND": "b12x",
+  "VLLM_PCIE_ONESHOT_ALLREDUCE_MAX_SIZE": "384KB",
+  "VLLM_B12X_PCIE_EAGER": "0",
+  "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True",
+  "B12X_PCIE_TP2_PLAIN_REMOTE_PUSH": null,
+  "B12X_PCIE_TP2_REMOTE_PUSH": null,
+  "B12X_PCIE_ONESHOT_PUSH": null,
+  "B12X_PCIE_TP4_REMOTE_PUSH": null,
+  "B12X_PCIE_ONESHOT_THREADS": null,
+  "B12X_PCIE_ONESHOT_BLOCK_LIMIT": null,
+  "NCCL_DEBUG": "WARN",
+  "NCCL_SOCKET_IFNAME": "lo",
+  "CUDA_DEVICE_ORDER": "PCI_BUS_ID"
+ },
+ "torch": "2.13.0+cu130",
+ "device": "NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition",
+ "plan": {
+  "graphs": 9,
+  "forwards_incl_warmup_and_prefill": 175,
+  "b12x_peer_push_calls_in_replays": 11656,
+  "checked_elements_in_replays": 1399635968,
+  "by_phase": {
+   "main": 110,
+   "skew": 12,
+   "boundary": 16,
+   "nccl-ref": 12
+  },
+  "mixed_iterations": 8
+ },
+ "backends": {
+  "ca": "B12X_PCIE_ONESHOT",
+  "pynccl": true,
+  "fi_ar": false,
+  "qr": false,
+  "aiter": false,
+  "symm_mem": false,
+  "max_size": 393216,
+  "enable_eager": false,
+  "transport_policy": [
+   false,
+   false,
+   true,
+   false,
+   true
+  ],
+  "eager_buffer_bytes": 393216,
+  "plain_remote_push_region_packs": 24576,
+  "init_s": 2.28
+ },
+ "epoch_start": 0,
+ "capture": {
+  "seconds": 1.4,
+  "per_graph": [
+   {
+    "gid": 0,
+    "warmup_transport": "pull",
+    "warmup_s": 0.752,
+    "capture_s": 0.026
+   },
+   {
+    "gid": 1,
+    "warmup_transport": "push",
+    "warmup_s": 0.24,
+    "capture_s": 0.022
+   },
+   {
+    "gid": 2,
+    "warmup_transport": "pynccl",
+    "warmup_s": 0.009,
+    "capture_s": 0.018
+   },
+   {
+    "gid": 3,
+    "warmup_transport": "push",
+    "warmup_s": 0.02,
+    "capture_s": 0.019
+   },
+   {
+    "gid": 4,
+    "warmup_transport": "push",
+    "warmup_s": 0.242,
+    "capture_s": 0.017
+   },
+   {
+    "gid": 5,
+    "warmup_transport": "push",
+    "warmup_s": 0.019,
+    "capture_s": 0.016
+   },
+   {
+    "gid": 6,
+    "warmup_transport": "pynccl",
+    "warmup_s": 0.005,
+    "capture_s": 0.005
+   },
+   {
+    "gid": 7,
+    "warmup_transport": "push",
+    "warmup_s": 0.007,
+    "capture_s": 0.006
+   },
+   {
+    "gid": 8,
+    "warmup_transport": "pynccl",
+    "warmup_s": 0.011,
+    "capture_s": 0.012
+   }
+  ],
+  "device_slot_selection": true,
+  "slot_bias": 1
+ },
+ "plans": [
+  {
+   "key": [
+    "bfloat16",
+    "(48, 4096)",
+    "(4096, 1)",
+    "1"
+   ],
+   "transport": "tp2_remote_push",
+   "threads": 128,
+   "blocks": 16,
+   "size_packs": 24576,
+   "region_packs": 24576
+  },
+  {
+   "key": [
+    "bfloat16",
+    "(1, 4096)",
+    "(4096, 1)",
+    "1"
+   ],
+   "transport": "tp2_remote_push",
+   "threads": 64,
+   "blocks": 36,
+   "size_packs": 512,
+   "region_packs": 24576
+  },
+  {
+   "key": [
+    "bfloat16",
+    "(4, 4096)",
+    "(4096, 1)",
+    "1"
+   ],
+   "transport": "tp2_remote_push_stream",
+   "threads": 256,
+   "blocks": 36,
+   "size_packs": 2048,
+   "region_packs": 24576
+  },
+  {
+   "key": [
+    "bfloat16",
+    "(3, 4096)",
+    "(4096, 1)",
+    "1"
+   ],
+   "transport": "tp2_remote_push_stream",
+   "threads": 256,
+   "blocks": 36,
+   "size_packs": 1536,
+   "region_packs": 24576
+  }
+ ],
+ "epoch_after_capture": {
+  "value": 395,
+  "delta": 395,
+  "expected_push_calls": 395
+ },
+ "warmup_mismatches": {},
+ "phases": [
+  {
+   "phase": "main",
+   "items": 110,
+   "forwards": 110,
+   "seconds": 0.4,
+   "epoch_delta": 9464,
+   "expected_push_calls": 9464
+  },
+  {
+   "phase": "skew",
+   "items": 12,
+   "forwards": 12,
+   "seconds": 0.02,
+   "epoch_delta": 1092,
+   "expected_push_calls": 1092
+  },
+  {
+   "phase": "boundary",
+   "items": 16,
+   "forwards": 16,
+   "seconds": 0.01,
+   "epoch_delta": 372,
+   "expected_push_calls": 372
+  },
+  {
+   "phase": "mixed",
+   "items": 8,
+   "forwards": 16,
+   "seconds": 0.04,
+   "epoch_delta": 728,
+   "expected_push_calls": 728
+  },
+  {
+   "phase": "nccl-ref",
+   "items": 12,
+   "forwards": 12,
+   "seconds": 0.06,
+   "epoch_delta": 0,
+   "expected_push_calls": 0
+  }
+ ],
+ "cases": [
+  {
+   "gid": 0,
+   "phase": "main",
+   "kind": "PIECEWISE",
+   "rows": 48,
+   "layers": 91,
+   "replays": 12,
+   "ar_kind": "comm",
+   "skew": false,
+   "expected_dispatch": "b12x",
+   "dispatch": "b12x",
+   "mismatched_elements": 0,
+   "layers_with_mismatch": []
+  },
+  {
+   "gid": 1,
+   "phase": "main",
+   "kind": "PIECEWISE",
+   "rows": 1,
+   "layers": 91,
+   "replays": 12,
+   "ar_kind": "comm",
+   "skew": false,
+   "expected_dispatch": "b12x",
+   "dispatch": "b12x",
+   "mismatched_elements": 0,
+   "layers_with_mismatch": []
+  },
+  {
+   "gid": 2,
+   "phase": "main",
+   "kind": "FULL",
+   "rows": 64,
+   "layers": 91,
+   "replays": 6,
+   "ar_kind": "comm",
+   "skew": false,
+   "expected_dispatch": "pynccl",
+   "dispatch": "pynccl",
+   "mismatched_elements": 0,
+   "layers_with_mismatch": []
+  },
+  {
+   "gid": 3,
+   "phase": "main",
+   "kind": "FULL",
+   "rows": 48,
+   "layers": 91,
+   "replays": 40,
+   "ar_kind": "comm",
+   "skew": false,
+   "expected_dispatch": "b12x",
+   "dispatch": "b12x",
+   "mismatched_elements": 0,
+   "layers_with_mismatch": []
+  },
+  {
+   "gid": 4,
+   "phase": "main",
+   "kind": "FULL",
+   "rows": 4,
+   "layers": 91,
+   "replays": 40,
+   "ar_kind": "comm",
+   "skew": false,
+   "expected_dispatch": "b12x",
+   "dispatch": "b12x",
+   "mismatched_elements": 0,
+   "layers_with_mismatch": []
+  },
+  {
+   "gid": 5,
+   "phase": "skew",
+   "kind": "FULL",
+   "rows": 4,
+   "layers": 91,
+   "replays": 12,
+   "ar_kind": "comm",
+   "skew": true,
+   "expected_dispatch": "b12x",
+   "dispatch": "b12x",
+   "mismatched_elements": 0,
+   "layers_with_mismatch": []
+  },
+  {
+   "gid": 6,
+   "phase": "boundary",
+   "kind": "FULL",
+   "rows": 49,
+   "layers": 31,
+   "replays": 4,
+   "ar_kind": "comm",
+   "skew": false,
+   "expected_dispatch": "pynccl",
+   "dispatch": "pynccl",
+   "mismatched_elements": 0,
+   "layers_with_mismatch": []
+  },
+  {
+   "gid": 7,
+   "phase": "boundary",
+   "kind": "FULL",
+   "rows": 3,
+   "layers": 31,
+   "replays": 12,
+   "ar_kind": "comm",
+   "skew": false,
+   "expected_dispatch": "b12x",
+   "dispatch": "b12x",
+   "mismatched_elements": 0,
+   "layers_with_mismatch": []
+  },
+  {
+   "gid": 8,
+   "phase": "nccl-ref",
+   "kind": "FULL",
+   "rows": 48,
+   "layers": 91,
+   "replays": 12,
+   "ar_kind": "pynccl",
+   "skew": false,
+   "expected_dispatch": "pynccl-direct",
+   "dispatch": "pynccl-direct",
+   "mismatched_elements": 0,
+   "layers_with_mismatch": []
+  }
+ ],
+ "prefill_mismatched_elements": 0,
+ "mismatch_steps": [],
+ "cross_rank_last_output_identical": true,
+ "cross_rank_reference_identical": true,
+ "epoch_end": 12051,
+ "peer": 0
+}

@@ -1,0 +1,1 @@
+budget: used 0.0139 + cap 0.3333 <= 0.5 GPU-h ? 1

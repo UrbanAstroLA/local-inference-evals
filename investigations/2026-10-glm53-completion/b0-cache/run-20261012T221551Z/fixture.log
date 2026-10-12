@@ -1,0 +1,94 @@
+attention.sparse_mla: SparseMlaQuery (max_chunks_per_row=64, max_physical_records=0, max_page_table_width=64, max_q_rows=4, max_batch=4, max_width=64, max_q_chunks=0, max_kv_rows=64, ...) was not prepared before its first use; preparing its default configuration. Repeated matching declarations are logged at DEBUG.
+attention.sparse_mla: SparseMlaQuery (max_chunks_per_row=64, max_physical_records=0, max_page_table_width=64, max_q_rows=4, max_batch=4, max_width=64, max_q_chunks=0, max_kv_rows=64, ...) was not prepared before its first use; preparing its default configuration. Repeated matching declarations are logged at DEBUG.
+{
+ "A_draft_writer": {
+  "ok": true,
+  "secs": 0.03,
+  "error": null
+ },
+ "B_draft_fa2_reader": {
+  "ok": true,
+  "secs": 64.7,
+  "error": null
+ },
+ "C1_kda_scatter_gather": {
+  "ok": true,
+  "secs": 0.82,
+  "error": null
+ },
+ "C2_kda_conv_update": {
+  "ok": true,
+  "secs": 0.31,
+  "error": null
+ },
+ "C2b_kda_conv_prefill": {
+  "ok": true,
+  "secs": 0.27,
+  "error": null
+ },
+ "C3_kda_fused_recurrent_spec": {
+  "ok": true,
+  "secs": 0.33,
+  "error": null
+ },
+ "C4_kda_align_precopy": {
+  "ok": true,
+  "secs": 3.56,
+  "error": null
+ },
+ "C5_page_copy_on_write": {
+  "ok": true,
+  "secs": 0.03,
+  "error": null
+ },
+ "D1_mla_writer": {
+  "ok": true,
+  "secs": 0.93,
+  "error": null
+ },
+ "D2_mla_readers": {
+  "ok": false,
+  "secs": 1.04,
+  "error": "ValueError('SM120 sparse MLA prefill: unsupported shape (model_type=2, heads=64, topk=64, compute_mode=0, scale_format=1, has_extra=False, B12X_MLA_SM120_PREFILL_MG=1). Supported (MG) shapes: single-cache heads%8==0; DSV4 single-cache topk in {512, 1024, 2048} (FP8) or 128 (BF16-QK, heads%8==0); DSV4 dual-cache topk in {128, 512} (BF16-QK) or topk in {1024, 2048} (FP8-QK), heads%8==0, pbs_extra in {2, 64}; GLM_NSA topk in {512, 1024, 2048, 2176}; GLM_NEXT topk in {512, 1024, 2048, 2051, 2112}; NVFP4 (GLM-family, scale_format=2) topk in {128, 512, 1024, 2048, 2176}; GLM_NEXT NVFP4 additionally topk in {2051, 2112}. No decode-reuse fallback.')"
+ },
+ "D3_mla_graph_replay": {
+  "ok": false,
+  "secs": 0.07,
+  "error": null
+ },
+ "E1_kpool_tail_seed": {
+  "ok": true,
+  "secs": 1.49,
+  "error": null
+ },
+ "E2_kpool_compress": {
+  "ok": true,
+  "secs": 0.3,
+  "error": null
+ },
+ "E3_kpool_decode_update": {
+  "ok": false,
+  "secs": 0.37,
+  "error": null
+ },
+ "F1_zeroer": {
+  "ok": true,
+  "secs": 0.05,
+  "error": null
+ },
+ "F2_cross_group_reuse": {
+  "ok": true,
+  "secs": 0.28,
+  "error": null
+ },
+ "G_draft_graph_replay": {
+  "ok": true,
+  "secs": 0.06,
+  "error": null
+ },
+ "Z_final": {
+  "ok": true,
+  "secs": 0.01,
+  "error": null
+ }
+}

@@ -1,0 +1,124 @@
+{
+ "profile": "smoke",
+ "graphs": 9,
+ "forwards_incl_warmup_and_prefill": 175,
+ "b12x_peer_push_calls_in_replays": 11656,
+ "checked_elements_in_replays": 1399635968,
+ "by_phase": {
+  "main": 110,
+  "skew": 12,
+  "boundary": 16,
+  "nccl-ref": 12
+ },
+ "mixed_iterations": 8,
+ "cases": [
+  {
+   "gid": 0,
+   "phase": "main",
+   "kind": "PIECEWISE",
+   "rows": 48,
+   "layers": 91,
+   "replays": 12,
+   "ar_kind": "comm",
+   "skew": false,
+   "expected_dispatch": "b12x",
+   "dispatch": null
+  },
+  {
+   "gid": 1,
+   "phase": "main",
+   "kind": "PIECEWISE",
+   "rows": 1,
+   "layers": 91,
+   "replays": 12,
+   "ar_kind": "comm",
+   "skew": false,
+   "expected_dispatch": "b12x",
+   "dispatch": null
+  },
+  {
+   "gid": 2,
+   "phase": "main",
+   "kind": "FULL",
+   "rows": 64,
+   "layers": 91,
+   "replays": 6,
+   "ar_kind": "comm",
+   "skew": false,
+   "expected_dispatch": "pynccl",
+   "dispatch": null
+  },
+  {
+   "gid": 3,
+   "phase": "main",
+   "kind": "FULL",
+   "rows": 48,
+   "layers": 91,
+   "replays": 40,
+   "ar_kind": "comm",
+   "skew": false,
+   "expected_dispatch": "b12x",
+   "dispatch": null
+  },
+  {
+   "gid": 4,
+   "phase": "main",
+   "kind": "FULL",
+   "rows": 4,
+   "layers": 91,
+   "replays": 40,
+   "ar_kind": "comm",
+   "skew": false,
+   "expected_dispatch": "b12x",
+   "dispatch": null
+  },
+  {
+   "gid": 5,
+   "phase": "skew",
+   "kind": "FULL",
+   "rows": 4,
+   "layers": 91,
+   "replays": 12,
+   "ar_kind": "comm",
+   "skew": true,
+   "expected_dispatch": "b12x",
+   "dispatch": null
+  },
+  {
+   "gid": 6,
+   "phase": "boundary",
+   "kind": "FULL",
+   "rows": 49,
+   "layers": 31,
+   "replays": 4,
+   "ar_kind": "comm",
+   "skew": false,
+   "expected_dispatch": "pynccl",
+   "dispatch": null
+  },
+  {
+   "gid": 7,
+   "phase": "boundary",
+   "kind": "FULL",
+   "rows": 3,
+   "layers": 31,
+   "replays": 12,
+   "ar_kind": "comm",
+   "skew": false,
+   "expected_dispatch": "b12x",
+   "dispatch": null
+  },
+  {
+   "gid": 8,
+   "phase": "nccl-ref",
+   "kind": "FULL",
+   "rows": 48,
+   "layers": 91,
+   "replays": 12,
+   "ar_kind": "pynccl",
+   "skew": false,
+   "expected_dispatch": "pynccl-direct",
+   "dispatch": null
+  }
+ ]
+}

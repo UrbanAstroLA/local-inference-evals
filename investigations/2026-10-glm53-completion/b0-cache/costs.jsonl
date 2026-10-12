@@ -1,0 +1,4 @@
+{"item": "b0-cache-cpu-prep", "date": "2026-10-12", "status": "prepared", "wall_s": null, "gpus": 0, "gpu_hours": 0.0, "note": "CPU-only geometry/reachability/fixture preparation; no GPU used"}
+{"item": "b0-cache-fixture", "run": "20261012T221551Z", "status": "exit-0", "wall_s": 100, "gpus": 1, "gpu_hours": 0.0278, "ceiling_gpu_hours": 0.5, "image": "sha256:08d1cb902ddb888f679b972714168bb7c0d2333b4c1865f3ebf860baa2f46548"}
+{"item": "b0-cache-fixture", "run": "20261012T222239Z", "status": "exit-0", "wall_s": 20, "gpus": 1, "gpu_hours": 0.0056, "ceiling_gpu_hours": 0.2, "image": "sha256:08d1cb902ddb888f679b972714168bb7c0d2333b4c1865f3ebf860baa2f46548"}
+{"item": "b0-cache-fixture", "run": "20261012T222337Z", "status": "exit-0", "wall_s": 21, "gpus": 1, "gpu_hours": 0.0058, "ceiling_gpu_hours": 0.2, "image": "sha256:08d1cb902ddb888f679b972714168bb7c0d2333b4c1865f3ebf860baa2f46548"}

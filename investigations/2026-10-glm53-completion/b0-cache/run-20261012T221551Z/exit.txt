@@ -1,0 +1,3 @@
+fixture_exit=3
+pytest_sm120_exit=0
+pytest_glm_next_exit=1

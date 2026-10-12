@@ -295,6 +295,36 @@ What was asked, run, found, corrected and withdrawn, in date order.
 - 4.541 of 7.5 GPU-hours (one session, 2 GPUs × 8,174 s). The investigation's cumulative total: 47.79 GPU-hours. Nothing
   further is scheduled. [Second pass](investigations/2026-10-glm53-completion/README.md#second-pass-seed-1235).
 
+**2026-10-12, evening. Checkpoint B0 and targeted invariants (amendments 16-16e).**
+- An independent assessment (amendment 16) froze the correctness bundle as checkpoint B0 and moved the work from
+  behavioural passes to targeted invariants: a future intervention is B0 plus one verified change (B1); stock releases
+  stay historical references; another behavioural evaluation needs a new verified intervention or a priced confirmation
+  objective. Each item had a costed proposal and fixed its reference and verdict rules before data.
+- **Two-GPU all-reduce** (authorized 16a, ceiling 0.5): CLEAN. B0's graph all-reduce transport (B12x PCIe peer-push)
+  returned the exact bf16 sum on both GPUs in all 2,040,800 calls over 26,650 forwards; the epoch counter matched the
+  scheduled calls; the PyNCCL reference arm exact; no hangs. 0.07 GPU-hours.
+- **KV writer and query projection, B0 vs 0.7.0** (authorized 16a, ceiling 0.25): within expected rounding under the
+  corrected criteria. Owned: before any GPU data, a CPU dry run of the frozen analysis on defect-free outputs found three
+  errors in the frozen criteria (a projection bound half the correct half-ulp; a dequantisation tolerance inconsistent
+  with the frozen error model; a byte-difference rate that omitted exact E4M3 ties). The errata were recorded and hashed
+  before the run; the analysis reports both verdicts; the operator chose the corrected one (16b). As first written, the
+  verdict is "beyond expected rounding", with failures equal to the dry run's defect-free counts. The runner's analysis
+  step also failed to load its own result files (a version object rejected by weights-only loading); the frozen analysis
+  was re-run unchanged through a one-type loader wrapper before any analysis output existed. 0.0069 GPU-hours.
+- **E1** (CPU): expected numerical variation of the upstream router kernel used above 1,024 rows; selection unaffected;
+  same kernel in every release; no workaround.
+- **Cache isolation and high-offset addressing** (authorized 16c, ceiling 0.5): every driven kernel passed. Owned: the
+  first launch was refused by the runner's own pre-flight, which counted the desktop's graphics client on GPU 0 (no
+  container, 0 GPU-hours); the check was narrowed to type-G desktop clients before any data (16d). The first run with
+  data had four failures: three fixture faults (an unsupported extend width; a scratch buffer compared with itself;
+  never-written ring slots compared) and an obsolete upstream test. They were fixed in fixture code after inspecting the
+  data, with no criterion or tolerance loosened; rerun 1 exposed two more fixture faults, and rerun 2 passed 80 of 80
+  checks (16e). 0.0392 GPU-hours.
+- No defect found, so no B1 and no behavioural evaluation. Not covered: block-table and slot-mapping construction under
+  real scheduling, the index-K readers, extend under graph replay, other communication paths, the mixed-quant MoE path.
+- 0.1161 GPU-hours in all. The investigation's cumulative total: 47.91 GPU-hours. Nothing further is scheduled.
+  [Checkpoint B0](investigations/2026-10-glm53-completion/README.md#checkpoint-b0-and-targeted-invariants-amendment-16).
+
 ## Withdrawn, and what replaced it
 
 > **Withdrawal notice (2026-10-09).** The earlier hard-question screens (`hard-prompt-screen` v0 and v1, 2026-09-30 to

@@ -1,0 +1,4 @@
+[22:15:20] budget: spent 0.0, this run ceiling 0.5, approved 0.5
+running containers:
+REFUSED: GPU 0 not idle (used 20 MiB, util 0%)
+|    0   N/A  N/A           89543      G   /usr/bin/gnome-shell                      8MiB |

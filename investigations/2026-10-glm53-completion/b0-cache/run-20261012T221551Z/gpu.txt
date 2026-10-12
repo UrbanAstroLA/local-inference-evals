@@ -1,0 +1,1 @@
+GPU 0: NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition (UUID: GPU-95feac2b)

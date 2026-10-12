@@ -1,0 +1,114 @@
+{
+ "meta": {
+  "image_tag": "b0",
+  "image_id": "sha256:08d1cb902ddb888f679b972714168bb7c0d2333b4c1865f3ebf860baa2f46548",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition",
+  "torch": "2.13.0+cu130",
+  "inputs_sha256": "ed4498e63d369969d25b57ceff8e7758ee852e9fd4b7f1f26f987e15633bc71a",
+  "have_glm_next_writer": true,
+  "vllm": "0.1.dev20051+g487ecf187"
+ },
+ "repeatable": {
+  "synth/0": {
+   "nsa": true,
+   "nsa_slot_independent": true,
+   "next": true,
+   "next_slot_independent": true
+  },
+  "proxy/3": {
+   "nsa": true,
+   "nsa_slot_independent": true,
+   "next": true,
+   "next_slot_independent": true
+  },
+  "proxy/23": {
+   "nsa": true,
+   "nsa_slot_independent": true,
+   "next": true,
+   "next_slot_independent": true
+  },
+  "proxy/43": {
+   "nsa": true,
+   "nsa_slot_independent": true,
+   "next": true,
+   "next_slot_independent": true
+  }
+ },
+ "proj": {
+  "3/rows1": {
+   "rows": 1,
+   "bmm_repeatable": true,
+   "h64_repeatable": true
+  },
+  "3/rows2": {
+   "rows": 2,
+   "bmm_repeatable": true,
+   "h64_repeatable": true
+  },
+  "3/rows4": {
+   "rows": 4,
+   "bmm_repeatable": true,
+   "h64_repeatable": true
+  },
+  "3/rows8": {
+   "rows": 8,
+   "bmm_repeatable": true,
+   "h64_repeatable": true
+  },
+  "3/rows16": {
+   "rows": 16,
+   "bmm_repeatable": true,
+   "h64_repeatable": true
+  },
+  "23/rows1": {
+   "rows": 1,
+   "bmm_repeatable": true,
+   "h64_repeatable": true
+  },
+  "23/rows2": {
+   "rows": 2,
+   "bmm_repeatable": true,
+   "h64_repeatable": true
+  },
+  "23/rows4": {
+   "rows": 4,
+   "bmm_repeatable": true,
+   "h64_repeatable": true
+  },
+  "23/rows8": {
+   "rows": 8,
+   "bmm_repeatable": true,
+   "h64_repeatable": true
+  },
+  "23/rows16": {
+   "rows": 16,
+   "bmm_repeatable": true,
+   "h64_repeatable": true
+  },
+  "43/rows1": {
+   "rows": 1,
+   "bmm_repeatable": true,
+   "h64_repeatable": true
+  },
+  "43/rows2": {
+   "rows": 2,
+   "bmm_repeatable": true,
+   "h64_repeatable": true
+  },
+  "43/rows4": {
+   "rows": 4,
+   "bmm_repeatable": true,
+   "h64_repeatable": true
+  },
+  "43/rows8": {
+   "rows": 8,
+   "bmm_repeatable": true,
+   "h64_repeatable": true
+  },
+  "43/rows16": {
+   "rows": 16,
+   "bmm_repeatable": true,
+   "h64_repeatable": true
+  }
+ }
+}

@@ -1,0 +1,20 @@
+Post-run-2 fixture changes (2026-10-12), ALL MADE AFTER INSPECTING RUN-2 DATA (run-20261012T221551Z).
+Run-2 results are not relabelled; reruns are recorded separately.
+
+run_fixture.py  2ae595b7... -> edcb9c3f9107894994b957d18b104ef3a241abfa0925e4c838088a1c1204411b
+  D2: width 64 extend unsupported for GLM_NEXT (b12x/attention/_shared/mla/prefill.py:430-432,547-560); B0 serves w2048 (server-s1.log:74). Keep decode w64 unchanged; add 2048-record sets (written + twin-checked) read by decode and extend at w2048. Outputs cloned. Tolerances unchanged.
+  D3: eager outputs alias binding scratch output_buffer (b12x/attention/_shared/mla/kernel.py:3183); run-2 replay checks compared out_g with itself. Clone eager refs; compare each replay with an eager read of the same selection (own scratch); record control conditions separately.
+  E3: whole-tail-block twin compared never-written ring slots 0-3 holding offset-dependent sentinel. Compare written slots 4-7 only + exact stash bytes (kpool_compress.py:593-594, 612-622, 702-712).
+inner.sh  0de3c1f7... -> 2d99ceb9f56d34c3567984c61dfd57923a37e398c4bf045195d1ff43c4a104d8  (FIXTURE_PARTS partial reruns; pytest skipped when set)
+run_b0_cache_fixture.sh  d6fac94f... -> 12918a3d7d0aec4bab55300823ea4f9edcb490b6c1464bb4c66cf09cbe69006a  (passes FIXTURE_PARTS; RUN_CEILING_GPU_H per-run ceiling so spent+ceiling <= approved; wall cap = ceiling)
+Backups: *.bak-run2
+
+run_fixture.py -> 3441cd5192b2746181f075bc088862135e8ac2eda29073988147b0e67ca42145  (post-run-3, AFTER INSPECTING RUN-3 DATA run-20261012T222239Z)
+  mla_read: extend returns (O, LSE) tuple (b12x/attention/_shared/mla/prefill.py:158,373) -> take O.
+  D3: writer replays 1-2 overwrote 16 records each of the 'last' and 'straddle' reader sets (fixture's own replay slots), so the added twin check could not hold; restore D1 latents on all reader sets (writer + twin + shadow checks) before the reader graph section.
+Backup: run_fixture.py.bak-run3
+
+Reruns (partial, FIXTURE_PARTS=D1,D2,D3,E3,Z; fresh tensors; pytest skipped):
+  rerun 1 run-20261012T222239Z (run-3.out): 20 s, 0.0056 GPU-h. D1,E3 pass; D2 AttributeError (extend tuple); D3 2 checks fail (own replay overwrites) - fixture faults.
+  rerun 2 run-20261012T222337Z (run-4.out): 21 s, 0.0058 GPU-h. D1,D2,D3,E3,Z pass; 80 checks, 0 failed.
+Total item cost: 0.0278 + 0.0056 + 0.0058 = 0.0392 GPU-h (ceiling 0.5). No further reruns (limit of two reached).

@@ -1,0 +1,119 @@
+{
+ "T1_geometry": {
+  "ok": true,
+  "secs": 0.0,
+  "log_checked": true,
+  "first_high_block": 935,
+  "straddle": [
+   2147483184,
+   2147483712
+  ]
+ },
+ "T2_views_real_code": {
+  "ok": true,
+  "secs": 5.57,
+  "n_checks": 107,
+  "draft_view": [
+   [
+    1275,
+    1088,
+    4,
+    128
+   ],
+   [
+    1148928,
+    1024,
+    256,
+    1
+   ]
+  ],
+  "conv_kernel_view": [
+   [
+    1275,
+    12288,
+    6
+   ],
+   [
+    1148928,
+    1,
+    12288
+   ]
+  ],
+  "ssm_view": [
+   [
+    1275,
+    32,
+    128,
+    128
+   ],
+   [
+    574464,
+    16384,
+    128,
+    1
+   ]
+  ],
+  "tail_view": [
+   [
+    1275,
+    2,
+    8,
+    128
+   ],
+   [
+    71808,
+    1024,
+    128,
+    1
+   ]
+  ],
+  "mla_view": [
+   [
+    86700,
+    64,
+    528
+   ],
+   [
+    33792,
+    528,
+    1
+   ]
+  ],
+  "idx_view": [
+   [
+    21675,
+    64,
+    132
+   ],
+   [
+    8448,
+    132,
+    1
+   ]
+  ]
+ },
+ "T3_shadow_small": {
+  "ok": true,
+  "secs": 0.26,
+  "detections": [
+   132,
+   1,
+   66
+  ]
+ },
+ "T4_shadow_full_size_high_offsets": {
+  "ok": true,
+  "secs": 7.71,
+  "writes": 10,
+  "stray_located": [
+   934,
+   1274
+  ]
+ },
+ "T5_payload_tags": {
+  "ok": true,
+  "secs": 1.29,
+  "record_bytes": 528,
+  "reference_roundtrip_exact": true
+ }
+}

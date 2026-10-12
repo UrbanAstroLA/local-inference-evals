@@ -873,3 +873,105 @@ Against record pass 2 (seed 1235, 5 empties): 2 rescued, 0 newly empty; raw −8
 396 question-passes per side): empties 6 vs 10, reduction 1.01 points (95% question bootstrap 0.00 to 2.27), one-sided
 sign-flip p = 0.11; raw −0.76 points (−3.79 to +2.27). Cost 4.54 occupied GPU-hours. Per amendment 15: report direction and
 uncertainty; no automatic additional pass.
+
+**Amendment 16 (2026-10-12; adopts the independent assessment "targeted invariants from the correctness-bundle
+checkpoint").** Checkpoint B0 is frozen: the D1-D4 correctness bundle as gated and screened — image
+sha256:08d1cb902ddb888f679b972714168bb7c0d2333b4c1865f3ebf860baa2f46548, combined diff 949b2301c906e0d499c17978b5adf4bd8a0ce03ed01011073c51bdb99e6ddad8,
+K3.25 weights snapshot 0490d2f7, recipe glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234 (env.sh 3125683b…; only IMAGE
+differs from the stock 0.9.1 recipe), effective configuration as fingerprinted in the gate and both screens (non-default
+args 7025a968…, FULL_AND_PIECEWISE, DCP1, owners split:25, NOPE record, DFlash2 x3, KV pool 4,707,515); its gates and two
+GPQA passes retained unchanged. Future interventions are B0 plus one justified change; verified corrections are not removed
+to recreate stock behaviour; stock releases remain historical references, and explaining their completion difference is
+separate from improving B0. No ablation of the weak bundle completion signal.
+First priority: TP2 all-reduce correctness. CPU preparation confirms the transport B0 actually dispatches under shipped
+graph execution, its supported message sizes, dtypes and graph-padded batch sizes, the current initialization/replay API,
+and a validated reference for the exact reduction semantics; obsolete test interfaces are repaired; the fixture exercises
+the real implementation. GPU fixture on two GPUs without the model: small and boundary message sizes, changing and
+distinguishable inputs every replay, repeated captured-graph execution, supported synchronization and buffer-reuse
+patterns, both ranks' outputs; comparison with the explicit reference and, where useful, the alternative validated
+transport; exact comparison where the arithmetic warrants, otherwise a tolerance frozen before data; arithmetic
+differences distinguished from stale values, cross-step contamination, wrong-rank data and synchronization/addressing
+errors. A costed proposal precedes any run; an initial ceiling of 0.5 occupied GPU-hours is proposed only if compilation
+and the fixture fit (initialization and cleanup included). No serving A/B follows automatically. Failure → minimize and
+reproduce, verify the smallest correction or a validated transport substitution, create B1 from B0, then propose an
+end-to-end test. Clean → retire the tested failure modes without claiming all communication paths or numerical effects are
+excluded.
+Second priority: cache isolation and high-offset addressing, model-free, with the bundle's actual cache geometry and
+kernels (known records and sentinel regions; MLA, draft and recurrent-state write isolation; actual padded strides;
+high-address blocks; slot reuse and applicable graph replay; reads against a validated logical-record reference; selected
+addresses and allocation patterns shown reachable in serving); priced separately; no long GPQA replies to exercise an
+addressing invariant.
+Parallel CPU work: E1 from existing captures (absolute as well as relative routing-weight differences, normalization and
+scaling semantics, expected numerical error per batch-size path; no workaround merely for lower accuracy against fp64);
+prepare the cheapest KV-writer/query-projection comparison for a later stage; the mixed-quant MoE reference harness is
+deferred unless evidence points there.
+Gate for another behavioural evaluation: a new verified intervention (B0 vs B1, other corrections fixed, the changed
+mechanism stated, completion, adjusted correctness and compute cost prespecified) or a clearly priced confirmation
+objective. The adjudicated scoring method is preserved. Deliverable per item: tested invariant and execution coverage,
+reference and tolerance, reproducibility, any localized failure and correction, GPU and engineering cost, what it rules
+down, and the next smallest discriminating test.
+
+**Amendment 16a (2026-10-12, operator authorization).** Authorized: (1) the B0 TP2 all-reduce fixture as proposed
+(b0-allreduce/PROPOSAL.md; scripts frozen in its SHA256SUMS): smoke then full, ceiling 0.5 occupied GPU-hours including
+initialization, compile and cleanup; reference exact bitwise equality with (a.float()+b.float()).to(bf16), identical on both
+ranks; PyNCCL cross-check arm; verdicts INCOMPLETE / INVALID / FAIL / CLEAN fixed in analyze.py; a fixture-code bug in the
+smoke may be fixed and the smoke repeated within the ceiling; no serving A/B follows automatically. (2) The KV-writer /
+query-projection comparison (e1-kvwriter/KVWRITER-PREP.md; predictions and criteria frozen there): one GPU per image
+(0.7.0 and B0), model-free, ceiling 0.25 occupied GPU-hours; it runs after the all-reduce fixture has released the GPUs.
+
+**Amendment 16b (2026-10-12; results recorded after the frozen analyses, and operator decision).** (1) B0 TP2 all-reduce
+fixture: CLEAN. 2,040,800 B12x peer-push all-reduces over 26,650 graph forwards (FULL and piecewise; every engine size and
+geometry edge; slot and address reuse; rank skew; prefill interleaving) plus 900 PyNCCL reference forwards; the B12x epoch
+counter advanced by exactly the scheduled calls in every phase; 0 mismatched elements in all 41 cases on both ranks against
+the exact bf16 reference; no hangs. Cost 0.07 GPU-hours (smoke 0.0139, full 0.0561). The tested transport failure modes are
+retired; contention with model kernels, the drafter's exact sequence, epoch rollover, other communication paths and
+numerics elsewhere are not excluded. No B1. (2) KV-writer / query-projection comparison (one GPU per image, B0 and stock
+0.7.0; 0.0069 GPU-hours): before GPU data, a CPU dry run on defect-free outputs of the frozen rounding model found three
+criterion errors (P2 bound half the correct half-ulp; W4 tolerance inconsistent with the frozen error model; W3 rate
+prediction omitting exact E4M3 ties), recorded as errata in the freeze manifest before the run. The runner's analysis step
+failed to load the result files (torch weights-only loading rejects a version object written by the investigation's own
+script); the frozen analysis was re-run unchanged through a loader wrapper that allows that one type, before any analysis
+output existed; frozen file hashes verified. Verdicts: "with errata" not beyond expected rounding (no failures); "frozen as
+written" beyond expected rounding, with failures that reproduce exactly the dry run's defect-free counts (W3 rates
+6.48e-4-1.12e-3; P2 counts 5,691-104,184, identical across images and between bmm and H64). Operator decision: the
+"with errata" verdict governs. Result: B0's 528-byte record writer and 0.7.0's 656-byte writer agree within rounding
+(differences only at exact E4M3 ties, one code); the query projections are equivalent on the shared lanes; the record and
+projection paths move from "floating-point only, unverified" to "measured equal within rounding" and are ruled down as
+0.7.0-vs-B0 mechanisms. No B1. (3) E1 (CPU): expected numerical variation of the upstream router warp kernel (unbiased
+score rebuilt as (s+b)-b in fp32 with biases 5.0-14.5); selection unaffected; same kernel binary in every release; no
+workaround.
+
+**Amendment 16c (2026-10-12, operator authorization).** The B0 cache isolation and high-offset fixture
+(b0-cache/PROPOSAL.md; fixture hashes in b0-cache/fixture.sha256; criteria fixed in the fixture code before data) is
+authorized: one GPU, ceiling 0.5 occupied GPU-hours including startup, compile and cleanup, no automatic retry.
+
+**Amendment 16d (2026-10-12, coordinator; operational fix before any cache-fixture data).** The first launch was refused by
+the runner's own pre-flight (no container started, 0 GPU-hours): its GPU-idle check counted the desktop's gnome-shell
+graphics client (type G, 8 MiB, 0% utilization) on GPU 0. The check now ignores type-G desktop graphics clients
+(gnome-shell, Xwayland, xdg-desktop-portal) only; the memory (1 GiB) and utilization (5%) limits and the refusal for any
+compute process or other client are unchanged, matching the other fixture runners. Runner sha256 0cb18df9… → d6fac94f270581276b1314e48967d66f91e6d6859c457ff275521a30bb3e8f70. No
+criterion, kernel call or fixture code changed.
+
+**Amendment 16e (2026-10-12; cache fixture results, recorded after the runs).** Run 2 (0.0278 GPU-hours): 15 parts passed
+byte-exact against the shadow image with sentinels intact (draft writer eager and graph replay, FA2 reader, five KDA
+kernels and page copy-on-write, MLA writer, kpool seed and compress, zeroer, cross-group block reuse); four failures, each
+diagnosed from stored outputs and source as a fixture fault or an obsolete upstream test, none high-address specific:
+D2 requested an extend width (64) the GLM_NEXT extend kernel rejects (supported widths 512-2112); D3 compared the decode
+binding's own scratch output buffer with itself, then (rerun 1) the fixture's writer replays overwrote its reader sets;
+E3 compared unwritten sentinel ring slots (positions 12-15 write slots 4-7 only); the original B12x GLM_NEXT high-page test
+uses the obsolete writer signature (the repaired copy passed). Fixes made after inspecting the data (fixture code only; no
+criterion or tolerance loosened; hashes in b0-cache/fixture-post-run2.sha256; runner gained partial-part and per-run
+ceiling options). Reruns 1 and 2 (0.0056 + 0.0058 GPU-hours): D1, D2 (decode and extend at the serving width 2048, plus
+decode at 64), D3 (graph replay equals the eager read of the same selection; the control follows the new selection) and E3
+pass; 80 checks, 0 failed. Total 0.0392 of 0.5 GPU-hours. Ruled down for the driven kernels: 32-bit truncation at blocks
+934-1274 and the record straddling 2^31, writes outside a group's page or into padding, padded-stride errors, stale data
+across block reuse, and replayed graphs using capture-time addresses (D8/D9 retired for these kernels). Not ruled down:
+block-table and slot-mapping construction under real scheduling, the index-K readers, extend under graph replay, the mamba
+postprocess kernel, numerics, rank 1. No B1.
+
+**Amendment 16f (2026-10-12, coordinator erratum to 16b and 16e, before publication).** 16b's "differences only at exact
+E4M3 ties, one code" overstated the KV-writer result: measured, 90-99% of cross-writer byte differences fall at exact ties,
+plus 11-88 non-tie differences per set (rates 9e-6 to 6.5e-5), all one code and inside the frozen reciprocal bracket, as the
+errata rule allows; the verdict is unchanged. 16e's count of the cache fixture's run-2 failures as "fixture faults or an
+obsolete upstream test" stands, but in total five fixture faults were found (three in run 2, two more exposed by rerun 1)
+plus one obsolete upstream test.

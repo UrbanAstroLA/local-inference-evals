@@ -1,0 +1,30 @@
+PASS T1 tables deterministic
+PASS T1 int table: integers in [-127,127]  [distinct 255]
+PASS T1 arith table: finite, normal, |x| in [2^-10, 2^11), -0.0 lanes  [min 0.000977 max 2.04e+03; -0 fraction 0.035]
+PASS T1 rank tables independent
+PASS T1 tensor step == int step
+PASS T1 families/owner layers/int sums exact  [owner zero (s,l,r) examples [(0, 2, 0), (0, 5, 1), (0, 8, 0)]]
+PASS T1 generate_layer == batched row
+PASS T1 no table-position collision among nearby calls (400 steps x 91 layers)  [0 collisions]
+PASS T2 torch native bf16 add == reference_sum
+PASS T2 reference == exact RN (20000 generated pairs)  [0 differ]
+PASS T2 reference == exact RN (20000 adversarial gaps/ties)  [0 differ]
+PASS T2 signed zeros follow RN (+0, +0, -0, 3)  [[0.0, 0.0, -0.0, 3.0]]
+PASS T3 wrong-source pack coincidence < 1e-3 for every candidate  [worst pack coincidence 4.88e-04; word coincidence mean 4.68e-03, max 1.28e-01]
+PASS T4 injected classes recovered at pack level  [{"stale-same-slot": {"stale-same-slot": 4}, "stale-other-slot": {"stale-other-slot": 4}, "wrong-rank": {"wrong-rank": 4}, "missing-peer": {"missing-peer": 4}, "cross-step": {"cross-step": 4}, "addressing": {"addressing": 4}, "local-stale": {"local-stale": 4}, "arithmetic": {"arithmetic": 8}}]
+PASS T4 zero stale source -> missing-peer, alternative listed  [{"packs": {"ok": 2044, "missing-peer": 4}, "matches": {"missing-peer": 15, "stale-same-slot": 15, "addressing": 2}}]
+PASS T4 half-stale pack reported torn  [{"ok": 2047, "torn-pack (mixed sources)": 1}]
+PASS T4 random bits unexplained  [{"ok": 8188, "unexplained": 4}]
+PASS T4 clean output all ok
+PASS T5 B0 env transport policy (push, tp2-fused, plain-push, tp4, tp8)  [(False, False, True, False, True)]
+PASS T5 VLLM_PCIE_ONESHOT_ALLREDUCE_MAX_SIZE=384KB -> 393216
+PASS T5 geometry rows 1..48 matches analyze.expected_geometry; eager = pull
+PASS T5 dispatch rule: rows <= 48 -> B12x, 49..64 -> PyNCCL
+PASS T5 fp32 / non-4096 hidden never take peer-push
+PASS T6 smoke schedule deterministic
+PASS T6 smoke expected dispatch by rows
+PASS T6 full schedule deterministic
+PASS T6 full expected dispatch by rows
+PASS T7 synthetic clean run -> CLEAN  [[]]
+PASS T7 injected stale-same-slot run -> FAIL, classified  [{"verdict": "FAIL", "packs": {"ok": 24573, "stale-same-slot": 3}, "words": {"ok": 98292, "stale-same-slot": 12}}]
+all passed

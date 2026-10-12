@@ -1,0 +1,30 @@
+attention.sparse_mla: SparseMlaQuery (max_q_chunks=0, max_batch=4, max_chunks_per_row=64, max_physical_records=0, max_page_table_width=64, max_q_rows=4, max_width=64, max_kv_rows=64, ...) was not prepared before its first use; preparing its default configuration. Repeated matching declarations are logged at DEBUG.
+attention.sparse_mla: SparseMlaQuery (max_q_chunks=0, max_batch=4, max_chunks_per_row=64, max_physical_records=0, max_page_table_width=2048, max_q_rows=4, max_width=2048, max_kv_rows=2048, ...) was not prepared before its first use; preparing its default configuration. Repeated matching declarations are logged at DEBUG.
+attention.sparse_mla: SparseMlaQuery (max_q_chunks=0, max_batch=4, max_chunks_per_row=64, max_physical_records=0, max_page_table_width=2048, max_q_rows=4, max_width=2048, max_kv_rows=2048, ...) was not prepared before its first use; preparing its default configuration. Repeated matching declarations are logged at DEBUG.
+{
+ "D1_mla_writer": {
+  "ok": true,
+  "secs": 1.64,
+  "error": null
+ },
+ "D2_mla_readers": {
+  "ok": true,
+  "secs": 3.61,
+  "error": null
+ },
+ "D3_mla_graph_replay": {
+  "ok": true,
+  "secs": 0.12,
+  "error": null
+ },
+ "E3_kpool_decode_update": {
+  "ok": true,
+  "secs": 5.26,
+  "error": null
+ },
+ "Z_final": {
+  "ok": true,
+  "secs": 0.01,
+  "error": null
+ }
+}

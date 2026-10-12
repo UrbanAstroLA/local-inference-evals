@@ -1,0 +1,632 @@
+{
+ "T1 tables deterministic": {
+  "pass": true,
+  "detail": ""
+ },
+ "T1 int table: integers in [-127,127]": {
+  "pass": true,
+  "detail": "distinct 255"
+ },
+ "T1 arith table: finite, normal, |x| in [2^-10, 2^11), -0.0 lanes": {
+  "pass": true,
+  "detail": "min 0.000977 max 2.04e+03; -0 fraction 0.035"
+ },
+ "T1 rank tables independent": {
+  "pass": true,
+  "detail": ""
+ },
+ "T1 tensor step == int step": {
+  "pass": true,
+  "detail": ""
+ },
+ "T1 families/owner layers/int sums exact": {
+  "pass": true,
+  "detail": "owner zero (s,l,r) examples [(0, 2, 0), (0, 5, 1), (0, 8, 0)]"
+ },
+ "T1 generate_layer == batched row": {
+  "pass": true,
+  "detail": ""
+ },
+ "T1 no table-position collision among nearby calls (400 steps x 91 layers)": {
+  "pass": true,
+  "detail": "0 collisions"
+ },
+ "T2 torch native bf16 add == reference_sum": {
+  "pass": true,
+  "detail": ""
+ },
+ "T2 reference == exact RN (20000 generated pairs)": {
+  "pass": true,
+  "detail": "0 differ"
+ },
+ "T2 reference == exact RN (20000 adversarial gaps/ties)": {
+  "pass": true,
+  "detail": "0 differ"
+ },
+ "T2 signed zeros follow RN (+0, +0, -0, 3)": {
+  "pass": true,
+  "detail": "[0.0, 0.0, -0.0, 3.0]"
+ },
+ "T3 wrong-source pack coincidence < 1e-3 for every candidate": {
+  "pass": true,
+  "detail": "worst pack coincidence 4.88e-04; word coincidence mean 4.68e-03, max 1.28e-01"
+ },
+ "T4 injected classes recovered at pack level": {
+  "pass": true,
+  "detail": "{\"stale-same-slot\": {\"stale-same-slot\": 4}, \"stale-other-slot\": {\"stale-other-slot\": 4}, \"wrong-rank\": {\"wrong-rank\": 4}, \"missing-peer\": {\"missing-peer\": 4}, \"cross-step\": {\"cross-step\": 4}, \"addressing\": {\"addressing\": 4}, \"local-stale\": {\"local-stale\": 4}, \"arithmetic\": {\"arithmetic\": 8}}"
+ },
+ "T4 zero stale source -> missing-peer, alternative listed": {
+  "pass": true,
+  "detail": "{\"packs\": {\"ok\": 2044, \"missing-peer\": 4}, \"matches\": {\"missing-peer\": 15, \"stale-same-slot\": 15, \"addressing\": 2}}"
+ },
+ "T4 half-stale pack reported torn": {
+  "pass": true,
+  "detail": "{\"ok\": 2047, \"torn-pack (mixed sources)\": 1}"
+ },
+ "T4 random bits unexplained": {
+  "pass": true,
+  "detail": "{\"ok\": 8188, \"unexplained\": 4}"
+ },
+ "T4 clean output all ok": {
+  "pass": true,
+  "detail": ""
+ },
+ "T5 B0 env transport policy (push, tp2-fused, plain-push, tp4, tp8)": {
+  "pass": true,
+  "detail": "(False, False, True, False, True)"
+ },
+ "T5 VLLM_PCIE_ONESHOT_ALLREDUCE_MAX_SIZE=384KB -> 393216": {
+  "pass": true,
+  "detail": ""
+ },
+ "T5 geometry rows 1..48 matches analyze.expected_geometry; eager = pull": {
+  "pass": true,
+  "detail": ""
+ },
+ "T5 dispatch rule: rows <= 48 -> B12x, 49..64 -> PyNCCL": {
+  "pass": true,
+  "detail": ""
+ },
+ "T5 fp32 / non-4096 hidden never take peer-push": {
+  "pass": true,
+  "detail": ""
+ },
+ "T5 table": {
+  "1": {
+   "graph": [
+    "tp2_remote_push",
+    64,
+    36
+   ],
+   "vllm": "b12x"
+  },
+  "2": {
+   "graph": [
+    "tp2_remote_push_stream",
+    128,
+    36
+   ],
+   "vllm": "b12x"
+  },
+  "3": {
+   "graph": [
+    "tp2_remote_push_stream",
+    256,
+    36
+   ],
+   "vllm": "b12x"
+  },
+  "4": {
+   "graph": [
+    "tp2_remote_push_stream",
+    256,
+    36
+   ],
+   "vllm": "b12x"
+  },
+  "5": {
+   "graph": [
+    "tp2_remote_push",
+    64,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "6": {
+   "graph": [
+    "tp2_remote_push",
+    64,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "7": {
+   "graph": [
+    "tp2_remote_push",
+    256,
+    32
+   ],
+   "vllm": "b12x"
+  },
+  "8": {
+   "graph": [
+    "tp2_remote_push",
+    256,
+    32
+   ],
+   "vllm": "b12x"
+  },
+  "9": {
+   "graph": [
+    "tp2_remote_push",
+    64,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "10": {
+   "graph": [
+    "tp2_remote_push",
+    64,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "11": {
+   "graph": [
+    "tp2_remote_push",
+    64,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "12": {
+   "graph": [
+    "tp2_remote_push",
+    64,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "13": {
+   "graph": [
+    "tp2_remote_push",
+    64,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "14": {
+   "graph": [
+    "tp2_remote_push",
+    64,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "15": {
+   "graph": [
+    "tp2_remote_push_stream",
+    64,
+    36
+   ],
+   "vllm": "b12x"
+  },
+  "16": {
+   "graph": [
+    "tp2_remote_push_stream",
+    64,
+    36
+   ],
+   "vllm": "b12x"
+  },
+  "17": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "18": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "19": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "20": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "21": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "22": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "23": {
+   "graph": [
+    "tp2_remote_push_stream",
+    128,
+    32
+   ],
+   "vllm": "b12x"
+  },
+  "24": {
+   "graph": [
+    "tp2_remote_push_stream",
+    128,
+    32
+   ],
+   "vllm": "b12x"
+  },
+  "25": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "26": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "27": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "28": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "29": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "30": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "31": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "32": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "33": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "34": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "35": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "36": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "37": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "38": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "39": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "40": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "41": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "42": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "43": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "44": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "45": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "46": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "47": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "48": {
+   "graph": [
+    "tp2_remote_push",
+    128,
+    16
+   ],
+   "vllm": "b12x"
+  },
+  "49": {
+   "graph": [
+    "pull",
+    256,
+    8
+   ],
+   "vllm": "pynccl"
+  },
+  "50": {
+   "graph": [
+    "pull",
+    256,
+    8
+   ],
+   "vllm": "pynccl"
+  },
+  "51": {
+   "graph": [
+    "pull",
+    256,
+    8
+   ],
+   "vllm": "pynccl"
+  },
+  "52": {
+   "graph": [
+    "pull",
+    256,
+    8
+   ],
+   "vllm": "pynccl"
+  },
+  "53": {
+   "graph": [
+    "pull",
+    256,
+    8
+   ],
+   "vllm": "pynccl"
+  },
+  "54": {
+   "graph": [
+    "pull",
+    256,
+    8
+   ],
+   "vllm": "pynccl"
+  },
+  "55": {
+   "graph": [
+    "pull",
+    256,
+    8
+   ],
+   "vllm": "pynccl"
+  },
+  "56": {
+   "graph": [
+    "pull",
+    256,
+    8
+   ],
+   "vllm": "pynccl"
+  },
+  "57": {
+   "graph": [
+    "pull",
+    256,
+    8
+   ],
+   "vllm": "pynccl"
+  },
+  "58": {
+   "graph": [
+    "pull",
+    256,
+    8
+   ],
+   "vllm": "pynccl"
+  },
+  "59": {
+   "graph": [
+    "pull",
+    256,
+    8
+   ],
+   "vllm": "pynccl"
+  },
+  "60": {
+   "graph": [
+    "pull",
+    256,
+    8
+   ],
+   "vllm": "pynccl"
+  },
+  "61": {
+   "graph": [
+    "pull",
+    256,
+    8
+   ],
+   "vllm": "pynccl"
+  },
+  "62": {
+   "graph": [
+    "pull",
+    256,
+    8
+   ],
+   "vllm": "pynccl"
+  },
+  "63": {
+   "graph": [
+    "pull",
+    256,
+    8
+   ],
+   "vllm": "pynccl"
+  },
+  "64": {
+   "graph": [
+    "pull",
+    256,
+    8
+   ],
+   "vllm": "pynccl"
+  }
+ },
+ "T6 smoke schedule deterministic": {
+  "pass": true,
+  "detail": ""
+ },
+ "T6 smoke expected dispatch by rows": {
+  "pass": true,
+  "detail": ""
+ },
+ "T6 full schedule deterministic": {
+  "pass": true,
+  "detail": ""
+ },
+ "T6 full expected dispatch by rows": {
+  "pass": true,
+  "detail": ""
+ },
+ "T7 synthetic clean run -> CLEAN": {
+  "pass": true,
+  "detail": "[]"
+ },
+ "T7 injected stale-same-slot run -> FAIL, classified": {
+  "pass": true,
+  "detail": "{\"verdict\": \"FAIL\", \"packs\": {\"ok\": 24573, \"stale-same-slot\": 3}, \"words\": {\"ok\": 98292, \"stale-same-slot\": 12}}"
+ }
+}

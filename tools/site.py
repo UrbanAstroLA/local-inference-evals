@@ -1171,7 +1171,8 @@ def build():
          "Localized defects, verified on GPU. Column 511: on 0.9.1's tiled route a pool ranked better than 480 of 512 is discarded in 88.1% of "
          "live decode rows (0.7.0's path: 6.9%). Tail ring: 98% of tail writes go to a shared null block on 0.9.1 (all releases affected, "
          "0.7.0 more). Router: the fp32-output computation selects a different top-8 expert set on 3.15% of token-layer rows. SwiGLU limit: "
-         "reachable in the served kernels; whether it engages was not measured. Each fix removes its localized problem.",
+         "reachable in the served kernels; whether it engages was not measured. Each fix removes its localized problem. Model-free checks of the "
+         "corrected build found no further defect in the all-reduce transport, the KV record writer and projection, or cache addressing above 2³¹ bytes.",
          '<a href="#engine-issues">issues and fixes</a>')])
     issues = table(["Issue", "Found", "Fix", "Released in", "Evidence"], [
         ["Prefill wrote 2 KB of keys into another block's indexer region (kpool)", "upstream vLLM (vllm#57477)",
@@ -1264,7 +1265,10 @@ def build():
              'with MLA layer ownership is tpurtell\'s design; it holds about 1.5x the KV cache of v0.7.0\'s DCP2 layout. Their effect on answers '
              'is unmeasured (descriptive). The last four were found by the completion investigation on 2026-10-11 and are present in every '
              'release; fixes are prepared and verified locally, not released. Two GPQA passes with all four together left 3 and 3 of 198 answers '
-             'empty against 5 and 5 in the matching 0.9.1 passes, with no clear separation; their effects on answers one at a time are untested.</p>' + issues
+             'empty against 5 and 5 in the matching 0.9.1 passes, with no clear separation; their effects on answers one at a time are untested. '
+             'Model-free checks of the corrected build then found no further defect: its two-GPU all-reduce transport returned the exact sum in all '
+             '2,040,800 calls, its KV record writer and query projection agree with 0.7.0\'s within rounding, and its cache kernels address '
+             'correctly above 2<sup>31</sup> bytes (<a href="' + REPO + '/blob/main/FINDINGS.md">items 4g-4i</a>).</p>' + issues
            + f'<h3 id="kernels">Kernel tests: {up_un[0]}/{up_un[1]} without the kpool fixes, {up_pa[0]}/{up_pa[1]} with them (supported)</h3>'
              '<p>vLLM\'s own regression tests for the kpool kernels, plus a rejected-draft reproduction, run inside each engine image.</p>' + per_image
            + more("Every test", '<div id="kernel-grid"></div>' + table(["Test"] + [engine_label(m["cfg"]) for m in km], ktr)))

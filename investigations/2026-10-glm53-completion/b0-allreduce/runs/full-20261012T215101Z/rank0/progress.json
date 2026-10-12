@@ -1,0 +1,45 @@
+{
+ "stage": "phase nccl-ref done",
+ "phases": [
+  {
+   "phase": "main",
+   "items": 20000,
+   "forwards": 20000,
+   "seconds": 64.46,
+   "epoch_delta": 1765400,
+   "expected_push_calls": 1765400
+  },
+  {
+   "phase": "skew",
+   "items": 1500,
+   "forwards": 1500,
+   "seconds": 5.05,
+   "epoch_delta": 136500,
+   "expected_push_calls": 136500
+  },
+  {
+   "phase": "boundary",
+   "items": 3650,
+   "forwards": 3650,
+   "seconds": 2.74,
+   "epoch_delta": 111600,
+   "expected_push_calls": 111600
+  },
+  {
+   "phase": "mixed",
+   "items": 300,
+   "forwards": 600,
+   "seconds": 1.36,
+   "epoch_delta": 27300,
+   "expected_push_calls": 27300
+  },
+  {
+   "phase": "nccl-ref",
+   "items": 900,
+   "forwards": 900,
+   "seconds": 2.35,
+   "epoch_delta": 0,
+   "expected_push_calls": 0
+  }
+ ]
+}

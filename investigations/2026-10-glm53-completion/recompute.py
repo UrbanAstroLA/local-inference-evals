@@ -337,12 +337,25 @@ sa, bg, bs, b2 = st("stage A verification"), st("bundle gate"), st("bundle scree
 print(f"  stage A {sum(c['gpu_hours'] for c in sa):.4f} ({len(sa)} entries), bundle gate {sum(c['gpu_hours'] for c in bg):.4f}, "
       f"bundle screen {sum(c['gpu_hours'] for c in bs):.3f}, bundle seed-1235 pass {sum(c['gpu_hours'] for c in b2):.3f}")
 check("stage A 0.6929 of 2.0, bundle gate 1.6403 of 2.0 (arms add up), screen 4.841 of 7.5, seed-1235 pass 4.541 of 7.5 "
-      "(2 GPUs x 8,174 s); cumulative 47.79 GPU-hours",
+      "(2 GPUs x 8,174 s); cumulative 47.79 GPU-hours before amendment 16",
       round(sum(c["gpu_hours"] for c in sa), 4) == 0.6929 and round(sum(c["gpu_hours"] for c in bg), 4) == 1.6403
       and all(abs(c["gpu_hours"] - round(sum(a["gpu_hours"] for a in c["arms"]), 4)) < 1e-9 for c in bg)
       and round(sum(c["gpu_hours"] for c in bs), 3) == 4.841 and len(b2) == 1 and b2[0]["gpu_hours"] == 4.541
       and b2[0]["gpu_hours"] == round(2 * sum(a["wall_s"] for a in b2[0]["arms"]) / 3600, 3)
-      and f"{sum(c['gpu_hours'] for c in allcost):.2f}" == "47.79")
+      and f"{sum(c['gpu_hours'] for c in allcost[:21]):.2f}" == "47.79")
+ar, kv, ca = st("B0 TP2 all-reduce fixture"), st("KV-writer / query-projection comparison"), st("B0 cache isolation")
+print(f"  amendment 16: all-reduce fixture {sum(c['gpu_hours'] for c in ar):.4f}, KV-writer comparison "
+      f"{sum(c['gpu_hours'] for c in kv):.4f}, cache fixture {sum(c['gpu_hours'] for c in ca):.4f} "
+      f"({sum(len(c['arms']) for c in ca)} launches, one refused at 0)")
+arms_ok = lambda c: (abs(c["gpu_hours"] - round(sum(a["gpu_hours"] for a in c["arms"]), 4)) < 1e-9
+                     and all(abs(a["gpu_hours"] - round(a["gpus"] * a["wall_s"] / 3600, 4)) < 1e-9 for a in c["arms"]))
+check("amendment 16 as separate steps, arms add up (GPUs x wall): all-reduce 0.07 of 0.5 (smoke 0.0139, full 0.0561), "
+      "KV writer 0.0069 of 0.25, cache fixture 0.0392 of 0.5 (incl. the refused zero-cost launch); cumulative 47.91 GPU-hours",
+      len(ar) == len(kv) == len(ca) == 1 and all(arms_ok(c) for c in ar + kv + ca)
+      and [a["gpu_hours"] for a in ar[0]["arms"]] == [0.0139, 0.0561] and ar[0]["gpu_hours"] == 0.07
+      and kv[0]["gpu_hours"] == 0.0069 and ca[0]["gpu_hours"] == 0.0392
+      and sum(a["wall_s"] == 0 and a["gpu_hours"] == 0.0 for a in ca[0]["arms"]) == 1
+      and f"{sum(c['gpu_hours'] for c in allcost):.2f}" == "47.91")
 
 print("\n## Checks (checks.jsonl)")
 for line in (HERE / "checks.jsonl").read_text().splitlines():

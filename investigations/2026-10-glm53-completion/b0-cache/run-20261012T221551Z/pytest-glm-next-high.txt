@@ -1,0 +1,59 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+_________ test_glm_next_writer_and_reader_use_int64_for_live_high_page _________
+
+    @torch.inference_mode()
+    def test_glm_next_writer_and_reader_use_int64_for_live_high_page() -> None:
+        device = require_sm120()
+        page_size = _GLM_NEXT_PAGE_SIZE
+        semantic_page_bytes = page_size * _GLM_NEXT_RECORD_BYTES
+        pooled_tail_bytes = (page_size // 4) * 128 * torch.bfloat16.itemsize
+        page_stride_bytes = semantic_page_bytes + pooled_tail_bytes
+        int32_max = torch.iinfo(torch.int32).max
+        high_page = int32_max // page_stride_bytes + 2
+        num_pages = high_page + 1
+        required_bytes = num_pages * page_stride_bytes
+        free_bytes, _ = torch.cuda.mem_get_info(device)
+        reserve_bytes = 2 * 1024**3
+        if free_bytes < required_bytes + reserve_bytes:
+            pytest.skip(
+                "live GLM_NEXT high-page test requires "
+                f"{required_bytes + reserve_bytes} bytes free, found {free_bytes}"
+            )
+        try:
+            backing = torch.empty(
+                (num_pages, page_stride_bytes), dtype=torch.uint8, device=device
+            )
+        except torch.OutOfMemoryError:
+            pytest.skip(
+                "CUDA allocator could not reserve the required mostly-uninitialized "
+                f"{required_bytes}-byte GLM_NEXT cache"
+            )
+        cache = torch.as_strided(
+            backing,
+            size=(num_pages, page_size, _GLM_NEXT_RECORD_BYTES),
+            stride=(page_stride_bytes, _GLM_NEXT_RECORD_BYTES, 1),
+        )
+        local_slot = 7
+        high_slot = high_page * page_size + local_slot
+        assert high_page * page_stride_bytes > int32_max
+        assert high_slot < int32_max
+    
+        live_latent = (
+            torch.linspace(
+                -0.75,
+                0.75,
+                _GLM_NEXT_HEAD_DIM,
+                dtype=torch.float32,
+                device=device,
+            )
+            .unsqueeze(0)
+            .to(torch.bfloat16)
+        )
+        sources = torch.cat((torch.zeros_like(live_latent), live_latent))
+        slots = torch.tensor([0, high_slot], dtype=torch.int64, device=device)
+>       sparse_mla.concat_and_cache_glm_next_mla(sources, cache, slots)
+E       TypeError: concat_and_cache_glm_next_mla() missing 1 required keyword-only argument: 'plan'
+
+tests/attention/test_glm_next_mla.py:1695: TypeError
+1 failed, 1 passed in 5.04s

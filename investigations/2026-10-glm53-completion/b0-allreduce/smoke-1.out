@@ -1,0 +1,5 @@
+max util gpu0=0 gpu1=1; mem gpu0=20 gpu1=2240 MiB
+budget: used 0.0 + cap 0.2 <= 0.5 GPU-h ? 1
+fixture rc=0; GPU part done; cost logged
+analysis rc=0: CLEAN
+out=<runs>/b0-allreduce/runs/smoke-20261012T215014Z

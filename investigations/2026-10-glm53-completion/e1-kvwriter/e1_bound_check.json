@@ -1,0 +1,38 @@
+{
+ "M>1024 vs block-model": {
+  "elems": 729600,
+  "ratio_err_over_bound": {
+   "p50": 0.7148631124178444,
+   "p99": 2.753860079910179,
+   "max": 7.365863660176676
+  },
+  "frac_exceeding_bound": 0.3485169956140351
+ },
+ "M>1024 vs warp-model": {
+  "elems": 729600,
+  "ratio_err_over_bound": {
+   "p50": 0.1672418491375117,
+   "p99": 0.5092562496495908,
+   "max": 0.8274671796864441
+  },
+  "frac_exceeding_bound": 0.0
+ },
+ "M<=1024 vs block-model": {
+  "elems": 99264,
+  "ratio_err_over_bound": {
+   "p50": 0.06916149545523259,
+   "p99": 0.2558779302452076,
+   "max": 0.419767317968152
+  },
+  "frac_exceeding_bound": 0.0
+ },
+ "M<=1024 vs warp-model": {
+  "elems": 99264,
+  "ratio_err_over_bound": {
+   "p50": 0.015628474933387787,
+   "p99": 0.06460671698956084,
+   "max": 0.13725969575392127
+  },
+  "frac_exceeding_bound": 0.0
+ }
+}

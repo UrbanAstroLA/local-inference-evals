@@ -17,7 +17,7 @@ evaluating the runtimes and quants, and the confounds that can move accuracy or 
 | [Confounds](https://urbanastrola.github.io/local-inference-evals/confounds.html) | What else can move a result, and how the runs control for it | [`CONFOUNDS.md`](CONFOUNDS.md) |
 | [Ledger](https://urbanastrola.github.io/local-inference-evals/ledger.html) | What was run, found, corrected and withdrawn, and when | [`LEDGER.md`](LEDGER.md) |
 | [Investigation](https://urbanastrola.github.io/local-inference-evals/looping.html) | Why some hard questions do not finish | [`investigations/2026-10-glm53-looping`](investigations/2026-10-glm53-looping) |
-| [Completion investigation](investigations/2026-10-glm53-completion/README.md) | Why 0.7.0 left fewer GPQA answers empty than 0.9.1: decode vs prefill, a completion pilot, a kernel and DCP source audit, localized defects with fixes prepared, a three-pass GPQA arm with one correction (no measurable change in completion), verification of router precision and the SwiGLU clamp, and two GPQA passes with four corrections together (3 and 3 empty of 198 vs 5 and 5 in the matching stock passes; no clear separation) | [`investigations/2026-10-glm53-completion`](investigations/2026-10-glm53-completion) |
+| [Completion investigation](investigations/2026-10-glm53-completion/README.md) | Why 0.7.0 left fewer GPQA answers empty than 0.9.1: decode vs prefill, a completion pilot, a kernel and DCP source audit, localized defects with fixes prepared, a three-pass GPQA arm with one correction (no measurable change in completion), verification of router precision and the SwiGLU clamp, two GPQA passes with four corrections together (3 and 3 empty of 198 vs 5 and 5 in the matching stock passes; no clear separation), and model-free checks of the corrected build that found no further defect | [`investigations/2026-10-glm53-completion`](investigations/2026-10-glm53-completion) |
 | [Method](https://urbanastrola.github.io/local-inference-evals/method.html) | Grades, scoring, intervals, receipts, glossary | [`protocols/`](protocols), [`DATASHEET.md`](DATASHEET.md) |
 
 **The DCP1 tail issue and its fix** (tpurtell PR #6, released in tpurtell 0.9.1):
@@ -28,7 +28,9 @@ written without token positions (item 4b; upstream vLLM passes them). The column
 change completion in a three-pass GPQA arm (15 vs 16 empty of 594). The router's bf16 logits (item 4c) and the
 unpassed routed-expert SwiGLU limit (item 4d) affect every release; two GPQA passes with all four corrections together
 left 3 and 3 of 198 empty against 5 and 5 in the matching stock 0.9.1 passes, with no clear separation (item 4e). The
-tail-ring, router and clamp corrections have not been tested alone in GPQA.
+tail-ring, router and clamp corrections have not been tested alone in GPQA. Model-free checks of the corrected build found
+no further defect in the two-GPU all-reduce transport, the KV record writer and query projection, or cache addressing
+above 2³¹ bytes (items 4g-4i).
 
 ## Labels
 

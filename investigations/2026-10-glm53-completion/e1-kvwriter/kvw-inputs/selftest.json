@@ -1,0 +1,22 @@
+{
+ "vllm_writer": {
+  "max_err_in_e4m3_steps": 0.5000007788340498,
+  "frac_err_gt_half_step": 0.0,
+  "rms_rel_err_vs_group_amax": 0.00025893083936953215
+ },
+ "b12x_writer_rn": {
+  "max_err_in_e4m3_steps": 0.5,
+  "frac_err_gt_half_step": 0.0,
+  "rms_rel_err_vs_group_amax": 0.00025893083934304856
+ },
+ "cross_writer_emulated": {
+  "elements": 2097152,
+  "bytes_differ": 1409,
+  "bytes_differ_frac": 0.0006718635559082031,
+  "bytes_differ_more_than_one_code": 0,
+  "b12x_ambiguous_elements": 12028,
+  "scale_ulp_diff_max_nonzero_groups": 1,
+  "zero_groups": 39
+ },
+ "note": "emulator self-test on synthetic inputs only; not the comparison"
+}

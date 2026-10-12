@@ -1,0 +1,31 @@
+[22:15:51] budget: spent 0.0, this run ceiling 0.5, approved 0.5
+running containers:
+[22:15:52] pre-flight ok: GPU 0 used 20 MiB, util 0%
+[22:15:52] starting container b0cache-fixture-1437863 (wall cap 1800s)
+[22:17:32] container finished: rc=0
+fixture_exit=3
+pytest_sm120_exit=0
+pytest_glm_next_exit=1
+A_draft_writer                   ok=True secs=0.03 
+B_draft_fa2_reader               ok=True secs=64.7 
+C1_kda_scatter_gather            ok=True secs=0.82 
+C2_kda_conv_update               ok=True secs=0.31 
+C2b_kda_conv_prefill             ok=True secs=0.27 
+C3_kda_fused_recurrent_spec      ok=True secs=0.33 
+C4_kda_align_precopy             ok=True secs=3.56 
+C5_page_copy_on_write            ok=True secs=0.03 
+D1_mla_writer                    ok=True secs=0.93 
+D2_mla_readers                   ok=False secs=1.04 ValueError('SM120 sparse MLA prefill: unsupported shape (model_type=2, heads=64, topk=64, compute_mode=0, scale_format=1
+D3_mla_graph_replay              ok=False secs=0.07 
+E1_kpool_tail_seed               ok=True secs=1.49 
+E2_kpool_compress                ok=True secs=0.3 
+E3_kpool_decode_update           ok=False secs=0.37 
+F1_zeroer                        ok=True secs=0.05 
+F2_cross_group_reuse             ok=True secs=0.28 
+G_draft_graph_replay             ok=True secs=0.06 
+Z_final                          ok=True secs=0.01 
+failed checks: 2
+   D3_mla_graph_replay control replay follows new selection 
+   E3_kpool_decode_update tail ring twin 
+[22:17:32] results in <runs>/b0-cache/run-20261012T221551Z
+[22:17:32] cost: 100s wall, 0.0278 GPU-hours (status exit-0)

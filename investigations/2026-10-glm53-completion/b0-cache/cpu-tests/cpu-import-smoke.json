@@ -1,0 +1,266 @@
+{
+ "meta": {
+  "free_bytes_at_start": null,
+  "total_bytes": null,
+  "torch": "2.13.0+cu130",
+  "image_id": null,
+  "geometry": {
+   "mla_page": 2297856,
+   "mla_tensor_bytes": 2929766400,
+   "idx_page": 143616,
+   "kda_real": 2244608,
+   "kda_padding_pct": 2.37,
+   "draft_real": 2228224,
+   "rank0_tensor_bytes": 18677260800,
+   "rank1_tensor_bytes": 15564384000,
+   "first_high_block": 935,
+   "first_high_slot_straddling": 4067203,
+   "straddle_bytes": [
+    2147483184,
+    2147483712
+   ],
+   "high_blocks": 340,
+   "kv_tokens": null
+  },
+  "env_nope_record": "1",
+  "views": {
+   "mla": [
+    [
+     86700,
+     64,
+     528
+    ],
+    [
+     33792,
+     528,
+     1
+    ]
+   ],
+   "draft_k": [
+    [
+     1275,
+     1088,
+     4,
+     128
+    ],
+    [
+     1148928,
+     1024,
+     256,
+     1
+    ]
+   ],
+   "conv_k": [
+    [
+     1275,
+     12288,
+     6
+    ],
+    [
+     1148928,
+     1,
+     12288
+    ]
+   ],
+   "ssm": [
+    [
+     1275,
+     32,
+     128,
+     128
+    ],
+    [
+     574464,
+     16384,
+     128,
+     1
+    ]
+   ],
+   "idx": [
+    [
+     21675,
+     64,
+     132
+    ],
+    [
+     8448,
+     132,
+     1
+    ]
+   ],
+   "tail": [
+    [
+     1275,
+     2,
+     8,
+     128
+    ],
+    [
+     71808,
+     1024,
+     128,
+     1
+    ]
+   ]
+  },
+  "setup_check": [
+   true,
+   true
+  ],
+  "elapsed_s": 19.0,
+  "all_parts_ok": false,
+  "failed_checks": []
+ },
+ "parts": {
+  "A_draft_writer": {
+   "ok": false,
+   "error": "ImportError(\"cannot import name 'reshape_and_cache_flash' from 'vllm.v1.attention.backends.fa_utils' (/usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/fa_utils.py)\")",
+   "traceback": "Traceback (most recent call last):\n  File \"/f/run_fixture.py\", line 64, in run\n    out = fn() or {}\n          ^^^^\n  File \"/f/run_fixture.py\", line 171, in part_a\n    draft_write(slots, k, v)\n  File \"/f/run_fixture.py\", line 138, in draft_write\n    from vllm.v1.attention.backends.fa_utils import reshape_and_cache_flash\nImportError: cannot import name 'reshape_and_cache_flash' from 'vllm.v1.attention.backends.fa_utils' (/usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/fa_utils.py)\n",
+   "secs": 0.01
+  },
+  "B_draft_fa2_reader": {
+   "ok": false,
+   "error": "ImportError(\"cannot import name 'flash_attn_varlen_func' from 'vllm.v1.attention.backends.fa_utils' (/usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/fa_utils.py)\")",
+   "traceback": "Traceback (most recent call last):\n  File \"/f/run_fixture.py\", line 64, in run\n    out = fn() or {}\n          ^^^^\n  File \"/f/run_fixture.py\", line 179, in part_b\n    from vllm.v1.attention.backends.fa_utils import flash_attn_varlen_func\nImportError: cannot import name 'flash_attn_varlen_func' from 'vllm.v1.attention.backends.fa_utils' (/usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/fa_utils.py)\n",
+   "secs": 0.0
+  },
+  "C1_kda_scatter_gather": {
+   "ok": false,
+   "error": "AssertionError()",
+   "traceback": "Traceback (most recent call last):\n  File \"/f/run_fixture.py\", line 64, in run\n    out = fn() or {}\n          ^^^^\n  File \"/f/run_fixture.py\", line 254, in part_c1\n    kda_set_ssm(EDGE, vals)\n  File \"/f/run_fixture.py\", line 231, in kda_set_ssm\n    scatter_states(SSM, vals, idx)\n  File \"/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/mamba/ops/scatter_states.py\", line 48, in scatter_states\n    assert state.is_cuda\n           ^^^^^^^^^^^^^\nAssertionError\n",
+   "secs": 0.0
+  },
+  "C2_kda_conv_update": {
+   "ok": false,
+   "error": "AttributeError(\"module 'triton' has no attribute 'next_power_of_2'\")",
+   "traceback": "Traceback (most recent call last):\n  File \"/f/run_fixture.py\", line 64, in run\n    out = fn() or {}\n          ^^^^\n  File \"/f/run_fixture.py\", line 275, in part_c2\n    y = causal_conv1d_update(x.clone(), CONV_K, w, None, \"silu\", conv_state_indices=idx)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/mamba/ops/causal_conv1d.py\", line 1224, in causal_conv1d_update\n    np2_statelen = triton.next_power_of_2(state_len)\n                   ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: module 'triton' has no attribute 'next_power_of_2'\n",
+   "secs": 0.77
+  },
+  "C2b_kda_conv_prefill": {
+   "ok": false,
+   "error": "AttributeError(\"module 'triton' has no attribute 'next_power_of_2'\")",
+   "traceback": "Traceback (most recent call last):\n  File \"/f/run_fixture.py\", line 64, in run\n    out = fn() or {}\n          ^^^^\n  File \"/f/run_fixture.py\", line 316, in part_c2b\n    y = causal_conv1d_fn(x.transpose(0, 1), w, None, conv_states=CONV_K, query_start_loc=qsl,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/mamba/ops/causal_conv1d.py\", line 580, in causal_conv1d_fn\n    np2_statelen = triton.next_power_of_2(state_len)\n                   ^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: module 'triton' has no attribute 'next_power_of_2'\n",
+   "secs": 0.77
+  },
+  "C3_kda_fused_recurrent_spec": {
+   "ok": false,
+   "error": "AssertionError()",
+   "traceback": "Traceback (most recent call last):\n  File \"/f/run_fixture.py\", line 64, in run\n    out = fn() or {}\n          ^^^^\n  File \"/f/run_fixture.py\", line 337, in part_c3\n    kda_set_ssm([r[1] for r in rows], torch.stack([init] * len(rows)))\n  File \"/f/run_fixture.py\", line 231, in kda_set_ssm\n    scatter_states(SSM, vals, idx)\n  File \"/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/mamba/ops/scatter_states.py\", line 48, in scatter_states\n    assert state.is_cuda\n           ^^^^^^^^^^^^^\nAssertionError\n",
+   "secs": 0.01
+  },
+  "C4_kda_align_precopy": {
+   "ok": false,
+   "error": "AssertionError()",
+   "traceback": "Traceback (most recent call last):\n  File \"/f/run_fixture.py\", line 64, in run\n    out = fn() or {}\n          ^^^^\n  File \"/f/run_fixture.py\", line 376, in part_c4\n    kda_set_ssm([11, 1272], sv)\n  File \"/f/run_fixture.py\", line 231, in kda_set_ssm\n    scatter_states(SSM, vals, idx)\n  File \"/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/mamba/ops/scatter_states.py\", line 48, in scatter_states\n    assert state.is_cuda\n           ^^^^^^^^^^^^^\nAssertionError\n",
+   "secs": 0.3
+  },
+  "C5_page_copy_on_write": {
+   "ok": false,
+   "error": "RuntimeError('Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx')",
+   "traceback": "Traceback (most recent call last):\n  File \"/f/run_fixture.py\", line 64, in run\n    out = fn() or {}\n          ^^^^\n  File \"/f/run_fixture.py\", line 407, in part_c5\n    copy_kv_cache_blocks_inplace([MLA], G.NUM_BLOCKS, [(2, 1270), (1274, 7)])\n  File \"/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/utils.py\", line 648, in copy_kv_cache_blocks_inplace\n    indices = async_tensor_h2d(indices_np, device=device)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/dist-packages/vllm/utils/torch_utils.py\", line 700, in async_tensor_h2d\n    t = data.pin_memory() if PIN_MEMORY else data\n        ^^^^^^^^^^^^^^^^^\nRuntimeError: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx\n",
+   "secs": 0.0
+  },
+  "D1_mla_writer": {
+   "ok": false,
+   "error": "ValueError('all tensors must be on CUDA')",
+   "traceback": "Traceback (most recent call last):\n  File \"/f/run_fixture.py\", line 433, in mla_writer_plan\n    return _prepare_glm_next_writer_plan(DEV, 64), \"vllm._prepare_glm_next_writer_plan\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/b12x_mla_sparse.py\", line 130, in _prepare_glm_next_writer_plan\n    plan = sparse_mla.plan_cache_writer(kv_c, kv_cache, slots)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/b12x/b12x/attention/sparse_mla/_preparation.py\", line 321, in plan_cache_writer\n    writer._validate_glm_next_mla_cache_writer_args(kv_c, kv_cache, slot_mapping)\n  File \"/opt/b12x/b12x/attention/_shared/mla/kv_cache.py\", line 855, in _validate_glm_next_mla_cache_writer_args\n    raise ValueError(\"all tensors must be on CUDA\")\nValueError: all tensors must be on CUDA\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/f/run_fixture.py\", line 64, in run\n    out = fn() or {}\n          ^^^^\n  File \"/f/run_fixture.py\", line 456, in part_d1\n    plan, how = mla_writer_plan()\n                ^^^^^^^^^^^^^^^^^\n  File \"/f/run_fixture.py\", line 439, in mla_writer_plan\n    return sparse_mla.plan_cache_writer(kv_c, cache, slots), f\"b12x lazy ({e!r})\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/b12x/b12x/attention/sparse_mla/_preparation.py\", line 321, in plan_cache_writer\n    writer._validate_glm_next_mla_cache_writer_args(kv_c, kv_cache, slot_mapping)\n  File \"/opt/b12x/b12x/attention/_shared/mla/kv_cache.py\", line 855, in _validate_glm_next_mla_cache_writer_args\n    raise ValueError(\"all tensors must be on CUDA\")\nValueError: all tensors must be on CUDA\n",
+   "secs": 1.1
+  },
+  "D2_mla_readers": {
+   "ok": false,
+   "error": "ValueError('declaration and session devices differ')",
+   "traceback": "Traceback (most recent call last):\n  File \"/f/run_fixture.py\", line 64, in run\n    out = fn() or {}\n          ^^^^\n  File \"/f/run_fixture.py\", line 522, in part_d2\n    outs[name], _ = mla_read(sel, mode, q)\n                    ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/f/run_fixture.py\", line 496, in mla_read\n    b = sparse_mla.bind(plan, scratch=torch.empty(spec.shape, dtype=spec.dtype, device=DEV), q=q,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/b12x/b12x/attention/sparse_mla/api.py\", line 74, in bind\n    state = _state(plan, device=kv_cache.device)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/b12x/b12x/attention/sparse_mla/_preparation.py\", line 371, in state\n    return require_prepared(plan, TUNING.component_id, device)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/b12x/b12x/preparation/types.py\", line 624, in require_prepared\n    prepared = _LAZY_PREPARER(plan)\n               ^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/b12x/b12x/preparation/session.py\", line 1648, in _prepare_default\n    return prepare_default(request)\n           ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/b12x/b12x/preparation/session.py\", line 1594, in prepare_default\n    session.prepare((request,), autotune=False)\n  File \"/opt/b12x/b12x/preparation/session.py\", line 353, in prepare\n    state = job.advance(collective_key=authorization)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/b12x/b12x/preparation/session.py\", line 624, in advance\n    return self._advance(collective_key=collective_key, tuning=tuning)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/b12x/b12x/preparation/session.py\", line 691, in _advance\n    signal = self._steps.send(send_value)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/b12x/b12x/preparation/session.py\", line 1441, in _run\n    obligations = yield from self._configure(groups)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/b12x/b12x/preparation/session.py\", line 862, in _configure\n    raise ValueError(\"declaration and session devices differ\")\nValueError: declaration and session devices differ\n",
+   "secs": 0.0
+  },
+  "D3_mla_graph_replay": {
+   "ok": false,
+   "error": "ValueError('all tensors must be on CUDA')",
+   "traceback": "Traceback (most recent call last):\n  File \"/f/run_fixture.py\", line 433, in mla_writer_plan\n    return _prepare_glm_next_writer_plan(DEV, 64), \"vllm._prepare_glm_next_writer_plan\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/b12x_mla_sparse.py\", line 130, in _prepare_glm_next_writer_plan\n    plan = sparse_mla.plan_cache_writer(kv_c, kv_cache, slots)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/b12x/b12x/attention/sparse_mla/_preparation.py\", line 321, in plan_cache_writer\n    writer._validate_glm_next_mla_cache_writer_args(kv_c, kv_cache, slot_mapping)\n  File \"/opt/b12x/b12x/attention/_shared/mla/kv_cache.py\", line 855, in _validate_glm_next_mla_cache_writer_args\n    raise ValueError(\"all tensors must be on CUDA\")\nValueError: all tensors must be on CUDA\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/f/run_fixture.py\", line 64, in run\n    out = fn() or {}\n          ^^^^\n  File \"/f/run_fixture.py\", line 538, in part_d3\n    plan, _ = mla_writer_plan()\n              ^^^^^^^^^^^^^^^^^\n  File \"/f/run_fixture.py\", line 439, in mla_writer_plan\n    return sparse_mla.plan_cache_writer(kv_c, cache, slots), f\"b12x lazy ({e!r})\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/b12x/b12x/attention/sparse_mla/_preparation.py\", line 321, in plan_cache_writer\n    writer._validate_glm_next_mla_cache_writer_args(kv_c, kv_cache, slot_mapping)\n  File \"/opt/b12x/b12x/attention/_shared/mla/kv_cache.py\", line 855, in _validate_glm_next_mla_cache_writer_args\n    raise ValueError(\"all tensors must be on CUDA\")\nValueError: all tensors must be on CUDA\n",
+   "secs": 0.0
+  },
+  "E1_kpool_tail_seed": {
+   "ok": false,
+   "error": "TypeError(\"'function' object is not subscriptable\")",
+   "traceback": "Traceback (most recent call last):\n  File \"/f/run_fixture.py\", line 64, in run\n    out = fn() or {}\n          ^^^^\n  File \"/f/run_fixture.py\", line 613, in part_e1\n    kpool_seed_tail_cache(TAIL, key, gate, ts, kpool=4)\n  File \"/usr/local/lib/python3.12/dist-packages/vllm/models/glm5next/nvidia/ops/kpool_compress.py\", line 514, in kpool_seed_tail_cache\n    _kpool_tail_seed_kernel[(n,)](\n    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^\nTypeError: 'function' object is not subscriptable\n",
+   "secs": 3.24
+  },
+  "E2_kpool_compress": {
+   "ok": false,
+   "error": "TypeError(\"'function' object is not subscriptable\")",
+   "traceback": "Traceback (most recent call last):\n  File \"/f/run_fixture.py\", line 64, in run\n    out = fn() or {}\n          ^^^^\n  File \"/f/run_fixture.py\", line 631, in part_e2\n    kpool_compress_and_write_cache(IDX.view(torch.uint8), sk, ss, ape,\n  File \"/usr/local/lib/python3.12/dist-packages/vllm/models/glm5next/nvidia/ops/kpool_compress.py\", line 407, in kpool_compress_and_write_cache\n    _kpool_softmax_rotate_write_cache_kernel[(slot_k.shape[0],)](\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^\nTypeError: 'function' object is not subscriptable\n",
+   "secs": 0.0
+  },
+  "E3_kpool_decode_update": {
+   "ok": false,
+   "error": "TypeError(\"'function' object is not subscriptable\")",
+   "traceback": "Traceback (most recent call last):\n  File \"/f/run_fixture.py\", line 64, in run\n    out = fn() or {}\n          ^^^^\n  File \"/f/run_fixture.py\", line 658, in part_e3\n    kpool_decode_update_and_maybe_write_cache_batched(IDX.view(torch.uint8), TAIL, ts, key, sc, ape, slot, pos, 4)\n  File \"/usr/local/lib/python3.12/dist-packages/vllm/models/glm5next/nvidia/ops/kpool_compress.py\", line 780, in kpool_decode_update_and_maybe_write_cache_batched\n    _kpool_decode_update_batched_kernel[(num_requests,)](\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\nTypeError: 'function' object is not subscriptable\n",
+   "secs": 0.0
+  },
+  "F1_zeroer": {
+   "ok": false,
+   "error": "RuntimeError('Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx')",
+   "traceback": "Traceback (most recent call last):\n  File \"/f/run_fixture.py\", line 64, in run\n    out = fn() or {}\n          ^^^^\n  File \"/f/run_fixture.py\", line 698, in part_f1\n    z.zero_block_ids(blocks)\n  File \"/usr/local/lib/python3.12/dist-packages/vllm/v1/worker/utils.py\", line 255, in zero_block_ids\n    idx = async_tensor_h2d(block_ids, device=self.device, dtype=torch.int64)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/dist-packages/vllm/utils/torch_utils.py\", line 702, in async_tensor_h2d\n    t = torch.tensor(data, dtype=dtype, pin_memory=PIN_MEMORY, device=\"cpu\")\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/index.aspx\n",
+   "secs": 0.0
+  },
+  "F2_cross_group_reuse": {
+   "ok": false,
+   "error": "ValueError('all tensors must be on CUDA')",
+   "traceback": "Traceback (most recent call last):\n  File \"/f/run_fixture.py\", line 433, in mla_writer_plan\n    return _prepare_glm_next_writer_plan(DEV, 64), \"vllm._prepare_glm_next_writer_plan\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/b12x_mla_sparse.py\", line 130, in _prepare_glm_next_writer_plan\n    plan = sparse_mla.plan_cache_writer(kv_c, kv_cache, slots)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/b12x/b12x/attention/sparse_mla/_preparation.py\", line 321, in plan_cache_writer\n    writer._validate_glm_next_mla_cache_writer_args(kv_c, kv_cache, slot_mapping)\n  File \"/opt/b12x/b12x/attention/_shared/mla/kv_cache.py\", line 855, in _validate_glm_next_mla_cache_writer_args\n    raise ValueError(\"all tensors must be on CUDA\")\nValueError: all tensors must be on CUDA\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/f/run_fixture.py\", line 64, in run\n    out = fn() or {}\n          ^^^^\n  File \"/f/run_fixture.py\", line 716, in part_f2\n    plan, _ = mla_writer_plan()\n              ^^^^^^^^^^^^^^^^^\n  File \"/f/run_fixture.py\", line 439, in mla_writer_plan\n    return sparse_mla.plan_cache_writer(kv_c, cache, slots), f\"b12x lazy ({e!r})\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/b12x/b12x/attention/sparse_mla/_preparation.py\", line 321, in plan_cache_writer\n    writer._validate_glm_next_mla_cache_writer_args(kv_c, kv_cache, slot_mapping)\n  File \"/opt/b12x/b12x/attention/_shared/mla/kv_cache.py\", line 855, in _validate_glm_next_mla_cache_writer_args\n    raise ValueError(\"all tensors must be on CUDA\")\nValueError: all tensors must be on CUDA\n",
+   "secs": 0.0
+  },
+  "G_draft_graph_replay": {
+   "ok": false,
+   "error": "ImportError(\"cannot import name 'reshape_and_cache_flash' from 'vllm.v1.attention.backends.fa_utils' (/usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/fa_utils.py)\")",
+   "traceback": "Traceback (most recent call last):\n  File \"/f/run_fixture.py\", line 64, in run\n    out = fn() or {}\n          ^^^^\n  File \"/f/run_fixture.py\", line 757, in part_g\n    from vllm.v1.attention.backends.fa_utils import reshape_and_cache_flash\nImportError: cannot import name 'reshape_and_cache_flash' from 'vllm.v1.attention.backends.fa_utils' (/usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/fa_utils.py)\n",
+   "secs": 0.0
+  },
+  "Z_final": {
+   "ok": true,
+   "secs": 0.89
+  }
+ },
+ "checks": [
+  {
+   "differing_words": 0,
+   "label": "fresh mla",
+   "ok": true,
+   "where": [],
+   "part": "setup"
+  },
+  {
+   "differing_words": 0,
+   "label": "fresh idx",
+   "ok": true,
+   "where": [],
+   "part": "setup"
+  },
+  {
+   "differing_words": 0,
+   "label": "conv setup",
+   "ok": true,
+   "where": [],
+   "part": "C2_kda_conv_update"
+  },
+  {
+   "differing_words": 0,
+   "label": "conv prefill setup",
+   "ok": true,
+   "where": [],
+   "part": "C2b_kda_conv_prefill"
+  },
+  {
+   "differing_words": 0,
+   "label": "final mla slot tensor",
+   "ok": true,
+   "where": [],
+   "part": "Z_final"
+  },
+  {
+   "differing_words": 0,
+   "label": "final idx tensor",
+   "ok": true,
+   "where": [],
+   "part": "Z_final"
+  }
+ ]
+}

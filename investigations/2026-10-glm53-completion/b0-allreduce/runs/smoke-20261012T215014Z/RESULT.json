@@ -1,0 +1,241 @@
+{
+ "run": "/out",
+ "problems": [],
+ "verdict": "CLEAN",
+ "invalid": [],
+ "fails": [],
+ "b12x_mismatches": {
+  "rank0": {
+   "replays": 0,
+   "warmups": 0
+  },
+  "rank1": {
+   "replays": 0,
+   "warmups": 0
+  }
+ },
+ "mismatches_by_case": {
+  "main/PIECEWISE/rows48/b12x": [
+   0,
+   0
+  ],
+  "main/PIECEWISE/rows1/b12x": [
+   0,
+   0
+  ],
+  "main/FULL/rows64/pynccl": [
+   0,
+   0
+  ],
+  "main/FULL/rows48/b12x": [
+   0,
+   0
+  ],
+  "main/FULL/rows4/b12x": [
+   0,
+   0
+  ],
+  "skew/FULL/rows4/b12x": [
+   0,
+   0
+  ],
+  "boundary/FULL/rows49/pynccl": [
+   0,
+   0
+  ],
+  "boundary/FULL/rows3/b12x": [
+   0,
+   0
+  ],
+  "nccl-ref/FULL/rows48/pynccl-direct": [
+   0,
+   0
+  ]
+ },
+ "phases": {
+  "rank0": [
+   {
+    "phase": "main",
+    "items": 110,
+    "forwards": 110,
+    "seconds": 0.4,
+    "epoch_delta": 9464,
+    "expected_push_calls": 9464
+   },
+   {
+    "phase": "skew",
+    "items": 12,
+    "forwards": 12,
+    "seconds": 0.02,
+    "epoch_delta": 1092,
+    "expected_push_calls": 1092
+   },
+   {
+    "phase": "boundary",
+    "items": 16,
+    "forwards": 16,
+    "seconds": 0.01,
+    "epoch_delta": 372,
+    "expected_push_calls": 372
+   },
+   {
+    "phase": "mixed",
+    "items": 8,
+    "forwards": 16,
+    "seconds": 0.04,
+    "epoch_delta": 728,
+    "expected_push_calls": 728
+   },
+   {
+    "phase": "nccl-ref",
+    "items": 12,
+    "forwards": 12,
+    "seconds": 0.06,
+    "epoch_delta": 0,
+    "expected_push_calls": 0
+   }
+  ],
+  "rank1": [
+   {
+    "phase": "main",
+    "items": 110,
+    "forwards": 110,
+    "seconds": 0.4,
+    "epoch_delta": 9464,
+    "expected_push_calls": 9464
+   },
+   {
+    "phase": "skew",
+    "items": 12,
+    "forwards": 12,
+    "seconds": 0.02,
+    "epoch_delta": 1092,
+    "expected_push_calls": 1092
+   },
+   {
+    "phase": "boundary",
+    "items": 16,
+    "forwards": 16,
+    "seconds": 0.01,
+    "epoch_delta": 372,
+    "expected_push_calls": 372
+   },
+   {
+    "phase": "mixed",
+    "items": 8,
+    "forwards": 16,
+    "seconds": 0.04,
+    "epoch_delta": 728,
+    "expected_push_calls": 728
+   },
+   {
+    "phase": "nccl-ref",
+    "items": 12,
+    "forwards": 12,
+    "seconds": 0.06,
+    "epoch_delta": 0,
+    "expected_push_calls": 0
+   }
+  ]
+ },
+ "capture": {
+  "seconds": 1.4,
+  "epoch_after_capture": {
+   "value": 395,
+   "delta": 395,
+   "expected_push_calls": 395
+  }
+ },
+ "plans": [
+  {
+   "key": [
+    "bfloat16",
+    "(48, 4096)",
+    "(4096, 1)",
+    "0"
+   ],
+   "transport": "tp2_remote_push",
+   "threads": 128,
+   "blocks": 16,
+   "size_packs": 24576,
+   "region_packs": 24576
+  },
+  {
+   "key": [
+    "bfloat16",
+    "(1, 4096)",
+    "(4096, 1)",
+    "0"
+   ],
+   "transport": "tp2_remote_push",
+   "threads": 64,
+   "blocks": 36,
+   "size_packs": 512,
+   "region_packs": 24576
+  },
+  {
+   "key": [
+    "bfloat16",
+    "(4, 4096)",
+    "(4096, 1)",
+    "0"
+   ],
+   "transport": "tp2_remote_push_stream",
+   "threads": 256,
+   "blocks": 36,
+   "size_packs": 2048,
+   "region_packs": 24576
+  },
+  {
+   "key": [
+    "bfloat16",
+    "(3, 4096)",
+    "(4096, 1)",
+    "0"
+   ],
+   "transport": "tp2_remote_push_stream",
+   "threads": 256,
+   "blocks": 36,
+   "size_packs": 1536,
+   "region_packs": 24576
+  }
+ ],
+ "backends": {
+  "ca": "B12X_PCIE_ONESHOT",
+  "pynccl": true,
+  "fi_ar": false,
+  "qr": false,
+  "aiter": false,
+  "symm_mem": false,
+  "max_size": 393216,
+  "enable_eager": false,
+  "transport_policy": [
+   false,
+   false,
+   true,
+   false,
+   true
+  ],
+  "eager_buffer_bytes": 393216,
+  "plain_remote_push_region_packs": 24576,
+  "init_s": 2.29
+ },
+ "plan": {
+  "graphs": 9,
+  "forwards_incl_warmup_and_prefill": 175,
+  "b12x_peer_push_calls_in_replays": 11656,
+  "checked_elements_in_replays": 1399635968,
+  "by_phase": {
+   "main": 110,
+   "skew": 12,
+   "boundary": 16,
+   "nccl-ref": 12
+  },
+  "mixed_iterations": 8
+ },
+ "classifications": [],
+ "mismatch_steps": {
+  "rank0": [],
+  "rank1": []
+ }
+}

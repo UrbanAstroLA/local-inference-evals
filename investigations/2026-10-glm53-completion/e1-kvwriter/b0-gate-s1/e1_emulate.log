@@ -1,0 +1,87 @@
+{
+ "files": 500,
+ "seconds": 2.3,
+ "selection_check": {
+  "rows": 34672,
+  "sel_mismatch_vs_emul_cr": 0,
+  "sel_mismatch_vs_emul_tanh": 0
+ },
+ "emulation_match": {
+  "M>1024": {
+   "block/cr": {
+    "rows": 26112,
+    "rows_bitwise": 0,
+    "elems": 208896,
+    "elems_bitwise": 9896,
+    "elem_ulp_le1": 28562,
+    "ulp_max": 33727
+   },
+   "warp/cr": {
+    "rows": 26112,
+    "rows_bitwise": 23441,
+    "elems": 208896,
+    "elems_bitwise": 187909,
+    "elem_ulp_le1": 188633,
+    "ulp_max": 26956
+   },
+   "block/tanh": {
+    "rows": 26112,
+    "rows_bitwise": 0,
+    "elems": 208896,
+    "elems_bitwise": 10399,
+    "elem_ulp_le1": 28631,
+    "ulp_max": 33013
+   },
+   "warp/tanh": {
+    "rows": 26112,
+    "rows_bitwise": 25648,
+    "elems": 208896,
+    "elems_bitwise": 205206,
+    "elem_ulp_le1": 205361,
+    "ulp_max": 170
+   }
+  },
+  "M<=1024": {
+   "block/cr": {
+    "rows": 8560,
+    "rows_bitwise": 588,
+    "elems": 68480,
+    "elems_bitwise": 39011,
+    "elem_ulp_le1": 59630,
+    "ulp_max": 453
+   },
+   "warp/cr": {
+    "rows": 8560,
+    "rows_bitwise": 0,
+    "elems": 68480,
+    "elems_bitwise": 3446,
+    "elem_ulp_le1": 9117,
+    "ulp_max": 11516
+   },
+   "block/tanh": {
+    "rows": 8560,
+    "rows_bitwise": 5613,
+    "elems": 68480,
+    "elems_bitwise": 61091,
+    "elem_ulp_le1": 64741,
+    "ulp_max": 20
+   },
+   "warp/tanh": {
+    "rows": 8560,
+    "rows_bitwise": 0,
+    "elems": 68480,
+    "elems_bitwise": 3415,
+    "elem_ulp_le1": 9078,
+    "ulp_max": 11516
+   }
+  }
+ },
+ "bias_summary": {
+  "layers": 42,
+  "abs_bias_max": 14.514942169189453,
+  "bias_range": [
+   4.995242595672607,
+   14.514942169189453
+  ]
+ }
+}

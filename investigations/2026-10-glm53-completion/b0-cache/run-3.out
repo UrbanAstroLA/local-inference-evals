@@ -1,0 +1,17 @@
+[22:22:39] budget: spent 0.0278, this run ceiling 0.2, approved 0.5
+running containers:
+[22:22:39] pre-flight ok: GPU 0 used 20 MiB, util 0%
+[22:22:39] starting container b0cache-fixture-1447504 (wall cap 720s)
+[22:22:59] container finished: rc=0
+fixture_exit=3
+pytest=skipped (partial rerun: D1,D2,D3,E3,Z)
+D1_mla_writer                    ok=True secs=1.62 
+D2_mla_readers                   ok=False secs=3.56 AttributeError("'tuple' object has no attribute 'clone'")
+D3_mla_graph_replay              ok=False secs=0.08 
+E3_kpool_decode_update           ok=True secs=5.14 
+Z_final                          ok=True secs=0.01 
+failed checks: 2
+   D3_mla_graph_replay eager straddle == eager low (twin records) 
+   D3_mla_graph_replay eager last == eager low (twin records) 
+[22:22:59] results in <runs>/b0-cache/run-20261012T222239Z
+[22:22:59] cost: 20s wall, 0.0056 GPU-hours (status exit-0)

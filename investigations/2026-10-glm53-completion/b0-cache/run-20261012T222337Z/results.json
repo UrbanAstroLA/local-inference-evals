@@ -1,0 +1,630 @@
+{
+ "meta": {
+  "device": "NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition",
+  "cc": [
+   12,
+   0
+  ],
+  "free_bytes_at_start": 101367808000,
+  "total_bytes": 101973491712,
+  "torch": "2.13.0+cu130",
+  "image_id": "sha256:08d1cb902ddb888f679b972714168bb7c0d2333b4c1865f3ebf860baa2f46548",
+  "geometry": {
+   "mla_page": 2297856,
+   "mla_tensor_bytes": 2929766400,
+   "idx_page": 143616,
+   "kda_real": 2244608,
+   "kda_padding_pct": 2.37,
+   "draft_real": 2228224,
+   "rank0_tensor_bytes": 18677260800,
+   "rank1_tensor_bytes": 15564384000,
+   "first_high_block": 935,
+   "first_high_slot_straddling": 4067203,
+   "straddle_bytes": [
+    2147483184,
+    2147483712
+   ],
+   "high_blocks": 340,
+   "kv_tokens": null
+  },
+  "env_nope_record": "1",
+  "views": {
+   "mla": [
+    [
+     86700,
+     64,
+     528
+    ],
+    [
+     33792,
+     528,
+     1
+    ]
+   ],
+   "draft_k": [
+    [
+     1275,
+     1088,
+     4,
+     128
+    ],
+    [
+     1148928,
+     1024,
+     256,
+     1
+    ]
+   ],
+   "conv_k": [
+    [
+     1275,
+     12288,
+     6
+    ],
+    [
+     1148928,
+     1,
+     12288
+    ]
+   ],
+   "ssm": [
+    [
+     1275,
+     32,
+     128,
+     128
+    ],
+    [
+     574464,
+     16384,
+     128,
+     1
+    ]
+   ],
+   "idx": [
+    [
+     21675,
+     64,
+     132
+    ],
+    [
+     8448,
+     132,
+     1
+    ]
+   ],
+   "tail": [
+    [
+     1275,
+     2,
+     8,
+     128
+    ],
+    [
+     71808,
+     1024,
+     128,
+     1
+    ]
+   ]
+  },
+  "setup_check": [
+   true,
+   true
+  ],
+  "elapsed_s": 16.9,
+  "mla_plan": "vllm._prepare_glm_next_writer_plan",
+  "all_parts_ok": true,
+  "failed_checks": []
+ },
+ "parts": {
+  "D1_mla_writer": {
+   "ok": true,
+   "plan": "vllm._prepare_glm_next_writer_plan",
+   "low_vs_reference_bytes_differing": 0,
+   "secs": 1.64
+  },
+  "D2_mla_readers": {
+   "ok": true,
+   "decode_w64_low_ref": [
+    1.0,
+    0.00048828125
+   ],
+   "decode_w64_straddle_ref": [
+    1.0,
+    0.00048828125
+   ],
+   "decode_w64_last_ref": [
+    1.0,
+    0.00048828125
+   ],
+   "decode_w2048_low_ref": [
+    1.0,
+    0.00048828125
+   ],
+   "decode_w2048_straddle_ref": [
+    1.0,
+    0.00048828125
+   ],
+   "decode_w2048_last_ref": [
+    1.0,
+    0.00048828125
+   ],
+   "extend_w2048_low_ref": [
+    1.0,
+    0.00048828125
+   ],
+   "extend_w2048_straddle_ref": [
+    1.0,
+    0.00048828125
+   ],
+   "extend_w2048_last_ref": [
+    1.0,
+    0.00048828125
+   ],
+   "secs": 3.61
+  },
+  "D3_mla_graph_replay": {
+   "ok": true,
+   "secs": 0.12
+  },
+  "E3_kpool_decode_update": {
+   "ok": true,
+   "secs": 5.26
+  },
+  "Z_final": {
+   "ok": true,
+   "secs": 0.01
+  }
+ },
+ "checks": [
+  {
+   "differing_words": 0,
+   "label": "fresh mla",
+   "ok": true,
+   "where": [],
+   "part": "setup"
+  },
+  {
+   "differing_words": 0,
+   "label": "fresh idx",
+   "ok": true,
+   "where": [],
+   "part": "setup"
+  },
+  {
+   "part": "D1_mla_writer",
+   "label": "low records decode to the latents",
+   "ok": true,
+   "cos": 1.0,
+   "max_abs": 0.0
+  },
+  {
+   "part": "D1_mla_writer",
+   "label": "low records == low twin bytes",
+   "ok": true
+  },
+  {
+   "part": "D1_mla_writer",
+   "label": "straddle records == low twin bytes",
+   "ok": true
+  },
+  {
+   "part": "D1_mla_writer",
+   "label": "b935 records == low twin bytes",
+   "ok": true
+  },
+  {
+   "part": "D1_mla_writer",
+   "label": "last records == low twin bytes",
+   "ok": true
+  },
+  {
+   "part": "D1_mla_writer",
+   "label": "kpage_cross records == low twin bytes",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "GLM_NEXT writer: only the declared records changed",
+   "ok": true,
+   "where": [],
+   "part": "D1_mla_writer"
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode w64 low vs fp32 ref",
+   "ok": true,
+   "cos": 1.0,
+   "max_abs": 0.00048828125
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode w64 straddle vs fp32 ref",
+   "ok": true,
+   "cos": 1.0,
+   "max_abs": 0.00048828125
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode w64 last vs fp32 ref",
+   "ok": true,
+   "cos": 1.0,
+   "max_abs": 0.00048828125
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode w64 low == low bit-equal",
+   "ok": true
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode w64 straddle == low bit-equal",
+   "ok": true
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode w64 b935 == low bit-equal",
+   "ok": true
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode w64 last == low bit-equal",
+   "ok": true
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode w64 kpage_cross == low bit-equal",
+   "ok": true
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "w2048 set low records == low twin bytes",
+   "ok": true
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "w2048 set straddle records == low twin bytes",
+   "ok": true
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "w2048 set b935 records == low twin bytes",
+   "ok": true
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "w2048 set last records == low twin bytes",
+   "ok": true
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "w2048 set kpage_cross records == low twin bytes",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "w2048 set writes: only declared records changed",
+   "ok": true,
+   "where": [],
+   "part": "D2_mla_readers"
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode w2048 low vs fp32 ref",
+   "ok": true,
+   "cos": 1.0,
+   "max_abs": 0.00048828125
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode w2048 straddle vs fp32 ref",
+   "ok": true,
+   "cos": 1.0,
+   "max_abs": 0.00048828125
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode w2048 last vs fp32 ref",
+   "ok": true,
+   "cos": 1.0,
+   "max_abs": 0.00048828125
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode w2048 low == low bit-equal",
+   "ok": true
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode w2048 straddle == low bit-equal",
+   "ok": true
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode w2048 b935 == low bit-equal",
+   "ok": true
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode w2048 last == low bit-equal",
+   "ok": true
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode w2048 kpage_cross == low bit-equal",
+   "ok": true
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "extend w2048 low vs fp32 ref",
+   "ok": true,
+   "cos": 1.0,
+   "max_abs": 0.00048828125
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "extend w2048 straddle vs fp32 ref",
+   "ok": true,
+   "cos": 1.0,
+   "max_abs": 0.00048828125
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "extend w2048 last vs fp32 ref",
+   "ok": true,
+   "cos": 1.0,
+   "max_abs": 0.00048828125
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "extend w2048 low == low bit-equal",
+   "ok": true
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "extend w2048 straddle == low bit-equal",
+   "ok": true
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "extend w2048 b935 == low bit-equal",
+   "ok": true
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "extend w2048 last == low bit-equal",
+   "ok": true
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "extend w2048 kpage_cross == low bit-equal",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "after GLM_NEXT reads",
+   "ok": true,
+   "where": [],
+   "part": "D2_mla_readers"
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "replay 0 records == eager twin",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "graph writer replay 0",
+   "ok": true,
+   "where": [],
+   "part": "D3_mla_graph_replay"
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "replay 1 records == eager twin",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "graph writer replay 1",
+   "ok": true,
+   "where": [],
+   "part": "D3_mla_graph_replay"
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "replay 2 records == eager twin",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "graph writer replay 2",
+   "ok": true,
+   "where": [],
+   "part": "D3_mla_graph_replay"
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "replay 3 records == eager twin",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "graph writer replay 3",
+   "ok": true,
+   "where": [],
+   "part": "D3_mla_graph_replay"
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "restored low == low twin bytes",
+   "ok": true
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "restored straddle == low twin bytes",
+   "ok": true
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "restored b935 == low twin bytes",
+   "ok": true
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "restored last == low twin bytes",
+   "ok": true
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "restored kpage_cross == low twin bytes",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "restore reader sets",
+   "ok": true,
+   "where": [],
+   "part": "D3_mla_graph_replay"
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "reader replay low == eager low",
+   "ok": true
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "eager low == eager low (twin records)",
+   "ok": true
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "reader replay straddle == eager straddle",
+   "ok": true
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "eager straddle == eager low (twin records)",
+   "ok": true
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "reader replay last == eager last",
+   "ok": true
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "eager last == eager low (twin records)",
+   "ok": true
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "reader replay b935 == eager b935",
+   "ok": true
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "eager b935 == eager low (twin records)",
+   "ok": true
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "control selection output differs from low",
+   "ok": true
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "control replay follows new selection",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "after graph reads",
+   "ok": true,
+   "where": [],
+   "part": "D3_mla_graph_replay"
+  },
+  {
+   "part": "E3_kpool_decode_update",
+   "label": "tail ring twin slots 4-7 half 0",
+   "ok": true
+  },
+  {
+   "part": "E3_kpool_decode_update",
+   "label": "tail ring twin slots 4-7 half 1",
+   "ok": true
+  },
+  {
+   "part": "E3_kpool_decode_update",
+   "label": "stash exact b5 pos12",
+   "ok": true
+  },
+  {
+   "part": "E3_kpool_decode_update",
+   "label": "stash exact b5 pos13",
+   "ok": true
+  },
+  {
+   "part": "E3_kpool_decode_update",
+   "label": "stash exact b5 pos14",
+   "ok": true
+  },
+  {
+   "part": "E3_kpool_decode_update",
+   "label": "stash exact b5 pos15",
+   "ok": true
+  },
+  {
+   "part": "E3_kpool_decode_update",
+   "label": "stash exact b1273 pos12",
+   "ok": true
+  },
+  {
+   "part": "E3_kpool_decode_update",
+   "label": "stash exact b1273 pos13",
+   "ok": true
+  },
+  {
+   "part": "E3_kpool_decode_update",
+   "label": "stash exact b1273 pos14",
+   "ok": true
+  },
+  {
+   "part": "E3_kpool_decode_update",
+   "label": "stash exact b1273 pos15",
+   "ok": true
+  },
+  {
+   "part": "E3_kpool_decode_update",
+   "label": "idx_k_range twin",
+   "ok": true
+  },
+  {
+   "part": "E3_kpool_decode_update",
+   "label": "idx_scale_range twin",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "decode update: tail ring slots + one pool only",
+   "ok": true,
+   "where": [],
+   "part": "E3_kpool_decode_update"
+  },
+  {
+   "differing_words": 0,
+   "label": "final mla slot tensor",
+   "ok": true,
+   "where": [],
+   "part": "Z_final"
+  },
+  {
+   "differing_words": 0,
+   "label": "final idx tensor",
+   "ok": true,
+   "where": [],
+   "part": "Z_final"
+  }
+ ]
+}

@@ -1,0 +1,189 @@
+# Excerpts of the sm_120 SASS cited in E1-ASSESSMENT.md and KVWRITER-PREP.md, disassembled on CPU with the B0 image's
+# own nvdisasm from vLLM's _moe_C_stable_libtorch.abi3.so (router top-k) and _C_stable_libtorch.abi3.so (fp8_ds_mla
+# writer). Line numbers refer to the full local listings, whose sha256 are in RAW-SHA256SUMS-kvwriter.txt.
+
+## warp384.sass (single_group_topk_warp_kernel, rows > 1,024): kernel symbol, rebuilt unbiased score, normalisation
+.text._ZN4vllm3moe17single_group_topk6detail29single_group_topk_warp_kernelIffiLNS0_11ScoringFuncE1ELi384ELi8EEEvPKT_PfPT1_PKT0_lllbfb:
+...
+L 740: /*2bf0*/              @!P0 LDC.64 R6, c[0x0][0x398] ;
+L 741: /*2c00*/              @!P0 IMAD.WIDE.U32 R6, R5, 0x4, R6 ;
+L 742: /*2c10*/              @!P0 LDG.E R7, desc[UR4][R6.64] ;
+L 743: /*2c20*/                   FSETP.NEU.AND P1, PT, R0, -INF , PT ;
+L 744: /*2c30*/                   HFMA2 R2, -RZ, RZ, 0, 0 ;
+L 745: /*2c40*/                   WARPSYNC.ALL ;
+L 746: /*2c50*/                   ISETP.LT.AND P2, PT, R43, R4, P1 ;
+L 747: /*2c60*/              @!P0 FADD R2, -R7, R0 ;
+L 748: /*2c70*/                   FSEL R2, R2, RZ, P2 ;
+L 749: /*2c80*/                   SHFL.BFLY PT, R3, R2, 0x10, 0x1f ;
+L 750: /*2c90*/                   BSSY.RECONVERGENT B0, `(.L_x_25139) ;
+L 751: /*2ca0*/                   FADD R3, R2, R3 ;
+L 752: /*2cb0*/                   SHFL.BFLY PT, R0, R3, 0x8, 0x1f ;
+L 753: /*2cc0*/                   FADD R4, R3, R0 ;
+L 754: /*2cd0*/                   SHFL.BFLY PT, R7, R4, 0x4, 0x1f ;
+L 755: /*2ce0*/                   FADD R7, R4, R7 ;
+L 756: /*2cf0*/                   SHFL.BFLY PT, R0, R7, 0x2, 0x1f ;
+L 757: /*2d00*/                   FADD R6, R7, R0 ;
+L 758: /*2d10*/                   VOTE.ANY R0, PT, P2 ;
+L 759: /*2d20*/                   SHFL.BFLY PT, R9, R6, 0x1, 0x1f ;
+L 760: /*2d30*/                   FADD R8, R6, R9 ;
+L 761: /*2d40*/               @P3 BRA `(.L_x_25140) ;
+L 762: /*2d50*/                   LDC.U8 R3, c[0x0][0x3b8] ;
+L 763: /*2d60*/                   ISETP.EQ.OR P1, PT, R0.reuse, RZ, !P1 ;
+L 764: /*2d70*/                   ISETP.NE.AND P0, PT, R0, RZ, PT ;
+L 765: /*2d80*/                   BSSY.RECONVERGENT B1, `(.L_x_25141) ;
+L 766: /*2d90*/                   FSEL R0, R57, RZ, !P0 ;
+L 767: /*2da0*/                   PRMT R3, R3, 0x8880, RZ ;
+L 768: /*2db0*/                   ISETP.NE.AND P2, PT, R3, RZ, PT ;
+L 769: /*2dc0*/                   FSEL R9, R0, RZ, P2 ;
+L 770: /*2dd0*/               @P1 BRA `(.L_x_25142) ;
+L 771: /*2de0*/                   LDCU UR6, c[0x0][0x3bc] ;
+L 772: /*2df0*/                   MOV R9, UR6 ;
+L 773: /*2e00*/              @!P2 BRA `(.L_x_25143) ;
+L 774: /*2e10*/                   LDCU UR6, c[0x0][0x3bc] ;
+L 775: /*2e20*/                   FADD R8, R8, 9.999999682655225389e-21 ;
+L 776: /*2e30*/                   BSSY.RECONVERGENT B2, `(.L_x_25143) ;
+L 777: /*2e40*/                   MUFU.RCP R0, R8 ;
+L 778: /*2e50*/                   MOV R7, UR6 ;
+L 779: /*2e60*/                   FCHK P0, R7, R8 ;
+L 780: /*2e70*/                   FFMA R3, -R8, R0, 1 ;
+L 781: /*2e80*/                   FFMA R0, R0, R3, R0 ;
+L 782: /*2e90*/                   FFMA R3, R0, UR6, RZ ;
+
+## block384.sass (single_group_topk_block_kernel, rows <= 1,024): kernel symbol, stored unbiased score, normalisation
+.text._ZN4vllm3moe17single_group_topk6detail30single_group_topk_block_kernelIffiLNS0_11ScoringFuncE1ELi384ELi8EEEvPKT_PfPT1_PKT0_llbfb:
+...
+L 566: /*2200*/                   S2R R7, SR_CgaCtaId ;
+L 567: /*2210*/                   ISETP.GE.OR P0, PT, R2, UR18, P1 ;
+L 568: /*2220*/                   ISETP.LT.OR P0, PT, R2, RZ, P0 ;
+L 569: /*2230*/              @!P0 IADD3 R6, PT, PT, R6, 0x600, RZ ;
+L 570: /*2240*/              @!P0 LEA R7, R7, R6, 0x18 ;
+L 571: /*2250*/                   HFMA2 R6, -RZ, RZ, 0, 0 ;
+L 572: /*2260*/              @!P0 IMAD R7, R2, 0x4, R7 ;
+L 573: /*2270*/              @!P0 LDS R6, [R7] ;
+L 574: /*2280*/                   FSETP.NEU.AND P0, PT, R3, -INF , !P1 ;
+L 575: /*2290*/                   VOTE.ANY R11, PT, P0 ;
+L 576: /*22a0*/                   FSEL R0, R6, RZ, P0 ;
+L 577: /*22b0*/                   SHFL.BFLY PT, R3, R0, 0x10, 0x1f ;
+L 578: /*22c0*/                   FADD R3, R0, R3 ;
+L 579: /*22d0*/                   SHFL.BFLY PT, R8, R3, 0x8, 0x1f ;
+L 580: /*22e0*/                   FADD R8, R3, R8 ;
+L 581: /*22f0*/                   SHFL.BFLY PT, R9, R8, 0x4, 0x1f ;
+L 582: /*2300*/                   FADD R9, R8, R9 ;
+L 583: /*2310*/                   SHFL.BFLY PT, R10, R9, 0x2, 0x1f ;
+L 584: /*2320*/                   FADD R10, R9, R10 ;
+L 585: /*2330*/                   SHFL.BFLY PT, R7, R10, 0x1, 0x1f ;
+L 586: /*2340*/                   FADD R7, R10, R7 ;
+L 587: /*2350*/               @P1 BRA `(.L_x_25192) ;
+L 588: /*2360*/                   ISETP.NE.AND P1, PT, R11, RZ, PT ;
+L 589: /*2370*/                   BSSY.RECONVERGENT B1, `(.L_x_25193) ;
+L 590: /*2380*/                   MOV R3, RZ ;
+L 591: /*2390*/               @P1 BRA `(.L_x_25194) ;
+L 592: /*23a0*/                   LDC.U8 R0, c[0x0][0x3b0] ;
+L 593: /*23b0*/                   PRMT R0, R0, 0x8880, RZ ;
+L 594: /*23c0*/                   ISETP.NE.AND P0, PT, R0, RZ, PT ;
+L 595: /*23d0*/              @!P0 BRA `(.L_x_25195) ;
+L 596: /*23e0*/                   I2FP.F32.U32 R0, UR17 ;
+L 597: /*23f0*/                   IADD3 R3, PT, PT, R0, 0x1800000, RZ ;
+L 598: /*2400*/                   LOP3.LUT R3, R3, 0x7f800000, RZ, 0xc0, !PT ;
+L 599: /*2410*/                   ISETP.GT.U32.AND P0, PT, R3, 0x1ffffff, PT ;
+L 600: /*2420*/               @P0 BRA `(.L_x_25196) ;
+L 601: /*2430*/                   MOV R11, 0x2450 ;
+L 602: /*2440*/                   CALL.REL.NOINC `($__internal_746_$__cuda_sm20_rcp_rn_f32_slowpath) ;
+L 603: /*2450*/                   BRA `(.L_x_25195) ;
+L 604: .L_x_25196:
+L 605: /*2460*/                   MUFU.RCP R3, R0 ;
+L 606: /*2470*/                   FFMA R6, R0, R3, -1 ;
+L 607: /*2480*/                   FADD.FTZ R6, -R6, -RZ ;
+L 608: /*2490*/                   FFMA R3, R3, R6, R3 ;
+L 609: /*24a0*/                   BRA `(.L_x_25195) ;
+L 610: .L_x_25194:
+L 611: /*24b0*/              @!P0 BRA `(.L_x_25195) ;
+L 612: /*24c0*/                   LDC.U8 R0, c[0x0][0x3b0] ;
+L 613: /*24d0*/                   LDCU UR4, c[0x0][0x3b4] ;
+L 614: /*24e0*/                   MOV R3, UR4 ;
+L 615: /*24f0*/                   PRMT R0, R0, 0x8880, RZ ;
+L 616: /*2500*/                   ISETP.NE.AND P0, PT, R0, RZ, PT ;
+L 617: /*2510*/              @!P0 BRA `(.L_x_25197) ;
+L 618: /*2520*/                   LDCU UR4, c[0x0][0x3b4] ;
+L 619: /*2530*/                   FADD R10, R7, 9.999999682655225389e-21 ;
+L 620: /*2540*/                   BSSY.RECONVERGENT B2, `(.L_x_25197) ;
+L 621: /*2550*/                   MUFU.RCP R0, R10 ;
+L 622: /*2560*/                   MOV R7, UR4 ;
+L 623: /*2570*/                   FCHK P0, R7, R10 ;
+L 624: /*2580*/                   FFMA R3, -R10, R0, 1 ;
+L 625: /*2590*/                   FFMA R0, R0, R3, R0 ;
+L 626: /*25a0*/                   FFMA R3, R0, UR4, RZ ;
+
+## vllm_concat_and_cache_ds_mla_bf16_e4m3.sass (fp8_ds_mla writer): scale = amax/448 and v/scale with IEEE division (FCHK
+## guards the div_rn slow path), then saturating E4M3 conversion
+.text._ZN4vllm30concat_and_cache_ds_mla_kernelI13__nv_bfloat16hLNS_18Fp8KVCacheDataTypeE1EEEvPKT_S5_PT0_PKliiiiiiiPKf:
+...
+L 138: /*0840*/                   UMOV UR4, 0x43e00000 ;
+L 139: /*0850*/                   FMNMX R8, R19, R18, !PT ;
+L 140: /*0860*/                   UFFMA UR4, UR5, -UR4, 1 ;
+L 141: /*0870*/                   BSSY.RECONVERGENT B0, `(.L_x_1001) ;
+L 142: /*0880*/                   FCHK P0, R8, 448 ;
+L 143: /*0890*/                   UFFMA UR4, UR4, UR5, 0.0022321429569274187088 ;
+L 144: /*08a0*/                   FFMA R11, R8, UR4, RZ ;
+L 145: /*08b0*/                   FFMA R10, R11, -448, R8 ;
+L 146: /*08c0*/                   FFMA R10, R10, UR4, R11 ;
+L 147: /*08d0*/              @!P0 BRA `(.L_x_1002) ;
+L 148: /*08e0*/                   HFMA2 R11, -RZ, RZ, 3.9375, 0 ;
+L 149: /*08f0*/                   MOV R10, 0x910 ;
+L 150: /*0900*/                   CALL.REL.NOINC `($__internal_44_$__cuda_sm3x_div_rn_noftz_f32_slowpath) ;
+L 151: /*0910*/                   MOV R10, R8 ;
+L 152: .L_x_1002:
+L 153: /*0920*/                   BSYNC.RECONVERGENT B0 ;
+L 154: .L_x_1001:
+L 155: /*0930*/                   LOP3.LUT R17, R17, 0x1f, RZ, 0xc0, !PT ;
+L 156: /*0940*/                   BSSY.RECONVERGENT B0, `(.L_x_1003) ;
+L 157: /*0950*/                   ISETP.NE.AND P0, PT, R17, 0x10, PT ;
+L 158: /*0960*/                   FMNMX R17, R10, 1.175494350822287508e-38, !PT ;
+L 159: /*0970*/                   MUFU.RCP R18, R17 ;
+L 160: /*0980*/              @!P0 LDC R19, c[0x0][0x3b0] ;
+L 161: /*0990*/              @!P0 LOP3.LUT R11, R16, 0x3, RZ, 0xc0, !PT ;
+L 162: /*09a0*/              @!P0 SHF.R.S32.HI R8, RZ, 0x1f, R19 ;
+L 163: /*09b0*/              @!P0 LEA.HI R8, R8, R19, RZ, 0x2 ;
+L 164: /*09c0*/                   FFMA R19, -R17, R18, 1 ;
+L 165: /*09d0*/              @!P0 LEA.HI.SX32 R11, R8, R11, 0x1e ;
+L 166: /*09e0*/                   FFMA R18, R18, R19, R18 ;
+L 167: /*09f0*/              @!P0 IMAD.WIDE R10, R11, 0x4, R12 ;
+L 168: /*0a00*/                   FFMA R19, R5, R18, RZ ;
+L 169: /*0a10*/              @!P0 STG.E desc[UR6][R10.64], R17 ;
+L 170: /*0a20*/                   FCHK P0, R5, R17 ;
+L 171: /*0a30*/                   FFMA R8, -R17, R19, R5 ;
+L 172: /*0a40*/                   FFMA R8, R18, R8, R19 ;
+L 173: /*0a50*/              @!P0 BRA `(.L_x_1004) ;
+L 174: /*0a60*/                   MOV R8, R5 ;
+L 175: /*0a70*/                   MOV R11, R17 ;
+L 176: /*0a80*/                   MOV R10, 0xaa0 ;
+L 177: /*0a90*/                   CALL.REL.NOINC `($__internal_44_$__cuda_sm3x_div_rn_noftz_f32_slowpath) ;
+L 178: .L_x_1004:
+L 179: /*0aa0*/                   BSYNC.RECONVERGENT B0 ;
+L 180: .L_x_1003:
+L 181: /*0ab0*/                   MUFU.RCP R10, R17 ;
+L 182: /*0ac0*/                   BSSY.RECONVERGENT B0, `(.L_x_1005) ;
+L 183: /*0ad0*/                   FCHK P0, R6, R17 ;
+L 184: /*0ae0*/                   FFMA R5, -R17, R10, 1 ;
+L 185: /*0af0*/                   FFMA R19, R10, R5, R10 ;
+L 186: /*0b00*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R5, RZ, R8, RZ ;
+L 187: /*0b10*/                   FFMA R10, R6, R19, RZ ;
+L 188: /*0b20*/                   FFMA R11, -R17, R10, R6 ;
+L 189: /*0b30*/                   FFMA R10, R19, R11, R10 ;
+L 190: /*0b40*/              @!P0 BRA `(.L_x_1006) ;
+L 191: /*0b50*/                   MOV R8, R6 ;
+L 192: /*0b60*/                   MOV R11, R17 ;
+L 193: /*0b70*/                   MOV R10, 0xb90 ;
+L 194: /*0b80*/                   CALL.REL.NOINC `($__internal_44_$__cuda_sm3x_div_rn_noftz_f32_slowpath) ;
+L 195: /*0b90*/                   MOV R10, R8 ;
+L 196: .L_x_1006:
+L 197: /*0ba0*/                   BSYNC.RECONVERGENT B0 ;
+L 198: .L_x_1005:
+L 199: /*0bb0*/                   MUFU.RCP R6, R17 ;
+L 200: /*0bc0*/                   BSSY.RECONVERGENT B0, `(.L_x_1007) ;
+L 201: /*0bd0*/                   FCHK P0, R4, R17 ;
+L 202: /*0be0*/                   FFMA R11, -R17, R6, 1 ;
+L 203: /*0bf0*/                   FFMA R19, R6, R11, R6 ;
+L 204: /*0c00*/                   F2FP.SATFINITE.E4M3.F32.PACK_AB_MERGE_C R6, RZ, R10, RZ ;
+L 205: /*0c10*/                   FFMA R8, R4, R19, RZ ;
+L 206: /*0c20*/                   FFMA R11, -R17, R8, R4 ;

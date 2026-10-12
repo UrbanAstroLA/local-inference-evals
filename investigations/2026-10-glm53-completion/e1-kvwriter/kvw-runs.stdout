@@ -1,0 +1,8 @@
+2026-10-12T22:10:32Z all-reduce full run finished: <runs>/b0-allreduce/runs/full-20261012T215101Z/RESULT.md 
+2026-10-12T22:10:32Z start b0 a1 image sha256:08d1cb902ddb888f679b972714168bb7c0d2333b4c1865f3ebf860baa2f46548
+2026-10-12T22:10:44Z end b0 a1 rc=0 seconds=12
+2026-10-12T22:10:44Z start v070 a1 image sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629
+2026-10-12T22:10:57Z end v070 a1 rc=0 seconds=13
+2026-10-12T22:10:57Z runs: b0 rc=0 v070 rc=0 used 0.0069 GPU-h
+2026-10-12T22:10:59Z analysis rc=1
+2026-10-12T22:10:59Z done

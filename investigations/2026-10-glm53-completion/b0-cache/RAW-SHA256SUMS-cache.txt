@@ -1,0 +1,12 @@
+# sha256 of local files not published: fixture backups (the versions that ran in run 2 and rerun 1, and the runner
+# before the amendment 16d pre-flight fix), compiled bytecode, and empty container logs. Paths relative to the
+# local b0-cache folder.
+41bd658d77eb6121ed7810fe2034c15187ea7fabe476bc54614f50fe74d7e87b  ./fixture/__pycache__/run_fixture.cpython-312.pyc
+0de3c1f75049bc2ae451a40969e5f68b7481fb9ba102a8960cf06ddaa0ec1772  ./fixture/inner.sh.bak-run2
+0cb18df990c1d67e54d0ef841d108a11de70936450df3fe2c2d9e3c3c3b5f9a5  ./fixture/run_b0_cache_fixture.sh.bak-preflight
+d6fac94f270581276b1314e48967d66f91e6d6859c457ff275521a30bb3e8f70  ./fixture/run_b0_cache_fixture.sh.bak-run2
+2ae595b77abb8ad8f227ddf2f6a19d119a94dc10c15f377bbf7a876f22a5f539  ./fixture/run_fixture.py.bak-run2
+edcb9c3f9107894994b957d18b104ef3a241abfa0925e4c838088a1c1204411b  ./fixture/run_fixture.py.bak-run3
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./run-20261012T221551Z/container.log
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./run-20261012T222239Z/container.log
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./run-20261012T222337Z/container.log

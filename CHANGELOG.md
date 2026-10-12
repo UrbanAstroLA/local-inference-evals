@@ -1,5 +1,43 @@
 # Changelog
 
+## 2026-10-12, evening (completion investigation, amendments 16-16e): checkpoint B0 and targeted invariants
+
+Contents unchanged: 65 runs, 13 comparisons. No earlier run or number changed. Item 4f's grade is unchanged (descriptive)
+with its classification added; items 4g-4i are new.
+
+- **`PLAN.md`**: amendments 16 (checkpoint B0 and targeted invariants), 16a (authorizations), 16b (all-reduce and
+  KV-writer results, operator decision on the KV-writer criteria, E1), 16c (cache fixture authorization), 16d
+  (pre-flight fix) and 16e (cache fixture results).
+- **Two-GPU all-reduce fixture** (new `b0-allreduce/`): CLEAN; 2,040,800 peer-push calls, 0 mismatches in 41 cases on
+  both ranks against an exact bf16 reference; 0.07 GPU-hours. Published: proposal, fixture, input patterns, analysis,
+  CPU tests, runner, frozen hashes, smoke and full results (per-rank results, plans, GPU log), CPU-check output, cost
+  lines, a README; pre-flight process listings, container logs, step schedules and the compile cache are hashed in
+  `RAW-SHA256SUMS-allreduce.txt`.
+- **KV writer and query projection, and E1** (new `e1-kvwriter/`): within expected rounding under criteria errata
+  recorded before GPU data (the operator's decision; the verdict as first written is reported beside it); 0.0069
+  GPU-hours. E1 classified as expected numerical variation of the upstream router kernel (CPU only). Published: the
+  frozen design, the errata, freeze hashes, input builder, GPU script, analysis (byte-identical to the frozen file),
+  loader wrapper, runner, analysis output, GPU logs, the E1 assessment, scripts and outputs, SASS excerpts, a README;
+  the prepared inputs, result tensors, pre-flight listings and full SASS listings are hashed in
+  `RAW-SHA256SUMS-kvwriter.txt`.
+- **Cache isolation and high-offset fixture** (new `b0-cache/`): every driven kernel passed after five fixture faults,
+  found in the data, were fixed (no criterion loosened); one upstream test obsolete; one launch refused by the runner's
+  pre-flight at zero cost and its check narrowed before any data; 0.0392 GPU-hours. Published: proposal, fixture code as
+  fixed, hashes before and after, change notes, reachability simulation, CPU tests, per-run results and consoles, cost
+  lines, a README; fixture backups (the versions that ran first) are hashed in `RAW-SHA256SUMS-cache.txt`.
+- **`PUBLIC-COPIES-16.txt`**: local and public sha256 of the copies with paths, image prefixes or GPU ids replaced; the
+  amendment and freeze hashes refer to the local files.
+- **`costs.jsonl`**: three entries appended, one per item (0.07, 0.0069, 0.0392, the last including the refused launch at
+  0). Cumulative 47.91 GPU-hours; `recompute.py` checks the new entries and total.
+- **Investigation README**: status line, answer table, fast path, source audit table, prior probes, defect matrix (a
+  second table for the audited items and E1), the new section "Checkpoint B0 and targeted invariants (amendment 16)",
+  observations (E1), open questions (one added, evidence only), limits, next steps (nothing scheduled; no B1).
+- **`FINDINGS.md`**: item 4f classified; new items 4g-4i with notes; open questions.
+- **`LEDGER.md`**: dated entry for the tranche, with the KV-writer errata, the cache fixture faults and the pre-flight
+  refusal.
+- **`CONFOUNDS.md`**: entry 17 (E1) status and evidence.
+- **Top-level README** and **site** (`tools/site.py`: the engine-issues text); pages regenerated.
+
 ## 2026-10-12, afternoon (completion investigation, amendments 15-15c): second bundle pass, seed 1235
 
 Contents unchanged: 65 runs, 13 comparisons. No earlier run or number changed; grades unchanged (item 4e stays

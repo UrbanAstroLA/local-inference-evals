@@ -1,0 +1,988 @@
+{
+ "meta": {
+  "device": "NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition",
+  "cc": [
+   12,
+   0
+  ],
+  "free_bytes_at_start": 101367808000,
+  "total_bytes": 101973491712,
+  "torch": "2.13.0+cu130",
+  "image_id": "sha256:08d1cb902ddb888f679b972714168bb7c0d2333b4c1865f3ebf860baa2f46548",
+  "geometry": {
+   "mla_page": 2297856,
+   "mla_tensor_bytes": 2929766400,
+   "idx_page": 143616,
+   "kda_real": 2244608,
+   "kda_padding_pct": 2.37,
+   "draft_real": 2228224,
+   "rank0_tensor_bytes": 18677260800,
+   "rank1_tensor_bytes": 15564384000,
+   "first_high_block": 935,
+   "first_high_slot_straddling": 4067203,
+   "straddle_bytes": [
+    2147483184,
+    2147483712
+   ],
+   "high_blocks": 340,
+   "kv_tokens": null
+  },
+  "env_nope_record": "1",
+  "views": {
+   "mla": [
+    [
+     86700,
+     64,
+     528
+    ],
+    [
+     33792,
+     528,
+     1
+    ]
+   ],
+   "draft_k": [
+    [
+     1275,
+     1088,
+     4,
+     128
+    ],
+    [
+     1148928,
+     1024,
+     256,
+     1
+    ]
+   ],
+   "conv_k": [
+    [
+     1275,
+     12288,
+     6
+    ],
+    [
+     1148928,
+     1,
+     12288
+    ]
+   ],
+   "ssm": [
+    [
+     1275,
+     32,
+     128,
+     128
+    ],
+    [
+     574464,
+     16384,
+     128,
+     1
+    ]
+   ],
+   "idx": [
+    [
+     21675,
+     64,
+     132
+    ],
+    [
+     8448,
+     132,
+     1
+    ]
+   ],
+   "tail": [
+    [
+     1275,
+     2,
+     8,
+     128
+    ],
+    [
+     71808,
+     1024,
+     128,
+     1
+    ]
+   ]
+  },
+  "setup_check": [
+   true,
+   true
+  ],
+  "elapsed_s": 80.9,
+  "mla_plan": "vllm._prepare_glm_next_writer_plan",
+  "all_parts_ok": false,
+  "failed_checks": [
+   {
+    "part": "D3_mla_graph_replay",
+    "label": "control replay follows new selection",
+    "ok": false
+   },
+   {
+    "part": "E3_kpool_decode_update",
+    "label": "tail ring twin",
+    "ok": false
+   }
+  ]
+ },
+ "parts": {
+  "A_draft_writer": {
+   "ok": true,
+   "rows": 32,
+   "clean": true,
+   "secs": 0.03
+  },
+  "B_draft_fa2_reader": {
+   "ok": true,
+   "low": {
+    "bit_equal_low": true,
+    "cos": 0.9999971389770508,
+    "max_abs": 0.00031860172748565674
+   },
+   "high": {
+    "bit_equal_low": true,
+    "cos": 0.9999971389770508,
+    "max_abs": 0.00031860172748565674
+   },
+   "edge": {
+    "bit_equal_low": true,
+    "cos": 0.9999971389770508,
+    "max_abs": 0.00031860172748565674
+   },
+   "secs": 64.7
+  },
+  "C1_kda_scatter_gather": {
+   "ok": true,
+   "secs": 0.82
+  },
+  "C2_kda_conv_update": {
+   "ok": true,
+   "secs": 0.31
+  },
+  "C2b_kda_conv_prefill": {
+   "ok": true,
+   "secs": 0.27
+  },
+  "C3_kda_fused_recurrent_spec": {
+   "ok": true,
+   "secs": 0.33
+  },
+  "C4_kda_align_precopy": {
+   "ok": true,
+   "secs": 3.56
+  },
+  "C5_page_copy_on_write": {
+   "ok": true,
+   "secs": 0.03
+  },
+  "D1_mla_writer": {
+   "ok": true,
+   "plan": "vllm._prepare_glm_next_writer_plan",
+   "low_vs_reference_bytes_differing": 0,
+   "secs": 0.93
+  },
+  "D2_mla_readers": {
+   "ok": false,
+   "error": "ValueError('SM120 sparse MLA prefill: unsupported shape (model_type=2, heads=64, topk=64, compute_mode=0, scale_format=1, has_extra=False, B12X_MLA_SM120_PREFILL_MG=1). Supported (MG) shapes: single-cache heads%8==0; DSV4 single-cache topk in {512, 1024, 2048} (FP8) or 128 (BF16-QK, heads%8==0); DSV4 dual-cache topk in {128, 512} (BF16-QK) or topk in {1024, 2048} (FP8-QK), heads%8==0, pbs_extra in {2, 64}; GLM_NSA topk in {512, 1024, 2048, 2176}; GLM_NEXT topk in {512, 1024, 2048, 2051, 2112}; NVFP4 (GLM-family, scale_format=2) topk in {128, 512, 1024, 2048, 2176}; GLM_NEXT NVFP4 additionally topk in {2051, 2112}. No decode-reuse fallback.')",
+   "traceback": "Traceback (most recent call last):\n  File \"/f/run_fixture.py\", line 64, in run\n    out = fn() or {}\n          ^^^^\n  File \"/f/run_fixture.py\", line 522, in part_d2\n    outs[name], _ = mla_read(sel, mode, q)\n                    ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/f/run_fixture.py\", line 499, in mla_read\n    return sparse_mla.run(b), (plan, b, sel)\n           ^^^^^^^^^^^^^^^^^\n  File \"/opt/b12x/b12x/attention/sparse_mla/api.py\", line 125, in run\n    return state.run(\n           ^^^^^^^^^^\n  File \"/opt/b12x/b12x/attention/sparse_mla/_preparation.py\", line 215, in run\n    self.prime(binding, kv_cache=kv_cache, attention_sink=attention_sink)\n  File \"/opt/b12x/b12x/attention/sparse_mla/_preparation.py\", line 195, in prime\n    prepared = run_unified_prefill(\n               ^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/b12x/b12x/attention/_shared/mla/prefill.py\", line 546, in run_unified_prefill\n    raise ValueError(\nValueError: SM120 sparse MLA prefill: unsupported shape (model_type=2, heads=64, topk=64, compute_mode=0, scale_format=1, has_extra=False, B12X_MLA_SM120_PREFILL_MG=1). Supported (MG) shapes: single-cache heads%8==0; DSV4 single-cache topk in {512, 1024, 2048} (FP8) or 128 (BF16-QK, heads%8==0); DSV4 dual-cache topk in {128, 512} (BF16-QK) or topk in {1024, 2048} (FP8-QK), heads%8==0, pbs_extra in {2, 64}; GLM_NSA topk in {512, 1024, 2048, 2176}; GLM_NEXT topk in {512, 1024, 2048, 2051, 2112}; NVFP4 (GLM-family, scale_format=2) topk in {128, 512, 1024, 2048, 2176}; GLM_NEXT NVFP4 additionally topk in {2051, 2112}. No decode-reuse fallback.\n",
+   "secs": 1.04
+  },
+  "D3_mla_graph_replay": {
+   "ok": false,
+   "secs": 0.07
+  },
+  "E1_kpool_tail_seed": {
+   "ok": true,
+   "secs": 1.49
+  },
+  "E2_kpool_compress": {
+   "ok": true,
+   "secs": 0.3
+  },
+  "E3_kpool_decode_update": {
+   "ok": false,
+   "secs": 0.37
+  },
+  "F1_zeroer": {
+   "ok": true,
+   "segments": 85,
+   "secs": 0.05
+  },
+  "F2_cross_group_reuse": {
+   "ok": true,
+   "secs": 0.28
+  },
+  "G_draft_graph_replay": {
+   "ok": true,
+   "secs": 0.06
+  },
+  "Z_final": {
+   "ok": true,
+   "secs": 0.01
+  }
+ },
+ "checks": [
+  {
+   "differing_words": 0,
+   "label": "fresh mla",
+   "ok": true,
+   "where": [],
+   "part": "setup"
+  },
+  {
+   "differing_words": 0,
+   "label": "fresh idx",
+   "ok": true,
+   "where": [],
+   "part": "setup"
+  },
+  {
+   "differing_words": 0,
+   "label": "draft reshape_and_cache_flash edge blocks + PAD",
+   "ok": true,
+   "where": [],
+   "part": "A_draft_writer"
+  },
+  {
+   "differing_words": 0,
+   "label": "context writes for 3 block sets",
+   "ok": true,
+   "where": [],
+   "part": "B_draft_fa2_reader"
+  },
+  {
+   "part": "B_draft_fa2_reader",
+   "label": "FA2 low vs low bit-equal",
+   "ok": true
+  },
+  {
+   "part": "B_draft_fa2_reader",
+   "label": "FA2 low vs fp32 ref",
+   "ok": true,
+   "cos": 0.9999971389770508,
+   "max_abs": 0.00031860172748565674
+  },
+  {
+   "part": "B_draft_fa2_reader",
+   "label": "FA2 high vs low bit-equal",
+   "ok": true
+  },
+  {
+   "part": "B_draft_fa2_reader",
+   "label": "FA2 high vs fp32 ref",
+   "ok": true,
+   "cos": 0.9999971389770508,
+   "max_abs": 0.00031860172748565674
+  },
+  {
+   "part": "B_draft_fa2_reader",
+   "label": "FA2 edge vs low bit-equal",
+   "ok": true
+  },
+  {
+   "part": "B_draft_fa2_reader",
+   "label": "FA2 edge vs fp32 ref",
+   "ok": true,
+   "cos": 0.9999971389770508,
+   "max_abs": 0.00031860172748565674
+  },
+  {
+   "differing_words": 0,
+   "label": "after FA2 reads (reads must not write)",
+   "ok": true,
+   "where": [],
+   "part": "B_draft_fa2_reader"
+  },
+  {
+   "differing_words": 0,
+   "label": "scatter_states edge blocks",
+   "ok": true,
+   "where": [],
+   "part": "C1_kda_scatter_gather"
+  },
+  {
+   "part": "C1_kda_scatter_gather",
+   "label": "gather_initial_states exact",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "after gather",
+   "ok": true,
+   "where": [],
+   "part": "C1_kda_scatter_gather"
+  },
+  {
+   "differing_words": 0,
+   "label": "conv setup",
+   "ok": true,
+   "where": [],
+   "part": "C2_kda_conv_update"
+  },
+  {
+   "part": "C2_kda_conv_update",
+   "label": "decode out 1274 == 2",
+   "ok": true
+  },
+  {
+   "part": "C2_kda_conv_update",
+   "label": "decode state 1274 == 2",
+   "ok": true
+  },
+  {
+   "part": "C2_kda_conv_update",
+   "label": "decode out 935 == 3",
+   "ok": true
+  },
+  {
+   "part": "C2_kda_conv_update",
+   "label": "decode state 935 == 3",
+   "ok": true
+  },
+  {
+   "part": "C2_kda_conv_update",
+   "label": "decode out 934 == 4",
+   "ok": true
+  },
+  {
+   "part": "C2_kda_conv_update",
+   "label": "decode state 934 == 4",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "conv update decode: only conv regions changed",
+   "ok": true,
+   "where": [],
+   "part": "C2_kda_conv_update"
+  },
+  {
+   "part": "C2_kda_conv_update",
+   "label": "spec out 1274 == 2",
+   "ok": true
+  },
+  {
+   "part": "C2_kda_conv_update",
+   "label": "spec state 1274 == 2",
+   "ok": true
+  },
+  {
+   "part": "C2_kda_conv_update",
+   "label": "spec out 935 == 3",
+   "ok": true
+  },
+  {
+   "part": "C2_kda_conv_update",
+   "label": "spec state 935 == 3",
+   "ok": true
+  },
+  {
+   "part": "C2_kda_conv_update",
+   "label": "spec out 934 == 4",
+   "ok": true
+  },
+  {
+   "part": "C2_kda_conv_update",
+   "label": "spec state 934 == 4",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "conv update spec: only conv regions changed",
+   "ok": true,
+   "where": [],
+   "part": "C2_kda_conv_update"
+  },
+  {
+   "differing_words": 0,
+   "label": "conv prefill setup",
+   "ok": true,
+   "where": [],
+   "part": "C2b_kda_conv_prefill"
+  },
+  {
+   "part": "C2b_kda_conv_prefill",
+   "label": "prefill out 1274 == 2",
+   "ok": true
+  },
+  {
+   "part": "C2b_kda_conv_prefill",
+   "label": "prefill state 1274 == 2",
+   "ok": true
+  },
+  {
+   "part": "C2b_kda_conv_prefill",
+   "label": "prefill out 935 == 3",
+   "ok": true
+  },
+  {
+   "part": "C2b_kda_conv_prefill",
+   "label": "prefill state 935 == 3",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "conv prefill: only conv regions changed",
+   "ok": true,
+   "where": [],
+   "part": "C2b_kda_conv_prefill"
+  },
+  {
+   "differing_words": 0,
+   "label": "recurrent setup",
+   "ok": true,
+   "where": [],
+   "part": "C3_kda_fused_recurrent_spec"
+  },
+  {
+   "part": "C3_kda_fused_recurrent_spec",
+   "label": "out row 1 == row 0",
+   "ok": true
+  },
+  {
+   "part": "C3_kda_fused_recurrent_spec",
+   "label": "state 935 == 1",
+   "ok": true
+  },
+  {
+   "part": "C3_kda_fused_recurrent_spec",
+   "label": "state 1100 == 2",
+   "ok": true
+  },
+  {
+   "part": "C3_kda_fused_recurrent_spec",
+   "label": "state 1273 == 3",
+   "ok": true
+  },
+  {
+   "part": "C3_kda_fused_recurrent_spec",
+   "label": "state 1274 == 4",
+   "ok": true
+  },
+  {
+   "part": "C3_kda_fused_recurrent_spec",
+   "label": "out row 3 == row 2",
+   "ok": true
+  },
+  {
+   "part": "C3_kda_fused_recurrent_spec",
+   "label": "state 930 == 5",
+   "ok": true
+  },
+  {
+   "part": "C3_kda_fused_recurrent_spec",
+   "label": "state 933 == 6",
+   "ok": true
+  },
+  {
+   "part": "C3_kda_fused_recurrent_spec",
+   "label": "state 934 == 7",
+   "ok": true
+  },
+  {
+   "part": "C3_kda_fused_recurrent_spec",
+   "label": "state 1271 == 8",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "fused_recurrent spec: only the 4 ssm columns per row changed",
+   "ok": true,
+   "where": [],
+   "part": "C3_kda_fused_recurrent_spec"
+  },
+  {
+   "differing_words": 0,
+   "label": "precopy setup",
+   "ok": true,
+   "where": [],
+   "part": "C4_kda_align_precopy"
+  },
+  {
+   "differing_words": 0,
+   "label": "precopy: exact copies only",
+   "ok": true,
+   "where": [],
+   "part": "C4_kda_align_precopy"
+  },
+  {
+   "differing_words": 0,
+   "label": "copy_kv_cache_blocks_inplace whole pages",
+   "ok": true,
+   "where": [],
+   "part": "C5_page_copy_on_write"
+  },
+  {
+   "part": "D1_mla_writer",
+   "label": "low records decode to the latents",
+   "ok": true,
+   "cos": 1.0,
+   "max_abs": 0.0
+  },
+  {
+   "part": "D1_mla_writer",
+   "label": "low records == low twin bytes",
+   "ok": true
+  },
+  {
+   "part": "D1_mla_writer",
+   "label": "straddle records == low twin bytes",
+   "ok": true
+  },
+  {
+   "part": "D1_mla_writer",
+   "label": "b935 records == low twin bytes",
+   "ok": true
+  },
+  {
+   "part": "D1_mla_writer",
+   "label": "last records == low twin bytes",
+   "ok": true
+  },
+  {
+   "part": "D1_mla_writer",
+   "label": "kpage_cross records == low twin bytes",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "GLM_NEXT writer: only the declared records changed",
+   "ok": true,
+   "where": [],
+   "part": "D1_mla_writer"
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode low vs fp32 ref",
+   "ok": true,
+   "cos": 1.0,
+   "max_abs": 0.00048828125
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode straddle vs fp32 ref",
+   "ok": true,
+   "cos": 1.0,
+   "max_abs": 0.00048828125
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode last vs fp32 ref",
+   "ok": true,
+   "cos": 1.0,
+   "max_abs": 0.00048828125
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode low == low bit-equal",
+   "ok": true
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode straddle == low bit-equal",
+   "ok": true
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode b935 == low bit-equal",
+   "ok": true
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode last == low bit-equal",
+   "ok": true
+  },
+  {
+   "part": "D2_mla_readers",
+   "label": "decode kpage_cross == low bit-equal",
+   "ok": true
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "replay 0 records == eager twin",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "graph writer replay 0",
+   "ok": true,
+   "where": [],
+   "part": "D3_mla_graph_replay"
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "replay 1 records == eager twin",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "graph writer replay 1",
+   "ok": true,
+   "where": [],
+   "part": "D3_mla_graph_replay"
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "replay 2 records == eager twin",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "graph writer replay 2",
+   "ok": true,
+   "where": [],
+   "part": "D3_mla_graph_replay"
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "replay 3 records == eager twin",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "graph writer replay 3",
+   "ok": true,
+   "where": [],
+   "part": "D3_mla_graph_replay"
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "reader replay low == eager low",
+   "ok": true
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "reader replay straddle == eager low",
+   "ok": true
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "reader replay last == eager low",
+   "ok": true
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "reader replay b935 == eager low",
+   "ok": true
+  },
+  {
+   "part": "D3_mla_graph_replay",
+   "label": "control replay follows new selection",
+   "ok": false
+  },
+  {
+   "differing_words": 0,
+   "label": "after graph reads",
+   "ok": true,
+   "where": [],
+   "part": "D3_mla_graph_replay"
+  },
+  {
+   "differing_words": 0,
+   "label": "tail seed exact",
+   "ok": true,
+   "where": [],
+   "part": "E1_kpool_tail_seed"
+  },
+  {
+   "differing_words": 0,
+   "label": "tail seed PAD rows",
+   "ok": true,
+   "where": [],
+   "part": "E1_kpool_tail_seed"
+  },
+  {
+   "part": "E2_kpool_compress",
+   "label": "idx_k_range 1274/1087 == 3/0",
+   "ok": true
+  },
+  {
+   "part": "E2_kpool_compress",
+   "label": "idx_scale_range 1274/1087 == 3/0",
+   "ok": true
+  },
+  {
+   "part": "E2_kpool_compress",
+   "label": "idx_k_range 935/64 == 3/63",
+   "ok": true
+  },
+  {
+   "part": "E2_kpool_compress",
+   "label": "idx_scale_range 935/64 == 3/63",
+   "ok": true
+  },
+  {
+   "part": "E2_kpool_compress",
+   "label": "idx_k_range 934/1023 == 3/64",
+   "ok": true
+  },
+  {
+   "part": "E2_kpool_compress",
+   "label": "idx_scale_range 934/1023 == 3/64",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "kpool compress: only K + scale of target pools",
+   "ok": true,
+   "where": [],
+   "part": "E2_kpool_compress"
+  },
+  {
+   "part": "E3_kpool_decode_update",
+   "label": "tail ring twin",
+   "ok": false
+  },
+  {
+   "part": "E3_kpool_decode_update",
+   "label": "idx_k_range twin",
+   "ok": true
+  },
+  {
+   "part": "E3_kpool_decode_update",
+   "label": "idx_scale_range twin",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "decode update: tail ring slots + one pool only",
+   "ok": true,
+   "where": [],
+   "part": "E3_kpool_decode_update"
+  },
+  {
+   "differing_words": 0,
+   "label": "zeroer MLA slot tensor pages",
+   "ok": true,
+   "where": [],
+   "part": "F1_zeroer"
+  },
+  {
+   "differing_words": 0,
+   "label": "zeroer idx pages (incl. tail ring)",
+   "ok": true,
+   "where": [],
+   "part": "F1_zeroer"
+  },
+  {
+   "part": "F2_cross_group_reuse",
+   "label": "b935 ep0 draft readback",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "b935 ep0 draft",
+   "ok": true,
+   "where": [],
+   "part": "F2_cross_group_reuse"
+  },
+  {
+   "part": "F2_cross_group_reuse",
+   "label": "b935 ep1 mla tags",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "b935 ep1 mla",
+   "ok": true,
+   "where": [],
+   "part": "F2_cross_group_reuse"
+  },
+  {
+   "part": "F2_cross_group_reuse",
+   "label": "b935 ep2 kda readback",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "b935 ep2 kda",
+   "ok": true,
+   "where": [],
+   "part": "F2_cross_group_reuse"
+  },
+  {
+   "part": "F2_cross_group_reuse",
+   "label": "b935 ep3 kda readback",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "b935 ep3 kda",
+   "ok": true,
+   "where": [],
+   "part": "F2_cross_group_reuse"
+  },
+  {
+   "part": "F2_cross_group_reuse",
+   "label": "b935 ep4 draft readback",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "b935 ep4 draft",
+   "ok": true,
+   "where": [],
+   "part": "F2_cross_group_reuse"
+  },
+  {
+   "part": "F2_cross_group_reuse",
+   "label": "b935 ep5 kda readback",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "b935 ep5 kda",
+   "ok": true,
+   "where": [],
+   "part": "F2_cross_group_reuse"
+  },
+  {
+   "part": "F2_cross_group_reuse",
+   "label": "b935 ep6 mla tags",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "b935 ep6 mla",
+   "ok": true,
+   "where": [],
+   "part": "F2_cross_group_reuse"
+  },
+  {
+   "part": "F2_cross_group_reuse",
+   "label": "b1274 ep0 draft readback",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "b1274 ep0 draft",
+   "ok": true,
+   "where": [],
+   "part": "F2_cross_group_reuse"
+  },
+  {
+   "part": "F2_cross_group_reuse",
+   "label": "b1274 ep1 mla tags",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "b1274 ep1 mla",
+   "ok": true,
+   "where": [],
+   "part": "F2_cross_group_reuse"
+  },
+  {
+   "part": "F2_cross_group_reuse",
+   "label": "b1274 ep2 kda readback",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "b1274 ep2 kda",
+   "ok": true,
+   "where": [],
+   "part": "F2_cross_group_reuse"
+  },
+  {
+   "part": "F2_cross_group_reuse",
+   "label": "b1274 ep3 kda readback",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "b1274 ep3 kda",
+   "ok": true,
+   "where": [],
+   "part": "F2_cross_group_reuse"
+  },
+  {
+   "part": "F2_cross_group_reuse",
+   "label": "b1274 ep4 draft readback",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "b1274 ep4 draft",
+   "ok": true,
+   "where": [],
+   "part": "F2_cross_group_reuse"
+  },
+  {
+   "part": "F2_cross_group_reuse",
+   "label": "b1274 ep5 kda readback",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "b1274 ep5 kda",
+   "ok": true,
+   "where": [],
+   "part": "F2_cross_group_reuse"
+  },
+  {
+   "part": "F2_cross_group_reuse",
+   "label": "b1274 ep6 mla tags",
+   "ok": true
+  },
+  {
+   "differing_words": 0,
+   "label": "b1274 ep6 mla",
+   "ok": true,
+   "where": [],
+   "part": "F2_cross_group_reuse"
+  },
+  {
+   "differing_words": 0,
+   "label": "idx tensor after reuse cycle",
+   "ok": true,
+   "where": [],
+   "part": "F2_cross_group_reuse"
+  },
+  {
+   "differing_words": 0,
+   "label": "draft graph replay 0",
+   "ok": true,
+   "where": [],
+   "part": "G_draft_graph_replay"
+  },
+  {
+   "differing_words": 0,
+   "label": "draft graph replay 1",
+   "ok": true,
+   "where": [],
+   "part": "G_draft_graph_replay"
+  },
+  {
+   "differing_words": 0,
+   "label": "draft graph replay 2",
+   "ok": true,
+   "where": [],
+   "part": "G_draft_graph_replay"
+  },
+  {
+   "differing_words": 0,
+   "label": "draft graph replay 3",
+   "ok": true,
+   "where": [],
+   "part": "G_draft_graph_replay"
+  },
+  {
+   "differing_words": 0,
+   "label": "final mla slot tensor",
+   "ok": true,
+   "where": [],
+   "part": "Z_final"
+  },
+  {
+   "differing_words": 0,
+   "label": "final idx tensor",
+   "ok": true,
+   "where": [],
+   "part": "Z_final"
+  }
+ ]
+}

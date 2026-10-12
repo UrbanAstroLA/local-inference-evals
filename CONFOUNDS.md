@@ -21,7 +21,7 @@ the runs control for it now, and its status. Only confounds this repository has 
 | [Graph vs eager execution](#14-graph-vs-eager-execution-for-instrumentation) | A probe that cannot run under CUDA graphs measures in eager mode | Gate and tail-ring runs checked under the shipped graphs | Controlled for the gate |
 | [Post-completion continuation](#15-long-context-decode-vs-prefill-measures-continuation-after-the-reply) | A decode-vs-prefill bin can lie entirely after the reply ended | Stated with the measure; not used as evidence about completion | Stated limit |
 | [Long-context greedy non-repeatability](#16-long-context-greedy-non-repeatability) | Two identical long-context requests diverge, so a single pass or a repeat is not a fixed point | Short-prompt repeatability used where a control needs determinism; outcomes compared over many draws | Measured; mechanism open |
-| [Batch-size-dependent routing weights](#17-batch-size-dependent-routing-weights-e1) | The same token gets slightly different expert weights in large and small batches | Offline checks invoke the router at the serving batch size | Measured; effect on outputs untested |
+| [Batch-size-dependent routing weights](#17-batch-size-dependent-routing-weights-e1) | The same token gets slightly different expert weights in large and small batches | Offline checks invoke the router at the serving batch size | Measured; expected numerical variation of the upstream kernel; effect on outputs untested |
 | [Seed reuse across engines](#18-seed-reuse-across-engines) | A comparison at a historical seed looks paired, or like a fresh-seed estimate, when it is neither | Matched seeds and session conditions documented; analyses take the question as the unit; combinations of follow-up passes labelled exploratory | Stated limit |
 
 ## 1. Shared request seed across repeats
@@ -426,8 +426,9 @@ gets slightly different expert weights above about 1,024 rows than below. Expert
 **Control.** Offline reproductions invoke the router as serving does, at the serving batch size (stage A from offline
 attempt 4; the bundle gate's D3 check). No workaround entered the correctness bundle.
 
-**Status.** Measured in stage A; effect on outputs and completion untested. Inferred exposure: prefill chunks only, since
-decode batches here stay far below 1,024 rows.
+**Status.** Measured in stage A and classified (amendment 16b) as expected numerical variation of the upstream router
+kernel, not a defect; the same kernel is in every release. Effect on outputs and completion untested. Inferred exposure:
+prefill chunks only, since decode batches here stay far below 1,024 rows.
 
 <details>
 <summary>Evidence</summary>
@@ -436,6 +437,10 @@ decode batches here stay far below 1,024 rows.
   1.2e-7 at ≤ 1,024 rows (12,408 rows) and 1.4e-6 above (91,200 rows; maximum 1.1e-3).
 - Found because a router invocation on a 64-row window failed a bitwise control that the serving-sized invocation
   passes on every record ([stage A](investigations/2026-10-glm53-completion/README.md#stage-a-verification-d3-d4-d5)).
+- Mechanism (CPU, amendment 16b): above 1,024 rows the router's warp kernel rebuilds the unbiased score as (s + b) − b
+  in fp32, a grid of 2⁻²¹-2⁻²⁰ with this model's correction biases of 5.0-14.5. Emulating that arithmetic reproduces the
+  served weights bitwise on 98% of rows, and 0 of 729,600 weights exceed its error bound; selection is unaffected by
+  construction ([E1 assessment](investigations/2026-10-glm53-completion/e1-kvwriter/README.md#e1-batch-size-dependent-routing-weights)).
 
 </details>
 
