@@ -1,0 +1,31 @@
+{"kind": "installed_scheduler", "pid": 1, "t": 1791851101.2025, "rank": 0}
+{"kind": "sched", "seq": 1, "fp": "d0d7e56decd5dd0a", "reqs": {"A": [2048, 2048, 0]}, "dig": "e520c402d0e21ae0", "changed": {"A": [[1000], [975], [1, 1, 4, 4, 4, 4, 4, 4, 4, 2]]}, "finished": [], "free_blocks": 1242, "excl": {"live_blocks": 32, "multi_group": 0, "examples": {}, "max_id": 1007, "ge_935": 31, "shared0": 0}, "t": 1791851101.2559, "rank": 0}
+{"kind": "upd", "fp": "d0d7e56decd5dd0a", "rej": {}, "t": 1791851109.5626, "rank": 0}
+{"kind": "sched", "seq": 2, "fp": "33d4e8c9b4ec27a3", "reqs": {"A": [4096, 2048, 0]}, "dig": "e520c402d0e21ae0", "changed": {}, "finished": [], "free_blocks": 1240, "t": 1791851109.5629, "rank": 0}
+{"kind": "upd", "fp": "33d4e8c9b4ec27a3", "rej": {}, "t": 1791851117.7891, "rank": 0}
+{"kind": "sched", "seq": 3, "fp": "b7aa8dee8543dd7e", "reqs": {"A": [6144, 2048, 0]}, "dig": "efd6ee73a0fa5335", "changed": {"A": [[1000, 1006], [975], [2, 1, 5, 5, 5, 5, 5, 5, 5, 6]]}, "finished": [], "free_blocks": 1231, "t": 1791851117.7894, "rank": 0}
+{"kind": "upd", "fp": "b7aa8dee8543dd7e", "rej": {}, "t": 1791851125.9951, "rank": 0}
+{"kind": "sched", "seq": 4, "fp": "e918e99cfa5d6aca", "reqs": {"A": [8192, 2048, 0]}, "dig": "efd6ee73a0fa5335", "changed": {}, "finished": [], "free_blocks": 1238, "t": 1791851125.9954, "rank": 0}
+{"kind": "upd", "fp": "e918e99cfa5d6aca", "rej": {}, "t": 1791851134.1588, "rank": 0}
+{"kind": "sched", "seq": 5, "fp": "d858f87f917c6919", "reqs": {"A": [9000, 808, 0], "B": [1240, 1240, 0]}, "dig": "37d18c75e1a7ed0b", "changed": {"A": [[1000, 1006, 1020], [975], [3, 1, 6, 6, 6, 6, 6, 6, 6, 9]], "B": [[1029], [1030], [1, 1, 4, 4, 4, 4, 4, 4, 4, 2]]}, "finished": [], "free_blocks": 1199, "t": 1791851134.1592, "rank": 0}
+{"kind": "upd", "fp": "d858f87f917c6919", "rej": {}, "t": 1791851142.3688, "rank": 0}
+{"kind": "sched", "seq": 6, "fp": "0d600afe3c420e2f", "reqs": {"A": [9004, 4, 3], "B": [3284, 2044, 0]}, "dig": "37d18c75e1a7ed0b", "changed": {}, "finished": [], "free_blocks": 1205, "t": 1791851142.3724, "rank": 0}
+{"kind": "upd", "fp": "0d600afe3c420e2f", "rej": {"A": [3, 0, 3]}, "t": 1791851150.6087, "rank": 0}
+{"kind": "sched", "seq": 7, "fp": "abb3af391a71dd64", "reqs": {"A": [9005, 4, 3], "B": [5000, 1716, 0], "C": [4680, 328, 0]}, "dig": "2e083c8a037c14e8", "changed": {"B": [[1029, 1059], [1030], [2, 1, 5, 5, 5, 5, 5, 5, 5, 5]], "C": [[1000, 1070], [1071], [2, 1, 5, 5, 5, 5, 5, 5, 5, 5]]}, "finished": [], "free_blocks": 1157, "t": 1791851150.6092, "rank": 0}
+{"kind": "upd", "fp": "abb3af391a71dd64", "rej": {"A": [3, 0, 3]}, "t": 1791851158.8736, "rank": 0}
+{"kind": "sched", "seq": 8, "fp": "47fcebbf86ad7639", "reqs": {"A": [9006, 4, 3], "B": [5004, 4, 3], "C": [6720, 2040, 0]}, "dig": "2e083c8a037c14e8", "changed": {}, "finished": [], "free_blocks": 1170, "t": 1791851158.874, "rank": 0}
+{"kind": "upd", "fp": "47fcebbf86ad7639", "rej": {"A": [3, 0, 3], "B": [3, 2, 1]}, "t": 1791851167.1948, "rank": 0}
+{"kind": "sched", "seq": 9, "fp": "f3029c76b669600e", "reqs": {"A": [9007, 4, 3], "B": [5007, 4, 3], "C": [8760, 2040, 0]}, "dig": "173e8afe2729fe28", "changed": {"C": [[1000, 1070, 1102], [1071], [3, 1, 6, 6, 6, 6, 6, 6, 6, 9]]}, "finished": [], "free_blocks": 1162, "t": 1791851167.1954, "rank": 0}
+{"kind": "upd", "fp": "f3029c76b669600e", "rej": {"A": [3, 1, 2], "B": [3, 2, 1]}, "t": 1791851175.5014, "rank": 0}
+{"kind": "sched", "seq": 10, "fp": "59882bb98645b460", "reqs": {"B": [5010, 4, 3], "C": [9004, 244, 0], "D": [300, 300, 0]}, "dig": "e554c9a8115986c9", "changed": {"D": [[1060], [1028], [1, 1, 4, 4, 4, 4, 4, 4, 4, 1]]}, "finished": ["A"], "free_blocks": 1174, "t": 1791851175.5018, "rank": 0}
+{"kind": "upd", "fp": "59882bb98645b460", "rej": {"B": [3, 2, 1]}, "t": 1791851177.8038, "rank": 0}
+{"kind": "sched", "seq": 11, "fp": "e9fb46fd1bdb0871", "reqs": {"C": [9008, 4, 3], "D": [304, 4, 3], "E": [2040, 2040, 0]}, "dig": "421668082e2d9cd6", "changed": {"E": [[1069], [1068], [1, 1, 4, 4, 4, 4, 4, 4, 4, 2]]}, "finished": ["B"], "free_blocks": 1176, "t": 1791851177.8073, "rank": 0}
+{"kind": "upd", "fp": "e9fb46fd1bdb0871", "rej": {"C": [3, 1, 2], "D": [3, 0, 3]}, "t": 1791851186.1919, "rank": 0}
+{"kind": "sched", "seq": 12, "fp": "e32d0ffba4005968", "reqs": {"C": [9010, 4, 3], "D": [305, 4, 3], "E": [4080, 2040, 0]}, "dig": "421668082e2d9cd6", "changed": {}, "finished": [], "free_blocks": 1174, "t": 1791851186.1922, "rank": 0}
+{"kind": "upd", "fp": "e32d0ffba4005968", "rej": {"C": [3, 1, 2], "D": [3, 3, 0]}, "t": 1791851194.5038, "rank": 0}
+{"kind": "sched", "seq": 13, "fp": "4237b883e84fee9c", "reqs": {"D": [309, 4, 3], "E": [4400, 320, 0]}, "dig": "4d352dc47680df9c", "changed": {"E": [[1069, 1059], [1068], [2, 1, 5, 5, 5, 5, 5, 5, 5, 5]]}, "finished": ["C"], "free_blocks": 1201, "t": 1791851194.5041, "rank": 0}
+{"kind": "upd", "fp": "4237b883e84fee9c", "rej": {"D": [3, 3, 0]}, "t": 1791851195.9022, "rank": 0}
+{"kind": "sched", "seq": 14, "fp": "a10a28fd70eb11e7", "reqs": {"E": [4404, 4, 3]}, "dig": "56b5305c79531d61", "changed": {}, "finished": ["D"], "free_blocks": 1240, "t": 1791851195.9024, "rank": 0}
+{"kind": "upd", "fp": "a10a28fd70eb11e7", "rej": {"E": [3, 2, 1]}, "t": 1791851195.9964, "rank": 0}
+{"kind": "sched", "seq": 15, "fp": "cbea36b23b8eb13e", "reqs": {"E": [4407, 4, 3]}, "dig": "56b5305c79531d61", "changed": {}, "finished": [], "free_blocks": 1240, "t": 1791851195.9965, "rank": 0}
+{"kind": "upd", "fp": "cbea36b23b8eb13e", "rej": {"E": [3, 3, 0]}, "t": 1791851196.0902, "rank": 0}

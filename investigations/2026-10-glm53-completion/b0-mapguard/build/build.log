@@ -1,0 +1,55 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 DONE 0.0s
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 2.75kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/local/glm53-v0.9.1-bundle-d1234:local
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/7] FROM docker.io/local/glm53-v0.9.1-bundle-d1234:local@sha256:08d1cb902ddb888f679b972714168bb7c0d2333b4c1865f3ebf860baa2f46548
+#4 resolve docker.io/local/glm53-v0.9.1-bundle-d1234:local@sha256:08d1cb902ddb888f679b972714168bb7c0d2333b4c1865f3ebf860baa2f46548 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 397.31kB done
+#5 DONE 0.0s
+
+#6 [2/7] RUN printf '%s\n'     "9104be37c8cb876a436f5fac11401c4abdb254529a6c37f3dca8121f41a5b61d  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py"     "6e74c42cf4385bb0451243098ec8b4a84005675fa776169fddb2fb230bab0157  /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/b12x_mla_sparse.py"     "e405e84eb3674b04bc6251b2736fe0dce8f66a907123c82dd31b4c2ebc73841f  /usr/local/lib/python3.12/dist-packages/vllm/v1/core/sched/scheduler.py"   | sha256sum -c - && ! test -e /usr/local/lib/python3.12/dist-packages/vllm/mapguard_hooks.py
+#6 CACHED
+
+#7 [3/7] COPY files/vllm/mapguard_hooks.py /usr/local/lib/python3.12/dist-packages/vllm/mapguard_hooks.py
+#7 DONE 0.0s
+
+#8 [4/7] COPY files/vllm/model_executor/layers/sparse_attn_indexer_kpool.py /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py
+#8 DONE 0.0s
+
+#9 [5/7] COPY files/vllm/v1/attention/backends/mla/b12x_mla_sparse.py /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/b12x_mla_sparse.py
+#9 DONE 0.0s
+
+#10 [6/7] COPY files/vllm/v1/core/sched/scheduler.py /usr/local/lib/python3.12/dist-packages/vllm/v1/core/sched/scheduler.py
+#10 DONE 0.0s
+
+#11 [7/7] RUN printf '%s\n'     "551faad623901b328ba64f5bdb4fff6f8389114fbd37781321668c97a5107b15  /usr/local/lib/python3.12/dist-packages/vllm/mapguard_hooks.py"     "0ac09f5c270ee485ed388f6c2e1cfa8dbac1b082091b0589b440f5e94fa68e0b  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py"     "7124975df27de3f31b7e5ae16d51c9863e33cab66b77ef7c9322e3a765c408a1  /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/b12x_mla_sparse.py"     "755916f22df976c58d1dd68996482f12366dd49102275a6e21e89dab7bd4b108  /usr/local/lib/python3.12/dist-packages/vllm/v1/core/sched/scheduler.py"   | sha256sum -c -  && python3 -m py_compile /usr/local/lib/python3.12/dist-packages/vllm/mapguard_hooks.py /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/b12x_mla_sparse.py /usr/local/lib/python3.12/dist-packages/vllm/v1/core/sched/scheduler.py  && test "$(grep -c "mapguard" /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py)" = 8  && test "$(grep -c "mapguard" /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/b12x_mla_sparse.py)" = 4  && test "$(grep -c "mapguard" /usr/local/lib/python3.12/dist-packages/vllm/v1/core/sched/scheduler.py)" = 2  && grep -q "col511-fix" /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py
+#11 0.151 /usr/local/lib/python3.12/dist-packages/vllm/mapguard_hooks.py: OK
+#11 0.151 /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py: OK
+#11 0.151 /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/b12x_mla_sparse.py: OK
+#11 0.151 /usr/local/lib/python3.12/dist-packages/vllm/v1/core/sched/scheduler.py: OK
+#11 DONE 0.2s
+
+#12 exporting to image
+#12 exporting layers 0.1s done
+#12 exporting manifest sha256:a47bd7504784a0fff2a4f25392e30934631a978f7475a927022c683994b588c2 done
+#12 exporting config sha256:7c2cea180677aa6a58fe8b7a535ae5b50638a17787bfdee17721c3b2fbba3ac6 done
+#12 exporting attestation manifest sha256:8933338e88b3a3be6f194088f61c9e48b4f10f6404fdf8d14eec531d8005068c done
+#12 exporting manifest list sha256:1f55fe653b7910bbb8eb907ec8d09ad7b7ba64813d89097a95c07aff91b9fbc1 done
+#12 naming to docker.io/local/glm53-v0.9.1-b0-mapguard:local done
+#12 unpacking to docker.io/local/glm53-v0.9.1-b0-mapguard:local 0.1s done
+#12 DONE 0.3s

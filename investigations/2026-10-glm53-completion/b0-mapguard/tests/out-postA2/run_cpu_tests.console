@@ -1,0 +1,8 @@
+smoke unset rc=0
+smoke device rc=0
+kpool unaligned rc=0
+mapguard tests rc=0
+a2 regression rc=1
+dryrun r0 rc=0
+dryrun r1 rc=0
+dryrun analysis rc=0

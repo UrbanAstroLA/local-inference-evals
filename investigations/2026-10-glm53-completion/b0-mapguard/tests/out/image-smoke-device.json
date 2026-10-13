@@ -1,0 +1,34 @@
+{
+ "mode": "device",
+ "results": [
+  {
+   "test": "I2 GLM53_MAPGUARD=device: worker + scheduler hooks installed",
+   "ok": true,
+   "runner": true,
+   "scheduler": true,
+   "kpool_on": true,
+   "b12x_on": true,
+   "mla_writer_wrapped": true,
+   "rowstate_wrapped": true,
+   "fullgraph_wrapped": true
+  },
+  {
+   "test": "I3 EngineCore digest (KVCacheManager lists) == worker ledger digest at every step",
+   "ok": true,
+   "steps": 12,
+   "joined": 12,
+   "equal": 12,
+   "excl": [
+    {
+     "live_blocks": 32,
+     "multi_group": 0,
+     "examples": {},
+     "max_id": 1007,
+     "ge_935": 31,
+     "shared0": 0
+    }
+   ]
+  }
+ ],
+ "module_sha256": "551faad623901b328ba64f5bdb4fff6f8389114fbd37781321668c97a5107b15"
+}

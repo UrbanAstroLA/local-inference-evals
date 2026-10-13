@@ -1,0 +1,351 @@
+{
+ "variant": "rerun",
+ "accepted_per_step": 2.6,
+ "qcap": 1024,
+ "precycled_to": 529,
+ "steps": 460,
+ "phase_steps": {
+  "warm": [
+   0,
+   124
+  ],
+  "T0": [
+   124,
+   229
+  ],
+  "F0": [
+   229,
+   291
+  ],
+  "T1": [
+   291,
+   397
+  ],
+  "F1": [
+   397,
+   460
+  ]
+ },
+ "first_id_ge_935": {
+  "MLA+idx": {
+   "step": 92,
+   "phase": "warm",
+   "step_in_phase": 92
+  },
+  "tail": {
+   "step": 92,
+   "phase": "warm",
+   "step_in_phase": 92
+  },
+  "KDA0": {
+   "step": 92,
+   "phase": "warm",
+   "step_in_phase": 92
+  },
+  "KDA1": {
+   "step": 94,
+   "phase": "warm",
+   "step_in_phase": 94
+  },
+  "KDA2": {
+   "step": 94,
+   "phase": "warm",
+   "step_in_phase": 94
+  },
+  "KDA3": {
+   "step": 94,
+   "phase": "warm",
+   "step_in_phase": 94
+  },
+  "KDA4": {
+   "step": 94,
+   "phase": "warm",
+   "step_in_phase": 94
+  },
+  "KDA5": {
+   "step": 94,
+   "phase": "warm",
+   "step_in_phase": 94
+  },
+  "KDA6": {
+   "step": 89,
+   "phase": "warm",
+   "step_in_phase": 89
+  },
+  "draft": {
+   "step": 89,
+   "phase": "warm",
+   "step_in_phase": 89
+  }
+ },
+ "blocks_ge_935_held_per_phase": {
+  "warm": {
+   "KDA6": 15,
+   "draft": 48,
+   "MLA+idx": 15,
+   "tail": 1,
+   "KDA0": 15,
+   "KDA1": 14,
+   "KDA2": 14,
+   "KDA3": 14,
+   "KDA4": 14,
+   "KDA5": 14
+  },
+  "T0": {
+   "MLA+idx": 21,
+   "tail": 5,
+   "KDA0": 25,
+   "KDA1": 25,
+   "KDA2": 25,
+   "KDA3": 25,
+   "KDA4": 25,
+   "KDA5": 25,
+   "KDA6": 25,
+   "draft": 32
+  },
+  "F0": {
+   "MLA+idx": 14,
+   "KDA0": 6,
+   "KDA1": 7,
+   "KDA2": 9,
+   "KDA3": 9,
+   "KDA4": 9,
+   "KDA5": 9,
+   "KDA6": 9,
+   "draft": 12,
+   "tail": 1
+  },
+  "T1": {
+   "MLA+idx": 17,
+   "KDA0": 17,
+   "KDA1": 22,
+   "KDA2": 20,
+   "KDA3": 16,
+   "KDA4": 14,
+   "KDA5": 15,
+   "KDA6": 16,
+   "draft": 18,
+   "tail": 3
+  },
+  "F1": {
+   "MLA+idx": 14,
+   "KDA0": 6,
+   "KDA1": 7,
+   "KDA2": 9,
+   "KDA3": 8,
+   "KDA4": 9,
+   "KDA5": 8,
+   "KDA6": 7,
+   "draft": 9,
+   "tail": 1
+  }
+ },
+ "max_id": {
+  "MLA+idx": 1260,
+  "tail": 1261,
+  "KDA0": 1265,
+  "KDA1": 1272,
+  "KDA2": 1272,
+  "KDA3": 1266,
+  "KDA4": 1262,
+  "KDA5": 1266,
+  "KDA6": 1270,
+  "draft": 1274
+ },
+ "prefix_hits": [
+  [
+   "warm",
+   64478,
+   26112,
+   false
+  ],
+  [
+   "warm",
+   120217,
+   56576,
+   false
+  ],
+  [
+   "T0",
+   120217,
+   113152,
+   false
+  ],
+  [
+   "T0",
+   64217,
+   56576,
+   false
+  ],
+  [
+   "T0",
+   64478,
+   56576,
+   false
+  ],
+  [
+   "T0",
+   32478,
+   26112,
+   false
+  ],
+  [
+   "T0",
+   16478,
+   8704,
+   false
+  ],
+  [
+   "T0",
+   16240,
+   8704,
+   false
+  ],
+  [
+   "F0",
+   120217,
+   113152,
+   false
+  ],
+  [
+   "F0",
+   64478,
+   56576,
+   false
+  ],
+  [
+   "F0",
+   16478,
+   8704,
+   false
+  ],
+  [
+   "T1",
+   120217,
+   113152,
+   false
+  ],
+  [
+   "T1",
+   64217,
+   56576,
+   false
+  ],
+  [
+   "T1",
+   64478,
+   56576,
+   false
+  ],
+  [
+   "T1",
+   32478,
+   26112,
+   false
+  ],
+  [
+   "T1",
+   16478,
+   8704,
+   false
+  ],
+  [
+   "T1",
+   16240,
+   8704,
+   false
+  ],
+  [
+   "F1",
+   120217,
+   113152,
+   false
+  ],
+  [
+   "F1",
+   64478,
+   56576,
+   false
+  ],
+  [
+   "F1",
+   16478,
+   8704,
+   false
+  ]
+ ],
+ "n_prefix_hits": 20,
+ "n_partial_mla_block_hits": 0,
+ "unaligned_prefill_chunk_starts": 44,
+ "unaligned_first_in_slice": 44,
+ "unaligned_later_in_slice": 0,
+ "unaligned_by_phase": {
+  "warm": 0,
+  "T0": 12,
+  "F0": 10,
+  "T1": 12,
+  "F1": 10
+ },
+ "unaligned_examples": [
+  [
+   "T0",
+   128,
+   0,
+   57703
+  ],
+  [
+   "T0",
+   129,
+   0,
+   59747
+  ],
+  [
+   "T0",
+   130,
+   0,
+   61791
+  ],
+  [
+   "T0",
+   131,
+   0,
+   63835
+  ],
+  [
+   "T0",
+   132,
+   0,
+   58238
+  ],
+  [
+   "T0",
+   133,
+   0,
+   60278
+  ],
+  [
+   "T0",
+   134,
+   0,
+   62318
+  ],
+  [
+   "T0",
+   135,
+   0,
+   64358
+  ],
+  [
+   "T0",
+   139,
+   0,
+   10366
+  ],
+  [
+   "T0",
+   140,
+   0,
+   12398
+  ]
+ ]
+}

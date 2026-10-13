@@ -1,0 +1,135 @@
+--- a/vllm/model_executor/layers/sparse_attn_indexer_kpool.py
++++ b/vllm/model_executor/layers/sparse_attn_indexer_kpool.py
+@@ -59,6 +59,15 @@
+ # MXFP4 layout: 2 values packed per byte, ue8m0 (1-byte) scale per block of 32.
+ MXFP4_BLOCK_SIZE = 32
+ 
++# ---- mapguard (observe-only; inert unless GLM53_MAPGUARD=device) ----
++try:
++    from vllm import mapguard_hooks as _mapguard
++    _mapguard.ensure_worker_install()
++except Exception:  # noqa: BLE001
++    _mapguard = None
++_MAPGUARD_ON = _mapguard is not None and _mapguard.ENABLED
++# ---- end mapguard ----
++
+ 
+ def _move_lowest_selected_pool_last(
+     pool_topk: torch.Tensor, pool_scores: torch.Tensor
+@@ -424,6 +433,10 @@
+             if n_prefill > 0:
+                 # decode tokens are batched first; prefill tokens follow.
+                 prefill_slice = slice(num_decode_tokens, num_tokens)
++                if _MAPGUARD_ON and positions is not None:  # mapguard: observe-only
++                    _mapguard.hook_idx_prefill_write(
++                        k_cache_prefix, slot_mapping[prefill_slice], positions,
++                        num_decode_tokens, num_tokens, index_kpool)
+                 _kpool_compress_insert(
+                     k[prefill_slice],
+                     gate_score[prefill_slice],
+@@ -468,6 +481,10 @@
+                         # maps to a different tail block (1 block/req) or is
+                         # past the batch. Writes are one-per-token to distinct
+                         # pos % kpool offsets, so the result is identical.
++                        if _MAPGUARD_ON and positions is not None:  # mapguard
++                            _mapguard.hook_tail_seed(
++                                k_cache_prefix, tail_meta.slot_mapping[prefill_slice],
++                                positions, num_decode_tokens, index_kpool)
+                         kpool_seed_tail_cache(
+                             tail_kv_cache,
+                             k[prefill_slice],
+@@ -563,6 +580,8 @@
+             k_scale = k_scale_full[: chunk.max_local_total_seq_lens]
+ 
+             if not chunk.skip_kv_gather and chunk.local_total_seq_lens > 0:
++                if _MAPGUARD_ON and positions is not None:  # mapguard: observe-only
++                    _mapguard.hook_idx_prefill_read(k_cache_prefix, chunk, positions)
+                 ops.cp_gather_indexer_k_quant_cache(
+                     kv_cache,
+                     k_quant,
+@@ -822,6 +841,10 @@
+                 # provided. Inputs are already grouped per request (uniform:
+                 # view; non-uniform: _scatter_decode_tokens_by_request padded to
+                 # [B, lmax]) — no per-token .contiguous() copies needed.
++                if _MAPGUARD_ON:  # mapguard: observe-only
++                    _mapguard.hook_idx_decode_write(
++                        k_cache_prefix, dec_slot, dec_pos, dec_tail_slot, positions,
++                        num_decode_tokens)
+                 kpool_decode_update_and_maybe_write_cache_batched(
+                     kv_cache_raw,
+                     tail_kv_cache,
+@@ -939,6 +962,10 @@
+                 dtype=torch.float32,
+                 device=pool_topk.device,
+             )
++            if _MAPGUARD_ON and positions is not None:  # mapguard: observe-only
++                _mapguard.hook_idx_decode_read(
++                    k_cache_prefix, b12x_block_table[:num_rows],
++                    b12x_seq_lens[:num_rows], positions, num_rows)
+             _run_b12x_paged_topk(
+                 q_fp8=padded_q_quant_decode_tokens.reshape(
+                     num_rows, *padded_q_quant_decode_tokens.shape[2:]
+@@ -965,6 +992,10 @@
+             )
+             _move_lowest_selected_pool_last(topk_dst, topk_scores)
+         else:
++            if _MAPGUARD_ON and positions is not None:  # mapguard: observe-only
++                _mapguard.hook_idx_decode_read(
++                    k_cache_prefix, decode_metadata.block_table, seq_lens, positions,
++                    num_padded_tokens)
+             logits = fp8_fp4_paged_mqa_logits(
+                 (padded_q_quant_cast, padded_q_scale),
+                 kv_cache_quant_view,
+--- a/vllm/v1/attention/backends/mla/b12x_mla_sparse.py
++++ b/vllm/v1/attention/backends/mla/b12x_mla_sparse.py
+@@ -73,6 +73,14 @@
+     from vllm.model_executor.models.deepseek_v2 import Indexer
+ 
+ logger = init_logger(__name__)
++
++# ---- mapguard (observe-only; inert unless GLM53_MAPGUARD=device) ----
++try:
++    from vllm import mapguard_hooks as _mapguard
++except Exception:  # noqa: BLE001
++    _mapguard = None
++_MAPGUARD_ON = _mapguard is not None and _mapguard.ENABLED
++# ---- end mapguard ----
+ 
+ # Split-K tile width. Mirrors SparseMLASm120's _DECODE_SPLIT_TILE: the number of
+ # split-K chunks is ceil(topk / tile). This bounds the chunk dim of the borrowed
+@@ -3013,6 +3021,9 @@
+             if self._indexer_outputs_physical_slots:
+                 selected_indices = topk_indices
+                 nsa_cache_seqlens = per_token_cache
++                if _MAPGUARD_ON:  # mapguard: observe-only
++                    _mapguard.hook_mla_read(
++                        layer, selected_indices, nsa_cache_seqlens, num_actual_toks)
+             else:
+                 # GLM-5.3's kpool indexer returns logical token positions.
+                 # Resolve them through this layer's MLA block table into
+@@ -3043,6 +3054,9 @@
+                 _mask_page_table_after_nsa_len(
+                     selected_indices, nsa_cache_seqlens
+                 )
++                if _MAPGUARD_ON:  # mapguard: observe-only
++                    _mapguard.hook_mla_read(
++                        layer, selected_indices, nsa_cache_seqlens, num_actual_toks)
+ 
+         # KV cache -> paged rank-3 uint8. B12X unified SM120 kernels consume
+         # flat slot ids in selected_indices, but compute raw byte offsets as:
+--- a/vllm/v1/core/sched/scheduler.py
++++ b/vllm/v1/core/sched/scheduler.py
+@@ -3032,3 +3032,13 @@
+         self.failed_recving_kv_req_ids |= async_failed_req_ids
+         # Return sync affected IDs to skip in update_from_output
+         return sync_failed_req_ids
++
++
++# ---- mapguard (observe-only; inert unless GLM53_MAPGUARD=device) ----
++try:
++    from vllm import mapguard_hooks as _mapguard
++
++    _mapguard.install_scheduler_side(Scheduler)
++except Exception:  # noqa: BLE001
++    pass
++# ---- end mapguard ----

@@ -1,0 +1,1 @@
+budget: spent 0.0 + this attempt's cap 0.8 (wall 1440s) <= approved 1.0 GPU-h

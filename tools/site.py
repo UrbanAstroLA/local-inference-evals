@@ -1172,7 +1172,9 @@ def build():
          "live decode rows (0.7.0's path: 6.9%). Tail ring: 98% of tail writes go to a shared null block on 0.9.1 (all releases affected, "
          "0.7.0 more). Router: the fp32-output computation selects a different top-8 expert set on 3.15% of token-layer rows. SwiGLU limit: "
          "reachable in the served kernels; whether it engages was not measured. Each fix removes its localized problem. Model-free checks of the "
-         "corrected build found no further defect in the all-reduce transport, the KV record writer and projection, or cache addressing above 2³¹ bytes.",
+         "corrected build found no further defect in the all-reduce transport, the KV record writer and projection, or cache addressing above 2³¹ bytes; "
+         "a live check of its slot mappings under real scheduling found one more: the indexer's prefill key writer mishandles chunk starts not "
+         "aligned to 4 tokens (effect untested).",
          '<a href="#engine-issues">issues and fixes</a>')])
     issues = table(["Issue", "Found", "Fix", "Released in", "Evidence"], [
         ["Prefill wrote 2 KB of keys into another block's indexer region (kpool)", "upstream vLLM (vllm#57477)",
@@ -1208,7 +1210,14 @@ def build():
          "during this evaluation (all releases)", "correction prepared: pass the limit to the B12x plans", "not released",
          tip("<b>Supported</b> (reachability)", "With the correction the served kernels are compiled with the limit, and a limit of 1 changes "
              "greedy outputs. Whether the limit of 10 engages was not measured. Effect on completion: untested alone")
-         + f' · <a href="{REPO}/blob/main/investigations/2026-10-glm53-completion/README.md#bundle-gate-d1d2d3d4-on-091">record</a>']])
+         + f' · <a href="{REPO}/blob/main/investigations/2026-10-glm53-completion/README.md#bundle-gate-d1d2d3d4-on-091">record</a>'],
+        ["The indexer's prefill key writer assumes chunks start on a 4-token pool boundary, but prefill chunks are not aligned: after an "
+         "unaligned start one pool is left unwritten, or filled from the previous request's tokens",
+         "during this evaluation (the corrected 0.9.1 build; other releases not checked)", "none prepared yet", "not released",
+         tip("<b>Supported</b> (in serving)", "One serving session of the corrected build with a live mapping guard: 217 events in 50 requests of a "
+             "long-prefix workload, every one at an unaligned chunk start; every other slot mapping correct over the frozen coverage. Effect "
+             "on selection or completion: untested")
+         + f' · <a href="{REPO}/blob/main/investigations/2026-10-glm53-completion/README.md#live-slot-mappings-on-b0-amendment-17">record</a>']])
     idx = (f'<h1>GLM-5.3-Flash on 2x RTX PRO 6000: results</h1>'
            f'<p class="lede">Accuracy, completion, speed, KV capacity and kernel tests of GLM-5.3-Flash EXL3 quants on tpurtell\'s vLLM-based engine, '
            f'under fixed, versioned protocols. Every number links to its receipts. What else can move a result: '
@@ -1268,7 +1277,8 @@ def build():
              'empty against 5 and 5 in the matching 0.9.1 passes, with no clear separation; their effects on answers one at a time are untested. '
              'Model-free checks of the corrected build then found no further defect: its two-GPU all-reduce transport returned the exact sum in all '
              '2,040,800 calls, its KV record writer and query projection agree with 0.7.0\'s within rounding, and its cache kernels address '
-             'correctly above 2<sup>31</sup> bytes (<a href="' + REPO + '/blob/main/FINDINGS.md">items 4g-4i</a>).</p>' + issues
+             'correctly above 2<sup>31</sup> bytes (<a href="' + REPO + '/blob/main/FINDINGS.md">items 4g-4i</a>). A live check of its slot mappings '
+             'under real scheduling found one more defect, the last row below (item 4j); its effect on answers is untested.</p>' + issues
            + f'<h3 id="kernels">Kernel tests: {up_un[0]}/{up_un[1]} without the kpool fixes, {up_pa[0]}/{up_pa[1]} with them (supported)</h3>'
              '<p>vLLM\'s own regression tests for the kpool kernels, plus a rejected-draft reproduction, run inside each engine image.</p>' + per_image
            + more("Every test", '<div id="kernel-grid"></div>' + table(["Test"] + [engine_label(m["cfg"]) for m in km], ktr)))

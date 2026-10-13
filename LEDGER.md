@@ -325,6 +325,29 @@ What was asked, run, found, corrected and withdrawn, in date order.
 - 0.1161 GPU-hours in all. The investigation's cumulative total: 47.91 GPU-hours. Nothing further is scheduled.
   [Checkpoint B0](investigations/2026-10-glm53-completion/README.md#checkpoint-b0-and-targeted-invariants-amendment-16).
 
+**2026-10-12 to 10-13, night. Live slot mappings on B0 (amendments 17-17e).**
+- An independent assessment (amendment 17) asked whether real scheduling gives B0's attention and index-K kernels the
+  cache slots they should get: the class of the tail-ring defect, which amendment 16's fixtures bypassed. The method was an
+  observe-only guard checking each mapping as the replayed CUDA graphs consume it, against an expectation rebuilt
+  independently from the scheduler's output. CPU fault-injection tests passed 28 of 28 and 28 coverage minimums were
+  frozen before GPU use. Authorized at 1.0 GPU-hours with one invalid-run allowance (17a).
+- **Found before GPU data** (17b, CPU): the index-K prefill writer assumes chunk starts aligned to its 4-token pools,
+  which the scheduler does not guarantee. Registered as candidate D7 with a pre-registered VIOLATION.
+- Owned: the first launch was refused by the runner's own pre-flight, which counted desktop graphics clients on GPU 1
+  (no container, 0 GPU-hours; filter widened before data, 17c).
+- Owned: attempt 2 (0.4211 GPU-hours) was invalid because of the investigation's tooling, not the engine. The runner's
+  start-up abort matched the healthy field `"guard_errors": 0`, so the workload never ran. The guard expected block ids
+  where the index-K reader consumes index-page ids, and the analysis had two window and timing artefacts. All were fixed
+  after inspection with no rule loosened (17d). Before attempt 3, everything was re-checked with zero GPU use, including
+  the client against a mock server, and the ceiling was raised to 1.45 (17e).
+- **Attempt 3** (0.5722 GPU-hours): every coverage minimum met, nothing invalid, probes identical to the earlier B0
+  record. VIOLATION, all of it D7: 217 events in 50 requests, identical on both GPUs; 186 pools never written and 31
+  filled from the previous request's tokens. Every one is at a prefill chunk start that is not a multiple of 4. Every
+  other mapping was clean. Effect on selection or completion not measured.
+- 0.9933 GPU-hours in all; cumulative 48.90. Next under the plan: minimise D7, verify its smallest correction, then
+  B1 = B0 + that correction; not yet authorized.
+  [Live slot mappings](investigations/2026-10-glm53-completion/README.md#live-slot-mappings-on-b0-amendment-17).
+
 ## Withdrawn, and what replaced it
 
 > **Withdrawal notice (2026-10-09).** The earlier hard-question screens (`hard-prompt-screen` v0 and v1, 2026-09-30 to

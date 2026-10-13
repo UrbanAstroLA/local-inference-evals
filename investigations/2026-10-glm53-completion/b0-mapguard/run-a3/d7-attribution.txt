@@ -1,0 +1,7 @@
+# post-hoc attribution (written after attempt-3 data; not part of the frozen analysis)
+rank 0: idx_w_pf records captured 1302; {'unaligned/first_pool': 1302}
+  chunk start mod 4352 (top): [(2045, 444), (4090, 366), (2031, 36), (2017, 24), (2003, 24), (2010, 18), (2082, 18), (4078, 18)]
+  position - chunk start: [(0, 174), (1, 540), (2, 588)]
+rank 1: idx_w_pf records captured 1085; {'unaligned/first_pool': 1085}
+  chunk start mod 4352 (top): [(2045, 370), (4090, 305), (2031, 30), (2017, 20), (2003, 20), (2010, 15), (2082, 15), (4078, 15)]
+  position - chunk start: [(0, 145), (1, 450), (2, 490)]

@@ -350,12 +350,18 @@ print(f"  amendment 16: all-reduce fixture {sum(c['gpu_hours'] for c in ar):.4f}
 arms_ok = lambda c: (abs(c["gpu_hours"] - round(sum(a["gpu_hours"] for a in c["arms"]), 4)) < 1e-9
                      and all(abs(a["gpu_hours"] - round(a["gpus"] * a["wall_s"] / 3600, 4)) < 1e-9 for a in c["arms"]))
 check("amendment 16 as separate steps, arms add up (GPUs x wall): all-reduce 0.07 of 0.5 (smoke 0.0139, full 0.0561), "
-      "KV writer 0.0069 of 0.25, cache fixture 0.0392 of 0.5 (incl. the refused zero-cost launch); cumulative 47.91 GPU-hours",
+      "KV writer 0.0069 of 0.25, cache fixture 0.0392 of 0.5 (incl. the refused zero-cost launch); cumulative 47.91 GPU-hours before amendment 17",
       len(ar) == len(kv) == len(ca) == 1 and all(arms_ok(c) for c in ar + kv + ca)
       and [a["gpu_hours"] for a in ar[0]["arms"]] == [0.0139, 0.0561] and ar[0]["gpu_hours"] == 0.07
       and kv[0]["gpu_hours"] == 0.0069 and ca[0]["gpu_hours"] == 0.0392
       and sum(a["wall_s"] == 0 and a["gpu_hours"] == 0.0 for a in ca[0]["arms"]) == 1
-      and f"{sum(c['gpu_hours'] for c in allcost):.2f}" == "47.91")
+      and f"{sum(c['gpu_hours'] for c in allcost if not str(c.get('step', '')).startswith('B0 live slot-mapping')):.2f}" == "47.91")
+mg = st("B0 live slot-mapping guard session")
+print(f"  amendment 17: slot-mapping guard {sum(c['gpu_hours'] for c in mg):.4f} "
+      f"({sum(len(c['arms']) for c in mg)} attempts, one refused at 0, one invalid)")
+check("amendment 17 arms add up (GPUs x wall): refused 0, invalid 0.4211, complete 0.5722; 0.9933 of 1.45; cumulative 48.90 GPU-hours",
+      len(mg) == 1 and arms_ok(mg[0]) and [a["gpu_hours"] for a in mg[0]["arms"]] == [0.0, 0.4211, 0.5722]
+      and mg[0]["gpu_hours"] == 0.9933 and f"{sum(c['gpu_hours'] for c in allcost):.2f}" == "48.90")
 
 print("\n## Checks (checks.jsonl)")
 for line in (HERE / "checks.jsonl").read_text().splitlines():

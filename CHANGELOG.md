@@ -1,5 +1,33 @@
 # Changelog
 
+## 2026-10-13 (completion investigation, amendments 17-17e): live slot mappings on B0
+
+Contents unchanged: 65 runs, 13 comparisons. No earlier run or number changed. Item 4j is new.
+
+- **`PLAN.md`**: amendments 17 (live scheduling and consumed slot mappings on B0), 17a (authorization), 17b (preparation;
+  candidate D7 found on CPU before GPU data), 17c (pre-flight fix), 17d (attempt-2 diagnosis; D7 confirmed in serving)
+  and 17e (zero-GPU checks before attempt 3; ceiling raised to 1.45).
+- **Slot-mapping guard session** (new `b0-mapguard/`): VIOLATION, D7 only. 217 events in 50 requests at index-K prefill
+  pools after chunk starts not aligned to 4 tokens; every other mapping clean over the frozen coverage. 0.9933
+  GPU-hours, including an invalid attempt caused by the investigation's runner.
+  - **Published:** the proposal, the guard module (current and as run in attempt 2), the hook diff and build files,
+    the frozen analysis and a post-hoc attribution, the runner and client, CPU tests and their outputs, the allocator
+    simulation, per-attempt budgets, gate output, client logs, verdicts and gzip-compressed guard records, the attempt-2
+    diagnosis, cost lines and a README.
+  - **Hashed in `RAW-SHA256SUMS-mapguard.txt`:** fixture token ids, probe outputs, container logs, pre-flight listings
+    and full patched engine files.
+  - **Substitutions** are listed in `PUBLIC-COPIES-17.txt`, including the guard module's public name
+    `mapguard_hooks.py`.
+- **Investigation `README.md`**:
+  - new section "Live slot mappings on B0 (amendment 17)";
+  - a D7 row in the defect matrix, now D1-D7;
+  - status, open questions and next steps updated.
+- **`costs.jsonl`**: one entry with three attempts (0, 0.4211, 0.5722). `recompute.py` checks it and the cumulative
+  48.90 GPU-hours.
+- **`FINDINGS.md`**: item 4j (D7, supported in serving; effect untested); open questions updated.
+- **`LEDGER.md`**, top-level **`README.md`**, **`tools/site.py`** and the rebuilt **`docs/`**: D7 added to the
+  engine-issues summary and table.
+
 ## 2026-10-12, evening (completion investigation, amendments 16-16e): checkpoint B0 and targeted invariants
 
 Contents unchanged: 65 runs, 13 comparisons. No earlier run or number changed. Item 4f's grade is unchanged (descriptive)

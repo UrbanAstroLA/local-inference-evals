@@ -1,0 +1,28 @@
+# sha256 of local b0-mapguard files not published. Paths relative to the local b0-mapguard folder.
+# - stage-2 fixture token ids (local fixture, not published)
+# - short greedy probe outputs (GPQA reply tokens)
+# - container logs
+# - pre-flight listings (desktop processes, full GPU ids)
+# - full copies of the patched engine files (the diff build/mapguard.diff is published)
+# - runner before the amendment-17c pre-flight filter
+# - bytecode
+3fa979c8fcb3588275ca92a17db4a633b21977382823adff36bb158e709ac065  ./build/files/vllm/mapguard_hooks.py
+d631a05f8b49c53e9d89ab587338bcc623087b1b254754fe3c9d4ba4fb2cf2e7  ./build/files/vllm/model_executor/layers/__pycache__/sparse_attn_indexer_kpool.cpython-312.pyc
+0ac09f5c270ee485ed388f6c2e1cfa8dbac1b082091b0589b440f5e94fa68e0b  ./build/files/vllm/model_executor/layers/sparse_attn_indexer_kpool.py
+2c0830bcf662b5b46aad0397db950625e6407844d7983ba2dfd5958d7ddc0840  ./build/files/vllm/v1/attention/backends/mla/__pycache__/b12x_mla_sparse.cpython-312.pyc
+7124975df27de3f31b7e5ae16d51c9863e33cab66b77ef7c9322e3a765c408a1  ./build/files/vllm/v1/attention/backends/mla/b12x_mla_sparse.py
+55951d6e0a64a7c9c33dbb43d7817bacbbd661950c9e5aafa726d19a5b761e7e  ./build/files/vllm/v1/core/sched/__pycache__/scheduler.cpython-312.pyc
+755916f22df976c58d1dd68996482f12366dd49102275a6e21e89dab7bd4b108  ./build/files/vllm/v1/core/sched/scheduler.py
+d4c442642ef853e00bc6659be005d52d38c96df1a3c61e90ebb0224fefdfdd37  ./reach/stage2_requests.json
+59af5d51cfd1008607080e7c59d0446b24303718fb133a5cc7b5f21fbfab21f5  ./run/run_mapguard.sh.bak-preflight
+b1ef17f4fea2835b8d3f18240c8754d193072e5b3db76a2de3c900785d1e721b  ./run-a1/preflight.txt
+d4c442642ef853e00bc6659be005d52d38c96df1a3c61e90ebb0224fefdfdd37  ./run-a1/requests.json
+62571dcb930abdc34d2e78291b38b1808a512da2cf537aa422a83135001ed14d  ./run-a2/preflight.txt
+d4c442642ef853e00bc6659be005d52d38c96df1a3c61e90ebb0224fefdfdd37  ./run-a2/requests.json
+7d2e34a6de01d83b16a9313f83480d0a7d763ce9458698d8d2fc03644a927dea  ./run-a2/server.log
+8a916b593eda6c50cd600de4306862431515c271d85848bb2477191ec4f264ee  ./run-a3/preflight.txt
+5f38cf8f149a7554bdc0765fc52435483b4837a59a916234d2de69db923f951b  ./run-a3/probe.jsonl
+d4c442642ef853e00bc6659be005d52d38c96df1a3c61e90ebb0224fefdfdd37  ./run-a3/requests.json
+93c502d7faf9d746f0435c1190e47265cc452a4b73e47d165cec8dced3f9593b  ./run-a3/server.log
+1cdfde3e7f2969df4a18269aa61316f025f595996bbf98f5ac419449edef22d9  ./tests/out/dryrun/server.log
+1cdfde3e7f2969df4a18269aa61316f025f595996bbf98f5ac419449edef22d9  ./tests/out-postA2/dryrun/server.log

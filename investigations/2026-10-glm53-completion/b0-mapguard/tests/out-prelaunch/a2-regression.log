@@ -1,0 +1,28 @@
+W1013 03:21:15.048000 1 torch/utils/cpp_extension.py:178] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+WARNING 10-13 03:21:15 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-13 03:21:15 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-13 03:21:15 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-13 03:21:20 [kv_cache_coordinator.py:658] Disabling fine-grained prefix-cache hits because these KV cache managers require block-aligned lookups: KpoolTailManager.
+{
+ "a2_guard": {
+  "violations": {
+   "idx_r_pf.rtable": 34,
+   "idx_r_dec.rtable": 112
+  },
+  "idx_read_consumed_examples": [
+   17000,
+   17000,
+   17000,
+   17000,
+   17000,
+   17000
+  ],
+  "consumed_multiple_of_17": true
+ },
+ "fixed_guard": {
+  "violations": {},
+  "idx_read_consumed_examples": [],
+  "consumed_multiple_of_17": null
+ },
+ "ok": true
+}

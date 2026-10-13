@@ -1,0 +1,9 @@
+budget: spent 0.0 + this attempt's cap 0.8 (wall 1440s) <= approved 1.0 GPU-h
+== preflight 2026-10-13T00:52:14Z
+index, memory.used [MiB], utilization.gpu [%]
+0, 20 MiB, 0 %
+1, 2288 MiB, 2 %
+ABORT: GPU clients other than desktop type-G graphics:
+|    1   N/A  N/A           91069      G   .../8969/usr/lib/firefox/firefox        584MiB |
+|    1   N/A  N/A           97151      G   ...nap-store/1419/bin/snap-store        368MiB |
+|    1   N/A  N/A           99539    C+G   ...88185955192 --disable-logging        390MiB |

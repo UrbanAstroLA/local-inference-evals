@@ -1,0 +1,17 @@
+{
+ "mode": "unset",
+ "results": [
+  {
+   "test": "I1 inert with GLM53_MAPGUARD unset: nothing patched",
+   "ok": true,
+   "runner": false,
+   "scheduler": false,
+   "kpool_on": false,
+   "b12x_on": false,
+   "mla_writer_wrapped": false,
+   "rowstate_wrapped": false,
+   "fullgraph_wrapped": false
+  }
+ ],
+ "module_sha256": "3fa979c8fcb3588275ca92a17db4a633b21977382823adff36bb158e709ac065"
+}

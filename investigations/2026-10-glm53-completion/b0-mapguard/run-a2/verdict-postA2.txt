@@ -1,0 +1,44 @@
+VERDICT: VIOLATION
+invalid: []
+violations: {'r0.idx_w_pf.missing_pred': 60, 'r1.idx_w_pf.missing_pred': 50}
+incomplete: ['C2_mixed_steps', 'C4_prefix_hits', 'C6b_decode_5to8', 'C6c_route_transitions', 'C7_high_mla_w', 'C7_high_idx_w', 'C7_high_mla_r', 'C7_high_idx_r', 'C7_high_tail', 'C8_idx_r_dec', 'C8_idx_r_pf']
+output identity (short greedy vs s1): NOT RUN {'q0': False, 'q1': False, 'q2': False, 'q3': False}
+  C9_owned_layers          1 (min 1)
+  C1_full_replay_steps     329 (min 300)
+  C5a_spec_writes          53925 (min 20000)
+  C7_high_mla_w            0 (min 5000)
+  C7_high_idx_w            0 (min 500)
+  C7_high_mla_r            0 (min 5000)
+  C7_high_idx_r            0 (min 500)
+  C7_high_tail             0 (min 50)
+  C8_mla_w                 205095 (min 200000)
+  C8_idx_w_pf              133195 (min 100000)
+  C8_idx_w_dec             71900 (min 20000)
+  C8_tail_w_seed           133195 (min 500)
+  C8_tail_w_stash          71900 (min 20000)
+  C8_idx_r_dec             0 (min 20000)
+  C8_idx_r_pf              0 (min 50)
+  C8_mla_r                 205095 (min 100000)
+  C10_join                 1.0 (min 0.95)
+  C10_p3_rows              1.0 (min 0.9)
+  C2_mixed_steps           6 (min 20)
+  C3_row_reuse             52 (min 20)
+  C4_prefix_hits           0 (min 10)
+  C6a_decode_le4           100 (min 60)
+  C6b_decode_5to8          22 (min 60)
+  C6c_route_transitions    5 (min 6)
+  C5b_rejected_drafts      7993 (min 2000)
+  C5c_accepted_drafts      10475 (min 2000)
+  C11_completions          68 (min 40)
+  C12_short_ctx            66 (min 8)
+note: P4: guard 551faad6 index-K read tables checked in block units -> idx_r_* rtable void
+note: P2/P6: window starts at the first non-warm-up step (the stack's release warm-up traffic is included)
+note: r0.idx_r_dec.rtable = 86280 void (P4)
+note: r0.idx_r_pf.rtable = 84 void (P4)
+note: rank 0: before the workload (runner warm-up incl.): {'idx_r_dec.rtable': 456, 'pos.pos_bounds': 4}
+note: rank 0: host-logged forwards 357 vs device-executed 356 (readout unordered with the engine stream; P1)
+note: r1.idx_r_dec.rtable = 71900 void (P4)
+note: r1.idx_r_pf.rtable = 70 void (P4)
+note: rank 1: before the workload (runner warm-up incl.): {'idx_r_dec.rtable': 380, 'pos.pos_bounds': 4}
+note: rank 1: host-logged forwards 358 vs device-executed 356 (readout unordered with the engine stream; P1)
+note: P5/P6: completions from EngineCore finished ids in the window

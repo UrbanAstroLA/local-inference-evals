@@ -975,3 +975,87 @@ plus 11-88 non-tie differences per set (rates 9e-6 to 6.5e-5), all one code and 
 errata rule allows; the verdict is unchanged. 16e's count of the cache fixture's run-2 failures as "fixture faults or an
 obsolete upstream test" stands, but in total five fixture faults were found (three in run 2, two more exposed by rerun 1)
 plus one obsolete upstream test.
+
+**Amendment 17 (2026-10-12; adopts the independent assessment "live scheduling and consumed slot mappings on B0", with the
+operator's agreement).** Objective: test whether real scheduling supplies correct MLA and index-K mappings on B0. Kernel
+addressing tests that already passed are not repeated; B0 is not changed; no GPQA screen. Preparation (CPU) before any GPU
+allocation: extend the existing D2 guard where practical; define an independent expected mapping from request identity and
+logical token position, current allocation ownership and KV group, committed vs speculative token state, and rank
+ownership with the actual cache geometry — never a reference copied from the same mapping builder; CPU-test with injected
+wrong-request and stale block ids, wrong logical positions, row-reuse errors and incorrect rank/group ownership, and with
+valid padding, masked rows and speculative slots that must not be flagged. Serving coverage: one short session of the
+unchanged B0 computation, both ranks, shipped graphs, existing active-reasoning prefixes with bounded continuations,
+exercising prefill/decode interleaving, request completion and row reuse, partial prefix-cache hits where applicable,
+speculative acceptance/rejection, fused/tiled transitions and actually reachable high-address blocks; the device mappings
+consumed during graph replay are checked, not only host-side metadata prepared before capture; minimum coverage frozen
+before running (missing required coverage = incomplete for that condition, not clean). Invariants per driven access: the
+physical block belongs to the intended request/group; the logical position maps to the intended record; inactive rows and
+masked accesses do not become live; replayed graphs consume current mappings; permitted speculative accesses stay separate
+from committed-state claims. On a violation the smallest useful snapshot is kept (request/row, phase, rank, position, block
+ownership, mapping). Instrumentation: verified not to alter model outputs or force eager fallback; overhead reported; a
+clean run cannot exclude every contention-dependent race. Provisioning: a concrete proposal (expected ~0.6 occupied
+GPU-hours from existing sessions; explicit maximum, startup and invalid-run allowance; engineering estimate and reused
+components), preferring extension of the existing guard over a general tracing framework; no GPU work authorized now.
+Outcomes: violation → minimize and reproduce, verify a correction, B1 = B0 + that correction only, then propose a
+behavioural comparison; clean with required coverage → retire the tested scheduling/mapping failures, no automatic
+completion pass, next prepare the smallest mixed-quant MoE fidelity fixture (identical inputs, routing and quantized
+weights); incomplete → identify the exact missing exposure and price only that.
+
+**Amendment 17a (2026-10-12, operator authorization "proceed as described").** The slot-mapping guard session is
+authorized within the described envelope: one short B0 serving session (both ranks, shipped graphs), expected about 0.6
+occupied GPU-hours, hard ceiling 1.0 including startup, warm-up, shutdown and one invalid-run allowance; it runs only after
+the guard, the independent expected mapping, the CPU fault-injection tests, the frozen coverage minimums and the
+instrumentation checks are prepared and pass. If the prepared proposal exceeds this envelope, needs substantial new
+instrumentation, or cannot meet its coverage minimums by design, it returns to the operator before any GPU use.
+
+**Amendment 17b (2026-10-12, coordinator; before any guard GPU data).** Preparation complete within the 17a envelope
+(expected 0.55-0.63 occupied GPU-hours; budget gate 1.0 including one invalid-run allowance; 31/31 CPU tests; image
+sha256:1f55fe65… = B0 plus the guard module and hook lines in three files; all files in b0-mapguard/SHA256SUMS). Independent
+expected mapping: a worker-side ledger rebuilt from the SchedulerOutput stream only, cross-checked offline against digests
+read directly from the KV cache manager in the engine-core process; eight graph-safe device check sites at the point of
+consumption. Coverage minimums frozen for 28 conditions; copy-on-write prefix paths are unreachable here (all prefix hits are
+block-aligned) and listed as not covered. Finding before GPU data (CPU, B0's real kernels under the Triton interpreter): the
+index-K prefill writer (_kpool_compress_insert, sparse_attn_indexer_kpool.py:102-147) pools tokens t-3..t and assumes
+pool-aligned chunk starts, while the scheduler does not align prefill chunks to 4 tokens (its mamba split aligns to 4,352-token
+blocks; source reading). For an unaligned chunk start, (a) the first prefill request's pool completing in its first three
+tokens is never written, and (b) a later request in the same step has its first pool compressed from the previous request's
+tokens (stored record byte-equal to that cross-request pooling). The allocator simulation of this workload predicts 73
+unaligned chunk starts (inference). The guard counts both cases; VIOLATION is pre-registered for this class whatever the
+other checks show; no selection or completion effect is claimed. Candidate defect D7, pending confirmation in serving.
+
+**Amendment 17c (2026-10-13, coordinator; operational fix before any guard GPU data).** The first launch was refused by the
+runner's own pre-flight (no container started, 0 GPU-hours): it allowed only shell graphics clients, while GPU 1 carried the
+desktop's Firefox and snap-store graphics clients and the Claude Desktop GPU process (the same desktop load present in every
+earlier B0 session and accepted in amendment 11b, and ignored by the other runners). The check now also ignores those three
+desktop clients; any other process, and the memory and utilization limits, still refuse. Runner sha256 59af5d51… → 4dd40ed67e02e605dc89c80ac0825c52fcdd6b99edcaae2364b24f438ee3198f. No
+guard, workload, coverage minimum, invariant or analysis changed.
+
+**Amendment 17d (2026-10-13; guard attempt-2 diagnosis, recorded after inspection).** Attempt 2 (0.4211 GPU-hours) never
+ran its client: the runner's start-up abort matched the key "guard_errors": 0 in every readout (pattern fault). The guard
+recorded only the stack's release warm-up traffic (84 requests, about 570 steps per rank, shipped graphs) and the runner's
+six fake warm-up steps. Classified after inspection: idx_r_dec/idx_r_pf "rtable" flags (86,736 and 84) are a guard
+expectation fault (the reader consumes index-page ids 17·block+j from a 256-token builder block size, indexer.py
+1089-1096 and 1268-1290; the guard expected block ids), so the index-K read sites are void (INCOMPLETE) for attempt 2 —
+stored records re-checked against the corrected expectation are consistent; the in-graph count off-by-one, the missing
+baseline and the position/attribution flags are analysis or runner-warm-up artefacts. Engine finding: D7 confirmed in
+serving — every long-prompt prefill chunk is 2,045 tokens (input budget 2,048 minus 3 draft slots, scheduler.py:563), so
+chunk starts fall at 2,045 and 4,090 tokens into each 4,352-token block, and index-K pools 2044-2047 and 4088-4091 of every
+block of a long prompt are never written (10 events per rank, every unaligned first-row start; none at aligned starts;
+pool_cross 0 because only one request prefilled per step); a later prefill read consumed an unwritten pool. Scope
+(inference): GPQA prompts are mostly a single chunk; effect on selection or completion not measured. Post-inspection fixes
+(labelled P1-P6; guard read unit, exact baseline, device-executed counts, scheduler-side completions, window rule; runner
+pattern and timing options; frozen criteria unchanged) with 28/28 + 4/4 CPU tests and an attempt-2 regression test; rebuilt
+guard image sha256:e48738c6…; hashes in b0-mapguard/SHA256SUMS-postA2. Corrected re-analysis of attempt 2: VIOLATION
+(D7 only), no INVALID; INCOMPLETE: mixed steps, prefix hits, 5-8 in flight, route transitions, high-address blocks (ids
+reached only 528), index-K reads.
+
+**Amendment 17e (2026-10-13; before data).** Operator authorization: rerun with the full frozen workload; data quality
+and isolation take priority over GPU time. Total ceiling for the guard item raised from 1.0 to 1.45 GPU-hours
+(attempt 2 spent 0.4211). Attempt 3 runs the full phase list (P0 warm T0 F0 T1 F1 D S Q P1) with the wall cap raised
+from 1,440 s to 1,800 s (at most 1.0 GPU-hour). From earlier B0 sessions, readiness takes about 780-800 s and the
+workload about 300 s, so the larger cap only adds margin; the expected spend is about 0.65 GPU-hours. Zero-GPU checks
+before launch: file hashes match SHA256SUMS-postA2; the image id matches images.txt (e48738c6…); the post-a2 CPU tests
+pass 28/28, and the a2 regression test passes on rerun (a logged rc=1 did not reproduce); the start-up abort pattern
+matches only guard-error records; and the client completes every phase against a local mock server, with distinct
+seeds for all 64 sampled requests and no request errors. If attempt 3 is invalid, there is no automatic retry: it is
+diagnosed and returned to the operator. Frozen criteria and coverage minimums are unchanged.

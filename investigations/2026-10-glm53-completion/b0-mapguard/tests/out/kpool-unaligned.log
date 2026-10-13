@@ -1,0 +1,15 @@
+WARNING 10-13 00:24:19 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+W1013 00:24:22.109000 1 torch/utils/cpp_extension.py:178] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+WARNING 10-13 00:24:22 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-13 00:24:22 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+{
+ "a_pool_written": false,
+ "b_pool_written": true,
+ "b_equals_own_tokens_reference": false,
+ "b_equals_cross_request_pooling": true,
+ "control_aligned_pool_correct": true,
+ "guard_missing_pred": 1,
+ "guard_pool_cross": 1,
+ "guard_other_violations": {},
+ "ok": true
+}

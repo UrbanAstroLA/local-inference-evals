@@ -1,0 +1,37 @@
+VERDICT: VIOLATION
+invalid: []
+violations: {'r0.idx_w_pf.missing_pred': 1116, 'r0.idx_w_pf.pool_cross': 186, 'r1.idx_w_pf.missing_pred': 930, 'r1.idx_w_pf.pool_cross': 155}
+incomplete: []
+output identity (short greedy vs s1): PASS {'q0': True, 'q1': True, 'q2': True, 'q3': True}
+  C9_owned_layers          1 (min 1)
+  C1_full_replay_steps     2076 (min 300)
+  C5a_spec_writes          213465 (min 20000)
+  C7_high_mla_w            68640 (min 5000)
+  C7_high_idx_w            17140 (min 500)
+  C7_high_mla_r            95172445 (min 5000)
+  C7_high_idx_r            113180 (min 500)
+  C7_high_tail             14480 (min 50)
+  C8_mla_w                 3068900 (min 200000)
+  C8_idx_w_pf              2784260 (min 100000)
+  C8_idx_w_dec             284640 (min 20000)
+  C8_tail_w_seed           2784260 (min 500)
+  C8_tail_w_stash          284640 (min 20000)
+  C8_idx_r_dec             284640 (min 20000)
+  C8_idx_r_pf              1910 (min 50)
+  C8_mla_r                 3068900 (min 100000)
+  C10_join                 1.0 (min 0.95)
+  C10_p3_rows              1.0 (min 0.9)
+  C2_mixed_steps           132 (min 20)
+  C3_row_reuse             140 (min 20)
+  C4_prefix_hits           32 (min 10)
+  C6a_decode_le4           851 (min 60)
+  C6b_decode_5to8          889 (min 60)
+  C6c_route_transitions    18 (min 6)
+  C5b_rejected_drafts      16677 (min 2000)
+  C5c_accepted_drafts      26016 (min 2000)
+  C11_completions          140 (min 40)
+  C12_short_ctx            90 (min 8)
+note: P2/P6: window starts at the first non-warm-up step (the stack's release warm-up traffic is included)
+note: rank 0: before the workload (runner warm-up incl.): {'pos.pos_bounds': 4}
+note: rank 1: before the workload (runner warm-up incl.): {'pos.pos_bounds': 4}
+note: P5/P6: completions from EngineCore finished ids in the window

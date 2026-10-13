@@ -1,0 +1,33 @@
+VERDICT: VIOLATION
+invalid: ['rank 0: no pre-workload baseline readout', "rank 0: in-graph check executions != armed forwards [('owned_layer_count', 0, 3, 362, 363), ('owned_layer_count', 0, 7, 362, 363), ('owned_layer_count', 0, 11, 362, 363)]", 'rank 1: no pre-workload baseline readout', "rank 1: in-graph check executions != armed forwards [('owned_layer_count', 1, 35, 362, 364), ('owned_layer_count', 1, 39, 362, 364), ('owned_layer_count', 1, 43, 362, 364)]"]
+violations: {'r0.idx_w_pf.missing_pred': 60, 'r0.idx_r_dec.rtable': 86736, 'r0.idx_r_pf.rtable': 84, 'r0.pos.pos_bounds': 4, 'r0.position_exact': 6, 'r0.host_attribution': 38, 'r1.idx_w_pf.missing_pred': 50, 'r1.idx_r_dec.rtable': 72280, 'r1.idx_r_pf.rtable': 70, 'r1.pos.pos_bounds': 4, 'r1.position_exact': 6, 'r1.host_attribution': 38}
+incomplete: ['C2_mixed_steps', 'C4_prefix_hits', 'C6b_decode_5to8', 'C7_high_mla_w', 'C7_high_idx_w', 'C7_high_mla_r', 'C7_high_idx_r', 'C7_high_tail', 'C9_owned_layers', 'C11_completions', 'C12_short_ctx']
+output identity (short greedy vs s1): UNVERIFIED {'q0': False, 'q1': False, 'q2': False, 'q3': False}
+  C9_owned_layers          0 (min 1)
+  C1_full_replay_steps     332 (min 300)
+  C5a_spec_writes          54195 (min 20000)
+  C7_high_mla_w            0 (min 5000)
+  C7_high_idx_w            0 (min 500)
+  C7_high_mla_r            0 (min 5000)
+  C7_high_idx_r            0 (min 500)
+  C7_high_tail             0 (min 50)
+  C8_mla_w                 205875 (min 200000)
+  C8_idx_w_pf              133595 (min 100000)
+  C8_idx_w_dec             72280 (min 20000)
+  C8_tail_w_seed           133595 (min 500)
+  C8_tail_w_stash          72280 (min 20000)
+  C8_idx_r_dec             72280 (min 20000)
+  C8_idx_r_pf              70 (min 50)
+  C8_mla_r                 205875 (min 100000)
+  C10_join                 0.9834710743801653 (min 0.95)
+  C10_p3_rows              0.9914232109354061 (min 0.9)
+  C2_mixed_steps           8 (min 20)
+  C3_row_reuse             68 (min 20)
+  C4_prefix_hits           0 (min 10)
+  C6a_decode_le4           126 (min 60)
+  C6b_decode_5to8          55 (min 60)
+  C6c_route_transitions    9 (min 6)
+  C5b_rejected_drafts      7993 (min 2000)
+  C5c_accepted_drafts      10475 (min 2000)
+  C11_completions          0 (min 40)
+  C12_short_ctx            0 (min 8)
