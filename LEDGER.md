@@ -432,7 +432,9 @@ What was asked, run, found, corrected and withdrawn, in date order.
 - **In progress:** a B0 pass at seed 1236 (the review step; readings frozen before generation) and zero-GPU discovery
   under amendment 20: a tail-accounting audit with stock releases reported separately, an inventory of existing long
   histories, termination-token semantics, and a focused source review of context-dependent paths.
-- **Hypothesis, not a result:** fewer long replies finishing on 0.9.1 than on 0.7.0 (amendment 19f).
+- **Hypothesis, not a result:** fewer long replies finishing on 0.9.1 than on 0.7.0 (amendment 19f). Finishing less
+  often is not the same as looping more often. A capped reply may be a loop or an exhaustion still reasoning, and the
+  GPQA records cannot tell which. Where text was kept (the completion pilot), capped replies were not loops.
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough
   qualification. They also said the D7 path "cannot run" where the basis is a reconstruction. These are reworded in the

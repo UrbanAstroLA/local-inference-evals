@@ -1153,6 +1153,12 @@ Intervals are bootstrapped over questions.
   alone gives 0.40 at ≥ 100k (10 of 25); B0 + B1 rests on 17 replies. Amendment 20 requires a re-audit with stock
   releases reported separately, cap exhaustion treated as censoring, and question identities shown, before any of this
   is relied on.
+- **Not finishing is not looping.** A reply that reaches the 327,680-token cap is censored: it may be repeating itself
+  (a loop) or still reasoning productively (an exhaustion), and GPQA runs keep no reasoning text to tell which. Where
+  text was kept, the evidence leans against loops: the completion pilot's two capped replies were not loops (repeated
+  200-character windows 0-1%), and in the looping investigation's screen question 79 mostly exhausts while question 88
+  loops. "Fewer long replies finish" therefore says nothing about how often the engine loops. Telling the two apart
+  needs histories with text (amendment 20b).
 - **Accuracy:** B0 and B1 are more correct, with every correction verified, but are not shown to be more accurate.
 - **Direction of the cause is open:** 0.9.1 failing to terminate, or 0.7.0 terminating for a reason that could include
   its own defects.

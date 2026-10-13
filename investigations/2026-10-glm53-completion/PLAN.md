@@ -1457,3 +1457,13 @@ configurations, with small counts. It does not localise the gap. Public summarie
 reworded, and FINDINGS item 4m is regraded as exploratory. "The D7 path cannot run" on the newly empty documents is a
 reconstruction (exposure class unsplittable), not an observation. Amendment 20's audit, with stock releases reported
 separately, governs any further use of these figures.
+
+**Amendment 20b (2026-10-13; operator clarification).** A lower probability of finishing before the cap is not a higher
+probability of looping. Cap exhaustion is censoring: the capped reply may be a loop (repetition) or an exhaustion
+(continued varied reasoning), and GPQA records keep no reasoning text to distinguish them. Requirements:
+- **Reporting:** no summary or proposal under amendment 20 equates non-completion with looping.
+- **Fixture inventory:** classify each retained history with text as loop, exhaustion or natural close, using the
+  repetition indicators already used by the pilot (repeated-window share, compression).
+- **Probe proposal:** when windows are chosen near tentative conclusions, state for each fixture whether it was
+  repeating at that point. A termination-probability difference measured on a looping history and one measured on a
+  varied-reasoning history answer different questions.

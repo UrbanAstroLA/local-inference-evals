@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-10-13, night (completion investigation, amendment 20b): non-completion is not looping
+
+Contents unchanged. No result is added.
+
+- **`PLAN.md`**: amendment 20b. Lower finishing probability is not higher looping probability; fixtures with text are to
+  be classed as loop, exhaustion or natural close; the probe proposal states each fixture's state at its windows.
+- **Completion `README.md`** (tail section) and **`LEDGER.md`**: the distinction stated, with the existing evidence (the
+  pilot's capped replies were not loops; question 79 mostly exhausts, question 88 loops).
+- **Looping `README.md`**: a status note pointing to the completion investigation, keeping loops and exhaustions
+  distinct.
+
 ## 2026-10-13, late evening (completion investigation, amendment 20): plan, status and a correction of emphasis
 
 Contents unchanged: 65 runs, 13 comparisons. No result is added.

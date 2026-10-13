@@ -4,6 +4,12 @@ On some hard GPQA Diamond questions the model does not finish its reasoning with
 repeats itself (a **loop**) or keeps reasoning until the budget runs out (an **exhaustion**). This page asks what drives
 that, and records an engine issue found along the way.
 
+> **Status (2026-10-13).** The question this page opened, what drives non-completion, continues in the
+> [completion investigation](../2026-10-glm53-completion/README.md). An exploratory look there suggests the 0.7.0-vs-0.9.1
+> difference is in how often *long* replies finish before the cap, not in how often replies get long. That is a
+> hypothesis under audit (amendments 19f-20b). It is not evidence about looping: a capped reply may be a loop or an
+> exhaustion, and the two are kept distinct as on this page.
+
 **Fast path:** [the DCP1 tail issue and its fix](#the-dcp1-tail-issue-and-its-fix) ·
 [non-completion](#non-completion-what-the-clean-data-shows) · [open questions](#open-questions) ·
 [recompute](#receipts-and-how-to-recompute-them) ·
