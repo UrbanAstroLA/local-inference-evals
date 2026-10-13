@@ -1222,3 +1222,96 @@ Budget: APPROVED_GPU_H 2.0 for the item, at most 2 attempts, wall cap 1,740 s pe
 Correction: amendment 17e's "distinct seeds for all 64 sampled requests" is wrong. Phases T1 and D reuse seeds
 8,850,000-8,850,007 on the same prefixes, in attempt 3 as in the frozen workload. This does not affect mapping checks.
 The workload is kept identical to attempt 3 for comparability.
+
+**Amendment 19 (2026-10-13; adopts the proposal "B1 checkpoint benchmark before publication", relayed by the operator;
+preparation only, no GPU use authorized).**
+
+Objective: representative quality, completion and runtime data for the verified B1 package (B0's D1-D4 bundle plus the
+D7 correction) before deciding on upstream publication. This is checkpoint characterization, not a D7 attribution
+experiment.
+
+Composition of B1, verified before this amendment:
+- image sha256:799d3cf8… was built from B0's image;
+- a full filesystem diff (150,806 entries) shows only `sparse_attn_indexer_kpool.py` and its bytecode changed;
+- B0 → B1 in that file is exactly `d7-fix.diff`, so B0's column-511 helpers are intact;
+- D1-D4 CPU regressions pass on the B1 serving image.
+
+Proposed run:
+- one GPQA pass of all 198 questions at seed 1236 with the original protocol, sampling, parser, concurrency and
+  327,680-token cap;
+- a fresh server with verified warm-up, shipped graph configuration, and frozen B1 image, diff and effective settings;
+- primary reference: the existing stock 0.9.1 seed-1236 pass; context: the column-511 arm and stock 0.7.0 at seed 1236;
+- B0 has no seed-1236 pass, so no D7 individual effect is inferred.
+
+Cost: a runner and costed proposal come before launch. Planning uses the recent bundle passes (4.54-4.84 occupied
+GPU-hours), with a proposed 7.5 GPU-hour watchdog. No automatic retry or additional pass.
+
+Measurements:
+- empty replies, separating cap exhaustion from premature stopping;
+- adjudicated stated-answer correctness across all requests, with raw correctness kept for continuity;
+- generated tokens across all requests;
+- occupied GPU-hours and throughput;
+- execution errors, preemption and validity checks.
+
+The interpretation is frozen before generation. A favourable result supports further evaluation or publication claims;
+an unfavourable one triggers review and does not by itself invalidate independently verified corrections.
+
+Reporting: checkpoint records stay separate (B0: seeds 1234 and 1235; B1: seed 1236). Pooled scores are not labelled a
+three-pass B1 result, and any family-level combination is exploratory and mixes two implementations.
+
+Publication preparation, during the run:
+- drafts of a tpurtell PR (exact changes, minimal reproductions, verification coverage and limits, B0/B1 results by
+  checkpoint, no claim that the gap is explained);
+- a vLLM bug report on D7 (minimal upstream reproduction, expected versus actual pooled contents, scheduler conditions,
+  correction approach, engine GPQA results as context only).
+Publication stays held for the operator's review after results.
+
+Operator note: if the pass is strong, an additional checkpoint pass may be warranted. That is a separate decision.
+
+**Amendment 19a (2026-10-13; frozen B1 screen package, before any generation).** b1-screen/SHA256SUMS has sha256
+73fa6661…, covering the runner (a4bb8e6b…), the analysis (79268c47…), the unchanged column-511 adjudication helper and
+FROZEN-INTERPRETATION.md (bbfb63d7…).
+
+Runner (a copy of the seed-1235 runner with B1's recipe, image id and env.sh pinned):
+- **Seed 1236:** reached as pass 3 through temporary empty pass-1/2 placeholders, which are removed on every exit path.
+  Pass 3 runs as the first pass of a fresh server.
+- **Protocol and limits:** original protocol; 7.5 GPU-hour watchdog; no retry.
+- **Added refusals:** frozen hashes, prior B1 data, launcher overrides, ports, and GPU occupancy.
+- **Correction:** the earlier runners' watchdog `pkill` pattern never matched the chain, because `+` in the recipe name
+  acts as a regex operator. lm_eval and the server would still have been stopped, and no watchdog ever fired in a B0
+  session. The new runner escapes the pattern.
+
+References, with request seeds confirmed from the proxy logs (each was the second pass of its server session; B1 will be
+the first of a fresh one):
+
+| Pass | Role | Empty | Raw | Stated |
+|---|---|---:|---:|---:|
+| stock 0.9.1 pass 3 | primary | 6 | 171 | 174 |
+| column-511 arm pass 3 | context | 6 | 171 | 174 |
+| stock 0.7.0 pass 3 | context | 1 | 175 | 177 |
+
+Frozen categories: amendment 15b's scheme with E = 6 as the baseline (SIMILAR OR WORSE / MODEST IMPROVEMENT / PROMISING,
+the material concern and accuracy concern on the six-pass family standard). For amendment 19 this reads as:
+- **favourable** = PROMISING;
+- **unfavourable** = a material concern, or E ≥ 7 (above every stock-family pass), which triggers review;
+- **similar** = otherwise.
+There is no significance or equivalence claim and no D7 effect. B0 and B1 records stay separate; the three-seed view is
+exploratory.
+
+Dry runs:
+- analysis with the arm as a labelled stand-in: valid 41/41;
+- category boundaries: 16/16;
+- refusal paths: 23/23;
+- session simulation (normal end, SIGTERM, watchdog): 30/30;
+- `DRY_RUN=1` on the real machine: passes.
+
+Expected cost: 4.6-6.0 occupied GPU-hours (point estimate about 5.1); watchdog 7.5.
+
+Correction: the seed-1235 table published the 0.7.0 stated count as 178; the published rows give 177 (context column;
+no category change).
+
+GPU use awaits the operator's authorization.
+
+**Amendment 19b (2026-10-13; operator authorization, before generation).** "Launch": one B1 seed-1236 GPQA pass under the
+frozen package of amendment 19a, with a 7.5 occupied GPU-hour watchdog, one session and no retry. Upstream contributions
+stay as drafts only, with no GitHub PR, issue or other publishing.

@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-10-13, afternoon (completion investigation, amendments 19-19b): B1 GPQA pass running; a correction
+
+Contents unchanged: 65 runs, 13 comparisons. No result is added yet.
+
+- **`PLAN.md`**: amendments 19 (B1 checkpoint benchmark: preparation), 19a (frozen package: runner, analysis,
+  interpretation and hashes; corrections) and 19b (launch authorization; upstream contributions stay drafts).
+- **Investigation `README.md`**:
+  - status and next steps say the B1 pass is running, results pending;
+  - the seed-1235 table's 0.7.0 stated count is corrected from 178 to 177, matching the published rows, with a
+    correction note.
+- **`LEDGER.md`**: checkpoint status, the running pass and the correction.
+
 ## 2026-10-13, later (completion investigation, amendments 18-18c): D7 corrected and verified (B1)
 
 Contents unchanged: 65 runs, 13 comparisons. No earlier run or number changed. Item 4k is new.

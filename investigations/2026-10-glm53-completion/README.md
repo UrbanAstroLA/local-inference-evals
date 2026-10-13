@@ -39,7 +39,9 @@ to an independent recompute; 0.6244 GPU-hours. Cumulative 49.52 GPU-hours;
 occupied GPU-hours of the three K3.25 records are
 [reconstructed from start-to-stop timings](#occupied-gpu-hours-of-the-three-k325-records). A replication of stock
 0.7.0's record stays deferred, not authorized (amendments 12, 14). B1 is the correctness checkpoint; D7's behavioural
-investigation is closed for now (no GPQA pass); the next item is another specific untested invariant.
+investigation is closed for now. **Running:** one GPQA pass of B1 (all 198 questions, seed 1236; a checkpoint
+characterization, not a D7 attribution), against the stock 0.9.1 pass at the same seed, under rules frozen before
+generation ([amendment 19](PLAN.md)); results pending.
 Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#dated-amendments).
 **Fast path:** [answer](#answer) · [evidence](#evidence) · [configuration diff](#what-differs-between-the-two-servers) ·
 [Phase 1](#phase-1) · [completion pilot](#completion-pilot-and-replication) ·
@@ -868,7 +870,10 @@ on the family standard; category MODEST IMPROVEMENT, NO CLEAR SEPARATION.**
 |---|---:|---:|---:|---:|
 | Empty replies | 3 (3 cap) | 5 (5 cap) | 5 (5 cap) | 3 (3 cap) |
 | Rescued / newly empty with the bundle | | 2 (q55, q81) / 0 | 5 (q74, q108, q120, q127, q186) / 3 (q79, q121, q147) | 1 (q81) / 1 (q147) |
-| Raw / stated correct (secondary) | 168 / 169 | 176 / 178 | 170 / 176 | 175 / 178 |
+| Raw / stated correct (secondary) | 168 / 169 | 176 / 178 | 170 / 176 | 175 / 177 |
+
+*Correction (2026-10-13, amendment 19a):* the 0.7.0 stated count at seed 1235 was first published as 178; the published
+per-question rows, which include the hand read of one reply, give 177. Context column only; no category changes.
 
 - Stated-answer adjudication complete before the category: 5 rows (docs 64, 94, 110, 113, 179); doc 94 hedged.
 - Against the matched stock pass: raw −8, stated −9 (single pass, secondary, no significance claim). The matched-offset
@@ -1127,6 +1132,15 @@ Stated with their evidence so far.
 ## Next steps
 
 D7 is corrected and verified in serving (amendment 18). B1 = B0 + D7 is the correctness checkpoint.
+
+**In progress (amendments 19-19b):**
+- One GPQA pass of B1 at seed 1236, characterizing the checkpoint before any upstream publication.
+- Primary reference: the stock 0.9.1 pass at the same seed (6 empty, raw 171, stated 174). Context: the column-511 arm
+  and stock 0.7.0 at that seed.
+- The categories were frozen before generation; the watchdog is 7.5 GPU-hours, with no retry.
+- B1's record stays separate from B0's two passes (seeds 1234 and 1235). It is not a three-pass result and does not
+  estimate D7's individual effect.
+- Upstream contributions are prepared as drafts and held until the investigation concludes.
 
 Under amendment 18a's outcome rules:
 - **Exposure is narrow and opposite to the gap**, so D7's behavioural investigation is closed for now and no GPQA pass

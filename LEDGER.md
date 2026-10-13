@@ -375,6 +375,27 @@ What was asked, run, found, corrected and withdrawn, in date order.
   GPQA pass and completion impact is untested. Cumulative 49.52 GPU-hours.
   [D7 correction](investigations/2026-10-glm53-completion/README.md#d7-correction-and-verification-amendment-18).
 
+**2026-10-13, afternoon. Checkpoint status, and the B1 GPQA pass (amendments 19-19b), results pending.**
+- **Where the corrections stand.** Each correction in the package is validated and measured on its own terms:
+  - D1 column-511 selection: verified offline, in place and in shipped graphs;
+  - D2 tail ring: 0 null-block or foreign writes;
+  - D3 router: fp32-output logits within tolerance of fp64, as served;
+  - D4 SwiGLU limit: reaches the served kernels; whether it engages at 10 is not measured;
+  - D7 unaligned chunk starts: verified in serving with byte-level checks.
+- **What GPQA shows so far** (B0 = D1-D4, two passes): 3 and 3 of 198 answers empty against 5 and 5 for stock 0.9.1 at
+  the same seeds. That is a modest, consistent reduction without clear separation, and it does not reach stock 0.7.0's
+  record. The 0.7.0-vs-0.9.1 completion gap is not explained.
+- **B1 = B0 + D7** is the correctness checkpoint. It is built from B0's image and differs only in the D7 file; D1-D4
+  regressions pass on it.
+- **One GPQA pass of B1** (seed 1236; primary reference: stock 0.9.1 at seed 1236, 6 empty) is running under rules
+  frozen before generation, with a 7.5 GPU-hour watchdog and no retry. It characterizes the checkpoint; it does not
+  attribute an effect to D7, and it stays a separate record from B0's passes.
+- **Owned:** the seed-1235 table published stock 0.7.0's stated count as 178; the published per-question rows give 177.
+  It is corrected in the README, in a context column, with no category change.
+- **Upstream:** a pull request for the engine (D1-D4 and D7, each with a minimal reproduction) and a vLLM report on D7
+  are drafted and held until the investigation concludes.
+- Cumulative 49.52 GPU-hours before this pass.
+
 ## Withdrawn, and what replaced it
 
 > **Withdrawal notice (2026-10-09).** The earlier hard-question screens (`hard-prompt-screen` v0 and v1, 2026-09-30 to
