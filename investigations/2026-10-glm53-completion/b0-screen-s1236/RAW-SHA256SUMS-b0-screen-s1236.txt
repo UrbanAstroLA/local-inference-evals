@@ -1,0 +1,7 @@
+# sha256 of local files not published (reason in brackets). Paths relative to the local folder.
+a2cbbb3c94384ef6dd73f3850d3066f4370b4cdc5562221cc6a580d7b82cd68c  ./__pycache__/analysis_col511.cpython-312.pyc   (bytecode)
+8928c0f77aff5a61359b4a01636f46f868d44a3e0b57073bcccaa41c304adf74  ./b0s1236-run.log   (the run in progress (published after it ends))
+e33264fbd6ff277c5e0fb5cebcdb4582543e61d929af04e3414c708a8c82a781  ./run-s1236/image-id.txt   (the run in progress (published after it ends))
+3d893d09cd331682e42662c234704f7d5377f349ac295a67cda85f2e6ad825ad  ./run-s1236/nvidia-smi.log   (the run in progress (published after it ends))
+92612b728e57050f56b4a30704aec134c6513fa2a9e494b7f36a6333ac560979  ./run-s1236/scripts.sha256   (the run in progress (published after it ends))
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./run-s1236/watchdog.log   (the run in progress (published after it ends))

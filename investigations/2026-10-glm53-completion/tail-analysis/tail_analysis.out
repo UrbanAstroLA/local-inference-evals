@@ -1,0 +1,65 @@
+Zero-GPU tail analysis (operator request 2026-10-13, after the B1 seed-1236 pass; exploratory, not pre-registered).
+
+Question: do engines differ in how often a long deliberation *finishes* before the 327,680-token cap, given that it got
+long?  Inputs: recording-proxy request logs (completion_tokens, finish_reason, content_chars) of every logged K3.25 GPQA
+pass, joined to doc ids by messages_sha256. Counts only; no reply text.
+
+Per pass: replies reaching L tokens (finished at >= L or capped), and how many of those finished
+
+pass                    >=  32k reach/fin  >=  64k reach/fin  >= 100k reach/fin  >= 200k reach/fin   capped
+0.7.0 1235                     28/25              14/11               8/5                5/2           3
+0.7.0 1236                     29/28              15/14               6/5                3/2           1
+stock 0.9.1 1234               24/20              13/9                7/3                5/1           4
+stock 0.9.1 1235               28/23              15/10               9/4                6/1           5
+stock 0.9.1 1236               25/19              13/7                9/3                6/0           6
+col511 arm 1234                27/23              14/10               8/4                5/1           4
+col511 arm 1235                24/19              16/11               9/4                5/0           5
+col511 arm 1236                22/16              16/10               8/2                6/0           6
+B0 1234                        22/19              11/8                4/1                3/0           3
+B0 1235                        22/19               6/3                4/1                3/0           3
+B1 1236                        26/17              12/3                9/0                9/0           9
+
+Pooled by engine: P(finish | reached L), passes pooled; 95% CI by bootstrap over questions
+  L = 32,000
+    0.7.0                      reached  57 (questions  35), finished  53  P = 0.93  [0.86, 0.98]
+    0.9.1 family (stock+arm)   reached 150 (questions  44), finished 120  P = 0.80  [0.70, 0.89]
+    corrected (B0+B1)          reached  70 (questions  37), finished  55  P = 0.79  [0.67, 0.90]
+    stock 0.9.1                reached  77 (questions  38), finished  62  P = 0.81  [0.70, 0.90]
+  L = 64,000
+    0.7.0                      reached  29 (questions  19), finished  25  P = 0.86  [0.74, 0.97]
+    0.9.1 family (stock+arm)   reached  87 (questions  32), finished  57  P = 0.66  [0.52, 0.79]
+    corrected (B0+B1)          reached  29 (questions  18), finished  14  P = 0.48  [0.32, 0.67]
+    stock 0.9.1                reached  41 (questions  25), finished  26  P = 0.63  [0.49, 0.80]
+  L = 100,000
+    0.7.0                      reached  14 (questions  11), finished  10  P = 0.71  [0.46, 0.93]
+    0.9.1 family (stock+arm)   reached  50 (questions  23), finished  20  P = 0.40  [0.26, 0.57]
+    corrected (B0+B1)          reached  17 (questions  11), finished   2  P = 0.12  [0.00, 0.27]
+    stock 0.9.1                reached  25 (questions  15), finished  10  P = 0.40  [0.23, 0.58]
+  L = 200,000
+    0.7.0                      reached   8 (questions   7), finished   4  P = 0.50  [0.14, 0.86]
+    0.9.1 family (stock+arm)   reached  33 (questions  16), finished   3  P = 0.09  [0.00, 0.20]
+    corrected (B0+B1)          reached  15 (questions  10), finished   0  P = 0.00  [0.00, 0.00]
+    stock 0.9.1                reached  17 (questions  11), finished   2  P = 0.12  [0.00, 0.27]
+
+Conclusion hazard: among replies still going at the start of each band, fraction that finish inside it
+  0.7.0                        0-16 k 304/396   16-32 k  35/92    32-64 k  28/57    64-100k  15/29   100-150k   5/14   150-200k   1/9    200-260k   4/8    260-327k   0/4   
+  0.9.1 family (stock+arm)     0-16 k 920/1188  16-32 k 118/268   32-64 k  63/150   64-100k  37/87   100-150k  14/50   150-200k   3/36   200-260k   2/33   260-327k   1/31  
+  corrected (B0+B1)            0-16 k 462/594   16-32 k  62/132   32-64 k  41/70    64-100k  12/29   100-150k   2/17   150-200k   0/15   200-260k   0/15   260-327k   0/15  
+  stock 0.9.1                  0-16 k 462/594   16-32 k  55/132   32-64 k  36/77    64-100k  16/41   100-150k   7/25   150-200k   1/18   200-260k   1/17   260-327k   1/16  
+
+Question as the unit: questions that reached 100k in both a 0.7.0 pass and a 0.9.1-family pass; per question, finish fraction among its >=100k replies
+    doc   8: 0.7.0 1/1  0.9.1-family 1/1
+    doc  79: 0.7.0 0/1  0.9.1-family 2/6
+    doc  81: 0.7.0 0/1  0.9.1-family 0/3
+    doc 120: 0.7.0 1/1  0.9.1-family 1/3
+    doc 121: 0.7.0 0/1  0.9.1-family 0/1
+    doc 127: 0.7.0 2/2  0.9.1-family 1/6
+    doc 147: 0.7.0 1/1  0.9.1-family 2/5
+    doc 186: 0.7.0 2/2  0.9.1-family 1/2
+  8 common questions: 0.7.0 higher on 4, lower on 1, equal on 3; mean difference +0.28
+
+Reach rate (does the engine get long more often?): replies reaching 100k per pass
+  0.7.0                      7.0 per pass over 2 passes
+  0.9.1 family (stock+arm)   8.3 per pass over 6 passes
+  corrected (B0+B1)          5.7 per pass over 3 passes
+  stock 0.9.1                8.3 per pass over 3 passes

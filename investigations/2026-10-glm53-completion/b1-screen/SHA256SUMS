@@ -1,0 +1,13 @@
+a4bb8e6b68c6b7adbd71b377eb3a361dfbaf2cb4864854d2d976c7f0c9af1928  gpqa-b1-screen-s1236.sh
+79268c4730d3c0f371cbc9afafa51680ff3d7bfbbfb1befd3827b957f2465b9c  b1screen_analysis.py
+b5b13ce2155085ca46fb24877f12b7cd0a5cdd16eb4cf19012958e7b86ae0033  analysis_col511.py
+bbfb63d7d448c6b66d7d92b87da8531254cf71df0eb682cacf7d901a854b1194  FROZEN-INTERPRETATION.md
+c4dbb500220772e8bcb1c4a4b6f2e3715176c011d012e8bd95db560ccd8b0cdd  <stacks>/glm53-flash-v0.8.0/eval-chain.sh
+946d880e1df584abbf03b6ab79cc2587dd447c800d1ead6dc3bfaf9b70394d76  <eval-tools>/diag/record_proxy.py
+e13116ca27db071254787043eabe13da497d3cb3cd0d069bc45d5eefa924f8e7  <eval-tools>/local-gpqa-score
+869b0c0af97865c637986f5dfe6be9886e511514cb3b24818208052b505b5fe3  <stacks>/glm53-flash-v0.9.0/start.sh
+f4658b81eeb4c4d5403a95795f10cf5962eedd8cc5161372356ac725a1404fe6  <stacks>/glm53-flash-v0.9.0/local-env.sh
+e1196cbcd6b4744cb41fdebf3d12d8586dbea464e702af5de47617837efe0e5e  <stacks>/glm53-flash-v0.9.0/start.sh
+a4ccf85dc1e1dd75acdb8549ecaec82137c9f77b47e5bb6464d82f04ef5537f1  <stacks>/glm53-flash-v0.9.0/model-profiles.sh
+49f1c57cce0e3c4f022a1ff846362cdd21e9e59d633ec021be8cacdb561d2bf7  <recipes>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234+d7/env.sh
+1ea07f7784b274ed95c269722bf779ba1bd4b6c0567efa23d302e81152754b7d  <recipes>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234+d7/recipe.json

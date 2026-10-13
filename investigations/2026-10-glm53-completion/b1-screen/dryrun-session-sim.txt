@@ -1,0 +1,39 @@
+# session_sim.sh run 2026-10-13T08:43:15-07:00 (CPU only; shims; fake chain; no container, no GPU)
+== (a) normal completion
+  runner rc=0
+  ok    placeholders __pass1/__pass2 removed
+  ok    pass-3 directory created by the (fake) chain; passes 1-2 skipped
+  ok    chain called with GPQA_PASSES=3 SEED_PER_PASS=1 CONC=8 BASE=proxy
+  ok    exactly one cost line
+  ok    server stopped (docker stop glm53-flash-exl3-b12x-vllm)
+  ok    no refused docker call
+  ok    fake chain gone
+  ok    proxy gone (8002 free)
+  ok    cost line: watchdog_fired false, chain_rc 0
+  ok    analysis ran and reported invalid (empty pass dir) with rc 3
+== (b) SIGTERM to the runner during the chain
+  runner rc=4
+  ok    placeholders __pass1/__pass2 removed
+  ok    pass-3 directory created by the (fake) chain; passes 1-2 skipped
+  ok    chain called with GPQA_PASSES=3 SEED_PER_PASS=1 CONC=8 BASE=proxy
+  ok    exactly one cost line
+  ok    server stopped (docker stop glm53-flash-exl3-b12x-vllm)
+  ok    no refused docker call
+  ok    fake chain gone
+  ok    proxy gone (8002 free)
+  ok    runner reported the signal and the interrupted-session cleanup
+  ok    cost line has chain_rc null
+== (c) watchdog at CEIL_GH=0.04 (72 s wall; checked every 60 s)
+  runner rc=0
+  ok    placeholders __pass1/__pass2 removed
+  ok    pass-3 directory created by the (fake) chain; passes 1-2 skipped
+  ok    chain called with GPQA_PASSES=3 SEED_PER_PASS=1 CONC=8 BASE=proxy
+  ok    exactly one cost line
+  ok    server stopped (docker stop glm53-flash-exl3-b12x-vllm)
+  ok    no refused docker call
+  ok    fake chain gone
+  ok    proxy gone (8002 free)
+  ok    watchdog fired and the cost line records it
+  ok    watchdog's escaped pattern killed the chain (wall < 200 s)
+RESULT: 30 passed, 0 failed
+rc=0

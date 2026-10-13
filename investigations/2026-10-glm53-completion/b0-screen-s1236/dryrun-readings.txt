@@ -1,0 +1,45 @@
+== part 1: amendment-15b / 19 / 14c functions against the B1 package's frozen cases
+ok   E=0 raw=171 stated=174 premature=0: ('PROMISING FOLLOW-UP SIGNAL', 'FAVOURABLE', False, 'CLEAR PROMISING')
+ok   E=2 raw=164 stated=166 premature=0: ('PROMISING FOLLOW-UP SIGNAL', 'FAVOURABLE', False, 'CLEAR PROMISING')
+ok   E=1 raw=171 stated=174 premature=1: ('PROMISING FOLLOW-UP SIGNAL', 'FAVOURABLE', False, 'CLEAR PROMISING')
+ok   E=2 raw=163 stated=166 premature=0: ('MODEST IMPROVEMENT, NO CLEAR SEPARATION', 'SIMILAR', True, 'MIXED')
+ok   E=2 raw=159 stated=166 premature=0: ('MODEST IMPROVEMENT, NO CLEAR SEPARATION', 'SIMILAR', True, 'MIXED')
+ok   E=2 raw=158 stated=166 premature=0: ('SIMILAR OR WORSE', 'UNFAVOURABLE', False, 'MIXED')
+ok   E=2 raw=170 stated=159 premature=0: ('SIMILAR OR WORSE', 'UNFAVOURABLE', False, 'MIXED')
+ok   E=2 raw=170 stated=160 premature=0: ('PROMISING FOLLOW-UP SIGNAL', 'FAVOURABLE', False, 'CLEAR PROMISING')
+ok   E=2 raw=171 stated=174 premature=2: ('SIMILAR OR WORSE', 'UNFAVOURABLE', False, 'MIXED')
+ok   E=3 raw=171 stated=174 premature=0: ('MODEST IMPROVEMENT, NO CLEAR SEPARATION', 'SIMILAR', False, 'SIMILAR / NO CLEAR SEPARATION')
+ok   E=4 raw=171 stated=174 premature=0: ('MODEST IMPROVEMENT, NO CLEAR SEPARATION', 'SIMILAR', False, 'SIMILAR OR WORSE')
+ok   E=5 raw=171 stated=174 premature=0: ('MODEST IMPROVEMENT, NO CLEAR SEPARATION', 'SIMILAR', False, 'SIMILAR OR WORSE')
+ok   E=6 raw=171 stated=174 premature=0: ('SIMILAR OR WORSE', 'SIMILAR', False, 'SIMILAR OR WORSE')
+ok   E=6 raw=160 stated=170 premature=0: ('SIMILAR OR WORSE', 'SIMILAR', True, 'SIMILAR OR WORSE')
+ok   E=7 raw=171 stated=174 premature=0: ('SIMILAR OR WORSE', 'UNFAVOURABLE', False, 'SIMILAR OR WORSE')
+ok   E=12 raw=176 stated=178 premature=0: ('SIMILAR OR WORSE', 'UNFAVOURABLE', False, 'SIMILAR OR WORSE')
+== part 2: B0-vs-B1 reading and identity reading
+ok   reading E=0 I_ne=0: ('(b)', 'run-to-run')
+ok   reading E=3 I_ne=0: ('(b)', 'run-to-run')
+ok   reading E=6 I_ne=0: ('(b)', 'run-to-run')
+ok   reading E=6 I_ne=2: ('(b)', 'run-to-run')
+ok   reading E=6 I_ne=3: ('(b)', 'no lean')
+ok   reading E=6 I_ne=19: ('(b)', 'no lean')
+ok   reading E=6 I_ne=20: ('(b)', 're-check')
+ok   reading E=4 I_ne=150: ('(b)', 're-check')
+ok   reading E=7 I_ne=0: ('(c)', None)
+ok   reading E=7 I_ne=50: ('(c)', None)
+ok   reading E=8 I_ne=0: ('(a)', None)
+ok   reading E=9 I_ne=198: ('(a)', None)
+ok   reading E=15 I_ne=0: ('(a)', None)
+ok   identity reading I_ne=0: BATCHING NONDETERMINISM DOMINATES
+ok   identity reading I_ne=2: BATCHING NONDETERMINISM DOMINATES
+ok   identity reading I_ne=3: PARTIAL
+ok   identity reading I_ne=19: PARTIAL
+ok   identity reading I_ne=20: NEAR-DETERMINISTIC AT A FIXED SEED
+ok   identity reading I_ne=198: NEAR-DETERMINISTIC AT A FIXED SEED
+== part 3: identity() on synthetic rows
+ok   identical content+tokens (docs 0, 2, 4, 5): 4
+ok   I_ne counts non-empty identical only (docs 0, 5): (2, [0, 5])
+ok   both-empty identical by construction (docs 2, 4); at cap (doc 2): (2, 1)
+ok   strict: equal reasoning length (non-empty: doc 0; both-empty: doc 4): (1, 1)
+ok   identity reading of I_ne = 2: BATCHING NONDETERMINISM DOMINATES
+ok   empty agreement 2x2: (2, 0, 1, 3)
+RESULT: 41/41 as specified

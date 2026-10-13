@@ -35,13 +35,16 @@ caused by the investigation's own runner. D7's writer is identical in 0.7.0, 0.8
 in the GPQA records its exposure is narrow and runs opposite to the gap (reconstructed: none in the 0.9.1 family, one
 question in 0.7.0, which finished). A writer-side correction ([amendment 18](#d7-correction-and-verification-amendment-18))
 was verified in serving as **B1 = B0 + D7**: CLEAN at 219 unaligned chunk starts, every straddling pool byte-identical
-to an independent recompute; 0.6244 GPU-hours. Cumulative 49.52 GPU-hours;
+to an independent recompute; 0.6244 GPU-hours. Cumulative 55.85 GPU-hours, including B1's GPQA pass (6.33);
 occupied GPU-hours of the three K3.25 records are
 [reconstructed from start-to-stop timings](#occupied-gpu-hours-of-the-three-k325-records). A replication of stock
 0.7.0's record stays deferred, not authorized (amendments 12, 14). B1 is the correctness checkpoint; D7's behavioural
-investigation is closed for now. **Running:** one GPQA pass of B1 (all 198 questions, seed 1236; a checkpoint
-characterization, not a D7 attribution), against the stock 0.9.1 pass at the same seed, under rules frozen before
-generation ([amendment 19](PLAN.md)); results pending.
+investigation is closed for now. A GPQA pass of B1 at seed 1236 ([amendment 19](#b1-checkpoint-pass-and-the-long-context-tail-amendment-19))
+left 9 of 198 replies empty, all at the cap, against 6 for stock 0.9.1 at that seed, with raw and stated accuracy
+unchanged. Under rules frozen before generation that reads unfavourable, which triggers review; it does not
+invalidate the verified corrections. A zero-GPU look at all logged passes (exploratory) then located the gap: replies
+get long equally often on every engine, but past about 100k tokens 0.9.1-family replies rarely finish (0.40 of those
+reaching 100k, B0+B1 0.12) while 0.7.0's usually do (0.71). A B0 pass at seed 1236, the review step, is running.
 Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#dated-amendments).
 **Fast path:** [answer](#answer) · [evidence](#evidence) · [configuration diff](#what-differs-between-the-two-servers) ·
 [Phase 1](#phase-1) · [completion pilot](#completion-pilot-and-replication) ·
@@ -50,7 +53,7 @@ Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#d
 [gate](#gate-column-511-correction-in-the-shipped-graph-configuration) · [completion arm](#completion-arm) · [upstream comparison](#comparison-with-upstream-vllm) ·
 [stage A](#stage-a-verification-d3-d4-d5) · [defect matrix](#defect-matrix-d1-d7) · [bundle gate](#bundle-gate-d1d2d3d4-on-091) ·
 [screen](#one-pass-gpqa-screen) · [second pass](#second-pass-seed-1235) · [checkpoint B0](#checkpoint-b0-and-targeted-invariants-amendment-16) ·
-[live slot mappings](#live-slot-mappings-on-b0-amendment-17) · [D7 correction](#d7-correction-and-verification-amendment-18) · [observations recorded separately](#observations-recorded-separately) ·
+[live slot mappings](#live-slot-mappings-on-b0-amendment-17) · [D7 correction](#d7-correction-and-verification-amendment-18) · [B1 pass and long-context tail](#b1-checkpoint-pass-and-the-long-context-tail-amendment-19) · [observations recorded separately](#observations-recorded-separately) ·
 [open questions](#open-questions) · [limits](#limits) · [next steps](#next-steps) · [recompute](#recompute)
 
 ## Answer
@@ -1082,6 +1085,72 @@ a reconstruction.
 - D7's behavioural investigation is closed for now.
 - The correction and a minimal reproduction are kept for upstream.
 
+### B1 checkpoint pass and the long-context tail (amendment 19)
+
+Amendments 19-19f. Receipts are in [`b1-screen/`](b1-screen), [`b0-screen-s1236/`](b0-screen-s1236) (the frozen package
+only; its run is in progress) and [`tail-analysis/`](tail-analysis).
+
+**B1 checkpoint pass** (amendments 19-19c): one GPQA pass of B1 = B0 + D7 at seed 1236, with the original protocol, a
+fresh server, rules frozen before generation and a 7.5 GPU-hour watchdog. It is a checkpoint characterization, not a
+D7 attribution, and a separate record from B0's passes.
+
+| Seed 1236 | B1 | Stock 0.9.1 (primary) | Column-511 arm | Stock 0.7.0 |
+|---|---:|---:|---:|---:|
+| Empty replies | **9** (9 cap, 0 premature) | 6 (6 cap) | 6 (6 cap) | 1 (1 cap) |
+| Raw / stated correct | 173 / 174 | 171 / 174 | 171 / 174 | 175 / 177 |
+| Generated tokens | 4.81 M | 4.25 M | 4.29 M | 3.37 M |
+
+- **Validity:** the pass is valid; one reply was hand-read and found not hedged.
+- **Against stock 0.9.1:** doc 170 rescued; docs 8, 69, 130 and 145 newly empty.
+- **Frozen reading:** SIMILAR OR WORSE on amendment 15b's scheme, and **unfavourable** for amendment 19, because E = 9 is
+  above every stock-family pass (4-6). This triggers review and does not invalidate the verified corrections.
+- **No accuracy concern.**
+- **Exploratory three-seed view** (B0 at 1234 and 1235 with B1 at 1236): 15 against 16 empty of 594. B0's two-seed
+  reduction does not persist.
+- **Cost:** 6.33 GPU-hours.
+
+**Post-hoc token reading** ([`b1-screen/run-s1236/token-analysis-posthoc.md`](b1-screen/run-s1236/token-analysis-posthoc.md)):
+- B1's +0.56 M generated tokens equal its 3 extra capped replies (each is 327,680 tokens); its finished replies total
+  0.43 M fewer tokens than stock's.
+- Over 188 mutually finished documents the per-document token difference has median −30, the same spread as every
+  other pair, including stock against itself at another seed.
+- B0 generated fewer tokens than stock at seeds 1234 and 1235.
+- The four newly empty documents are short single-chunk prompts on which the D7 code path cannot run (exposure class
+  unsplittable). Each finished in every earlier B0 and stock pass.
+- Replies from builds that differ numerically are never byte-identical at the same seed: the identical-reply counts
+  first quoted (2-5 of 198) were all pairs of empty replies.
+
+**Review step** (amendments 19d-19e, running): a B0 pass at seed 1236. B0 and B1 differ only in the D7 file, and D7 is
+reconstructed as not reaching GPQA prompts, so this is a near-replicate of B1. It measures run-to-run variation at a
+fixed seed and completes B0's three-seed record. Its readings are frozen: an empty count of 8 or more means the excess
+belongs to the corrected family at this seed, not D7; 6 or fewer means D7 or run-to-run variation, with a weak lean from
+the count of identical non-empty replies.
+
+**The long-context tail** (amendment 19f; exploratory, chosen after the B1 result;
+[`tail-analysis/`](tail-analysis/tail_analysis.out)). It uses the 11 logged K3.25 passes (counts only; older records
+kept no token counts).
+
+| Reached | 0.7.0 (2 passes) | 0.9.1 family (6) | B0 + B1 (3) |
+|---|---|---|---|
+| Replies reaching 100k per pass | 7.0 | 8.3 | 5.7 |
+| P(finish \| ≥ 64k) | 0.86 [0.74, 0.97] | 0.66 [0.52, 0.79] | 0.48 [0.32, 0.67] |
+| P(finish \| ≥ 100k) | **0.71** [0.46, 0.93] | **0.40** [0.26, 0.57] | **0.12** [0.00, 0.27] |
+| P(finish \| ≥ 200k) | 4 of 8 | 3 of 33 | 0 of 15 |
+
+Intervals are bootstrapped over questions.
+- **Finishing beyond 150k tokens:** 0.9.1-family replies still running past 150k almost never finish (6 of about 100);
+  0.7.0's still do (4 of 8 in 200-260k).
+- **Question as the unit:** of 8 questions that reached 100k on both engines, 0.7.0 finished a larger share on 4, a
+  smaller share on 1 and the same on 3.
+- **Reading (exploratory):** the completion gap is not in how often replies get long but in whether long replies
+  terminate. That points to decode behaviour at contexts of about 64-100k tokens and beyond, a range no earlier probe
+  measured (Phase 1 stopped at 16k).
+- **Accuracy:** B0 and B1 are more correct, with every correction verified, but are not shown to be more accurate.
+- **Direction of the cause is open:** 0.9.1 failing to terminate, or 0.7.0 terminating for a reason that could include
+  its own defects.
+- **Limits:** 0.7.0 contributes 14 replies at ≥ 100k over 11 questions, and its first pass is unlogged; seeds are reused
+  and controls are historical.
+
 ### Observations recorded separately
 
 Evidence only; no completion claim.
@@ -1107,6 +1176,7 @@ Stated with their evidence so far.
 | Why does greedy decoding of 0.9.1 diverge between identical long-context requests? | Short prompts repeat bitwise for 96 tokens; 4,240- and 16,240-token prompts diverge at token 3 in the stock release, also with identical prefix-cache coverage; divergences fell on low-margin steps (chosen-token probability 0.30-0.66; runner-up not recorded). Mechanism not identified ([observations](#observations-recorded-separately)). |
 | Does E1 (batch-size-dependent routing weights) affect outputs? | Weights differ by up to 1.1e-3 relative above about 1,024 rows (p99 5.6e-7); expert ids unchanged, by construction and on the captured rows; inferred exposure prefill only; classified as expected numerical variation of the upstream kernel, present in every release. Untested. |
 | Does D7 (index-K pools after unaligned prefill chunk starts) affect selection, outputs or completion? | Confirmed in serving on B0 (217 events in 50 requests of a long-prefix workload) and corrected in B1 ([amendments 17-18](#d7-correction-and-verification-amendment-18)). In the GPQA records the exposure is narrow: none in the 0.9.1 family and doc 127 in 0.7.0 passes 2-3, which finished (reconstructed). The selection effect was not measured. Untested; the behavioural investigation is closed for now. |
+| Why do long replies stop terminating on the 0.9.1 family? | Exploratory (amendment 19f): replies reach ≥ 100k tokens at similar rates on every engine, but P(finish \| ≥ 100k) is 0.71 on 0.7.0, 0.40 on the 0.9.1 family and 0.12 on B0+B1; beyond about 150k the 0.9.1 family almost never finishes. Decode behaviour at contexts of about 64-100k tokens and beyond was not measured by any probe so far. Whether the cause is 0.9.1 failing to terminate or 0.7.0 terminating for another reason is open. |
 | What do the targeted invariants on B0 leave unexamined? | Amendment 17 checked block-table and slot-mapping construction under real scheduling, including the index-K readers' mappings, and found only D7. Still not ruled down: copy-on-write prefix paths (unreachable in that workload); contention-dependent races; the values the index-K readers compute (B12x paged top-k and the compiled prefill readers); the sparse-MLA extend reader under graph replay; the mamba postprocess kernel; communication paths other than the tested transport (PyNCCL above 48 rows was only cross-checked; the owner exchange; contention with model kernels); the mixed-quant MoE path, whose reference harness was deferred (amendment 16). Rank 1's cache tensors were not driven by the cache fixture (same geometry per tensor; amendment 17 checked both ranks' mappings in serving). No evidence yet points to any of these. |
 | Do legitimate numerical differences shift how often long deliberation runs past the cap? | Non-completion is a low-rate tail event (about 1 in 10 fresh draws at these caps on two hard questions); small pilots cannot resolve rates near 2.7% vs 0.7% of replies. |
 | Which part of the 0.7.0 layout bundle goes with the higher disagreement? | Step 6 changed EP, DCP, MLA ownership, KV record, draft pages and the top-k merge path together, and still differs from stock 0.7.0 in the top-k merge path, draft depth (×3 vs ×5), vision and engine code. Inconclusive by component. |
@@ -1133,24 +1203,20 @@ Stated with their evidence so far.
 
 D7 is corrected and verified in serving (amendment 18). B1 = B0 + D7 is the correctness checkpoint.
 
-**In progress (amendments 19-19b):**
-- One GPQA pass of B1 at seed 1236, characterizing the checkpoint before any upstream publication.
-- Primary reference: the stock 0.9.1 pass at the same seed (6 empty, raw 171, stated 174). Context: the column-511 arm
-  and stock 0.7.0 at that seed.
-- The categories were frozen before generation; the watchdog is 7.5 GPU-hours, with no retry.
-- B1's record stays separate from B0's two passes (seeds 1234 and 1235). It is not a three-pass result and does not
-  estimate D7's individual effect.
-- Upstream contributions are prepared as drafts and held until the investigation concludes.
+**B1 checkpoint pass (amendments 19-19c):** 9 of 198 empty against 6 for stock 0.9.1 at seed 1236. Frozen reading
+unfavourable, which triggers review.
 
-Under amendment 18a's outcome rules:
-- **Exposure is narrow and opposite to the gap**, so D7's behavioural investigation is closed for now and no GPQA pass
-  is run.
-- **The next item** is another specific untested invariant. The mixed-quant MoE fidelity fixture is the one queued
-  (amendment 17).
-- **Upstream:** the minimal reproduction and patch are kept for reporting upstream and to the engine's author when the
-  investigation concludes.
+**In progress (amendments 19d-19e):** a B0 pass at seed 1236, the review step, with readings frozen before generation.
 
-Every next step still needs a costed proposal and approval.
+**Next proposal (amendment 19f):** a long-context termination probe.
+- **Discovery first, zero GPU:** what differs between 0.7.0 and 0.9.1 in ways that scale with context length (sparse
+  index-K selection as the pool count grows, DCP2 against DCP1 top-k merging, ×5 against ×3 drafting, block size, the
+  tail ring).
+- **Then, if justified, teacher-forced scoring on GPU:** the same long reasoning traces scored on both engines,
+  comparing the end-of-reasoning probability and token agreement at positions from 64k to 300k.
+- Each step needs a costed proposal and independent review.
+
+Upstream contributions are prepared as drafts and held until the investigation concludes.
 
 Earlier positions stand:
 
@@ -1164,6 +1230,7 @@ Open, with their evidence above:
 
 - what produces the completion gap;
 - whether D7 affects selection or completion (corrected in B1; behavioural investigation closed for now);
+- why long replies stop terminating on the 0.9.1 family (amendment 19f);
 - whether the bundle's lower count of empty replies holds beyond two seeds;
 - whether 0.7.0's rate of empty replies reproduces;
 - whether the tail-ring fix, router precision or the SwiGLU clamp change completion or accuracy individually;

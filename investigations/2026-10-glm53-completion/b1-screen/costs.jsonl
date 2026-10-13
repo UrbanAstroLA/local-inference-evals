@@ -1,0 +1,1 @@
+{"session": 1, "checkpoint": "B1", "recipe": "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234+d7", "image": "sha256:799d3cf8e5d14a615b89c734a6a38b4be5729bb44bb6b56effc7cf7df747b88a", "passes": "3", "seed": 1236, "wall_s": 11394, "gpus": 2, "gpu_hours": 6.33, "chain_rc": 0, "watchdog_fired": false}

@@ -1,0 +1,700 @@
+{
+ "label": "B1 checkpoint pass (seed 1236)",
+ "dry_run": null,
+ "valid": true,
+ "checks": [
+  [
+   "B1 checkpoint pass (seed 1236) pass 1: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "B1 checkpoint pass (seed 1236) pass 1: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "B1 checkpoint pass (seed 1236) pass 1: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "B1 checkpoint pass (seed 1236) pass 1: every request HTTP 200, seed 1236, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "B1 checkpoint pass (seed 1236) pass 1: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "request log of the new pass present",
+   true,
+   "<gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234+d7.s1.requests.jsonl"
+  ],
+  [
+   "0.9.1 record pass 3: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.9.1 record pass 3: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.9.1 record pass 3: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.9.1 record pass 3: every request HTTP 200, seed 1236, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 record pass 3: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 record: rows derived here reproduce the published rows (594 rows; empty, raw, strict, stated, hashes, finish reason, tokens)",
+   true,
+   "0 field mismatches"
+  ],
+  [
+   "col511 arm pass 3: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "col511 arm pass 3: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "col511 arm pass 3: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "col511 arm pass 3: every request HTTP 200, seed 1236, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "col511 arm pass 3: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.7.0 record (context) pass 3: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.7.0 record (context) pass 3: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.7.0 record (context) pass 3: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.7.0 record (context) pass 3: every request HTTP 200, seed 1236, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.7.0 record (context) pass 3: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.7.0 record (context): rows derived here reproduce the published rows (594 rows; empty, raw, strict, stated, hashes, finish reason, tokens)",
+   true,
+   "0 field mismatches"
+  ],
+  [
+   "frozen family constants reproduce (E, raw, stated of record p1-3 and arm p1-3; baseline E of record p3)",
+   true,
+   ""
+  ],
+  [
+   "B0 seed 1234 (bundle screen 1) pass 1: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "B0 seed 1234 (bundle screen 1) pass 1: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "B0 seed 1234 (bundle screen 1) pass 1: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "B0 seed 1234 (bundle screen 1) pass 1: every request HTTP 200, seed 1234, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "B0 seed 1234 (bundle screen 1) pass 1: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "B0 seed 1235 (bundle screen 2) pass 1: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "B0 seed 1235 (bundle screen 2) pass 1: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "B0 seed 1235 (bundle screen 2) pass 1: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "B0 seed 1235 (bundle screen 2) pass 1: every request HTTP 200, seed 1235, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "B0 seed 1235 (bundle screen 2) pass 1: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "prompts identical to record pass 3 (messages_sha256, 198 questions)",
+   true,
+   "0 differ"
+  ],
+  [
+   "prompts identical to arm pass 3 (messages_sha256, 198 questions)",
+   true,
+   "0 differ"
+  ],
+  [
+   "prompts identical to 0.7.0 pass 3 (messages_sha256, 198 questions)",
+   true,
+   "0 differ"
+  ],
+  [
+   "lm-eval: request seed 1236, --seed 1237, concurrency 8, timeout 10800, 3 retries, cap 327680; task hash = record pass 3",
+   true,
+   "{\"new\": {\"seed\": \"1236\", \"random_seed\": \"1237\", \"num_concurrent\": \"8\", \"timeout\": \"10800\", \"max_retries\": \"3\", \"max_gen_toks\": \"327680\", \"task_hash\": \"87e807b3b27c86618285efdab99466609ad12f022ae453146595fc8306b053b0\"}, \"record_pass3_task_hash\": \"87e807b3b27c86618285efdab99466609ad12f022ae453146595fc8306b053b0\"}"
+  ],
+  [
+   "no execution/stopping errors (finish reason stop or length on every request)",
+   true,
+   "[]"
+  ],
+  [
+   "server: one start, no illegal memory access / preemption / NaN lines in the request window",
+   true,
+   "{\"preemption_lines\": 0, \"illegal_memory_access_lines\": 0, \"nan_warning_lines\": 0}"
+  ],
+  [
+   "server: shipped configuration (non-default args as every 0.9.1-family session, cudagraph FULL_AND_PIECEWISE, KV pool 4,707,515, 9 release warm-ups logged)",
+   true,
+   "{\"non_default_args_sha256\": \"7025a96888a67642741db00aaecb9cbf786c2ba67cc4ded7d67c1cf4e909dcc5\", \"cudagraph_mode\": [\"FULL_AND_PIECEWISE\"], \"kv_pool_tokens\": [4707515], \"release_warmups_logged\": 9}"
+  ],
+  [
+   "container image is B1",
+   true,
+   "sha256:799d3cf8e5d14a615b89c734a6a38b4be5729bb44bb6b56effc7cf7df747b88a"
+  ],
+  [
+   "container settings equal to B0's seed-1235 session apart from the image (env as a set, cmd, args, binds, ports, shm, ipc, devices, network, runtime)",
+   true,
+   "differ: []"
+  ]
+ ],
+ "script_sha256": "79268c4730d3c0f371cbc9afafa51680ff3d7bfbbfb1befd3827b957f2465b9c",
+ "analysis_col511_sha256": "b5b13ce2155085ca46fb24877f12b7cd0a5cdd16eb4cf19012958e7b86ae0033",
+ "input_pins_informative": {
+  "all_unchanged": true,
+  "changed": []
+ },
+ "accuracy_standard": {
+  "family_raw": [
+   169,
+   176,
+   171,
+   164,
+   170,
+   171
+  ],
+  "family_stated": [
+   170,
+   178,
+   174,
+   165,
+   176,
+   174
+  ],
+  "family_empties": [
+   5,
+   5,
+   6,
+   4,
+   5,
+   6
+  ],
+  "raw_mean": 170.17,
+  "raw_sd": 3.87,
+  "stated_mean": 172.83,
+  "stated_sd": 4.67,
+  "material": "raw <= 158 or stated <= 159 or premature stops >= 2",
+  "concern": "raw 159-163",
+  "baseline_E": 6,
+  "family_E_max": 6
+ },
+ "part_A_b1_pass": {
+  "empties": 9,
+  "causes": {
+   "cap_exhaustion": 9
+  },
+  "category_15b": "PROVISIONAL (SIMILAR OR WORSE; stated adjudication pending for docs [37])",
+  "category_15b_if_adjudication_complete": "SIMILAR OR WORSE",
+  "reading_amendment19": "PROVISIONAL (UNFAVOURABLE)",
+  "reading_amendment19_if_adjudication_complete": "UNFAVOURABLE",
+  "reading_reasons": [
+   "E = 9 above every stock-family pass (max 6)"
+  ],
+  "adjudication_complete": false,
+  "adjudicated_docs": [],
+  "flags_family_standard": {
+   "material_concern": false,
+   "accuracy_concern": false,
+   "detail": {
+    "raw": 173,
+    "stated": 174,
+    "premature_stops": 0
+   }
+  },
+  "sensitivity_matched_offsets_vs_record_pass3": {
+   "baseline_raw": 171,
+   "baseline_stated": 174,
+   "flag": false,
+   "concern": false,
+   "rule": "flag raw <= 160 or stated <= 163 or >= 2 premature; concern raw 161-165"
+  },
+  "sensitivity_14c_absolute_rule": "SIMILAR OR WORSE",
+  "versus": {
+   "stock 0.9.1 record pass 3 (primary reference, seed 1236)": {
+    "baseline_empties": 6,
+    "baseline_causes": {
+     "cap_exhaustion": 6,
+     "premature_stop": 0,
+     "not_logged": 0,
+     "other_finish": 0
+    },
+    "rescued": [
+     170
+    ],
+    "newly_empty": [
+     8,
+     69,
+     130,
+     145
+    ],
+    "empty_in_both": [
+     79,
+     81,
+     88,
+     127,
+     147
+    ],
+    "baseline_raw": 171,
+    "baseline_stated": 174,
+    "raw_diff": 2,
+    "stated_diff": 0,
+    "raw_only_screen_correct": 12,
+    "raw_only_baseline_correct": 10
+   },
+   "col511 arm pass 3 (context, seed 1236)": {
+    "baseline_empties": 6,
+    "baseline_causes": {
+     "cap_exhaustion": 6,
+     "premature_stop": 0,
+     "not_logged": 0,
+     "other_finish": 0
+    },
+    "rescued": [
+     157
+    ],
+    "newly_empty": [
+     8,
+     88,
+     130,
+     145
+    ],
+    "empty_in_both": [
+     69,
+     79,
+     81,
+     127,
+     147
+    ],
+    "baseline_raw": 171,
+    "baseline_stated": 174,
+    "raw_diff": 2,
+    "stated_diff": 0,
+    "raw_only_screen_correct": 11,
+    "raw_only_baseline_correct": 9
+   },
+   "stock 0.7.0 pass 3 (context, seed 1236)": {
+    "baseline_empties": 1,
+    "baseline_causes": {
+     "cap_exhaustion": 1,
+     "premature_stop": 0,
+     "not_logged": 0,
+     "other_finish": 0
+    },
+    "rescued": [],
+    "newly_empty": [
+     8,
+     69,
+     79,
+     81,
+     88,
+     127,
+     130,
+     147
+    ],
+    "empty_in_both": [
+     145
+    ],
+    "baseline_raw": 175,
+    "baseline_stated": 177,
+    "raw_diff": -2,
+    "stated_diff": -3,
+    "raw_only_screen_correct": 7,
+    "raw_only_baseline_correct": 9
+   }
+  },
+  "secondary": {
+   "raw_correct_all_198": 173,
+   "stated_correct_all_198": 174,
+   "stated_differs_from_raw_rows": [
+    37
+   ],
+   "hedged_by_hand": [],
+   "generated_tokens": {
+    "b1": {
+     "logged_requests": 198,
+     "total_all_requests": 4808779,
+     "mean_all_requests": 24286.8,
+     "all_requests": {
+      "p10": 832,
+      "p25": 1234,
+      "p50": 4027,
+      "p75": 12702,
+      "p90": 39392,
+      "p99": 327680,
+      "max": 327680,
+      "n": 198
+     },
+     "answered": {
+      "p10": 830,
+      "p25": 1199,
+      "p50": 3621,
+      "p75": 10690,
+      "p90": 30642,
+      "p99": 78161,
+      "max": 82121,
+      "n": 189
+     },
+     "answered_above_32k_64k_128k_200k": [
+      17,
+      3,
+      0,
+      0
+     ]
+    },
+    "record_pass3": {
+     "logged_requests": 198,
+     "total_all_requests": 4251266,
+     "mean_all_requests": 21471.0,
+     "all_requests": {
+      "p10": 797,
+      "p25": 1295,
+      "p50": 4048,
+      "p75": 13878,
+      "p90": 37624,
+      "p99": 327680,
+      "max": 327680,
+      "n": 198
+     },
+     "answered": {
+      "p10": 797,
+      "p25": 1252,
+      "p50": 3757,
+      "p75": 13144,
+      "p90": 29790,
+      "p99": 109684,
+      "max": 175275,
+      "n": 192
+     },
+     "answered_above_32k_64k_128k_200k": [
+      19,
+      6,
+      1,
+      0
+     ]
+    },
+    "arm_pass3": {
+     "logged_requests": 198,
+     "total_all_requests": 4285640,
+     "mean_all_requests": 21644.6,
+     "all_requests": {
+      "p10": 830,
+      "p25": 1259,
+      "p50": 2990,
+      "p75": 13815,
+      "p90": 45042,
+      "p99": 327680,
+      "max": 327680,
+      "n": 198
+     },
+     "answered": {
+      "p10": 830,
+      "p25": 1250,
+      "p50": 2877,
+      "p75": 12252,
+      "p90": 28994,
+      "p99": 108490,
+      "max": 120738,
+      "n": 192
+     },
+     "answered_above_32k_64k_128k_200k": [
+      16,
+      10,
+      0,
+      0
+     ]
+    },
+    "v070_pass3": {
+     "logged_requests": 198,
+     "total_all_requests": 3373582,
+     "mean_all_requests": 17038.3,
+     "all_requests": {
+      "p10": 853,
+      "p25": 1226,
+      "p50": 3781,
+      "p75": 13260,
+      "p90": 40690,
+      "p99": 250709,
+      "max": 327680,
+      "n": 198
+     },
+     "answered": {
+      "p10": 853,
+      "p25": 1226,
+      "p50": 3781,
+      "p75": 12766,
+      "p90": 39872,
+      "p99": 220231,
+      "max": 250709,
+      "n": 197
+     },
+     "answered_above_32k_64k_128k_200k": [
+      26,
+      14,
+      2,
+      2
+     ]
+    },
+    "paired_mean_per_request_b1_minus_record_pass3": {
+     "questions": 198,
+     "estimate": 2815.7,
+     "ci95": [
+      -3232.9,
+      9166.6
+     ],
+     "note": "all requests incl. cap exhaustions; question bootstrap; descriptive"
+    }
+   },
+   "timing": {
+    "per_pass": {
+     "pass1": {
+      "window_h": 2.9668,
+      "completion_tokens": 4808779,
+      "aggregate_tok_s": 450.2,
+      "median_request_tok_s_answered": 57.5
+     }
+    },
+    "request_window_h_total": 2.9668,
+    "request_window_gpu_h": 5.934,
+    "occupied": null,
+    "gpu_hours_used": 6.33,
+    "gpu_hours_source": "override",
+    "raw_correct_per_gpu_hour": 27.33,
+    "stated_correct_per_gpu_hour": 27.49,
+    "kernel_route_exposure_client_side": {
+     "pass1": {
+      "busy_h": 2.9668,
+      "share_busy_inflight_1to4": 0.1157,
+      "share_busy_inflight_5plus": 0.8843,
+      "max_inflight": 8,
+      "mean_share_of_request_life_inflight_1to4": {
+       "empty": 0.0767,
+       "answered": 0.0002
+      }
+     }
+    }
+   },
+   "comparator_windows_context": {
+    "record_pass3": {
+     "window_h": 2.7931,
+     "completion_tokens": 4251266,
+     "aggregate_tok_s": 422.8,
+     "median_request_tok_s_answered": 57.7,
+     "request_window_gpu_h": 5.586
+    },
+    "arm_pass3": {
+     "window_h": 2.7437,
+     "completion_tokens": 4285640,
+     "aggregate_tok_s": 433.9,
+     "median_request_tok_s_answered": 58.5,
+     "request_window_gpu_h": 5.487
+    },
+    "v070_pass3": {
+     "window_h": 3.6414,
+     "completion_tokens": 3373582,
+     "aggregate_tok_s": 257.3,
+     "median_request_tok_s_answered": 37.4,
+     "request_window_gpu_h": 7.283
+    },
+    "note": "comparators' pass 3 was the second pass of its server session; request windows only (no per-pass occupied GPU-hours)"
+   },
+   "server": {
+    "log": "server-s1.log",
+    "sha256": "6347a38fd817ab53483e1c93668332a75251a1748b301a31d28767c0f2490a2e",
+    "server_starts": 1,
+    "cited_block": 0,
+    "non_default_args_sha256": "7025a96888a67642741db00aaecb9cbf786c2ba67cc4ded7d67c1cf4e909dcc5",
+    "model_snapshots": [
+     "0490d2f708b12145f6516555ab066aaeb401cd21",
+     "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+    ],
+    "vllm_version": [
+     "0.1.dev20051+g487ecf187"
+    ],
+    "env_names_logged_sha256": "f85d9d360488c02bc9ba2bbb33b86319201cfad14cd4c6a9ccb312539ec1313e",
+    "kv_pool_tokens": [
+     4707515
+    ],
+    "cudagraph_mode": [
+     "FULL_AND_PIECEWISE"
+    ],
+    "release_warmups_logged": 9,
+    "status": {
+     "lines": 1067,
+     "max_running": 8,
+     "lines_waiting": 0,
+     "peak_kv_usage_pct": 41.5,
+     "mean_gen_tok_s_8plus_running": 470.8,
+     "share_lines_running_1to4": 0.1153,
+     "share_lines_running_5plus": 0.8847
+    },
+    "in_window": {
+     "preemption_lines": 0,
+     "illegal_memory_access_lines": 0,
+     "nan_warning_lines": 0
+    }
+   }
+  }
+ },
+ "part_B_exploratory_corrected_family": {
+  "vs_record_passes_1_3": {
+   "label": "EXPLORATORY (corrected family seeds 1234-1236 vs stock 0.9.1 record seeds 1234-1236): two implementations (B0 seeds 1234-1235, B1 seed 1236), NOT a three-pass B1 result; historical controls; B1 pass chosen after inspecting B0's passes",
+   "question_passes_per_side": 594,
+   "corrected_family_empties": 15,
+   "comparator_empties": 16,
+   "empty_signflip_cmp_minus_family": {
+    "T": 1,
+    "m_nonzero": 11,
+    "p_one_sided": 0.5,
+    "p_two_sided": 1.0,
+    "null_patterns": 2048
+   },
+   "empty_rate_reduction_points": 0.17,
+   "empty_rate_reduction_ci95_points": [
+    -1.01,
+    1.35
+   ],
+   "questions_d_pos": 6,
+   "questions_d_neg": 5,
+   "raw_diff_points": -0.17,
+   "raw_diff_ci95_points": [
+    -2.86,
+    2.36
+   ],
+   "raw_signflip_two_sided_reference": 1.0,
+   "stated_diff_points": -0.51,
+   "stated_diff_ci95_points": [
+    -3.03,
+    2.02
+   ]
+  },
+  "vs_arm_passes_1_3": {
+   "label": "EXPLORATORY (corrected family seeds 1234-1236 vs column-511 arm seeds 1234-1236): two implementations (B0 seeds 1234-1235, B1 seed 1236), NOT a three-pass B1 result; historical controls; B1 pass chosen after inspecting B0's passes",
+   "question_passes_per_side": 594,
+   "corrected_family_empties": 15,
+   "comparator_empties": 15,
+   "empty_signflip_cmp_minus_family": {
+    "T": 0,
+    "m_nonzero": 14,
+    "p_one_sided": 0.604736328125,
+    "p_two_sided": 1.0,
+    "null_patterns": 16384
+   },
+   "empty_rate_reduction_points": 0.0,
+   "empty_rate_reduction_ci95_points": [
+    -1.18,
+    1.18
+   ],
+   "questions_d_pos": 7,
+   "questions_d_neg": 7,
+   "raw_diff_points": 1.68,
+   "raw_diff_ci95_points": [
+    -1.18,
+    4.71
+   ],
+   "raw_signflip_two_sided_reference": 0.32239207116072066,
+   "stated_diff_points": 0.67,
+   "stated_diff_ci95_points": [
+    -2.19,
+    3.54
+   ]
+  },
+  "per_checkpoint_records": {
+   "B0 seed 1234": {
+    "E": 3,
+    "raw": 174,
+    "stated": 176
+   },
+   "B0 seed 1235": {
+    "E": 3,
+    "raw": 168,
+    "stated": 169
+   },
+   "B1 seed 1236": {
+    "E": 9,
+    "raw": 173,
+    "stated": 174
+   }
+  }
+ }
+}

@@ -1,0 +1,15 @@
+# CPU dry-run controls of b0s1236_analysis.py (f707d2003ddc7553...) 2026-10-13T12:58:14-07:00
+== negative: B1 stand-in WITH B1's inspect record (image is not B0) -> invalid, rc 3: rc=3
+INVALID: [["container image is B0", false, "sha256:799d3cf8e5d14a615b89c734a6a38b4be5729bb44bb6b56effc7cf7df747b88a"], ["container settings equal to B0's seed-1235 session, image included (env as a set, cmd, args, binds, ports, shm, ipc, devices, network, runtime)", false, "differ: ['image']"]]
+  valid: false
+== positive: B1 stand-in with B0's seed-1235 inspect record (image B0; settings = B0 s2; = B1 s1 apart from image) -> valid: rc=0
+  valid: true
+== negative: no server log, no inspect, no dry-run label (a real run missing its records) -> invalid, rc 3: rc=3
+INVALID: [["server log supplied and every request logged with a start time", false, "missing"], ["container inspect record supplied", false, "missing"]]
+  valid: false
+== negative: aborted session (empty pass dir, no request log) -> invalid, rc 3: rc=3
+INVALID: [["NEG: aborted pass 1: exactly one samples file", false, 0], ["request log of the new pass present", false, "/nonexistent.requests.jsonl"], ["prompts identical to record pass 3 (messages_sha256, 198 questions)", false, "0 differ"], ["prompts identical to arm pass 3 (messages_sha256, 198 questions)", false, "0 differ"], ["prompts identical to 0.7.0 pass 3 (messages_sha256, 198 questions)"
+  valid: false
+== provisional control: B1 stand-in without adjudication (stated rows unread) -> valid, category PROVISIONAL, reading final: rc=0
+  valid: true
+  category: PROVISIONAL (SIMILAR OR WORSE; stated adjudication pending for docs [37]) | B0/B1 reading: (a) | stated_provisional: True

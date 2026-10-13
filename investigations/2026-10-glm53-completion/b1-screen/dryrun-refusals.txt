@@ -1,0 +1,40 @@
+# refusal_tests.sh run 2026-10-13T08:43:10-07:00 (CPU only; shims; no container)
+== part 1: the frozen runner (a4bb8e6b68c6b7ad...) under environment scenarios
+PASS  baseline (rc 0): DRY_RUN: all refusal checks passed. A real run would now: create <runs>/b1-screen/run-s1236; sta
+PASS  ceiling_above_7.5 (rc 1): ABORT: CEIL_GH=8 must be in (0, 7.5]
+PASS  image_missing (rc 1): ABORT: image sha256:799d3cf8e5d14a615b89c734a6a38b4be5729bb44bb6b56effc7cf7df747b88a missing (or docker unavailable)
+PASS  tag_moved (rc 1): ABORT: tag local/glm53-v0.9.1-b1-d7:local is 'sha256:0000000000000000000000000000000000000000000000000000000000000000', not sha256:7
+PASS  override_extra_args (rc 1): ABORT: override variables set in the environment (not the shipped configuration): EXTRA_SERVE_ARGS
+PASS  override_gpqa_tag (rc 1): ABORT: override variables set in the environment (not the shipped configuration): GPQA_TAG
+PASS  override_dflash (rc 1): ABORT: override variables set in the environment (not the shipped configuration): DFLASH_TOKENS
+PASS  override_port (rc 1): ABORT: override variables set in the environment (not the shipped configuration): PORT
+PASS  glm_container (rc 1): ABORT: a GLM container is running
+PASS  port_in_use (rc 1): ABORT: port 8001 or 8002 is in use:
+PASS  nvidia_smi_fails (rc 1): ABORT: nvidia-smi failed
+PASS  compute_process (rc 1): ABORT: compute process 2735887 on the GPUs
+PASS  graphics_client (rc 1): ABORT: GPU clients other than the desktop graphics clients:
+PASS  gpu_busy (rc 1): ABORT: GPU1 busy mem=9000MiB util=50%
+PASS  one_gpu (rc 1): ABORT: expected 2 GPUs, saw 1
+== part 2: path-substituted copy (B1S, G -> <scratch>/refusal2) for file-state refusals
+PASS  copy_baseline (rc 0): DRY_RUN: all refusal checks passed. A real run would now: create <scratch>/refu
+PASS  earlier_attempt (rc 1): ABORT: <scratch>/refusal2/b1s/run-s1236 exists (an earlier attempt; no automati
+PASS  cost_line_present (rc 1): ABORT: <scratch>/refusal2/b1s/costs.jsonl already records a B1 session (no retr
+PASS  pass_dir_exists (rc 1): ABORT: B1 pass directories exist (no retry, no further pass):
+PASS  tagged_pass_dir (rc 1): ABORT: B1 pass directories exist (no retry, no further pass):
+PASS  reqlog_exists (rc 1): ABORT: <scratch>/refusal2/gpqa/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1
+PASS  frozen_file_changed (rc 1): ABORT: <scratch>/refusal2/b1s/SHA256SUMS does not verify:
+PASS  copy_baseline_again (rc 0): DRY_RUN: all refusal checks passed. A real run would now: create <scratch>/refu
+== shim calls other than read-only queries:
+none
+== distinct shim calls:
+     19 docker image inspect local/glm53-v0.9.1-b1-d7:local --format {{.Id}}
+     20 docker image inspect sha256:<id> --format {{.Id}}
+     10 docker ps --format {{.Names}}
+      6 nvidia-smi 
+      8 nvidia-smi -L
+      7 nvidia-smi --query-compute-apps=pid --format=csv,noheader
+      5 nvidia-smi --query-gpu=index,memory.used,utilization.gpu --format=csv,noheader,nounits
+      9 ss -ltnH ( sport = :8001 or sport = :8002 )
+WORK gpqa dir empty after tests
+RESULT: 23 passed, 0 failed
+rc=0

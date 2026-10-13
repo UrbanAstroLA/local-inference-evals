@@ -1315,3 +1315,80 @@ GPU use awaits the operator's authorization.
 **Amendment 19b (2026-10-13; operator authorization, before generation).** "Launch": one B1 seed-1236 GPQA pass under the
 frozen package of amendment 19a, with a 7.5 occupied GPU-hour watchdog, one session and no retry. Upstream contributions
 stay as drafts only, with no GitHub PR, issue or other publishing.
+
+**Amendment 19c (2026-10-13; B1 seed-1236 result, recorded after the run).**
+- **Validity:** valid on every check.
+- **Result:** 9 of 198 replies empty, all at the cap, and 0 stopped early. Raw 173 and stated 174; one reply was
+  hand-read and found not hedged. 4.81 M tokens were generated. 6.33 occupied GPU-hours, with the watchdog not reached.
+- **Against stock 0.9.1 at seed 1236** (6 empty, raw 171, stated 174): doc 170 rescued; docs 8, 69, 130 and 145 newly
+  empty.
+- **Frozen reading:** SIMILAR OR WORSE (amendment 15b); for amendment 19, **UNFAVOURABLE**, because E = 9 is above every
+  stock-family pass. This triggers review and does not invalidate the verified corrections.
+- **Exploratory three-seed view** (B0 at 1234 and 1235 with B1 at 1236): 15 against 16 empty of 594.
+- **Context:** builds that differ numerically share few identical replies at the same seed (B1 against stock 0.9.1: 5 of
+  198).
+- **Review route chosen by the operator:** a B0 pass at seed 1236. B0 and B1 differ only in the D7 file, and D7 is
+  reconstructed as not reaching GPQA prompts, so B0 at 1236 is a near-replicate of B1. It measures run-to-run variation
+  at a fixed seed and completes B0's three-seed record. One pair of passes cannot fully separate D7 from that variation.
+
+**Amendment 19d (2026-10-13; operator authorization "proceed with B0 seed 1236 pass", before generation).**
+- **Scope:** one B0 GPQA pass at seed 1236, all 198 questions, original protocol, fresh server.
+- **Limits:** 7.5 occupied GPU-hour watchdog, one session, no retry.
+- **Launch:** only after its package (runner, frozen analysis including the B0-against-B1 identity and per-question
+  measures, and a frozen interpretation) passes its dry runs and its hashes are frozen and verified by the coordinator.
+
+**Amendment 19e (2026-10-13; frozen B0 seed-1236 package, verified by the coordinator, before generation).**
+
+Package: b0-screen-s1236/SHA256SUMS has sha256 5615737c…, covering the runner (211bfff4…), the analysis (f707d200…) and
+FROZEN-INTERPRETATION.md (42262e39…), with the external pins identical to the B1 package.
+- Pass 3 of the B0 recipe gives seed 1236 naturally, so no placeholders are used. B0's passes 1 and 2 are pinned by their
+  samples hashes.
+- Primary comparison: B0 against B1 at seed 1236.
+- Frozen readings:
+  - **(a)** B0 E ≥ 8: the seed-1236 excess is a property of the corrected family at this seed, not attributable to D7;
+  - **(b)** B0 E ≤ 6: either D7, which would contradict the zero-exposure reconstruction, or run-to-run variation; one
+    pair of passes cannot separate them. A weak lean comes from the count of identical non-empty replies (I_ne): ≥ 20
+    triggers a CPU re-check of the reconstruction, ≤ 2 means run-to-run variation suffices, and 3-19 gives no lean;
+  - **(c)** E = 7: no reading.
+- Continuity: amendment 15b's category against stock 0.9.1 at seed 1236. B0's three-seed record is exploratory, and B1
+  stays separate.
+- Dry runs pass: two stand-ins (49/49 each), reading boundaries 41/41, refusals 30/30, session simulation 34/34, and
+  `DRY_RUN=1` on the real machine.
+- Expected cost: 4.6-6.4 GPU-hours; watchdog 7.5.
+
+Correction (coordinator): earlier "identical replies" counts between builds at the same seed (for example B1 against
+stock 0.9.1, 5 of 198) were all pairs of empty replies at the cap. The count of identical non-empty replies is 0 in
+every earlier pair. The frozen analysis reads the non-empty count.
+
+Post-hoc (operator request, after B1's result; not frozen): `b1-screen/run-s1236/token-analysis-posthoc.md`.
+- B1's +0.56 M generated tokens against stock at seed 1236 equal its 3 extra capped replies; its finished replies total
+  0.43 M fewer tokens.
+- The per-document deltas over 188 mutually finished documents have median −30, the same spread as every other pair.
+- B0 at seeds 1234 and 1235 generated fewer tokens than stock.
+- The four newly capped documents are short single-chunk prompts, classed unsplittable.
+
+**Amendment 19f (2026-10-13; exploratory zero-GPU tail analysis, chosen after the B1 seed-1236 result; not
+pre-registered).** Inputs: the recording-proxy logs of the 11 logged K3.25 GPQA passes (0.7.0 seeds 1235-1236; stock
+0.9.1 and the column-511 arm at 1234-1236; B0 at 1234-1235; B1 at 1236). Counts only. Older records kept no
+per-reply token counts.
+
+Results:
+- **Reaching long:** replies reaching ≥ 100k tokens are similar in number per pass: 0.7.0 7.0, the 0.9.1 family 8.3,
+  B0+B1 5.7.
+- **Finishing once long** (bootstrap over questions):
+  - P(finish | reached 100k): 0.7.0 0.71 [0.46, 0.93]; 0.9.1 family 0.40 [0.26, 0.57]; B0+B1 0.12 [0.00, 0.27];
+  - at 200k: 4 of 8, 3 of 33 and 0 of 15.
+- **Finishing hazard by length:** 0.9.1-family replies almost never finish beyond about 150k tokens (6 of about 100
+  still running); 0.7.0's still do (4 of 8 at 200-260k).
+- **Question as the unit:** 8 questions reached 100k on both engines; 0.7.0 finished a larger share on 4, a smaller
+  share on 1, and the same on 3.
+
+Reading (exploratory): the completion gap is not in how often replies get long but in whether long replies terminate,
+which points to decode behaviour at contexts of about 64-100k tokens and beyond. B0 and B1 are more correct (verified
+corrections) but not shown more accurate, and their long replies rarely finish. The cause may be on either side: 0.9.1
+failing to terminate, or 0.7.0 terminating for a reason that could include its own defects (D2, D6).
+
+Limits: 0.7.0 has 14 replies at ≥ 100k over 11 questions; its pass 1 is unlogged; seeds are reused; controls are
+historical.
+
+Next: a proposal for a long-context termination probe (CPU discovery first), for independent review.

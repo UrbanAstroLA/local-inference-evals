@@ -396,6 +396,22 @@ What was asked, run, found, corrected and withdrawn, in date order.
   are drafted and held until the investigation concludes.
 - Cumulative 49.52 GPU-hours before this pass.
 
+**2026-10-13, afternoon and evening. B1 GPQA result, the review step, and the long-context tail (amendments 19c-19f).**
+- **B1 result** (seed 1236): valid; 9 of 198 empty, all at the cap, against 6 for stock 0.9.1; raw and stated accuracy
+  unchanged. Under the reading frozen before generation it is unfavourable, which triggers review; the verified
+  corrections stand. 6.33 GPU-hours.
+- **Post-hoc token reading:** the extra tokens are the extra capped replies, and finished replies are no longer. The four
+  newly empty documents are short single-chunk prompts on which the D7 path cannot run.
+- **Owned:** the identical-reply counts first quoted between builds at the same seed (2-5 of 198) were all pairs of
+  empty replies; no non-empty reply was ever identical. The frozen B0 analysis counts non-empty identity only.
+- **Review step:** a B0 pass at seed 1236 (near-replicate of B1) is running under readings frozen before generation.
+- **Long-context tail** (exploratory, zero GPU): replies get long equally often on every engine, but past about 100k
+  tokens 0.9.1-family replies rarely finish (0.40; B0+B1 0.12) while 0.7.0's usually do (0.71). This localises the
+  completion question to termination at long context, a range no earlier probe measured.
+- **Next:** a proposal for a long-context termination probe, discovery first, for independent review. Cumulative 55.85
+  GPU-hours.
+  [B1 pass and long-context tail](investigations/2026-10-glm53-completion/README.md#b1-checkpoint-pass-and-the-long-context-tail-amendment-19).
+
 ## Withdrawn, and what replaced it
 
 > **Withdrawal notice (2026-10-09).** The earlier hard-question screens (`hard-prompt-screen` v0 and v1, 2026-09-30 to

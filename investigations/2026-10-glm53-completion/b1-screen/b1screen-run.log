@@ -1,0 +1,11 @@
+2026-10-13T09:24:39-07:00 B1 checkpoint pass (seed 1236) start; recipe glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234+d7; ceiling 7.5 GPU-h (13500 s wall)
+recording http://127.0.0.1:8001 on 127.0.0.1:8002 -> <gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234+d7.s1.requests.jsonl
+2026-10-13T09:24:41-07:00 placeholders (empty, removed at exit): <gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234+d7__pass1 <gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234+d7__pass2
+2026-10-13T12:34:28-07:00 chain rc=0
+docker logs rc=0
+docker inspect rc=0
+docker stop rc=0
+placeholders removed
+analysis rc=0 (3 = invalid pass; category PROVISIONAL until --adjudication)
+no GLM container running
+2026-10-13T12:34:42-07:00 B1 PASS DONE; total wall 11403s, 6.33 GPU-h

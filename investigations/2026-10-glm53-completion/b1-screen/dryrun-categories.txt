@@ -1,0 +1,19 @@
+# test_categories.py run 2026-10-13T08:43:11-07:00
+ok   E= 0 raw=171 stated=174 premature=0: PROMISING FOLLOW-UP SIGNAL | FAVOURABLE [] | 14c CLEAR PROMISING
+ok   E= 2 raw=164 stated=166 premature=0: PROMISING FOLLOW-UP SIGNAL | FAVOURABLE [] | 14c CLEAR PROMISING
+ok   E= 1 raw=171 stated=174 premature=1: PROMISING FOLLOW-UP SIGNAL | FAVOURABLE [] | 14c CLEAR PROMISING
+ok   E= 2 raw=163 stated=166 premature=0: MODEST IMPROVEMENT, NO CLEAR SEPARATION | SIMILAR ['accuracy concern (raw 159-163): review item'] | 14c MIXED
+ok   E= 2 raw=159 stated=166 premature=0: MODEST IMPROVEMENT, NO CLEAR SEPARATION | SIMILAR ['accuracy concern (raw 159-163): review item'] | 14c MIXED
+ok   E= 2 raw=158 stated=166 premature=0: SIMILAR OR WORSE | UNFAVOURABLE ['material concern'] | 14c MIXED
+ok   E= 2 raw=170 stated=159 premature=0: SIMILAR OR WORSE | UNFAVOURABLE ['material concern'] | 14c MIXED
+ok   E= 2 raw=170 stated=160 premature=0: PROMISING FOLLOW-UP SIGNAL | FAVOURABLE [] | 14c CLEAR PROMISING
+ok   E= 2 raw=171 stated=174 premature=2: SIMILAR OR WORSE | UNFAVOURABLE ['material concern'] | 14c MIXED
+ok   E= 3 raw=171 stated=174 premature=0: MODEST IMPROVEMENT, NO CLEAR SEPARATION | SIMILAR [] | 14c SIMILAR / NO CLEAR SEPARATION
+ok   E= 4 raw=171 stated=174 premature=0: MODEST IMPROVEMENT, NO CLEAR SEPARATION | SIMILAR [] | 14c SIMILAR OR WORSE
+ok   E= 5 raw=171 stated=174 premature=0: MODEST IMPROVEMENT, NO CLEAR SEPARATION | SIMILAR [] | 14c SIMILAR OR WORSE
+ok   E= 6 raw=171 stated=174 premature=0: SIMILAR OR WORSE | SIMILAR [] | 14c SIMILAR OR WORSE
+ok   E= 6 raw=160 stated=170 premature=0: SIMILAR OR WORSE | SIMILAR ['accuracy concern (raw 159-163): review item'] | 14c SIMILAR OR WORSE
+ok   E= 7 raw=171 stated=174 premature=0: SIMILAR OR WORSE | UNFAVOURABLE ['E = 7 above every stock-family pass (max 6)'] | 14c SIMILAR OR WORSE
+ok   E=12 raw=176 stated=178 premature=0: SIMILAR OR WORSE | UNFAVOURABLE ['E = 12 above every stock-family pass (max 6)'] | 14c SIMILAR OR WORSE
+RESULT: 16/16 as specified
+rc=0

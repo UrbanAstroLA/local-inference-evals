@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-10-13, evening (completion investigation, amendments 19c-19f): B1 result, review step, long-context tail
+
+Contents unchanged: 65 runs, 13 comparisons. Items 4l and 4m are new.
+
+- **`PLAN.md`**: amendments 19c (B1 result), 19d (B0 seed-1236 authorization), 19e (frozen B0 package; identity-count
+  correction) and 19f (exploratory tail analysis).
+- **New folders:**
+  - `b1-screen/`: runner, frozen analysis and interpretation, dry runs, result, hand read, post-hoc token reading.
+    Server log and inspection are hashed; the GPQA samples and request log stay local.
+  - `b0-screen-s1236/`: the package frozen before generation; its run was in progress at publication.
+  - `tail-analysis/`: script, output and README.
+  - Substitutions and two shortened hand-read notes are listed in `PUBLIC-COPIES-19.txt`.
+- **Investigation `README.md`:** new section "B1 checkpoint pass and the long-context tail (amendment 19)"; status, open
+  questions and next steps updated.
+- **`costs.jsonl`**: the B1 pass (6.33). `recompute.py` checks it and the cumulative 55.85 GPU-hours.
+- **`FINDINGS.md`** (items 4l-4m), **`LEDGER.md`**, **`tools/site.py`** and the rebuilt **`docs/`**.
+
 ## 2026-10-13, afternoon (completion investigation, amendments 19-19b): B1 GPQA pass running; a correction
 
 Contents unchanged: 65 runs, 13 comparisons. No result is added yet.

@@ -1,0 +1,8 @@
+# DRY_RUN=1 of the frozen runner on the real machine (read-only docker/nvidia-smi/ss queries) 2026-10-13T08:45:33-07:00
+2026-10-13T08:45:33-07:00 B1 checkpoint pass (seed 1236) start; recipe glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234+d7; ceiling 7.5 GPU-h (13500 s wall); DRY_RUN=1
+DRY_RUN: all refusal checks passed. A real run would now: create <runs>/b1-screen/run-s1236; start the GPU logger and the watchdog
+  (13500 s); start the recording proxy 8002 -> 8001 (<gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234+d7.s1.requests.jsonl); create the empty placeholders __pass1/__pass2;
+  run GPQA_PASSES=3 GPQA_SEED_PER_PASS=1 GPQA_CONCURRENCY=8 GPQA_BASE=http://127.0.0.1:8002 <stacks>/glm53-flash-v0.8.0/eval-chain.sh glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234+d7 gpqa
+  (fresh server, warm-up gate, pass 3 only: request seed 1236, lm-eval --seed 1237); stop the server; write one cost
+  line; remove the placeholders; run the frozen analysis. Nothing was created or started.
+rc=0

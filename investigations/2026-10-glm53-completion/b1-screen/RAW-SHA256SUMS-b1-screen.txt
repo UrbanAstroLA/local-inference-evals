@@ -1,0 +1,4 @@
+# sha256 of local files not published (reason in brackets). Paths relative to the local folder.
+ff2727494f87d7a0f5efe41b65fe13363f3a5cd634af6031da4f17119d4d3155  ./__pycache__/analysis_col511.cpython-312.pyc   (bytecode)
+4cd32f437cce0a40abee039b2054a5bc5721dcd7bc781df7c06723e7de10f9be  ./run-s1236/inspect-s1.json   (container inspection (host paths, ids))
+6347a38fd817ab53483e1c93668332a75251a1748b301a31d28767c0f2490a2e  ./run-s1236/server-s1.log   (container log)

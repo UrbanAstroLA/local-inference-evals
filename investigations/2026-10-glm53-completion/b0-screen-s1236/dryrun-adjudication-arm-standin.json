@@ -1,0 +1,20 @@
+{
+ "what": "DRY RUN ONLY: the col511 arm's pass-3 hand reads, standing in for the B1 pass's adjudication file",
+ "rows": [
+  {
+   "doc": 70,
+   "hedged": false,
+   "source": "arm-col511/adjudications.json"
+  },
+  {
+   "doc": 98,
+   "hedged": false,
+   "source": "arm-col511/adjudications.json"
+  },
+  {
+   "doc": 134,
+   "hedged": false,
+   "source": "arm-col511/adjudications.json"
+  }
+ ]
+}
