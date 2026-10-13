@@ -1,0 +1,311 @@
+{
+ "ran": true,
+ "cases": [
+  {
+   "case": 0,
+   "requested_D": 0,
+   "bg_in_decode_at_send": 0,
+   "prompt_tokens_server": 2795,
+   "prompt_tokens_ok": true,
+   "seeds": {
+    "bg": [],
+    "doc": 9710000
+   },
+   "error": null,
+   "status": "ok",
+   "sched_seq": 2401,
+   "actual_D": 0,
+   "other_prefill_rows": 0,
+   "other_rows_tokens": [],
+   "chunk1_start": 0,
+   "chunk1_len": 2045,
+   "num_computed_after_first": 2045,
+   "chunk2_start": 2045,
+   "chunk2_len": 750,
+   "pred_budget_formula": 2045,
+   "formula_matches": true,
+   "pred_2045_minus_7D": 2045,
+   "arith_matches": true,
+   "requested_eq_actual_D": true,
+   "split_residue": 1,
+   "split_pool_aligned": false
+  },
+  {
+   "case": 1,
+   "requested_D": 1,
+   "bg_in_decode_at_send": 1,
+   "prompt_tokens_server": 2795,
+   "prompt_tokens_ok": true,
+   "seeds": {
+    "bg": [
+     9700010
+    ],
+    "doc": 9710001
+   },
+   "error": null,
+   "status": "ok",
+   "sched_seq": 2415,
+   "actual_D": 1,
+   "other_prefill_rows": 0,
+   "other_rows_tokens": [
+    4
+   ],
+   "chunk1_start": 0,
+   "chunk1_len": 2038,
+   "num_computed_after_first": 2038,
+   "chunk2_start": 2038,
+   "chunk2_len": 757,
+   "pred_budget_formula": 2038,
+   "formula_matches": true,
+   "pred_2045_minus_7D": 2038,
+   "arith_matches": true,
+   "requested_eq_actual_D": true,
+   "split_residue": 2,
+   "split_pool_aligned": false
+  },
+  {
+   "case": 2,
+   "requested_D": 2,
+   "bg_in_decode_at_send": 2,
+   "prompt_tokens_server": 2795,
+   "prompt_tokens_ok": true,
+   "seeds": {
+    "bg": [
+     9700020,
+     9700021
+    ],
+    "doc": 9710002
+   },
+   "error": null,
+   "status": "ok",
+   "sched_seq": 2433,
+   "actual_D": 2,
+   "other_prefill_rows": 0,
+   "other_rows_tokens": [
+    4,
+    4
+   ],
+   "chunk1_start": 0,
+   "chunk1_len": 2031,
+   "num_computed_after_first": 2031,
+   "chunk2_start": 2031,
+   "chunk2_len": 764,
+   "pred_budget_formula": 2031,
+   "formula_matches": true,
+   "pred_2045_minus_7D": 2031,
+   "arith_matches": true,
+   "requested_eq_actual_D": true,
+   "split_residue": 3,
+   "split_pool_aligned": false
+  },
+  {
+   "case": 3,
+   "requested_D": 3,
+   "bg_in_decode_at_send": 3,
+   "prompt_tokens_server": 2795,
+   "prompt_tokens_ok": true,
+   "seeds": {
+    "bg": [
+     9700030,
+     9700031,
+     9700032
+    ],
+    "doc": 9710003
+   },
+   "error": null,
+   "status": "ok",
+   "sched_seq": 2452,
+   "actual_D": 3,
+   "other_prefill_rows": 0,
+   "other_rows_tokens": [
+    4,
+    4,
+    4
+   ],
+   "chunk1_start": 0,
+   "chunk1_len": 2024,
+   "num_computed_after_first": 2024,
+   "chunk2_start": 2024,
+   "chunk2_len": 771,
+   "pred_budget_formula": 2024,
+   "formula_matches": true,
+   "pred_2045_minus_7D": 2024,
+   "arith_matches": true,
+   "requested_eq_actual_D": true,
+   "split_residue": 0,
+   "split_pool_aligned": true
+  },
+  {
+   "case": 4,
+   "requested_D": 4,
+   "bg_in_decode_at_send": 4,
+   "prompt_tokens_server": 2795,
+   "prompt_tokens_ok": true,
+   "seeds": {
+    "bg": [
+     9700040,
+     9700041,
+     9700042,
+     9700043
+    ],
+    "doc": 9710004
+   },
+   "error": null,
+   "status": "ok",
+   "sched_seq": 2472,
+   "actual_D": 4,
+   "other_prefill_rows": 0,
+   "other_rows_tokens": [
+    4,
+    4,
+    4,
+    4
+   ],
+   "chunk1_start": 0,
+   "chunk1_len": 2017,
+   "num_computed_after_first": 2017,
+   "chunk2_start": 2017,
+   "chunk2_len": 778,
+   "pred_budget_formula": 2017,
+   "formula_matches": true,
+   "pred_2045_minus_7D": 2017,
+   "arith_matches": true,
+   "requested_eq_actual_D": true,
+   "split_residue": 1,
+   "split_pool_aligned": false
+  },
+  {
+   "case": 5,
+   "requested_D": 5,
+   "bg_in_decode_at_send": 5,
+   "prompt_tokens_server": 2795,
+   "prompt_tokens_ok": true,
+   "seeds": {
+    "bg": [
+     9700050,
+     9700051,
+     9700052,
+     9700053,
+     9700054
+    ],
+    "doc": 9710005
+   },
+   "error": null,
+   "status": "ok",
+   "sched_seq": 2495,
+   "actual_D": 5,
+   "other_prefill_rows": 0,
+   "other_rows_tokens": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "chunk1_start": 0,
+   "chunk1_len": 2010,
+   "num_computed_after_first": 2010,
+   "chunk2_start": 2010,
+   "chunk2_len": 785,
+   "pred_budget_formula": 2010,
+   "formula_matches": true,
+   "pred_2045_minus_7D": 2010,
+   "arith_matches": true,
+   "requested_eq_actual_D": true,
+   "split_residue": 2,
+   "split_pool_aligned": false
+  },
+  {
+   "case": 6,
+   "requested_D": 6,
+   "bg_in_decode_at_send": 6,
+   "prompt_tokens_server": 2795,
+   "prompt_tokens_ok": true,
+   "seeds": {
+    "bg": [
+     9700060,
+     9700061,
+     9700062,
+     9700063,
+     9700064,
+     9700065
+    ],
+    "doc": 9710006
+   },
+   "error": null,
+   "status": "ok",
+   "sched_seq": 2520,
+   "actual_D": 6,
+   "other_prefill_rows": 0,
+   "other_rows_tokens": [
+    4,
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "chunk1_start": 0,
+   "chunk1_len": 2003,
+   "num_computed_after_first": 2003,
+   "chunk2_start": 2003,
+   "chunk2_len": 792,
+   "pred_budget_formula": 2003,
+   "formula_matches": true,
+   "pred_2045_minus_7D": 2003,
+   "arith_matches": true,
+   "requested_eq_actual_D": true,
+   "split_residue": 3,
+   "split_pool_aligned": false
+  },
+  {
+   "case": 7,
+   "requested_D": 7,
+   "bg_in_decode_at_send": 7,
+   "prompt_tokens_server": 2795,
+   "prompt_tokens_ok": true,
+   "seeds": {
+    "bg": [
+     9700070,
+     9700071,
+     9700072,
+     9700073,
+     9700074,
+     9700075,
+     9700076
+    ],
+    "doc": 9710007
+   },
+   "error": null,
+   "status": "ok",
+   "sched_seq": 2547,
+   "actual_D": 7,
+   "other_prefill_rows": 0,
+   "other_rows_tokens": [
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "chunk1_start": 0,
+   "chunk1_len": 1996,
+   "num_computed_after_first": 1996,
+   "chunk2_start": 1996,
+   "chunk2_len": 799,
+   "pred_budget_formula": 1996,
+   "formula_matches": true,
+   "pred_2045_minus_7D": 1996,
+   "arith_matches": true,
+   "requested_eq_actual_D": true,
+   "split_residue": 0,
+   "split_pool_aligned": true
+  }
+ ],
+ "skipped": [],
+ "budget": 2048,
+ "draft_slots_K": 3,
+ "source": "server.log non-default args / speculative config"
+}

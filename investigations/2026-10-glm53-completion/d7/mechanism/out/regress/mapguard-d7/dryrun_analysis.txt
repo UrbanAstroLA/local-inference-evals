@@ -1,0 +1,35 @@
+VERDICT: INVALID
+invalid: ['server.log: no FULL CUDA graph capture', 'non-default args differ from the B0 screen']
+violations: {}
+incomplete: ['C1_full_replay_steps', 'C2_mixed_steps', 'C3_row_reuse', 'C4_prefix_hits', 'C5a_spec_writes', 'C5b_rejected_drafts', 'C5c_accepted_drafts', 'C6a_decode_le4', 'C6b_decode_5to8', 'C6c_route_transitions', 'C8_mla_w', 'C8_idx_w_dec', 'C8_tail_w_stash', 'C8_idx_r_dec', 'C11_completions', 'C12_short_ctx']
+output identity (short greedy vs s1): NOT RUN {'q0': False, 'q1': False, 'q2': False, 'q3': False}
+  C9_owned_layers          1 (min 1)
+  C1_full_replay_steps     2 (min 300)
+  C5a_spec_writes          210 (min 20000)
+  C7_high_mla_w            117040 (min 5000)
+  C7_high_idx_w            29260 (min 500)
+  C7_high_mla_r            14818560 (min 5000)
+  C7_high_idx_r            7935 (min 500)
+  C7_high_tail             600 (min 50)
+  C8_mla_w                 117040 (min 200000)
+  C8_idx_w_pf              116760 (min 100000)
+  C8_idx_w_dec             280 (min 20000)
+  C8_tail_w_seed           116760 (min 500)
+  C8_tail_w_stash          280 (min 20000)
+  C8_idx_r_dec             280 (min 20000)
+  C8_idx_r_pf              80 (min 50)
+  C8_mla_r                 117040 (min 100000)
+  C10_join                 1.0 (min 0.95)
+  C10_p3_rows              1.0 (min 0.9)
+  C2_mixed_steps           8 (min 20)
+  C3_row_reuse             2 (min 20)
+  C4_prefix_hits           1 (min 10)
+  C6a_decode_le4           2 (min 60)
+  C6b_decode_5to8          0 (min 60)
+  C6c_route_transitions    0 (min 6)
+  C5b_rejected_drafts      22 (min 2000)
+  C5c_accepted_drafts      20 (min 2000)
+  C11_completions          4 (min 40)
+  C12_short_ctx            1 (min 8)
+note: P2/P6: window starts at the first non-warm-up step (the stack's release warm-up traffic is included)
+note: P5/P6: completions from EngineCore finished ids in the window

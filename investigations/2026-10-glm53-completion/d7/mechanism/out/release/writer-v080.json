@@ -1,0 +1,851 @@
+{
+ "label": "v080",
+ "writer_file": "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py",
+ "cases": [
+  {
+   "dcp": 1,
+   "start": 2043,
+   "residue": 3,
+   "role": "first",
+   "straddling_pool": {
+    "pool": 510,
+    "positions": [
+     2040,
+     2043
+    ],
+    "straddles_start": true,
+    "class": "unwritten"
+   },
+   "other_pools_ok": true,
+   "n_pools_checked": 3,
+   "preceding_request_pools_ok": null
+  },
+  {
+   "dcp": 1,
+   "start": 2043,
+   "residue": 3,
+   "role": "later",
+   "straddling_pool": {
+    "pool": 510,
+    "positions": [
+     2040,
+     2043
+    ],
+    "straddles_start": true,
+    "class": "cross"
+   },
+   "other_pools_ok": true,
+   "n_pools_checked": 3,
+   "preceding_request_pools_ok": true
+  },
+  {
+   "dcp": 1,
+   "start": 2044,
+   "residue": 0,
+   "role": "first",
+   "straddling_pool": null,
+   "other_pools_ok": true,
+   "n_pools_checked": 3,
+   "preceding_request_pools_ok": null
+  },
+  {
+   "dcp": 1,
+   "start": 2044,
+   "residue": 0,
+   "role": "later",
+   "straddling_pool": null,
+   "other_pools_ok": true,
+   "n_pools_checked": 3,
+   "preceding_request_pools_ok": true
+  },
+  {
+   "dcp": 1,
+   "start": 2045,
+   "residue": 1,
+   "role": "first",
+   "straddling_pool": {
+    "pool": 511,
+    "positions": [
+     2044,
+     2047
+    ],
+    "straddles_start": true,
+    "class": "unwritten"
+   },
+   "other_pools_ok": true,
+   "n_pools_checked": 3,
+   "preceding_request_pools_ok": null
+  },
+  {
+   "dcp": 1,
+   "start": 2045,
+   "residue": 1,
+   "role": "later",
+   "straddling_pool": {
+    "pool": 511,
+    "positions": [
+     2044,
+     2047
+    ],
+    "straddles_start": true,
+    "class": "cross"
+   },
+   "other_pools_ok": true,
+   "n_pools_checked": 3,
+   "preceding_request_pools_ok": true
+  },
+  {
+   "dcp": 1,
+   "start": 2046,
+   "residue": 2,
+   "role": "first",
+   "straddling_pool": {
+    "pool": 511,
+    "positions": [
+     2044,
+     2047
+    ],
+    "straddles_start": true,
+    "class": "unwritten"
+   },
+   "other_pools_ok": true,
+   "n_pools_checked": 3,
+   "preceding_request_pools_ok": null
+  },
+  {
+   "dcp": 1,
+   "start": 2046,
+   "residue": 2,
+   "role": "later",
+   "straddling_pool": {
+    "pool": 511,
+    "positions": [
+     2044,
+     2047
+    ],
+    "straddles_start": true,
+    "class": "cross"
+   },
+   "other_pools_ok": true,
+   "n_pools_checked": 3,
+   "preceding_request_pools_ok": true
+  },
+  {
+   "dcp": 1,
+   "start": 2047,
+   "residue": 3,
+   "role": "first",
+   "straddling_pool": {
+    "pool": 511,
+    "positions": [
+     2044,
+     2047
+    ],
+    "straddles_start": true,
+    "class": "unwritten"
+   },
+   "other_pools_ok": true,
+   "n_pools_checked": 3,
+   "preceding_request_pools_ok": null
+  },
+  {
+   "dcp": 1,
+   "start": 2047,
+   "residue": 3,
+   "role": "later",
+   "straddling_pool": {
+    "pool": 511,
+    "positions": [
+     2044,
+     2047
+    ],
+    "straddles_start": true,
+    "class": "cross"
+   },
+   "other_pools_ok": true,
+   "n_pools_checked": 3,
+   "preceding_request_pools_ok": true
+  },
+  {
+   "dcp": 1,
+   "start": 4090,
+   "residue": 2,
+   "role": "first",
+   "straddling_pool": {
+    "pool": 1022,
+    "positions": [
+     4088,
+     4091
+    ],
+    "straddles_start": true,
+    "class": "unwritten"
+   },
+   "other_pools_ok": true,
+   "n_pools_checked": 3,
+   "preceding_request_pools_ok": null
+  },
+  {
+   "dcp": 1,
+   "start": 4090,
+   "residue": 2,
+   "role": "later",
+   "straddling_pool": {
+    "pool": 1022,
+    "positions": [
+     4088,
+     4091
+    ],
+    "straddles_start": true,
+    "class": "cross"
+   },
+   "other_pools_ok": true,
+   "n_pools_checked": 3,
+   "preceding_request_pools_ok": true
+  },
+  {
+   "dcp": 1,
+   "start": 4351,
+   "residue": 3,
+   "role": "first",
+   "straddling_pool": {
+    "pool": 1087,
+    "positions": [
+     4348,
+     4351
+    ],
+    "straddles_start": true,
+    "class": "unwritten"
+   },
+   "other_pools_ok": true,
+   "n_pools_checked": 3,
+   "preceding_request_pools_ok": null
+  },
+  {
+   "dcp": 1,
+   "start": 4351,
+   "residue": 3,
+   "role": "later",
+   "straddling_pool": {
+    "pool": 1087,
+    "positions": [
+     4348,
+     4351
+    ],
+    "straddles_start": true,
+    "class": "cross"
+   },
+   "other_pools_ok": true,
+   "n_pools_checked": 3,
+   "preceding_request_pools_ok": true
+  },
+  {
+   "dcp": 1,
+   "start": 4353,
+   "residue": 1,
+   "role": "first",
+   "straddling_pool": {
+    "pool": 1088,
+    "positions": [
+     4352,
+     4355
+    ],
+    "straddles_start": true,
+    "class": "unwritten"
+   },
+   "other_pools_ok": true,
+   "n_pools_checked": 3,
+   "preceding_request_pools_ok": null
+  },
+  {
+   "dcp": 1,
+   "start": 4353,
+   "residue": 1,
+   "role": "later",
+   "straddling_pool": {
+    "pool": 1088,
+    "positions": [
+     4352,
+     4355
+    ],
+    "straddles_start": true,
+    "class": "cross"
+   },
+   "other_pools_ok": true,
+   "n_pools_checked": 3,
+   "preceding_request_pools_ok": true
+  },
+  {
+   "dcp": 2,
+   "start": 2043,
+   "residue": 3,
+   "role": "first",
+   "straddling_pool_by_rank": {
+    "0": [
+     {
+      "pool": 510,
+      "owner_rank": 0,
+      "slot": 1151,
+      "slot_as_expected": true,
+      "straddles_start": true,
+      "class": "unwritten"
+     }
+    ],
+    "1": [
+     {
+      "pool": 510,
+      "owner_rank": 0,
+      "slot": -1,
+      "slot_as_expected": true,
+      "straddles_start": true,
+      "class": "not_owned"
+     }
+    ]
+   },
+   "other_owned_pools_ok": true,
+   "slots_as_expected": true
+  },
+  {
+   "dcp": 2,
+   "start": 2043,
+   "residue": 3,
+   "role": "later",
+   "straddling_pool_by_rank": {
+    "0": [
+     {
+      "pool": 510,
+      "owner_rank": 0,
+      "slot": 1151,
+      "slot_as_expected": true,
+      "straddles_start": true,
+      "class": "cross"
+     }
+    ],
+    "1": [
+     {
+      "pool": 510,
+      "owner_rank": 0,
+      "slot": -1,
+      "slot_as_expected": true,
+      "straddles_start": true,
+      "class": "not_owned"
+     }
+    ]
+   },
+   "other_owned_pools_ok": true,
+   "slots_as_expected": true
+  },
+  {
+   "dcp": 2,
+   "start": 2045,
+   "residue": 1,
+   "role": "first",
+   "straddling_pool_by_rank": {
+    "0": [
+     {
+      "pool": 511,
+      "owner_rank": 1,
+      "slot": -1,
+      "slot_as_expected": true,
+      "straddles_start": true,
+      "class": "not_owned"
+     }
+    ],
+    "1": [
+     {
+      "pool": 511,
+      "owner_rank": 1,
+      "slot": 1151,
+      "slot_as_expected": true,
+      "straddles_start": true,
+      "class": "unwritten"
+     }
+    ]
+   },
+   "other_owned_pools_ok": true,
+   "slots_as_expected": true
+  },
+  {
+   "dcp": 2,
+   "start": 2045,
+   "residue": 1,
+   "role": "later",
+   "straddling_pool_by_rank": {
+    "0": [
+     {
+      "pool": 511,
+      "owner_rank": 1,
+      "slot": -1,
+      "slot_as_expected": true,
+      "straddles_start": true,
+      "class": "not_owned"
+     }
+    ],
+    "1": [
+     {
+      "pool": 511,
+      "owner_rank": 1,
+      "slot": 1151,
+      "slot_as_expected": true,
+      "straddles_start": true,
+      "class": "cross"
+     }
+    ]
+   },
+   "other_owned_pools_ok": true,
+   "slots_as_expected": true
+  },
+  {
+   "dcp": 2,
+   "start": 2046,
+   "residue": 2,
+   "role": "first",
+   "straddling_pool_by_rank": {
+    "0": [
+     {
+      "pool": 511,
+      "owner_rank": 1,
+      "slot": -1,
+      "slot_as_expected": true,
+      "straddles_start": true,
+      "class": "not_owned"
+     }
+    ],
+    "1": [
+     {
+      "pool": 511,
+      "owner_rank": 1,
+      "slot": 1151,
+      "slot_as_expected": true,
+      "straddles_start": true,
+      "class": "unwritten"
+     }
+    ]
+   },
+   "other_owned_pools_ok": true,
+   "slots_as_expected": true
+  },
+  {
+   "dcp": 2,
+   "start": 2046,
+   "residue": 2,
+   "role": "later",
+   "straddling_pool_by_rank": {
+    "0": [
+     {
+      "pool": 511,
+      "owner_rank": 1,
+      "slot": -1,
+      "slot_as_expected": true,
+      "straddles_start": true,
+      "class": "not_owned"
+     }
+    ],
+    "1": [
+     {
+      "pool": 511,
+      "owner_rank": 1,
+      "slot": 1151,
+      "slot_as_expected": true,
+      "straddles_start": true,
+      "class": "cross"
+     }
+    ]
+   },
+   "other_owned_pools_ok": true,
+   "slots_as_expected": true
+  },
+  {
+   "dcp": 2,
+   "start": 2047,
+   "residue": 3,
+   "role": "first",
+   "straddling_pool_by_rank": {
+    "0": [
+     {
+      "pool": 511,
+      "owner_rank": 1,
+      "slot": -1,
+      "slot_as_expected": true,
+      "straddles_start": true,
+      "class": "not_owned"
+     }
+    ],
+    "1": [
+     {
+      "pool": 511,
+      "owner_rank": 1,
+      "slot": 1151,
+      "slot_as_expected": true,
+      "straddles_start": true,
+      "class": "unwritten"
+     }
+    ]
+   },
+   "other_owned_pools_ok": true,
+   "slots_as_expected": true
+  },
+  {
+   "dcp": 2,
+   "start": 2047,
+   "residue": 3,
+   "role": "later",
+   "straddling_pool_by_rank": {
+    "0": [
+     {
+      "pool": 511,
+      "owner_rank": 1,
+      "slot": -1,
+      "slot_as_expected": true,
+      "straddles_start": true,
+      "class": "not_owned"
+     }
+    ],
+    "1": [
+     {
+      "pool": 511,
+      "owner_rank": 1,
+      "slot": 1151,
+      "slot_as_expected": true,
+      "straddles_start": true,
+      "class": "cross"
+     }
+    ]
+   },
+   "other_owned_pools_ok": true,
+   "slots_as_expected": true
+  },
+  {
+   "dcp": 2,
+   "start": 5627,
+   "residue": 3,
+   "role": "first",
+   "straddling_pool_by_rank": {
+    "0": [
+     {
+      "pool": 1406,
+      "owner_rank": 0,
+      "slot": 1599,
+      "slot_as_expected": true,
+      "straddles_start": true,
+      "class": "unwritten"
+     }
+    ],
+    "1": [
+     {
+      "pool": 1406,
+      "owner_rank": 0,
+      "slot": -1,
+      "slot_as_expected": true,
+      "straddles_start": true,
+      "class": "not_owned"
+     }
+    ]
+   },
+   "other_owned_pools_ok": true,
+   "slots_as_expected": true
+  },
+  {
+   "dcp": 2,
+   "start": 5627,
+   "residue": 3,
+   "role": "later",
+   "straddling_pool_by_rank": {
+    "0": [
+     {
+      "pool": 1406,
+      "owner_rank": 0,
+      "slot": 1599,
+      "slot_as_expected": true,
+      "straddles_start": true,
+      "class": "cross"
+     }
+    ],
+    "1": [
+     {
+      "pool": 1406,
+      "owner_rank": 0,
+      "slot": -1,
+      "slot_as_expected": true,
+      "straddles_start": true,
+      "class": "not_owned"
+     }
+    ]
+   },
+   "other_owned_pools_ok": true,
+   "slots_as_expected": true
+  }
+ ],
+ "ref_interp_casts_vs_rne_casts_differing_bytes_per_pool": [
+  17,
+  30,
+  19,
+  7,
+  12,
+  11,
+  9,
+  19,
+  21,
+  14,
+  20,
+  19,
+  15,
+  17,
+  14,
+  18
+ ],
+ "signature": [
+  [
+   1,
+   2043,
+   3,
+   "first",
+   "unwritten"
+  ],
+  [
+   1,
+   2043,
+   3,
+   "later",
+   "cross"
+  ],
+  [
+   1,
+   2044,
+   0,
+   "first",
+   "none(aligned)"
+  ],
+  [
+   1,
+   2044,
+   0,
+   "later",
+   "none(aligned)"
+  ],
+  [
+   1,
+   2045,
+   1,
+   "first",
+   "unwritten"
+  ],
+  [
+   1,
+   2045,
+   1,
+   "later",
+   "cross"
+  ],
+  [
+   1,
+   2046,
+   2,
+   "first",
+   "unwritten"
+  ],
+  [
+   1,
+   2046,
+   2,
+   "later",
+   "cross"
+  ],
+  [
+   1,
+   2047,
+   3,
+   "first",
+   "unwritten"
+  ],
+  [
+   1,
+   2047,
+   3,
+   "later",
+   "cross"
+  ],
+  [
+   1,
+   4090,
+   2,
+   "first",
+   "unwritten"
+  ],
+  [
+   1,
+   4090,
+   2,
+   "later",
+   "cross"
+  ],
+  [
+   1,
+   4351,
+   3,
+   "first",
+   "unwritten"
+  ],
+  [
+   1,
+   4351,
+   3,
+   "later",
+   "cross"
+  ],
+  [
+   1,
+   4353,
+   1,
+   "first",
+   "unwritten"
+  ],
+  [
+   1,
+   4353,
+   1,
+   "later",
+   "cross"
+  ],
+  [
+   2,
+   2043,
+   3,
+   "first",
+   {
+    "0": [
+     "unwritten"
+    ],
+    "1": [
+     "not_owned"
+    ]
+   }
+  ],
+  [
+   2,
+   2043,
+   3,
+   "later",
+   {
+    "0": [
+     "cross"
+    ],
+    "1": [
+     "not_owned"
+    ]
+   }
+  ],
+  [
+   2,
+   2045,
+   1,
+   "first",
+   {
+    "0": [
+     "not_owned"
+    ],
+    "1": [
+     "unwritten"
+    ]
+   }
+  ],
+  [
+   2,
+   2045,
+   1,
+   "later",
+   {
+    "0": [
+     "not_owned"
+    ],
+    "1": [
+     "cross"
+    ]
+   }
+  ],
+  [
+   2,
+   2046,
+   2,
+   "first",
+   {
+    "0": [
+     "not_owned"
+    ],
+    "1": [
+     "unwritten"
+    ]
+   }
+  ],
+  [
+   2,
+   2046,
+   2,
+   "later",
+   {
+    "0": [
+     "not_owned"
+    ],
+    "1": [
+     "cross"
+    ]
+   }
+  ],
+  [
+   2,
+   2047,
+   3,
+   "first",
+   {
+    "0": [
+     "not_owned"
+    ],
+    "1": [
+     "unwritten"
+    ]
+   }
+  ],
+  [
+   2,
+   2047,
+   3,
+   "later",
+   {
+    "0": [
+     "not_owned"
+    ],
+    "1": [
+     "cross"
+    ]
+   }
+  ],
+  [
+   2,
+   5627,
+   3,
+   "first",
+   {
+    "0": [
+     "unwritten"
+    ],
+    "1": [
+     "not_owned"
+    ]
+   }
+  ],
+  [
+   2,
+   5627,
+   3,
+   "later",
+   {
+    "0": [
+     "cross"
+    ],
+    "1": [
+     "not_owned"
+    ]
+   }
+  ]
+ ],
+ "defect_reproduced_as_described": true
+}

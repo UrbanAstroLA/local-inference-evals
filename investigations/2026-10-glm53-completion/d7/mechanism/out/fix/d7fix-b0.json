@@ -1,0 +1,212 @@
+{
+ "expect": "b0",
+ "installed_writer_has_d7_args": false,
+ "writer_file": "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py",
+ "n": 28,
+ "met": 28,
+ "results": [
+  {
+   "name": "M1 residue 0: first request alone, start 2044",
+   "holds": true,
+   "expected": true,
+   "met": true,
+   "detail": "bad=[] stray=0"
+  },
+  {
+   "name": "M1 residue 1: first request alone, start 2045",
+   "holds": false,
+   "expected": false,
+   "met": true,
+   "detail": "bad=[(511, 'unwritten')] stray=0"
+  },
+  {
+   "name": "M1 residue 2: first request alone, start 2046",
+   "holds": false,
+   "expected": false,
+   "met": true,
+   "detail": "bad=[(511, 'unwritten')] stray=0"
+  },
+  {
+   "name": "M1 residue 3: first request alone, start 2047",
+   "holds": false,
+   "expected": false,
+   "met": true,
+   "detail": "bad=[(511, 'unwritten')] stray=0"
+  },
+  {
+   "name": "M2 residue 0: later request in packed batch (after aligned B)",
+   "holds": true,
+   "expected": true,
+   "met": true,
+   "detail": "bad={'A': [], 'B': []} stray=0"
+  },
+  {
+   "name": "M2 residue 1: later request in packed batch (after aligned B)",
+   "holds": false,
+   "expected": false,
+   "met": true,
+   "detail": "bad={'A': [(511, 'wrong')], 'B': []} stray=0"
+  },
+  {
+   "name": "M2 residue 2: later request in packed batch (after aligned B)",
+   "holds": false,
+   "expected": false,
+   "met": true,
+   "detail": "bad={'A': [(511, 'wrong')], 'B': []} stray=0"
+  },
+  {
+   "name": "M2 residue 3: later request in packed batch (after aligned B)",
+   "holds": false,
+   "expected": false,
+   "met": true,
+   "detail": "bad={'A': [(511, 'wrong')], 'B': []} stray=0"
+  },
+  {
+   "name": "M2b first+later both unaligned (residues 1,2), order swapped next step",
+   "holds": false,
+   "expected": false,
+   "met": true,
+   "detail": "bad={'A': [(250, 'unwritten'), (475, 'wrong')], 'B': [(300, 'wrong'), (475, 'unwritten')]} stray=0"
+  },
+  {
+   "name": "M2b first+later both unaligned (residues 3,1), order swapped next step",
+   "holds": false,
+   "expected": false,
+   "met": true,
+   "detail": "bad={'A': [(250, 'unwritten'), (475, 'wrong')], 'B': [(300, 'wrong'), (475, 'unwritten')]} stray=0"
+  },
+  {
+   "name": "M2b first+later both unaligned (residues 2,3), order swapped next step",
+   "holds": false,
+   "expected": false,
+   "met": true,
+   "detail": "bad={'A': [(250, 'unwritten'), (475, 'wrong')], 'B': [(300, 'wrong'), (475, 'unwritten')]} stray=0"
+  },
+  {
+   "name": "M3 short chunks 1-4 tokens alone, successive unaligned boundaries",
+   "holds": false,
+   "expected": false,
+   "met": true,
+   "detail": "bad=[(511, 'unwritten'), (512, 'unwritten'), (514, 'unwritten')] stray=0"
+  },
+  {
+   "name": "M3b short chunks (1-3 tokens) as later request in packed batches",
+   "holds": false,
+   "expected": false,
+   "met": true,
+   "detail": "bad={'C': [(511, 'wrong'), (512, 'wrong'), (513, 'wrong')], 'D': []} stray=0"
+  },
+  {
+   "name": "M4 0.9.1/B0 served chunking of a 9,000-token prompt (starts 2045,4090,6397,8442)",
+   "holds": false,
+   "expected": false,
+   "met": true,
+   "detail": "bad=[(511, 'unwritten'), (1022, 'unwritten'), (1599, 'unwritten'), (2110, 'unwritten')] stray=0"
+  },
+  {
+   "name": "M4b chunk start 4349 at the block-0/1 boundary (pool 1087)",
+   "holds": false,
+   "expected": false,
+   "met": true,
+   "detail": "bad=[(1087, 'unwritten')] stray=0"
+  },
+  {
+   "name": "M4b chunk start 4350 at the block-0/1 boundary (pool 1087)",
+   "holds": false,
+   "expected": false,
+   "met": true,
+   "detail": "bad=[(1087, 'unwritten')] stray=0"
+  },
+  {
+   "name": "M4b chunk start 4351 at the block-0/1 boundary (pool 1087)",
+   "holds": false,
+   "expected": false,
+   "met": true,
+   "detail": "bad=[(1087, 'unwritten')] stray=0"
+  },
+  {
+   "name": "M4b chunk start 4353 at the block-0/1 boundary (pool 1088)",
+   "holds": false,
+   "expected": false,
+   "met": true,
+   "detail": "bad=[(1088, 'unwritten')] stray=0"
+  },
+  {
+   "name": "M4b chunk start 4354 at the block-0/1 boundary (pool 1088)",
+   "holds": false,
+   "expected": false,
+   "met": true,
+   "detail": "bad=[(1088, 'unwritten')] stray=0"
+  },
+  {
+   "name": "M4b chunk start 4355 at the block-0/1 boundary (pool 1088)",
+   "holds": false,
+   "expected": false,
+   "met": true,
+   "detail": "bad=[(1088, 'unwritten')] stray=0"
+  },
+  {
+   "name": "M5 prefix hit at 4,352 on a reused (stale) ring block, then unaligned continuation 5,479",
+   "holds": false,
+   "expected": false,
+   "met": true,
+   "detail": "bad=[(1369, 'unwritten')] stray=0"
+  },
+  {
+   "name": "M6 preempted request resumed on a new ring block, recompute from 0, unaligned continuation",
+   "holds": false,
+   "expected": false,
+   "met": true,
+   "detail": "bad={'G': [(511, 'unwritten')], 'H': [], 'H2': []} stray=0"
+  },
+  {
+   "name": "M7 tail ring absent: straddling pool left unwritten exactly as B0 (documented fallback)",
+   "holds": true,
+   "expected": true,
+   "met": true,
+   "detail": "bad=[(511, 'unwritten')]"
+  },
+  {
+   "name": "M8 three decode rows before the prefill slice; later request unaligned",
+   "holds": false,
+   "expected": false,
+   "met": true,
+   "detail": "bad={'A': [(511, 'wrong')], 'B': []} stray=0"
+  },
+  {
+   "name": "M9 random shared-step schedules (6 trials, 4 requests, 53 unaligned starts)",
+   "holds": false,
+   "expected": false,
+   "met": true,
+   "detail": "bad+stray=53 of 20799 pools"
+  },
+  {
+   "name": "M10 aligned starts: patched writer byte-identical to B0 writer (24 random packed batches, stale ring contents)",
+   "holds": true,
+   "expected": true,
+   "met": true,
+   "detail": "24/24 identical"
+  },
+  {
+   "name": "M11 op-level aligned workload: all pools correct (hashes compared across images by the runner)",
+   "holds": true,
+   "expected": true,
+   "met": true,
+   "detail": "bad={'A': [], 'B': []} stray=0"
+  },
+  {
+   "name": "M12 DCP2 interleave-1 geometry: straddling pool correct on its owner rank (informative; B1 is DCP1)",
+   "holds": false,
+   "expected": false,
+   "met": true,
+   "detail": "ok=0 bad=3"
+  }
+ ],
+ "m11_hashes": [
+  "6cba48eeded9aa970b67094fdecf50b89af20f491904cccf69cb4a8fd11caf4d",
+  "f0fa0e97f6f57d7c5b3245906654b3031f773b92945ebe3b0a59f3aa0de824f7",
+  "16e828279fec8fcd73b3438058bb2fcfcc0848fbae308f2c40cc86e773a10e3c",
+  "bf6ef689fd2b539f0995e7fc07a5300bf0878f35ab311ff72402746a6e496aaa"
+ ],
+ "ref_mode": "interp"
+}

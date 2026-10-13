@@ -1,0 +1,11 @@
+S1_worker_capture_model_line: [719]
+S1_worker_warmup_kernels_line: [797]
+S1_v2_warmup_before_capture: False
+S2_v2_capture_model_locks_workspace: False
+S3_v1_runner_lock_workspace_lines: [7180]
+
+WorkspaceManager growth frees the old buffer before allocating: True
+W1 unlocked: request 256 B (address recorded), then 4096 B -> old buffer released=True, new address differs=True
+W2 locked: the same growth raises AssertionError=True ('Workspace is locked but allocation f...'), buffer kept=True
+
+REPRODUCED: V2 captures graphs, then runs warmup_kernels and serves with the workspace unlocked; an unlocked manager frees a captured buffer on growth

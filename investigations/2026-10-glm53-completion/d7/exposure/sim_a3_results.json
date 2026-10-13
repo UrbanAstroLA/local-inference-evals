@@ -1,0 +1,830 @@
+{
+ "replay": {
+  "rows": 14712,
+  "rows_matched": 14712,
+  "mismatches": [],
+  "n_mismatches": 0,
+  "skipped_prefill_unexplained": [],
+  "n_skipped_unexplained": 0
+ },
+ "closed_bound": {
+  "measured": 217,
+  "simulated": 217,
+  "exact_step_and_chunk": 217,
+  "same_chunk_different_step": 0,
+  "measured_only": 0,
+  "simulated_only": 0,
+  "by_phase_measured_vs_simulated": {
+   "D": [
+    22,
+    22
+   ],
+   "F0": [
+    9,
+    9
+   ],
+   "F1": [
+    9,
+    9
+   ],
+   "S": [
+    19,
+    19
+   ],
+   "T0": [
+    20,
+    20
+   ],
+   "T1": [
+    20,
+    20
+   ],
+   "stack-warmup": [
+    10,
+    10
+   ],
+   "warm": [
+    108,
+    108
+   ]
+  },
+  "measured_only_examples": [],
+  "simulated_only_examples": [],
+  "all_prefill_chunks": {
+   "measured_chunks": 481,
+   "simulated_chunks": 481,
+   "same_chunk": 481,
+   "same_chunk_and_step": 481
+  },
+  "steps_simulated": 2480,
+  "steps_measured": 2482
+ },
+ "closed_measured": {
+  "measured": 217,
+  "simulated": 217,
+  "exact_step_and_chunk": 217,
+  "same_chunk_different_step": 0,
+  "measured_only": 0,
+  "simulated_only": 0,
+  "by_phase_measured_vs_simulated": {
+   "D": [
+    22,
+    22
+   ],
+   "F0": [
+    9,
+    9
+   ],
+   "F1": [
+    9,
+    9
+   ],
+   "S": [
+    19,
+    19
+   ],
+   "T0": [
+    20,
+    20
+   ],
+   "T1": [
+    20,
+    20
+   ],
+   "stack-warmup": [
+    10,
+    10
+   ],
+   "warm": [
+    108,
+    108
+   ]
+  },
+  "measured_only_examples": [],
+  "simulated_only_examples": [],
+  "all_prefill_chunks": {
+   "measured_chunks": 481,
+   "simulated_chunks": 481,
+   "same_chunk": 481,
+   "same_chunk_and_step": 481
+  },
+  "steps_simulated": 2480,
+  "steps_measured": 2482
+ },
+ "ablation": [
+  {
+   "label": "frozen-original rules: budget 2048, no draft-slot reservation, decode row 4, no Mamba clip, decodes first",
+   "rules": {
+    "K": 3,
+    "max_batched": 2048,
+    "reserve_per_request": 0,
+    "decode_tokens": 4,
+    "mamba_align": false,
+    "decode_first": true,
+    "pool": 4
+   },
+   "events": 80,
+   "exact": 0,
+   "same_chunk": 0,
+   "by_phase": {
+    "D": [
+     22,
+     11
+    ],
+    "F0": [
+     9,
+     6
+    ],
+    "F1": [
+     9,
+     10
+    ],
+    "S": [
+     19,
+     17
+    ],
+    "T0": [
+     20,
+     14
+    ],
+    "T1": [
+     20,
+     22
+    ],
+    "stack-warmup": [
+     10,
+     0
+    ],
+    "warm": [
+     108,
+     0
+    ]
+   }
+  },
+  {
+   "label": "+ Mamba 'align' clip at 4,352 boundaries",
+   "rules": {
+    "K": 3,
+    "max_batched": 2048,
+    "reserve_per_request": 0,
+    "decode_tokens": 4,
+    "mamba_align": true,
+    "decode_first": true,
+    "pool": 4
+   },
+   "events": 59,
+   "exact": 0,
+   "same_chunk": 0,
+   "by_phase": {
+    "D": [
+     22,
+     8
+    ],
+    "F0": [
+     9,
+     4
+    ],
+    "F1": [
+     9,
+     7
+    ],
+    "S": [
+     19,
+     13
+    ],
+    "T0": [
+     20,
+     10
+    ],
+    "T1": [
+     20,
+     17
+    ],
+    "stack-warmup": [
+     10,
+     0
+    ],
+    "warm": [
+     108,
+     0
+    ]
+   }
+  },
+  {
+   "label": "+ draft-slot reservation K=3 per scheduled request (solo budget 2045; decode row costs 4+3)",
+   "rules": {
+    "K": 3,
+    "max_batched": 2048,
+    "reserve_per_request": 3,
+    "decode_tokens": 4,
+    "mamba_align": true,
+    "decode_first": true,
+    "pool": 4
+   },
+   "events": 217,
+   "exact": 217,
+   "same_chunk": 217,
+   "by_phase": {
+    "D": [
+     22,
+     22
+    ],
+    "F0": [
+     9,
+     9
+    ],
+    "F1": [
+     9,
+     9
+    ],
+    "S": [
+     19,
+     19
+    ],
+    "T0": [
+     20,
+     20
+    ],
+    "T1": [
+     20,
+     20
+    ],
+    "stack-warmup": [
+     10,
+     10
+    ],
+    "warm": [
+     108,
+     108
+    ]
+   }
+  },
+  {
+   "label": "+ scheduler order (running in admission order, then waiting) = corrected rules",
+   "rules": {
+    "K": 3,
+    "max_batched": 2048,
+    "reserve_per_request": 3,
+    "decode_tokens": 4,
+    "mamba_align": true,
+    "decode_first": false,
+    "pool": 4
+   },
+   "events": 217,
+   "exact": 217,
+   "same_chunk": 217,
+   "by_phase": {
+    "D": [
+     22,
+     22
+    ],
+    "F0": [
+     9,
+     9
+    ],
+    "F1": [
+     9,
+     9
+    ],
+    "S": [
+     19,
+     19
+    ],
+    "T0": [
+     20,
+     20
+    ],
+    "T1": [
+     20,
+     20
+    ],
+    "stack-warmup": [
+     10,
+     10
+    ],
+    "warm": [
+     108,
+     108
+    ]
+   }
+  },
+  {
+   "label": "corrected rules without the Mamba clip",
+   "rules": {
+    "K": 3,
+    "max_batched": 2048,
+    "reserve_per_request": 3,
+    "decode_tokens": 4,
+    "mamba_align": false,
+    "decode_first": false,
+    "pool": 4
+   },
+   "events": 206,
+   "exact": 19,
+   "same_chunk": 19,
+   "by_phase": {
+    "D": [
+     22,
+     21
+    ],
+    "F0": [
+     9,
+     12
+    ],
+    "F1": [
+     9,
+     10
+    ],
+    "S": [
+     19,
+     23
+    ],
+    "T0": [
+     20,
+     23
+    ],
+    "T1": [
+     20,
+     17
+    ],
+    "stack-warmup": [
+     10,
+     9
+    ],
+    "warm": [
+     108,
+     91
+    ]
+   }
+  },
+  {
+   "label": "corrected rules without the draft-slot reservation",
+   "rules": {
+    "K": 3,
+    "max_batched": 2048,
+    "reserve_per_request": 0,
+    "decode_tokens": 4,
+    "mamba_align": true,
+    "decode_first": false,
+    "pool": 4
+   },
+   "events": 59,
+   "exact": 0,
+   "same_chunk": 0,
+   "by_phase": {
+    "D": [
+     22,
+     8
+    ],
+    "F0": [
+     9,
+     4
+    ],
+    "F1": [
+     9,
+     7
+    ],
+    "S": [
+     19,
+     13
+    ],
+    "T0": [
+     20,
+     10
+    ],
+    "T1": [
+     20,
+     17
+    ],
+    "stack-warmup": [
+     10,
+     0
+    ],
+    "warm": [
+     108,
+     0
+    ]
+   }
+  },
+  {
+   "label": "corrected rules, arrival order = client send order instead of engine order",
+   "events": 230,
+   "exact": 135,
+   "same_chunk": 147,
+   "by_phase": {
+    "D": [
+     22,
+     26
+    ],
+    "F0": [
+     9,
+     9
+    ],
+    "F1": [
+     9,
+     9
+    ],
+    "S": [
+     19,
+     19
+    ],
+    "T0": [
+     20,
+     24
+    ],
+    "T1": [
+     20,
+     25
+    ],
+    "stack-warmup": [
+     10,
+     10
+    ],
+    "warm": [
+     108,
+     108
+    ]
+   }
+  }
+ ],
+ "predict": {
+  "step_time_fit": {
+   "a": 0.06719005322601189,
+   "b_per_prefill_token": 0.0002738813709627488,
+   "c_per_decode_row": 0.0014796307684041595,
+   "rmse": 0.13244548983770807,
+   "n": 2434
+  },
+  "runs": [
+   {
+    "acc": 2.6,
+    "time_scale": 0.7,
+    "events": 224,
+    "same_chunk": 133,
+    "steps": 2406,
+    "by_phase": {
+     "D": [
+      22,
+      24
+     ],
+     "F0": [
+      9,
+      9
+     ],
+     "F1": [
+      9,
+      9
+     ],
+     "S": [
+      19,
+      16
+     ],
+     "T0": [
+      20,
+      24
+     ],
+     "T1": [
+      20,
+      24
+     ],
+     "stack-warmup": [
+      10,
+      10
+     ],
+     "warm": [
+      108,
+      108
+     ]
+    }
+   },
+   {
+    "acc": 2.6,
+    "time_scale": 1.0,
+    "events": 227,
+    "same_chunk": 138,
+    "steps": 2403,
+    "by_phase": {
+     "D": [
+      22,
+      24
+     ],
+     "F0": [
+      9,
+      9
+     ],
+     "F1": [
+      9,
+      9
+     ],
+     "S": [
+      19,
+      19
+     ],
+     "T0": [
+      20,
+      24
+     ],
+     "T1": [
+      20,
+      24
+     ],
+     "stack-warmup": [
+      10,
+      10
+     ],
+     "warm": [
+      108,
+      108
+     ]
+    }
+   },
+   {
+    "acc": 2.6,
+    "time_scale": 1.4,
+    "events": 226,
+    "same_chunk": 135,
+    "steps": 2300,
+    "by_phase": {
+     "D": [
+      22,
+      24
+     ],
+     "F0": [
+      9,
+      9
+     ],
+     "F1": [
+      9,
+      9
+     ],
+     "S": [
+      19,
+      19
+     ],
+     "T0": [
+      20,
+      24
+     ],
+     "T1": [
+      20,
+      24
+     ],
+     "stack-warmup": [
+      10,
+      9
+     ],
+     "warm": [
+      108,
+      108
+     ]
+    }
+   },
+   {
+    "acc": 2.9,
+    "time_scale": 0.7,
+    "events": 224,
+    "same_chunk": 133,
+    "steps": 2242,
+    "by_phase": {
+     "D": [
+      22,
+      24
+     ],
+     "F0": [
+      9,
+      9
+     ],
+     "F1": [
+      9,
+      9
+     ],
+     "S": [
+      19,
+      16
+     ],
+     "T0": [
+      20,
+      24
+     ],
+     "T1": [
+      20,
+      24
+     ],
+     "stack-warmup": [
+      10,
+      10
+     ],
+     "warm": [
+      108,
+      108
+     ]
+    }
+   },
+   {
+    "acc": 2.9,
+    "time_scale": 1.0,
+    "events": 227,
+    "same_chunk": 138,
+    "steps": 2239,
+    "by_phase": {
+     "D": [
+      22,
+      24
+     ],
+     "F0": [
+      9,
+      9
+     ],
+     "F1": [
+      9,
+      9
+     ],
+     "S": [
+      19,
+      19
+     ],
+     "T0": [
+      20,
+      24
+     ],
+     "T1": [
+      20,
+      24
+     ],
+     "stack-warmup": [
+      10,
+      10
+     ],
+     "warm": [
+      108,
+      108
+     ]
+    }
+   },
+   {
+    "acc": 2.9,
+    "time_scale": 1.4,
+    "events": 226,
+    "same_chunk": 135,
+    "steps": 2136,
+    "by_phase": {
+     "D": [
+      22,
+      24
+     ],
+     "F0": [
+      9,
+      9
+     ],
+     "F1": [
+      9,
+      9
+     ],
+     "S": [
+      19,
+      19
+     ],
+     "T0": [
+      20,
+      24
+     ],
+     "T1": [
+      20,
+      24
+     ],
+     "stack-warmup": [
+      10,
+      9
+     ],
+     "warm": [
+      108,
+      108
+     ]
+    }
+   },
+   {
+    "acc": 3.2,
+    "time_scale": 0.7,
+    "events": 224,
+    "same_chunk": 133,
+    "steps": 2112,
+    "by_phase": {
+     "D": [
+      22,
+      24
+     ],
+     "F0": [
+      9,
+      9
+     ],
+     "F1": [
+      9,
+      9
+     ],
+     "S": [
+      19,
+      16
+     ],
+     "T0": [
+      20,
+      24
+     ],
+     "T1": [
+      20,
+      24
+     ],
+     "stack-warmup": [
+      10,
+      10
+     ],
+     "warm": [
+      108,
+      108
+     ]
+    }
+   },
+   {
+    "acc": 3.2,
+    "time_scale": 1.0,
+    "events": 227,
+    "same_chunk": 138,
+    "steps": 2109,
+    "by_phase": {
+     "D": [
+      22,
+      24
+     ],
+     "F0": [
+      9,
+      9
+     ],
+     "F1": [
+      9,
+      9
+     ],
+     "S": [
+      19,
+      19
+     ],
+     "T0": [
+      20,
+      24
+     ],
+     "T1": [
+      20,
+      24
+     ],
+     "stack-warmup": [
+      10,
+      10
+     ],
+     "warm": [
+      108,
+      108
+     ]
+    }
+   },
+   {
+    "acc": 3.2,
+    "time_scale": 1.4,
+    "events": 226,
+    "same_chunk": 135,
+    "steps": 2006,
+    "by_phase": {
+     "D": [
+      22,
+      24
+     ],
+     "F0": [
+      9,
+      9
+     ],
+     "F1": [
+      9,
+      9
+     ],
+     "S": [
+      19,
+      19
+     ],
+     "T0": [
+      20,
+      24
+     ],
+     "T1": [
+      20,
+      24
+     ],
+     "stack-warmup": [
+      10,
+      9
+     ],
+     "warm": [
+      108,
+      108
+     ]
+    }
+   }
+  ]
+ }
+}

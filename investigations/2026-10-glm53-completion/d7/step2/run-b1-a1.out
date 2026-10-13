@@ -1,0 +1,179 @@
+budget: spent 0.0 + this attempt's cap 0.967 (wall 1740s) <= approved 2.0 GPU-h
+== preflight 2026-10-13T09:59:42Z
+index, memory.used [MiB], utilization.gpu [%]
+0, 20 MiB, 0 %
+1, 2244 MiB, 1 %
+== start 2026-10-13T09:59:42Z image=local/glm53-v0.9.1-b1-mapguard:local (sha256:4d7bd73e6f2ef6485289dcb5bcb2f2a65f1846a5959cde7cbd9c275471c72e16) cap 1740s
+Validated 18 checkpoint shards
+Validated DFlash2 K3 draft checkpoint
+1573af05e7a6653e2791c62748214254bdae9c3083abe40f0a38bf1cb603b66c
+Started glm53-flash-exl3-b12x-vllm on http://127.0.0.1:127.0.0.1:8001/v1. Initial B12x/CuTe compilation can take several minutes.
+Target: k325 profile, wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1@0490d2f708b12145f6516555ab066aaeb401cd21
+Profile: fp8, KV cache: fp8_ds_mla, max length: 1048576, max sequences: 16, GPU memory utilization: 0.95
+MoE topology: TP2, EP1
+Speculation: DFlash2 K3, bfloat16 draft KV, from incoai/GLM-5.3-Flash-DFlash2@bf582e4eacc1810f76656d1811693ff6c6737d2a
+State rollback: baseline full-state rollback
+Vision: disabled (language-model-only mode)
+Follow startup: docker logs -f glm53-flash-exl3-b12x-vllm
+== readiness gate (cap 1020s)
+ready after 732s
+43:(APIServer pid=59) INFO 10-13 10:00:02 [vllm.py:1336] Auto-enabling VLLM_USE_BREAKABLE_CUDAGRAPH=1. Set VLLM_USE_BREAKABLE_CUDAGRAPH=0 to opt out.
+47:(EngineCore pid=274) INFO 10-13 10:00:14 [core.py:122] Initializing a V1 LLM engine (v0.1.dev20051+g487ecf187) with config: model='/model-repo/snapshots/0490d2f708b12145f6516555ab066aaeb401cd21', speculative_config=SpeculativeConfig(method='dflash', model='/draft-repo/snapshots/bf582e4eacc1810f76
+242:(EngineCore pid=274) INFO 10-13 10:04:18 [kv_cache_utils.py:2299] GPU KV cache size: 4,707,515 tokens, Maximum concurrency for 1,048,576 tokens per request: 4.49x
+400:(Worker_TP0 pid=370) INFO 10-13 10:10:15 [model_runner.py:1033] Graph capturing finished in 159 secs, took 0.79 GiB
+402:(Worker_TP1 pid=404) INFO 10-13 10:10:15 [model_runner.py:1033] Graph capturing finished in 159 secs, took 0.74 GiB
+{"kind": "init", "mode": "device", "geo": {"nb": 1275, "R": 16, "W0": 241, "bs": 4352, "kbs": 64, "kpool": 4, "ring": 8, "ppb": 1088, "ipage": 64, "ipb": 17, "high": 935, "g_attn": 0, "g_tail": 1}, "groups": ["UniformTypeKVCacheSpecs", "UniformTypeKVCacheSpecs", "MambaSpec", "MambaSpec", "MambaSpec", "MambaSpec", "MambaSpec", "MambaSpec", "MambaSpec", "UniformTypeKVCacheSpecs"], "issues": [], "block_sizes": [4352, 8, 4352, 4352, 4352, 4352, 4352, 4352, 4352, 1088], "kernel_block_sizes": [64, 8, 4352, 4352, 4352, 4352, 4352, 4352, 4352, 1088], "owned_layers_impl": [3, 7, 11, 15, 19, 23], "owned
+{"kind": "init", "mode": "device", "geo": {"nb": 1275, "R": 16, "W0": 241, "bs": 4352, "kbs": 64, "kpool": 4, "ring": 8, "ppb": 1088, "ipage": 64, "ipb": 17, "high": 935, "g_attn": 0, "g_tail": 1}, "groups": ["UniformTypeKVCacheSpecs", "UniformTypeKVCacheSpecs", "MambaSpec", "MambaSpec", "MambaSpec", "MambaSpec", "MambaSpec", "MambaSpec", "MambaSpec", "UniformTypeKVCacheSpecs"], "issues": [], "block_sizes": [4352, 8, 4352, 4352, 4352, 4352, 4352, 4352, 4352, 1088], "kernel_block_sizes": [64, 8, 4352, 4352, 4352, 4352, 4352, 4352, 4352, 1088], "owned_layers_impl": [27, 31, 35, 39, 43], "owned_l
+guard: worker ranks 2, scheduler side 1, guard errors 0
+== client (deadline in 858s)
+03:11:55 model wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1
+03:12:03 P0 q0 prompt=124 gen=96 1.96s err=None
+03:12:04 P0 q1 prompt=134 gen=96 1.47s err=None
+03:12:06 P0 q2 prompt=158 gen=96 1.43s err=None
+03:12:07 P0 q3 prompt=133 gen=96 1.33s err=None
+03:12:07 phase P0 done in 6.2s
+03:12:09 warm r7 cached=0/4240 gen=1 1.73s err=None
+03:12:12 warm r6 cached=0/8240 gen=1 3.14s err=None
+03:12:18 warm r5 cached=0/16240 gen=1 6.57s err=None
+03:12:25 warm r4 cached=0/16478 gen=1 6.61s err=None
+03:12:38 warm r3 cached=0/32478 gen=1 13.2s err=None
+03:12:54 warm r2 cached=26112/64478 gen=1 15.7s err=None
+03:13:20 warm r1 cached=0/64217 gen=1 26.37s err=None
+03:13:47 warm r0 cached=56576/120217 gen=1 26.36s err=None
+03:13:47 phase warm done in 99.7s
+03:14:13 T0 r2 cached=56576/64478 gen=200 26.15s err=None
+03:14:13 T0 r3 cached=26112/32478 gen=200 26.2s err=None
+03:14:13 T0 r6 cached=0/8240 gen=200 26.55s err=None
+03:14:14 T0 r5 cached=8704/16240 gen=200 26.94s err=None
+03:14:14 T0 r7 cached=0/4240 gen=200 26.99s err=None
+03:14:14 T0 r0 cached=113152/120217 gen=200 27.07s err=None
+03:14:14 T0 r4 cached=8704/16478 gen=200 27.21s err=None
+03:14:14 T0 r1 cached=56576/64217 gen=200 27.58s err=None
+03:14:14 phase T0 done in 27.6s
+03:14:26 F0 r7 cached=0/4240 gen=128 12.12s err=None
+03:14:27 F0 r0 cached=113152/120217 gen=128 12.49s err=None
+03:14:27 F0 r4 cached=8704/16478 gen=128 12.55s err=None
+03:14:27 F0 r2 cached=56576/64478 gen=128 12.63s err=None
+03:14:27 phase F0 done in 12.6s
+03:14:53 T1 r2 cached=56576/64478 gen=200 26.31s err=None
+03:14:54 T1 r5 cached=8704/16240 gen=200 26.48s err=None
+03:14:54 T1 r3 cached=26112/32478 gen=200 26.49s err=None
+03:14:54 T1 r7 cached=0/4240 gen=200 26.81s err=None
+03:14:54 T1 r0 cached=113152/120217 gen=200 26.84s err=None
+03:14:54 T1 r1 cached=56576/64217 gen=200 27.18s err=None
+03:14:54 T1 r6 cached=0/8240 gen=200 27.33s err=None
+03:14:55 T1 r4 cached=8704/16478 gen=200 27.58s err=None
+03:14:55 phase T1 done in 27.6s
+03:15:07 F1 r7 cached=0/4240 gen=128 12.08s err=None
+03:15:07 F1 r4 cached=8704/16478 gen=128 12.23s err=None
+03:15:07 F1 r0 cached=113152/120217 gen=128 12.5s err=None
+03:15:07 F1 r2 cached=56576/64478 gen=128 12.53s err=None
+03:15:07 phase F1 done in 12.5s
+03:15:31 D r7 cached=0/4240 gen=40 24.16s err=None
+03:15:32 D r6 cached=0/8240 gen=80 24.83s err=None
+03:15:33 D r5 cached=8704/16240 gen=120 25.91s err=None
+03:15:33 D r4 cached=8704/16478 gen=160 25.97s err=None
+03:15:34 D r3 cached=26112/32478 gen=200 26.6s err=None
+03:15:34 D r2 cached=56576/64478 gen=240 26.86s err=None
+03:15:35 D r1 cached=56576/64217 gen=280 28.04s err=None
+03:15:36 D r0 cached=113152/120217 gen=320 28.67s err=None
+03:15:36 phase D done in 28.7s
+03:16:01 S r3 cached=26112/32478 gen=120 19.43s err=None
+03:16:02 S r1 cached=56576/64217 gen=120 22.74s err=None
+03:16:02 S r5 cached=8704/16240 gen=120 16.85s err=None
+03:16:02 S r6 cached=0/8240 gen=120 14.02s err=None
+03:16:03 S r7 cached=0/4240 gen=300 27.21s err=None
+03:16:04 S r2 cached=56576/64478 gen=300 27.84s err=None
+03:16:04 S r4 cached=8704/16478 gen=300 28.08s err=None
+03:16:04 S r0 cached=113152/120217 gen=300 28.34s err=None
+03:16:04 phase S done in 28.3s
+03:16:18 Q q2 prompt=158 gen=727 13.49s err=None
+03:16:23 Q q5 prompt=181 gen=992 18.21s err=None
+03:16:24 Q q4 prompt=365 gen=1024 19.49s err=None
+03:16:26 Q q0 prompt=124 gen=1024 21.46s err=None
+03:16:26 Q q3 prompt=133 gen=1024 22.07s err=None
+03:16:29 Q q6 prompt=172 gen=1006 24.49s err=None
+03:16:29 Q q1 prompt=134 gen=1024 24.5s err=None
+03:16:31 Q q7 prompt=447 gen=1024 26.97s err=None
+03:16:45 Q q9 prompt=131 gen=842 22.82s err=None
+03:16:46 Q q11 prompt=146 gen=1024 19.76s err=None
+03:16:46 Q q14 prompt=283 gen=866 16.83s err=None
+03:16:46 Q q8 prompt=238 gen=1024 28.16s err=None
+03:16:48 Q q10 prompt=376 gen=1024 23.84s err=None
+03:16:50 Q q12 prompt=322 gen=1024 23.1s err=None
+03:16:52 Q q13 prompt=131 gen=1024 23.35s err=None
+03:16:53 Q q15 prompt=204 gen=1024 21.44s err=None
+03:16:53 phase Q done in 48.4s
+03:16:54 P1 q0 prompt=124 gen=96 1.44s err=None
+03:16:56 P1 q1 prompt=134 gen=96 1.42s err=None
+03:16:57 P1 q2 prompt=158 gen=96 1.41s err=None
+03:16:58 P1 q3 prompt=133 gen=96 1.34s err=None
+03:16:58 phase P1 done in 5.6s
+03:17:06 2d D=0 in_decode=0 prompt_tokens=2795 err=None drain={'idle': True, 'secs': 0.05}
+03:17:09 2d D=1 in_decode=1 prompt_tokens=2795 err=None drain={'idle': True, 'secs': 0.27}
+03:17:15 2d D=2 in_decode=2 prompt_tokens=2795 err=None drain={'idle': True, 'secs': 0.26}
+03:17:22 2d D=3 in_decode=3 prompt_tokens=2795 err=None drain={'idle': True, 'secs': 0.26}
+03:17:30 2d D=4 in_decode=4 prompt_tokens=2795 err=None drain={'idle': True, 'secs': 0.26}
+03:17:40 2d D=5 in_decode=5 prompt_tokens=2795 err=None drain={'idle': True, 'secs': 0.26}
+03:17:52 2d D=6 in_decode=6 prompt_tokens=2795 err=None drain={'idle': True, 'secs': 0.26}
+03:18:06 2d D=7 in_decode=7 prompt_tokens=2795 err=None drain={'idle': True, 'secs': 0.26}
+03:18:06 phase 2d done in 61.5s
+03:18:12 CLIENT DONE
+client rc=0
+== cleanup 2026-10-13T10:18:12Z
+Stopped glm53-flash-exl3-b12x-vllm (container retained; start.sh replaces it on the next launch).
+stop rc=0
+no glm53* container running
+occupied 1124s x 2 GPU = 0.6244 GPU-h
+docker cp rc=0
+VERDICT: CLEAN
+invalid: []
+violations: {}
+incomplete: []
+output identity (short greedy vs s1): PASS {'q0': True, 'q1': True, 'q2': True, 'q3': True}
+  C9_owned_layers          1 (min 1)
+  C1_full_replay_steps     1993 (min 300)
+  C5a_spec_writes          211410 (min 20000)
+  C7_high_mla_w            85815 (min 5000)
+  C7_high_idx_w            21450 (min 500)
+  C7_high_mla_r            112489344 (min 5000)
+  C7_high_idx_r            107340 (min 500)
+  C7_high_tail             22100 (min 50)
+  C8_mla_w                 3066160 (min 200000)
+  C8_idx_w_pf              2784260 (min 100000)
+  C8_idx_w_dec             281900 (min 20000)
+  C8_tail_w_seed           2784260 (min 500)
+  C8_tail_w_stash          281900 (min 20000)
+  C8_idx_r_dec             281900 (min 20000)
+  C8_idx_r_pf              1905 (min 50)
+  C8_mla_r                 3066160 (min 100000)
+  C10_join                 1.0 (min 0.95)
+  C10_p3_rows              1.0 (min 0.9)
+  C13_d7_straddle_events   219 (min 100)
+  C14_d7_positive_control  694780 (min 10000)
+  C2_mixed_steps           129 (min 20)
+  C3_row_reuse             140 (min 20)
+  C4_prefix_hits           32 (min 10)
+  C6a_decode_le4           793 (min 60)
+  C6b_decode_5to8          861 (min 60)
+  C6c_route_transitions    18 (min 6)
+  C5b_rejected_drafts      15787 (min 2000)
+  C5c_accepted_drafts      26495 (min 2000)
+  C11_completions          140 (min 40)
+  C12_short_ctx            90 (min 8)
+note: P2/P6: window starts at the first non-warm-up step (the stack's release warm-up traffic is included)
+note: rank 0: before the workload (runner warm-up incl.): {'pos.pos_bounds': 4}
+note: rank 1: before the workload (runner warm-up incl.): {'pos.pos_bounds': 4}
+note: P5/P6: completions from EngineCore finished ids in the window
+D7 rank 0: {'s_events': 1314, 's_verified': 1314, 's_indet': 0, 's_unavail': 0, 's_missing': 0, 's_mism': 0, 'pc_checked': 833736, 'pc_mism': 0, 'd7_fallback': 0, 'legacy': 0} events {'events': 219, 'exercised': 219, 'by_outcome': {'verified': 219}}
+D7 rank 1: {'s_events': 1095, 's_verified': 1095, 's_indet': 0, 's_unavail': 0, 's_missing': 0, 's_mism': 0, 'pc_checked': 694780, 'pc_mism': 0, 'd7_fallback': 0, 'legacy': 0} events {'events': 219, 'exercised': 219, 'by_outcome': {'verified': 219}}
+phase 2d window (outside the verdict): {'cut': 1791886625.067, 'violations': {0: {}, 1: {}}, 'd7': {0: {'s_events': 240, 's_verified': 240, 's_indet': 0, 's_unavail': 0, 's_missing': 0, 's_mism': 0, 'pc_checked': 211344, 'pc_mism': 0, 'd7_fallback': 0}, 1: {'s_events': 200, 's_verified': 200, 's_indet': 0, 's_unavail': 0, 's_missing': 0, 's_mism': 0, 'pc_checked': 176120, 'pc_mism': 0, 'd7_fallback': 0}}, 'note': 'outside every coverage count and the verdict (B1-5); reported separately'}
+phase 2d: ran=True budget=2048 K=3
+  2d {"case": 0, "requested_D": 0, "actual_D": 0, "other_prefill_rows": 0, "chunk1_len": 2045, "chunk2_start": 2045, "pred_budget_formula": 2045, "pred_2045_minus_7D": 2045, "arith_matches": true, "requested_eq_actual_D": true, "split_residue": 1, "prompt_tokens_ok": true, "status": "ok"}
+  2d {"case": 1, "requested_D": 1, "actual_D": 1, "other_prefill_rows": 0, "chunk1_len": 2038, "chunk2_start": 2038, "pred_budget_formula": 2038, "pred_2045_minus_7D": 2038, "arith_matches": true, "requested_eq_actual_D": true, "split_residue": 2, "prompt_tokens_ok": true, "status": "ok"}
+  2d {"case": 2, "requested_D": 2, "actual_D": 2, "other_prefill_rows": 0, "chunk1_len": 2031, "chunk2_start": 2031, "pred_budget_formula": 2031, "pred_2045_minus_7D": 2031, "arith_matches": true, "requested_eq_actual_D": true, "split_residue": 3, "prompt_tokens_ok": true, "status": "ok"}
+  2d {"case": 3, "requested_D": 3, "actual_D": 3, "other_prefill_rows": 0, "chunk1_len": 2024, "chunk2_start": 2024, "pred_budget_formula": 2024, "pred_2045_minus_7D": 2024, "arith_matches": true, "requested_eq_actual_D": true, "split_residue": 0, "prompt_tokens_ok": true, "status": "ok"}
+  2d {"case": 4, "requested_D": 4, "actual_D": 4, "other_prefill_rows": 0, "chunk1_len": 2017, "chunk2_start": 2017, "pred_budget_formula": 2017, "pred_2045_minus_7D": 2017, "arith_matches": true, "requested_eq_actual_D": true, "split_residue": 1, "prompt_tokens_ok": true, "status": "ok"}
+  2d {"case": 5, "requested_D": 5, "actual_D": 5, "other_prefill_rows": 0, "chunk1_len": 2010, "chunk2_start": 2010, "pred_budget_formula": 2010, "pred_2045_minus_7D": 2010, "arith_matches": true, "requested_eq_actual_D": true, "split_residue": 2, "prompt_tokens_ok": true, "status": "ok"}
+  2d {"case": 6, "requested_D": 6, "actual_D": 6, "other_prefill_rows": 0, "chunk1_len": 2003, "chunk2_start": 2003, "pred_budget_formula": 2003, "pred_2045_minus_7D": 2003, "arith_matches": true, "requested_eq_actual_D": true, "split_residue": 3, "prompt_tokens_ok": true, "status": "ok"}
+  2d {"case": 7, "requested_D": 7, "actual_D": 7, "other_prefill_rows": 0, "chunk1_len": 1996, "chunk2_start": 1996, "pred_budget_formula": 1996, "pred_2045_minus_7D": 1996, "arith_matches": true, "requested_eq_actual_D": true, "split_residue": 0, "prompt_tokens_ok": true, "status": "ok"}

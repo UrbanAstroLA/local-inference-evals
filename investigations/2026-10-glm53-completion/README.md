@@ -31,11 +31,15 @@ GPU-hours. A live check of the slot mappings B0's kernels consume under real sch
 assumes prefill chunks start on a 4-token pool boundary, so after an unaligned chunk start one pool is left unwritten or
 filled from the previous request's tokens (217 events in 50 requests of a long-prefix workload; every other mapping
 clean over the frozen coverage; its effect on completion untested); 0.9933 GPU-hours, including an invalid attempt
-caused by the investigation's own runner. Cumulative 48.90 GPU-hours;
+caused by the investigation's own runner. D7's writer is identical in 0.7.0, 0.8.0 and 0.9.1 and in upstream vLLM main;
+in the GPQA records its exposure is narrow and runs opposite to the gap (reconstructed: none in the 0.9.1 family, one
+question in 0.7.0, which finished). A writer-side correction ([amendment 18](#d7-correction-and-verification-amendment-18))
+was verified in serving as **B1 = B0 + D7**: CLEAN at 219 unaligned chunk starts, every straddling pool byte-identical
+to an independent recompute; 0.6244 GPU-hours. Cumulative 49.52 GPU-hours;
 occupied GPU-hours of the three K3.25 records are
 [reconstructed from start-to-stop timings](#occupied-gpu-hours-of-the-three-k325-records). A replication of stock
-0.7.0's record stays deferred, not authorized (amendments 12, 14). Next under the plan: minimise D7, verify its
-smallest correction, then B1 = B0 + that correction (not yet authorized).
+0.7.0's record stays deferred, not authorized (amendments 12, 14). B1 is the correctness checkpoint; D7's behavioural
+investigation is closed for now (no GPQA pass); the next item is another specific untested invariant.
 Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#dated-amendments).
 **Fast path:** [answer](#answer) · [evidence](#evidence) · [configuration diff](#what-differs-between-the-two-servers) ·
 [Phase 1](#phase-1) · [completion pilot](#completion-pilot-and-replication) ·
@@ -44,7 +48,7 @@ Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#d
 [gate](#gate-column-511-correction-in-the-shipped-graph-configuration) · [completion arm](#completion-arm) · [upstream comparison](#comparison-with-upstream-vllm) ·
 [stage A](#stage-a-verification-d3-d4-d5) · [defect matrix](#defect-matrix-d1-d7) · [bundle gate](#bundle-gate-d1d2d3d4-on-091) ·
 [screen](#one-pass-gpqa-screen) · [second pass](#second-pass-seed-1235) · [checkpoint B0](#checkpoint-b0-and-targeted-invariants-amendment-16) ·
-[live slot mappings](#live-slot-mappings-on-b0-amendment-17) · [observations recorded separately](#observations-recorded-separately) ·
+[live slot mappings](#live-slot-mappings-on-b0-amendment-17) · [D7 correction](#d7-correction-and-verification-amendment-18) · [observations recorded separately](#observations-recorded-separately) ·
 [open questions](#open-questions) · [limits](#limits) · [next steps](#next-steps) · [recompute](#recompute)
 
 ## Answer
@@ -767,7 +771,7 @@ Status after stage A, the bundle gate, the two bundle passes and amendments 16-1
 | D4 routed SwiGLU limit not passed | yes | path exercised; whether activations exceed 10 not measured | limit 1 changes outputs (reachability only); effect of 10 not measured | plans carry 10 and the session's compiled kernels carry (True, 10) (bundle gate, criterion revised after data) | untested alone; bundle passes (seeds 1234, 1235): 3 and 3 empty vs 5 and 5, no clear separation |
 | D5 workspace not locked after capture | yes (source) | not exercised in this workload (stage A; bundle gate s1) | — | not run; left out of the bundle | untested |
 | D6 stale warm-up tail block ids | yes (source; 16 stale rows per rank measured) | the source of D2's foreign writes without D2; unreachable under D2 (stale columns never read) | — | CPU only; left out of the bundle | untested |
-| D7 index-K prefill writer assumes pool-aligned chunk starts | yes: pools tokens t−3..t of the batch; the scheduler's chunks are not aligned to 4 tokens | yes: 217 events in 50 requests in one serving session of B0 (amendment 17), every unaligned chunk start | yes: the pool straddling the start is unwritten (186) or written from the previous request's tokens (31) | not yet: CPU reproduction with B0's kernel only | untested |
+| D7 index-K prefill writer assumes pool-aligned chunk starts | yes: pools tokens t−3..t of the batch; the scheduler's chunks are not aligned to 4 tokens; same writer in 0.7.0-0.9.1 and upstream vLLM main | yes: 217 events in 50 requests in one serving session of B0 (amendment 17); in the GPQA records only doc 127 in 0.7.0 (reconstructed) | yes: the pool straddling the start is unwritten (186) or written from the previous request's tokens (31) | yes: B1 = B0 + D7 in serving, 219 straddling pools byte-verified, CLEAN (amendment 18) | untested; GPQA exposure narrow and opposite to the gap |
 
 "Bundle passes" are two GPQA passes of D1+D2+D3+D4 together, against the matching stock 0.9.1 passes; they attribute nothing to an individual correction.
 
@@ -1012,6 +1016,67 @@ never meet an unaligned start; that is an inference.
 **Not covered:** copy-on-write prefix paths (unreachable here: every prefix hit is block-aligned), contention-dependent
 races that one run cannot exclude, and model paths other than the cache mappings, such as the mixed-quant MoE.
 
+### D7: correction and verification (amendment 18)
+
+Amendments 18-18c. The receipts and full write-up are in [`d7/`](d7/README.md). The plan for a violation (amendment 17)
+is to minimise it, establish its exposure, verify the smallest correction, and build B1 = B0 + that correction only.
+
+**Release and upstream comparison** (CPU, each image's own code):
+- The D7 writer is byte-identical in 0.7.0, 0.8.0 and 0.9.1, and every served configuration reaches unaligned starts.
+- The pattern still differs by release:
+
+  | | 0.7.0 | 0.8.0 / 0.9.1 |
+  |---|---|---|
+  | Draft slots; solo chunk | 5; 2,043 tokens | 3; 2,045 tokens |
+  | Attention block | 3,584 | 4,352 |
+  | Affected pools per long prompt | about 1 per block | about 2 per block |
+  | Where an event lands | one DCP2 rank | every MLA layer on its owner GPU |
+
+- Upstream vLLM main keeps the same writer assumption; SGLang repairs it writer-side from the request's tail ring.
+
+**GPQA exposure** ([`d7/exposure/`](d7/exposure/REPORT.md)):
+- **Simulator.** With the scheduler's draft-slot reservation added, a rebuilt simulator reproduces the B0 session's 217
+  events exactly (given its recorded timing); the earlier simulation, without it, predicted 73.
+- **Token counts.** Exact prompt-token counts for all 1,980 logged GPQA requests match the server's.
+- **0.9.1 family:** no exposure. Doc 127, the only prompt longer than a chunk, is split at 2,045 − 7·7 = 1,996, a pool
+  boundary, with 7 requests decoding at its admission in every logged pass. That count is reconstructed from proxy
+  timestamps.
+- **Stock 0.7.0, passes 2-3:** doc 127 is exposed (split at 1,966), and it finished both times.
+- **Reading:** descriptive only. The exposure is narrow and runs opposite to the gap.
+
+**Correction:** writer-side, one file ([`d7/mechanism/d7-fix.diff`](d7/mechanism/d7-fix.diff)).
+- A pool member from before the chunk start is read from the request's tail ring. That ring has carried positions since
+  D2 and was verified in the B0 session.
+- Rows without a ring keep the old rule, a fallback that is unreachable in B1's configuration.
+- CPU tests: 28/28 against an independent plain-torch reference, covering every residue, batch order, short chunks,
+  block boundaries, prefix hits and preemption. D1-D4 regressions pass.
+
+**Serving verification (B1, one session; [`d7/step2/`](d7/step2)):**
+- **Guard:** amended to B1's write rule, with an independent byte oracle. The guard's own shadow of each request's last
+  keys is recomputed with the engine's compress kernel, never read from the ring B1 uses.
+- **Positive control:** every aligned pool must match exactly.
+- **Fault injection:** CPU tests detected all four required fault classes.
+
+| Criterion | Result |
+|---|---|
+| Coverage minimums | all met |
+| Straddling pools exercised (≥ 100) | 219, byte-verified on every owned layer |
+| Missing, mismatched or fallback pools | 0 |
+| Positive control | 1.53 M aligned pools, 0 mismatches |
+| Other mapping sites | clean |
+| Short probes vs B0 | identical |
+| **Verdict** | **CLEAN**; 0.6244 GPU-hours, one attempt (2.0 authorized) |
+
+An appended phase admitted doc 127 behind 0-7 decoding requests. The first chunk was exactly 2,045 − 7·D in every case,
+with the actual D equal to the requested D. That measures the scheduling arithmetic; the historical decode count stays
+a reconstruction.
+
+**Outcome (amendment 18a).**
+- B1 is the correctness checkpoint for the covered serving configuration; B0 and its records are preserved.
+- Completion impact is untested, and no GPQA pass follows.
+- D7's behavioural investigation is closed for now.
+- The correction and a minimal reproduction are kept for upstream.
+
 ### Observations recorded separately
 
 Evidence only; no completion claim.
@@ -1029,14 +1094,14 @@ Stated with their evidence so far.
 | Question | Evidence so far |
 |---|---|
 | Does generation-vs-prefill disagreement at long context bear on completion? | The 8,000-15,999-token measure covers continuation after the reply had ended (amendment 7); no positive evidence either way. |
-| What produces the completion gap between 0.7.0 and 0.9.1? | The column-511 drop, the only defect found that differed between the engines in the direction of the gap, is not supported as its explanation: with the correction alone 0.9.1 left 15 empty replies vs 16 ([completion arm](#completion-arm)). The tail ring affects 0.7.0 more, which does not exclude an accidental completion benefit from incorrect computation; its role is untested. The layout bundle showed no reproducible benefit (pilot and replication); router precision and the SwiGLU clamp are the same in all releases; the KV record writer and query projection, which differ between the engines, agree within rounding ([amendment 16](#checkpoint-b0-and-targeted-invariants-amendment-16)). One GPQA pass of 0.9.1 with D1-D4 together left 3 of 198 empty against 5 and 4 in pass 1 of the 0.9.1 record and the column-511 arm (0.7.0 pass 1: 0): similar, no clear separation, one pass ([screen](#one-pass-gpqa-screen)); a second pass at seed 1235 left 3 against 5 and 5 (0.7.0: 3): modest improvement, no clear separation ([second pass](#second-pass-seed-1235)). The gap itself (4 vs 16) rests on one three-pass record per engine. The corrected 0.9.1 arm's 15 empty replies resemble the 0.9.1 record's 16, with empties moving between questions, but it ran a modified engine, so it is not a replication of the unmodified 0.9.1 record. Whether either record's rate reproduces on its unmodified engine has not been tested. D7, confirmed in serving on B0 (amendment 17), was not checked on 0.7.0, and its effect on completion is untested. Open. |
+| What produces the completion gap between 0.7.0 and 0.9.1? | The column-511 drop, the only defect found that differed between the engines in the direction of the gap, is not supported as its explanation: with the correction alone 0.9.1 left 15 empty replies vs 16 ([completion arm](#completion-arm)). The tail ring affects 0.7.0 more, which does not exclude an accidental completion benefit from incorrect computation; its role is untested. The layout bundle showed no reproducible benefit (pilot and replication); router precision and the SwiGLU clamp are the same in all releases; the KV record writer and query projection, which differ between the engines, agree within rounding ([amendment 16](#checkpoint-b0-and-targeted-invariants-amendment-16)). One GPQA pass of 0.9.1 with D1-D4 together left 3 of 198 empty against 5 and 4 in pass 1 of the 0.9.1 record and the column-511 arm (0.7.0 pass 1: 0): similar, no clear separation, one pass ([screen](#one-pass-gpqa-screen)); a second pass at seed 1235 left 3 against 5 and 5 (0.7.0: 3): modest improvement, no clear separation ([second pass](#second-pass-seed-1235)). The gap itself (4 vs 16) rests on one three-pass record per engine. The corrected 0.9.1 arm's 15 empty replies resemble the 0.9.1 record's 16, with empties moving between questions, but it ran a modified engine, so it is not a replication of the unmodified 0.9.1 record. Whether either record's rate reproduces on its unmodified engine has not been tested. D7 is present in both engines; in the GPQA records its exposure is narrow and runs opposite to the gap (amendment 18, reconstructed). Open. |
 | Does the column-511 correction cost accuracy? | Raw -1.85 points (95% -5.05 to +1.35), stated -1.18 (-4.04 to +1.52), against a historical control; not significant, which does not establish no cost. Inconclusive. |
 | Do the tail-ring fix, the router precision or the SwiGLU clamp change completion or accuracy? | All affect both engines. Each has a verified computational correction (D2, D3) or a reachable one (D4); none was tested alone in GPQA. Together with D1, two passes: 3 and 3 empty of 198 against 5 and 5 in the matching stock passes; raw 174 and 168, stated 176 and 169 (single passes, secondary); no clear separation in either. Untested individually; interactions untested. |
 | Does the bundle's empty count differ from the baselines' beyond seed-to-seed variation? | Two passes (seeds 1234 and 1235): 3 and 3 empty against 5 and 5 in the matching stock 0.9.1 passes and 4 and 5 in the column-511 arm's. Exploratory combination (follow-up chosen after the first pass; historical controls; seeds reused): 6 vs 10 of 396, reduction 1.01 points (95% 0.00 to 2.27), one-sided p = 0.11; against the arm 6 vs 9. Rescued and newly empty replies are listed per pass ([screen](#one-pass-gpqa-screen), [second pass](#second-pass-seed-1235)). Inconclusive. |
 | Do the bundle's corrections account for the historical gap to 0.7.0? | The bundle corrects verified defects and shows a modest, consistent reduction in empty replies at two seeds (3 and 3 vs 5 and 5 in the matching stock passes); not established. Stock 0.7.0's lower rate (0 and 3 at the same seeds) is not reached, and three of the four corrections (D2, D3, D4) make 0.9.1 more correct than 0.7.0 rather than more like it, so other contributors to the historical gap likely remain unidentified. A cumulative effect of several small corrections is a working hypothesis, not a result. |
 | Why does greedy decoding of 0.9.1 diverge between identical long-context requests? | Short prompts repeat bitwise for 96 tokens; 4,240- and 16,240-token prompts diverge at token 3 in the stock release, also with identical prefix-cache coverage; divergences fell on low-margin steps (chosen-token probability 0.30-0.66; runner-up not recorded). Mechanism not identified ([observations](#observations-recorded-separately)). |
 | Does E1 (batch-size-dependent routing weights) affect outputs? | Weights differ by up to 1.1e-3 relative above about 1,024 rows (p99 5.6e-7); expert ids unchanged, by construction and on the captured rows; inferred exposure prefill only; classified as expected numerical variation of the upstream kernel, present in every release. Untested. |
-| Does D7 (index-K pools after unaligned prefill chunk starts) affect selection, outputs or completion? | Confirmed in serving on B0: 217 events in 50 requests of a long-prefix workload, 31 of them pooling another request's tokens ([amendment 17](#live-slot-mappings-on-b0-amendment-17)). How often selection reads the affected pools was not measured. GPQA prompts are mostly a single chunk starting at position 0 (inference). Untested. |
+| Does D7 (index-K pools after unaligned prefill chunk starts) affect selection, outputs or completion? | Confirmed in serving on B0 (217 events in 50 requests of a long-prefix workload) and corrected in B1 ([amendments 17-18](#d7-correction-and-verification-amendment-18)). In the GPQA records the exposure is narrow: none in the 0.9.1 family and doc 127 in 0.7.0 passes 2-3, which finished (reconstructed). The selection effect was not measured. Untested; the behavioural investigation is closed for now. |
 | What do the targeted invariants on B0 leave unexamined? | Amendment 17 checked block-table and slot-mapping construction under real scheduling, including the index-K readers' mappings, and found only D7. Still not ruled down: copy-on-write prefix paths (unreachable in that workload); contention-dependent races; the values the index-K readers compute (B12x paged top-k and the compiled prefill readers); the sparse-MLA extend reader under graph replay; the mamba postprocess kernel; communication paths other than the tested transport (PyNCCL above 48 rows was only cross-checked; the owner exchange; contention with model kernels); the mixed-quant MoE path, whose reference harness was deferred (amendment 16). Rank 1's cache tensors were not driven by the cache fixture (same geometry per tensor; amendment 17 checked both ranks' mappings in serving). No evidence yet points to any of these. |
 | Do legitimate numerical differences shift how often long deliberation runs past the cap? | Non-completion is a low-rate tail event (about 1 in 10 fresh draws at these caps on two hard questions); small pilots cannot resolve rates near 2.7% vs 0.7% of replies. |
 | Which part of the 0.7.0 layout bundle goes with the higher disagreement? | Step 6 changed EP, DCP, MLA ownership, KV record, draft pages and the top-k merge path together, and still differs from stock 0.7.0 in the top-k merge path, draft depth (×3 vs ×5), vision and engine code. Inconclusive by component. |
@@ -1061,15 +1126,17 @@ Stated with their evidence so far.
 
 ## Next steps
 
-Amendment 17 found a defect, D7. The plan's outcome for a violation (amendment 17) is, in order:
+D7 is corrected and verified in serving (amendment 18). B1 = B0 + D7 is the correctness checkpoint.
 
-1. minimise and reproduce it (a CPU reproduction with B0's kernel exists);
-2. verify the smallest correction;
-3. build B1 = B0 + that correction only;
-4. then propose a behavioural comparison.
+Under amendment 18a's outcome rules:
+- **Exposure is narrow and opposite to the gap**, so D7's behavioural investigation is closed for now and no GPQA pass
+  is run.
+- **The next item** is another specific untested invariant. The mixed-quant MoE fidelity fixture is the one queued
+  (amendment 17).
+- **Upstream:** the minimal reproduction and patch are kept for reporting upstream and to the engine's author when the
+  investigation concludes.
 
-None of these is authorized yet; each needs a costed proposal and the operator's approval. A B0 vs B1 comparison of one
-verified change is the plan's gate for another behavioural evaluation. Whether 0.7.0 shares D7 has not been checked.
+Every next step still needs a costed proposal and approval.
 
 Earlier positions stand:
 
@@ -1082,7 +1149,7 @@ Earlier positions stand:
 Open, with their evidence above:
 
 - what produces the completion gap;
-- whether D7 affects selection or completion;
+- whether D7 affects selection or completion (corrected in B1; behavioural investigation closed for now);
 - whether the bundle's lower count of empty replies holds beyond two seeds;
 - whether 0.7.0's rate of empty replies reproduces;
 - whether the tail-ring fix, router precision or the SwiGLU clamp change completion or accuracy individually;

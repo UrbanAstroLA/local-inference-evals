@@ -1,0 +1,114 @@
+--- a/vllm/model_executor/layers/sparse_attn_indexer_kpool.py
++++ b/vllm/model_executor/layers/sparse_attn_indexer_kpool.py
+@@ -108,6 +108,9 @@
+     kpool: int,
+     head_dim: int,
+     round_scale: bool,
++    positions: torch.Tensor | None = None,
++    tail_kv_cache: torch.Tensor | None = None,
++    tail_slot_mapping: torch.Tensor | None = None,
+ ) -> None:
+     """Pool ``kpool`` consecutive tokens into one fp8 K and write at pool slots.
+ 
+@@ -117,13 +120,25 @@
+     candidate and non-completions are masked off inside the kernel. Compacting
+     the valid rows first (``torch.nonzero`` + boolean-mask gather + an
+     ``ok.all()`` check) costs two device syncs on the eager prefill path and
+-    buys nothing numerically. Assumes pool-aligned chunk starts (same
+-    invariant as sglang).
++    buys nothing numerically.
++
++    local-d7: the scheduler does not start prefill chunks on pool boundaries
++    (budget minus draft slots, shared-step splits). With ``positions``, the
++    tail ring and its token-granular slots, a pool member that is not one of
++    the same request's tokens in this batch (same tail block, position
++    ``pos - j``) is read from the request's tail ring at ``pos % ring``, where
++    its earlier chunk seeded it (kpool_seed_tail_cache). Rows without a tail
++    slot, or calls without the ring, keep the pool-aligned rule.
+     """
+     n = slot_mapping.shape[0]
+-    # No pool can complete in a batch smaller than one pool; also keeps the
+-    # clamped gather indices below in bounds.
+-    if n < kpool:
++    repair = (
++        positions is not None
++        and tail_kv_cache is not None
++        and tail_slot_mapping is not None
++    )
++    # No pool can complete in a batch smaller than one pool (unless its earlier
++    # members come from the tail ring); the gather indices are clamped below.
++    if n == 0 or (n < kpool and not repair):
+         return
+     pos = torch.arange(n, device=k.device)
+     valid = slot_mapping >= 0
+@@ -132,10 +147,39 @@
+     write_mask = valid & (pos >= kpool - 1)
+     offs = torch.arange(kpool, device=k.device)
+     idx = (pos - (kpool - 1)).clamp_min(0)[:, None] + offs[None, :]
++    idx = idx.clamp_max(n - 1)  # no-op when n >= kpool
++    if not repair:
++        slot_k, slot_score = k[idx], gate_score[idx]
++    else:
++        ring = tail_kv_cache.shape[2]
++        tpos = positions[:n].to(torch.int64)
++        tslot = tail_slot_mapping[:n].to(torch.int64)
++        has_ring = tslot >= 0
++        blk = torch.div(tslot.clamp_min(0), ring, rounding_mode="floor")
++        mpos = tpos[:, None] - (kpool - 1) + offs[None, :]  # member positions
++        rel = pos[:, None] - (kpool - 1) + offs[None, :]  # member batch rows
++        relc = rel.clamp(0, n - 1)
++        own = (
++            (rel >= 0)
++            & has_ring[relc]
++            & (blk[relc] == blk[:, None])
++            & (tpos[relc] == mpos)
++        )
++        from_ring = has_ring[:, None] & ~own
++        src = torch.where(has_ring[:, None], relc, idx)
++        slot_k, slot_score = k[src], gate_score[src]
++        rslot = torch.remainder(mpos, ring)
++        rblk = blk[:, None].expand(-1, kpool)
++        sel = from_ring[..., None]
++        slot_k = torch.where(sel, tail_kv_cache[rblk, 0, rslot], slot_k)
++        slot_score = torch.where(sel, tail_kv_cache[rblk, 1, rslot], slot_score)
++        write_mask = torch.where(
++            has_ring, valid & (own | (mpos >= 0)).all(dim=1), write_mask
++        )
+     kpool_compress_and_write_cache(
+         kv_cache,
+-        k[idx],  # [n, kpool, head_dim]
+-        gate_score[idx],
++        slot_k,  # [n, kpool, head_dim]
++        slot_score,
+         ape,
+         slot_mapping.to(torch.int64),
+         pool_size=kpool,
+@@ -424,6 +468,16 @@
+             if n_prefill > 0:
+                 # decode tokens are batched first; prefill tokens follow.
+                 prefill_slice = slice(num_decode_tokens, num_tokens)
++                # local-d7: a pool straddling an unaligned chunk start takes
++                # its earlier members from the request's tail ring.
++                d7_tail = None
++                if (
++                    tail_kv_cache is not None
++                    and tail_prefix is not None
++                    and positions is not None
++                    and os.environ.get("VLLM_KPOOL_SKIP_TAIL_CACHE") != "1"
++                ):
++                    d7_tail = attn_metadata.get(_resolve_layer_name(tail_prefix))
+                 _kpool_compress_insert(
+                     k[prefill_slice],
+                     gate_score[prefill_slice],
+@@ -433,6 +487,11 @@
+                     index_kpool,
+                     head_dim,
+                     round_scale=(scale_fmt is not None),
++                    positions=None if d7_tail is None else positions[prefill_slice],
++                    tail_kv_cache=None if d7_tail is None else tail_kv_cache,
++                    tail_slot_mapping=(
++                        None if d7_tail is None else d7_tail.slot_mapping[prefill_slice]
++                    ),
+                 )
+                 # Persist the prefill tail (trailing incomplete pool's raw K +
+                 # gate score) into the paged tail cache, so the decode side can

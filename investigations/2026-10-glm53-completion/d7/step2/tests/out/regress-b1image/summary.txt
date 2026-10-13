@@ -1,0 +1,11 @@
+image local/glm53-v0.9.1-b1-d7:local sha256:799d3cf8e5d14a615b89c734a6a38b4be5729bb44bb6b56effc7cf7df747b88a
+image ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07
+D1_test_col511_cpu                 b1       rc=0   ALL PASS
+D1_fixture_cpucheck                b1       rc=0   [07:41:03] cpucheck OK
+D2_test_fix_U                      b1       rc=0   17/17 met expectation in 0.2s
+D2_scenarios                       b1       rc=0   6/6 passed in 3.1s
+D3_installed_expect_patched        b1       rc=0   PATCH CHECK PASS: SM12x router GEMM dispatches to tier 5, fp32 output (tier 5 is CUDA/ROCm-only and is not executed on C
+D4_installed_expect_patched        b1       rc=0   PATCH CHECK PASS: swiglu_limit reaches every Caps(...) and compile_mixed_trellis(...) call (static; kernel behaviour not
+D5_excluded_expect_release         b1       rc=0   REPRODUCED: V2 captures graphs, then runs warmup_kernels and serves with the workspace unlocked; an unlocked manager fre
+D6_excluded_expect_release         b1       rc=0   REPRODUCED: warm-up reserves up to 4 tail blocks per request (contract 1); the stale id 484 stays in column 1 and the ge
+done 2026-10-13T07:42:04Z

@@ -1,0 +1,17 @@
+image local/glm53-v0.9.1-b1-mapguard:local sha256:4d7bd73e6f2ef6485289dcb5bcb2f2a65f1846a5959cde7cbd9c275471c72e16
+image local/glm53-v0.9.1-b1-d7:local sha256:799d3cf8e5d14a615b89c734a6a38b4be5729bb44bb6b56effc7cf7df747b88a
+d7fix_b1_image         rc=0   28/28 met expectation (b1)
+smoke_unset            rc=0   PASS I1 inert with GLM53_MAPGUARD unset: nothing patched {"runner": false, "scheduler": false, "kpool_on": false, "b12x_on": false, "mla_wri
+smoke_device           rc=0   PASS I4 exact baseline readout: none during runner warm-up, exactly one at the first real request {"baseline_records_after_each_call": [0, 0
+kpool_unaligned        rc=0   }
+test_mapguard          rc=0   28/28 passed in 1537.7 s -> tests/out/cpu-results.json
+a2_regression          rc=0   }
+test_d7_guard          rc=0   30/30 passed in 2306.1 s, guard errors 0 -> tests/out/d7-guard.json
+dryrun-r0              rc=0   rank 0: steps 15 guard_errors 0
+dryrun-r1              rc=0   rank 1: steps 15 guard_errors 0
+dryrun-analysis        rc=0   VERDICT: INVALID
+dryrun-d7-r0           rc=0   rank 0: steps 15 guard_errors 0 prefill_calls 78 {'s_events': 54, 's_verified': 54, 's_indet': 0, 's_unavail': 0, 's_missing': 0, 's_mism': 
+dryrun-d7-r1           rc=0   rank 1: steps 15 guard_errors 0 prefill_calls 65 {'s_events': 45, 's_verified': 45, 's_indet': 0, 's_unavail': 0, 's_missing': 0, 's_mism': 
+dryrun-d7-analysis     rc=0   VERDICT: INVALID
+analysis_2d            rc=0   2/2 passed -> <runs>/d7/step2/tests/out/analysis-2d.json
+done 2026-10-13T09:56:46Z

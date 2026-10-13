@@ -1,0 +1,13 @@
+v070 sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629 files(kpool,kpool_compress,scheduler,compressor_utils): e7935f2a9b8e 52959ea33234 a509e42c4b9b 558292982f3c 
+v070 writer rc=0 defect_reproduced_as_described: True
+v070 chunking rc=0 any_unaligned True residues [1, 2, 3] single {'1500': [], '2795': [2043], '9000': [2043, 5627], '20000': [2043, 5627, 9211, 12795, 16379, 19963]}
+v080 sha256:e4d37a01da91ec590df78af13efa9d256fc306a5a88df09908ea12ebefa32423 files(kpool,kpool_compress,scheduler,compressor_utils): e7935f2a9b8e 52959ea33234 a509e42c4b9b 558292982f3c 
+v080 writer rc=0 defect_reproduced_as_described: True
+v080 chunking rc=0 any_unaligned True residues [1, 2, 3] single {'1500': [], '2795': [2045], '9000': [2045, 4090, 6397, 8442], '20000': [2045, 4090, 6397, 8442, 10749, 12794, 15101, 17146, 19453]}
+v091 sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 files(kpool,kpool_compress,scheduler,compressor_utils): e7935f2a9b8e 7fb8eab0d71c e405e84eb367 558292982f3c 
+v091 writer rc=0 defect_reproduced_as_described: True
+v091 chunking rc=0 any_unaligned True residues [1, 2, 3] single {'1500': [], '2795': [2045], '9000': [2045, 4090, 6397, 8442], '20000': [2045, 4090, 6397, 8442, 10749, 12794, 15101, 17146, 19453]}
+b0 sha256:08d1cb902ddb888f679b972714168bb7c0d2333b4c1865f3ebf860baa2f46548 files(kpool,kpool_compress,scheduler,compressor_utils): 9104be37c8cb 7fb8eab0d71c e405e84eb367 558292982f3c 
+b0 writer rc=0 defect_reproduced_as_described: True
+b0 chunking rc=0 any_unaligned True residues [1, 2, 3] single {'1500': [], '2795': [2045], '9000': [2045, 4090, 6397, 8442], '20000': [2045, 4090, 6397, 8442, 10749, 12794, 15101, 17146, 19453]}
+done 2026-10-13T04:38:20Z

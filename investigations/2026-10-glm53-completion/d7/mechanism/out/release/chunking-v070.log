@@ -1,0 +1,57 @@
+{
+ "label": "v070",
+ "block_size": 3584,
+ "K": 5,
+ "split_source": "/usr/local/lib/python3.12/dist-packages/vllm/v1/core/sched/scheduler.py:378",
+ "single_request_unaligned_starts": {
+  "1500": [],
+  "2795": [
+   [
+    2043,
+    752
+   ]
+  ],
+  "9000": [
+   [
+    2043,
+    1541
+   ],
+   [
+    5627,
+    1541
+   ]
+  ],
+  "20000": [
+   [
+    2043,
+    1541
+   ],
+   [
+    5627,
+    1541
+   ],
+   [
+    9211,
+    1541
+   ],
+   [
+    12795,
+    1541
+   ],
+   [
+    16379,
+    1541
+   ],
+   [
+    19963,
+    37
+   ]
+  ]
+ },
+ "any_unaligned": true,
+ "all_residues_seen": [
+  1,
+  2,
+  3
+ ]
+}

@@ -1,0 +1,11 @@
+[07:41:01] python 3.12.3 torch 2.13.0+cu130 b12x /opt/b12x/b12x/__init__.py
+[07:41:01] git rev-parse failed: [Errno 2] No such file or directory: 'git'
+[07:41:03] cpucheck gauss: b12x torch reference vs fp64 ref max err/bound = 0.000797; score range [-2.54,2.62]
+[07:41:03]   row0 top=1.256 s512=-0.3658 gap512_513=0.000302 zeros=0 neg=380
+[07:41:03] cpucheck heavy: b12x torch reference vs fp64 ref max err/bound = 0.00123; score range [-14.8,19.8]
+[07:41:03]   row0 top=6.665 s512=-2.231 gap512_513=0.0142 zeros=0 neg=480
+[07:41:03] cpucheck constructed a: fp32 ref == fp64 ref: True; distinct=834 s[0]=3.99902 s[499]=2.15234 s[500]=2.15137 s[511]=2.13281 s[512]=1.99902 zeros=0
+[07:41:03] cpucheck constructed b: fp32 ref == fp64 ref: True; distinct=512 s[0]=1.99951 s[499]=1.07617 s[500]=1.07568 s[511]=1.06641 s[512]=nan zeros=0
+[07:41:03] cpucheck constructed c: fp32 ref == fp64 ref: True; distinct=819 s[0]=7.99805 s[499]=4.26562 s[500]=4 s[511]=4 s[512]=4 zeros=0
+[07:41:03] cpucheck constructed d: fp32 ref == fp64 ref: True; distinct=301 s[0]=1.99951 s[499]=0 s[500]=0 s[511]=0 s[512]=0 zeros=724
+[07:41:03] cpucheck OK

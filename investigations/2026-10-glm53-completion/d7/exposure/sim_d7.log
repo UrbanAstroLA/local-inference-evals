@@ -1,0 +1,21 @@
+[replay] rows 14712, n reproduced 14712, mismatches 0, unexplained skipped prefills 0
+[closed/bound] measured 217 simulated 217 exact 217 same-chunk-other-step 0 measured-only 0 sim-only 0; chunks {'measured_chunks': 481, 'simulated_chunks': 481, 'same_chunk': 481, 'same_chunk_and_step': 481}; steps 2480/2482
+    by phase (measured, simulated): {'D': [22, 22], 'F0': [9, 9], 'F1': [9, 9], 'S': [19, 19], 'T0': [20, 20], 'T1': [20, 20], 'stack-warmup': [10, 10], 'warm': [108, 108]}
+[closed/measured] measured 217 simulated 217 exact 217 same-chunk-other-step 0 measured-only 0 sim-only 0; chunks {'measured_chunks': 481, 'simulated_chunks': 481, 'same_chunk': 481, 'same_chunk_and_step': 481}; steps 2480/2482
+    by phase (measured, simulated): {'D': [22, 22], 'F0': [9, 9], 'F1': [9, 9], 'S': [19, 19], 'T0': [20, 20], 'T1': [20, 20], 'stack-warmup': [10, 10], 'warm': [108, 108]}
+[ablate]   80 events,    0 same chunk as measured (0 same step) -- frozen-original rules: budget 2048, no draft-slot reservation, decode row 4, no Mamba clip, decodes first
+[ablate]   59 events,    0 same chunk as measured (0 same step) -- + Mamba 'align' clip at 4,352 boundaries
+[ablate]  217 events,  217 same chunk as measured (217 same step) -- + draft-slot reservation K=3 per scheduled request (solo budget 2045; decode row costs 4+3)
+[ablate]  217 events,  217 same chunk as measured (217 same step) -- + scheduler order (running in admission order, then waiting) = corrected rules
+[ablate]  206 events,   19 same chunk as measured (19 same step) -- corrected rules without the Mamba clip
+[ablate]   59 events,    0 same chunk as measured (0 same step) -- corrected rules without the draft-slot reservation
+[ablate]  230 events,  147 same chunk as measured (135 same step) -- corrected rules, arrival order = client send order instead of engine order
+[predict] acc 2.6 time x0.7: 224 events (133 same chunk as measured), steps 2406
+[predict] acc 2.6 time x1.0: 227 events (138 same chunk as measured), steps 2403
+[predict] acc 2.6 time x1.4: 226 events (135 same chunk as measured), steps 2300
+[predict] acc 2.9 time x0.7: 224 events (133 same chunk as measured), steps 2242
+[predict] acc 2.9 time x1.0: 227 events (138 same chunk as measured), steps 2239
+[predict] acc 2.9 time x1.4: 226 events (135 same chunk as measured), steps 2136
+[predict] acc 3.2 time x0.7: 224 events (133 same chunk as measured), steps 2112
+[predict] acc 3.2 time x1.0: 227 events (138 same chunk as measured), steps 2109
+[predict] acc 3.2 time x1.4: 226 events (135 same chunk as measured), steps 2006

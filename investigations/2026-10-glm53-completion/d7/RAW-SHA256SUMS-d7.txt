@@ -1,0 +1,34 @@
+# sha256 of local d7 files not published. Paths relative to the local d7 folder.
+# - stage-2 fixture token ids (local fixture, not published)
+# - short greedy probe outputs (per-token hashes, reversible against the vocabulary)
+# - container logs
+# - pre-flight listings (desktop processes, full GPU ids)
+# - full copies of engine files, patched or not (the diffs are published)
+# - bytecode
+767503d294babfe1e47d063b8844d99600711351115ccff97e2b6edcce7b2f2a  ./mechanism/build/Dockerfile
+146a7c6b525d56e17e56b5c55d81cb0c19bfe7e1cfe3304a4974c1047246c6e3  ./mechanism/build/sparse_attn_indexer_kpool.py
+1cdfde3e7f2969df4a18269aa61316f025f595996bbf98f5ac419449edef22d9  ./mechanism/guardcopy/tests/out/dryrun/server.log
+9104be37c8cb876a436f5fac11401c4abdb254529a6c37f3dca8121f41a5b61d  ./mechanism/patch/b0/sparse_attn_indexer_kpool.py
+146a7c6b525d56e17e56b5c55d81cb0c19bfe7e1cfe3304a4974c1047246c6e3  ./mechanism/patch/b1/sparse_attn_indexer_kpool.py
+bc3ff48029dc9248e4844701891516fe4e158a2d907ae0efaf8572b66b039552  ./mechanism/patch/check/sparse_attn_indexer_kpool.py.d7
+fae1127c1e7dee3d8408af9299bf19149e41cc9bc670baacd1230184f0a8c13d  ./mechanism/patch/check/sparse_attn_indexer_kpool.py.orig
+6e664fce5b66967f6554adf1e35193d4c09b25bb191b183514d0ffe8ab91c4fc  ./mechanism/patch/guard/guard-vs-guard-d7.diff
+068a46c0a3e8385fe1ba80c37c6fae5f0a3cef76b0d1996896653086436a5f36  ./mechanism/patch/guard/sparse_attn_indexer_kpool.py.d7
+0ac09f5c270ee485ed388f6c2e1cfa8dbac1b082091b0589b440f5e94fa68e0b  ./mechanism/patch/guard/sparse_attn_indexer_kpool.py.orig
+47cfac41a6ccb501ec75fafa11d9dee74592899709ffd43fc701692e63151ee2  ./step2/b1-build/build.log
+cbdd2ada6f5a993246e7b4ffe1072b39854a488ad17b7934c0e6dae7789c4e12  ./step2/b1-build/d7-fix.diff
+5ecbdb19db39ea378c4bd04d69b0c2ee294b345ad238e681cdc11392d00146f7  ./step2/b1-build/fs-diff-b0-vs-b1.txt
+cf4316f2ac207ce62bee17fbc1bce4f232e33d934f329799b54e2b37e8ef792d  ./step2/b1-build/image-id.txt
+b849f5562c64f40d0280565887077bece72e518403ba6cc8b69d4a9397c61283  ./step2/b1-build/make_b1.sh
+146a7c6b525d56e17e56b5c55d81cb0c19bfe7e1cfe3304a4974c1047246c6e3  ./step2/b1-build/sparse_attn_indexer_kpool.py
+a8e59fa53590253584ccb1057ddc57b1cbf3946a1b9c143a3f76ab7ac65aa663  ./step2/build/files/vllm/mapguard_hooks.py
+30ff8bdea2bfba185bf0bf5b591e7999d451baad12238761681f60d56b55b35f  ./step2/build/files/vllm/model_executor/layers/sparse_attn_indexer_kpool.py
+7124975df27de3f31b7e5ae16d51c9863e33cab66b77ef7c9322e3a765c408a1  ./step2/build/files/vllm/v1/attention/backends/mla/b12x_mla_sparse.py
+755916f22df976c58d1dd68996482f12366dd49102275a6e21e89dab7bd4b108  ./step2/build/files/vllm/v1/core/sched/scheduler.py
+287d65a4532fa70d37969451e02d3af1db543558249edc5efd89f277d76681eb  ./step2/run-b1-a1/preflight.txt
+e861ffe1fe6619f1224909264644f7f2c6fcc498af8b8fd5c6222a3ba2ba0b7a  ./step2/run-b1-a1/probe.jsonl
+d4c442642ef853e00bc6659be005d52d38c96df1a3c61e90ebb0224fefdfdd37  ./step2/run-b1-a1/requests.json
+47e8bb9a15243c9cb16773eda711313e668795edb9fb5c23f104f861c83d1d08  ./step2/run-b1-a1/server.log
+1b9a28dd00a88627584994d8bfa0a28edfd04f9900883818945536d627c6d861  ./step2/tests/out/client-dryrun/probe.jsonl
+1cdfde3e7f2969df4a18269aa61316f025f595996bbf98f5ac419449edef22d9  ./step2/tests/out/dryrun/server.log
+1cdfde3e7f2969df4a18269aa61316f025f595996bbf98f5ac419449edef22d9  ./step2/tests/out/dryrun-d7/server.log

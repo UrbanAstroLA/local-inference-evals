@@ -1,0 +1,28 @@
+co-sends within 1.0 s (mid-pass, all logged passes): max 2, histogram {0: 1822, 1: 72, 2: 6}
+stock 0.7.0 (DFlash2 x5, DCP2)                p1 seed 1234 logged=False E= 0 classes={'NOT-unsplittable': 82, 'UNKNOWN': 116} ens_events=None exposed_docs={}
+stock 0.7.0 (DFlash2 x5, DCP2)                p2 seed 1235 logged=True  E= 3 classes={'NOT-unsplittable': 197, 'KNOWN': 1} ens_events=(1, 1) exposed_docs={'127': 1.0}
+stock 0.7.0 (DFlash2 x5, DCP2)                p3 seed 1236 logged=True  E= 1 classes={'NOT-unsplittable': 197, 'KNOWN': 1} ens_events=(1, 1) exposed_docs={'127': 1.0}
+stock 0.9.1 (DFlash2 x3)                      p1 seed 1234 logged=True  E= 5 classes={'NOT-unsplittable': 197, 'NOT-aligned-split': 1} ens_events=(0, 0) exposed_docs={}
+stock 0.9.1 (DFlash2 x3)                      p2 seed 1235 logged=True  E= 5 classes={'NOT-unsplittable': 197, 'NOT-aligned-split': 1} ens_events=(0, 0) exposed_docs={}
+stock 0.9.1 (DFlash2 x3)                      p3 seed 1236 logged=True  E= 6 classes={'NOT-unsplittable': 197, 'NOT-aligned-split': 1} ens_events=(0, 0) exposed_docs={}
+col511 arm (0.9.1 + column-511 correction)    p1 seed 1234 logged=True  E= 4 classes={'NOT-unsplittable': 197, 'NOT-aligned-split': 1} ens_events=(0, 0) exposed_docs={}
+col511 arm (0.9.1 + column-511 correction)    p2 seed 1235 logged=True  E= 5 classes={'NOT-unsplittable': 197, 'NOT-aligned-split': 1} ens_events=(0, 0) exposed_docs={}
+col511 arm (0.9.1 + column-511 correction)    p3 seed 1236 logged=True  E= 6 classes={'NOT-unsplittable': 197, 'NOT-aligned-split': 1} ens_events=(0, 0) exposed_docs={}
+bundle D1-D4 = B0 (0.9.1 + D1-D4)             p1 seed 1234 logged=True  E= 3 classes={'NOT-unsplittable': 197, 'NOT-aligned-split': 1} ens_events=(0, 0) exposed_docs={}
+bundle D1-D4 = B0 (0.9.1 + D1-D4)             p2 seed 1235 logged=True  E= 3 classes={'NOT-unsplittable': 197, 'NOT-aligned-split': 1} ens_events=(0, 0) exposed_docs={}
+check: stock 0.7.0 (DFlash2 x5, DCP2) pass 1: empty flags vs published rows: 198/198 equal
+check: stock 0.7.0 (DFlash2 x5, DCP2) pass 2: empty flags vs published rows: 198/198 equal
+check: stock 0.7.0 (DFlash2 x5, DCP2) pass 2: dispatch order inversions vs doc order: 1
+check: stock 0.7.0 (DFlash2 x5, DCP2) pass 3: empty flags vs published rows: 198/198 equal
+check: stock 0.7.0 (DFlash2 x5, DCP2) pass 3: dispatch order inversions vs doc order: 4
+check: stock 0.9.1 (DFlash2 x3) pass 1: empty flags vs published rows: 198/198 equal
+check: stock 0.9.1 (DFlash2 x3) pass 1: dispatch order inversions vs doc order: 2
+check: stock 0.9.1 (DFlash2 x3) pass 2: empty flags vs published rows: 198/198 equal
+check: stock 0.9.1 (DFlash2 x3) pass 2: dispatch order inversions vs doc order: 3
+check: stock 0.9.1 (DFlash2 x3) pass 3: empty flags vs published rows: 198/198 equal
+check: stock 0.9.1 (DFlash2 x3) pass 3: dispatch order inversions vs doc order: 4
+check: col511 arm (0.9.1 + column-511 correction) pass 1: dispatch order inversions vs doc order: 1
+check: col511 arm (0.9.1 + column-511 correction) pass 2: dispatch order inversions vs doc order: 2
+check: col511 arm (0.9.1 + column-511 correction) pass 3: dispatch order inversions vs doc order: 4
+check: bundle D1-D4 = B0 (0.9.1 + D1-D4) pass 1: dispatch order inversions vs doc order: 1
+check: bundle D1-D4 = B0 (0.9.1 + D1-D4) pass 2: dispatch order inversions vs doc order: 2

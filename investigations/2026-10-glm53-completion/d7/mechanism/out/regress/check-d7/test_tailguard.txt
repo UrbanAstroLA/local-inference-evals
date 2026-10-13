@@ -1,0 +1,23 @@
+PASS seed write predicate equals real _kpool_tail_seed_kernel (interpreter)
+PASS stash write predicate equals real _kpool_decode_update_batched_kernel (interpreter)
+PASS observe-only: inputs unchanged after check_call
+PASS device mode records the 4 foreign seed writes (pos 12-15 -> block 483)
+PASS foreign writes into a block held by another row's attention get F_ATTN
+PASS null-alias counter counts decode stash + chunk-end seed writes (8)
+PASS writes counter = 4 stash + 12 seed (pos 4-7, 12-15, 20-23)
+PASS record layout: kind/rank/layer/step/token/row/pos
+PASS record_rows: counts all (100), keeps first CAP, overflow to dump row
+PASS device-mode in-op check runs on meta tensors (no host sync, fixed shapes)
+PASS clean table: no stale/divergence records
+PASS stale non-zero column >= 1 recorded once at first appearance (row 3, col 1, value 483)
+PASS GPU-vs-shadow divergence recorded (value 483 vs expected 0)
+PASS CPU-staged tail write with start != 0 is logged as staged_tail_anomaly
+PASS pre-forward slot check: deviating/null/foreign token counts (4 decode null + 8 pos 8-15 foreign + 8 pos 16-23 null)
+PASS eager mode logs violation events with row/pos/used/own/persist cols/chunk len
+PASS guard patched KpoolTailMetadataBuilder.build
+PASS tail builder wrapper is transparent (positions=None returns the same slot_mapping storage)
+PASS guard logs the tail slot-mapping source
+PASS row history: LIFO row reuse logged (A row 15 -> freed -> B row 15)
+PASS patched indexer: two guarded call sites + import, additions only
+PASS poll writes counters to JSONL
+22/22 passed

@@ -37,9 +37,10 @@ investigation. Standard library only.
 | 4h | B0's KV record writer (528-byte record) and query projection agree with 0.7.0's (656-byte record, H64 projection) within expected rounding: stored bytes differ on 0.06-0.11% of elements, each by one E4M3 code and each explained by the rounding model fixed before data; the two projections are bitwise equal on the shared lanes. Read under criteria errata recorded before GPU data. | **Supported** (these inputs and shapes) | [checkpoint B0](investigations/2026-10-glm53-completion/README.md#checkpoint-b0-and-targeted-invariants-amendment-16), [`e1-kvwriter/`](investigations/2026-10-glm53-completion/e1-kvwriter) |
 | 4i | With B0's real cache geometry (a 2.93 GB shared tensor whose pages cross 2³¹ bytes), every cache writer and reader driven stayed in its own page and addressed correctly at the highest blocks and on the record straddling 2³¹, eager and under graph replay, after fixture faults found in the data were fixed. | **Supported** (driven kernels only) | [checkpoint B0](investigations/2026-10-glm53-completion/README.md#checkpoint-b0-and-targeted-invariants-amendment-16), [`b0-cache/`](investigations/2026-10-glm53-completion/b0-cache) |
 | 4j | On checkpoint B0, under real scheduling, the index-K prefill writer leaves the pool that straddles a prefill chunk start not aligned to 4 tokens unwritten, or fills it from the previous request's tokens in the batch (D7): 217 events in 50 requests of one long-prefix serving session, identical on both GPUs, every one at an unaligned chunk start. Every other slot mapping the attention and index-K kernels consumed was correct over the frozen coverage. Effect on selection, outputs or completion not measured. | **Supported** (the defect, in serving; its effect untested) | [live slot mappings](investigations/2026-10-glm53-completion/README.md#live-slot-mappings-on-b0-amendment-17), [`b0-mapguard/`](investigations/2026-10-glm53-completion/b0-mapguard) |
+| 4k | D7's writer is byte-identical in tpurtell 0.7.0, 0.8.0 and 0.9.1 and keeps the same assumption in upstream vLLM main. A writer-side correction, which reads a straddling pool's earlier members from the request's own tail ring, was verified in serving as B1 = B0 + D7: at 219 unaligned chunk starts every straddling pool was written and byte-identical to an independent recompute, with 0 mismatches over 1.53 million aligned control pools and every other mapping clean. In the GPQA records the exposure is narrow and opposite to the completion gap (reconstructed: none in the 0.9.1 family; one question in 0.7.0, which finished). Completion impact untested. | **Supported** (the correction, for the covered serving configuration); exposure **descriptive** (reconstruction) | [D7 correction](investigations/2026-10-glm53-completion/README.md#d7-correction-and-verification-amendment-18), [`d7/`](investigations/2026-10-glm53-completion/d7) |
 
 <details>
-<summary>Numbers and qualifications, items 1-4j</summary>
+<summary>Numbers and qualifications, items 1-4k</summary>
 
 1. vllm-project/vllm#57477: every prefill wrote 2 KB of keys into another block's indexer region. vllm-project/vllm#58454: a rejected
    pool-completing draft could overwrite committed keys at 2 or more draft tokens. 29 of 33 pass on both images.
@@ -188,6 +189,28 @@ stream. CPU fault-injection tests passed 28 of 28 before GPU use, and 28 coverag
   compute, and the mixed-quant MoE. Whether 0.7.0 shares D7 was not checked.
 
 0.9933 GPU-hours.
+
+**4k.** Amendments 18-18c.
+
+- **Release and upstream comparison** (CPU, each image's own code):
+  - the writer is identical across releases, and every served configuration reaches unaligned starts;
+  - the pattern differs: 0.7.0 has 5 draft slots, a 2,043-token solo chunk, a 3,584-token block and DCP2, against 3,
+    2,045 and 4,352 tokens and DCP1 for 0.8.0/0.9.1;
+  - SGLang repairs the defect writer-side.
+- **Exposure:**
+  - the rebuilt scheduler simulation reproduces the B0 session's 217 events exactly;
+  - exact prompt-token counts for 1,980 logged GPQA requests match the server's;
+  - in the 0.9.1 family doc 127 is split at 1,996, a pool boundary, given 7 decode rows at admission, which is
+    reconstructed from proxy timestamps;
+  - an appended serving phase measured the split at 2,045 − 7·D for D = 0-7.
+- **Correction:** 28/28 CPU tests against an independent reference; D1-D4 regressions pass.
+- **Serving:**
+  - the guard was amended with an independent byte oracle: its own shadow of each request's keys, recomputed with the
+    engine's compress kernel;
+  - all four fault classes were detected on CPU;
+  - all coverage minimums were met and the short probes were identical to B0's.
+
+0.6244 GPU-hours, one attempt.
 
 </details>
 
@@ -366,7 +389,7 @@ Stated with their evidence. Grade: **open**.
 | Does the DCP1 tail fix change answers or how often hard questions fail to finish? | It changes decode numerics in the first 2,044 tokens; the loops observed are stopped far later; GPQA and tool calling show no difference beyond noise at their sizes (items 3, 4, 16). |
 | Why is the engine not bitwise reproducible one request at a time? | Item 19: greedy reruns diverge after a median of 318 characters; same-seed decode-vs-prefill runs first differ after 1 to 130 tokens, with no concurrent requests. Item 19a: short prompts repeat bitwise for 96 tokens, long-context prompts diverge at token 3 on the stock release, at low-margin steps (margin bounded, not measured). Mechanism not identified. |
 | Do batch-size-dependent routing weights (item 4f) change outputs? | Weights differ by up to 1.1e-3 relative above about 1,024 rows (p99 5.6e-7); expert ids unchanged; inferred exposure prefill only; expected numerical variation of the upstream kernel, present in every release. Untested. |
-| Does D7 (item 4j) affect selection, outputs or completion? | Confirmed in serving on B0 in a long-prefix workload; how often selection reads the affected pools was not measured; GPQA prompts are mostly one chunk starting at position 0 (inference); not checked on 0.7.0. Untested. |
+| Does D7 (items 4j-4k) affect selection, outputs or completion? | Corrected and verified in B1. Present in every release. In the GPQA records exposure is narrow and opposite to the gap (reconstructed). The selection effect was not measured. Untested; behavioural investigation closed for now. |
 | What do the targeted checks on the corrected build leave unexamined? | Items 4g-4i found no defect; item 4j checked slot-mapping construction under real scheduling and found only D7. Not covered: copy-on-write prefix paths, contention-dependent races, the values the index-K readers compute, extend under graph replay, communication paths other than the tested transport, and the mixed-quant MoE path, whose reference harness was deferred. No evidence yet points to any of these. |
 | Do these quants cost accuracy? | No higher-precision reference (BF16 or NVFP4) was run on this hardware. The published 90.6-92.1 used other weights and harnesses that are not fully published, so the gap to them is not a measure of quantization (item 12). |
 | Code-level questions: the 511-pool slice, `swiglu_limit` on the routed experts, top-k ties between layouts | Read in code ([investigation](investigations/2026-10-glm53-looping/README.md#open-questions)). Since measured: the 511-pool slice (item 4a). `swiglu_limit` on the routed experts: omission confirmed and the fix reachable in served kernels (item 4d); whether the limit engages is untested. Top-k ties: the selected set matches an exact top 512 apart from boundary ties; not measured further. |

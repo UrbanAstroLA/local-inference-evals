@@ -31,7 +31,8 @@ left 3 and 3 of 198 empty against 5 and 5 in the matching stock 0.9.1 passes, wi
 tail-ring, router and clamp corrections have not been tested alone in GPQA. Model-free checks of the corrected build found
 no further defect in the two-GPU all-reduce transport, the KV record writer and query projection, or cache addressing
 above 2³¹ bytes (items 4g-4i). A live check of its slot mappings under real scheduling found one more: the indexer's
-prefill key writer mishandles prefill chunk starts not aligned to 4 tokens (item 4j; effect on completion untested).
+prefill key writer mishandles prefill chunk starts not aligned to 4 tokens (item 4j), in every release and in upstream
+vLLM; a correction was verified in serving (item 4k). Its GPQA exposure is narrow; effect on completion untested.
 
 ## Labels
 

@@ -1,0 +1,8 @@
+
+[installed gate_linear.py (patched)] GateLinear(4096, 288, out_dtype=float32), bf16 weight: tier per device (tiers 1-2 reported unavailable on CPU)
+  SM120 (RTX PRO 6000, RTX 50xx)   cublas_fp32_out=True  m=8: 5 torch.mm(out_dtype=fp32)                       m=64: 5 torch.mm(out_dtype=fp32)
+  SM121 (GB10)                     cublas_fp32_out=True  m=8: 5 torch.mm(out_dtype=fp32)                       m=64: 5 torch.mm(out_dtype=fp32)
+  SM90 (Hopper)                    cublas_fp32_out=True  m=8: 5 torch.mm(out_dtype=fp32)                       m=64: 5 torch.mm(out_dtype=fp32)
+  SM100 (B200)                     cublas_fp32_out=True  m=8: 5 torch.mm(out_dtype=fp32)                       m=64: 5 torch.mm(out_dtype=fp32)
+
+PATCH CHECK PASS: SM12x router GEMM dispatches to tier 5, fp32 output (tier 5 is CUDA/ROCm-only and is not executed on CPU)

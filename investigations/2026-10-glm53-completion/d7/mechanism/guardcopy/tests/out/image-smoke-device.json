@@ -1,0 +1,45 @@
+{
+ "mode": "device",
+ "results": [
+  {
+   "test": "I2 GLM53_MAPGUARD=device: worker + scheduler hooks installed",
+   "ok": true,
+   "runner": true,
+   "scheduler": true,
+   "kpool_on": true,
+   "b12x_on": true,
+   "mla_writer_wrapped": true,
+   "rowstate_wrapped": true,
+   "fullgraph_wrapped": true
+  },
+  {
+   "test": "I3 EngineCore digest (KVCacheManager lists) == worker ledger digest at every step",
+   "ok": true,
+   "steps": 12,
+   "joined": 12,
+   "equal": 12,
+   "excl": [
+    {
+     "live_blocks": 32,
+     "multi_group": 0,
+     "examples": {},
+     "max_id": 1007,
+     "ge_935": 31,
+     "shared0": 0
+    }
+   ]
+  },
+  {
+   "test": "I4 exact baseline readout: none during runner warm-up, exactly one at the first real request",
+   "ok": true,
+   "baseline_records_after_each_call": [
+    0,
+    0,
+    1,
+    1
+   ],
+   "baseline_errors": 0
+  }
+ ],
+ "module_sha256": "3fa979c8fcb3588275ca92a17db4a633b21977382823adff36bb158e709ac065"
+}

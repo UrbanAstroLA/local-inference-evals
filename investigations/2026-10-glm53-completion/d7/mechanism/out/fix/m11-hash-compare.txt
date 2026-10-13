@@ -1,0 +1,4 @@
+M11 op-level aligned workload, raw cache+ring SHA-256 after each of 4 steps
+B0  (08d1cb90): 6cba48eeded9aa97 f0fa0e97f6f57d7c 16e828279fec8fcd bf6ef689fd2b539f
+B1d7(093ddce6): 6cba48eeded9aa97 f0fa0e97f6f57d7c 16e828279fec8fcd bf6ef689fd2b539f
+identical: True

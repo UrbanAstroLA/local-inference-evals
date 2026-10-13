@@ -1,0 +1,23 @@
+{
+ "a2_guard": {
+  "violations": {
+   "idx_r_pf.rtable": 34,
+   "idx_r_dec.rtable": 112
+  },
+  "idx_read_consumed_examples": [
+   17000,
+   17000,
+   17000,
+   17000,
+   17000,
+   17000
+  ],
+  "consumed_multiple_of_17": true
+ },
+ "fixed_guard": {
+  "violations": {},
+  "idx_read_consumed_examples": [],
+  "consumed_multiple_of_17": null
+ },
+ "ok": true
+}

@@ -34,7 +34,9 @@ selection or completion was not measured.
   [`analysis/analyze_mapguard.py`](analysis/analyze_mapguard.py). A condition below its minimum is INCOMPLETE, not clean.
 - **Workload** ([`run/client_mapguard.py`](run/client_mapguard.py)): eight active-reasoning prefixes of 4,000-120,000
   tokens with bounded continuations at 1 to 8 in flight, a staggered admission, 16 GPQA prompts capped at 1,024 tokens,
-  and four short greedy probes before and after. Every sampled request has its own seed.
+  and four short greedy probes before and after. Seeds are recorded per request. *Correction (2026-10-13, amendment
+  18c):* this said every sampled request has its own seed; phases T1 and D reuse seeds 8,850,000-8,850,007 on the same
+  prefixes. This does not affect the mapping checks.
 
 ## Attempts
 
@@ -69,7 +71,8 @@ Before attempt 3, the following were checked with zero GPU use (amendment 17e):
 - the image id;
 - the CPU tests, and the regression test rerun on the rebuilt image
   ([`tests/out-prelaunch/`](tests/out-prelaunch)), because a logged rc=1 from that test did not reproduce;
-- the client end to end against a local mock server: every phase, no errors, distinct seeds for all 64 sampled requests.
+- the client end to end against a local mock server: every phase, no errors. (This said "distinct seeds for all 64
+  sampled requests"; 8 seeds are reused between phases T1 and D. Corrected in amendment 18c.)
 
 ## Attempt 3
 

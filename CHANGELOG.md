@@ -1,5 +1,28 @@
 # Changelog
 
+## 2026-10-13, later (completion investigation, amendments 18-18c): D7 corrected and verified (B1)
+
+Contents unchanged: 65 runs, 13 comparisons. No earlier run or number changed. Item 4k is new.
+
+- **`PLAN.md`**: amendments 18 (D7 review), 18a (step-2 conditions; server-log correction), 18b (operator authorization:
+  2.0 GPU-hours, one retry) and 18c (frozen package; seed correction).
+- **New `d7/` folder:**
+  - **Published:** the release and upstream comparison, the correction (`d7-fix.diff`) and its CPU tests, the GPQA
+    exposure reconstruction (simulator, tokenizer, classes; token counts, hashes and offsets only), the frozen step-2
+    package (guard, analysis, runner, client, CPU tests, build files), and the B1 session's verdict, phase 2d and gzip
+    guard records.
+  - **Hashed in `RAW-SHA256SUMS-d7.txt`:** fixture token ids, probe outputs, container logs, pre-flight listings and
+    full engine files.
+  - **Substitutions** are listed in `PUBLIC-COPIES-18.txt`.
+- **Investigation `README.md`:**
+  - new section "D7: correction and verification (amendment 18)";
+  - the D7 row in the defect matrix updated;
+  - status, open questions and next steps updated.
+- **`b0-mapguard/README.md`:** the seed statements are corrected in place, with notes.
+- **`costs.jsonl`**: one entry (0.6244). `recompute.py` checks it and the cumulative 49.52 GPU-hours.
+- **`FINDINGS.md`** (item 4k, open questions), **`LEDGER.md`**, top-level **`README.md`**, **`tools/site.py`** and the
+  rebuilt **`docs/`**.
+
 ## 2026-10-13 (completion investigation, amendments 17-17e): live slot mappings on B0
 
 Contents unchanged: 65 runs, 13 comparisons. No earlier run or number changed. Item 4j is new.

@@ -1,0 +1,28 @@
+image local/glm53-v0.9.1-b1-d7-cpu:local sha256:093ddce64f9135c8242e6ceb939e7b4e414ef5ec2d75fb8bd1c59a7b78d7b552
+image local/glm53-v0.9.1-bundle-d1234-check:local sha256:b61793817388bc42b2477df4bbde5aca61df0567cf7c88ab29061633b06282ba
+image local/glm53-v0.9.1-b0-mapguard:local sha256:e48738c65ca1092f61530079c0c01a726b0d7bd66469a2d611d04d4c796072d2
+image ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07
+D1_test_col511_cpu                 b1       rc=0   ALL PASS
+D1_fixture_cpucheck                b1       rc=0   [04:57:54] cpucheck OK
+D2_test_fix_U                      b1       rc=0   17/17 met expectation in 0.2s
+D2_scenarios                       b1       rc=0   6/6 passed in 3.1s
+D3_installed_expect_patched        b1       rc=0   PATCH CHECK PASS: SM12x router GEMM dispatches to tier 5, fp32 output (tier 5 is CUDA/ROCm-only and is not executed on C
+D4_installed_expect_patched        b1       rc=0   PATCH CHECK PASS: swiglu_limit reaches every Caps(...) and compile_mixed_trellis(...) call (static; kernel behaviour not
+D5_excluded_expect_release         b1       rc=0   REPRODUCED: V2 captures graphs, then runs warmup_kernels and serves with the workspace unlocked; an unlocked manager fre
+D6_excluded_expect_release         b1       rc=0   REPRODUCED: warm-up reserves up to 4 tail blocks per request (contract 1); the stale id 484 stays in column 1 and the ge
+import_inert                       check-d7 rc=1   ImportError: cannot import name 'SparseAttnIndexerKpool' from partially initialized module 'vllm.model_executor.layers.s
+test_c511check                     check-d7 rc=0   7 passed, 0 failed: []
+test_tailguard                     check-d7 rc=0   22/22 passed
+test_verify13                      check-d7 rc=0   15 passed, 0 failed (tmp /tmp/v13test_6a3ft9g7)
+test_d4limit                       check-d7 rc=0   done: 0 failed []
+test_fix_U                         check-d7 rc=0   17/17 met expectation in 0.2s
+test_all_observers_together        check-d7 rc=0   done: 0 failed []
+image_smoke_unset                  mapguard-d7 rc=0   PASS I1 inert with GLM53_MAPGUARD unset: nothing patched {"runner": false, "scheduler": false, "kpool_on": false, "b12x_
+image_smoke_device                 mapguard-d7 rc=1   ModuleNotFoundError: No module named 'sim_pool'
+kpool_unaligned                    mapguard-d7 rc=0   }
+test_mapguard                      mapguard-d7 rc=1   ModuleNotFoundError: No module named 'sim_pool'
+a2_regression                      mapguard-d7 rc=1   ModuleNotFoundError: No module named 'sim_pool'
+dryrun_r0                          mapguard-d7 rc=1   ModuleNotFoundError: No module named 'sim_pool'
+dryrun_r1                          mapguard-d7 rc=1   ModuleNotFoundError: No module named 'sim_pool'
+dryrun_analysis                    mapguard-d7 rc=0     C12_short_ctx            0 (min 8)
+done 2026-10-13T05:01:46Z

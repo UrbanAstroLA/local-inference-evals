@@ -1,0 +1,465 @@
+{
+ "module": "vllm.mapguard_hooks (image)",
+ "module_sha256": "3fa979c8fcb3588275ca92a17db4a633b21977382823adff36bb158e709ac065",
+ "passed": 28,
+ "total": 28,
+ "secs": 1548.0,
+ "results": [
+  {
+   "test": "A6 indexer read geometry from B0 code: factor 4, 64-pool pages, 17 per block; guard agrees",
+   "ok": true,
+   "factor": 4,
+   "storage": 64,
+   "guard_ipage": 64,
+   "guard_ipb": 17
+  },
+  {
+   "test": "N1 clean scenario: no violation at any site (real allocator + real B0 builders)",
+   "ok": true,
+   "violations": {},
+   "issues": [],
+   "guard_errors": 0,
+   "steps": 15,
+   "secs": 95.4
+  },
+  {
+   "test": "N1 coverage: every check site exercised",
+   "ok": true,
+   "checked": {
+    "mla_w": 47096,
+    "idx_w_pf": 46968,
+    "idx_w_dec": 128,
+    "tail_w_seed": 46968,
+    "tail_w_stash": 128,
+    "idx_r_dec": 128,
+    "idx_r_pf": 34,
+    "mla_r": 47096,
+    "pos": 23548
+   }
+  },
+  {
+   "test": "N2 padded rows/tokens (FULL-graph-style padding) not flagged",
+   "ok": true,
+   "padded_steps": 1
+  },
+  {
+   "test": "N3 masked selection entries / padding tokens with nsa=0 not flagged",
+   "ok": true
+  },
+  {
+   "test": "N4 speculative slots later rejected not flagged",
+   "ok": true,
+   "spec_writes": 96,
+   "rejected_tokens": 20
+  },
+  {
+   "test": "N5 mixed prefill/decode steps, prefix hit, row reuse clean",
+   "ok": true,
+   "mixed_steps": 8
+  },
+  {
+   "test": "N6 high-address blocks (>= 935) checked and clean",
+   "ok": true,
+   "high": {
+    "mla_w": 47096,
+    "idx_w_pf": 11742,
+    "idx_w_dec": 32,
+    "tail_w_seed": 136,
+    "tail_w_stash": 128,
+    "idx_r_dec": 2160,
+    "idx_r_pf": 632,
+    "mla_r": 5947008,
+    "pos": 0
+   }
+  },
+  {
+   "test": "A2a exact offline position join: clean scenario has 0 mismatches",
+   "ok": true,
+   "checked": 33,
+   "mismatch": 0
+  },
+  {
+   "test": "F1 wrong-request block id -> MLA/index-K writes and reads flagged (foreign)",
+   "ok": true,
+   "injected": [
+    [
+     8,
+     [
+      "wrong_req"
+     ]
+    ]
+   ],
+   "violations": {
+    "mla_w.mism": 8,
+    "idx_w_dec.mism": 2,
+    "idx_r_dec.rtable": 8,
+    "mla_r.sel_foreign": 162
+   },
+   "flags": [
+    "foreign",
+    "mism",
+    "rtable",
+    "self",
+    "spec"
+   ],
+   "clean_before": true
+  },
+  {
+   "test": "F2 stale block id after free/reuse (missed append on a reused row) flagged",
+   "ok": true,
+   "injected": [
+    [
+     14,
+     [
+      "drop_append"
+     ]
+    ]
+   ],
+   "violations": {
+    "mla_w.mism": 1296,
+    "idx_w_pf.mism": 324,
+    "idx_r_pf.rtable": 2,
+    "mla_r.sel_foreign": 30072
+   },
+   "flags": [
+    "mism",
+    "null",
+    "rtable",
+    "self"
+   ],
+   "clean_before": true
+  },
+  {
+   "test": "F3a wrong logical position (prefill row +1) -> position bounds flagged",
+   "ok": true,
+   "injected": [
+    [
+     1,
+     [
+      "wrong_pos"
+     ]
+    ]
+   ],
+   "violations": {
+    "idx_w_pf.missing": 1024,
+    "idx_w_pf.unexp": 1024,
+    "pos.pos_bounds": 1
+   },
+   "flags": [
+    "missing",
+    "ownoff",
+    "posb",
+    "unexp"
+   ],
+   "clean_before": true
+  },
+  {
+   "test": "F3b wrong position within the in-graph window -> exact offline join flags it",
+   "ok": true,
+   "injected": [
+    [
+     9,
+     [
+      "wrong_pos"
+     ]
+    ]
+   ],
+   "p3": {
+    "checked": 33,
+    "mismatch": 1,
+    "examples": [
+     {
+      "step": 9,
+      "rid": "B",
+      "p0": 5000,
+      "expected": 5001,
+      "hi": 5004
+     }
+    ]
+   }
+  },
+  {
+   "test": "F3c wrong record within the right block (offset error) flagged (ownoff)",
+   "ok": true,
+   "injected": [
+    [
+     4,
+     [
+      "offset_bug"
+     ]
+    ]
+   ],
+   "violations": {
+    "mla_w.mism": 4096
+   },
+   "flags": [
+    "mism",
+    "ownoff"
+   ],
+   "clean_before": true
+  },
+  {
+   "test": "F4 row-reuse error (previous request's runner row) flagged",
+   "ok": true,
+   "injected": [
+    [
+     10,
+     [
+      "row_reuse"
+     ]
+    ]
+   ],
+   "violations": {
+    "mla_w.mism": 8,
+    "idx_w_dec.mism": 2,
+    "tail_w_stash.mism": 8,
+    "idx_r_dec.rtable": 2,
+    "mla_r.sel_foreign": 20,
+    "pos.pos_bounds": 1
+   },
+   "flags": [
+    "foreign",
+    "mism",
+    "posb",
+    "rtable",
+    "self",
+    "spec"
+   ],
+   "clean_before": true
+  },
+  {
+   "test": "F5a wrong group (MLA write into a KDA-group block) flagged (wgroup)",
+   "ok": true,
+   "injected": [
+    [
+     3,
+     [
+      "wrong_group"
+     ]
+    ]
+   ],
+   "violations": {
+    "mla_w.mism": 512,
+    "idx_w_pf.mism": 128,
+    "idx_r_pf.rtable": 2,
+    "mla_r.sel_foreign": 403160
+   },
+   "flags": [
+    "mism",
+    "rtable",
+    "self",
+    "wgroup"
+   ],
+   "clean_before": true
+  },
+  {
+   "test": "F6 stale replay (previous step's slot mapping consumed) flagged",
+   "ok": true,
+   "injected": [
+    [
+     5,
+     [
+      "stale_replay"
+     ]
+    ]
+   ],
+   "violations": {
+    "mla_w.mism": 4096
+   },
+   "flags": [
+    "foreign",
+    "mism",
+    "ownoff"
+   ],
+   "clean_before": true
+  },
+  {
+   "test": "F7 unaligned prefill chunk start: pool completion dropped (missing_pred) or pooled across the previous request (pool_cross) flagged",
+   "ok": true,
+   "injected": [
+    [
+     2,
+     [
+      "none"
+     ]
+    ]
+   ],
+   "violations": {
+    "idx_w_pf.missing_pred": 2
+   },
+   "flags": [
+    "pred"
+   ],
+   "clean_before": true
+  },
+  {
+   "test": "F8 inactive (padding) token writes a live block -> flagged (inact)",
+   "ok": true,
+   "injected": [
+    [
+     14,
+     [
+      "inact_write"
+     ]
+    ]
+   ],
+   "violations": {
+    "mla_w.inact": 2
+   },
+   "flags": [
+    "foreign",
+    "inact"
+   ],
+   "clean_before": true
+  },
+  {
+   "test": "F9 tail ring T1 signature (generic mapping, stale column) flagged",
+   "ok": true,
+   "injected": [
+    [
+     5,
+     [
+      "tail_t1"
+     ]
+    ]
+   ],
+   "violations": {
+    "tail_w_seed.mism": 16,
+    "tail_w_seed.missing": 16,
+    "tail_w_seed.unexp": 8
+   },
+   "flags": [
+    "mism",
+    "missing",
+    "null",
+    "ownoff",
+    "unexp",
+    "wgroup"
+   ],
+   "clean_before": true
+  },
+  {
+   "test": "F10 MLA selected slots: non-causal / foreign / masked-live flagged",
+   "ok": true,
+   "injected": [
+    [
+     6,
+     [
+      "sel_causal",
+      "sel_foreign",
+      "masked_live"
+     ]
+    ]
+   ],
+   "violations": {
+    "mla_r.sel_foreign": 2,
+    "mla_r.sel_causal": 2,
+    "mla_r.masked_live": 2
+   },
+   "flags": [
+    "foreign",
+    "maskl",
+    "selc",
+    "self"
+   ],
+   "clean_before": true
+  },
+  {
+   "test": "F11 row split (query_start_loc) mismatch flagged",
+   "ok": true,
+   "injected": [
+    [
+     5,
+     [
+      "qsl_bad"
+     ]
+    ]
+   ],
+   "violations": {
+    "pos.qsl": 1
+   },
+   "flags": [
+    "qsl"
+   ],
+   "clean_before": true
+  },
+  {
+   "test": "F13 index-K read: wrong pool length and foreign page flagged",
+   "ok": true,
+   "injected": [
+    [
+     14,
+     [
+      "idx_read_len",
+      "idx_read_foreign"
+     ]
+    ]
+   ],
+   "violations": {
+    "idx_r_dec.rlen": 2,
+    "idx_r_dec.rtable": 2
+   },
+   "flags": [
+    "foreign",
+    "rlen",
+    "rtable"
+   ],
+   "clean_before": true
+  },
+  {
+   "test": "A3 transmission join: identical digests -> 0 mismatches; one altered -> flagged",
+   "ok": true,
+   "identical": {
+    "joined": 15,
+    "steps": 15,
+    "mismatch": 0,
+    "examples": []
+   },
+   "altered": {
+    "mismatch": 1
+   }
+  },
+  {
+   "test": "F5b rank ownership: a write from a non-owned layer and a missing owned layer flagged",
+   "ok": true,
+   "good_ok": true,
+   "wrong": [
+    [
+     "non_owned_layer_writes",
+     1,
+     23,
+     5
+    ]
+   ],
+   "missing": [
+    [
+     "owned_layer_count",
+     0,
+     11,
+     0,
+     100
+    ]
+   ]
+  },
+  {
+   "test": "A4/A5 verdicts: CLEAN / INCOMPLETE (named condition) / INVALID / VIOLATION precedence",
+   "ok": true,
+   "clean": "CLEAN",
+   "inc": [
+    "C7_high_mla_w"
+   ],
+   "inv": "INVALID",
+   "vio": "VIOLATION"
+  },
+  {
+   "test": "G1 graph safety: no host-sync op inside any device check (.item/.tolist/nonzero/bool-index/...)",
+   "ok": true,
+   "hits": []
+  },
+  {
+   "test": "G2 observe-only: no consumed engine tensor modified by any hook",
+   "ok": true,
+   "mutated": []
+  }
+ ]
+}

@@ -1,0 +1,347 @@
+{
+ "window_s": 1.0,
+ "engines": {
+  "0.9.1": {
+   "K": 3,
+   "dt": 0.05040974529346623
+  },
+  "0.7.0": {
+   "K": 5,
+   "dt": 0.09048987108655616
+  }
+ },
+ "cosend_max": 2,
+ "cosend_hist": {
+  "0": 1822,
+  "1": 72,
+  "2": 6
+ },
+ "results": [
+  {
+   "record": "stock 0.7.0 (DFlash2 x5, DCP2)",
+   "engine": "0.7.0",
+   "pass": 1,
+   "seed": 1234,
+   "logged": false,
+   "samples_sha256": "0bf51197d934337eab7a1837fd5aea9847dfc5ef388c3639348a438bc7e4ae59",
+   "empties": 0,
+   "classes": {
+    "NOT-unsplittable": 82,
+    "UNKNOWN": 116
+   },
+   "class_x_empty": {
+    "NOT-unsplittable|answered": 82,
+    "UNKNOWN|answered": 116
+   },
+   "ensemble": null,
+   "ensemble_exposed": {},
+   "ensemble_chunk_patterns": null
+  },
+  {
+   "record": "stock 0.7.0 (DFlash2 x5, DCP2)",
+   "engine": "0.7.0",
+   "pass": 2,
+   "seed": 1235,
+   "logged": true,
+   "samples_sha256": "e7bae2038110adab0db6bc65848a9c4ef77f82bf63e7ac1e0c2b3113a50f55d5",
+   "empties": 3,
+   "classes": {
+    "NOT-unsplittable": 197,
+    "KNOWN": 1
+   },
+   "class_x_empty": {
+    "KNOWN|answered": 1,
+    "NOT-unsplittable|answered": 194,
+    "NOT-unsplittable|empty": 3
+   },
+   "ensemble": {
+    "schedules": 160,
+    "events_min": 1,
+    "events_max": 1,
+    "events_mean": 1.0
+   },
+   "ensemble_exposed": {
+    "127": 1.0
+   },
+   "ensemble_chunk_patterns": {
+    "127": [
+     [
+      [
+       [
+        1966,
+        829
+       ]
+      ],
+      160
+     ]
+    ]
+   }
+  },
+  {
+   "record": "stock 0.7.0 (DFlash2 x5, DCP2)",
+   "engine": "0.7.0",
+   "pass": 3,
+   "seed": 1236,
+   "logged": true,
+   "samples_sha256": "aae579ab4587cd68003576d86a7ae1fa1096bc7681b3ad87bf65627222e9ef4e",
+   "empties": 1,
+   "classes": {
+    "NOT-unsplittable": 197,
+    "KNOWN": 1
+   },
+   "class_x_empty": {
+    "KNOWN|answered": 1,
+    "NOT-unsplittable|answered": 196,
+    "NOT-unsplittable|empty": 1
+   },
+   "ensemble": {
+    "schedules": 160,
+    "events_min": 1,
+    "events_max": 1,
+    "events_mean": 1.0
+   },
+   "ensemble_exposed": {
+    "127": 1.0
+   },
+   "ensemble_chunk_patterns": {
+    "127": [
+     [
+      [
+       [
+        1966,
+        829
+       ]
+      ],
+      160
+     ]
+    ]
+   }
+  },
+  {
+   "record": "stock 0.9.1 (DFlash2 x3)",
+   "engine": "0.9.1",
+   "pass": 1,
+   "seed": 1234,
+   "logged": true,
+   "samples_sha256": "be5c567defff894ac898e7e90ea2149e4fd5ff64486216a6c26f736efb447fc1",
+   "empties": 5,
+   "classes": {
+    "NOT-unsplittable": 197,
+    "NOT-aligned-split": 1
+   },
+   "class_x_empty": {
+    "NOT-aligned-split|empty": 1,
+    "NOT-unsplittable|answered": 193,
+    "NOT-unsplittable|empty": 4
+   },
+   "ensemble": {
+    "schedules": 160,
+    "events_min": 0,
+    "events_max": 0,
+    "events_mean": 0.0
+   },
+   "ensemble_exposed": {},
+   "ensemble_chunk_patterns": {}
+  },
+  {
+   "record": "stock 0.9.1 (DFlash2 x3)",
+   "engine": "0.9.1",
+   "pass": 2,
+   "seed": 1235,
+   "logged": true,
+   "samples_sha256": "c9105163deefe174f6b903caaa6344650ac8cd589d58f1a3b9a03d7199546920",
+   "empties": 5,
+   "classes": {
+    "NOT-unsplittable": 197,
+    "NOT-aligned-split": 1
+   },
+   "class_x_empty": {
+    "NOT-aligned-split|answered": 1,
+    "NOT-unsplittable|answered": 192,
+    "NOT-unsplittable|empty": 5
+   },
+   "ensemble": {
+    "schedules": 160,
+    "events_min": 0,
+    "events_max": 0,
+    "events_mean": 0.0
+   },
+   "ensemble_exposed": {},
+   "ensemble_chunk_patterns": {}
+  },
+  {
+   "record": "stock 0.9.1 (DFlash2 x3)",
+   "engine": "0.9.1",
+   "pass": 3,
+   "seed": 1236,
+   "logged": true,
+   "samples_sha256": "bcaa1e011ce13b202205e12f37f399f57bdf39ad4b83ee8bdd885c8715d728b7",
+   "empties": 6,
+   "classes": {
+    "NOT-unsplittable": 197,
+    "NOT-aligned-split": 1
+   },
+   "class_x_empty": {
+    "NOT-aligned-split|empty": 1,
+    "NOT-unsplittable|answered": 192,
+    "NOT-unsplittable|empty": 5
+   },
+   "ensemble": {
+    "schedules": 160,
+    "events_min": 0,
+    "events_max": 0,
+    "events_mean": 0.0
+   },
+   "ensemble_exposed": {},
+   "ensemble_chunk_patterns": {}
+  },
+  {
+   "record": "col511 arm (0.9.1 + column-511 correction)",
+   "engine": "0.9.1",
+   "pass": 1,
+   "seed": 1234,
+   "logged": true,
+   "samples_sha256": "463c42a319dce116aab2916695bc96a56e51d19c92f9c8d551a12b0f22e64dce",
+   "empties": 4,
+   "classes": {
+    "NOT-unsplittable": 197,
+    "NOT-aligned-split": 1
+   },
+   "class_x_empty": {
+    "NOT-aligned-split|empty": 1,
+    "NOT-unsplittable|answered": 194,
+    "NOT-unsplittable|empty": 3
+   },
+   "ensemble": {
+    "schedules": 160,
+    "events_min": 0,
+    "events_max": 0,
+    "events_mean": 0.0
+   },
+   "ensemble_exposed": {},
+   "ensemble_chunk_patterns": {}
+  },
+  {
+   "record": "col511 arm (0.9.1 + column-511 correction)",
+   "engine": "0.9.1",
+   "pass": 2,
+   "seed": 1235,
+   "logged": true,
+   "samples_sha256": "1df6043cccb0cccab6bbf0a2bcdf58630d19a30e8a46afad97d5670c0a995bcf",
+   "empties": 5,
+   "classes": {
+    "NOT-unsplittable": 197,
+    "NOT-aligned-split": 1
+   },
+   "class_x_empty": {
+    "NOT-aligned-split|empty": 1,
+    "NOT-unsplittable|answered": 193,
+    "NOT-unsplittable|empty": 4
+   },
+   "ensemble": {
+    "schedules": 160,
+    "events_min": 0,
+    "events_max": 0,
+    "events_mean": 0.0
+   },
+   "ensemble_exposed": {},
+   "ensemble_chunk_patterns": {}
+  },
+  {
+   "record": "col511 arm (0.9.1 + column-511 correction)",
+   "engine": "0.9.1",
+   "pass": 3,
+   "seed": 1236,
+   "logged": true,
+   "samples_sha256": "1d00ade555e2567fb4b2b272a6e149c669458803d7f2fe81478fd2842984e351",
+   "empties": 6,
+   "classes": {
+    "NOT-unsplittable": 197,
+    "NOT-aligned-split": 1
+   },
+   "class_x_empty": {
+    "NOT-aligned-split|empty": 1,
+    "NOT-unsplittable|answered": 192,
+    "NOT-unsplittable|empty": 5
+   },
+   "ensemble": {
+    "schedules": 160,
+    "events_min": 0,
+    "events_max": 0,
+    "events_mean": 0.0
+   },
+   "ensemble_exposed": {},
+   "ensemble_chunk_patterns": {}
+  },
+  {
+   "record": "bundle D1-D4 = B0 (0.9.1 + D1-D4)",
+   "engine": "0.9.1",
+   "pass": 1,
+   "seed": 1234,
+   "logged": true,
+   "samples_sha256": "8c413a97e412ea156ffc7093b3e85a5d04ff06e3fbba66b6f3077f18114caad8",
+   "empties": 3,
+   "classes": {
+    "NOT-unsplittable": 197,
+    "NOT-aligned-split": 1
+   },
+   "class_x_empty": {
+    "NOT-aligned-split|empty": 1,
+    "NOT-unsplittable|answered": 195,
+    "NOT-unsplittable|empty": 2
+   },
+   "ensemble": {
+    "schedules": 160,
+    "events_min": 0,
+    "events_max": 0,
+    "events_mean": 0.0
+   },
+   "ensemble_exposed": {},
+   "ensemble_chunk_patterns": {}
+  },
+  {
+   "record": "bundle D1-D4 = B0 (0.9.1 + D1-D4)",
+   "engine": "0.9.1",
+   "pass": 2,
+   "seed": 1235,
+   "logged": true,
+   "samples_sha256": "d3eb4fa745c70ee8a91133e3d12e238a83e8aa9487f7989e3b42d6f157fa9c92",
+   "empties": 3,
+   "classes": {
+    "NOT-unsplittable": 197,
+    "NOT-aligned-split": 1
+   },
+   "class_x_empty": {
+    "NOT-aligned-split|answered": 1,
+    "NOT-unsplittable|answered": 194,
+    "NOT-unsplittable|empty": 3
+   },
+   "ensemble": {
+    "schedules": 160,
+    "events_min": 0,
+    "events_max": 0,
+    "events_mean": 0.0
+   },
+   "ensemble_exposed": {},
+   "ensemble_chunk_patterns": {}
+  }
+ ],
+ "checks": [
+  "stock 0.7.0 (DFlash2 x5, DCP2) pass 1: empty flags vs published rows: 198/198 equal",
+  "stock 0.7.0 (DFlash2 x5, DCP2) pass 2: empty flags vs published rows: 198/198 equal",
+  "stock 0.7.0 (DFlash2 x5, DCP2) pass 2: dispatch order inversions vs doc order: 1",
+  "stock 0.7.0 (DFlash2 x5, DCP2) pass 3: empty flags vs published rows: 198/198 equal",
+  "stock 0.7.0 (DFlash2 x5, DCP2) pass 3: dispatch order inversions vs doc order: 4",
+  "stock 0.9.1 (DFlash2 x3) pass 1: empty flags vs published rows: 198/198 equal",
+  "stock 0.9.1 (DFlash2 x3) pass 1: dispatch order inversions vs doc order: 2",
+  "stock 0.9.1 (DFlash2 x3) pass 2: empty flags vs published rows: 198/198 equal",
+  "stock 0.9.1 (DFlash2 x3) pass 2: dispatch order inversions vs doc order: 3",
+  "stock 0.9.1 (DFlash2 x3) pass 3: empty flags vs published rows: 198/198 equal",
+  "stock 0.9.1 (DFlash2 x3) pass 3: dispatch order inversions vs doc order: 4",
+  "col511 arm (0.9.1 + column-511 correction) pass 1: dispatch order inversions vs doc order: 1",
+  "col511 arm (0.9.1 + column-511 correction) pass 2: dispatch order inversions vs doc order: 2",
+  "col511 arm (0.9.1 + column-511 correction) pass 3: dispatch order inversions vs doc order: 4",
+  "bundle D1-D4 = B0 (0.9.1 + D1-D4) pass 1: dispatch order inversions vs doc order: 1",
+  "bundle D1-D4 = B0 (0.9.1 + D1-D4) pass 2: dispatch order inversions vs doc order: 2"
+ ]
+}

@@ -1059,3 +1059,166 @@ pass 28/28, and the a2 regression test passes on rerun (a logged rc=1 did not re
 matches only guard-error records; and the client completes every phase against a local mock server, with distinct
 seeds for all 64 sampled requests and no request errors. If attempt 3 is invalid, there is no automatic retry: it is
 diagnosed and returned to the operator. Frozen criteria and coverage minimums are unchanged.
+
+**Amendment 18 (2026-10-13; adopts the independent review "D7 — verified B1 and exposure before behavioural spending",
+relayed by the operator; before any D7 data).** Proceed with CPU discovery, reproduction and correction preparation.
+
+Step 0, mechanism and exposure:
+- **Release comparison.** For each release, test the actual writer and the relevant scheduling and DCP semantics. Report
+  separately: whether the faulty assumption exists; whether execution can reach an unaligned start; and how the affected
+  pools differ by request order, chunking and rank. A shared source defect does not exclude an engine difference.
+- **Upstream comparison.** Prefer a verified upstream correction where one applies. Check its assumptions against B0's
+  chunking, prefix caching, tail-ring state and speculative execution; upstream code is evidence, not proof of
+  compatibility with this fork.
+- **GPQA exposure.**
+  - Use exact rendered prompt-token counts, not character lengths.
+  - First explain the simulator's 73 predicted versus 217 measured events in attempt 3.
+  - If recorded admission times and prompt lengths cannot uniquely reconstruct per-step budgets, label exposure as
+    estimated, give bounds or sensitivity across plausible schedules, and separate known, possible and unknown exposure.
+  - Exposure-versus-empty associations stay descriptive. Doc 127 is not taken to bound the possible effect until
+    shared-step exposure has been assessed.
+
+Step 1, the smallest correct intervention:
+- **Writer-side repair is preferred** if the preceding 1-3 keys and gates are available with verified ownership and
+  positions.
+- **Its tests cover:** every chunk-start residue modulo 4; first and later requests in a packed batch; short chunks and
+  successive chunk boundaries; block boundaries, prefix hits and applicable resume paths; pooled bytes against an
+  independent reference; aligned inputs unchanged.
+- **If scheduler alignment is chosen:** define alignment by logical pool position; verify progress when fewer than four
+  budget tokens remain; cover shared-step splits and final chunks; document that it prevents exposure rather than making
+  the writer correct for arbitrary unaligned inputs.
+- B1 = B0 plus the chosen D7 intervention only.
+
+Step 2, serving verification:
+- **Recommended:** conditional authorization at a ceiling of 1.0 occupied GPU-hours, including startup, warm-up and
+  invalid attempts. It runs only after the correction and the existing regression tests pass, and only once the operator
+  has authorized it.
+- **Conditions:** the frozen guard workload on both ranks with shipped graphs; all applicable coverage minimums; zero
+  missing or foreign pools; correct ownership and logical position; D1-D4 gates unchanged; short single-chunk probes
+  unchanged under matching conditions.
+- **Writer-side repair:** unaligned starts must still be exercised; a clean run without exposure would not verify it.
+- **Scheduler prevention:** demonstrate that the prohibited starts are prevented, and do not describe it as writer
+  correctness on unaligned inputs.
+- Throughput and instrumentation overhead are recorded. Lightweight exposure counters may be collected during step 2 if
+  that is safe, never at the expense of graph-mode verification.
+
+Step 3, localized computational effect, is a separate costed decision:
+- identical queries, head weights and token histories;
+- index-K states that differ only in the affected pool, with a reference for the correctly pooled keys;
+- affected-pool inclusion on B0 and B1, final attended pool and token sets after the D1 truncation and tail handling,
+  prefill as well as decode selection, and repeated baseline calls to separate top-k variability and boundary ties;
+- selected-pool rank alone does not establish output impact.
+
+Outcomes:
+- **Verified correction:** B1 becomes the correctness checkpoint; completion impact stays untested.
+- **Material computational effect with credible GPQA exposure:** propose a targeted B0/B1 behavioural comparison with
+  long-tail requests costed explicitly and cases, seeds and outcomes frozen before running.
+- **Narrow or uncertain exposure:** keep the correctness improvement; no full GPQA pass merely because the defect is real.
+- **Shared defect across releases:** investigate differential exposure before deciding its relevance to the gap.
+
+No behavioural evaluation follows automatically.
+
+**Amendment 18a (2026-10-13; adopts the independent review "D7 Step 2 — recommended conditional authorization", relayed by
+the operator; before any B1 data).** Steps 0-1 are complete (CPU only).
+
+Step 0-1 results:
+- **Writer:** the D7 writer is byte-identical in 0.7.0, 0.8.0 and 0.9.1, and every served configuration can reach an
+  unaligned start. Exposure patterns differ by draft slots, block size and DCP.
+- **Upstream:** vLLM main keeps the assumption; SGLang repairs it writer-side from the tail ring.
+- **Simulator:** with the draft-slot reservation added, it reproduces attempt 3's 217 events exactly (given the recorded
+  step timing).
+- **GPQA exposure:** none in the 0.9.1 family under the reconstruction (doc 127 split at 1,996 with 7 decode rows), and
+  doc 127 exposed in 0.7.0 passes 2-3, where it finished.
+- **Correction:** writer-side `d7-fix.diff`, 28/28 CPU fix tests, regressions pass.
+
+Correction to an earlier statement: stock 0.9.1's GPQA server logs exist (pass 1 and passes 2-3) and show a 2,048-token
+budget and 3 draft tokens; "no server log found" was wrong. Stock 0.7.0 passes 2-3 show 2,048 and 5.
+
+Authorized for preparation: 2a (guard amendment for B1's write rule) and 2b (B1 = B0 + D7 only, plus a guard image).
+Recommended: 2c with the appended phase 2d, maximum 1.0 occupied GPU-hours including startup, warm-up, verification, the
+appended phase and shutdown, no automatic retry, launched only after the CPU tests pass and hashes are frozen, and only
+with the operator's go-ahead. No Step 3 or behavioural run.
+
+Requirements before freezing:
+- **Independent content oracle.** Straddling-pool references are built from request keys and gates tracked
+  independently by logical position, not from the ring members B1 gathers.
+- **Fault injection** must detect missing repaired pools, foreign keys, stale keys from the same request and incorrect
+  logical positions.
+- **Byte oracle on GPU-faithful conversion and compression semantics.** The Triton interpreter's conversions are not the
+  byte oracle.
+- **No-ring fallback.** Establish whether unaligned prefills can reach it under B1's configuration. If unreachable,
+  document and assert it where practical; if reachable, repair it or scope it out before claiming arbitrary
+  unaligned-input correctness. External-token and KV-connector paths stay outside the claim.
+
+Serving criteria: as proposed — both ranks, shipped graphs, existing coverage minimums, at least 100 exercised
+straddling-pool events, zero missing, foreign or byte-incorrect pools, all other mapping checks clean, D1-D4 gates
+preserved, and short single-chunk probes unchanged. No long-prompt transcript parity is expected.
+
+Phase 2d: for each case, record the requested background concurrency, the actual scheduled decode count D at the
+relevant prefill step, the token budget and reservations, and the actual chunk start and length. Evaluate 2,045 − 7·D
+against the actual D; a difference between the requested and actual D is reported as such, not as an arithmetic
+contradiction. This validates the scheduling arithmetic under measured conditions and does not measure historical GPQA
+exposure. Exposure reporting keeps measured chunking arithmetic, the reconstructed historical decode count and the
+exposure inferred from those two separate; the reconstruction is not promoted to certainty.
+
+Outcomes:
+- **CLEAN with the required exposure:** the D7 repair is verified for the covered serving configuration; B1 is frozen as
+  B0 + D7 only; B0 and its records are preserved; completion impact stays untested and no GPQA pass follows.
+- **Violation:** the failing inputs are preserved and minimised; no verified B1.
+- **INCOMPLETE:** the missing condition is identified and a narrowly costed follow-up is returned.
+- **If exposure stays narrow and opposite to the gap:** D7's behavioural investigation is closed for now; the correctness
+  repair and the upstream reproduction are kept; work moves to another specific untested invariant.
+
+**Amendment 18b (2026-10-13; operator authorization, before any B1 data).** Step 2c with the appended phase 2d is
+authorized up to **2.0 occupied GPU-hours in total**, with **at most one retry** (two attempts in all).
+- **Precondition:** launch only if the 2a/2b CPU tests verifiably pass and the hashes are frozen.
+- **Retry:** allowed only after the failed attempt is diagnosed and recorded, with no rule loosened. Any change to frozen
+  files is recorded and re-hashed before the retry.
+- **Unchanged:** the per-attempt wall cap and all criteria of amendment 18a. Startup, warm-up, the appended phase and
+  shutdown count toward the total.
+- **Not authorized:** Step 3 or any behavioural run.
+
+**Amendment 18c (2026-10-13; frozen step-2 package, before any B1 GPU data).** The CPU preparation passed and was
+verified by the coordinator against the frozen hashes. d7/step2/SHA256SUMS (95 files) has sha256 97c26d11…; FROZEN.md
+holds the rules.
+
+Images:
+- **B1:** sha256:799d3cf8…. A full filesystem diff against B0 shows only `sparse_attn_indexer_kpool.py` and its bytecode
+  changed.
+- **Guard image:** sha256:4d7bd73e….
+- **Recipe fork:** `+bundle-d1234+d7`, draft-untested.
+
+Guard amendment:
+- **Write rule:** idx_w_pf models B1's rule from the writer's actual ring status.
+- **Independent oracle:**
+  - inputs are a guard-owned shadow of each request's last ≤3 keys and gates, keyed by layer, request and ledger
+    position — never the tail ring;
+  - the expected record is recomputed with the engine's own compress kernel into guard scratch, so GPU semantics come by
+    construction.
+- **Positive control:** every aligned pool must match exactly. Any mismatch makes that rank's straddling byte checks
+  INVALID, not violations.
+- **New criteria:**
+  - C13: at least 100 straddling pools per rank, byte-verified on every owned layer;
+  - C14: at least 10,000 positive-control pools per rank;
+  - zero missing, mismatched or fallback events;
+  - probes identical to attempt 3's.
+- **No-ring fallback:** unreachable in B1's configuration (source and environment). Any fallback event is a violation,
+  and the skip-tail-cache variable makes the run INVALID.
+
+CPU tests:
+- new guard tests: 30/30 (all four fault classes detected; an unfaithful oracle turns byte checks INVALID);
+- existing suite: 28/28;
+- a2 regression: ok;
+- smoke tests: pass;
+- fix tests on the B1 image: 28/28;
+- D1-D4 regressions: pass;
+- D7 pipeline dry run: 0 violations, every straddling pool verified (the dry run is INVALID only for having no real graph
+  capture or server arguments).
+
+Phase 2d is analysed separately, after the window's last readout.
+
+Budget: APPROVED_GPU_H 2.0 for the item, at most 2 attempts, wall cap 1,740 s per attempt.
+
+Correction: amendment 17e's "distinct seeds for all 64 sampled requests" is wrong. Phases T1 and D reuse seeds
+8,850,000-8,850,007 on the same prefixes, in attempt 3 as in the frozen workload. This does not affect mapping checks.
+The workload is kept identical to attempt 3 for comparability.

@@ -348,6 +348,33 @@ What was asked, run, found, corrected and withdrawn, in date order.
   B1 = B0 + that correction; not yet authorized.
   [Live slot mappings](investigations/2026-10-glm53-completion/README.md#live-slot-mappings-on-b0-amendment-17).
 
+**2026-10-13. D7: exposure, correction and verification (amendments 18-18c).**
+- An independent review (amendment 18) asked for the mechanism per release, a comparison with upstream, exact GPQA
+  exposure with stated uncertainty, the smallest correction, and verification in serving before any behavioural spend.
+- **Releases and upstream** (CPU): the writer is byte-identical in 0.7.0, 0.8.0 and 0.9.1, and every served
+  configuration reaches unaligned starts, with patterns that differ by draft slots, block size and DCP. Upstream vLLM main
+  keeps the assumption; SGLang repairs it writer-side.
+- **Exposure** (CPU):
+  - The earlier simulation's 73 predicted against 217 measured events is explained by the scheduler's per-request
+    draft-slot reservation, which the simulation lacked; with it, the 217 are reproduced exactly.
+  - In the GPQA records there is no exposure in the 0.9.1 family, and doc 127 is exposed in 0.7.0 passes 2-3, where it
+    finished. This is a reconstruction.
+- **Owned:**
+  - my first proposal compared prompt lengths in characters and called doc 127 "always exposed"; it is always split,
+    but on 0.9.1 at a pool boundary;
+  - I stated that no server log existed for the stock 0.9.1 record; both exist;
+  - amendment 17e stated distinct seeds for all 64 sampled requests; 8 seeds are reused between two phases (no effect on
+    the mapping checks).
+  All three are corrected in amendment 18a or 18c.
+- **Correction and verification:** a writer-side correction passed 28/28 CPU tests and the D1-D4 regressions. The guard
+  was amended with an independent byte oracle and a positive control, and all required fault classes were detected on
+  CPU. Authorized up to 2.0 GPU-hours with one retry (18b); one session, **CLEAN**: 219 straddling pools byte-verified,
+  0 mismatches over 1.53 million control pools, every other mapping clean, 0.6244 GPU-hours. An appended phase measured
+  doc 127's split at 2,045 − 7·D for D = 0-7.
+- **Outcome:** B1 = B0 + D7 is the correctness checkpoint. D7's behavioural investigation is closed for now; there is no
+  GPQA pass and completion impact is untested. Cumulative 49.52 GPU-hours.
+  [D7 correction](investigations/2026-10-glm53-completion/README.md#d7-correction-and-verification-amendment-18).
+
 ## Withdrawn, and what replaced it
 
 > **Withdrawal notice (2026-10-09).** The earlier hard-question screens (`hard-prompt-screen` v0 and v1, 2026-09-30 to

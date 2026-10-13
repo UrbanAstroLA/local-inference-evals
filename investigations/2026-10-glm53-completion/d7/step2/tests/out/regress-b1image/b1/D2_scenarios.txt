@@ -1,0 +1,7 @@
+PASS A/shipped: seed writes pos 4-7 to own block and the chunk's last 4 tokens to null block 0  [{(0, 4): 2044, (0, 5): 2045, (0, 6): 2046, (0, 7): 2047, (7, 4): 4, (7, 5): 5, (7, 6): 6, (7, 7): 7}]
+PASS B/shipped: a pool spanning two steps is compressed from another request's keys (shared null-block ring)  [rel_err=[0.9, 0.0]]
+PASS C/shipped: victim page 256-B units 4-7 and 12-15 overwritten with positions 12-15 (forensic signature)  [units=[4, 5, 6, 7, 12, 13, 14, 15] positions=[12, 13, 14, 15]]
+PASS D/fixed: seed writes only the last kpool tokens into the own block  [{(7, 4): 2044, (7, 5): 2045, (7, 6): 2046, (7, 7): 2047}]
+PASS D/fixed: completed decode pools equal the kernel's compression of each request's own keys  [rel_err=[0.0, 0.0]]
+PASS D/fixed: stale column ignored, victim page untouched  [units=[]]
+6/6 passed in 3.1s

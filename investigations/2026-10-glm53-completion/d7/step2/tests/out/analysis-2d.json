@@ -1,0 +1,123 @@
+{
+ "passed": 2,
+ "total": 2,
+ "results": [
+  {
+   "test": "T1 phase 2d: actual D, other prefill rows, chunk start/length, budget formula and 2045-7D per case; requested != actual D reported as such",
+   "ok": true,
+   "cases": [
+    {
+     "requested_D": 0,
+     "actual_D": 0,
+     "other_prefill_rows": 0,
+     "chunk1_len": 2045,
+     "chunk2_start": 2045,
+     "pred_budget_formula": 2045,
+     "pred_2045_minus_7D": 2045,
+     "arith_matches": true,
+     "requested_eq_actual_D": true,
+     "split_residue": 1
+    },
+    {
+     "requested_D": 1,
+     "actual_D": 1,
+     "other_prefill_rows": 0,
+     "chunk1_len": 2038,
+     "chunk2_start": 2038,
+     "pred_budget_formula": 2038,
+     "pred_2045_minus_7D": 2038,
+     "arith_matches": true,
+     "requested_eq_actual_D": true,
+     "split_residue": 2
+    },
+    {
+     "requested_D": 3,
+     "actual_D": 3,
+     "other_prefill_rows": 0,
+     "chunk1_len": 2024,
+     "chunk2_start": 2024,
+     "pred_budget_formula": 2024,
+     "pred_2045_minus_7D": 2024,
+     "arith_matches": true,
+     "requested_eq_actual_D": true,
+     "split_residue": 0
+    },
+    {
+     "requested_D": 5,
+     "actual_D": 4,
+     "other_prefill_rows": 0,
+     "chunk1_len": 2017,
+     "chunk2_start": 2017,
+     "pred_budget_formula": 2017,
+     "pred_2045_minus_7D": 2017,
+     "arith_matches": true,
+     "requested_eq_actual_D": false,
+     "split_residue": 1
+    },
+    {
+     "requested_D": 7,
+     "actual_D": 7,
+     "other_prefill_rows": 1,
+     "chunk1_len": 1693,
+     "chunk2_start": 1693,
+     "pred_budget_formula": 1693,
+     "pred_2045_minus_7D": 1996,
+     "arith_matches": null,
+     "requested_eq_actual_D": true,
+     "split_residue": 1
+    }
+   ],
+   "expected": [
+    2045,
+    2038,
+    2024,
+    2017,
+    1693
+   ]
+  },
+  {
+   "test": "T2 window cut at the 2d start: frozen window counters exclude 2d; 2d-window violations reported separately, not in the verdict",
+   "ok": true,
+   "window": {
+    "s_events": 0,
+    "s_verified": 5,
+    "s_indet": 0,
+    "s_unavail": 0,
+    "s_missing": 0,
+    "s_mism": 0,
+    "pc_checked": 20000,
+    "pc_mism": 0,
+    "d7_fallback": 0,
+    "legacy": 0
+   },
+   "p2d": {
+    "cut": 950.0,
+    "violations": {
+     "0": {
+      "idx_w_pf.s_mism": 1
+     }
+    },
+    "d7": {
+     "0": {
+      "s_events": 0,
+      "s_verified": 1,
+      "s_indet": 0,
+      "s_unavail": 0,
+      "s_missing": 0,
+      "s_mism": 1,
+      "pc_checked": 100,
+      "pc_mism": 0,
+      "d7_fallback": 0
+     }
+    },
+    "note": "outside every coverage count and the verdict (B1-5); reported separately"
+   },
+   "verdict": "INVALID",
+   "invalid": [
+    "worker ranks reporting: [0] (need [0, 1])",
+    "rank 0: in-graph check executions != armed forwards [('owned_layer_count', 0, 3, 0, 1), ('owned_layer_count', 0, 7, 0, 1), ('owned_layer_count', 0, 11, 0, 1)]",
+    "rank 0: no FULL-graph replay observed (eager fallback?)"
+   ]
+  }
+ ]
+}

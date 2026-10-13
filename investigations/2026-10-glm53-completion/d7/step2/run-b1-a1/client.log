@@ -1,0 +1,93 @@
+03:11:55 model wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1
+03:12:03 P0 q0 prompt=124 gen=96 1.96s err=None
+03:12:04 P0 q1 prompt=134 gen=96 1.47s err=None
+03:12:06 P0 q2 prompt=158 gen=96 1.43s err=None
+03:12:07 P0 q3 prompt=133 gen=96 1.33s err=None
+03:12:07 phase P0 done in 6.2s
+03:12:09 warm r7 cached=0/4240 gen=1 1.73s err=None
+03:12:12 warm r6 cached=0/8240 gen=1 3.14s err=None
+03:12:18 warm r5 cached=0/16240 gen=1 6.57s err=None
+03:12:25 warm r4 cached=0/16478 gen=1 6.61s err=None
+03:12:38 warm r3 cached=0/32478 gen=1 13.2s err=None
+03:12:54 warm r2 cached=26112/64478 gen=1 15.7s err=None
+03:13:20 warm r1 cached=0/64217 gen=1 26.37s err=None
+03:13:47 warm r0 cached=56576/120217 gen=1 26.36s err=None
+03:13:47 phase warm done in 99.7s
+03:14:13 T0 r2 cached=56576/64478 gen=200 26.15s err=None
+03:14:13 T0 r3 cached=26112/32478 gen=200 26.2s err=None
+03:14:13 T0 r6 cached=0/8240 gen=200 26.55s err=None
+03:14:14 T0 r5 cached=8704/16240 gen=200 26.94s err=None
+03:14:14 T0 r7 cached=0/4240 gen=200 26.99s err=None
+03:14:14 T0 r0 cached=113152/120217 gen=200 27.07s err=None
+03:14:14 T0 r4 cached=8704/16478 gen=200 27.21s err=None
+03:14:14 T0 r1 cached=56576/64217 gen=200 27.58s err=None
+03:14:14 phase T0 done in 27.6s
+03:14:26 F0 r7 cached=0/4240 gen=128 12.12s err=None
+03:14:27 F0 r0 cached=113152/120217 gen=128 12.49s err=None
+03:14:27 F0 r4 cached=8704/16478 gen=128 12.55s err=None
+03:14:27 F0 r2 cached=56576/64478 gen=128 12.63s err=None
+03:14:27 phase F0 done in 12.6s
+03:14:53 T1 r2 cached=56576/64478 gen=200 26.31s err=None
+03:14:54 T1 r5 cached=8704/16240 gen=200 26.48s err=None
+03:14:54 T1 r3 cached=26112/32478 gen=200 26.49s err=None
+03:14:54 T1 r7 cached=0/4240 gen=200 26.81s err=None
+03:14:54 T1 r0 cached=113152/120217 gen=200 26.84s err=None
+03:14:54 T1 r1 cached=56576/64217 gen=200 27.18s err=None
+03:14:54 T1 r6 cached=0/8240 gen=200 27.33s err=None
+03:14:55 T1 r4 cached=8704/16478 gen=200 27.58s err=None
+03:14:55 phase T1 done in 27.6s
+03:15:07 F1 r7 cached=0/4240 gen=128 12.08s err=None
+03:15:07 F1 r4 cached=8704/16478 gen=128 12.23s err=None
+03:15:07 F1 r0 cached=113152/120217 gen=128 12.5s err=None
+03:15:07 F1 r2 cached=56576/64478 gen=128 12.53s err=None
+03:15:07 phase F1 done in 12.5s
+03:15:31 D r7 cached=0/4240 gen=40 24.16s err=None
+03:15:32 D r6 cached=0/8240 gen=80 24.83s err=None
+03:15:33 D r5 cached=8704/16240 gen=120 25.91s err=None
+03:15:33 D r4 cached=8704/16478 gen=160 25.97s err=None
+03:15:34 D r3 cached=26112/32478 gen=200 26.6s err=None
+03:15:34 D r2 cached=56576/64478 gen=240 26.86s err=None
+03:15:35 D r1 cached=56576/64217 gen=280 28.04s err=None
+03:15:36 D r0 cached=113152/120217 gen=320 28.67s err=None
+03:15:36 phase D done in 28.7s
+03:16:01 S r3 cached=26112/32478 gen=120 19.43s err=None
+03:16:02 S r1 cached=56576/64217 gen=120 22.74s err=None
+03:16:02 S r5 cached=8704/16240 gen=120 16.85s err=None
+03:16:02 S r6 cached=0/8240 gen=120 14.02s err=None
+03:16:03 S r7 cached=0/4240 gen=300 27.21s err=None
+03:16:04 S r2 cached=56576/64478 gen=300 27.84s err=None
+03:16:04 S r4 cached=8704/16478 gen=300 28.08s err=None
+03:16:04 S r0 cached=113152/120217 gen=300 28.34s err=None
+03:16:04 phase S done in 28.3s
+03:16:18 Q q2 prompt=158 gen=727 13.49s err=None
+03:16:23 Q q5 prompt=181 gen=992 18.21s err=None
+03:16:24 Q q4 prompt=365 gen=1024 19.49s err=None
+03:16:26 Q q0 prompt=124 gen=1024 21.46s err=None
+03:16:26 Q q3 prompt=133 gen=1024 22.07s err=None
+03:16:29 Q q6 prompt=172 gen=1006 24.49s err=None
+03:16:29 Q q1 prompt=134 gen=1024 24.5s err=None
+03:16:31 Q q7 prompt=447 gen=1024 26.97s err=None
+03:16:45 Q q9 prompt=131 gen=842 22.82s err=None
+03:16:46 Q q11 prompt=146 gen=1024 19.76s err=None
+03:16:46 Q q14 prompt=283 gen=866 16.83s err=None
+03:16:46 Q q8 prompt=238 gen=1024 28.16s err=None
+03:16:48 Q q10 prompt=376 gen=1024 23.84s err=None
+03:16:50 Q q12 prompt=322 gen=1024 23.1s err=None
+03:16:52 Q q13 prompt=131 gen=1024 23.35s err=None
+03:16:53 Q q15 prompt=204 gen=1024 21.44s err=None
+03:16:53 phase Q done in 48.4s
+03:16:54 P1 q0 prompt=124 gen=96 1.44s err=None
+03:16:56 P1 q1 prompt=134 gen=96 1.42s err=None
+03:16:57 P1 q2 prompt=158 gen=96 1.41s err=None
+03:16:58 P1 q3 prompt=133 gen=96 1.34s err=None
+03:16:58 phase P1 done in 5.6s
+03:17:06 2d D=0 in_decode=0 prompt_tokens=2795 err=None drain={'idle': True, 'secs': 0.05}
+03:17:09 2d D=1 in_decode=1 prompt_tokens=2795 err=None drain={'idle': True, 'secs': 0.27}
+03:17:15 2d D=2 in_decode=2 prompt_tokens=2795 err=None drain={'idle': True, 'secs': 0.26}
+03:17:22 2d D=3 in_decode=3 prompt_tokens=2795 err=None drain={'idle': True, 'secs': 0.26}
+03:17:30 2d D=4 in_decode=4 prompt_tokens=2795 err=None drain={'idle': True, 'secs': 0.26}
+03:17:40 2d D=5 in_decode=5 prompt_tokens=2795 err=None drain={'idle': True, 'secs': 0.26}
+03:17:52 2d D=6 in_decode=6 prompt_tokens=2795 err=None drain={'idle': True, 'secs': 0.26}
+03:18:06 2d D=7 in_decode=7 prompt_tokens=2795 err=None drain={'idle': True, 'secs': 0.26}
+03:18:06 phase 2d done in 61.5s
+03:18:12 CLIENT DONE

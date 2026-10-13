@@ -1,0 +1,51 @@
+VERDICT: CLEAN
+invalid: []
+violations: {}
+incomplete: []
+output identity (short greedy vs s1): PASS {'q0': True, 'q1': True, 'q2': True, 'q3': True}
+  C9_owned_layers          1 (min 1)
+  C1_full_replay_steps     1993 (min 300)
+  C5a_spec_writes          211410 (min 20000)
+  C7_high_mla_w            85815 (min 5000)
+  C7_high_idx_w            21450 (min 500)
+  C7_high_mla_r            112489344 (min 5000)
+  C7_high_idx_r            107340 (min 500)
+  C7_high_tail             22100 (min 50)
+  C8_mla_w                 3066160 (min 200000)
+  C8_idx_w_pf              2784260 (min 100000)
+  C8_idx_w_dec             281900 (min 20000)
+  C8_tail_w_seed           2784260 (min 500)
+  C8_tail_w_stash          281900 (min 20000)
+  C8_idx_r_dec             281900 (min 20000)
+  C8_idx_r_pf              1905 (min 50)
+  C8_mla_r                 3066160 (min 100000)
+  C10_join                 1.0 (min 0.95)
+  C10_p3_rows              1.0 (min 0.9)
+  C13_d7_straddle_events   219 (min 100)
+  C14_d7_positive_control  694780 (min 10000)
+  C2_mixed_steps           129 (min 20)
+  C3_row_reuse             140 (min 20)
+  C4_prefix_hits           32 (min 10)
+  C6a_decode_le4           793 (min 60)
+  C6b_decode_5to8          861 (min 60)
+  C6c_route_transitions    18 (min 6)
+  C5b_rejected_drafts      15787 (min 2000)
+  C5c_accepted_drafts      26495 (min 2000)
+  C11_completions          140 (min 40)
+  C12_short_ctx            90 (min 8)
+note: P2/P6: window starts at the first non-warm-up step (the stack's release warm-up traffic is included)
+note: rank 0: before the workload (runner warm-up incl.): {'pos.pos_bounds': 4}
+note: rank 1: before the workload (runner warm-up incl.): {'pos.pos_bounds': 4}
+note: P5/P6: completions from EngineCore finished ids in the window
+D7 rank 0: {'s_events': 1314, 's_verified': 1314, 's_indet': 0, 's_unavail': 0, 's_missing': 0, 's_mism': 0, 'pc_checked': 833736, 'pc_mism': 0, 'd7_fallback': 0, 'legacy': 0} events {'events': 219, 'exercised': 219, 'by_outcome': {'verified': 219}}
+D7 rank 1: {'s_events': 1095, 's_verified': 1095, 's_indet': 0, 's_unavail': 0, 's_missing': 0, 's_mism': 0, 'pc_checked': 694780, 'pc_mism': 0, 'd7_fallback': 0, 'legacy': 0} events {'events': 219, 'exercised': 219, 'by_outcome': {'verified': 219}}
+phase 2d window (outside the verdict): {'cut': 1791886625.067, 'violations': {0: {}, 1: {}}, 'd7': {0: {'s_events': 240, 's_verified': 240, 's_indet': 0, 's_unavail': 0, 's_missing': 0, 's_mism': 0, 'pc_checked': 211344, 'pc_mism': 0, 'd7_fallback': 0}, 1: {'s_events': 200, 's_verified': 200, 's_indet': 0, 's_unavail': 0, 's_missing': 0, 's_mism': 0, 'pc_checked': 176120, 'pc_mism': 0, 'd7_fallback': 0}}, 'note': 'outside every coverage count and the verdict (B1-5); reported separately'}
+phase 2d: ran=True budget=2048 K=3
+  2d {"case": 0, "requested_D": 0, "actual_D": 0, "other_prefill_rows": 0, "chunk1_len": 2045, "chunk2_start": 2045, "pred_budget_formula": 2045, "pred_2045_minus_7D": 2045, "arith_matches": true, "requested_eq_actual_D": true, "split_residue": 1, "prompt_tokens_ok": true, "status": "ok"}
+  2d {"case": 1, "requested_D": 1, "actual_D": 1, "other_prefill_rows": 0, "chunk1_len": 2038, "chunk2_start": 2038, "pred_budget_formula": 2038, "pred_2045_minus_7D": 2038, "arith_matches": true, "requested_eq_actual_D": true, "split_residue": 2, "prompt_tokens_ok": true, "status": "ok"}
+  2d {"case": 2, "requested_D": 2, "actual_D": 2, "other_prefill_rows": 0, "chunk1_len": 2031, "chunk2_start": 2031, "pred_budget_formula": 2031, "pred_2045_minus_7D": 2031, "arith_matches": true, "requested_eq_actual_D": true, "split_residue": 3, "prompt_tokens_ok": true, "status": "ok"}
+  2d {"case": 3, "requested_D": 3, "actual_D": 3, "other_prefill_rows": 0, "chunk1_len": 2024, "chunk2_start": 2024, "pred_budget_formula": 2024, "pred_2045_minus_7D": 2024, "arith_matches": true, "requested_eq_actual_D": true, "split_residue": 0, "prompt_tokens_ok": true, "status": "ok"}
+  2d {"case": 4, "requested_D": 4, "actual_D": 4, "other_prefill_rows": 0, "chunk1_len": 2017, "chunk2_start": 2017, "pred_budget_formula": 2017, "pred_2045_minus_7D": 2017, "arith_matches": true, "requested_eq_actual_D": true, "split_residue": 1, "prompt_tokens_ok": true, "status": "ok"}
+  2d {"case": 5, "requested_D": 5, "actual_D": 5, "other_prefill_rows": 0, "chunk1_len": 2010, "chunk2_start": 2010, "pred_budget_formula": 2010, "pred_2045_minus_7D": 2010, "arith_matches": true, "requested_eq_actual_D": true, "split_residue": 2, "prompt_tokens_ok": true, "status": "ok"}
+  2d {"case": 6, "requested_D": 6, "actual_D": 6, "other_prefill_rows": 0, "chunk1_len": 2003, "chunk2_start": 2003, "pred_budget_formula": 2003, "pred_2045_minus_7D": 2003, "arith_matches": true, "requested_eq_actual_D": true, "split_residue": 3, "prompt_tokens_ok": true, "status": "ok"}
+  2d {"case": 7, "requested_D": 7, "actual_D": 7, "other_prefill_rows": 0, "chunk1_len": 1996, "chunk2_start": 1996, "pred_budget_formula": 1996, "pred_2045_minus_7D": 1996, "arith_matches": true, "requested_eq_actual_D": true, "split_residue": 0, "prompt_tokens_ok": true, "status": "ok"}

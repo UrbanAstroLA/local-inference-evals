@@ -1,0 +1,15 @@
+exec(open("tests/test_kpool_unaligned.py").read().split("# guard on the same inputs")[0])
+nn = n
+pos_ = torch.arange(nn)
+idx = (pos_ - 3).clamp_min(0)[:, None] + torch.arange(4)[None, :]
+wm = (slot >= 0) & (pos_ >= 3)
+c2 = cache()
+kpool_compress_and_write_cache(c2, k_all[idx], gate_all[idx], ape, slot, pool_size=KP, head_dim=HD, write_mask=wm, round_scale=True, write_cache=True, return_compressed=False)
+print("exact replica == B0 call:", torch.equal(c2, c))
+c3 = cache()
+kpool_compress_and_write_cache(c3, k_all[idx][7:8], gate_all[idx][7:8], ape, slot[7:8], pool_size=KP, head_dim=HD, round_scale=True)
+print("single-row replica locB == B0:", torch.equal(rec(c3, locB), rec(c, locB)), idx[7].tolist())
+c4 = cache()
+kpool_compress_and_write_cache(c4, k_all[4:8][None].contiguous(), gate_all[4:8][None].contiguous(), ape, slot[7:8], pool_size=KP, head_dim=HD, round_scale=True)
+print("contiguous slice == B0:", torch.equal(rec(c4, locB), rec(c, locB)))
+print(rec(c, locB)[:8].tolist(), rec(c4, locB)[:8].tolist(), rec(contam, locB)[:8].tolist())
