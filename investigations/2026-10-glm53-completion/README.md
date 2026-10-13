@@ -1141,8 +1141,10 @@ kept no token counts).
 | P(finish \| ≥ 200k) | 4 of 8 | 3 of 33 | 0 of 15 |
 
 Intervals are bootstrapped over questions.
-- **Finishing beyond 150k tokens:** few 0.9.1-family replies still running past 150k finished (6 of about 100); 0.7.0
-  had 4 of 8 in 200-260k. The 150k figure is a post-hoc band, not a change point.
+- **Finishing beyond 150k tokens:** of the 0.9.1-family replies still running at 150k, 6 of 36 finished (18 questions);
+  0.7.0 had 5 of 9. The 150k figure is a post-hoc band, not a change point. *Correction (amendment 20c):* this was first
+  given as "6 of about 100", a sum of the at-risk counts of three bands that counted the same requests up to three
+  times.
 - **Question as the unit:** of 8 questions that reached 100k on both engines, 0.7.0 finished a larger share on 4, a
   smaller share on 1 and the same on 3.
 - **Reading (exploratory, hypothesis only):** in these passes the difference appears in whether long replies terminate
@@ -1153,6 +1155,22 @@ Intervals are bootstrapped over questions.
   alone gives 0.40 at ≥ 100k (10 of 25); B0 + B1 rests on 17 replies. Amendment 20 requires a re-audit with stock
   releases reported separately, cap exhaustion treated as censoring, and question identities shown, before any of this
   is relied on.
+- **Audit (amendment 20c, [`tail-audit/`](tail-audit/AUDIT.md)), stock releases only:**
+
+  | Still generating at L | Stock 0.7.0 (2 passes) | Stock 0.9.1 (3 passes) | Difference |
+  |---|---|---|---|
+  | 100k: finished / at risk (questions) | 10/14 (11), 0.71 [0.44, 0.94] | 10/25 (15), 0.40 [0.24, 0.60] | +0.31 [0.03, 0.55] |
+  | 200k | 4/8 (7), 0.50 [0.00, 0.89] | 2/17 (11), 0.12 [0.00, 0.29] | +0.38 [−0.15, 0.81] |
+  | Share of replies reaching 100k | 0.035 | 0.042 | −0.007 [−0.026, 0.015] |
+
+  The intervals are question-clustered bootstraps, and the difference is a joint bootstrap.
+  - It reproduces 19f's counts, apart from the 150k figure above.
+  - Every finish at 64k or more is a valid final answer.
+  - At matched seeds (1235-1236) the 100k difference is +0.33 [0.03, 0.57].
+  - The per-band shares do not support a specific range such as "64-100k": the 200-260k contrast rests on 4 events from 3
+    questions.
+  - Session position and seed are confounded: every second-of-session pass is seed 1236.
+  - About 10 finishing events at 100k or more per stock release, from 8-9 questions.
 - **Not finishing is not looping.** A reply that reaches the 327,680-token cap is censored: it may be repeating itself
   (a loop) or still reasoning productively (an exhaustion), and GPQA runs keep no reasoning text to tell which. Where
   text was kept, the evidence leans against loops: the completion pilot's two capped replies were not loops (repeated

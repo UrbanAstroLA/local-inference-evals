@@ -1,0 +1,7 @@
+Public copies of the amendment 20 tail-accounting audit (tail-audit/) with local absolute paths replaced by placeholders
+(<runs>, <gpqa-runs>, <this-repo>, <scratch>). The 'local' column is the sha256 of the file as produced; tail-audit/SHA256SUMS
+refers to it. Every other file is published unchanged. Counts, question ids, flags and hashes only.
+file	local_sha256	public_sha256
+tail-audit/audit.json	f6e50cfac79e4de4be4cd827287617678579bbb2c7635ab56c21ec50d8601860	2b185e7b50ede568904979de3ae9bd668eaf2cfbe3b6c8ab4d3bcbb289143134
+tail-audit/audit.out	289441b9a701c79f9e1e529af3412f2924480e8f6993a009f1b6030fa65285ba	1171ccb94ae7d5bfa5c37fa2df76ef157121ff54c1e55ab053f0af87d03d7df9
+tail-audit/audit.py	83357a7faa2ce163fb709703c7f54fe3f1ae1c981b3848fb53b45718751170c4	f0a914890865dd0f813259eec9467dbd10798bf36cda9588b99c7fbfcaade878

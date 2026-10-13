@@ -1,0 +1,770 @@
+checks: 124/124 passed; valid = True
+
+### Per pass (logged passes; session position = order within one server session)
+
+| configuration | seed | lm-eval pass | session (server log) | position | empty | censored at cap | empty stop | no-letter stop | hedged stop | valid | at risk / valid / other / censored at 100k | at 200k |
+|---|---:|---:|---|---|---:|---:|---:|---:|---:|---:|---|---|
+| stock 0.7.0 | 1235 | 2 | glm53-flash-exl3-k3.25@tpurtell+ps.server.log | 1 of 2 | 3 | 3 | 0 | 0 | 2 | 193 | 8 / 5 / 0 / 3 | 5 / 2 / 0 / 3 |
+| stock 0.7.0 | 1236 | 3 | glm53-flash-exl3-k3.25@tpurtell+ps.server.log | 2 of 2 | 1 | 1 | 0 | 0 | 0 | 197 | 6 / 5 / 0 / 1 | 3 / 2 / 0 / 1 |
+| stock 0.9.1 | 1234 | 1 | glm53-flash-exl3-k3.25@tpurtell+v0.9.1.server.log | 1 of 1 | 5 | 4 | 1 | 0 | 0 | 193 | 7 / 3 / 0 / 4 | 5 / 1 / 0 / 4 |
+| stock 0.9.1 | 1235 | 2 | glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps.server.log | 1 of 2 | 5 | 5 | 0 | 0 | 0 | 193 | 9 / 4 / 0 / 5 | 6 / 1 / 0 / 5 |
+| stock 0.9.1 | 1236 | 3 | glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps.server.log | 2 of 2 | 6 | 6 | 0 | 0 | 0 | 192 | 9 / 3 / 0 / 6 | 6 / 0 / 0 / 6 |
+| col511 arm | 1234 | 1 | server-s1.log | 1 of 1 | 4 | 4 | 0 | 0 | 0 | 194 | 8 / 4 / 0 / 4 | 5 / 1 / 0 / 4 |
+| col511 arm | 1235 | 2 | server-s2.log | 1 of 2 | 5 | 5 | 0 | 0 | 0 | 193 | 9 / 4 / 0 / 5 | 5 / 0 / 0 / 5 |
+| col511 arm | 1236 | 3 | server-s2.log | 2 of 2 | 6 | 6 | 0 | 0 | 0 | 192 | 8 / 2 / 0 / 6 | 6 / 0 / 0 / 6 |
+| B0 | 1234 | 1 | server-s1.log | 1 of 1 | 3 | 3 | 0 | 0 | 0 | 195 | 4 / 1 / 0 / 3 | 3 / 0 / 0 / 3 |
+| B0 | 1235 | 2 | server-s2.log | 1 of 1 | 3 | 3 | 0 | 0 | 1 | 194 | 4 / 1 / 0 / 3 | 3 / 0 / 0 / 3 |
+| B1 | 1236 | 3 | server-s1.log | 1 of 1 | 9 | 9 | 0 | 0 | 0 | 189 | 9 / 0 / 0 / 9 | 9 / 0 / 0 / 9 |
+| stock 0.7.0 | 1234 | 1 | unlogged | - | 0 | ? | ? | - | - | - | unlogged | unlogged |
+
+### stock 0.7.0  [STOCK; 2 passes, 396 requests]
+
+Thresholds (T = logged completion tokens; at risk = T >= L):
+
+| L | unique requests at risk | questions at risk | finishing events | valid final answer | other stop | censored at cap | P(event before cap \| at risk) [95% q-boot] | P(valid \| at risk) [95% q-boot] |
+|---:|---:|---:|---:|---:|---:|---:|---|---|
+| 32,000 | 57 | 35 | 53 | 52 | 1 | 4 | 0.93 [0.86, 0.98] | 0.91 [0.84, 0.98] |
+| 64,000 | 29 | 19 | 25 | 25 | 0 | 4 | 0.86 [0.74, 0.97] | 0.86 [0.74, 0.97] |
+| 100,000 | 14 | 11 | 10 | 10 | 0 | 4 | 0.71 [0.44, 0.94] | 0.71 [0.44, 0.94] |
+| 200,000 | 8 | 7 | 4 | 4 | 0 | 4 | 0.50 [0.00, 0.89] | 0.50 [0.00, 0.89] |
+
+Question identities (doc ids):
+
+- >= 64,000: at risk [7, 8, 48, 71, 76, 79, 81, 88, 118, 120, 121, 127, 130, 138, 145, 147, 164, 170, 186]; with a valid finish [7, 8, 48, 71, 76, 79, 81, 88, 118, 120, 127, 130, 138, 145, 147, 164, 170, 186]
+- >= 100,000: at risk [7, 8, 76, 79, 81, 120, 121, 127, 145, 147, 186]; with a valid finish [7, 8, 76, 120, 127, 145, 147, 186]
+- >= 200,000: at risk [79, 81, 120, 121, 127, 145, 147]; with a valid finish [120, 127, 147]
+
+Bands (at risk = still generating at band start; events end inside the band):
+
+| band (tokens) | at risk | events | valid | other | censored in band | conditional fraction ending in band | questions with an event |
+|---|---:|---:|---:|---:|---:|---:|---|
+| 0-16,000 | 396 | 304 | 303 | 1 | 0 | 0.77 | 164 questions |
+| 16,000-32,000 | 92 | 35 | 35 | 0 | 0 | 0.38 | 30 questions |
+| 32,000-64,000 | 57 | 28 | 27 | 1 | 0 | 0.49 | 22 questions |
+| 64,000-100,000 | 29 | 15 | 15 | 0 | 0 | 0.52 | [8, 48, 71, 79, 81, 88, 118, 130, 138, 147, 164, 170] |
+| 100,000-150,000 | 14 | 5 | 5 | 0 | 0 | 0.36 | [7, 8, 76, 145, 186] |
+| 150,000-200,000 | 9 | 1 | 1 | 0 | 0 | 0.11 | [186] |
+| 200,000-260,000 | 8 | 4 | 4 | 0 | 0 | 0.50 | [120, 127, 147] |
+| 260,000-327,680 | 4 | 0 | 0 | 0 | 4 | 0.00 | [] |
+
+Still generating, S(t) = P(T > t), Kaplan-Meier with censoring at the cap, 95% question-clustered bootstrap (B = 2000, all 198 questions resampled):
+
+| t | 16k | 32k | 64k | 100k | 150k | 200k | 260k | cap- |
+|---|---|---|---|---|---|---|---|---|
+| S(t), completion tokens (measured) | 0.232 [0.179, 0.290] | 0.144 [0.101, 0.192] | 0.073 [0.043, 0.109] | 0.035 [0.015, 0.058] | 0.023 [0.008, 0.040] | 0.020 [0.008, 0.038] | 0.010 [0.003, 0.020] | 0.010 [0.003, 0.020] |
+| S(t), reasoning tokens (derived) | 0.227 [0.174, 0.285] | 0.139 [0.096, 0.187] | 0.073 [0.043, 0.109] | 0.035 [0.015, 0.058] | 0.023 [0.008, 0.040] | 0.020 [0.008, 0.038] | 0.010 [0.003, 0.020] | 0.010 [0.003, 0.020] |
+
+### stock 0.9.1  [STOCK; 3 passes, 594 requests]
+
+Thresholds (T = logged completion tokens; at risk = T >= L):
+
+| L | unique requests at risk | questions at risk | finishing events | valid final answer | other stop | censored at cap | P(event before cap \| at risk) [95% q-boot] | P(valid \| at risk) [95% q-boot] |
+|---:|---:|---:|---:|---:|---:|---:|---|---|
+| 32,000 | 77 | 38 | 62 | 62 | 0 | 15 | 0.81 [0.71, 0.91] | 0.81 [0.71, 0.91] |
+| 64,000 | 41 | 25 | 26 | 26 | 0 | 15 | 0.63 [0.47, 0.80] | 0.63 [0.47, 0.80] |
+| 100,000 | 25 | 15 | 10 | 10 | 0 | 15 | 0.40 [0.24, 0.60] | 0.40 [0.24, 0.60] |
+| 200,000 | 17 | 11 | 2 | 2 | 0 | 15 | 0.12 [0.00, 0.29] | 0.12 [0.00, 0.29] |
+
+Question identities (doc ids):
+
+- >= 64,000: at risk [8, 18, 27, 48, 55, 69, 71, 79, 81, 88, 90, 94, 109, 110, 118, 120, 121, 127, 130, 138, 145, 147, 164, 170, 186]; with a valid finish [8, 18, 27, 48, 69, 71, 79, 81, 90, 94, 110, 118, 120, 127, 130, 138, 145, 147, 164, 186]
+- >= 100,000: at risk [8, 55, 69, 71, 79, 81, 88, 90, 109, 120, 121, 127, 147, 164, 170]; with a valid finish [8, 69, 71, 79, 90, 120, 127, 147, 164]
+- >= 200,000: at risk [55, 79, 81, 88, 109, 120, 121, 127, 147, 164, 170]; with a valid finish [79, 164]
+
+Bands (at risk = still generating at band start; events end inside the band):
+
+| band (tokens) | at risk | events | valid | other | censored in band | conditional fraction ending in band | questions with an event |
+|---|---:|---:|---:|---:|---:|---:|---|
+| 0-16,000 | 594 | 462 | 461 | 1 | 0 | 0.78 | 170 questions |
+| 16,000-32,000 | 132 | 55 | 55 | 0 | 0 | 0.42 | 42 questions |
+| 32,000-64,000 | 77 | 36 | 36 | 0 | 0 | 0.47 | 23 questions |
+| 64,000-100,000 | 41 | 16 | 16 | 0 | 0 | 0.39 | [8, 18, 27, 48, 71, 81, 94, 110, 118, 130, 138, 145, 186] |
+| 100,000-150,000 | 25 | 7 | 7 | 0 | 0 | 0.28 | [8, 69, 71, 90, 120, 127, 147] |
+| 150,000-200,000 | 18 | 1 | 1 | 0 | 0 | 0.06 | [71] |
+| 200,000-260,000 | 17 | 1 | 1 | 0 | 0 | 0.06 | [79] |
+| 260,000-327,680 | 16 | 1 | 1 | 0 | 15 | 0.06 | [164] |
+
+Still generating, S(t) = P(T > t), Kaplan-Meier with censoring at the cap, 95% question-clustered bootstrap (B = 2000, all 198 questions resampled):
+
+| t | 16k | 32k | 64k | 100k | 150k | 200k | 260k | cap- |
+|---|---|---|---|---|---|---|---|---|
+| S(t), completion tokens (measured) | 0.222 [0.172, 0.280] | 0.130 [0.089, 0.173] | 0.069 [0.042, 0.099] | 0.042 [0.022, 0.067] | 0.030 [0.013, 0.049] | 0.029 [0.012, 0.047] | 0.027 [0.012, 0.044] | 0.025 [0.010, 0.042] |
+| S(t), reasoning tokens (derived) | 0.217 [0.167, 0.273] | 0.130 [0.089, 0.173] | 0.067 [0.040, 0.099] | 0.042 [0.022, 0.067] | 0.030 [0.013, 0.049] | 0.029 [0.012, 0.047] | 0.027 [0.012, 0.044] | 0.025 [0.010, 0.042] |
+
+### stock 0.9.1 seeds 1235-1236 (seed- and session-matched to 0.7.0)  [STOCK; 2 passes, 396 requests]
+
+Thresholds (T = logged completion tokens; at risk = T >= L):
+
+| L | unique requests at risk | questions at risk | finishing events | valid final answer | other stop | censored at cap | P(event before cap \| at risk) [95% q-boot] | P(valid \| at risk) [95% q-boot] |
+|---:|---:|---:|---:|---:|---:|---:|---|---|
+| 32,000 | 53 | 34 | 42 | 42 | 0 | 11 | 0.79 [0.65, 0.92] | 0.79 [0.65, 0.92] |
+| 64,000 | 28 | 21 | 17 | 17 | 0 | 11 | 0.61 [0.39, 0.82] | 0.61 [0.39, 0.82] |
+| 100,000 | 18 | 13 | 7 | 7 | 0 | 11 | 0.39 [0.14, 0.67] | 0.39 [0.14, 0.67] |
+| 200,000 | 12 | 9 | 1 | 1 | 0 | 11 | 0.08 [0.00, 0.31] | 0.08 [0.00, 0.31] |
+
+Question identities (doc ids):
+
+- >= 64,000: at risk [8, 27, 48, 55, 69, 71, 79, 81, 88, 94, 118, 120, 121, 127, 130, 138, 145, 147, 164, 170, 186]; with a valid finish [8, 27, 48, 69, 71, 94, 118, 120, 127, 130, 138, 145, 164, 186]
+- >= 100,000: at risk [8, 55, 69, 71, 79, 81, 88, 120, 121, 127, 147, 164, 170]; with a valid finish [8, 69, 71, 120, 127, 164]
+- >= 200,000: at risk [55, 79, 81, 88, 121, 127, 147, 164, 170]; with a valid finish [164]
+
+Bands (at risk = still generating at band start; events end inside the band):
+
+| band (tokens) | at risk | events | valid | other | censored in band | conditional fraction ending in band | questions with an event |
+|---|---:|---:|---:|---:|---:|---:|---|
+| 0-16,000 | 396 | 305 | 305 | 0 | 0 | 0.77 | 162 questions |
+| 16,000-32,000 | 91 | 38 | 38 | 0 | 0 | 0.42 | 32 questions |
+| 32,000-64,000 | 53 | 25 | 25 | 0 | 0 | 0.47 | 20 questions |
+| 64,000-100,000 | 28 | 10 | 10 | 0 | 0 | 0.36 | [27, 48, 94, 118, 130, 138, 145, 186] |
+| 100,000-150,000 | 18 | 5 | 5 | 0 | 0 | 0.28 | [8, 69, 71, 120, 127] |
+| 150,000-200,000 | 13 | 1 | 1 | 0 | 0 | 0.08 | [71] |
+| 200,000-260,000 | 12 | 0 | 0 | 0 | 0 | 0.00 | [] |
+| 260,000-327,680 | 12 | 1 | 1 | 0 | 11 | 0.08 | [164] |
+
+Still generating, S(t) = P(T > t), Kaplan-Meier with censoring at the cap, 95% question-clustered bootstrap (B = 2000, all 198 questions resampled):
+
+| t | 16k | 32k | 64k | 100k | 150k | 200k | 260k | cap- |
+|---|---|---|---|---|---|---|---|---|
+| S(t), completion tokens (measured) | 0.230 [0.174, 0.288] | 0.134 [0.091, 0.179] | 0.071 [0.040, 0.103] | 0.045 [0.023, 0.073] | 0.033 [0.013, 0.056] | 0.030 [0.013, 0.053] | 0.030 [0.013, 0.053] | 0.028 [0.010, 0.051] |
+| S(t), reasoning tokens (derived) | 0.225 [0.169, 0.283] | 0.134 [0.091, 0.179] | 0.068 [0.040, 0.101] | 0.045 [0.023, 0.073] | 0.033 [0.013, 0.056] | 0.030 [0.013, 0.053] | 0.030 [0.013, 0.053] | 0.028 [0.010, 0.051] |
+
+### col511 arm  [MODIFIED; 3 passes, 594 requests]
+
+Thresholds (T = logged completion tokens; at risk = T >= L):
+
+| L | unique requests at risk | questions at risk | finishing events | valid final answer | other stop | censored at cap | P(event before cap \| at risk) [95% q-boot] | P(valid \| at risk) [95% q-boot] |
+|---:|---:|---:|---:|---:|---:|---:|---|---|
+| 32,000 | 73 | 38 | 58 | 58 | 0 | 15 | 0.79 [0.67, 0.90] | 0.79 [0.67, 0.90] |
+| 64,000 | 46 | 27 | 31 | 31 | 0 | 15 | 0.67 [0.50, 0.83] | 0.67 [0.50, 0.83] |
+| 100,000 | 25 | 18 | 10 | 10 | 0 | 15 | 0.40 [0.20, 0.62] | 0.40 [0.20, 0.62] |
+| 200,000 | 16 | 12 | 1 | 1 | 0 | 15 | 0.06 [0.00, 0.20] | 0.06 [0.00, 0.20] |
+
+Question identities (doc ids):
+
+- >= 64,000: at risk [7, 8, 32, 48, 55, 69, 71, 74, 76, 79, 81, 88, 90, 94, 108, 110, 118, 120, 127, 130, 145, 147, 157, 164, 170, 185, 186]; with a valid finish [7, 8, 32, 48, 55, 71, 76, 79, 81, 88, 90, 94, 110, 118, 130, 145, 147, 164, 185, 186]
+- >= 100,000: at risk [48, 69, 71, 74, 79, 81, 88, 90, 94, 108, 110, 120, 127, 130, 147, 157, 170, 186]; with a valid finish [48, 71, 79, 90, 94, 110, 130, 147, 186]
+- >= 200,000: at risk [69, 74, 79, 81, 88, 108, 120, 127, 147, 157, 170, 186]; with a valid finish [186]
+
+Bands (at risk = still generating at band start; events end inside the band):
+
+| band (tokens) | at risk | events | valid | other | censored in band | conditional fraction ending in band | questions with an event |
+|---|---:|---:|---:|---:|---:|---:|---|
+| 0-16,000 | 594 | 458 | 458 | 0 | 0 | 0.77 | 169 questions |
+| 16,000-32,000 | 136 | 63 | 63 | 0 | 0 | 0.46 | 43 questions |
+| 32,000-64,000 | 73 | 27 | 27 | 0 | 0 | 0.37 | 20 questions |
+| 64,000-100,000 | 46 | 21 | 21 | 0 | 0 | 0.46 | [7, 8, 32, 48, 55, 71, 76, 81, 88, 118, 130, 145, 147, 164, 185] |
+| 100,000-150,000 | 25 | 7 | 7 | 0 | 0 | 0.28 | [48, 71, 90, 94, 130, 147] |
+| 150,000-200,000 | 18 | 2 | 2 | 0 | 0 | 0.11 | [79, 110] |
+| 200,000-260,000 | 16 | 1 | 1 | 0 | 0 | 0.06 | [186] |
+| 260,000-327,680 | 15 | 0 | 0 | 0 | 15 | 0.00 | [] |
+
+Still generating, S(t) = P(T > t), Kaplan-Meier with censoring at the cap, 95% question-clustered bootstrap (B = 2000, all 198 questions resampled):
+
+| t | 16k | 32k | 64k | 100k | 150k | 200k | 260k | cap- |
+|---|---|---|---|---|---|---|---|---|
+| S(t), completion tokens (measured) | 0.229 [0.178, 0.283] | 0.123 [0.086, 0.165] | 0.077 [0.047, 0.109] | 0.042 [0.022, 0.066] | 0.030 [0.013, 0.051] | 0.027 [0.012, 0.045] | 0.025 [0.012, 0.042] | 0.025 [0.012, 0.042] |
+| S(t), reasoning tokens (derived) | 0.226 [0.177, 0.280] | 0.120 [0.083, 0.162] | 0.076 [0.047, 0.108] | 0.042 [0.022, 0.066] | 0.030 [0.013, 0.051] | 0.027 [0.012, 0.045] | 0.025 [0.012, 0.042] | 0.025 [0.012, 0.042] |
+
+### B0  [MODIFIED; 2 passes, 396 requests]
+
+Thresholds (T = logged completion tokens; at risk = T >= L):
+
+| L | unique requests at risk | questions at risk | finishing events | valid final answer | other stop | censored at cap | P(event before cap \| at risk) [95% q-boot] | P(valid \| at risk) [95% q-boot] |
+|---:|---:|---:|---:|---:|---:|---:|---|---|
+| 32,000 | 44 | 30 | 38 | 37 | 1 | 6 | 0.86 [0.74, 0.97] | 0.84 [0.72, 0.95] |
+| 64,000 | 17 | 14 | 11 | 11 | 0 | 6 | 0.65 [0.42, 0.89] | 0.65 [0.42, 0.89] |
+| 100,000 | 8 | 6 | 2 | 2 | 0 | 6 | 0.25 [0.00, 0.60] | 0.25 [0.00, 0.60] |
+| 200,000 | 6 | 5 | 0 | 0 | 0 | 6 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+
+Question identities (doc ids):
+
+- >= 64,000: at risk [8, 48, 76, 79, 81, 88, 90, 120, 121, 127, 130, 145, 147, 185]; with a valid finish [8, 48, 76, 81, 88, 90, 120, 130, 145, 147, 185]
+- >= 100,000: at risk [79, 88, 90, 121, 127, 147]; with a valid finish [88, 90]
+- >= 200,000: at risk [79, 88, 121, 127, 147]; with a valid finish []
+
+Bands (at risk = still generating at band start; events end inside the band):
+
+| band (tokens) | at risk | events | valid | other | censored in band | conditional fraction ending in band | questions with an event |
+|---|---:|---:|---:|---:|---:|---:|---|
+| 0-16,000 | 396 | 309 | 309 | 0 | 0 | 0.78 | 168 questions |
+| 16,000-32,000 | 87 | 43 | 43 | 0 | 0 | 0.49 | 37 questions |
+| 32,000-64,000 | 44 | 27 | 26 | 1 | 0 | 0.61 | 25 questions |
+| 64,000-100,000 | 17 | 9 | 9 | 0 | 0 | 0.53 | [8, 48, 76, 81, 120, 130, 145, 147, 185] |
+| 100,000-150,000 | 8 | 2 | 2 | 0 | 0 | 0.25 | [88, 90] |
+| 150,000-200,000 | 6 | 0 | 0 | 0 | 0 | 0.00 | [] |
+| 200,000-260,000 | 6 | 0 | 0 | 0 | 0 | 0.00 | [] |
+| 260,000-327,680 | 6 | 0 | 0 | 0 | 6 | 0.00 | [] |
+
+Still generating, S(t) = P(T > t), Kaplan-Meier with censoring at the cap, 95% question-clustered bootstrap (B = 2000, all 198 questions resampled):
+
+| t | 16k | 32k | 64k | 100k | 150k | 200k | 260k | cap- |
+|---|---|---|---|---|---|---|---|---|
+| S(t), completion tokens (measured) | 0.220 [0.169, 0.273] | 0.111 [0.073, 0.154] | 0.043 [0.023, 0.068] | 0.020 [0.005, 0.038] | 0.015 [0.003, 0.030] | 0.015 [0.003, 0.030] | 0.015 [0.003, 0.030] | 0.015 [0.003, 0.030] |
+| S(t), reasoning tokens (derived) | 0.217 [0.167, 0.270] | 0.111 [0.073, 0.154] | 0.043 [0.023, 0.068] | 0.020 [0.005, 0.038] | 0.015 [0.003, 0.030] | 0.015 [0.003, 0.030] | 0.015 [0.003, 0.030] | 0.015 [0.003, 0.030] |
+
+### B1  [MODIFIED; 1 passes, 198 requests]
+
+Thresholds (T = logged completion tokens; at risk = T >= L):
+
+| L | unique requests at risk | questions at risk | finishing events | valid final answer | other stop | censored at cap | P(event before cap \| at risk) [95% q-boot] | P(valid \| at risk) [95% q-boot] |
+|---:|---:|---:|---:|---:|---:|---:|---|---|
+| 32,000 | 26 | 26 | 17 | 17 | 0 | 9 | 0.65 [0.46, 0.84] | 0.65 [0.46, 0.84] |
+| 64,000 | 12 | 12 | 3 | 3 | 0 | 9 | 0.25 [0.00, 0.53] | 0.25 [0.00, 0.53] |
+| 100,000 | 9 | 9 | 0 | 0 | 0 | 9 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+| 200,000 | 9 | 9 | 0 | 0 | 0 | 9 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+
+Question identities (doc ids):
+
+- >= 64,000: at risk [8, 69, 71, 79, 81, 88, 118, 127, 130, 145, 147, 179]; with a valid finish [71, 118, 179]
+- >= 100,000: at risk [8, 69, 79, 81, 88, 127, 130, 145, 147]; with a valid finish []
+- >= 200,000: at risk [8, 69, 79, 81, 88, 127, 130, 145, 147]; with a valid finish []
+
+Bands (at risk = still generating at band start; events end inside the band):
+
+| band (tokens) | at risk | events | valid | other | censored in band | conditional fraction ending in band | questions with an event |
+|---|---:|---:|---:|---:|---:|---:|---|
+| 0-16,000 | 198 | 153 | 153 | 0 | 0 | 0.77 | 153 questions |
+| 16,000-32,000 | 45 | 19 | 19 | 0 | 0 | 0.42 | 19 questions |
+| 32,000-64,000 | 26 | 14 | 14 | 0 | 0 | 0.54 | 14 questions |
+| 64,000-100,000 | 12 | 3 | 3 | 0 | 0 | 0.25 | [71, 118, 179] |
+| 100,000-150,000 | 9 | 0 | 0 | 0 | 0 | 0.00 | [] |
+| 150,000-200,000 | 9 | 0 | 0 | 0 | 0 | 0.00 | [] |
+| 200,000-260,000 | 9 | 0 | 0 | 0 | 0 | 0.00 | [] |
+| 260,000-327,680 | 9 | 0 | 0 | 0 | 9 | 0.00 | [] |
+
+Still generating, S(t) = P(T > t), Kaplan-Meier with censoring at the cap, 95% question-clustered bootstrap (B = 2000, all 198 questions resampled):
+
+| t | 16k | 32k | 64k | 100k | 150k | 200k | 260k | cap- |
+|---|---|---|---|---|---|---|---|---|
+| S(t), completion tokens (measured) | 0.227 [0.172, 0.288] | 0.131 [0.086, 0.182] | 0.061 [0.030, 0.096] | 0.045 [0.020, 0.076] | 0.045 [0.020, 0.076] | 0.045 [0.020, 0.076] | 0.045 [0.020, 0.076] | 0.045 [0.020, 0.076] |
+| S(t), reasoning tokens (derived) | 0.222 [0.167, 0.283] | 0.131 [0.086, 0.182] | 0.061 [0.030, 0.096] | 0.045 [0.020, 0.076] | 0.045 [0.020, 0.076] | 0.045 [0.020, 0.076] | 0.045 [0.020, 0.076] | 0.045 [0.020, 0.076] |
+
+### POOLED: stock 0.9.1 + col511 arm (19f '0.9.1 family')  [POOLED; 6 passes, 1188 requests]
+
+Thresholds (T = logged completion tokens; at risk = T >= L):
+
+| L | unique requests at risk | questions at risk | finishing events | valid final answer | other stop | censored at cap | P(event before cap \| at risk) [95% q-boot] | P(valid \| at risk) [95% q-boot] |
+|---:|---:|---:|---:|---:|---:|---:|---|---|
+| 32,000 | 150 | 44 | 120 | 120 | 0 | 30 | 0.80 [0.70, 0.89] | 0.80 [0.70, 0.89] |
+| 64,000 | 87 | 32 | 57 | 57 | 0 | 30 | 0.66 [0.51, 0.80] | 0.66 [0.51, 0.80] |
+| 100,000 | 50 | 23 | 20 | 20 | 0 | 30 | 0.40 [0.25, 0.58] | 0.40 [0.25, 0.58] |
+| 200,000 | 33 | 16 | 3 | 3 | 0 | 30 | 0.09 [0.00, 0.20] | 0.09 [0.00, 0.20] |
+
+Question identities (doc ids):
+
+- >= 64,000: at risk [7, 8, 18, 27, 32, 48, 55, 69, 71, 74, 76, 79, 81, 88, 90, 94, 108, 109, 110, 118, 120, 121, 127, 130, 138, 145, 147, 157, 164, 170, 185, 186]; with a valid finish [7, 8, 18, 27, 32, 48, 55, 69, 71, 76, 79, 81, 88, 90, 94, 110, 118, 120, 127, 130, 138, 145, 147, 164, 185, 186]
+- >= 100,000: at risk [8, 48, 55, 69, 71, 74, 79, 81, 88, 90, 94, 108, 109, 110, 120, 121, 127, 130, 147, 157, 164, 170, 186]; with a valid finish [8, 48, 69, 71, 79, 90, 94, 110, 120, 127, 130, 147, 164, 186]
+- >= 200,000: at risk [55, 69, 74, 79, 81, 88, 108, 109, 120, 121, 127, 147, 157, 164, 170, 186]; with a valid finish [79, 164, 186]
+
+Bands (at risk = still generating at band start; events end inside the band):
+
+| band (tokens) | at risk | events | valid | other | censored in band | conditional fraction ending in band | questions with an event |
+|---|---:|---:|---:|---:|---:|---:|---|
+| 0-16,000 | 1188 | 920 | 919 | 1 | 0 | 0.77 | 174 questions |
+| 16,000-32,000 | 268 | 118 | 118 | 0 | 0 | 0.44 | 58 questions |
+| 32,000-64,000 | 150 | 63 | 63 | 0 | 0 | 0.42 | 30 questions |
+| 64,000-100,000 | 87 | 37 | 37 | 0 | 0 | 0.43 | [7, 8, 18, 27, 32, 48, 55, 71, 76, 81, 88, 94, 110, 118, 130, 138, 145, 147, 164, 185, 186] |
+| 100,000-150,000 | 50 | 14 | 14 | 0 | 0 | 0.28 | [8, 48, 69, 71, 90, 94, 120, 127, 130, 147] |
+| 150,000-200,000 | 36 | 3 | 3 | 0 | 0 | 0.08 | [71, 79, 110] |
+| 200,000-260,000 | 33 | 2 | 2 | 0 | 0 | 0.06 | [79, 186] |
+| 260,000-327,680 | 31 | 1 | 1 | 0 | 30 | 0.03 | [164] |
+
+Still generating, S(t) = P(T > t), Kaplan-Meier with censoring at the cap, 95% question-clustered bootstrap (B = 2000, all 198 questions resampled):
+
+| t | 16k | 32k | 64k | 100k | 150k | 200k | 260k | cap- |
+|---|---|---|---|---|---|---|---|---|
+| S(t), completion tokens (measured) | 0.226 [0.177, 0.279] | 0.126 [0.087, 0.167] | 0.073 [0.045, 0.103] | 0.042 [0.024, 0.065] | 0.030 [0.015, 0.049] | 0.028 [0.013, 0.045] | 0.026 [0.013, 0.042] | 0.025 [0.012, 0.041] |
+| S(t), reasoning tokens (derived) | 0.221 [0.173, 0.273] | 0.125 [0.087, 0.166] | 0.072 [0.045, 0.102] | 0.042 [0.024, 0.065] | 0.030 [0.015, 0.049] | 0.028 [0.013, 0.045] | 0.026 [0.013, 0.042] | 0.025 [0.012, 0.041] |
+
+### POOLED: B0 + B1 (19f 'corrected')  [POOLED; 3 passes, 594 requests]
+
+Thresholds (T = logged completion tokens; at risk = T >= L):
+
+| L | unique requests at risk | questions at risk | finishing events | valid final answer | other stop | censored at cap | P(event before cap \| at risk) [95% q-boot] | P(valid \| at risk) [95% q-boot] |
+|---:|---:|---:|---:|---:|---:|---:|---|---|
+| 32,000 | 70 | 37 | 55 | 54 | 1 | 15 | 0.79 [0.67, 0.90] | 0.77 [0.66, 0.88] |
+| 64,000 | 29 | 18 | 14 | 14 | 0 | 15 | 0.48 [0.32, 0.68] | 0.48 [0.32, 0.68] |
+| 100,000 | 17 | 11 | 2 | 2 | 0 | 15 | 0.12 [0.00, 0.29] | 0.12 [0.00, 0.29] |
+| 200,000 | 15 | 10 | 0 | 0 | 0 | 15 | 0.00 [0.00, 0.00] | 0.00 [0.00, 0.00] |
+
+Question identities (doc ids):
+
+- >= 64,000: at risk [8, 48, 69, 71, 76, 79, 81, 88, 90, 118, 120, 121, 127, 130, 145, 147, 179, 185]; with a valid finish [8, 48, 71, 76, 81, 88, 90, 118, 120, 130, 145, 147, 179, 185]
+- >= 100,000: at risk [8, 69, 79, 81, 88, 90, 121, 127, 130, 145, 147]; with a valid finish [88, 90]
+- >= 200,000: at risk [8, 69, 79, 81, 88, 121, 127, 130, 145, 147]; with a valid finish []
+
+Bands (at risk = still generating at band start; events end inside the band):
+
+| band (tokens) | at risk | events | valid | other | censored in band | conditional fraction ending in band | questions with an event |
+|---|---:|---:|---:|---:|---:|---:|---|
+| 0-16,000 | 594 | 462 | 462 | 0 | 0 | 0.78 | 172 questions |
+| 16,000-32,000 | 132 | 62 | 62 | 0 | 0 | 0.47 | 45 questions |
+| 32,000-64,000 | 70 | 41 | 40 | 1 | 0 | 0.59 | 31 questions |
+| 64,000-100,000 | 29 | 12 | 12 | 0 | 0 | 0.41 | [8, 48, 71, 76, 81, 118, 120, 130, 145, 147, 179, 185] |
+| 100,000-150,000 | 17 | 2 | 2 | 0 | 0 | 0.12 | [88, 90] |
+| 150,000-200,000 | 15 | 0 | 0 | 0 | 0 | 0.00 | [] |
+| 200,000-260,000 | 15 | 0 | 0 | 0 | 0 | 0.00 | [] |
+| 260,000-327,680 | 15 | 0 | 0 | 0 | 15 | 0.00 | [] |
+
+Still generating, S(t) = P(T > t), Kaplan-Meier with censoring at the cap, 95% question-clustered bootstrap (B = 2000, all 198 questions resampled):
+
+| t | 16k | 32k | 64k | 100k | 150k | 200k | 260k | cap- |
+|---|---|---|---|---|---|---|---|---|
+| S(t), completion tokens (measured) | 0.222 [0.173, 0.276] | 0.118 [0.081, 0.160] | 0.049 [0.027, 0.076] | 0.029 [0.012, 0.049] | 0.025 [0.010, 0.044] | 0.025 [0.010, 0.044] | 0.025 [0.010, 0.044] | 0.025 [0.010, 0.044] |
+| S(t), reasoning tokens (derived) | 0.219 [0.170, 0.271] | 0.118 [0.081, 0.160] | 0.049 [0.027, 0.076] | 0.029 [0.012, 0.049] | 0.025 [0.010, 0.044] | 0.025 [0.010, 0.044] | 0.025 [0.010, 0.044] | 0.025 [0.010, 0.044] |
+
+### POOLED: all modified 0.9.1 configurations (arm + B0 + B1)  [POOLED; 6 passes, 1188 requests]
+
+Thresholds (T = logged completion tokens; at risk = T >= L):
+
+| L | unique requests at risk | questions at risk | finishing events | valid final answer | other stop | censored at cap | P(event before cap \| at risk) [95% q-boot] | P(valid \| at risk) [95% q-boot] |
+|---:|---:|---:|---:|---:|---:|---:|---|---|
+| 32,000 | 143 | 45 | 113 | 112 | 1 | 30 | 0.79 [0.69, 0.89] | 0.78 [0.68, 0.88] |
+| 64,000 | 75 | 29 | 45 | 45 | 0 | 30 | 0.60 [0.45, 0.75] | 0.60 [0.45, 0.75] |
+| 100,000 | 42 | 21 | 12 | 12 | 0 | 30 | 0.29 [0.15, 0.48] | 0.29 [0.15, 0.48] |
+| 200,000 | 31 | 16 | 1 | 1 | 0 | 30 | 0.03 [0.00, 0.11] | 0.03 [0.00, 0.11] |
+
+Question identities (doc ids):
+
+- >= 64,000: at risk [7, 8, 32, 48, 55, 69, 71, 74, 76, 79, 81, 88, 90, 94, 108, 110, 118, 120, 121, 127, 130, 145, 147, 157, 164, 170, 179, 185, 186]; with a valid finish [7, 8, 32, 48, 55, 71, 76, 79, 81, 88, 90, 94, 110, 118, 120, 130, 145, 147, 164, 179, 185, 186]
+- >= 100,000: at risk [8, 48, 69, 71, 74, 79, 81, 88, 90, 94, 108, 110, 120, 121, 127, 130, 145, 147, 157, 170, 186]; with a valid finish [48, 71, 79, 88, 90, 94, 110, 130, 147, 186]
+- >= 200,000: at risk [8, 69, 74, 79, 81, 88, 108, 120, 121, 127, 130, 145, 147, 157, 170, 186]; with a valid finish [186]
+
+Bands (at risk = still generating at band start; events end inside the band):
+
+| band (tokens) | at risk | events | valid | other | censored in band | conditional fraction ending in band | questions with an event |
+|---|---:|---:|---:|---:|---:|---:|---|
+| 0-16,000 | 1188 | 920 | 920 | 0 | 0 | 0.77 | 177 questions |
+| 16,000-32,000 | 268 | 125 | 125 | 0 | 0 | 0.47 | 61 questions |
+| 32,000-64,000 | 143 | 68 | 67 | 1 | 0 | 0.48 | 34 questions |
+| 64,000-100,000 | 75 | 33 | 33 | 0 | 0 | 0.44 | [7, 8, 32, 48, 55, 71, 76, 81, 88, 118, 120, 130, 145, 147, 164, 179, 185] |
+| 100,000-150,000 | 42 | 9 | 9 | 0 | 0 | 0.21 | [48, 71, 88, 90, 94, 130, 147] |
+| 150,000-200,000 | 33 | 2 | 2 | 0 | 0 | 0.06 | [79, 110] |
+| 200,000-260,000 | 31 | 1 | 1 | 0 | 0 | 0.03 | [186] |
+| 260,000-327,680 | 30 | 0 | 0 | 0 | 30 | 0.00 | [] |
+
+Still generating, S(t) = P(T > t), Kaplan-Meier with censoring at the cap, 95% question-clustered bootstrap (B = 2000, all 198 questions resampled):
+
+| t | 16k | 32k | 64k | 100k | 150k | 200k | 260k | cap- |
+|---|---|---|---|---|---|---|---|---|
+| S(t), completion tokens (measured) | 0.226 [0.178, 0.278] | 0.120 [0.084, 0.162] | 0.063 [0.037, 0.092] | 0.035 [0.018, 0.056] | 0.028 [0.013, 0.045] | 0.026 [0.013, 0.043] | 0.025 [0.012, 0.041] | 0.025 [0.012, 0.041] |
+| S(t), reasoning tokens (derived) | 0.222 [0.174, 0.274] | 0.119 [0.083, 0.159] | 0.062 [0.037, 0.091] | 0.035 [0.018, 0.056] | 0.028 [0.013, 0.045] | 0.026 [0.013, 0.043] | 0.025 [0.012, 0.041] | 0.025 [0.012, 0.041] |
+
+### Requests at risk at 100k, every configuration (ids only)
+
+| configuration | seed | session position | doc | T (completion tokens) | outcome | reasoning tokens (derived) | content tokens (re-tokenized) | reasoning chars |
+|---|---:|---|---:|---:|---|---:|---:|---:|
+| stock 0.7.0 | 1235 | 1 of 2 | 145 | 100,868 | valid | 100,606 | 262 | 332,536 |
+| stock 0.7.0 | 1235 | 1 of 2 | 7 | 110,545 | valid | 109,962 | 583 | 399,651 |
+| stock 0.7.0 | 1235 | 1 of 2 | 186 | 152,970 | valid | 152,376 | 594 | 406,460 |
+| stock 0.7.0 | 1235 | 1 of 2 | 127 | 230,448 | valid | 230,069 | 379 | 533,378 |
+| stock 0.7.0 | 1235 | 1 of 2 | 120 | 233,223 | valid | 232,451 | 772 | 582,576 |
+| stock 0.7.0 | 1235 | 1 of 2 | 79 | 327,680 | censored_empty | 327,680 | 0 | 655,590 |
+| stock 0.7.0 | 1235 | 1 of 2 | 81 | 327,680 | censored_empty | 327,680 | 0 | 859,057 |
+| stock 0.7.0 | 1235 | 1 of 2 | 121 | 327,680 | censored_empty | 327,680 | 0 | 1,062,353 |
+| stock 0.7.0 | 1236 | 2 of 2 | 8 | 102,001 | valid | 101,764 | 237 | 344,368 |
+| stock 0.7.0 | 1236 | 2 of 2 | 186 | 102,493 | valid | 101,936 | 557 | 281,168 |
+| stock 0.7.0 | 1236 | 2 of 2 | 76 | 103,553 | valid | 103,204 | 349 | 313,244 |
+| stock 0.7.0 | 1236 | 2 of 2 | 127 | 220,231 | valid | 219,721 | 510 | 484,958 |
+| stock 0.7.0 | 1236 | 2 of 2 | 147 | 250,709 | valid | 250,223 | 486 | 641,323 |
+| stock 0.7.0 | 1236 | 2 of 2 | 145 | 327,680 | censored_empty | 327,680 | 0 | 882,831 |
+| stock 0.9.1 | 1234 | 1 of 1 | 90 | 106,387 | valid | 105,936 | 451 | 324,346 |
+| stock 0.9.1 | 1234 | 1 of 1 | 147 | 136,344 | valid | 135,984 | 360 | 372,918 |
+| stock 0.9.1 | 1234 | 1 of 1 | 79 | 203,164 | valid | 202,796 | 368 | 498,412 |
+| stock 0.9.1 | 1234 | 1 of 1 | 88 | 327,680 | censored_empty | 327,680 | 0 | 822,104 |
+| stock 0.9.1 | 1234 | 1 of 1 | 109 | 327,680 | censored_empty | 327,680 | 0 | 919,329 |
+| stock 0.9.1 | 1234 | 1 of 1 | 127 | 327,680 | censored_empty | 327,680 | 0 | 731,822 |
+| stock 0.9.1 | 1234 | 1 of 1 | 120 | 327,680 | censored_empty | 327,680 | 0 | 802,260 |
+| stock 0.9.1 | 1235 | 1 of 2 | 71 | 104,835 | valid | 104,549 | 286 | 340,352 |
+| stock 0.9.1 | 1235 | 1 of 2 | 127 | 106,687 | valid | 106,488 | 199 | 281,919 |
+| stock 0.9.1 | 1235 | 1 of 2 | 120 | 123,709 | valid | 123,045 | 664 | 330,234 |
+| stock 0.9.1 | 1235 | 1 of 2 | 164 | 274,150 | valid | 273,659 | 491 | 801,040 |
+| stock 0.9.1 | 1235 | 1 of 2 | 55 | 327,680 | censored_empty | 327,680 | 0 | 848,590 |
+| stock 0.9.1 | 1235 | 1 of 2 | 79 | 327,680 | censored_empty | 327,680 | 0 | 666,262 |
+| stock 0.9.1 | 1235 | 1 of 2 | 81 | 327,680 | censored_empty | 327,680 | 0 | 850,888 |
+| stock 0.9.1 | 1235 | 1 of 2 | 121 | 327,680 | censored_empty | 327,680 | 0 | 870,947 |
+| stock 0.9.1 | 1235 | 1 of 2 | 147 | 327,680 | censored_empty | 327,680 | 0 | 845,242 |
+| stock 0.9.1 | 1236 | 2 of 2 | 8 | 102,222 | valid | 102,015 | 207 | 358,783 |
+| stock 0.9.1 | 1236 | 2 of 2 | 69 | 109,684 | valid | 109,290 | 394 | 297,895 |
+| stock 0.9.1 | 1236 | 2 of 2 | 71 | 175,275 | valid | 175,023 | 252 | 573,944 |
+| stock 0.9.1 | 1236 | 2 of 2 | 79 | 327,680 | censored_empty | 327,680 | 0 | 646,808 |
+| stock 0.9.1 | 1236 | 2 of 2 | 81 | 327,680 | censored_empty | 327,680 | 0 | 843,526 |
+| stock 0.9.1 | 1236 | 2 of 2 | 88 | 327,680 | censored_empty | 327,680 | 0 | 1,191,199 |
+| stock 0.9.1 | 1236 | 2 of 2 | 127 | 327,680 | censored_empty | 327,680 | 0 | 772,860 |
+| stock 0.9.1 | 1236 | 2 of 2 | 147 | 327,680 | censored_empty | 327,680 | 0 | 923,013 |
+| stock 0.9.1 | 1236 | 2 of 2 | 170 | 327,680 | censored_empty | 327,680 | 0 | 869,863 |
+| B0 | 1234 | 1 of 1 | 90 | 101,893 | valid | 101,406 | 487 | 302,341 |
+| B0 | 1234 | 1 of 1 | 79 | 327,680 | censored_empty | 327,680 | 0 | 673,269 |
+| B0 | 1234 | 1 of 1 | 88 | 327,680 | censored_empty | 327,680 | 0 | 842,437 |
+| B0 | 1234 | 1 of 1 | 127 | 327,680 | censored_empty | 327,680 | 0 | 730,384 |
+| B0 | 1235 | 1 of 1 | 88 | 116,281 | valid | 115,976 | 305 | 379,128 |
+| B0 | 1235 | 1 of 1 | 79 | 327,680 | censored_empty | 327,680 | 0 | 679,879 |
+| B0 | 1235 | 1 of 1 | 121 | 327,680 | censored_empty | 327,680 | 0 | 880,751 |
+| B0 | 1235 | 1 of 1 | 147 | 327,680 | censored_empty | 327,680 | 0 | 802,719 |
+| B1 | 1236 | 1 of 1 | 8 | 327,680 | censored_empty | 327,680 | 0 | 1,129,585 |
+| B1 | 1236 | 1 of 1 | 69 | 327,680 | censored_empty | 327,680 | 0 | 1,109,825 |
+| B1 | 1236 | 1 of 1 | 79 | 327,680 | censored_empty | 327,680 | 0 | 622,696 |
+| B1 | 1236 | 1 of 1 | 81 | 327,680 | censored_empty | 327,680 | 0 | 872,808 |
+| B1 | 1236 | 1 of 1 | 88 | 327,680 | censored_empty | 327,680 | 0 | 1,255,472 |
+| B1 | 1236 | 1 of 1 | 127 | 327,680 | censored_empty | 327,680 | 0 | 483,514 |
+| B1 | 1236 | 1 of 1 | 130 | 327,680 | censored_empty | 327,680 | 0 | 1,003,004 |
+| B1 | 1236 | 1 of 1 | 147 | 327,680 | censored_empty | 327,680 | 0 | 807,574 |
+| B1 | 1236 | 1 of 1 | 145 | 327,680 | censored_empty | 327,680 | 0 | 896,146 |
+| col511 arm | 1234 | 1 of 1 | 48 | 102,281 | valid | 101,774 | 507 | 395,511 |
+| col511 arm | 1234 | 1 of 1 | 90 | 109,128 | valid | 108,714 | 414 | 315,658 |
+| col511 arm | 1234 | 1 of 1 | 110 | 158,242 | valid | 157,494 | 748 | 618,384 |
+| col511 arm | 1234 | 1 of 1 | 186 | 213,174 | valid | 212,645 | 529 | 575,934 |
+| col511 arm | 1234 | 1 of 1 | 79 | 327,680 | censored_empty | 327,680 | 0 | 768,827 |
+| col511 arm | 1234 | 1 of 1 | 88 | 327,680 | censored_empty | 327,680 | 0 | 848,013 |
+| col511 arm | 1234 | 1 of 1 | 127 | 327,680 | censored_empty | 327,680 | 0 | 513,312 |
+| col511 arm | 1234 | 1 of 1 | 170 | 327,680 | censored_empty | 327,680 | 0 | 868,893 |
+| col511 arm | 1235 | 1 of 2 | 147 | 112,368 | valid | 111,845 | 523 | 293,619 |
+| col511 arm | 1235 | 1 of 2 | 130 | 117,982 | valid | 117,639 | 343 | 397,929 |
+| col511 arm | 1235 | 1 of 2 | 71 | 144,948 | valid | 144,754 | 194 | 489,082 |
+| col511 arm | 1235 | 1 of 2 | 79 | 194,679 | valid | 194,069 | 610 | 424,208 |
+| col511 arm | 1235 | 1 of 2 | 74 | 327,680 | censored_empty | 327,680 | 0 | 664,237 |
+| col511 arm | 1235 | 1 of 2 | 108 | 327,680 | censored_empty | 327,680 | 0 | 900,022 |
+| col511 arm | 1235 | 1 of 2 | 120 | 327,680 | censored_empty | 327,680 | 0 | 859,062 |
+| col511 arm | 1235 | 1 of 2 | 127 | 327,680 | censored_empty | 327,680 | 0 | 881,862 |
+| col511 arm | 1235 | 1 of 2 | 186 | 327,680 | censored_empty | 327,680 | 0 | 865,235 |
+| col511 arm | 1236 | 2 of 2 | 94 | 108,490 | valid | 107,930 | 560 | 426,903 |
+| col511 arm | 1236 | 2 of 2 | 71 | 120,738 | valid | 120,520 | 218 | 390,726 |
+| col511 arm | 1236 | 2 of 2 | 69 | 327,680 | censored_empty | 327,680 | 0 | 1,226,044 |
+| col511 arm | 1236 | 2 of 2 | 79 | 327,680 | censored_empty | 327,680 | 0 | 770,906 |
+| col511 arm | 1236 | 2 of 2 | 81 | 327,680 | censored_empty | 327,680 | 0 | 851,559 |
+| col511 arm | 1236 | 2 of 2 | 127 | 327,680 | censored_empty | 327,680 | 0 | 758,373 |
+| col511 arm | 1236 | 2 of 2 | 157 | 327,680 | censored_empty | 327,680 | 0 | 1,629,359 |
+| col511 arm | 1236 | 2 of 2 | 147 | 327,680 | censored_empty | 327,680 | 0 | 696,790 |
+### Stock 0.7.0 minus stock 0.9.1, joint question-clustered bootstrap (same resampled questions on both sides)
+
+| comparison | P(event \| risk 32k) | P(event \| risk 64k) | P(event \| risk 100k) | P(event \| risk 200k) | S(100k) | S(200k) | S(cap-) |
+|---|---|---|---|---|---|---|---|
+| stock 0.7.0 minus stock 0.9.1 (all logged seeds) | +0.12 [0.03, 0.23] | +0.23 [0.05, 0.40] | +0.31 [0.03, 0.55] | +0.38 [-0.15, 0.81] | -0.007 [-0.026, 0.015] | -0.008 [-0.021, 0.003] | -0.015 [-0.030, -0.003] |
+| stock 0.7.0 minus stock 0.9.1 (seeds 1235-1236) | +0.14 [0.03, 0.26] | +0.25 [0.05, 0.45] | +0.33 [0.03, 0.57] | +0.42 [-0.10, 0.80] | -0.010 [-0.033, 0.013] | -0.010 [-0.025, 0.005] | -0.018 [-0.035, -0.003] |
+
+### Question as the unit (per question: events / valid / at risk)
+
+- stock 0.7.0 vs stock 0.9.1 (all logged seeds) @ 64000: 17 common questions; first side higher on 7, lower on 1, equal on 9; mean difference of event fractions 0.216; only first side [7, 76]; only second side [18, 27, 55, 69, 90, 94, 109, 110]
+- stock 0.7.0 vs stock 0.9.1 (all logged seeds) @ 100000: 7 common questions; first side higher on 3, lower on 1, equal on 3; mean difference of event fractions 0.214; only first side [7, 76, 145, 186]; only second side [55, 69, 71, 88, 90, 109, 164, 170]
+    - doc 8: 1/1/1 vs 1/1/1
+    - doc 79: 0/0/1 vs 1/1/3
+    - doc 81: 0/0/1 vs 0/0/2
+    - doc 120: 1/1/1 vs 1/1/2
+    - doc 121: 0/0/1 vs 0/0/1
+    - doc 127: 2/2/2 vs 1/1/3
+    - doc 147: 1/1/1 vs 1/1/3
+- stock 0.7.0 vs stock 0.9.1, seeds 1235-1236 only @ 64000: 17 common questions; first side higher on 6, lower on 1, equal on 10; mean difference of event fractions 0.235; only first side [7, 76]; only second side [27, 55, 69, 94]
+- stock 0.7.0 vs stock 0.9.1, seeds 1235-1236 only @ 100000: 7 common questions; first side higher on 2, lower on 0, equal on 5; mean difference of event fractions 0.214; only first side [7, 76, 145, 186]; only second side [55, 69, 71, 88, 164, 170]
+    - doc 8: 1/1/1 vs 1/1/1
+    - doc 79: 0/0/1 vs 0/0/2
+    - doc 81: 0/0/1 vs 0/0/2
+    - doc 120: 1/1/1 vs 1/1/1
+    - doc 121: 0/0/1 vs 0/0/1
+    - doc 127: 2/2/2 vs 1/1/2
+    - doc 147: 1/1/1 vs 0/0/2
+- 19f replica: stock 0.7.0 vs stock 0.9.1 + col511 arm @ 64000: 19 common questions; first side higher on 7, lower on 1, equal on 11; mean difference of event fractions 0.185; only first side []; only second side [18, 27, 32, 55, 69, 74, 90, 94, 108, 109, 110, 157, 185]
+- 19f replica: stock 0.7.0 vs stock 0.9.1 + col511 arm @ 100000: 8 common questions; first side higher on 4, lower on 1, equal on 3; mean difference of event fractions 0.283; only first side [7, 76, 145]; only second side [48, 55, 69, 71, 74, 88, 90, 94, 108, 109, 110, 130, 157, 164, 170]
+
+### Session position (descriptive)
+
+- stock 0.7.0 session position 1: seeds [1235], 198 requests, at risk at 100k 8, events 5, censored 3
+- stock 0.7.0 session position 2: seeds [1236], 198 requests, at risk at 100k 6, events 5, censored 1
+- stock 0.9.1 session position 1: seeds [1234, 1235], 396 requests, at risk at 100k 16, events 7, censored 9
+- stock 0.9.1 session position 2: seeds [1236], 198 requests, at risk at 100k 9, events 3, censored 6
+- col511 arm session position 1: seeds [1234, 1235], 396 requests, at risk at 100k 17, events 8, censored 9
+- col511 arm session position 2: seeds [1236], 198 requests, at risk at 100k 8, events 2, censored 6
+
+### Reasoning fields
+
+```
+{
+ "reasoning_tokens_logged_types": {
+  "NoneType": 2178
+ },
+ "reasoning_chars_populated": true,
+ "content_chars_populated": true,
+ "content_chars_equal_to_lm_eval_reply_length": 2178,
+ "requests": 2178,
+ "content_tokens_retok_finished_nonempty": {
+  "n": 2128,
+  "min": 84,
+  "median": 372.0,
+  "p90": 632,
+  "max": 1403
+ },
+ "requests_changing_threshold_status_on_reasoning_axis": {
+  "32000": 4,
+  "64000": 2
+ },
+ "censored_with_nonempty_content": 0,
+ "censored_reasoning_chars": {
+  "min": 483514,
+  "max": 1629359,
+  "median": 848590
+ },
+ "censored_content_chars_max": 0
+}
+```
+
+### 19f re-derivation
+
+```
+{
+ "rerun_stdout_identical_to_tail_analysis_out": true,
+ "tail_analysis_py_sha256": "196dcfb344cf36eaf7f8f6e90271af2ebd187e09fa215ec28dd5698ed524340b",
+ "tail_analysis_out_sha256": "c912c85734719f71e986b2578f192999a04fba084fb712ff6a411465f6085621",
+ "bootstrap_nan_replicates": {
+  "0.7.0 @ 32000": {
+   "nan_replicates": 0,
+   "questions_resampled": 35
+  },
+  "0.9.1 family (stock+arm) @ 32000": {
+   "nan_replicates": 0,
+   "questions_resampled": 44
+  },
+  "corrected (B0+B1) @ 32000": {
+   "nan_replicates": 0,
+   "questions_resampled": 37
+  },
+  "stock 0.9.1 @ 32000": {
+   "nan_replicates": 0,
+   "questions_resampled": 38
+  },
+  "0.7.0 @ 64000": {
+   "nan_replicates": 0,
+   "questions_resampled": 19
+  },
+  "0.9.1 family (stock+arm) @ 64000": {
+   "nan_replicates": 0,
+   "questions_resampled": 32
+  },
+  "corrected (B0+B1) @ 64000": {
+   "nan_replicates": 0,
+   "questions_resampled": 18
+  },
+  "stock 0.9.1 @ 64000": {
+   "nan_replicates": 0,
+   "questions_resampled": 25
+  },
+  "0.7.0 @ 100000": {
+   "nan_replicates": 0,
+   "questions_resampled": 11
+  },
+  "0.9.1 family (stock+arm) @ 100000": {
+   "nan_replicates": 0,
+   "questions_resampled": 23
+  },
+  "corrected (B0+B1) @ 100000": {
+   "nan_replicates": 0,
+   "questions_resampled": 11
+  },
+  "stock 0.9.1 @ 100000": {
+   "nan_replicates": 0,
+   "questions_resampled": 15
+  },
+  "0.7.0 @ 200000": {
+   "nan_replicates": 0,
+   "questions_resampled": 7
+  },
+  "0.9.1 family (stock+arm) @ 200000": {
+   "nan_replicates": 0,
+   "questions_resampled": 16
+  },
+  "corrected (B0+B1) @ 200000": {
+   "nan_replicates": 0,
+   "questions_resampled": 10
+  },
+  "stock 0.9.1 @ 200000": {
+   "nan_replicates": 0,
+   "questions_resampled": 11
+  }
+ },
+ "recount": {
+  "0.9.1 family: unique requests at risk at 150k": 36,
+  "0.9.1 family: finishing events at >= 150k": 6,
+  "0.9.1 family: valid final answers at >= 150k": 6,
+  "0.9.1 family: sum of band at-risk counts 150k-cap (19f's 'about 100')": 100,
+  "stock 0.9.1: unique at risk at 150k / events beyond": [
+   18,
+   3
+  ],
+  "stock 0.7.0: unique at risk at 150k / events beyond": [
+   9,
+   5
+  ],
+  "0.7.0 @ 32000: reached / finished(19f) / valid / other": [
+   57,
+   53,
+   52,
+   1
+  ],
+  "0.7.0 @ 64000: reached / finished(19f) / valid / other": [
+   29,
+   25,
+   25,
+   0
+  ],
+  "0.7.0 @ 100000: reached / finished(19f) / valid / other": [
+   14,
+   10,
+   10,
+   0
+  ],
+  "0.7.0 @ 200000: reached / finished(19f) / valid / other": [
+   8,
+   4,
+   4,
+   0
+  ],
+  "0.9.1 family (stock+arm) @ 32000: reached / finished(19f) / valid / other": [
+   150,
+   120,
+   120,
+   0
+  ],
+  "0.9.1 family (stock+arm) @ 64000: reached / finished(19f) / valid / other": [
+   87,
+   57,
+   57,
+   0
+  ],
+  "0.9.1 family (stock+arm) @ 100000: reached / finished(19f) / valid / other": [
+   50,
+   20,
+   20,
+   0
+  ],
+  "0.9.1 family (stock+arm) @ 200000: reached / finished(19f) / valid / other": [
+   33,
+   3,
+   3,
+   0
+  ],
+  "corrected (B0+B1) @ 32000: reached / finished(19f) / valid / other": [
+   70,
+   55,
+   54,
+   1
+  ],
+  "corrected (B0+B1) @ 64000: reached / finished(19f) / valid / other": [
+   29,
+   14,
+   14,
+   0
+  ],
+  "corrected (B0+B1) @ 100000: reached / finished(19f) / valid / other": [
+   17,
+   2,
+   2,
+   0
+  ],
+  "corrected (B0+B1) @ 200000: reached / finished(19f) / valid / other": [
+   15,
+   0,
+   0,
+   0
+  ],
+  "stock 0.9.1 @ 32000: reached / finished(19f) / valid / other": [
+   77,
+   62,
+   62,
+   0
+  ],
+  "stock 0.9.1 @ 64000: reached / finished(19f) / valid / other": [
+   41,
+   26,
+   26,
+   0
+  ],
+  "stock 0.9.1 @ 100000: reached / finished(19f) / valid / other": [
+   25,
+   10,
+   10,
+   0
+  ],
+  "stock 0.9.1 @ 200000: reached / finished(19f) / valid / other": [
+   17,
+   2,
+   2,
+   0
+  ]
+ }
+}
+```
+
+### Checks
+
+- [ok] stated-answer extractor copy is the frozen one (analysis_col511.py sha256 b5b13ce2...) 
+- [ok] extractor block in <eval-tools>/export_evals.py lines 233-259 still has sha256 731f27d4... 
+- [ok] stock 0.7.0 s1235: 198 requests, one per question, HTTP 200, max_tokens 327680 
+- [ok] stock 0.7.0 s1235: exactly one samples file in glm53-flash-exl3-k3.25@tpurtell+ps__pass2 
+- [ok] stock 0.7.0 s1235: server log has exactly one engine start (glm53-flash-exl3-k3.25@tpurtell+ps.server.log) 
+- [ok] stock 0.7.0 s1235: all 198 content hashes match lm-eval replies 
+- [ok] stock 0.7.0 s1235: all 198 rows reproduce the published results.jsonl flags (empty, raw, strict, stated, finish, tokens, hash) 
+- [ok] stock 0.7.0 s1236: 198 requests, one per question, HTTP 200, max_tokens 327680 
+- [ok] stock 0.7.0 s1236: exactly one samples file in glm53-flash-exl3-k3.25@tpurtell+ps__pass3 
+- [ok] stock 0.7.0 s1236: server log has exactly one engine start (glm53-flash-exl3-k3.25@tpurtell+ps.server.log) 
+- [ok] stock 0.7.0 s1236: all 198 content hashes match lm-eval replies 
+- [ok] stock 0.7.0 s1236: all 198 rows reproduce the published results.jsonl flags (empty, raw, strict, stated, finish, tokens, hash) 
+- [ok] stock 0.9.1 s1234: 198 requests, one per question, HTTP 200, max_tokens 327680 
+- [ok] stock 0.9.1 s1234: exactly one samples file in glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps__pass1 
+- [ok] stock 0.9.1 s1234: server log has exactly one engine start (glm53-flash-exl3-k3.25@tpurtell+v0.9.1.server.log) 
+- [ok] stock 0.9.1 s1234: all 198 content hashes match lm-eval replies 
+- [ok] stock 0.9.1 s1234: all 198 rows reproduce the published results.jsonl flags (empty, raw, strict, stated, finish, tokens, hash) 
+- [ok] stock 0.9.1 s1235: 198 requests, one per question, HTTP 200, max_tokens 327680 
+- [ok] stock 0.9.1 s1235: exactly one samples file in glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps__pass2 
+- [ok] stock 0.9.1 s1235: server log has exactly one engine start (glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps.server.log) 
+- [ok] stock 0.9.1 s1235: all 198 content hashes match lm-eval replies 
+- [ok] stock 0.9.1 s1235: all 198 rows reproduce the published results.jsonl flags (empty, raw, strict, stated, finish, tokens, hash) 
+- [ok] stock 0.9.1 s1236: 198 requests, one per question, HTTP 200, max_tokens 327680 
+- [ok] stock 0.9.1 s1236: exactly one samples file in glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps__pass3 
+- [ok] stock 0.9.1 s1236: server log has exactly one engine start (glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps.server.log) 
+- [ok] stock 0.9.1 s1236: all 198 content hashes match lm-eval replies 
+- [ok] stock 0.9.1 s1236: all 198 rows reproduce the published results.jsonl flags (empty, raw, strict, stated, finish, tokens, hash) 
+- [ok] col511 arm s1234: 198 requests, one per question, HTTP 200, max_tokens 327680 
+- [ok] col511 arm s1234: exactly one samples file in glm53-flash-exl3-k3.25@tpurtell+v0.9.1+col511fix__pass1 
+- [ok] col511 arm s1234: server log has exactly one engine start (server-s1.log) 
+- [ok] col511 arm s1234: all 198 content hashes match lm-eval replies 
+- [ok] col511 arm s1235: 198 requests, one per question, HTTP 200, max_tokens 327680 
+- [ok] col511 arm s1235: exactly one samples file in glm53-flash-exl3-k3.25@tpurtell+v0.9.1+col511fix__pass2 
+- [ok] col511 arm s1235: server log has exactly one engine start (server-s2.log) 
+- [ok] col511 arm s1235: all 198 content hashes match lm-eval replies 
+- [ok] col511 arm s1236: 198 requests, one per question, HTTP 200, max_tokens 327680 
+- [ok] col511 arm s1236: exactly one samples file in glm53-flash-exl3-k3.25@tpurtell+v0.9.1+col511fix__pass3 
+- [ok] col511 arm s1236: server log has exactly one engine start (server-s2.log) 
+- [ok] col511 arm s1236: all 198 content hashes match lm-eval replies 
+- [ok] B0 s1234: 198 requests, one per question, HTTP 200, max_tokens 327680 
+- [ok] B0 s1234: exactly one samples file in glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234__pass1 
+- [ok] B0 s1234: server log has exactly one engine start (server-s1.log) 
+- [ok] B0 s1234: all 198 content hashes match lm-eval replies 
+- [ok] B0 s1235: 198 requests, one per question, HTTP 200, max_tokens 327680 
+- [ok] B0 s1235: exactly one samples file in glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234__pass2 
+- [ok] B0 s1235: server log has exactly one engine start (server-s2.log) 
+- [ok] B0 s1235: all 198 content hashes match lm-eval replies 
+- [ok] B1 s1236: 198 requests, one per question, HTTP 200, max_tokens 327680 
+- [ok] B1 s1236: exactly one samples file in glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234+d7__pass3 
+- [ok] B1 s1236: server log has exactly one engine start (server-s1.log) 
+- [ok] B1 s1236: all 198 content hashes match lm-eval replies 
+- [ok] B0 s1234: reproduces recorded empties/raw/stated (3, 174, 176) 
+- [ok] B0 s1235: reproduces recorded empties/raw/stated (3, 168, 169) 
+- [ok] B1 s1236: reproduces recorded empties/raw/stated (9, 173, 174) 
+- [ok] col511 arm: reproduces recorded empties/raw/stated (15, 505, 515) 
+- [ok] KM equals the empirical still-going fraction below the cap (axis T, n=396) 
+- [ok] KM equals the empirical still-going fraction below the cap (axis reasoning_tokens_derived, n=396) 
+- [ok] KM equals the empirical still-going fraction below the cap (axis T, n=594) 
+- [ok] KM equals the empirical still-going fraction below the cap (axis reasoning_tokens_derived, n=594) 
+- [ok] KM equals the empirical still-going fraction below the cap (axis T, n=396) 
+- [ok] KM equals the empirical still-going fraction below the cap (axis reasoning_tokens_derived, n=396) 
+- [ok] KM equals the empirical still-going fraction below the cap (axis T, n=594) 
+- [ok] KM equals the empirical still-going fraction below the cap (axis reasoning_tokens_derived, n=594) 
+- [ok] KM equals the empirical still-going fraction below the cap (axis T, n=396) 
+- [ok] KM equals the empirical still-going fraction below the cap (axis reasoning_tokens_derived, n=396) 
+- [ok] KM equals the empirical still-going fraction below the cap (axis T, n=198) 
+- [ok] KM equals the empirical still-going fraction below the cap (axis reasoning_tokens_derived, n=198) 
+- [ok] KM equals the empirical still-going fraction below the cap (axis T, n=1188) 
+- [ok] KM equals the empirical still-going fraction below the cap (axis reasoning_tokens_derived, n=1188) 
+- [ok] KM equals the empirical still-going fraction below the cap (axis T, n=594) 
+- [ok] KM equals the empirical still-going fraction below the cap (axis reasoning_tokens_derived, n=594) 
+- [ok] KM equals the empirical still-going fraction below the cap (axis T, n=1188) 
+- [ok] KM equals the empirical still-going fraction below the cap (axis reasoning_tokens_derived, n=1188) 
+- [ok] 19f script re-run reproduces tail_analysis.out byte for byte 

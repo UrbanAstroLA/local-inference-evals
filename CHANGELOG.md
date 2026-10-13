@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-10-13, night (completion investigation, amendment 20c): tail-accounting audit
+
+Contents unchanged. No run is added.
+
+- **New `tail-audit/`**: the stock-separate audit of the tail analysis required by amendment 20. Script, output, JSON
+  and AUDIT.md; counts, ids and flags only. Substitutions are in `PUBLIC-COPIES-20.txt`.
+- **Correction (owned):** "6 of about 100 still running beyond 150k" double-counted requests across bands; the unique
+  count is 6 of 36. Fixed in the completion README, with a note.
+- **Completion `README.md`**, **`LEDGER.md`** and **`PLAN.md`** (amendment 20c): stock-only figures, with the hypothesis
+  standing at small counts and no range claimed.
+
 ## 2026-10-13, night (completion investigation, amendment 20b): non-completion is not looping
 
 Contents unchanged. No result is added.

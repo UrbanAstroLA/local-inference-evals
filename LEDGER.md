@@ -435,6 +435,13 @@ What was asked, run, found, corrected and withdrawn, in date order.
 - **Hypothesis, not a result:** fewer long replies finishing on 0.9.1 than on 0.7.0 (amendment 19f). Finishing less
   often is not the same as looping more often. A capped reply may be a loop or an exhaustion still reasoning, and the
   GPQA records cannot tell which. Where text was kept (the completion pilot), capped replies were not loops.
+- **Tail audit (amendment 20c), stock releases only:**
+  - 0.7.0 finished 10 of 14 replies still generating at 100k; 0.9.1 finished 10 of 25. The difference is +0.31
+    [0.03, 0.55], question-clustered.
+  - Reaching 100k is equally common.
+  - It reproduces the earlier counts. **Owned:** a "6 of about 100 past 150k" figure summed at-risk counts across bands;
+    the unique count is 6 of 36.
+  - No specific context range is supported.
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough
   qualification. They also said the D7 path "cannot run" where the basis is a reconstruction. These are reworded in the

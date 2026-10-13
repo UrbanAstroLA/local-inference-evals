@@ -1467,3 +1467,35 @@ probability of looping. Cap exhaustion is censoring: the capped reply may be a l
 - **Probe proposal:** when windows are chosen near tentative conclusions, state for each fixture whether it was
   repeating at that point. A termination-probability difference measured on a looping history and one measured on a
   varied-reasoning history answer different questions.
+
+**Amendment 20c (2026-10-13; tail-accounting audit result, zero GPU).** Receipts are in tail-audit/ (124 checks pass;
+counts, ids and flags only).
+
+Reproduction:
+- The audit reproduces amendment 19f's counts byte for byte.
+- One counting error: "6 of about 100 still running beyond 150k" summed the at-risk counts of three bands. The unique
+  count is 6 of 36 (18 questions); stock 0.9.1 alone is 3 of 18, and stock 0.7.0 5 of 9.
+- A valid final answer (finish stop, non-empty, an extractable letter, not ruled hedged) accounts for every finish at
+  64k or more. Only four stops in all logged data are not valid answers, all below 64k.
+
+Stock-only results, question-clustered bootstrap:
+
+| | Stock 0.7.0 | Stock 0.9.1 | Difference |
+|---|---|---|---|
+| Finished at ≥ 100k | 10/14, 0.71 | 10/25, 0.40 | +0.31 [0.03, 0.55] |
+| Finished at ≥ 200k | 4/8 | 2/17 | +0.38 [−0.15, 0.81] |
+| Reaching 100k | 0.035 | 0.042 | −0.007 [−0.026, 0.015] |
+| Capped | 4 of 396 | 15 of 594 | — |
+
+- At matched seeds (1235-1236) the 100k difference is +0.33 [0.03, 0.57].
+- Question as the unit, all seeds: 0.7.0 finished a larger share on 3 questions, a smaller share on 1 and the same on 3.
+- The per-band shares do not support a specific range such as "64-100k". The 200-260k contrast rests on 4 events from 3
+  questions.
+- Session position and seed are confounded: every second-of-session pass is seed 1236. B1, a first-of-session pass, has
+  the most caps.
+- `reasoning_tokens` is null in every log. Using re-tokenized content as the axis does not change the 100k or 200k
+  counts.
+
+Reading: the hypothesis that long replies finish less often on stock 0.9.1 than on stock 0.7.0 survives the stock-only
+audit, with a wide interval and small counts (about 10 finishing events per release). It remains a hypothesis, and no
+range or change point is claimed.
