@@ -401,16 +401,51 @@ What was asked, run, found, corrected and withdrawn, in date order.
   unchanged. Under the reading frozen before generation it is unfavourable, which triggers review; the verified
   corrections stand. 6.33 GPU-hours.
 - **Post-hoc token reading:** the extra tokens are the extra capped replies, and finished replies are no longer. The four
-  newly empty documents are short single-chunk prompts on which the D7 path cannot run.
+  newly empty documents are short single-chunk prompts on which, per the exposure reconstruction, the D7 path is not
+  expected to run.
 - **Owned:** the identical-reply counts first quoted between builds at the same seed (2-5 of 198) were all pairs of
   empty replies; no non-empty reply was ever identical. The frozen B0 analysis counts non-empty identity only.
 - **Review step:** a B0 pass at seed 1236 (near-replicate of B1) is running under readings frozen before generation.
-- **Long-context tail** (exploratory, zero GPU): replies get long equally often on every engine, but past about 100k
-  tokens 0.9.1-family replies rarely finish (0.40; B0+B1 0.12) while 0.7.0's usually do (0.71). This localises the
-  completion question to termination at long context, a range no earlier probe measured.
+- **Long-context tail** (exploratory, zero GPU, chosen after the B1 result): replies reach 100k tokens at similar rates,
+  but fewer of 0.9.1's long replies finished before the cap than 0.7.0's (stock 0.9.1 10 of 25, 0.7.0 10 of 14, at
+  ≥ 100k). This is a hypothesis to examine, not a localisation. The published summary first said it "located" the gap;
+  see the next entry.
 - **Next:** a proposal for a long-context termination probe, discovery first, for independent review. Cumulative 55.85
   GPU-hours.
   [B1 pass and long-context tail](investigations/2026-10-glm53-completion/README.md#b1-checkpoint-pass-and-the-long-context-tail-amendment-19).
+
+**2026-10-13, evening. Where things stand, a correction of emphasis, and the next plan (amendment 20).**
+- **Established** (each with its own reproduction and verification):
+  - corrections for D1 (column-511 selection), D2 (tail ring without positions), D3 (router logits in bf16 on SM12x),
+    D4 (routed SwiGLU limit not passed, reachability only) and D7 (index-K prefill writer at unaligned chunk starts,
+    verified in serving);
+  - D7 is also present in upstream vLLM main;
+  - the targeted invariants of amendments 16-17 (all-reduce, KV writer, cache addressing, live slot mappings) were
+    clean apart from D7.
+- **Not established:**
+  - what produces the 0.7.0-vs-0.9.1 completion gap (4 vs 16 empty of 594, one three-pass record per engine);
+  - whether any correction changes completion;
+  - whether the corrected builds are more accurate (accuracy is similar).
+  
+  The D1-D4 bundle's lower empty count at two seeds (3 and 3 vs 5 and 5) did not persist once B1's seed-1236 pass (9 vs
+  6) is included; that pass reads unfavourable under its frozen rule and is under review.
+- **In progress:** a B0 pass at seed 1236 (the review step; readings frozen before generation) and zero-GPU discovery
+  under amendment 20: a tail-accounting audit with stock releases reported separately, an inventory of existing long
+  histories, termination-token semantics, and a focused source review of context-dependent paths.
+- **Hypothesis, not a result:** fewer long replies finishing on 0.9.1 than on 0.7.0 (amendment 19f).
+- **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
+  "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough
+  qualification. They also said the D7 path "cannot run" where the basis is a reconstruction. These are reworded in the
+  README, FINDINGS (item 4m, now graded exploratory and hypothesis-generating) and this ledger.
+- **Next (amendment 20, adopted from an independent assessment):**
+  - finish the B0 review under its frozen rules;
+  - complete the zero-GPU discovery;
+  - then propose a bounded fixed-history probe: stock 0.7.0 against B1 on identical token prefixes of about 64k-128k
+    plus a short control, scoring reasoning-close and end-of-turn probabilities, sampler eligibility and argmax
+    agreement, with a decode-path control and repeatability established first.
+  
+  No claim that a probability difference would explain completion rates. Each GPU stage is proposed and authorized
+  separately.
 
 ## Withdrawn, and what replaced it
 

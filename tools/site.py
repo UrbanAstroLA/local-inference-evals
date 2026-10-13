@@ -1280,9 +1280,9 @@ def build():
              'correctly above 2<sup>31</sup> bytes (<a href="' + REPO + '/blob/main/FINDINGS.md">items 4g-4i</a>). A live check of its slot mappings '
              'under real scheduling found one more defect, the last row below (items 4j-4k): present in every release and in upstream vLLM, '
              'corrected and verified in serving; its exposure in the GPQA records is narrow and its effect on answers untested. One GPQA pass '
-             'with all five corrections left 9 of 198 empty against 6 for stock 0.9.1 at the same seed (item 4l). Across logged passes, '
-             'replies get long equally often on every engine but finish far less often past about 100k tokens on the 0.9.1 family '
-             '(exploratory, item 4m).</p>' + issues
+             'with all five corrections left 9 of 198 empty against 6 for stock 0.9.1 at the same seed (item 4l; one pass, under review). '
+             'A post-hoc look suggests long-context termination as a direction to examine (exploratory, item 4m); what produces the '
+             'completion difference between releases is not established.</p>' + issues
            + f'<h3 id="kernels">Kernel tests: {up_un[0]}/{up_un[1]} without the kpool fixes, {up_pa[0]}/{up_pa[1]} with them (supported)</h3>'
              '<p>vLLM\'s own regression tests for the kpool kernels, plus a rejected-draft reproduction, run inside each engine image.</p>' + per_image
            + more("Every test", '<div id="kernel-grid"></div>' + table(["Test"] + [engine_label(m["cfg"]) for m in km], ktr)))

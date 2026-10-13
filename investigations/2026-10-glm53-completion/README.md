@@ -42,9 +42,11 @@ occupied GPU-hours of the three K3.25 records are
 investigation is closed for now. A GPQA pass of B1 at seed 1236 ([amendment 19](#b1-checkpoint-pass-and-the-long-context-tail-amendment-19))
 left 9 of 198 replies empty, all at the cap, against 6 for stock 0.9.1 at that seed, with raw and stated accuracy
 unchanged. Under rules frozen before generation that reads unfavourable, which triggers review; it does not
-invalidate the verified corrections. A zero-GPU look at all logged passes (exploratory) then located the gap: replies
-get long equally often on every engine, but past about 100k tokens 0.9.1-family replies rarely finish (0.40 of those
-reaching 100k, B0+B1 0.12) while 0.7.0's usually do (0.71). A B0 pass at seed 1236, the review step, is running.
+invalidate the verified corrections; it is one pass, and a B0 pass at the same seed (the review step) is running. A
+post-hoc look at the logged passes suggests a direction to examine, not a localisation (exploratory, small counts,
+pooled configurations): replies reach 100k tokens at similar rates, but fewer of 0.9.1's long replies finish before
+the cap than 0.7.0's. An audit with stock releases reported separately and a fixed-history probe are planned
+(amendment 20).
 Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#dated-amendments).
 **Fast path:** [answer](#answer) · [evidence](#evidence) · [configuration diff](#what-differs-between-the-two-servers) ·
 [Phase 1](#phase-1) · [completion pilot](#completion-pilot-and-replication) ·
@@ -1115,8 +1117,9 @@ D7 attribution, and a separate record from B0's passes.
 - Over 188 mutually finished documents the per-document token difference has median −30, the same spread as every
   other pair, including stock against itself at another seed.
 - B0 generated fewer tokens than stock at seeds 1234 and 1235.
-- The four newly empty documents are short single-chunk prompts on which the D7 code path cannot run (exposure class
-  unsplittable). Each finished in every earlier B0 and stock pass.
+- The four newly empty documents are short single-chunk prompts; under the exposure reconstruction (class
+  unsplittable), the D7 code path is not expected to run on them. That is reconstructed, not observed. Each finished in
+  every earlier B0 and stock pass.
 - Replies from builds that differ numerically are never byte-identical at the same seed: the identical-reply counts
   first quoted (2-5 of 198) were all pairs of empty replies.
 
@@ -1138,13 +1141,18 @@ kept no token counts).
 | P(finish \| ≥ 200k) | 4 of 8 | 3 of 33 | 0 of 15 |
 
 Intervals are bootstrapped over questions.
-- **Finishing beyond 150k tokens:** 0.9.1-family replies still running past 150k almost never finish (6 of about 100);
-  0.7.0's still do (4 of 8 in 200-260k).
+- **Finishing beyond 150k tokens:** few 0.9.1-family replies still running past 150k finished (6 of about 100); 0.7.0
+  had 4 of 8 in 200-260k. The 150k figure is a post-hoc band, not a change point.
 - **Question as the unit:** of 8 questions that reached 100k on both engines, 0.7.0 finished a larger share on 4, a
   smaller share on 1 and the same on 3.
-- **Reading (exploratory):** the completion gap is not in how often replies get long but in whether long replies
-  terminate. That points to decode behaviour at contexts of about 64-100k tokens and beyond, a range no earlier probe
-  measured (Phase 1 stopped at 16k).
+- **Reading (exploratory, hypothesis only):** in these passes the difference appears in whether long replies terminate
+  rather than in how often replies get long. That makes long-context behaviour a direction worth examining; no earlier
+  probe measured contexts beyond 16k. It does not localise the gap.
+- **How firm this is:** the analysis was chosen after the B1 result, and the thresholds and bands after seeing the data.
+  The "0.9.1 family" pools stock 0.9.1 with the column-511 arm, and "B0 + B1" pools two implementations. Stock 0.9.1
+  alone gives 0.40 at ≥ 100k (10 of 25); B0 + B1 rests on 17 replies. Amendment 20 requires a re-audit with stock
+  releases reported separately, cap exhaustion treated as censoring, and question identities shown, before any of this
+  is relied on.
 - **Accuracy:** B0 and B1 are more correct, with every correction verified, but are not shown to be more accurate.
 - **Direction of the cause is open:** 0.9.1 failing to terminate, or 0.7.0 terminating for a reason that could include
   its own defects.
@@ -1176,7 +1184,7 @@ Stated with their evidence so far.
 | Why does greedy decoding of 0.9.1 diverge between identical long-context requests? | Short prompts repeat bitwise for 96 tokens; 4,240- and 16,240-token prompts diverge at token 3 in the stock release, also with identical prefix-cache coverage; divergences fell on low-margin steps (chosen-token probability 0.30-0.66; runner-up not recorded). Mechanism not identified ([observations](#observations-recorded-separately)). |
 | Does E1 (batch-size-dependent routing weights) affect outputs? | Weights differ by up to 1.1e-3 relative above about 1,024 rows (p99 5.6e-7); expert ids unchanged, by construction and on the captured rows; inferred exposure prefill only; classified as expected numerical variation of the upstream kernel, present in every release. Untested. |
 | Does D7 (index-K pools after unaligned prefill chunk starts) affect selection, outputs or completion? | Confirmed in serving on B0 (217 events in 50 requests of a long-prefix workload) and corrected in B1 ([amendments 17-18](#d7-correction-and-verification-amendment-18)). In the GPQA records the exposure is narrow: none in the 0.9.1 family and doc 127 in 0.7.0 passes 2-3, which finished (reconstructed). The selection effect was not measured. Untested; the behavioural investigation is closed for now. |
-| Why do long replies stop terminating on the 0.9.1 family? | Exploratory (amendment 19f): replies reach ≥ 100k tokens at similar rates on every engine, but P(finish \| ≥ 100k) is 0.71 on 0.7.0, 0.40 on the 0.9.1 family and 0.12 on B0+B1; beyond about 150k the 0.9.1 family almost never finishes. Decode behaviour at contexts of about 64-100k tokens and beyond was not measured by any probe so far. Whether the cause is 0.9.1 failing to terminate or 0.7.0 terminating for another reason is open. |
+| Do long replies terminate less often on 0.9.1 than on 0.7.0, and if so why? | Hypothesis from a post-hoc analysis (amendment 19f; pooled configurations, small counts; audit pending under amendment 20): replies reach ≥ 100k tokens at similar rates on every engine, but P(finish \| ≥ 100k) is 0.71 on 0.7.0, 0.40 on the 0.9.1 family and 0.12 on B0+B1; beyond about 150k the 0.9.1 family almost never finishes. Decode behaviour at contexts of about 64-100k tokens and beyond was not measured by any probe so far. Whether the cause is 0.9.1 failing to terminate or 0.7.0 terminating for another reason is open. |
 | What do the targeted invariants on B0 leave unexamined? | Amendment 17 checked block-table and slot-mapping construction under real scheduling, including the index-K readers' mappings, and found only D7. Still not ruled down: copy-on-write prefix paths (unreachable in that workload); contention-dependent races; the values the index-K readers compute (B12x paged top-k and the compiled prefill readers); the sparse-MLA extend reader under graph replay; the mamba postprocess kernel; communication paths other than the tested transport (PyNCCL above 48 rows was only cross-checked; the owner exchange; contention with model kernels); the mixed-quant MoE path, whose reference harness was deferred (amendment 16). Rank 1's cache tensors were not driven by the cache fixture (same geometry per tensor; amendment 17 checked both ranks' mappings in serving). No evidence yet points to any of these. |
 | Do legitimate numerical differences shift how often long deliberation runs past the cap? | Non-completion is a low-rate tail event (about 1 in 10 fresh draws at these caps on two hard questions); small pilots cannot resolve rates near 2.7% vs 0.7% of replies. |
 | Which part of the 0.7.0 layout bundle goes with the higher disagreement? | Step 6 changed EP, DCP, MLA ownership, KV record, draft pages and the top-k merge path together, and still differs from stock 0.7.0 in the top-k merge path, draft depth (×3 vs ×5), vision and engine code. Inconclusive by component. |

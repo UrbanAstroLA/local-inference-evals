@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-10-13, late evening (completion investigation, amendment 20): plan, status and a correction of emphasis
+
+Contents unchanged: 65 runs, 13 comparisons. No result is added.
+
+- **`PLAN.md`**: amendment 20 (long-context termination localisation: finish the B0 review; zero-GPU discovery; a
+  bounded fixed-history probe proposal; an execution-path control; interpretation and extension rules).
+- **Correction of emphasis:** the tail analysis (amendment 19f) is reworded throughout as exploratory and
+  hypothesis-generating, not a localisation of the gap. FINDINGS item 4m is regraded and its numbers given for stock
+  0.9.1 alone. "The D7 path cannot run" is reworded as a reconstruction. B1's pass is noted as one pass under review.
+- **`LEDGER.md`**: a "where things stand" entry (established / not established / in progress / hypothesis) and the
+  owned correction.
+- **Investigation `README.md`**, **`FINDINGS.md`**, **`tools/site.py`** and **`docs/`** updated accordingly.
+
 ## 2026-10-13, evening (completion investigation, amendments 19c-19f): B1 result, review step, long-context tail
 
 Contents unchanged: 65 runs, 13 comparisons. Items 4l and 4m are new.

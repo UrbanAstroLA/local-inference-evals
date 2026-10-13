@@ -1392,3 +1392,68 @@ Limits: 0.7.0 has 14 replies at ≥ 100k over 11 questions; its pass 1 is unlogg
 historical.
 
 Next: a proposal for a long-context termination probe (CPU discovery first), for independent review.
+
+**Amendment 20 (2026-10-13; adopts the independent assessment "long-context termination localisation", relayed by the
+operator; before any of its data).**
+
+Objective: determine whether engines assign different termination probabilities on identical active-reasoning
+histories, and whether those differences depend on the execution path or the context range. No claim is made that a
+probability difference explains completion rates.
+
+1. **Finish the current review.** B0's seed-1236 result is recorded under the frozen rules, with unchanged categories
+   and these qualifications:
+   - high B0 censoring means D7 is not necessary for the excess;
+   - reply identity measures transcript repeatability, not outcome independence;
+   - one B0/B1 pair cannot isolate a D7 effect;
+   - B0, B1 and stock records stay separate.
+2. **Discovery and fixture inventory (zero GPU):**
+   - **Tail-accounting audit.** Stock releases are reported separately before any pooling of modified configurations.
+     For each threshold and band: unique requests at risk, unique finishing events, question identities, valid
+     final-answer completion against other stopping, session position and seed. 327,680-token exhaustions are
+     administrative censoring in survival terms, kept separately as unanswered benchmark replies. No precise change
+     point is inferred from thresholds chosen after the results.
+   - **Existing histories before new ones.** Inventory retained pilot token traces (including censored reasoning beyond
+     100k), successful traces approaching a reasoning close, and any raw reasoning text from later GPQA runs. Exact
+     token ids are preferred; re-tokenized text is a shared counterfactual fixture, not a replay of the generated
+     sequence. Forced continuation after natural completion is excluded.
+   - **Focused source review** of context-dependent boundaries and dispatch: pool-count and fold transitions;
+     sequence-length and index representation limits; sparse selection and attention paths at long lengths; DCP
+     partition, merge and cache geometry; recurrent-state precision and update paths; long-context speculative
+     verification and stopping/logits processing. Each item is classed as a known bug, expected numerical variation or
+     an untested invariant; this is not a broad release audit.
+   - **Termination semantics.** Verify the actual token ids and processing for reasoning close, end of turn / EOS and
+     the transition into final-answer content. Reasoning close and generation stop are different events; a
+     multi-token marker is scored as a sequence.
+3. **First GPU proposal: a bounded fixed-history probe.** Existing histories spanning roughly 64k-128k, a shorter
+   control, and windows near tentative conclusions or reasoning closes, rather than starting uniformly at 300k. Stock
+   0.7.0 against B1 on identical token prefixes, labelled old shipped computation against corrected computation.
+   - **Measures:** reasoning-close probability (or sequence probability); EOS / end-of-turn probabilities; sampler
+     eligibility after masking and top_p; selected next-token log-probabilities; argmax agreement; repeated-run
+     variation.
+   - Shared-top-20 KL is not the primary measure, because it can omit the termination tokens themselves.
+   - Only designated positions and metrics are captured, not full-vocabulary outputs at every token.
+4. **Execution-path control.** Prefill scoring is a first comparison, not the decisive test. At a small subset of
+   prefixes, prefill scoring is compared with target decode or verification scoring of the same next-token state,
+   using a bounded forced-history window if existing tooling supports it. The report states how committed state is
+   advanced, and repeatability is established before engine differences are interpreted. Full incremental replay that
+   needs substantial new instrumentation is priced separately; prefill is never presented as decode fidelity. A cold
+   prefill does not reconstruct the state accumulated during 100k tokens of speculative generation.
+5. **Interpretation:**
+   - a difference confined to prefill → investigate that path, with no generation-time claim;
+   - a difference also present in target decode → nominate a mechanism, and check it against within-engine variation;
+   - no difference on the tested prefixes → narrow that hypothesis, without excluding history-dependent state
+     corruption or rare effects;
+   - stock 0.7.0 favouring termination → establish whether that is intended computation or known corruption, and never
+     restore an incorrect path as a remedy.
+6. **Extension gate.** Extend toward 200k-300k only when a source boundary or an initial difference justifies it,
+   suitable fixtures exist, and the observation would distinguish the stated alternatives. Costs come from measured
+   throughput. Each GPU stage needs its own proposal and authorization; no full GPQA pass or ablation follows
+   automatically.
+
+**Amendment 20a (2026-10-13; correction of emphasis, coordinator).** Amendment 19f's reading ("the completion gap is
+not in how often replies get long but in whether long replies terminate") is hypothesis-generating only. It was chosen
+after the B1 result, its thresholds and bands came after the data, and its pooled groups mix stock with modified
+configurations, with small counts. It does not localise the gap. Public summaries that said "located" or "localised" are
+reworded, and FINDINGS item 4m is regraded as exploratory. "The D7 path cannot run" on the newly empty documents is a
+reconstruction (exposure class unsplittable), not an observation. Amendment 20's audit, with stock releases reported
+separately, governs any further use of these figures.
