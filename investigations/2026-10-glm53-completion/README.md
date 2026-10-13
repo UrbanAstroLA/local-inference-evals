@@ -1240,7 +1240,10 @@ unfavourable, which triggers review.
 
 **In progress (amendments 19d-19e):** a B0 pass at seed 1236, the review step, with readings frozen before generation.
 
-**Next proposal (amendment 19f):** a long-context termination probe.
+**Next proposal (amendments 19f-20d; awaiting review):** a long-context termination probe
+([`probe-proposal/PROPOSAL.md`](probe-proposal/PROPOSAL.md)), after zero-GPU discovery
+([`tail-audit/`](tail-audit/AUDIT.md), [`fixture-inventory/`](fixture-inventory/INVENTORY.md),
+[`source-review-lc/`](source-review-lc/SOURCE-REVIEW.md)).
 - **Discovery first, zero GPU:** what differs between 0.7.0 and 0.9.1 in ways that scale with context length (sparse
   index-K selection as the pool count grows, DCP2 against DCP1 top-k merging, ×5 against ×3 drafting, block size, the
   tail ring).

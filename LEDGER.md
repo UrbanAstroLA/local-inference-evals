@@ -442,6 +442,33 @@ What was asked, run, found, corrected and withdrawn, in date order.
   - It reproduces the earlier counts. **Owned:** a "6 of about 100 past 150k" figure summed at-risk counts across bands;
     the unique count is 6 of 36.
   - No specific context range is supported.
+
+**2026-10-13, night. Discovery for the termination probe, and the first-stage proposal (amendment 20d).**
+- **Where things stand** (unchanged from the entry above):
+  - the corrections are established;
+  - the completion gap's cause is not;
+  - fewer long replies finishing on stock 0.9.1 than on 0.7.0 is a hypothesis (stock-only audit: 10/25 against 10/14 at
+    ≥ 100k);
+  - finishing less is not looping more;
+  - a B0 pass at seed 1236 (the review of B1's result) is still running.
+- **Termination semantics:** stopping rules are identical across all four builds, so any difference is in the model's
+  output probabilities, not the stop logic ([`fixture-inventory/TERMINATION.md`](investigations/2026-10-glm53-completion/fixture-inventory/TERMINATION.md)).
+- **Existing histories:** exact token ids exist only below 5k tokens. Long histories are text, usable as shared
+  re-tokenized fixtures, and classed as natural close, loop or exhaustion
+  ([`fixture-inventory/INVENTORY.md`](investigations/2026-10-glm53-completion/fixture-inventory/INVENTORY.md)).
+- **Source review of context-length-dependent paths** ([`source-review-lc/SOURCE-REVIEW.md`](investigations/2026-10-glm53-completion/source-review-lc/SOURCE-REVIEW.md)):
+  - the leading candidate is the known D2: decode-written index-K pools are wrong on 0.7.0, often wrong on stock 0.9.1
+    depending on concurrency, and correct on B0/B1;
+  - its rank order matches the finishing rates, which is an observation, not evidence;
+  - D6, the 0.7.0 tail-ring wrap on rejected drafts at ×5, is the second known decode-only index-K corruption;
+  - kernel regime changes past about 120k and KDA block migration are untested invariants;
+  - prefill scoring cannot see D2 or D6, so prefill-only probes would miss them.
+- **Proposal, awaiting independent review** ([`probe-proposal/PROPOSAL.md`](investigations/2026-10-glm53-completion/probe-proposal/PROPOSAL.md)):
+  a force-decoded window probe at 64-128k context, with 0.7.0 against B0 at matched draft depth plus D2 and D6
+  diagnostic arms (diagnostic only, never a remedy), staged and costed. Draft depth and the reject/restore path were
+  added as factors. No GPU use is authorized yet, and no probability difference will be read as explaining completion
+  rates.
+
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough
   qualification. They also said the D7 path "cannot run" where the basis is a reconstruction. These are reworded in the

@@ -1,0 +1,599 @@
+{
+ "rates": {
+  "0.9.1-family": {
+   "start": 13.5,
+   "stop": 1.5,
+   "prefill": 3000.0,
+   "decode": 45.0,
+   "gpus": 2
+  },
+  "0.7.0": {
+   "start": 10.5,
+   "stop": 1.5,
+   "prefill": 1200.0,
+   "decode": 27.0,
+   "gpus": 2
+  }
+ },
+ "batch_totals": {
+  "L": {
+   "n": 8,
+   "prefix_tokens": 794853,
+   "forced_predictions_max": 8193,
+   "forced_predictions_sum": 65544,
+   "rebuild_prompt_tokens": 860389
+  },
+  "S": {
+   "n": 8,
+   "prefix_tokens": 1474,
+   "forced_predictions_max": 11982,
+   "forced_predictions_sum": 55062,
+   "rebuild_prompt_tokens": 56528
+  },
+  "L2": {
+   "n": 8,
+   "prefix_tokens": 719745,
+   "forced_predictions_max": 8193,
+   "forced_predictions_sum": 65544,
+   "rebuild_prompt_tokens": 785281
+  },
+  "L3": {
+   "n": 8,
+   "prefix_tokens": 680677,
+   "forced_predictions_max": 8193,
+   "forced_predictions_sum": 65544,
+   "rebuild_prompt_tokens": 746213
+  }
+ },
+ "stages": {
+  "Stage 1": {
+   "arms": [
+    {
+     "arm": "stock 0.7.0 x5",
+     "wall_h": 1.396,
+     "gpu_h": 2.792,
+     "phases": [
+      [
+       "P0 health",
+       0,
+       0,
+       0.8
+      ],
+      [
+       "S full replay + rebuild at close",
+       58002,
+       11982,
+       8.5
+      ],
+      [
+       "L run 1 (salt A) + index-K dumps + rebuild R1",
+       1655242,
+       8193,
+       28.4
+      ],
+      [
+       "L run 2 (salt A, decode-only repeat)",
+       17408,
+       8193,
+       5.6
+      ],
+      [
+       "L run 3 (salt B, prefill+decode repeat) + rebuild R2",
+       1655242,
+       8193,
+       28.4
+      ]
+     ]
+    },
+    {
+     "arm": "B0 x3",
+     "wall_h": 0.825,
+     "gpu_h": 1.651,
+     "phases": [
+      [
+       "P0 health",
+       0,
+       0,
+       0.8
+      ],
+      [
+       "S full replay + rebuild at close",
+       58002,
+       11982,
+       5.1
+      ],
+      [
+       "L run 1 (salt A) + index-K dumps + rebuild R1",
+       1655242,
+       8193,
+       12.6
+      ],
+      [
+       "L run 2 (salt A, decode-only repeat)",
+       17408,
+       8193,
+       3.5
+      ],
+      [
+       "L run 3 (salt B, prefill+decode repeat) + rebuild R2",
+       1655242,
+       8193,
+       12.6
+      ]
+     ]
+    },
+    {
+     "arm": "B0-minus-D2 x3",
+     "wall_h": 0.825,
+     "gpu_h": 1.651,
+     "phases": [
+      [
+       "P0 health",
+       0,
+       0,
+       0.8
+      ],
+      [
+       "S full replay + rebuild at close",
+       58002,
+       11982,
+       5.1
+      ],
+      [
+       "L run 1 (salt A) + index-K dumps + rebuild R1",
+       1655242,
+       8193,
+       12.6
+      ],
+      [
+       "L run 2 (salt A, decode-only repeat)",
+       17408,
+       8193,
+       3.5
+      ],
+      [
+       "L run 3 (salt B, prefill+decode repeat) + rebuild R2",
+       1655242,
+       8193,
+       12.6
+      ]
+     ]
+    },
+    {
+     "arm": "B0 x5 (draft-depth control)",
+     "wall_h": 0.825,
+     "gpu_h": 1.651,
+     "phases": [
+      [
+       "P0 health",
+       0,
+       0,
+       0.8
+      ],
+      [
+       "S full replay + rebuild at close",
+       58002,
+       11982,
+       5.1
+      ],
+      [
+       "L run 1 (salt A) + index-K dumps + rebuild R1",
+       1655242,
+       8193,
+       12.6
+      ],
+      [
+       "L run 2 (salt A, decode-only repeat)",
+       17408,
+       8193,
+       3.5
+      ],
+      [
+       "L run 3 (salt B, prefill+decode repeat) + rebuild R2",
+       1655242,
+       8193,
+       12.6
+      ]
+     ]
+    }
+   ],
+   "estimate_gpu_h": 7.74,
+   "ceiling_gpu_h": 10.6,
+   "invalid_start_allowance": 0.5
+  },
+  "Stage 1-min (alternative to Stage 1)": {
+   "arms": [
+    {
+     "arm": "stock 0.7.0 x5",
+     "wall_h": 0.829,
+     "gpu_h": 1.658,
+     "phases": [
+      [
+       "P0 health",
+       0,
+       0,
+       0.8
+      ],
+      [
+       "S full replay + rebuild at close",
+       58002,
+       11982,
+       8.5
+      ],
+      [
+       "L run 1 (salt A) + index-K dumps + rebuild R1",
+       1655242,
+       8193,
+       28.4
+      ]
+     ]
+    },
+    {
+     "arm": "B0 x3",
+     "wall_h": 0.558,
+     "gpu_h": 1.116,
+     "phases": [
+      [
+       "P0 health",
+       0,
+       0,
+       0.8
+      ],
+      [
+       "S full replay + rebuild at close",
+       58002,
+       11982,
+       5.1
+      ],
+      [
+       "L run 1 (salt A) + index-K dumps + rebuild R1",
+       1655242,
+       8193,
+       12.6
+      ]
+     ]
+    },
+    {
+     "arm": "B0-minus-D2 x3",
+     "wall_h": 0.558,
+     "gpu_h": 1.116,
+     "phases": [
+      [
+       "P0 health",
+       0,
+       0,
+       0.8
+      ],
+      [
+       "S full replay + rebuild at close",
+       58002,
+       11982,
+       5.1
+      ],
+      [
+       "L run 1 (salt A) + index-K dumps + rebuild R1",
+       1655242,
+       8193,
+       12.6
+      ]
+     ]
+    },
+    {
+     "arm": "B0 x5",
+     "wall_h": 0.558,
+     "gpu_h": 1.116,
+     "phases": [
+      [
+       "P0 health",
+       0,
+       0,
+       0.8
+      ],
+      [
+       "S full replay + rebuild at close",
+       58002,
+       11982,
+       5.1
+      ],
+      [
+       "L run 1 (salt A) + index-K dumps + rebuild R1",
+       1655242,
+       8193,
+       12.6
+      ]
+     ]
+    }
+   ],
+   "estimate_gpu_h": 5.01,
+   "ceiling_gpu_h": 7.0,
+   "invalid_start_allowance": 0.5
+  },
+  "Stage 1b (optional D6 diagnostic)": {
+   "arms": [
+    {
+     "arm": "B0-ring4 x5 (spec-ring reverted on B0)",
+     "wall_h": 0.825,
+     "gpu_h": 1.651,
+     "phases": [
+      [
+       "P0 health",
+       0,
+       0,
+       0.8
+      ],
+      [
+       "S full replay + rebuild at close",
+       58002,
+       11982,
+       5.1
+      ],
+      [
+       "L run 1 (salt A) + index-K dumps + rebuild R1",
+       1655242,
+       8193,
+       12.6
+      ],
+      [
+       "L run 2 (salt A, decode-only repeat)",
+       17408,
+       8193,
+       3.5
+      ],
+      [
+       "L run 3 (salt B, prefill+decode repeat) + rebuild R2",
+       1655242,
+       8193,
+       12.6
+      ]
+     ]
+    }
+   ],
+   "estimate_gpu_h": 1.65,
+   "ceiling_gpu_h": 2.6,
+   "invalid_start_allowance": 0.5
+  },
+  "Stage 2": {
+   "arms": [
+    {
+     "arm": "stock 0.7.0 x5",
+     "wall_h": 1.764,
+     "gpu_h": 3.528,
+     "phases": [
+      [
+       "P0 health",
+       0,
+       0,
+       0.8
+      ],
+      [
+       "L2 run 1 (salt A) + rebuild",
+       1505026,
+       8193,
+       26.3
+      ],
+      [
+       "L2 run 2 (salt A)",
+       17408,
+       8193,
+       5.6
+      ],
+      [
+       "L3 run 1 (salt A) + rebuild",
+       1426890,
+       8193,
+       25.2
+      ],
+      [
+       "L3 run 2 (salt A)",
+       17408,
+       8193,
+       5.6
+      ],
+      [
+       "composition: 2 targets x (1 target + 7 sampled background)",
+       224000,
+       16386,
+       13.6
+      ],
+      [
+       "L oracle-draft bracket (salt A; drafts replaced by history)",
+       812261,
+       8193,
+       16.7
+      ]
+     ]
+    },
+    {
+     "arm": "B0 x3",
+     "wall_h": 1.022,
+     "gpu_h": 2.044,
+     "phases": [
+      [
+       "P0 health",
+       0,
+       0,
+       0.8
+      ],
+      [
+       "L2 run 1 (salt A) + rebuild",
+       1505026,
+       8193,
+       11.7
+      ],
+      [
+       "L2 run 2 (salt A)",
+       17408,
+       8193,
+       3.5
+      ],
+      [
+       "L3 run 1 (salt A) + rebuild",
+       1426890,
+       8193,
+       11.3
+      ],
+      [
+       "L3 run 2 (salt A)",
+       17408,
+       8193,
+       3.5
+      ],
+      [
+       "composition: 2 targets x (1 target + 7 sampled background)",
+       224000,
+       16386,
+       7.6
+      ],
+      [
+       "L oracle-draft bracket (salt A; drafts replaced by history)",
+       812261,
+       8193,
+       7.9
+      ]
+     ]
+    },
+    {
+     "arm": "B0-minus-D2 x3",
+     "wall_h": 1.022,
+     "gpu_h": 2.044,
+     "phases": [
+      [
+       "P0 health",
+       0,
+       0,
+       0.8
+      ],
+      [
+       "L2 run 1 (salt A) + rebuild",
+       1505026,
+       8193,
+       11.7
+      ],
+      [
+       "L2 run 2 (salt A)",
+       17408,
+       8193,
+       3.5
+      ],
+      [
+       "L3 run 1 (salt A) + rebuild",
+       1426890,
+       8193,
+       11.3
+      ],
+      [
+       "L3 run 2 (salt A)",
+       17408,
+       8193,
+       3.5
+      ],
+      [
+       "composition: 2 targets x (1 target + 7 sampled background)",
+       224000,
+       16386,
+       7.6
+      ],
+      [
+       "L oracle-draft bracket (salt A; drafts replaced by history)",
+       812261,
+       8193,
+       7.9
+      ]
+     ]
+    }
+   ],
+   "estimate_gpu_h": 7.62,
+   "ceiling_gpu_h": 10.4,
+   "invalid_start_allowance": 0.5
+  },
+  "Stage 2c (context arm)": {
+   "arms": [
+    {
+     "arm": "stock 0.9.1 x3, Stage 1 + Stage 2 workload in one session",
+     "wall_h": 1.583,
+     "gpu_h": 3.167,
+     "phases": [
+      [
+       "P0 health",
+       0,
+       0,
+       0.8
+      ],
+      [
+       "S full replay + rebuild at close",
+       58002,
+       11982,
+       5.1
+      ],
+      [
+       "L run 1 (salt A) + index-K dumps + rebuild R1",
+       1655242,
+       8193,
+       12.6
+      ],
+      [
+       "L run 2 (salt A, decode-only repeat)",
+       17408,
+       8193,
+       3.5
+      ],
+      [
+       "L run 3 (salt B, prefill+decode repeat) + rebuild R2",
+       1655242,
+       8193,
+       12.6
+      ],
+      [
+       "L2 run 1 (salt A) + rebuild",
+       1505026,
+       8193,
+       11.7
+      ],
+      [
+       "L2 run 2 (salt A)",
+       17408,
+       8193,
+       3.5
+      ],
+      [
+       "L3 run 1 (salt A) + rebuild",
+       1426890,
+       8193,
+       11.3
+      ],
+      [
+       "L3 run 2 (salt A)",
+       17408,
+       8193,
+       3.5
+      ],
+      [
+       "composition: 2 targets x (1 target + 7 sampled background)",
+       224000,
+       16386,
+       7.6
+      ],
+      [
+       "L oracle-draft bracket (salt A; drafts replaced by history)",
+       812261,
+       8193,
+       7.9
+      ]
+     ]
+    }
+   ],
+   "estimate_gpu_h": 3.17,
+   "ceiling_gpu_h": 4.6,
+   "invalid_start_allowance": 0.5
+  },
+  "Stage K (model-free selection replay, 1 GPU)": {
+   "estimate_gpu_h": 0.3,
+   "ceiling_gpu_h": 0.5
+  }
+ },
+ "sensitivity": {
+  "0.7.0 Stage 1 at prefill 900": 3.31,
+  "0.7.0 Stage 1 at prefill 1600": 2.4
+ },
+ "total_estimate_stage1_2_2c_K": 20.48
+}

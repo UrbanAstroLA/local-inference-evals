@@ -1,0 +1,37 @@
+batch L {'n': 8, 'prefix_tokens': 794853, 'forced_predictions_max': 8193, 'forced_predictions_sum': 65544, 'rebuild_prompt_tokens': 860389}
+  L1  ca7fd76b2b7a  near_close             doc 13   e=102579  W=8192   prefix=94518   absend=102710  d2close=0       natural_close
+  L2  e87744068243  near_close             doc 88   e=121500  W=8192   prefix=113537  absend=121729  d2close=0       natural_close
+  L3  09ba09a88d7b  near_close             doc 79   e=97408   W=8192   prefix=89307   absend=97499   d2close=0       natural_close
+  L4  f0c2498e7b7f  near_close             doc 88   e=80324   W=8192   prefix=72361   absend=80553   d2close=0       natural_close
+  L5  fc3010f3a808  exhaustion_active      doc 170  e=120000  W=8192   prefix=112025  absend=120217  d2close=None    active (exhaustion)
+  L6  a503e4fce96a  doc79_pair_active      doc 79   e=97408   W=8192   prefix=89307   absend=97499   d2close=51656   active (history closes later)
+  L7  c85856ae6b1f  doc79_pair_exhaustion  doc 79   e=120000  W=8192   prefix=111899  absend=120091  d2close=None    active (exhaustion)
+  L8  77100ed719f5  doc79_pair_exhaustion  doc 79   e=120000  W=8192   prefix=111899  absend=120091  d2close=None    active (exhaustion)
+batch S {'n': 8, 'prefix_tokens': 1474, 'forced_predictions_max': 11982, 'forced_predictions_sum': 55062, 'rebuild_prompt_tokens': 56528}
+  S1  57703691f509  short_exact            doc 1    e=4795    W=4795   prefix=134     absend=4929    d2close=0       natural_close (exact ids; short control)
+  S2  53fa5b3e066f  short_exact            doc 1    e=4497    W=4497   prefix=134     absend=4631    d2close=0       natural_close (exact ids; short control)
+  S3  be2e9e349395  short_exact            doc 3    e=3867    W=3867   prefix=133     absend=4000    d2close=0       natural_close (exact ids; short control)
+  S4  4b92a6a90ec4  short_exact            doc 3    e=1722    W=1722   prefix=133     absend=1855    d2close=0       natural_close (exact ids; short control)
+  S5  9143682aa636  short_text             doc 79   e=11981   W=11981  prefix=91      absend=12072   d2close=0       natural_close
+  S6  7a64a6fa06d2  short_text             doc 55   e=9929    W=9929   prefix=240     absend=10169   d2close=0       natural_close
+  S7  f4f28e056fb3  short_text             doc 13   e=6885    W=6885   prefix=131     absend=7016    d2close=0       natural_close
+  S8  964a74b9edf1  short_text             doc 109  e=11378   W=11378  prefix=478     absend=11856   d2close=0       natural_close
+batch L2 {'n': 8, 'prefix_tokens': 719745, 'forced_predictions_max': 8193, 'forced_predictions_sum': 65544, 'rebuild_prompt_tokens': 785281}
+  M1  17d671f680b5  near_close             doc 79   e=98842   W=8192   prefix=90741   absend=98933   d2close=0       natural_close
+  M2  6800a0e38d91  near_close             doc 88   e=111213  W=8192   prefix=103250  absend=111442  d2close=0       natural_close
+  M3  cd6c18552504  near_close             doc 121  e=71492   W=8192   prefix=63490   absend=71682   d2close=0       natural_close
+  M4  c253c576662a  near_close             doc 127  e=88819   W=8192   prefix=83422   absend=91614   d2close=0       natural_close
+  M5  70b6b6b1ae38  near_close             doc 79   e=69265   W=8192   prefix=61164   absend=69356   d2close=0       natural_close
+  M6  73700fa6eb27  near_close             doc 88   e=96568   W=8192   prefix=88605   absend=96797   d2close=0       natural_close
+  M7  a68d65155475  near_close             doc 88   e=124781  W=8192   prefix=116818  absend=125010  d2close=0       natural_close
+  M8  dcaf4cdad47a  near_close             doc 88   e=120218  W=8192   prefix=112255  absend=120447  d2close=0       natural_close
+batch L3 {'n': 8, 'prefix_tokens': 680677, 'forced_predictions_max': 8193, 'forced_predictions_sum': 65544, 'rebuild_prompt_tokens': 746213}
+  A1  ca7fd76b2b7a  pre_close_active       doc 13   e=94387   W=8192   prefix=86326   absend=94518   d2close=8192    active (history closes later)
+  A2  e87744068243  pre_close_active       doc 88   e=113308  W=8192   prefix=105345  absend=113537  d2close=8192    active (history closes later)
+  A3  09ba09a88d7b  pre_close_active       doc 79   e=89216   W=8192   prefix=81115   absend=89307   d2close=8192    active (history closes later)
+  A4  f0c2498e7b7f  pre_close_active       doc 88   e=72132   W=8192   prefix=64169   absend=72361   d2close=8192    active (history closes later)
+  A5  fc3010f3a808  exhaustion_active      doc 170  e=64000   W=8192   prefix=56025   absend=64217   d2close=None    active (exhaustion)
+  A6  99441a83fffd  doc79_pair_exhaustion  doc 79   e=96000   W=8192   prefix=87899   absend=96091   d2close=None    active (exhaustion)
+  A7  d5bafa393d8f  doc79_pair_exhaustion  doc 79   e=96000   W=8192   prefix=87899   absend=96091   d2close=None    active (exhaustion)
+  A8  4db8bbe82d5c  loop_preonset_active   doc 79   e=120000  W=8192   prefix=111899  absend=120091  d2close=None    active (loop pre-onset)
+same history across batches: {'ca7fd76b2b7a': ['L:L1', 'L3:A1'], 'e87744068243': ['L:L2', 'L3:A2'], '09ba09a88d7b': ['L:L3', 'L3:A3'], 'f0c2498e7b7f': ['L:L4', 'L3:A4'], 'fc3010f3a808': ['L:L5', 'L3:A5']}

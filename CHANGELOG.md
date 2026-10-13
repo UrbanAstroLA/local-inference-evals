@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-10-13, night (completion investigation, amendment 20d): discovery reports and probe proposal
+
+Contents unchanged. No run is added.
+
+- **New folders:**
+  - `fixture-inventory/`: existing histories, loop/exhaustion/close classes and termination-token semantics;
+  - `source-review-lc/`: the focused review of context-length-dependent paths;
+  - `probe-proposal/`: the first-stage force-decoded window proposal, with feasibility checks, fixture selection and
+    costing.
+  
+  Ids, positions, metrics and hashes only. Substitutions are listed in `PUBLIC-COPIES-20d.txt`.
+- **`PLAN.md`** (amendment 20d), **`LEDGER.md`** and the completion **`README.md`** (next steps) link them. No GPU use
+  is authorized.
+
 ## 2026-10-13, night (completion investigation, amendment 20c): tail-accounting audit
 
 Contents unchanged. No run is added.

@@ -1,0 +1,34 @@
+== 0.7.0: K=5, DCP2, block 3584 local tokens (7168 global)
+  attention block-table width W0 = 147; index-K pages/request = 2058 (131712 local pool rows); mamba block = 3584 tokens
+  tiled route: 5 supertile chunks of 32768 rows, two-level fold ON, slice 16384 rows, 9 slices
+    slice k live from L > 131,072 * k tokens (2nd slice at 131,072; 3rd at 262,144)
+    supertile chunk c live from L > 262,144 * c tokens (2nd chunk at 262,144; 3rd at 524,288)
+  fused route (padded rows <= 16): per-CTA local trims
+    1 req: rows 6 -> padded 8: ctas/group 23; local trim from L > 94,208; repeated trims from L > 176,640; merge serial last-CTA (cap 11776 <= crossover 24691: never cooperative)
+    2 req: rows 12 -> padded 16: ctas/group 11; local trim from L > 45,056; repeated trims from L > 84,480; merge serial last-CTA (cap 5632 <= crossover 23287: never cooperative)
+    3 req: rows 18 -> padded 24: TILED
+    4 req: rows 24 -> padded 24: TILED
+    5 req: rows 30 -> padded 32: TILED
+    6 req: rows 36 -> padded 40: TILED
+    7 req: rows 42 -> padded 48: TILED
+    8 req: rows 48 -> padded 48: TILED
+  prefill: solo chunk 2043 tokens (2048 - K draft slots); unaligned starts (chunk % 4 = 3); logits budget sub-chunks the query dim once pools > 65,696 -> L > 262,784 tokens
+  KDA align migrations per 327,680-token reply: 91
+
+== 0.9.1/B0/B1: K=3, DCP1, block 4352 local tokens (4352 global)
+  attention block-table width W0 = 241; index-K pages/request = 4097 (262208 local pool rows); mamba block = 4352 tokens
+  tiled route: 9 supertile chunks of 32768 rows, two-level fold ON, slice 16384 rows, 17 slices
+    slice k live from L > 65,536 * k tokens (2nd slice at 65,536; 3rd at 131,072)
+    supertile chunk c live from L > 131,072 * c tokens (2nd chunk at 131,072; 3rd at 262,144)
+  fused route (padded rows <= 16): per-CTA local trims
+    1 req: rows 4 -> padded 4: ctas/group 47; local trim from L > 96,256; repeated trims from L > 180,480; merge cooperative (always)
+    2 req: rows 8 -> padded 8: ctas/group 23; local trim from L > 47,104; repeated trims from L > 88,320; merge cooperative (always)
+    3 req: rows 12 -> padded 16: ctas/group 11; local trim from L > 22,528; repeated trims from L > 42,240; merge cooperative (always)
+    4 req: rows 16 -> padded 16: ctas/group 11; local trim from L > 22,528; repeated trims from L > 42,240; merge cooperative (always)
+    5 req: rows 20 -> padded 24: TILED
+    6 req: rows 24 -> padded 24: TILED
+    7 req: rows 28 -> padded 32: TILED
+    8 req: rows 32 -> padded 32: TILED
+  prefill: solo chunk 2045 tokens (2048 - K draft slots); unaligned starts (chunk % 4 = 1); logits budget sub-chunks the query dim once pools > 65,632 -> L > 262,528 tokens
+  KDA align migrations per 327,680-token reply: 75
+

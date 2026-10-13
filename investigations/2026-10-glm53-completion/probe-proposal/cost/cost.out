@@ -1,0 +1,107 @@
+Planning rates: {"0.9.1-family": {"start": 13.5, "stop": 1.5, "prefill": 3000.0, "decode": 45.0, "gpus": 2}, "0.7.0": {"start": 10.5, "stop": 1.5, "prefill": 1200.0, "decode": 27.0, "gpus": 2}}
+
+Stage 1 / stock 0.7.0 x5: wall 1.40 h, 2.79 occupied GPU-h
+   P0 health                                                  prefill         0 tok  decode      0 tok/request    0.8 min
+   S full replay + rebuild at close                           prefill     58002 tok  decode  11982 tok/request    8.5 min
+   L run 1 (salt A) + index-K dumps + rebuild R1              prefill   1655242 tok  decode   8193 tok/request   28.4 min
+   L run 2 (salt A, decode-only repeat)                       prefill     17408 tok  decode   8193 tok/request    5.6 min
+   L run 3 (salt B, prefill+decode repeat) + rebuild R2       prefill   1655242 tok  decode   8193 tok/request   28.4 min
+
+Stage 1 / B0 x3: wall 0.83 h, 1.65 occupied GPU-h
+   P0 health                                                  prefill         0 tok  decode      0 tok/request    0.8 min
+   S full replay + rebuild at close                           prefill     58002 tok  decode  11982 tok/request    5.1 min
+   L run 1 (salt A) + index-K dumps + rebuild R1              prefill   1655242 tok  decode   8193 tok/request   12.6 min
+   L run 2 (salt A, decode-only repeat)                       prefill     17408 tok  decode   8193 tok/request    3.5 min
+   L run 3 (salt B, prefill+decode repeat) + rebuild R2       prefill   1655242 tok  decode   8193 tok/request   12.6 min
+
+Stage 1 / B0-minus-D2 x3: wall 0.83 h, 1.65 occupied GPU-h
+   P0 health                                                  prefill         0 tok  decode      0 tok/request    0.8 min
+   S full replay + rebuild at close                           prefill     58002 tok  decode  11982 tok/request    5.1 min
+   L run 1 (salt A) + index-K dumps + rebuild R1              prefill   1655242 tok  decode   8193 tok/request   12.6 min
+   L run 2 (salt A, decode-only repeat)                       prefill     17408 tok  decode   8193 tok/request    3.5 min
+   L run 3 (salt B, prefill+decode repeat) + rebuild R2       prefill   1655242 tok  decode   8193 tok/request   12.6 min
+
+Stage 1 / B0 x5 (draft-depth control): wall 0.83 h, 1.65 occupied GPU-h
+   P0 health                                                  prefill         0 tok  decode      0 tok/request    0.8 min
+   S full replay + rebuild at close                           prefill     58002 tok  decode  11982 tok/request    5.1 min
+   L run 1 (salt A) + index-K dumps + rebuild R1              prefill   1655242 tok  decode   8193 tok/request   12.6 min
+   L run 2 (salt A, decode-only repeat)                       prefill     17408 tok  decode   8193 tok/request    3.5 min
+   L run 3 (salt B, prefill+decode repeat) + rebuild R2       prefill   1655242 tok  decode   8193 tok/request   12.6 min
+Stage 1: estimate 7.74 GPU-h; ceiling 10.6 (x1.30 + one invalid-start allowance 0.50)
+
+Stage 1-min (alternative to Stage 1) / stock 0.7.0 x5: wall 0.83 h, 1.66 occupied GPU-h
+   P0 health                                                  prefill         0 tok  decode      0 tok/request    0.8 min
+   S full replay + rebuild at close                           prefill     58002 tok  decode  11982 tok/request    8.5 min
+   L run 1 (salt A) + index-K dumps + rebuild R1              prefill   1655242 tok  decode   8193 tok/request   28.4 min
+
+Stage 1-min (alternative to Stage 1) / B0 x3: wall 0.56 h, 1.12 occupied GPU-h
+   P0 health                                                  prefill         0 tok  decode      0 tok/request    0.8 min
+   S full replay + rebuild at close                           prefill     58002 tok  decode  11982 tok/request    5.1 min
+   L run 1 (salt A) + index-K dumps + rebuild R1              prefill   1655242 tok  decode   8193 tok/request   12.6 min
+
+Stage 1-min (alternative to Stage 1) / B0-minus-D2 x3: wall 0.56 h, 1.12 occupied GPU-h
+   P0 health                                                  prefill         0 tok  decode      0 tok/request    0.8 min
+   S full replay + rebuild at close                           prefill     58002 tok  decode  11982 tok/request    5.1 min
+   L run 1 (salt A) + index-K dumps + rebuild R1              prefill   1655242 tok  decode   8193 tok/request   12.6 min
+
+Stage 1-min (alternative to Stage 1) / B0 x5: wall 0.56 h, 1.12 occupied GPU-h
+   P0 health                                                  prefill         0 tok  decode      0 tok/request    0.8 min
+   S full replay + rebuild at close                           prefill     58002 tok  decode  11982 tok/request    5.1 min
+   L run 1 (salt A) + index-K dumps + rebuild R1              prefill   1655242 tok  decode   8193 tok/request   12.6 min
+Stage 1-min (alternative to Stage 1): estimate 5.01 GPU-h; ceiling 7.0 (x1.30 + one invalid-start allowance 0.50)
+
+Stage 1b (optional D6 diagnostic) / B0-ring4 x5 (spec-ring reverted on B0): wall 0.83 h, 1.65 occupied GPU-h
+   P0 health                                                  prefill         0 tok  decode      0 tok/request    0.8 min
+   S full replay + rebuild at close                           prefill     58002 tok  decode  11982 tok/request    5.1 min
+   L run 1 (salt A) + index-K dumps + rebuild R1              prefill   1655242 tok  decode   8193 tok/request   12.6 min
+   L run 2 (salt A, decode-only repeat)                       prefill     17408 tok  decode   8193 tok/request    3.5 min
+   L run 3 (salt B, prefill+decode repeat) + rebuild R2       prefill   1655242 tok  decode   8193 tok/request   12.6 min
+Stage 1b (optional D6 diagnostic): estimate 1.65 GPU-h; ceiling 2.6 (x1.30 + one invalid-start allowance 0.50)
+
+Stage 2 / stock 0.7.0 x5: wall 1.76 h, 3.53 occupied GPU-h
+   P0 health                                                  prefill         0 tok  decode      0 tok/request    0.8 min
+   L2 run 1 (salt A) + rebuild                                prefill   1505026 tok  decode   8193 tok/request   26.3 min
+   L2 run 2 (salt A)                                          prefill     17408 tok  decode   8193 tok/request    5.6 min
+   L3 run 1 (salt A) + rebuild                                prefill   1426890 tok  decode   8193 tok/request   25.2 min
+   L3 run 2 (salt A)                                          prefill     17408 tok  decode   8193 tok/request    5.6 min
+   composition: 2 targets x (1 target + 7 sampled background) prefill    224000 tok  decode  16386 tok/request   13.6 min
+   L oracle-draft bracket (salt A; drafts replaced by history) prefill    812261 tok  decode   8193 tok/request   16.7 min
+
+Stage 2 / B0 x3: wall 1.02 h, 2.04 occupied GPU-h
+   P0 health                                                  prefill         0 tok  decode      0 tok/request    0.8 min
+   L2 run 1 (salt A) + rebuild                                prefill   1505026 tok  decode   8193 tok/request   11.7 min
+   L2 run 2 (salt A)                                          prefill     17408 tok  decode   8193 tok/request    3.5 min
+   L3 run 1 (salt A) + rebuild                                prefill   1426890 tok  decode   8193 tok/request   11.3 min
+   L3 run 2 (salt A)                                          prefill     17408 tok  decode   8193 tok/request    3.5 min
+   composition: 2 targets x (1 target + 7 sampled background) prefill    224000 tok  decode  16386 tok/request    7.6 min
+   L oracle-draft bracket (salt A; drafts replaced by history) prefill    812261 tok  decode   8193 tok/request    7.9 min
+
+Stage 2 / B0-minus-D2 x3: wall 1.02 h, 2.04 occupied GPU-h
+   P0 health                                                  prefill         0 tok  decode      0 tok/request    0.8 min
+   L2 run 1 (salt A) + rebuild                                prefill   1505026 tok  decode   8193 tok/request   11.7 min
+   L2 run 2 (salt A)                                          prefill     17408 tok  decode   8193 tok/request    3.5 min
+   L3 run 1 (salt A) + rebuild                                prefill   1426890 tok  decode   8193 tok/request   11.3 min
+   L3 run 2 (salt A)                                          prefill     17408 tok  decode   8193 tok/request    3.5 min
+   composition: 2 targets x (1 target + 7 sampled background) prefill    224000 tok  decode  16386 tok/request    7.6 min
+   L oracle-draft bracket (salt A; drafts replaced by history) prefill    812261 tok  decode   8193 tok/request    7.9 min
+Stage 2: estimate 7.62 GPU-h; ceiling 10.4 (x1.30 + one invalid-start allowance 0.50)
+
+Stage 2c (context arm) / stock 0.9.1 x3, Stage 1 + Stage 2 workload in one session: wall 1.58 h, 3.17 occupied GPU-h
+   P0 health                                                  prefill         0 tok  decode      0 tok/request    0.8 min
+   S full replay + rebuild at close                           prefill     58002 tok  decode  11982 tok/request    5.1 min
+   L run 1 (salt A) + index-K dumps + rebuild R1              prefill   1655242 tok  decode   8193 tok/request   12.6 min
+   L run 2 (salt A, decode-only repeat)                       prefill     17408 tok  decode   8193 tok/request    3.5 min
+   L run 3 (salt B, prefill+decode repeat) + rebuild R2       prefill   1655242 tok  decode   8193 tok/request   12.6 min
+   L2 run 1 (salt A) + rebuild                                prefill   1505026 tok  decode   8193 tok/request   11.7 min
+   L2 run 2 (salt A)                                          prefill     17408 tok  decode   8193 tok/request    3.5 min
+   L3 run 1 (salt A) + rebuild                                prefill   1426890 tok  decode   8193 tok/request   11.3 min
+   L3 run 2 (salt A)                                          prefill     17408 tok  decode   8193 tok/request    3.5 min
+   composition: 2 targets x (1 target + 7 sampled background) prefill    224000 tok  decode  16386 tok/request    7.6 min
+   L oracle-draft bracket (salt A; drafts replaced by history) prefill    812261 tok  decode   8193 tok/request    7.9 min
+Stage 2c (context arm): estimate 3.17 GPU-h; ceiling 4.6 (x1.30 + one invalid-start allowance 0.50)
+
+Stage K: estimate 0.30 GPU-h (1 GPU); ceiling 0.5
+sensitivity: stock 0.7.0 Stage 1 session at prefill 900 tok/s -> 3.31 GPU-h
+sensitivity: stock 0.7.0 Stage 1 session at prefill 1600 tok/s -> 2.40 GPU-h
+
+Total estimate, Stages 1 + 2 + 2c + K (Stage 1-min excluded): 20.48 GPU-h

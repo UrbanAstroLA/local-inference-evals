@@ -1,0 +1,2121 @@
+{
+ "note": "Ids, positions, classes and hashes only. Window-level id hashes (prefix ids, forced ids) are computed at freeze (Stage 0) when the ids are re-tokenized in a CPU container; they are not here.",
+ "inventory_sha256": "786ba0aef34af528bdd5082b4b7ad7a3e9fe943772fd0ab558dfd6d204a846d9",
+ "params": {
+  "W_LONG": 8192,
+  "LEAD_IN": 512,
+  "TAIL": 512,
+  "GRID": 64,
+  "ABS_LIMIT": 131072,
+  "CLOSE_ID": 154842
+ },
+ "batches": {
+  "L": [
+   {
+    "fixture": "L1",
+    "source_id": "ca7fd76b2b7a",
+    "cls": "near_close",
+    "note": "stock 0.7.0 history, doc 13",
+    "doc": 13,
+    "seed": null,
+    "source_engine": "v0.7.0 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "396f4c0bc1ff94886cb98cf42da15a01b585b905ddc4f76561f5456b771f5693",
+    "prompt_tokens": 131,
+    "reasoning_tokens_in_history": 102579,
+    "natural_close_index": 102579,
+    "window_start_index": 94387,
+    "window_end_index": 102579,
+    "forced_predictions": 8193,
+    "prefix_tokens": 94518,
+    "abs_window_end": 102710,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      102579
+     ],
+     "tail": [
+      102068,
+      102579
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      94899,
+      102579
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": -1,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 96000,
+      "zlib30k": 0.239,
+      "rep200": 0.0075,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.2379,
+     "rep200": 0.0002,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     95149,
+     95154,
+     95424,
+     95429,
+     95717,
+     95733,
+     95741,
+     96219,
+     96235,
+     96240,
+     96388,
+     96400,
+     96401,
+     96704,
+     96709,
+     96999,
+     97000,
+     97317,
+     97333,
+     97338,
+     97368,
+     97845,
+     97862,
+     97863,
+     98432,
+     98514,
+     98519,
+     98679,
+     98680,
+     98697,
+     98926,
+     98931,
+     98966,
+     99244,
+     99259,
+     99690,
+     99695,
+     100226,
+     100231,
+     100244,
+     100281,
+     100512,
+     100513,
+     100821,
+     101081,
+     101092,
+     101104,
+     101105,
+     101450,
+     101931,
+     101936,
+     102050,
+     102066,
+     102071,
+     102189,
+     102194,
+     102207,
+     102549,
+     102554,
+     102567
+    ],
+    "class_20b_at_window": "natural_close"
+   },
+   {
+    "fixture": "L2",
+    "source_id": "e87744068243",
+    "cls": "near_close",
+    "note": "stock 0.7.0 history, doc 88",
+    "doc": 88,
+    "seed": null,
+    "source_engine": "v0.7.0 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "4d39bdecebeac640f0855952f424eb9f36f618a179d641f24de994bf27647d78",
+    "prompt_tokens": 229,
+    "reasoning_tokens_in_history": 121500,
+    "natural_close_index": 121500,
+    "window_start_index": 113308,
+    "window_end_index": 121500,
+    "forced_predictions": 8193,
+    "prefix_tokens": 113537,
+    "abs_window_end": 121729,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      121500
+     ],
+     "tail": [
+      120989,
+      121500
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      113820,
+      121500
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": -8,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 112000,
+      "zlib30k": 0.3313,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.3343,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     121126
+    ],
+    "class_20b_at_window": "natural_close"
+   },
+   {
+    "fixture": "L3",
+    "source_id": "09ba09a88d7b",
+    "cls": "near_close",
+    "note": "stock 0.9.1 history, doc 79 seed 5004 (pairs with L6)",
+    "doc": 79,
+    "seed": 5004,
+    "source_engine": "v0.9.1 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "e0a7e2ea41cb87224fe4f5f4ec1bd75baa2875e192eee1dbb95afc8b09b1663d",
+    "prompt_tokens": 91,
+    "reasoning_tokens_in_history": 97408,
+    "natural_close_index": 97408,
+    "window_start_index": 89216,
+    "window_end_index": 97408,
+    "forced_predictions": 8193,
+    "prefix_tokens": 89307,
+    "abs_window_end": 97499,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      97408
+     ],
+     "tail": [
+      96897,
+      97408
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      89728,
+      97408
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 0,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 96000,
+      "zlib30k": 0.3352,
+      "rep200": 0.0009,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.3443,
+     "rep200": 0.0009,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     90646,
+     91460,
+     92461,
+     96386,
+     96963,
+     97396,
+     97405
+    ],
+    "class_20b_at_window": "natural_close"
+   },
+   {
+    "fixture": "L4",
+    "source_id": "f0c2498e7b7f",
+    "cls": "near_close",
+    "note": "stock 0.9.1 history, doc 88",
+    "doc": 88,
+    "seed": 5005,
+    "source_engine": "v0.9.1 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "8ccb2eb5d205cb65c0a361e92997f0a647a6514401392747627df25c4e4e44db",
+    "prompt_tokens": 229,
+    "reasoning_tokens_in_history": 80324,
+    "natural_close_index": 80324,
+    "window_start_index": 72132,
+    "window_end_index": 80324,
+    "forced_predictions": 8193,
+    "prefix_tokens": 72361,
+    "abs_window_end": 80553,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      80324
+     ],
+     "tail": [
+      79813,
+      80324
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      72644,
+      80324
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 0,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 80000,
+      "zlib30k": 0.3365,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.3359,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     72948,
+     80007
+    ],
+    "class_20b_at_window": "natural_close"
+   },
+   {
+    "fixture": "L5",
+    "source_id": "fc3010f3a808",
+    "cls": "exhaustion_active",
+    "note": "phase-2 r0 history (doc 170), active, no close in reach",
+    "doc": 170,
+    "seed": 7170,
+    "source_engine": "v0.9.1 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "f4dac7dddfd8206108d443d09f6a8215cd024047c6191d6a58b83e11566ccc6c",
+    "prompt_tokens": 217,
+    "reasoning_tokens_in_history": 131069,
+    "natural_close_index": null,
+    "window_start_index": 111808,
+    "window_end_index": 120000,
+    "forced_predictions": 8193,
+    "prefix_tokens": 112025,
+    "abs_window_end": 120217,
+    "below_131072": true,
+    "forced_token_at_end": "history token e",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      120000
+     ],
+     "tail": [
+      119489,
+      120000
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      112320,
+      120000
+     ]
+    },
+    "state_of_history": "exhaustion",
+    "distance_to_close": null,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 3,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 112000,
+      "zlib30k": 0.3631,
+      "rep200": 0.0,
+      "repeating": false
+     },
+     "after": {
+      "checkpoint": 128000,
+      "zlib30k": 0.3724,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.3708,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     114289,
+     115284,
+     116103,
+     117476,
+     118612
+    ],
+    "class_20b_at_window": "active (exhaustion)"
+   },
+   {
+    "fixture": "L6",
+    "source_id": "a503e4fce96a",
+    "cls": "doc79_pair_active",
+    "note": "stock 0.7.0 doc 79 seed 5004, same end index as L3; closes 51.7k later",
+    "doc": 79,
+    "seed": 5004,
+    "source_engine": "v0.7.0 stock image, DFlash x3",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "d37db56907e158295fa35593c64bb95ac8b8d14cf7d63acc71213704c3001d00",
+    "prompt_tokens": 91,
+    "reasoning_tokens_in_history": 149064,
+    "natural_close_index": 149064,
+    "window_start_index": 89216,
+    "window_end_index": 97408,
+    "forced_predictions": 8193,
+    "prefix_tokens": 89307,
+    "abs_window_end": 97499,
+    "below_131072": true,
+    "forced_token_at_end": "history token e",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      97408
+     ],
+     "tail": [
+      96897,
+      97408
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      89728,
+      97408
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 51656,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 0,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 96000,
+      "zlib30k": 0.3089,
+      "rep200": 0.0061,
+      "repeating": false
+     },
+     "after": {
+      "checkpoint": 112000,
+      "zlib30k": 0.3109,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.2974,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     89899,
+     89900,
+     90272,
+     90273,
+     90339,
+     90340,
+     90417,
+     90418,
+     90828,
+     90829,
+     91187,
+     91188,
+     91304,
+     91312,
+     91313,
+     91885,
+     93075,
+     93076,
+     93251,
+     93252,
+     93772,
+     93773,
+     93934,
+     93935,
+     94219,
+     94227,
+     94228,
+     94911,
+     95273,
+     95295,
+     95296,
+     96775
+    ],
+    "class_20b_at_window": "active (history closes later)"
+   },
+   {
+    "fixture": "L7",
+    "source_id": "c85856ae6b1f",
+    "cls": "doc79_pair_exhaustion",
+    "note": "stock 0.7.0 doc 79 seed 5010, exhaustion (pairs with L8)",
+    "doc": 79,
+    "seed": 5010,
+    "source_engine": "v0.7.0 stock image, DFlash x3",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "9bb820ed1be78ff56712336b4b569380edfcf22c49ef9246c4e5a39c09198ca3",
+    "prompt_tokens": 91,
+    "reasoning_tokens_in_history": 327680,
+    "natural_close_index": null,
+    "window_start_index": 111808,
+    "window_end_index": 120000,
+    "forced_predictions": 8193,
+    "prefix_tokens": 111899,
+    "abs_window_end": 120091,
+    "below_131072": true,
+    "forced_token_at_end": "history token e",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      120000
+     ],
+     "tail": [
+      119489,
+      120000
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      112320,
+      120000
+     ]
+    },
+    "state_of_history": "exhaustion",
+    "distance_to_close": null,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 0,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 112000,
+      "zlib30k": 0.3815,
+      "rep200": 0.0,
+      "repeating": false
+     },
+     "after": {
+      "checkpoint": 128000,
+      "zlib30k": 0.3621,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.3244,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [],
+    "class_20b_at_window": "active (exhaustion)"
+   },
+   {
+    "fixture": "L8",
+    "source_id": "77100ed719f5",
+    "cls": "doc79_pair_exhaustion",
+    "note": "stock 0.9.1 doc 79 seed 5010, exhaustion (pairs with L7)",
+    "doc": 79,
+    "seed": 5010,
+    "source_engine": "v0.9.1 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "a391beb46a6ae9ea5a992d56392784d38686262e6922fe310ec54a094b0800df",
+    "prompt_tokens": 91,
+    "reasoning_tokens_in_history": 327678,
+    "natural_close_index": null,
+    "window_start_index": 111808,
+    "window_end_index": 120000,
+    "forced_predictions": 8193,
+    "prefix_tokens": 111899,
+    "abs_window_end": 120091,
+    "below_131072": true,
+    "forced_token_at_end": "history token e",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      120000
+     ],
+     "tail": [
+      119489,
+      120000
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      112320,
+      120000
+     ]
+    },
+    "state_of_history": "exhaustion",
+    "distance_to_close": null,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 2,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 112000,
+      "zlib30k": 0.3513,
+      "rep200": 0.0,
+      "repeating": false
+     },
+     "after": {
+      "checkpoint": 128000,
+      "zlib30k": 0.3442,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.3102,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [],
+    "class_20b_at_window": "active (exhaustion)"
+   }
+  ],
+  "S": [
+   {
+    "fixture": "S1",
+    "source_id": "57703691f509",
+    "cls": "short_exact",
+    "note": "exact ids, 0.9.1 EP2/DCP2 bundle (step 6), doc 1",
+    "doc": 1,
+    "seed": 1235,
+    "source_engine": "v0.9.1 EP2/DCP2 bundle",
+    "history_ids": "exact generated ids (active segment, up to the first close)",
+    "history_sha256": "3395bd84d5bf8602e6f2eb5e89ec74ca5f975606576304bb9be626ca14d21fda",
+    "prompt_tokens": 134,
+    "reasoning_tokens_in_history": 16000,
+    "natural_close_index": 4795,
+    "window_start_index": 0,
+    "window_end_index": 4795,
+    "forced_predictions": 4796,
+    "prefix_tokens": 134,
+    "abs_window_end": 4929,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      4795
+     ],
+     "tail": [
+      4284,
+      4795
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      512,
+      4795
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "class_20b_at_window": "natural_close (exact ids; short control)",
+    "generating_sampler": "T1.0 top_p 1.0 ignore_eos",
+    "decode_logprob_of_close_at_close_on_generator": -0.0021613112185150385
+   },
+   {
+    "fixture": "S2",
+    "source_id": "53fa5b3e066f",
+    "cls": "short_exact",
+    "note": "exact ids, 0.7.0 + kpool fixes (step 5), doc 1",
+    "doc": 1,
+    "seed": 1235,
+    "source_engine": "v0.7.0 + kpool fixes (local)",
+    "history_ids": "exact generated ids (active segment, up to the first close)",
+    "history_sha256": "1aea423da09464896c47978c06ccc0949d752ac6befd4ef26e349ed866267323",
+    "prompt_tokens": 134,
+    "reasoning_tokens_in_history": 16000,
+    "natural_close_index": 4497,
+    "window_start_index": 0,
+    "window_end_index": 4497,
+    "forced_predictions": 4498,
+    "prefix_tokens": 134,
+    "abs_window_end": 4631,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      4497
+     ],
+     "tail": [
+      3986,
+      4497
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      512,
+      4497
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "class_20b_at_window": "natural_close (exact ids; short control)",
+    "generating_sampler": "T1.0 top_p 1.0 ignore_eos",
+    "decode_logprob_of_close_at_close_on_generator": -0.00019488819816615433
+   },
+   {
+    "fixture": "S3",
+    "source_id": "be2e9e349395",
+    "cls": "short_exact",
+    "note": "exact ids, 0.9.1 EP2/DCP2 bundle (step 6), doc 3",
+    "doc": 3,
+    "seed": 1237,
+    "source_engine": "v0.9.1 EP2/DCP2 bundle",
+    "history_ids": "exact generated ids (active segment, up to the first close)",
+    "history_sha256": "ff2134e5adbea3b6dd5f83383b994ff4c24c68f2edf4be9b26a6f5d9b0ceda11",
+    "prompt_tokens": 133,
+    "reasoning_tokens_in_history": 16000,
+    "natural_close_index": 3867,
+    "window_start_index": 0,
+    "window_end_index": 3867,
+    "forced_predictions": 3868,
+    "prefix_tokens": 133,
+    "abs_window_end": 4000,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      3867
+     ],
+     "tail": [
+      3356,
+      3867
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      512,
+      3867
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "class_20b_at_window": "natural_close (exact ids; short control)",
+    "generating_sampler": "T1.0 top_p 1.0 ignore_eos",
+    "decode_logprob_of_close_at_close_on_generator": -0.003933313302695751
+   },
+   {
+    "fixture": "S4",
+    "source_id": "4b92a6a90ec4",
+    "cls": "short_exact",
+    "note": "exact ids, 0.7.0 + kpool fixes (step 5), doc 3",
+    "doc": 3,
+    "seed": 1237,
+    "source_engine": "v0.7.0 + kpool fixes (local)",
+    "history_ids": "exact generated ids (active segment, up to the first close)",
+    "history_sha256": "e72e9670861a41e7e634ae3cebdb678d00abb7765dd3235e20a0476355e1ef62",
+    "prompt_tokens": 133,
+    "reasoning_tokens_in_history": 16000,
+    "natural_close_index": 1722,
+    "window_start_index": 0,
+    "window_end_index": 1722,
+    "forced_predictions": 1723,
+    "prefix_tokens": 133,
+    "abs_window_end": 1855,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 430,
+    "primary_positions": {
+     "end": [
+      1722
+     ],
+     "tail": [
+      1211,
+      1722
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      430,
+      1722
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "class_20b_at_window": "natural_close (exact ids; short control)",
+    "generating_sampler": "T1.0 top_p 1.0 ignore_eos",
+    "decode_logprob_of_close_at_close_on_generator": -0.03741417080163956
+   },
+   {
+    "fixture": "S5",
+    "source_id": "9143682aa636",
+    "cls": "short_text",
+    "note": "stock 0.7.0 doc 79 seed 5001",
+    "doc": 79,
+    "seed": 5001,
+    "source_engine": "v0.7.0 stock image, DFlash x3",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "7b8ae326426c23dfba7878dd485b3e32a7b398a8e835ea30b96e477ac1ee59d0",
+    "prompt_tokens": 91,
+    "reasoning_tokens_in_history": 11981,
+    "natural_close_index": 11981,
+    "window_start_index": 0,
+    "window_end_index": 11981,
+    "forced_predictions": 11982,
+    "prefix_tokens": 91,
+    "abs_window_end": 12072,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      11981
+     ],
+     "tail": [
+      11470,
+      11981
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      512,
+      11981
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": -1,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 8000,
+      "zlib30k": 0.368,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.3582,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [],
+    "class_20b_at_window": "natural_close"
+   },
+   {
+    "fixture": "S6",
+    "source_id": "7a64a6fa06d2",
+    "cls": "short_text",
+    "note": "stock 0.9.1 pilot doc 55",
+    "doc": 55,
+    "seed": 7055,
+    "source_engine": "v0.9.1 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "01a78b38dbc74fde62e934ff40c960341624d2dfbf7f0dd62c4a8eaf7a29901d",
+    "prompt_tokens": 240,
+    "reasoning_tokens_in_history": 9929,
+    "natural_close_index": 9929,
+    "window_start_index": 0,
+    "window_end_index": 9929,
+    "forced_predictions": 9930,
+    "prefix_tokens": 240,
+    "abs_window_end": 10169,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      9929
+     ],
+     "tail": [
+      9418,
+      9929
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      512,
+      9929
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 0,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 8000,
+      "zlib30k": 0.3105,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.306,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [],
+    "class_20b_at_window": "natural_close"
+   },
+   {
+    "fixture": "S7",
+    "source_id": "f4f28e056fb3",
+    "cls": "short_text",
+    "note": "stock 0.7.0 S7 doc 13",
+    "doc": 13,
+    "seed": 1234,
+    "source_engine": "v0.7.0 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "f25a15a95c59ef045d8e79ff1daaebff15758d55db4d598bda72571124314ac5",
+    "prompt_tokens": 131,
+    "reasoning_tokens_in_history": 6885,
+    "natural_close_index": 6885,
+    "window_start_index": 0,
+    "window_end_index": 6885,
+    "forced_predictions": 6886,
+    "prefix_tokens": 131,
+    "abs_window_end": 7016,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      6885
+     ],
+     "tail": [
+      6374,
+      6885
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      512,
+      6885
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 0,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 4000,
+      "zlib30k": 0.3212,
+      "rep200": 0.0042,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.3024,
+     "rep200": 0.005,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [],
+    "class_20b_at_window": "natural_close"
+   },
+   {
+    "fixture": "S8",
+    "source_id": "964a74b9edf1",
+    "cls": "short_text",
+    "note": "stock 0.9.1 replication doc 109",
+    "doc": 109,
+    "seed": 7409,
+    "source_engine": "v0.9.1 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "536288b5d62238ab25081566101d2d517b17e6f1d11367e34aeb390e50d4abbf",
+    "prompt_tokens": 478,
+    "reasoning_tokens_in_history": 11378,
+    "natural_close_index": 11378,
+    "window_start_index": 0,
+    "window_end_index": 11378,
+    "forced_predictions": 11379,
+    "prefix_tokens": 478,
+    "abs_window_end": 11856,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      11378
+     ],
+     "tail": [
+      10867,
+      11378
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      512,
+      11378
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 0,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 8000,
+      "zlib30k": 0.275,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.2852,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [],
+    "class_20b_at_window": "natural_close"
+   }
+  ],
+  "L2": [
+   {
+    "fixture": "M1",
+    "source_id": "17d671f680b5",
+    "cls": "near_close",
+    "note": "stock 0.7.0, doc 79",
+    "doc": 79,
+    "seed": null,
+    "source_engine": "v0.7.0 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "ce539dfa6070f3cd22888fec1b0f400e2460912a7520e58878f7610afca8fb3e",
+    "prompt_tokens": 91,
+    "reasoning_tokens_in_history": 98842,
+    "natural_close_index": 98842,
+    "window_start_index": 90650,
+    "window_end_index": 98842,
+    "forced_predictions": 8193,
+    "prefix_tokens": 90741,
+    "abs_window_end": 98933,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      98842
+     ],
+     "tail": [
+      98331,
+      98842
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      91162,
+      98842
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 1,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 96000,
+      "zlib30k": 0.3672,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.3545,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     96928,
+     98581,
+     98772,
+     98833,
+     98834
+    ],
+    "class_20b_at_window": "natural_close"
+   },
+   {
+    "fixture": "M2",
+    "source_id": "6800a0e38d91",
+    "cls": "near_close",
+    "note": "stock 0.7.0, doc 88 (re-tokenization drift 7)",
+    "doc": 88,
+    "seed": null,
+    "source_engine": "v0.7.0 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "1f6de6ef9039d665f2ab978badbbb44caf937c6bc73e1c7f7bca5b00329edce5",
+    "prompt_tokens": 229,
+    "reasoning_tokens_in_history": 111213,
+    "natural_close_index": 111213,
+    "window_start_index": 103021,
+    "window_end_index": 111213,
+    "forced_predictions": 8193,
+    "prefix_tokens": 103250,
+    "abs_window_end": 111442,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      111213
+     ],
+     "tail": [
+      110702,
+      111213
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      103533,
+      111213
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 7,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 96000,
+      "zlib30k": 0.3293,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.337,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     104263,
+     108325,
+     108853,
+     108920,
+     110540,
+     110761,
+     110762,
+     111187,
+     111206
+    ],
+    "class_20b_at_window": "natural_close"
+   },
+   {
+    "fixture": "M3",
+    "source_id": "cd6c18552504",
+    "cls": "near_close",
+    "note": "stock 0.7.0 seed-replay, doc 121",
+    "doc": 121,
+    "seed": 1234,
+    "source_engine": "v0.7.0 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "7406921829e007df41fd410ddf9f06e07cd0faaf17981f6b618736f80c163cac",
+    "prompt_tokens": 190,
+    "reasoning_tokens_in_history": 71492,
+    "natural_close_index": 71492,
+    "window_start_index": 63300,
+    "window_end_index": 71492,
+    "forced_predictions": 8193,
+    "prefix_tokens": 63490,
+    "abs_window_end": 71682,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      71492
+     ],
+     "tail": [
+      70981,
+      71492
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      63812,
+      71492
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 0,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 64000,
+      "zlib30k": 0.2693,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.2757,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     71484
+    ],
+    "class_20b_at_window": "natural_close"
+   },
+   {
+    "fixture": "M4",
+    "source_id": "c253c576662a",
+    "cls": "near_close",
+    "note": "stock 0.7.0 S7, doc 127",
+    "doc": 127,
+    "seed": 1234,
+    "source_engine": "v0.7.0 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "7f150bf1046a6186f6ecebcdf8228e89f2aa03d31d78945bfa214af0c46abf13",
+    "prompt_tokens": 2795,
+    "reasoning_tokens_in_history": 88819,
+    "natural_close_index": 88819,
+    "window_start_index": 80627,
+    "window_end_index": 88819,
+    "forced_predictions": 8193,
+    "prefix_tokens": 83422,
+    "abs_window_end": 91614,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      88819
+     ],
+     "tail": [
+      88308,
+      88819
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      81139,
+      88819
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 0,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 80000,
+      "zlib30k": 0.2569,
+      "rep200": 0.1022,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.2219,
+     "rep200": 0.209,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     87541,
+     87894,
+     88714,
+     88815
+    ],
+    "class_20b_at_window": "natural_close"
+   },
+   {
+    "fixture": "M5",
+    "source_id": "70b6b6b1ae38",
+    "cls": "near_close",
+    "note": "stock 0.9.1 doc 79 seed 5012",
+    "doc": 79,
+    "seed": 5012,
+    "source_engine": "v0.9.1 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "ae2440acb7a66be0d09a96a0e24ca1e98e69bf6c420028640401759ee658a869",
+    "prompt_tokens": 91,
+    "reasoning_tokens_in_history": 69265,
+    "natural_close_index": 69265,
+    "window_start_index": 61073,
+    "window_end_index": 69265,
+    "forced_predictions": 8193,
+    "prefix_tokens": 61164,
+    "abs_window_end": 69356,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      69265
+     ],
+     "tail": [
+      68754,
+      69265
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      61585,
+      69265
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 0,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 64000,
+      "zlib30k": 0.3606,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.321,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     62952,
+     64494,
+     65030,
+     65148,
+     65216,
+     65445,
+     65912,
+     66568,
+     66842,
+     67311,
+     67595,
+     68494,
+     68854,
+     69125,
+     69256,
+     69257
+    ],
+    "class_20b_at_window": "natural_close"
+   },
+   {
+    "fixture": "M6",
+    "source_id": "73700fa6eb27",
+    "cls": "near_close",
+    "note": "stock 0.9.1 doc 88 seed 5010",
+    "doc": 88,
+    "seed": 5010,
+    "source_engine": "v0.9.1 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "af7e6a7021480d0222c340b5f59a35076dc63c1a0b12a7830ce7b273d9cdbeb3",
+    "prompt_tokens": 229,
+    "reasoning_tokens_in_history": 96568,
+    "natural_close_index": 96568,
+    "window_start_index": 88376,
+    "window_end_index": 96568,
+    "forced_predictions": 8193,
+    "prefix_tokens": 88605,
+    "abs_window_end": 96797,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      96568
+     ],
+     "tail": [
+      96057,
+      96568
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      88888,
+      96568
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 1,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 96000,
+      "zlib30k": 0.3417,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.3398,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     89737,
+     90789,
+     90934,
+     91174,
+     91175,
+     91222,
+     92724,
+     95127,
+     95289,
+     96120
+    ],
+    "class_20b_at_window": "natural_close"
+   },
+   {
+    "fixture": "M7",
+    "source_id": "a68d65155475",
+    "cls": "near_close",
+    "note": "stock 0.9.1 doc 88 seed 5001",
+    "doc": 88,
+    "seed": 5001,
+    "source_engine": "v0.9.1 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "b6bd62bc323b343bab415c144fbc5ee27c8be58c03a7a7d53bec675f500bca2d",
+    "prompt_tokens": 229,
+    "reasoning_tokens_in_history": 124781,
+    "natural_close_index": 124781,
+    "window_start_index": 116589,
+    "window_end_index": 124781,
+    "forced_predictions": 8193,
+    "prefix_tokens": 116818,
+    "abs_window_end": 125010,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      124781
+     ],
+     "tail": [
+      124270,
+      124781
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      117101,
+      124781
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 4,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 112000,
+      "zlib30k": 0.3373,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.3257,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     118085,
+     124588,
+     124734
+    ],
+    "class_20b_at_window": "natural_close"
+   },
+   {
+    "fixture": "M8",
+    "source_id": "dcaf4cdad47a",
+    "cls": "near_close",
+    "note": "stock 0.9.1 doc 88 seed 5011",
+    "doc": 88,
+    "seed": 5011,
+    "source_engine": "v0.9.1 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "9f0764fcf69b25151c5663fae6a68e023feccc594d453864b8f9b46ec38a1f1e",
+    "prompt_tokens": 229,
+    "reasoning_tokens_in_history": 120218,
+    "natural_close_index": 120218,
+    "window_start_index": 112026,
+    "window_end_index": 120218,
+    "forced_predictions": 8193,
+    "prefix_tokens": 112255,
+    "abs_window_end": 120447,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      120218
+     ],
+     "tail": [
+      119707,
+      120218
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      112538,
+      120218
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": -1,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 112000,
+      "zlib30k": 0.3302,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.3236,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     114069,
+     114070,
+     115047,
+     118622,
+     119627,
+     119964
+    ],
+    "class_20b_at_window": "natural_close"
+   }
+  ],
+  "L3": [
+   {
+    "fixture": "A1",
+    "source_id": "ca7fd76b2b7a",
+    "cls": "pre_close_active",
+    "note": "L1 history, window ending 8,192 before its close",
+    "doc": 13,
+    "seed": null,
+    "source_engine": "v0.7.0 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "396f4c0bc1ff94886cb98cf42da15a01b585b905ddc4f76561f5456b771f5693",
+    "prompt_tokens": 131,
+    "reasoning_tokens_in_history": 102579,
+    "natural_close_index": 102579,
+    "window_start_index": 86195,
+    "window_end_index": 94387,
+    "forced_predictions": 8193,
+    "prefix_tokens": 86326,
+    "abs_window_end": 94518,
+    "below_131072": true,
+    "forced_token_at_end": "history token e",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      94387
+     ],
+     "tail": [
+      93876,
+      94387
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      86707,
+      94387
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 8192,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": -1,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 80000,
+      "zlib30k": 0.2461,
+      "rep200": 0.0009,
+      "repeating": false
+     },
+     "after": {
+      "checkpoint": 96000,
+      "zlib30k": 0.239,
+      "rep200": 0.0075,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.2379,
+     "rep200": 0.0002,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     86973,
+     86978,
+     87178,
+     87183,
+     87376,
+     87381,
+     87389,
+     87708,
+     87713,
+     87714,
+     87731,
+     89105,
+     89110,
+     89392,
+     90083,
+     90719,
+     90727,
+     90749,
+     91154,
+     91159,
+     91331,
+     91706,
+     91711,
+     91941,
+     91957,
+     92149,
+     92158,
+     92163,
+     93057,
+     93062,
+     93085,
+     93780,
+     93785,
+     94030,
+     94035,
+     94369,
+     94374
+    ],
+    "class_20b_at_window": "active (history closes later)"
+   },
+   {
+    "fixture": "A2",
+    "source_id": "e87744068243",
+    "cls": "pre_close_active",
+    "note": "L2 history",
+    "doc": 88,
+    "seed": null,
+    "source_engine": "v0.7.0 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "4d39bdecebeac640f0855952f424eb9f36f618a179d641f24de994bf27647d78",
+    "prompt_tokens": 229,
+    "reasoning_tokens_in_history": 121500,
+    "natural_close_index": 121500,
+    "window_start_index": 105116,
+    "window_end_index": 113308,
+    "forced_predictions": 8193,
+    "prefix_tokens": 105345,
+    "abs_window_end": 113537,
+    "below_131072": true,
+    "forced_token_at_end": "history token e",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      113308
+     ],
+     "tail": [
+      112797,
+      113308
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      105628,
+      113308
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 8192,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": -8,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 112000,
+      "zlib30k": 0.3313,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.3343,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     109415
+    ],
+    "class_20b_at_window": "active (history closes later)"
+   },
+   {
+    "fixture": "A3",
+    "source_id": "09ba09a88d7b",
+    "cls": "pre_close_active",
+    "note": "L3 history",
+    "doc": 79,
+    "seed": 5004,
+    "source_engine": "v0.9.1 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "e0a7e2ea41cb87224fe4f5f4ec1bd75baa2875e192eee1dbb95afc8b09b1663d",
+    "prompt_tokens": 91,
+    "reasoning_tokens_in_history": 97408,
+    "natural_close_index": 97408,
+    "window_start_index": 81024,
+    "window_end_index": 89216,
+    "forced_predictions": 8193,
+    "prefix_tokens": 81115,
+    "abs_window_end": 89307,
+    "below_131072": true,
+    "forced_token_at_end": "history token e",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      89216
+     ],
+     "tail": [
+      88705,
+      89216
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      81536,
+      89216
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 8192,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 0,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 80000,
+      "zlib30k": 0.3193,
+      "rep200": 0.0,
+      "repeating": false
+     },
+     "after": {
+      "checkpoint": 96000,
+      "zlib30k": 0.3352,
+      "rep200": 0.0009,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.3443,
+     "rep200": 0.0009,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     82971,
+     83730,
+     83892,
+     84743,
+     84752,
+     85351,
+     85352,
+     86186,
+     86187,
+     86577,
+     86578,
+     87292,
+     87315,
+     87782,
+     87844,
+     88118,
+     88469,
+     88477,
+     88495,
+     89084
+    ],
+    "class_20b_at_window": "active (history closes later)"
+   },
+   {
+    "fixture": "A4",
+    "source_id": "f0c2498e7b7f",
+    "cls": "pre_close_active",
+    "note": "L4 history",
+    "doc": 88,
+    "seed": 5005,
+    "source_engine": "v0.9.1 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "8ccb2eb5d205cb65c0a361e92997f0a647a6514401392747627df25c4e4e44db",
+    "prompt_tokens": 229,
+    "reasoning_tokens_in_history": 80324,
+    "natural_close_index": 80324,
+    "window_start_index": 63940,
+    "window_end_index": 72132,
+    "forced_predictions": 8193,
+    "prefix_tokens": 64169,
+    "abs_window_end": 72361,
+    "below_131072": true,
+    "forced_token_at_end": "history token e",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      72132
+     ],
+     "tail": [
+      71621,
+      72132
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      64452,
+      72132
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 8192,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 0,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 64000,
+      "zlib30k": 0.3231,
+      "rep200": 0.0,
+      "repeating": false
+     },
+     "after": {
+      "checkpoint": 80000,
+      "zlib30k": 0.3365,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.3359,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     69543,
+     69755
+    ],
+    "class_20b_at_window": "active (history closes later)"
+   },
+   {
+    "fixture": "A5",
+    "source_id": "fc3010f3a808",
+    "cls": "exhaustion_active",
+    "note": "phase-2 r1 end (doc 170)",
+    "doc": 170,
+    "seed": 7170,
+    "source_engine": "v0.9.1 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "f4dac7dddfd8206108d443d09f6a8215cd024047c6191d6a58b83e11566ccc6c",
+    "prompt_tokens": 217,
+    "reasoning_tokens_in_history": 131069,
+    "natural_close_index": null,
+    "window_start_index": 55808,
+    "window_end_index": 64000,
+    "forced_predictions": 8193,
+    "prefix_tokens": 56025,
+    "abs_window_end": 64217,
+    "below_131072": true,
+    "forced_token_at_end": "history token e",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      64000
+     ],
+     "tail": [
+      63489,
+      64000
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      56320,
+      64000
+     ]
+    },
+    "state_of_history": "exhaustion",
+    "distance_to_close": null,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 3,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 64000,
+      "zlib30k": 0.3703,
+      "rep200": 0.0,
+      "repeating": false
+     },
+     "after": {
+      "checkpoint": 80000,
+      "zlib30k": 0.3692,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.3708,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     60509
+    ],
+    "class_20b_at_window": "active (exhaustion)"
+   },
+   {
+    "fixture": "A6",
+    "source_id": "99441a83fffd",
+    "cls": "doc79_pair_exhaustion",
+    "note": "stock 0.7.0 doc 79 seed 5002 (pairs with A7)",
+    "doc": 79,
+    "seed": 5002,
+    "source_engine": "v0.7.0 stock image, DFlash x3",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "10b461f60f9ead42b0af0b6fd45611e516e77c5803b66e22f303ae5c7273c1ea",
+    "prompt_tokens": 91,
+    "reasoning_tokens_in_history": 327678,
+    "natural_close_index": null,
+    "window_start_index": 87808,
+    "window_end_index": 96000,
+    "forced_predictions": 8193,
+    "prefix_tokens": 87899,
+    "abs_window_end": 96091,
+    "below_131072": true,
+    "forced_token_at_end": "history token e",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      96000
+     ],
+     "tail": [
+      95489,
+      96000
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      88320,
+      96000
+     ]
+    },
+    "state_of_history": "exhaustion",
+    "distance_to_close": null,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 2,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 96000,
+      "zlib30k": 0.3449,
+      "rep200": 0.0,
+      "repeating": false
+     },
+     "after": {
+      "checkpoint": 112000,
+      "zlib30k": 0.3623,
+      "rep200": 0.0017,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.314,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [],
+    "class_20b_at_window": "active (exhaustion)"
+   },
+   {
+    "fixture": "A7",
+    "source_id": "d5bafa393d8f",
+    "cls": "doc79_pair_exhaustion",
+    "note": "stock 0.9.1 doc 79 seed 5002 (pairs with A6)",
+    "doc": 79,
+    "seed": 5002,
+    "source_engine": "v0.9.1 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "ee4bcd3ecae3228bd22c9c6b33e939892be47925d3f8a56dfd02a870f9ff5562",
+    "prompt_tokens": 91,
+    "reasoning_tokens_in_history": 327678,
+    "natural_close_index": null,
+    "window_start_index": 87808,
+    "window_end_index": 96000,
+    "forced_predictions": 8193,
+    "prefix_tokens": 87899,
+    "abs_window_end": 96091,
+    "below_131072": true,
+    "forced_token_at_end": "history token e",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      96000
+     ],
+     "tail": [
+      95489,
+      96000
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      88320,
+      96000
+     ]
+    },
+    "state_of_history": "exhaustion",
+    "distance_to_close": null,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 2,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 96000,
+      "zlib30k": 0.3639,
+      "rep200": 0.0,
+      "repeating": false
+     },
+     "after": {
+      "checkpoint": 112000,
+      "zlib30k": 0.3667,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.3101,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [],
+    "class_20b_at_window": "active (exhaustion)"
+   },
+   {
+    "fixture": "A8",
+    "source_id": "4db8bbe82d5c",
+    "cls": "loop_preonset_active",
+    "note": "stock 0.7.0 doc 79 seed 5012; loop onset 184k, active here",
+    "doc": 79,
+    "seed": 5012,
+    "source_engine": "v0.7.0 stock image, DFlash x3",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "b2845216e1a0cb1a8f448bf0182d692ebbc08b78ba2a0ba90a1255d5e87954db",
+    "prompt_tokens": 91,
+    "reasoning_tokens_in_history": 199943,
+    "natural_close_index": null,
+    "window_start_index": 111808,
+    "window_end_index": 120000,
+    "forced_predictions": 8193,
+    "prefix_tokens": 111899,
+    "abs_window_end": 120091,
+    "below_131072": true,
+    "forced_token_at_end": "history token e",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      120000
+     ],
+     "tail": [
+      119489,
+      120000
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      112320,
+      120000
+     ]
+    },
+    "state_of_history": "loop",
+    "distance_to_close": null,
+    "loop_onset_index": 184000,
+    "loop_onset_after_window": true,
+    "retok_drift": null,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 112000,
+      "zlib30k": 0.3304,
+      "rep200": 0.0,
+      "repeating": false
+     },
+     "after": {
+      "checkpoint": 128000,
+      "zlib30k": 0.295,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.084,
+     "rep200": 0.3977,
+     "repeating": true
+    },
+    "nonrepeating_commitment_positions_in_window": [],
+    "class_20b_at_window": "active (loop pre-onset)"
+   }
+  ]
+ },
+ "same_history_across_batches": {
+  "ca7fd76b2b7a": [
+   "L:L1",
+   "L3:A1"
+  ],
+  "e87744068243": [
+   "L:L2",
+   "L3:A2"
+  ],
+  "09ba09a88d7b": [
+   "L:L3",
+   "L3:A3"
+  ],
+  "f0c2498e7b7f": [
+   "L:L4",
+   "L3:A4"
+  ],
+  "fc3010f3a808": [
+   "L:L5",
+   "L3:A5"
+  ]
+ },
+ "batch_totals": {
+  "L": {
+   "n": 8,
+   "prefix_tokens": 794853,
+   "forced_predictions_max": 8193,
+   "forced_predictions_sum": 65544,
+   "rebuild_prompt_tokens": 860389
+  },
+  "S": {
+   "n": 8,
+   "prefix_tokens": 1474,
+   "forced_predictions_max": 11982,
+   "forced_predictions_sum": 55062,
+   "rebuild_prompt_tokens": 56528
+  },
+  "L2": {
+   "n": 8,
+   "prefix_tokens": 719745,
+   "forced_predictions_max": 8193,
+   "forced_predictions_sum": 65544,
+   "rebuild_prompt_tokens": 785281
+  },
+  "L3": {
+   "n": 8,
+   "prefix_tokens": 680677,
+   "forced_predictions_max": 8193,
+   "forced_predictions_sum": 65544,
+   "rebuild_prompt_tokens": 746213
+  }
+ }
+}

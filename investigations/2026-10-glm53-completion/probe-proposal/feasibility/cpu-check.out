@@ -1,0 +1,40 @@
+=== sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07
+vllm 0.1.dev20051+g487ecf187 torch 2.13.0+cu130 cuda available False
+PASS F1 accepted prefix and committed history (K=3) num=3 committed=[1010, 1011, 1012]
+PASS F2 unforced request untouched 
+PASS F3 zero-draft forced row commits one history token 
+PASS F4a window end clamps the commit num=2
+PASS F4b valid rows = rows conditioned only on history 
+PASS F4c K=5 full acceptance commits 6 history tokens 
+PASS M1 eligibility bounds bracket the served top-p mask kept=31/60, ambiguous(ties)=0
+PASS M2 post-mask probabilities equal the served softmax max|d|=0.00e+00; tracked kept with p_post>0: 31
+PASS E1 V2 runner refuses custom logits processors 
+PASS E2 DFlash2 forces the V2 runner 
+PASS E3a vllm_xargs list reaches SamplingParams.extra_args extra_args={'local_forcewin': [1, 2, 3], 'fixture': 'L1'}
+PASS E3b cache_salt accepted on a token-id completions request 
+PASS E3c logprob_token_ids sets SamplingParams.logprobs=None (not served by the V2 rejection sampler) 
+FAIL E4 general plugin from a .dist-info on sys.path is discovered and runs plugins found: ['lora_filesystem_resolver', 'lora_hf_hub_resolver']
+13/14 checks passed
+=== ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629
+vllm 0.1.dev20051+g487ecf187 torch 2.13.0+cu130 cuda available False
+PASS F1 accepted prefix and committed history (K=3) num=3 committed=[1010, 1011, 1012]
+PASS F2 unforced request untouched 
+PASS F3 zero-draft forced row commits one history token 
+PASS F4a window end clamps the commit num=2
+PASS F4b valid rows = rows conditioned only on history 
+PASS F4c K=5 full acceptance commits 6 history tokens 
+PASS M1 eligibility bounds bracket the served top-p mask kept=31/60, ambiguous(ties)=0
+PASS M2 post-mask probabilities equal the served softmax max|d|=0.00e+00; tracked kept with p_post>0: 31
+PASS E1 V2 runner refuses custom logits processors 
+PASS E2 DFlash2 forces the V2 runner 
+PASS E3a vllm_xargs list reaches SamplingParams.extra_args extra_args={'local_forcewin': [1, 2, 3], 'fixture': 'L1'}
+PASS E3b cache_salt accepted on a token-id completions request 
+PASS E3c logprob_token_ids sets SamplingParams.logprobs=None (not served by the V2 rejection sampler) 
+PASS E4 general plugin from a .dist-info on sys.path is discovered and runs plugins found: ['local_probe_selftest', 'b12x_fp6', 'lora_filesystem_resolver', 'lora_hf_hub_resolver']
+14/14 checks passed
+=== sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07
+FAIL E4b
+=== ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629
+WARNING 10-13 21:42:43 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+PASS E4b general plugin discovered at process start
+# E4/E4b on 0.9.1: image ENV VLLM_PLUGINS=lora_filesystem_resolver (allowlist) filters general plugins; 0.7.0 image sets none.

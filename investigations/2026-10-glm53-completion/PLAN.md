@@ -1499,3 +1499,59 @@ Stock-only results, question-clustered bootstrap:
 Reading: the hypothesis that long replies finish less often on stock 0.9.1 than on stock 0.7.0 survives the stock-only
 audit, with a wide interval and small counts (about 10 finishing events per release). It remains a hypothesis, and no
 range or change point is claimed.
+
+**Amendment 20d (2026-10-13; zero-GPU discovery results and the first-stage proposal, before any probe data).**
+Receipts are in tail-audit/ (20c), fixture-inventory/, source-review-lc/ and probe-proposal/.
+
+Termination semantics:
+- Stopping rules are byte-identical across 0.7.0, 0.9.1, B0 and B1: parser, sampler, speculative verification,
+  tokenizer and generation config.
+- `</think>` (154842) switches the output to content and does not stop generation. 154820, 154827 and 154829 stop it.
+- top_p 0.95 is the only mask that can remove a termination token.
+- So any engine difference in termination is in the logits.
+
+Fixtures:
+- Exact generated ids exist only for histories under 5k tokens.
+- Long histories exist as text: 901 complete reasoning texts, usable as re-tokenized counterfactual fixtures, not
+  replays.
+- Classified per 20b: 527 natural closes, 224 loops, 92 exhaustions.
+- No reasoning text exists for any GPQA pass.
+
+Focused source review, ranked:
+1. **D2 (known):** decode-written index-K pools are wrong on 0.7.0 at every concurrency; on stock 0.9.1 at 0% for 1
+   request, 47-57% for 2 and 78-90% for 8; on B0/B1 never. The rank order matches the finishing rates, which is an
+   observation only. Prefill cannot see it.
+2. **Selection-kernel regime changes untested with live data past about 120k:** on B1's tiled route, at 65,536 and
+   131,072 tokens.
+3. **KDA block migration under speculation:** untested past 16k.
+4. **D6 (known):** on 0.7.0 at ×5 the 4-slot tail ring wraps on rejected drafts. Decode-only; fixed from 0.9.0.
+
+Settled by source:
+- no RoPE in attention or the indexer;
+- no representation limits;
+- no precision change between 16k and 300k;
+- the ReplaySSM rollback path was never served.
+
+Proposal (probe-proposal/PROPOSAL.md) for independent review:
+- **Instrument:** a force-decoded window. A small hook after the rejection sampler commits the history's own tokens, so
+  the window's index-K, tail-ring, KDA and speculative state come from the real decode path. It is needed because Model
+  Runner V2 refuses custom logits processors and prompt logprobs cover prefill only.
+- **Measures:** termination-token probabilities before and after top_p, plus eligibility, at designated positions.
+- **Arms** at 8 in flight: stock 0.7.0 ×5; B0 ×3; B0 ×5; the diagnostics B0 − D2 ×3 and an optional B0 ring-4 ×5;
+  stock 0.9.1 as context.
+- **Fixtures:** windows of 8,192 forced tokens ending at 80k-121.5k, plus short controls.
+- **Stages** each separately authorized:
+
+  | Stage | Estimate / ceiling (GPU-hours) |
+  |---|---|
+  | 1 | 7.74 / 10.6 |
+  | 1-min | 5.0 / 7.0 |
+  | 1b | 1.65 |
+  | 2 | 7.62 |
+  | K (kernel replay) | 0.3 |
+
+- **Frozen readings:** repeatability first; a consistent direction on at least 6 of 8 windows; D2, D6 or draft depth
+  nominated (not proven) only if its diagnostic contrast reproduces the 0.7.0-vs-B0 direction; a corrupted path never
+  restored as a remedy; no claim that a probability difference explains completion rates.
+
+No GPU use is authorized by this amendment.
