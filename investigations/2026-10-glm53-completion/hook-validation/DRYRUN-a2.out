@@ -1,0 +1,2 @@
+budget: spent 1.2117 + this attempt's cap 1.188 (wall 2138s) <= approved 2.4 GPU-h
+DRY_RUN: budget gate, attempt count, frozen hashes, image pin and client plan passed

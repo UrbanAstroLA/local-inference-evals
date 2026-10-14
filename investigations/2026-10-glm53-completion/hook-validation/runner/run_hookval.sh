@@ -13,7 +13,14 @@
 # hook + guard installed on both ranks before traffic, watchdog at the wall cap, stop on every exit path
 # (EXIT/INT/TERM trap), docker cp of hook + guard outputs, one cost line to the moment the GPUs are released, then
 # the frozen CPU analysis. No `set -e`. <stacks> is only read (start/stop scripts), never modified.
-ATTEMPT=${1:-1}
+#
+# ATTEMPT-2 VARIANT (PA2-10; attempt-1 runner kept as run_hookval.sh.a1; ATTEMPT2-PREP.md). Differences:
+#   image local/glm53-v0.9.1-b1-forcehook-mg2:local (pinned in images.txt); ATTEMPT must be 2 and the cost
+#   ledger must hold exactly the one attempt-1 line of the item (2 of 2 = the last attempt under amendment 21c);
+#   the budget gate is cumulative over the item (2.4 GPU-h approved; attempt 1 spent 1.2117), so the wall cap is
+#   min(WALL_CAP, remaining x 3600 / 2 GPUs) = 2,138 s; MIN_WALL 1,500 s (scoped plan estimate 1,260 s occupied
+#   without the optional poison phase, runner/cost_a2.json); the client is the scoped attempt-2 variant.
+ATTEMPT=${1:-2}
 HERE=$(cd "$(dirname "$0")" && pwd)
 ROOT=$(cd "$HERE/.." && pwd)
 COSTS=$ROOT/costs.jsonl
@@ -22,15 +29,17 @@ MAX_ATTEMPTS=2
 ST=<stacks>/glm53-flash-v0.9.0
 RC=<recipes>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234+d7
 CN=glm53-flash-exl3-b12x-vllm
-IMG=local/glm53-v0.9.1-b1-forcehook-mg:local
+IMG=local/glm53-v0.9.1-b1-forcehook-mg2:local
 GPUS=2
-CEILING=2.4                     # proposed item total (VALIDATION.md section 7)
-WALL_CAP=${WALL_CAP:-3240}
-MIN_WALL=${MIN_WALL:-2000}
+CEILING=2.4                     # authorized item total (PLAN.md amendment 21c), both attempts together
+WALL_CAP=${WALL_CAP:-3240}      # capped below by the remaining item budget (2,138 s after attempt 1)
+MIN_WALL=${MIN_WALL:-1500}      # attempt 2: scoped plan, 1,260 s occupied estimated (runner/cost_a2.json)
+REQ_ATTEMPT=2                   # attempt 2 of 2
 RESERVE=${RESERVE:-180}         # seconds after the client deadline for readouts, copies and the stop
 GATE_CAP=${GATE_CAP:-1080}
 DEBUG="FORCEWIN=on FORCEWIN_D2=1 FORCEWIN_SHADOW=1 FORCEWIN_SNAP=1 FORCEWIN_DIR=/tmp/forcewin FORCEWIN_WMAX=5120 GLM53_MAPGUARD=device GLM53_MAPGUARD_DIR=/tmp/mapguard GLM53_MAPGUARD_POLL_SECS=20"
 OUT=$ROOT/run-a$ATTEMPT
+if [ "$ATTEMPT" != "$REQ_ATTEMPT" ]; then echo "REFUSED: this runner variant is attempt $REQ_ATTEMPT only (got '$ATTEMPT')"; exit 2; fi
 if [ -e "$OUT" ]; then echo "ABORT: $OUT exists (use another ATTEMPT)"; exit 2; fi
 touch "$COSTS" || exit 2
 
@@ -48,6 +57,7 @@ for l in open('$COSTS'):
         if d.get('item')=='$ITEM': s+=float(d.get('gpu_hours',0)); n+=1
 print(round(s,4), n)")
 if [ "$NATT" -ge "$MAX_ATTEMPTS" ]; then echo "REFUSED: $NATT attempts already recorded for $ITEM (max $MAX_ATTEMPTS)"; exit 2; fi
+if [ "$NATT" -ne $((ATTEMPT - 1)) ]; then echo "REFUSED: cost ledger holds $NATT $ITEM attempt(s); attempt $ATTEMPT needs exactly $((ATTEMPT - 1))"; exit 2; fi
 LEFT_S=$(python3 -c "print(int(($APPROVED_GPU_H - $SPENT) * 3600 / $GPUS))")
 if [ "$LEFT_S" -lt "$WALL_CAP" ]; then WALL_CAP=$LEFT_S; fi
 if [ "$WALL_CAP" -lt "$MIN_WALL" ]; then
@@ -89,7 +99,7 @@ cost_line() {
   local T1=${TEND:-$(date +%s)}
   local SECS=$((T1 - T0))
   local GH=$(python3 -c "print(round($GPUS*$SECS/3600,4))")
-  printf '{"item":"%s","start":"%s","end":"%s","seconds":%s,"gpus":%s,"gpu_hours":%s,"attempt":%s,"image":"%s","rc":%s,"wall_cap":%s,"purpose":"forced-history hook validation (PLAN.md amendment 21 section 4)"}\n' \
+  printf '{"item":"%s","start":"%s","end":"%s","seconds":%s,"gpus":%s,"gpu_hours":%s,"attempt":%s,"image":"%s","rc":%s,"wall_cap":%s,"purpose":"forced-history hook validation attempt 2 of 2, scoped (PLAN.md amendment 21 section 4; ATTEMPT2-PREP.md)"}\n' \
     "$ITEM" "$START" "$(date -u -d @"$T1" +%Y-%m-%dT%H:%M:%SZ)" "$SECS" "$GPUS" "$GH" "$ATTEMPT" "$IMG_ID" "${RC_MAIN:-null}" "$WALL_CAP" >> "$COSTS"
   echo "occupied ${SECS}s x $GPUS GPU = ${GH} GPU-h"
 }

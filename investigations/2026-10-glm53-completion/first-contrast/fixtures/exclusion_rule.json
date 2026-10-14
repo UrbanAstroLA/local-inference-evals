@@ -1,0 +1,16 @@
+{
+ "status": "Ready to freeze: coordinator decision of 2026-10-14 on hook-validation/followup-a2/FOLLOWUP-a2.md (sha256 c579b91a2ddef71bc8ca058a2a8d8fdf4f99931f5c146586b1690001ce306718). Frozen with the package SHA256SUMS; immutable after the first GPU request.",
+ "excluded_from_primary_aggregate": [],
+ "flagged_kept_in_primary": {
+  "be2e9e349395": "attempt-2 flag 'outside its own matched null': deep-layer numerical fragility common to clean and injected decodes (13 gross units reproduce across three independent decodes). Not an instrument defect.",
+  "376073921446": "attempt-2 flag 'arm asymmetry': a single-position event (pool 128, tokens 512-515) inflating layer-unit counts against a zero prefill null; symmetric by position (5 vs 6). Not an instrument defect."
+ },
+ "where_these_ids_occur": "Both ids are exact-id short traces of the attempt-2 V4 D2 set. Neither is one of the 8 long first-contrast fixtures (L1 L4 M3 M4 L3 L5 A8 L8). They enter the first contrast only through the optional short stratum S (PROPOSAL.md s.3.7), whose 8 fixtures are the attempt-2 D2 set.",
+ "rule": [
+  "R1 Keep flagged fixtures IN the primary aggregate of their stratum. No flagged fixture carries a mechanism claim. No fixture is excluded (excluded_from_primary_aggregate stays empty).",
+  "R2 Pre-registered leave-flagged-out sensitivity: every primary statistic, screen and reading is recomputed without the flagged fixtures (attempt-2 flags in stratum S; in-session flags in either stratum) and reported beside the primary, never instead of it. The direction screen then uses ceil(0.75 x n) of the n remaining fixtures.",
+  "R3 Fixture flags are counted by position as well as by layer-unit: a gross position is a (fixture, pool) gross in at least one DSA layer of either rank. The attempt-2 definitions (outside own null: gross_f > max(2 x max(N_dd_f, N_pp_f), 0.1 %) with >= 10 gross units; arm asymmetry on units shared by both B1 arms and N_pp) are evaluated twice, once with layer-units and once with positions as the unit (>= 3 gross positions replacing >= 10 gross units). Both counts are reported; a flag on either count marks the fixture flagged.",
+  "R4 be2e9e349395's 13 three-way-reproducible gross units (known_fragile_be2e9e349395.json) are a known fragile set: they are reported separately, and any pool-level effect located on them is attributed first to pre-existing decode-vs-prefill numerics. In stratum S the index-K content rows are reported with and without these units.",
+  "R5 In-session flags on the long fixtures (after data) follow R1-R3: the fixture stays in the primary aggregate, carries no mechanism claim, and is dropped in the R2 sensitivity."
+ ]
+}

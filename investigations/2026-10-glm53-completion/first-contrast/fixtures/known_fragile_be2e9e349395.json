@@ -1,0 +1,142 @@
+{
+ "fixture": "be2e9e349395",
+ "source": "hook-validation/followup-a2/out/f3_summary.json",
+ "source_sha256": "12cb2875eeb29fc29a3c79d95c0a9890038e42d8c479c6e05040aacdf71a036f",
+ "followup": "hook-validation/followup-a2/FOLLOWUP-a2.md",
+ "followup_sha256": "c579b91a2ddef71bc8ca058a2a8d8fdf4f99931f5c146586b1690001ce306718",
+ "definition": "index-K units (rank, DSA layer, pool) of the attempt-2 V4 window (prompt-start, 2,000 forced tokens) gross (rel > 0.25 vs the prefill rebuild) in all three independent decodes: a2-b1, a2-b1b and a1-b1",
+ "n": 13,
+ "units": [
+  {
+   "rank": 1,
+   "layer": 39,
+   "pool": 145,
+   "o": 447,
+   "positions": [
+    580,
+    583
+   ]
+  },
+  {
+   "rank": 1,
+   "layer": 35,
+   "pool": 155,
+   "o": 487,
+   "positions": [
+    620,
+    623
+   ]
+  },
+  {
+   "rank": 1,
+   "layer": 35,
+   "pool": 211,
+   "o": 711,
+   "positions": [
+    844,
+    847
+   ]
+  },
+  {
+   "rank": 1,
+   "layer": 39,
+   "pool": 211,
+   "o": 711,
+   "positions": [
+    844,
+    847
+   ]
+  },
+  {
+   "rank": 1,
+   "layer": 43,
+   "pool": 231,
+   "o": 791,
+   "positions": [
+    924,
+    927
+   ]
+  },
+  {
+   "rank": 0,
+   "layer": 23,
+   "pool": 446,
+   "o": 1651,
+   "positions": [
+    1784,
+    1787
+   ]
+  },
+  {
+   "rank": 1,
+   "layer": 27,
+   "pool": 446,
+   "o": 1651,
+   "positions": [
+    1784,
+    1787
+   ]
+  },
+  {
+   "rank": 0,
+   "layer": 19,
+   "pool": 474,
+   "o": 1763,
+   "positions": [
+    1896,
+    1899
+   ]
+  },
+  {
+   "rank": 0,
+   "layer": 23,
+   "pool": 474,
+   "o": 1763,
+   "positions": [
+    1896,
+    1899
+   ]
+  },
+  {
+   "rank": 1,
+   "layer": 27,
+   "pool": 474,
+   "o": 1763,
+   "positions": [
+    1896,
+    1899
+   ]
+  },
+  {
+   "rank": 0,
+   "layer": 23,
+   "pool": 485,
+   "o": 1807,
+   "positions": [
+    1940,
+    1943
+   ]
+  },
+  {
+   "rank": 0,
+   "layer": 23,
+   "pool": 509,
+   "o": 1903,
+   "positions": [
+    2036,
+    2039
+   ]
+  },
+  {
+   "rank": 1,
+   "layer": 27,
+   "pool": 509,
+   "o": 1903,
+   "positions": [
+    2036,
+    2039
+   ]
+  }
+ ],
+ "use": "known fragile set: any pool-level effect located on these units is reported separately and attributed first to pre-existing decode-vs-prefill numerics"
+}

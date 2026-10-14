@@ -1,0 +1,28 @@
+W1014 03:09:18.696000 1 torch/utils/cpp_extension.py:178] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+WARNING 10-14 03:09:19 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-14 03:09:19 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-14 03:09:19 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+PASS D1a injected window tokens -> OLD mapping (null tail block 0, pos % 8) got [4, 5, 6, 7] generic [4, 5, 6, 7]
+PASS D1b other request and the injected request's PREFILL rows keep B1's circular mapping r1 [53, 54, 55, 48] r2 [56, 57, 58, 59]
+PASS D1c padding rows (null block) stay PAD [-1, -1, -1, -1]
+PASS D1d persistent slot-mapping buffer holds the final mapping (graph-safe write kept) 
+PASS D1e injection off (step not armed): builder output byte-identical to B1 
+PASS D1f no request keyed: builder output byte-identical to B1 
+PASS D1g window bounds respected: positions >= P+hi revert to B1 [4, 5, 46, 47]
+PASS D2 B1 arm: every committed decode pool == compress of the request's own keys (incl. redo) 21 pools, shadow classes [1]
+PASS D3a injected arm (3 requests): committed pools are corrupted 17 of 21 pools wrong
+PASS D3b shadow ledger: every 'clean' pool is byte-correct, every 'corrupt' pool is wrong clean 2 (all ok True), corrupt 2 (any ok False), race 17 (ok 2)
+PASS D4 one injected request alone: zero corrupted pools (D2's 1-in-flight signature) 10 pools
+PASS D5a frozen guard, B1 arm: zero tail_w_stash / idx_w_dec mismatches {'tail_mism': 0, 'tail_null': 0, 'tail_checked': 12, 'idx_mism': 0, 'idx_written': 3}
+PASS D5b frozen guard, injected arm: tail_w_stash mism == null-class == every injected token; idx_w_dec slots still correct {'tail_mism': 12, 'tail_null': 12, 'tail_checked': 12, 'idx_mism': 0, 'idx_written': 3}
+PASS D6a d2_tail_mapping counts injected tokens per request [4, 4, 0]
+PASS D6b shadow input recorded for the step (final mapping, positions, qsl) 
+PASS D6c _shadow_step fills the device class table (colliding requests -> race; uninjected r2 clean) [[3, 0, 0, 0], [3, 0, 0, 0], [1, 0, 0, 0]]
+PASS D7p-a B1 arm, padded steps, hook ledger: every committed pool classified under its own request, all clean, all byte-correct {'committed': 21, 'classified': 21, 'missing': 0, 'foreign': 0, 'clean': 21, 'clean_ok': True, 'corrupt': 0, 'corrupt_wrong': True, 'race': 0, 'byte_ok': 21}
+PASS D7p-b injected arm, padded steps, hook ledger: every committed pool classified; clean -> byte-correct, corrupt -> wrong {'committed': 21, 'classified': 21, 'missing': 0, 'foreign': 0, 'clean': 2, 'clean_ok': True, 'corrupt': 2, 'corrupt_wrong': True, 'race': 17, 'byte_ok': 4}
+PASS D7p-c padded and unpadded runs of the same schedule: identical classes (B1 and injected arms) B1 equal True, injected equal True
+PASS D7p-d count mismatch between the stored mapping and the step is refused (nothing attributed) 
+PASS D7pn negative control: the attempt-1 ledger fails D7p-a on the same padded inputs (and is correct unpadded) a1 padded: {'committed': 21, 'classified': 7, 'missing': 14, 'foreign': 6, 'clean': 2, 'clean_ok': True, 'corrupt': 5, 'corrupt_wrong': False, 'race': 0, 'byte_ok': 21}, all-clean False; a1 unpadded equal to the fixed ledger: True
+PASS D0 no hook errors during the suite []
+test_d2_inject: 22/22 checks passed
+rc=0

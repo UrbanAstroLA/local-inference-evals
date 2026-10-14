@@ -17,6 +17,19 @@ the FROZEN B1 mapguard's write check (check_writes, unmodified file d7/step2/gua
   D5  the frozen guard: tail_w_stash flags exactly the injected tokens (mism + null-block class); index-K decode
       slots stay correct (D2 does not move pool slots); B1 arm: zero.
   D6  hook glue: d2_tail_mapping counts injected tokens per request; _shadow_step fills the device class table.
+
+Attempt 2 (post-inspection PA2-4; attempt-1 file kept as test_d2_inject.py.a1; D1-D6 unchanged except that the
+input-batch stand-in now carries query_start_loc_np, as the engine's InputBatch does):
+  D7p padded FULL-graph steps (3 requests = 12 tokens run in the 16-token graph: the builder sees 4 requests) through
+      the REAL hooked builder, the REAL decode writer and the hook's own ledger (_shadow_step), against the bytes:
+      a  B1 arm: every committed pool classified, under its own request, clean, and byte-correct (the positive
+         control the attempt-2 analysis asserts on GPU);
+      b  injected arm: every committed pool classified; clean -> byte-correct, corrupt -> wrong;
+      c  padded and unpadded runs of the same schedule give identical classes (both arms);
+      d  a count mismatch between the stored mapping and the step is refused (raises; nothing attributed).
+  D7pn negative control: the attempt-1 module (forcewin_hooks.py.a1), fed the same padded builder inputs, fails
+      D7p-a (pools under the wrong request / missing), as DIAGNOSIS-a1 section 7 measured on GPU.
+  D0  no unexpected hook errors in the suite.
 """
 import os
 import sys
@@ -107,7 +120,7 @@ class Rig:
         circ = IDX.compute_kpool_tail_slot_mapping(gen.clone(), bt, qsl, pos, n_pad, len(rows) + pad_reqs, RING)
         ib = types.SimpleNamespace(num_reqs=len(rows), idx_mapping=idx_map, idx_mapping_np=np.array(rows),
                                    is_prefilling_np=np.zeros(len(rows), dtype=bool), num_tokens=n,
-                                   num_draft_tokens=0)
+                                   num_draft_tokens=0, query_start_loc_np=qsl[: len(rows) + 1].numpy().copy())
         if arm:
             fw.on_batch(self.runner, ib)
         persistent = gen.clone()
@@ -333,10 +346,162 @@ def t_glue():
           pc[0][k0] == fw.PC_RACE and pc[1][k1] == fw.PC_RACE and pc[2][0] == fw.PC_CLEAN, str(pc))
 
 
+# ---------------------------------------------------------------- attempt 2: padded steps (PA2-4)
+ERRS = []
+_orig_err = fw._err
+
+
+def _count_err(where, exc):
+    ERRS.append((where, repr(exc)[:200]))
+    _orig_err(where, exc)
+
+
+fw._err = _count_err
+
+
+def load_a1():
+    import importlib.machinery
+    import importlib.util
+    path = os.path.join(HERE, "..", "hook", "forcewin_hooks.py.a1")
+    loader = importlib.machinery.SourceFileLoader("forcewin_hooks_a1", path)
+    spec = importlib.util.spec_from_loader("forcewin_hooks_a1", loader)
+    mod = importlib.util.module_from_spec(spec)
+    loader.exec_module(mod)
+    return mod
+
+
+def simulate_hook(n_req, inject, steps=12, seed=0, P0=(64, 72, 100), pad_reqs=1, accept_seq=None):
+    """As simulate(), but the ledger is the HOOK's own (_shadow_step on the mapping the hooked builder stored), and
+    every step runs with pad_reqs FULL-graph padding requests appended to the builder's batch. Returns per-request
+    committed pools (byte truth), the hook's class map, and the per-step builder inputs (for the a1 replay)."""
+    g = torch.Generator().manual_seed(seed)
+    own = [5, 6, 7][:n_req]
+    mla = [30, 31, 32][:n_req]
+    P = list(P0[:n_req])
+    rig = Rig(own=own, P=P, d2=[[0, 400] if inject else None] * n_req)
+    raw, tail, idxc = make_kv()
+    ape = 0.1 * torch.randn(KPOOL, HD, generator=g)
+    Kt = {r: torch.randn(600, HD, generator=g).to(torch.bfloat16) for r in range(n_req)}
+    Gt = {r: torch.randn(600, HD, generator=g).to(torch.bfloat16) for r in range(n_req)}
+    p0 = list(P)
+    committed = {r: [] for r in range(n_req)}
+    replay = []
+    n = 4 * n_req
+    for s in range(steps):
+        rows = list(range(n_req))
+        per = [list(range(p0[r], p0[r] + 4)) for r in rows]
+        ts, circ, gen, persistent, qsl, pos, ib = rig.mapping(rows, per, pad_reqs=pad_reqs)
+        a = [accept_seq[(s + r) % len(accept_seq)] if accept_seq else int(torch.randint(0, 4, (1,), generator=g))
+             for r in rows]
+        Kb = torch.zeros(n_req, 4, HD, dtype=torch.bfloat16)
+        Gb = torch.zeros(n_req, 4, HD, dtype=torch.bfloat16)
+        sm = torch.full((n_req, 4), -1, dtype=torch.int32)
+        for r in rows:
+            for j in range(4):
+                p = per[r][j]
+                if j <= a[r]:
+                    Kb[r, j], Gb[r, j] = Kt[r][p], Gt[r][p]
+                else:
+                    Kb[r, j] = torch.randn(HD, generator=g).to(torch.bfloat16)
+                    Gb[r, j] = torch.randn(HD, generator=g).to(torch.bfloat16)
+                if (p + 1) % KPOOL == 0:
+                    sm[r, j] = (mla[r] * 17) * 64 + p // KPOOL
+        kpool_decode_update_and_maybe_write_cache_batched(
+            idxc, tail, ts[:n].view(n_req, 4).to(torch.int32), Kb, Gb, ape, sm,
+            pos[:n].view(n_req, 4).to(torch.int32), KPOOL, HD, round_scale=True)
+        sc = dict(nr=n_req, acc=torch.tensor(a), idx=torch.tensor(rows))
+        fw._shadow_step(ib, sc)
+        replay.append((gen.clone(), circ.clone(), qsl.clone(), pos.clone(), int(qsl[-1]), n_req + pad_reqs, ib, a))
+        for r in rows:
+            for j in range(a[r] + 1):
+                p = per[r][j]
+                if (p + 1) % KPOOL == 0:
+                    committed[r].append(p // KPOOL)
+        p0 = [p0[r] + a[r] + 1 for r in rows]
+    truth = {}
+    for r in range(n_req):
+        for pool in committed[r]:
+            got = pool_rec(raw, mla[r], pool)
+            ref = ref_rec(Kt[r][4 * pool: 4 * pool + 4], Gt[r][4 * pool: 4 * pool + 4], ape)
+            truth[(r, pool)] = same(got, ref)
+    cls = {(k, pool): c for k, d in fw.S.shadow.cls.items() for pool, c in d.items()}
+    return dict(truth=truth, cls=cls, replay=replay, rig=rig, P=P)
+
+
+def replay_a1(a1, res, inject):
+    """Feed the attempt-1 module the SAME builder inputs (padded qsl, n_reqs incl. padding) and decisions."""
+    a1.S.__init__()
+    a1.S.shadow = a1.ShadowRing()
+    rig = res["rig"]
+    for i, Pi in enumerate(res["P"]):
+        ea = {"forcewin_hooks": [1] * 400, "local_fw_tag": "r%d" % i}
+        if inject:
+            ea["local_fw_d2"] = [0, 400]
+        a1.add_request(rig.runner, "r%d" % i, i, Pi, types.SimpleNamespace(
+            sampling_params=SamplingParams(max_tokens=400, extra_args=ea)))
+    for gen, circ, qsl, pos, n_pad, n_reqs, ib, a in res["replay"]:
+        a1.on_batch(rig.runner, ib)
+        out = a1.d2_tail_mapping(gen, circ, qsl, pos, n_pad, n_reqs)
+        a1.note_tail_mapping(out, pos, qsl, n_pad, n_reqs)
+        a1.S.fwd_armed = False
+        a1._shadow_step(ib, dict(nr=ib.num_reqs, acc=torch.tensor(a), idx=torch.tensor(list(range(ib.num_reqs)))))
+    return {(k, pool): c for k, d in a1.S.shadow.cls.items() for pool, c in d.items()}
+
+
+def ledger_vs_truth(truth, cls):
+    keys_t, keys_c = set(truth), set(cls)
+    clean = [truth[k] for k in keys_t & keys_c if cls[k] == fw.PC_CLEAN]
+    corrupt = [truth[k] for k in keys_t & keys_c if cls[k] == fw.PC_CORRUPT]
+    return dict(committed=len(keys_t), classified=len(keys_t & keys_c), missing=len(keys_t - keys_c),
+                foreign=len(keys_c - keys_t), clean=len(clean), clean_ok=all(clean), corrupt=len(corrupt),
+                corrupt_wrong=not any(corrupt), race=sum(1 for k in keys_t & keys_c if cls[k] == fw.PC_RACE),
+                byte_ok=sum(truth.values()))
+
+
+def t_padded():
+    b1p = simulate_hook(3, inject=False, steps=12, seed=1, pad_reqs=1)
+    j = ledger_vs_truth(b1p["truth"], b1p["cls"])
+    allclean = all(c == fw.PC_CLEAN for k, c in b1p["cls"].items() if k in b1p["truth"])
+    check("D7p-a B1 arm, padded steps, hook ledger: every committed pool classified under its own request, all "
+          "clean, all byte-correct", j["missing"] == 0 and j["foreign"] == 0 and allclean and j["clean_ok"]
+          and j["byte_ok"] == j["committed"] and j["committed"] > 10, str(j))
+    injp = simulate_hook(3, inject=True, steps=12, seed=1, pad_reqs=1)
+    ji = ledger_vs_truth(injp["truth"], injp["cls"])
+    check("D7p-b injected arm, padded steps, hook ledger: every committed pool classified; clean -> byte-correct, "
+          "corrupt -> wrong", ji["missing"] == 0 and ji["foreign"] == 0 and ji["clean_ok"] and ji["corrupt_wrong"]
+          and ji["corrupt"] > 0, str(ji))
+    b1u = simulate_hook(3, inject=False, steps=12, seed=1, pad_reqs=0)
+    inju = simulate_hook(3, inject=True, steps=12, seed=1, pad_reqs=0)
+    check("D7p-c padded and unpadded runs of the same schedule: identical classes (B1 and injected arms)",
+          b1u["cls"] == b1p["cls"] and inju["cls"] == injp["cls"],
+          "B1 equal %s, injected equal %s" % (b1u["cls"] == b1p["cls"], inju["cls"] == injp["cls"]))
+    # D7p-d: a count mismatch is refused
+    gen, circ, qsl, pos, n_pad, n_reqs, ib, a = b1p["replay"][0]
+    fw.S.d2_tok = (circ[:12].clone(), pos[:12].clone(), qsl[:4].clone(), 3, 12)
+    try:
+        fw._shadow_step(ib, dict(nr=2, acc=torch.tensor(a[:2]), idx=torch.tensor([0, 1])))
+        refused = False
+    except ValueError:
+        refused = True
+    check("D7p-d count mismatch between the stored mapping and the step is refused (nothing attributed)", refused)
+    a1 = load_a1()
+    a1._err = lambda where, exc: None
+    ca = replay_a1(a1, b1p, inject=False)
+    ja = ledger_vs_truth(b1p["truth"], ca)
+    a1clean = all(c == fw.PC_CLEAN for k, c in ca.items() if k in b1p["truth"])
+    a1_pass = ja["missing"] == 0 and ja["foreign"] == 0 and a1clean
+    cu = replay_a1(a1, b1u, inject=False)
+    check("D7pn negative control: the attempt-1 ledger fails D7p-a on the same padded inputs (and is correct "
+          "unpadded)", not a1_pass and cu == b1u["cls"],
+          "a1 padded: %s, all-clean %s; a1 unpadded equal to the fixed ledger: %s" % (ja, a1clean, cu == b1u["cls"]))
+
+
 if __name__ == "__main__":
     t_mapping()
     t_content()
     t_guard()
     t_glue()
+    t_padded()
+    check("D0 no hook errors during the suite", not ERRS, str(ERRS[:3]))
     ok = summary("test_d2_inject")
     sys.exit(0 if ok else 1)

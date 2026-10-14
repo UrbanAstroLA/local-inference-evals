@@ -1,0 +1,19 @@
+{
+ "units_contributing": 204,
+ "cluster_form": {
+  "positions_contributing": 118,
+  "seed": 20261015,
+  "P_equal_vs_reb": 0.04123,
+  "P_equal_vs_reb2": 0.04143,
+  "P_equal_both": 0.00206
+ },
+ "observed_diff": {
+  "reb": 0,
+  "reb2": 0
+ },
+ "sims": 200000,
+ "seed": 20261014,
+ "P_equal_vs_reb": 0.06159,
+ "P_equal_vs_reb2": 0.062405,
+ "P_equal_both": 0.004525
+}

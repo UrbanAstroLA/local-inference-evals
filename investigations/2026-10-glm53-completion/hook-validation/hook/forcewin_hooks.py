@@ -50,6 +50,16 @@ Request keys (vllm_xargs):
   local_fw_selrec list[int]   output indices whose full final pool selection is recorded
   local_fw_ref    int         prefill reference: record metrics at every computed prompt row predicting
                                 position >= this value (index = predicted position - value)
+
+Attempt-2 changes (post-inspection, hook-validation/ATTEMPT2-PREP.md; attempt-1 module kept as forcewin_hooks.py.a1):
+  PA2-1  on_selection maps each selection row to its request through a per-token table (S.tokreq, filled in
+         on_batch from query_start_loc before the forward). With next_n == 1 the rows are query tokens (the SM120
+         indexer's flattened spec-verify layout [B*(K+1), 1], or plain decode); with next_n > 1 the native padded
+         [B, next_n] layout keeps row // next_n. Attempt 1 used row // next_n for both, which misattributed or
+         dropped every flattened row except batch row 0's first token (DIAGNOSIS-a1 section 3).
+  PA2-2  the shadow ledger stores the REAL request and token counts of the step (from on_batch) with the tail
+         mapping, so FULL-graph padding requests (3/5/7 in flight padded to 16/24/32 tokens) no longer shift the
+         packed acc/idx slices in _shadow_step (DIAGNOSIS-a1 section 7).
 """
 from __future__ import annotations
 
@@ -355,7 +365,9 @@ class _State:
         self.chunk_lo = 0
         self.sc = None
         self.row_d2on = None
-        self.d2_tok = None         # (final tail mapping, positions, qsl, n_tok) of the step, for the shadow
+        self.d2_tok = None         # (final tail mapping, positions, qsl, n_reqs, n_tok) of the step, REAL counts
+        self.real_nr = 0           # PA2-2: the step's real request / token counts (before FULL-graph padding)
+        self.real_ntok = 0
         self.shadow = ShadowRing() if SHADOW else None
         self.exp_step = 0
 
@@ -418,6 +430,9 @@ def _ensure(runner):
     S.xstep = torch.zeros((), dtype=torch.int32, device=dev)
     S.xarmed = torch.zeros((), dtype=torch.int32, device=dev)
     S.bidx = torch.full((2 * S.max_reqs + 1,), -1, dtype=torch.int64, device=dev)   # batch row -> req_idx
+    # PA2-1: query token -> req_idx (-1 = padding / none); the last entry is a sink that is never written
+    T = int(getattr(runner, "max_num_tokens", 0) or 0) or (2 * S.max_reqs * (S.K + 1) + 64)
+    S.tokreq = torch.full((T + 1,), -1, dtype=torch.int64, device=dev)
     S.sc = None      # per-step scratch
     _log({"kind": "init", "K": S.K, "vocab": S.vocab, "max_reqs": R, "wmax": WMAX, "d2_allowed": D2_ALLOWED,
           "shadow": SHADOW, "snap": SNAP, "cols": COLS, "xcols": XCOLS})
@@ -577,6 +592,20 @@ def on_batch(runner, input_batch):
         idx = input_batch.idx_mapping[:nr].to(torch.int64)
         S.bidx.fill_(-1)
         S.bidx[:nr].copy_(idx)
+        # PA2-1/PA2-2: real counts and the per-token request table (host arrays; filled BEFORE the forward, so a
+        # replayed graph reads this step's values from the capture-time address)
+        nt = int(input_batch.num_tokens)
+        S.real_nr, S.real_ntok = nr, nt
+        S.tokreq.fill_(-1)
+        try:     # a failure here leaves the table empty (no exposure records) and is logged; forcing stays armed
+            qs = np.asarray(input_batch.query_start_loc_np[: nr + 1], dtype=np.int64)
+            if int(qs[-1]) != nt or nt > S.tokreq.shape[0] - 1:
+                raise ValueError("query_start_loc end %d != num_tokens %d (table %d)"
+                                 % (int(qs[-1]), nt, S.tokreq.shape[0] - 1))
+            rows = torch.from_numpy(np.repeat(np.arange(nr, dtype=np.int64), np.diff(qs))).to(S.dev)
+            S.tokreq[:nt].copy_(idx[rows])
+        except Exception as exc:  # noqa: BLE001
+            _err("on_batch.tokreq", exc)
         S.xstep.fill_(S.step)
         S.xarmed.fill_(1)
         # per batch row, padded with "not injected" so that a builder call whose num_reqs includes FULL-graph
@@ -624,7 +653,7 @@ def d2_tail_mapping(generic, circular, qsl, positions, n_tok, n_reqs):
         inj = (out[: int(n_tok)] != circular[: int(n_tok)])
         S.d2count.index_add_(0, S.bidx[req].clamp(min=0), inj.to(torch.int64))
         if SHADOW:
-            S.d2_tok = (out[: int(n_tok)].clone(), positions[: int(n_tok)].clone(), qsl[: n_reqs + 1].clone())
+            _note(out, positions, qsl, n_tok, n_reqs)
         return out
     except Exception as exc:  # noqa: BLE001
         _err("d2_tail_mapping", exc)
@@ -636,9 +665,17 @@ def note_tail_mapping(final, positions, qsl, n_tok, n_reqs):
     if not (SHADOW and S.fwd_armed) or S.d2_tok is not None:
         return
     try:
-        S.d2_tok = (final[: int(n_tok)].clone(), positions[: int(n_tok)].clone(), qsl[: n_reqs + 1].clone())
+        _note(final, positions, qsl, n_tok, n_reqs)
     except Exception as exc:  # noqa: BLE001
         _err("note_tail_mapping", exc)
+
+
+def _note(final, positions, qsl, n_tok, n_reqs):
+    """PA2-2: keep the step's tail mapping for the ledger, cut to the REAL requests and tokens (the builder's
+    n_reqs / n_tok include FULL-graph padding requests, which are appended after the real ones)."""
+    nr = min(int(S.real_nr), int(n_reqs))
+    nt = min(int(S.real_ntok), int(n_tok))
+    S.d2_tok = (final[:nt].clone(), positions[:nt].clone(), qsl[: nr + 1].clone(), nr, nt)
 
 
 def on_logits(runner, logits, input_batch):
@@ -779,7 +816,11 @@ def after_commit(runner, input_batch, sampler_output, num_sampled, num_rejected,
         S.inv[:, 0].index_add_(0, idx, in_win.to(torch.int64))        # checked steps
         S.inv[:, 1].index_add_(0, idx, bad_last.to(torch.int64))      # last committed token != history
         if SHADOW and S.d2_tok is not None and sc.get("acc") is not None:
-            _shadow_step(input_batch, sc)
+            try:                 # its own guard: a ledger fault must not skip this step's snapshot
+                _shadow_step(input_batch, sc)
+            except Exception as exc:  # noqa: BLE001
+                S.d2_tok = None
+                _err("shadow_step", exc)
         if SNAP:
             _maybe_snapshot(runner, input_batch, nout, attn_metadata)
     except Exception as exc:  # noqa: BLE001
@@ -879,8 +920,15 @@ def on_selection(layer_name, pool_ids, dec_seq, batch_size, next_n):
             S.layer_slot[layer_name] = slot
         rows = pool_ids.shape[0]
         dev = pool_ids.device
-        b = torch.div(torch.arange(rows, device=dev), max(int(next_n), 1), rounding_mode="floor")
-        ridx = S.bidx[b.clamp(max=2 * S.max_reqs)]
+        t = torch.arange(rows, device=dev)
+        if int(next_n) == 1:
+            # PA2-1: one row per query token (SM120 flattened spec-verify layout [B*(K+1), 1], or plain decode):
+            # row t is the batch's query token t; padding tokens map to -1 (sink entry never written)
+            ridx = S.tokreq[t.clamp(max=S.tokreq.shape[0] - 1)]
+        else:
+            # native padded [B, next_n] layout: row (b, j) belongs to decode request b
+            b = torch.div(t, int(next_n), rounding_mode="floor")
+            ridx = S.bidx[b.clamp(max=2 * S.max_reqs)]
         okr = ridx >= 0
         rc = ridx.clamp(min=0)
         pos = dec_seq[:rows].to(torch.int64) - 1
@@ -905,13 +953,19 @@ def on_selection(layer_name, pool_ids, dec_seq, batch_size, next_n):
 
 # ---------------------------------------------------------------- shadow ledger step (host)
 def _shadow_step(input_batch, sc):
-    final, positions, qsl = S.d2_tok
+    final, positions, qsl, nrs, nts = S.d2_tok
     S.d2_tok = None
     nr = sc["nr"]
+    if nrs != nr or qsl.shape[0] != nr + 1 or final.shape[0] != nts:
+        # PA2-2: never attribute across a count mismatch (logged; H1i flags it)
+        raise ValueError("shadow counts: stored nr %d / qsl %d / tokens %d vs step nr %d / tokens %d"
+                         % (nrs, qsl.shape[0], final.shape[0], nr, nts))
     acc = sc["acc"]
     host = torch.cat([final.to(torch.int64), positions.to(torch.int64), qsl.to(torch.int64),
-                      acc.to(torch.int64), sc["idx"].to(torch.int64)]).cpu().numpy()
+                      acc[:nr].to(torch.int64), sc["idx"][:nr].to(torch.int64)]).cpu().numpy()
     n = final.shape[0]
+    if int(host[2 * n + nr]) != n:
+        raise ValueError("shadow counts: qsl end %d != real tokens %d" % (int(host[2 * n + nr]), n))
     fin, pos, q = host[:n], host[n:2 * n], host[2 * n:2 * n + nr + 1]
     a = host[2 * n + nr + 1: 2 * n + 2 * nr + 1]
     idx = host[2 * n + 2 * nr + 1:]

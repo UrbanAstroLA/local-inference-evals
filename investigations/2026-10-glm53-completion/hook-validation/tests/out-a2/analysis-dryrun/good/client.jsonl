@@ -1,0 +1,130 @@
+{"kind": "start", "t": 1000.0, "plan": false, "deadline": 9000000000.0, "scope": "attempt2"}
+{"kind": "dump", "tag": "start", "t": 1000.1, "rc": 0}
+{"kind": "probe", "id": "q0", "sha256": "x", "expected": "x", "equal": true}
+{"kind": "probe", "id": "q1", "sha256": "x", "expected": "x", "equal": true}
+{"kind": "probe", "id": "q2", "sha256": "x", "expected": "x", "equal": true}
+{"kind": "probe", "id": "q3", "sha256": "x", "expected": "x", "equal": true}
+{"kind": "phase", "tag": "V0", "t0": 1000.1, "t1": 1005.1, "secs": 5.0}
+{"kind": "dump", "tag": "V0", "t": 1005.2, "rc": 0}
+{"kind": "request", "phase": "V2a", "tag": "V2a-natural-t0", "mode": "natural", "seed": 101, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V2a", "tag": "V2a-natural-t1", "mode": "natural", "seed": 102, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V2a", "tag": "V2a-natural-t2", "mode": "natural", "seed": 103, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V2a", "tag": "V2a-natural-t3", "mode": "natural", "seed": 104, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V2a", "tag": "V2a-natural-t4", "mode": "natural", "seed": 105, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V2a", "tag": "V2a-natural-t5", "mode": "natural", "seed": 106, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V2a", "tag": "V2a-natural-t6", "mode": "natural", "seed": 107, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V2a", "tag": "V2a-natural-t7", "mode": "natural", "seed": 108, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "phase", "tag": "V2a-natural", "t0": 1005.2, "t1": 1010.2, "secs": 5.0}
+{"kind": "dump", "tag": "V2a-natural", "t": 1010.3, "rc": 0}
+{"kind": "request", "phase": "V2a", "tag": "V2a-oracle-t0", "mode": "oracle", "seed": 109, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V2a", "tag": "V2a-oracle-t1", "mode": "oracle", "seed": 110, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V2a", "tag": "V2a-oracle-t2", "mode": "oracle", "seed": 111, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V2a", "tag": "V2a-oracle-t3", "mode": "oracle", "seed": 112, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V2a", "tag": "V2a-oracle-t4", "mode": "oracle", "seed": 113, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V2a", "tag": "V2a-oracle-t5", "mode": "oracle", "seed": 114, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V2a", "tag": "V2a-oracle-t6", "mode": "oracle", "seed": 115, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V2a", "tag": "V2a-oracle-t7", "mode": "oracle", "seed": 116, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "phase", "tag": "V2a-oracle", "t0": 1010.3, "t1": 1015.3, "secs": 5.0}
+{"kind": "dump", "tag": "V2a-oracle", "t": 1015.4, "rc": 0}
+{"kind": "request", "phase": "V2c", "tag": "V2c-t0", "mode": "natural", "seed": 117, "P": 500, "W": 0, "ids_equal": null, "finish": "length", "error": null, "ref_from": 195, "batch": null}
+{"kind": "request", "phase": "V2c", "tag": "V2c-t1", "mode": "natural", "seed": 118, "P": 500, "W": 0, "ids_equal": null, "finish": "length", "error": null, "ref_from": 195, "batch": null}
+{"kind": "request", "phase": "V2c", "tag": "V2c-t2", "mode": "natural", "seed": 119, "P": 500, "W": 0, "ids_equal": null, "finish": "length", "error": null, "ref_from": 200, "batch": null}
+{"kind": "request", "phase": "V2c", "tag": "V2c-t3", "mode": "natural", "seed": 120, "P": 500, "W": 0, "ids_equal": null, "finish": "length", "error": null, "ref_from": 200, "batch": null}
+{"kind": "request", "phase": "V2c", "tag": "V2c-t4", "mode": "natural", "seed": 121, "P": 500, "W": 0, "ids_equal": null, "finish": "length", "error": null, "ref_from": 200, "batch": null}
+{"kind": "request", "phase": "V2c", "tag": "V2c-t5", "mode": "natural", "seed": 122, "P": 500, "W": 0, "ids_equal": null, "finish": "length", "error": null, "ref_from": 200, "batch": null}
+{"kind": "request", "phase": "V2c", "tag": "V2c-t6", "mode": "natural", "seed": 123, "P": 500, "W": 0, "ids_equal": null, "finish": "length", "error": null, "ref_from": 200, "batch": null}
+{"kind": "request", "phase": "V2c", "tag": "V2c-t7", "mode": "natural", "seed": 124, "P": 500, "W": 0, "ids_equal": null, "finish": "length", "error": null, "ref_from": 200, "batch": null}
+{"kind": "phase", "tag": "V2c", "t0": 1015.4, "t1": 1020.4, "secs": 5.0}
+{"kind": "dump", "tag": "V2c", "t": 1020.5, "rc": 0}
+{"kind": "request", "phase": "V4", "tag": "V4-d2-u0", "mode": "natural", "seed": 125, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "d2"}
+{"kind": "request", "phase": "V4", "tag": "V4-d2-u1", "mode": "natural", "seed": 126, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "d2"}
+{"kind": "request", "phase": "V4", "tag": "V4-d2-u2", "mode": "natural", "seed": 127, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "d2"}
+{"kind": "request", "phase": "V4", "tag": "V4-d2-u3", "mode": "natural", "seed": 128, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "d2"}
+{"kind": "request", "phase": "V4", "tag": "V4-d2-u4", "mode": "natural", "seed": 129, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "d2"}
+{"kind": "request", "phase": "V4", "tag": "V4-d2-u5", "mode": "natural", "seed": 130, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "d2"}
+{"kind": "request", "phase": "V4", "tag": "V4-d2-u6", "mode": "natural", "seed": 131, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "d2"}
+{"kind": "request", "phase": "V4", "tag": "V4-d2-u7", "mode": "natural", "seed": 132, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "d2"}
+{"kind": "phase", "tag": "V4-d2", "t0": 1020.5, "t1": 1025.5, "secs": 5.0}
+{"kind": "dump", "tag": "V4-d2", "t": 1025.6, "rc": 0}
+{"kind": "request", "phase": "V4", "tag": "V4-b1-u0", "mode": "natural", "seed": 133, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "b1"}
+{"kind": "request", "phase": "V4", "tag": "V4-b1-u1", "mode": "natural", "seed": 134, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "b1"}
+{"kind": "request", "phase": "V4", "tag": "V4-b1-u2", "mode": "natural", "seed": 135, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "b1"}
+{"kind": "request", "phase": "V4", "tag": "V4-b1-u3", "mode": "natural", "seed": 136, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "b1"}
+{"kind": "request", "phase": "V4", "tag": "V4-b1-u4", "mode": "natural", "seed": 137, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "b1"}
+{"kind": "request", "phase": "V4", "tag": "V4-b1-u5", "mode": "natural", "seed": 138, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "b1"}
+{"kind": "request", "phase": "V4", "tag": "V4-b1-u6", "mode": "natural", "seed": 139, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "b1"}
+{"kind": "request", "phase": "V4", "tag": "V4-b1-u7", "mode": "natural", "seed": 140, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "b1"}
+{"kind": "phase", "tag": "V4-b1", "t0": 1025.6, "t1": 1030.6, "secs": 5.0}
+{"kind": "dump", "tag": "V4-b1", "t": 1030.7, "rc": 0}
+{"kind": "request", "phase": "V4", "tag": "V4-d2solo-u0", "mode": "natural", "seed": 141, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "d2solo"}
+{"kind": "phase", "tag": "V4-d2solo", "t0": 1030.7, "t1": 1035.7, "secs": 5.0}
+{"kind": "dump", "tag": "V4-d2solo", "t": 1035.8, "rc": 0}
+{"kind": "request", "phase": "V4", "tag": "V4-rebuild-u0", "mode": "natural", "seed": 142, "P": 528, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "rebuild"}
+{"kind": "request", "phase": "V4", "tag": "V4-rebuild-u1", "mode": "natural", "seed": 143, "P": 528, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "rebuild"}
+{"kind": "request", "phase": "V4", "tag": "V4-rebuild-u2", "mode": "natural", "seed": 144, "P": 528, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "rebuild"}
+{"kind": "request", "phase": "V4", "tag": "V4-rebuild-u3", "mode": "natural", "seed": 145, "P": 528, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "rebuild"}
+{"kind": "request", "phase": "V4", "tag": "V4-rebuild-u4", "mode": "natural", "seed": 146, "P": 528, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "rebuild"}
+{"kind": "request", "phase": "V4", "tag": "V4-rebuild-u5", "mode": "natural", "seed": 147, "P": 528, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "rebuild"}
+{"kind": "request", "phase": "V4", "tag": "V4-rebuild-u6", "mode": "natural", "seed": 148, "P": 528, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "rebuild"}
+{"kind": "request", "phase": "V4", "tag": "V4-rebuild-u7", "mode": "natural", "seed": 149, "P": 528, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "rebuild"}
+{"kind": "phase", "tag": "V4-rebuild", "t0": 1035.8, "t1": 1040.8, "secs": 5.0}
+{"kind": "dump", "tag": "V4-rebuild", "t": 1040.9, "rc": 0}
+{"kind": "request", "phase": "V4n", "tag": "V4n-b1b-u0", "mode": "natural", "seed": 150, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "b1b"}
+{"kind": "request", "phase": "V4n", "tag": "V4n-b1b-u1", "mode": "natural", "seed": 151, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "b1b"}
+{"kind": "request", "phase": "V4n", "tag": "V4n-b1b-u2", "mode": "natural", "seed": 152, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "b1b"}
+{"kind": "request", "phase": "V4n", "tag": "V4n-b1b-u3", "mode": "natural", "seed": 153, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "b1b"}
+{"kind": "request", "phase": "V4n", "tag": "V4n-b1b-u4", "mode": "natural", "seed": 154, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "b1b"}
+{"kind": "request", "phase": "V4n", "tag": "V4n-b1b-u5", "mode": "natural", "seed": 155, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "b1b"}
+{"kind": "request", "phase": "V4n", "tag": "V4n-b1b-u6", "mode": "natural", "seed": 156, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "b1b"}
+{"kind": "request", "phase": "V4n", "tag": "V4n-b1b-u7", "mode": "natural", "seed": 157, "P": 128, "W": 400, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "b1b"}
+{"kind": "phase", "tag": "V4n-b1b", "t0": 1040.9, "t1": 1045.9, "secs": 5.0}
+{"kind": "dump", "tag": "V4n-b1b", "t": 1046.0, "rc": 0}
+{"kind": "request", "phase": "V4n", "tag": "V4n-rebuild2-u0", "mode": "natural", "seed": 158, "P": 728, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "rebuild2"}
+{"kind": "request", "phase": "V4n", "tag": "V4n-rebuild2-u1", "mode": "natural", "seed": 159, "P": 728, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "rebuild2"}
+{"kind": "request", "phase": "V4n", "tag": "V4n-rebuild2-u2", "mode": "natural", "seed": 160, "P": 728, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "rebuild2"}
+{"kind": "request", "phase": "V4n", "tag": "V4n-rebuild2-u3", "mode": "natural", "seed": 161, "P": 728, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "rebuild2"}
+{"kind": "request", "phase": "V4n", "tag": "V4n-rebuild2-u4", "mode": "natural", "seed": 162, "P": 728, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "rebuild2"}
+{"kind": "request", "phase": "V4n", "tag": "V4n-rebuild2-u5", "mode": "natural", "seed": 163, "P": 728, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "rebuild2"}
+{"kind": "request", "phase": "V4n", "tag": "V4n-rebuild2-u6", "mode": "natural", "seed": 164, "P": 728, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "rebuild2"}
+{"kind": "request", "phase": "V4n", "tag": "V4n-rebuild2-u7", "mode": "natural", "seed": 165, "P": 728, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": "rebuild2"}
+{"kind": "phase", "tag": "V4n-rebuild2", "t0": 1046.0, "t1": 1051.0, "secs": 5.0}
+{"kind": "dump", "tag": "V4n-rebuild2", "t": 1051.1, "rc": 0}
+{"kind": "request", "phase": "V3", "tag": "V3-sched:7-t0", "mode": "sched:7", "seed": 166, "P": 400, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V3", "tag": "V3ref-F120-V3-sched:7-t0", "mode": "natural", "seed": 167, "P": 519, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V3", "tag": "V3ref-F126-V3-sched:7-t0", "mode": "natural", "seed": 168, "P": 525, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V3", "tag": "V3-sched:7-t1", "mode": "sched:7", "seed": 169, "P": 400, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V3", "tag": "V3ref-F121-V3-sched:7-t1", "mode": "natural", "seed": 170, "P": 520, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V3", "tag": "V3ref-F127-V3-sched:7-t1", "mode": "natural", "seed": 171, "P": 526, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V3", "tag": "V3-sched:7-t2", "mode": "sched:7", "seed": 172, "P": 400, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V3", "tag": "V3ref-F122-V3-sched:7-t2", "mode": "natural", "seed": 173, "P": 521, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V3", "tag": "V3ref-F128-V3-sched:7-t2", "mode": "natural", "seed": 174, "P": 527, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V3", "tag": "V3-sched:7-t3", "mode": "sched:7", "seed": 175, "P": 400, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V3", "tag": "V3ref-F123-V3-sched:7-t3", "mode": "natural", "seed": 176, "P": 522, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V3", "tag": "V3ref-F129-V3-sched:7-t3", "mode": "natural", "seed": 177, "P": 528, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V3", "tag": "V3-sched:7-t4", "mode": "sched:7", "seed": 178, "P": 400, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V3", "tag": "V3ref-F124-V3-sched:7-t4", "mode": "natural", "seed": 179, "P": 523, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V3", "tag": "V3ref-F130-V3-sched:7-t4", "mode": "natural", "seed": 180, "P": 529, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V3", "tag": "V3-sched:7-t5", "mode": "sched:7", "seed": 181, "P": 400, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V3", "tag": "V3ref-F125-V3-sched:7-t5", "mode": "natural", "seed": 182, "P": 524, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V3", "tag": "V3ref-F131-V3-sched:7-t5", "mode": "natural", "seed": 183, "P": 530, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V3", "tag": "V3-sched:7-t6", "mode": "sched:7", "seed": 184, "P": 400, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V3", "tag": "V3ref-F126-V3-sched:7-t6", "mode": "natural", "seed": 185, "P": 525, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V3", "tag": "V3ref-F132-V3-sched:7-t6", "mode": "natural", "seed": 186, "P": 531, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V3", "tag": "V3-sched:7-t7", "mode": "sched:7", "seed": 187, "P": 400, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V3", "tag": "V3ref-F127-V3-sched:7-t7", "mode": "natural", "seed": 188, "P": 526, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V3", "tag": "V3ref-F133-V3-sched:7-t7", "mode": "natural", "seed": 189, "P": 532, "W": 1, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "phase", "tag": "V3-forced", "t0": 1051.1, "t1": 1056.1, "secs": 5.0}
+{"kind": "dump", "tag": "V3-forced", "t": 1056.2, "rc": 0}
+{"kind": "phase", "tag": "V3-refs", "t0": 1056.2, "t1": 1061.2, "secs": 5.0}
+{"kind": "dump", "tag": "V3-refs", "t": 1061.3, "rc": 0}
+{"kind": "request", "phase": "V2a", "tag": "V2a-poison-t0", "mode": "poison", "seed": 190, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V2a", "tag": "V2a-poison-t1", "mode": "poison", "seed": 191, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V2a", "tag": "V2a-poison-t2", "mode": "poison", "seed": 192, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V2a", "tag": "V2a-poison-t3", "mode": "poison", "seed": 193, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V2a", "tag": "V2a-poison-t4", "mode": "poison", "seed": 194, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V2a", "tag": "V2a-poison-t5", "mode": "poison", "seed": 195, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V2a", "tag": "V2a-poison-t6", "mode": "poison", "seed": 196, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "request", "phase": "V2a", "tag": "V2a-poison-t7", "mode": "poison", "seed": 197, "P": 200, "W": 300, "ids_equal": true, "finish": "length", "error": null, "ref_from": null, "batch": null}
+{"kind": "phase", "tag": "V2a-poison", "t0": 1061.3, "t1": 1066.3, "secs": 5.0}
+{"kind": "dump", "tag": "V2a-poison", "t": 1066.4, "rc": 0}
+{"kind": "end", "t": 1067.4}

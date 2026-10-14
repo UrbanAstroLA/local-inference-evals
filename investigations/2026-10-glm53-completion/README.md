@@ -1231,8 +1231,24 @@ the real decode path and records termination-token probabilities. 1.2117 of 2.4 
 - **Engine edge case, immaterial:** the served Triton top-p kernel skips masking on some near-one-hot rows (kept
   probability below 1e-8).
 - **No new B1 defect was found.**
-- **Next:** attempt 2 (the last under the authorization) with the hook fixes and revised criteria, after independent
-  review.
+- **Attempt 2 (VALID under the revised, post-inspection criteria; 0.795 GPU-hours; amendments 21g-21j):**
+  - **Validated on the current image:**
+    - forcing, alignment against prefill (top-1 ≥ 0.95 within the null) and the argmax shift control;
+    - exact KDA slot bookkeeping;
+    - index-K structure (exact attribution, no page above 25% gross, zero gross in layers 3-15, pools byte-stable over
+      time) and content within matched nulls (B1 0.61% against 1.16%);
+    - the D2 injection at 59.7%, with the guard pattern exact;
+    - a clean ledger and complete exposure records.
+  - The original attempt-1 criteria still read INVALID and are reported beside the revised verdict.
+  - **Follow-up checks** ([`FOLLOWUP-a2.md`](hook-validation/followup-a2/FOLLOWUP-a2.md)):
+    - an equal gross count in both B1 arms is a coincidence;
+    - a recurring KDA metadata disagreement is an align-mode block-change artefact with correct committed state;
+    - two flagged short fixtures are deep-layer numerical fragility.
+  - **What a pass establishes, and does not:** forced-token commitment, alignment, attribution and a verified D2
+    injection. Not full-history replay equivalence, not the absence of every deep-layer numerical issue, and not that
+    D2 explains GPQA completion.
+- **Next:** the first contrast, B1 against B1 with the decode-window D2 injection plus the long-prompt control
+  ([`first-contrast/PROPOSAL.md`](first-contrast/PROPOSAL.md)), awaiting independent review and authorization.
 
 ### Observations recorded separately
 

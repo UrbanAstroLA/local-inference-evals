@@ -500,6 +500,27 @@ What was asked, run, found, corrected and withdrawn, in date order.
   63.22 GPU-hours.
   [Instrument validation](investigations/2026-10-glm53-completion/README.md#instrument-validation-k-and-the-force-history-hook-amendment-21).
 
+**2026-10-14. Hook validation attempt 2, and the first-contrast proposal (amendments 21g-21k).**
+- **Where things stand:**
+  - corrections established;
+  - the completion gap's cause not established;
+  - fewer long replies finishing on stock 0.9.1 than on 0.7.0 is a hypothesis;
+  - finishing less is not looping more.
+- **Revised criteria:** an independent review accepted them for the last validation attempt, all post-inspection:
+  - an index-K content gate against matched in-session nulls, plus exact structural checks;
+  - KDA commit bookkeeping kept exact, separate from a numerical identification screen;
+  - attempt 1's alignment evidence carried over, with explicit provenance.
+  Originals are reported beside the revised readings.
+- **Attempt 2: VALID** under those criteria (0.795 GPU-hours).
+  - **Validated:** the forced-decode instrument (forcing, alignment, attribution, a clean ledger, complete exposure
+    records) and the decode-window D2 injection (59.7% corrupted pools against a 1.16% matched limit).
+  - **Not established:** full-history equivalence, the absence of every deep-layer numerical issue, or any link to GPQA
+    completion.
+  - **Follow-ups:** found no defect.
+- **Next:** a first contrast of B1 against B1 with the decode-window D2 injection, with a long-prompt control. It is
+  proposed and costed (about 2.8 GPU-hours, ceiling 4.3) and awaits independent review and authorization. Cumulative
+  64.01 GPU-hours.
+
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough
   qualification. They also said the D7 path "cannot run" where the basis is a reconstruction. These are reworded in the

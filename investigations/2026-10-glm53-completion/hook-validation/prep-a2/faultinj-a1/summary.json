@@ -1,0 +1,214 @@
+{
+ "ok": true,
+ "cases": {
+  "base": {
+   "targeted": {
+    "IDX-attrib": "PASS",
+    "IDX-page": "PASS",
+    "IDX-early": "PASS",
+    "IDX-stable": "PASS",
+    "H5f-B1": "PASS",
+    "H5f-D2": "PASS",
+    "H2a-r": "PASS",
+    "H2c-r": "PASS",
+    "H4-slot": "PASS",
+    "H4b-r": "PASS",
+    "H4b-sep": "PASS"
+   },
+   "expected": "PASS",
+   "ok": true,
+   "all_failing": [
+    "IDX-content",
+    "H5e-r",
+    "H5h-r",
+    "CARRY-scope",
+    "CARRY-admissible"
+   ],
+   "raised": []
+  },
+  "F1-wrongpage-b1": {
+   "targeted": {
+    "IDX-page": "FAIL",
+    "IDX-early": "FAIL"
+   },
+   "expected": "FAIL",
+   "ok": true,
+   "all_failing": [
+    "IDX-page",
+    "IDX-early",
+    "H5h-r",
+    "CARRY-scope",
+    "CARRY-admissible"
+   ],
+   "raised": [],
+   "newly_failing_vs_base": [
+    "IDX-early",
+    "IDX-page"
+   ]
+  },
+  "F1-wrongpage-v3": {
+   "targeted": {
+    "IDX-stable": "FAIL",
+    "IDX-early": "FAIL"
+   },
+   "expected": "FAIL",
+   "ok": true,
+   "all_failing": [
+    "IDX-early",
+    "IDX-stable",
+    "IDX-content",
+    "H5e-r",
+    "H5h-r",
+    "CARRY-scope",
+    "CARRY-admissible"
+   ],
+   "raised": [],
+   "newly_failing_vs_base": [
+    "IDX-early",
+    "IDX-stable"
+   ]
+  },
+  "F2-attrib-b1": {
+   "targeted": {
+    "IDX-page": "FAIL",
+    "IDX-early": "FAIL"
+   },
+   "expected": "FAIL",
+   "ok": true,
+   "all_failing": [
+    "IDX-page",
+    "IDX-early",
+    "H5f-D2",
+    "H5h-r",
+    "CARRY-scope",
+    "CARRY-admissible"
+   ],
+   "raised": [],
+   "newly_failing_vs_base": [
+    "H5f-D2",
+    "IDX-early",
+    "IDX-page"
+   ]
+  },
+  "F2-attrib-v2a": {
+   "targeted": {
+    "H2c-r": "FAIL"
+   },
+   "expected": "FAIL",
+   "ok": true,
+   "all_failing": [
+    "H2c-r",
+    "H3-r",
+    "IDX-content",
+    "H5e-r",
+    "H5h-r",
+    "CARRY-scope",
+    "CARRY-admissible"
+   ],
+   "raised": [],
+   "newly_failing_vs_base": [
+    "H2c-r",
+    "H3-r"
+   ]
+  },
+  "F2-attrib-v3": {
+   "targeted": {
+    "H4b-r": "FAIL"
+   },
+   "expected": "FAIL",
+   "ok": true,
+   "all_failing": [
+    "H4b-r",
+    "IDX-early",
+    "IDX-stable",
+    "IDX-content",
+    "H5e-r",
+    "H5h-r",
+    "CARRY-scope",
+    "CARRY-admissible"
+   ],
+   "raised": [],
+   "newly_failing_vs_base": [
+    "H4b-r",
+    "IDX-early",
+    "IDX-stable"
+   ]
+  },
+  "F3-ledger-a1": {
+   "targeted": {
+    "H5f-B1": "FAIL"
+   },
+   "expected": "FAIL",
+   "ok": true,
+   "all_failing": [
+    "IDX-content",
+    "H5e-r",
+    "H5f-B1",
+    "H5h-r",
+    "CARRY-scope",
+    "CARRY-admissible"
+   ],
+   "raised": [],
+   "newly_failing_vs_base": [
+    "H5f-B1"
+   ]
+  },
+  "F3-ledger-poolshift-b1": {
+   "targeted": {
+    "H5f-B1": "FAIL"
+   },
+   "expected": "FAIL",
+   "ok": true,
+   "all_failing": [
+    "IDX-content",
+    "H5e-r",
+    "H5f-B1",
+    "H5h-r",
+    "CARRY-scope",
+    "CARRY-admissible"
+   ],
+   "raised": [],
+   "newly_failing_vs_base": [
+    "H5f-B1"
+   ]
+  },
+  "F3-ledger-poolshift-d2": {
+   "targeted": {
+    "H5f-D2": "FAIL"
+   },
+   "expected": "FAIL",
+   "ok": true,
+   "all_failing": [
+    "IDX-content",
+    "H5e-r",
+    "H5f-D2",
+    "H5h-r",
+    "CARRY-scope",
+    "CARRY-admissible"
+   ],
+   "raised": [],
+   "newly_failing_vs_base": [
+    "H5f-D2"
+   ]
+  },
+  "F3-ledger-reqshift-d2": {
+   "targeted": {
+    "H5f-D2": "FAIL"
+   },
+   "expected": "FAIL",
+   "ok": true,
+   "all_failing": [
+    "IDX-content",
+    "H5e-r",
+    "H5f-D2",
+    "H5h-r",
+    "CARRY-scope",
+    "CARRY-admissible"
+   ],
+   "raised": [],
+   "newly_failing_vs_base": [
+    "H5f-D2"
+   ]
+  }
+ }
+}

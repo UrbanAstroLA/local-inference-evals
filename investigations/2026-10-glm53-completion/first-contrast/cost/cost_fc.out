@@ -1,0 +1,23 @@
+Components (seconds), central / pessimistic:
+  primary_round_warm     312.6    416.5
+  rewarm_hit              14.7     17.6
+  primary_batch          287.1    409.6
+  lp_round_warm          360.4    512.4
+  lp_rewarm_hit           11.4     13.2
+  lp_batch                66.6    118.4
+  ih_R1                  363.9    517.0
+  ih_R2                  364.5    517.9
+  short_run               55.9     70.9
+  short_rebuilds          22.9     26.1
+
+Option                                                                                    estimate   pessim.    optim.   ceiling  wallcap
+A0  primary only (C x3, D x3), no long-context content check                                  1.96      2.57      1.74      2.99 [4625]
+A   primary + long-context instrument health (R1 ref+dump, R2 dump)                           2.36      3.14      2.10      3.57 [5660]
+B   one session: primary + LP control x3 (instrument health folded into the LP warms)         2.82      3.86      2.50      4.29 [6952]
+B2  one session: primary + LP control x2 per condition                                        2.53      3.43      2.24      3.85 [6177]
+A+S primary + instrument health + short stratum S (attempt-2 D2 set)                          2.56      3.40      2.30      3.82 [6112]
+B+S one session: primary + LP x3 + short stratum S                                            3.02      4.11      2.69      4.54 [7404]
+C   two sessions: S1 = A; S2 = LP x3 + bridge (one C/D round re-run)                          4.17      5.59      3.72      6.02 [5660, 4410]
+
+Early stop after C1 (structural gate fails): 0.77 GPU-h
+LP control marginal (B - A0), central: 0.86 GPU-h

@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-10-14, later (completion investigation, amendments 21g-21k): hook validation attempt 2, first-contrast proposal
+
+Contents unchanged: 65 runs, 13 comparisons. Item 4o is new.
+
+- **`PLAN.md`**:
+  - 21g (independent guidance for attempt 2 and the first contrast);
+  - 21h (coordinator interpretation and recorded limits);
+  - 21i (frozen package);
+  - 21j (attempt-2 result: revised VALID, original INVALID);
+  - 21k (follow-ups; the first-contrast proposal).
+- **`hook-validation/`** gains `prep-a2/`, `run-a2/` and `followup-a2/`.
+- **New `first-contrast/`:** the proposal, position plan, exclusion-rule file, prior null and costing.
+- **Substitutions** are listed in `PUBLIC-COPIES-21j.txt`. The forcing tensor records of both runs are listed by size
+  only.
+- **Investigation `README.md`:** the attempt-2 result and next step.
+- **`costs.jsonl`** (attempt 2, 0.795) and **`recompute.py`**: cumulative 64.01.
+- **`FINDINGS.md`** (item 4o) and **`LEDGER.md`**.
+
 ## 2026-10-14 (completion investigation, amendments 21-21f): review result, K, hook validation attempt 1
 
 Contents unchanged: 65 runs, 13 comparisons. Item 4n is new.

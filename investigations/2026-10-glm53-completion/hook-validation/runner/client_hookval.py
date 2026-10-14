@@ -23,6 +23,28 @@ Phases in priority order (a stopped session keeps the most important results):
        mixed schedules; then prefill references at the ACTUAL frontiers (read from the hook log).
   V2b  all 24 traces x {natural, oracle} (full histories up to the natural close).
 Before the first request and after every phase the guard readout is triggered (DUMP).
+
+ATTEMPT 2 (scoped variant, PA2-9; attempt-1 client kept as client_hookval.py.a1; ATTEMPT2-PREP.md section 4).
+Phases, in order: V0; V2a natural + oracle; V2c; V4 as attempt 1 plus V4n (a SECOND B1 arm, the same 8 windows
+in two batches of 4 = a different batch composition: the in-session decode-path null; and a SECOND prefill
+rebuild of every window at a different build length, prompt + window + 200 further real ids of the same trace:
+the in-session prefill-vs-prefill null); V3 as attempt 1; then V2a poison only if the deadline leaves room
+(optional: H3 on the rebuilt image; its absence is recorded as "optional_skip", not as a coverage skip).
+V1 and V2b are not run: H2's null and H3 carry over from attempt 1 with provenance (ATTEMPT2-PREP.md).
+Requests now also record ref_from (local_fw_ref) and the batch they ran in. The forcing payloads, keys, seeds
+scheme and phase code of V0, V2a, V2c, V4 and V3 are attempt 1's.
+
+PA2-20 (PLAN.md amendment 21g; pre-21g client kept as client_hookval.py.pre21g). No request payload changes; records
+only, plus the optional phase's time requirement:
+  * every window-dumping request records dump_src_sha = sha of the token ids at positions < the dumped range's end
+    (decode arms: prompt + window; rebuilds: their prefix cut at the range end), so the plan and the analysis can
+    verify that V4-b1, V4n-b1b, V4-rebuild and V4n-rebuild2 dump the same tokens at the same positions (matched nulls);
+  * the optional V2a-poison phase runs only if the time left covers POISON_NEED_S (240 s: attempt 1 measured 154 s
+    for this phase plus the dump) scaled up by this session's V2a-natural time relative to attempt 1's (58.6 s); its
+    skip records need and left;
+  * V3-refs records a coverage_gap (never a silent drop) when the hook log yields no snapshot frontier or a V3
+    request has no snapshot;
+  * the client ends with a coverage record: required phases run / skipped, optional phase status.
 """
 import gzip
 import hashlib
@@ -45,7 +67,14 @@ CLOSE = 154842
 os.makedirs(OUT, exist_ok=True)
 LOG = open(f"{OUT}/client.jsonl", "a")
 lock = threading.Lock()
-SCHEDULES = ["natural", "oracle", "poison", "reject:1", "reject:2", "reject:3", "sched:20261013"]
+SCHEDULES = ["natural", "oracle"]                 # attempt 2 (attempt 1: + poison, reject:1-3, sched:20261013)
+OPTIONAL_SCHEDULES = ["poison"]                   # attempt 2: run last, only if the deadline leaves room
+REBUILD2_EXTRA = 200                              # attempt 2: second rebuild = prompt + window + 200 more ids
+POISON_NEED_S = 240.0                             # PA2-20: optional poison phase needs this much time left ...
+A1_NATURAL_S = 58.6                               # ... scaled by this session's V2a-natural secs / attempt 1's
+REQUIRED = ["V0", "V2a-natural", "V2a-oracle", "V2c", "V4-d2", "V4-b1", "V4-d2solo", "V4-rebuild", "V4n-b1b",
+            "V4n-rebuild2", "V3-forced", "V3-refs"]
+DONE = {}                                         # phase tag -> seconds (for the coverage record)
 PLANNED = []
 
 
@@ -115,7 +144,7 @@ def next_seed():
     return SEED[0]
 
 
-def forced(phase, tag, prefix, F, mode="natural", salt=None, xa=None, max_tokens=None, logprobs=None):
+def forced(phase, tag, prefix, F, mode="natural", salt=None, xa=None, max_tokens=None, logprobs=None, batch_id=None):
     """One forced request (token-id prompt); returns the record. Seeds are distinct per request and recorded."""
     seed = next_seed()
     xargs = {"forcewin_hooks": list(F), "local_fw_tag": tag, "local_fw_draft": mode}
@@ -126,7 +155,11 @@ def forced(phase, tag, prefix, F, mode="natural", salt=None, xa=None, max_tokens
         body["logprobs"] = logprobs
     d = dict(kind="request", phase=phase, tag=tag, mode=mode, seed=seed, salt=body["cache_salt"], P=len(prefix),
              W=len(F), P_mod8=len(prefix) % 8, prefix_sha=sha(list(prefix)), forced_sha=sha(list(F)),
-             keys=sorted(xargs))
+             keys=sorted(xargs), ref_from=xargs.get("local_fw_ref"), dumprange=xargs.get("local_fw_dumprange"),
+             batch=batch_id)
+    if xargs.get("local_fw_dumpwin"):           # PA2-20: token ids at positions < the dumped range's end
+        dr = xargs.get("local_fw_dumprange")
+        d["dump_src_sha"] = sha(list(prefix)[: dr[1]]) if dr else sha(list(prefix) + list(F))
     if PLAN:
         PLANNED.append(d)
         return d
@@ -176,6 +209,7 @@ def dump(tag):
 
 
 def phase(tag, t0):
+    DONE[tag] = round(time.time() - t0, 1)
     rec(dict(kind="phase", tag=tag, t0=round(t0, 3), t1=round(time.time(), 3), secs=round(time.time() - t0, 1)))
     log(f"phase {tag} done in {time.time() - t0:.0f}s")
     dump(tag)
@@ -214,10 +248,12 @@ def V0():
     phase("V0", t0)
 
 
-def V2a():
-    for mode in SCHEDULES:
-        if left() < 240:
-            rec(dict(kind="skip", phase="V2a", mode=mode))
+def V2a(modes=None, optional=False):
+    for mode in (modes or SCHEDULES):
+        need = max(POISON_NEED_S, POISON_NEED_S * DONE.get("V2a-natural", 0.0) / A1_NATURAL_S) if optional else 240
+        if left() < need:
+            rec(dict(kind="optional_skip" if optional else "skip", phase="V2a", mode=mode, left=round(left(), 1),
+                     need=round(need, 1)))
             continue
         t0 = time.time()
         fns = []
@@ -312,6 +348,44 @@ def V4():
             xa={"local_fw_dumpwin": 1, "local_fw_dumprange": [len(pre), len(pre) + len(F)]}))
     batch(fns)
     phase("V4-rebuild", t0)
+    V4n(items)
+
+
+def V4n(items):
+    """Attempt 2: in-session nulls for the index-K content criteria (ATTEMPT2-CRITERIA-DRAFT.md).
+    b1b: the B1 arm again (no injection), same windows, two batches of 4 (longest paired with shortest) -> decode
+    vs decode at a different batch composition. rebuild2: prefill of prompt + window + up to REBUILD2_EXTRA further
+    real ids of the trace (padded with the trace's own prompt ids when the history ends), dumping the same window
+    positions -> prefill vs prefill at a different build length (tokens after the dumped range only change the
+    build length: attention is causal)."""
+    if left() < 150:
+        rec(dict(kind="skip", phase="V4n"))
+        return
+    t0 = time.time()
+    order = sorted(items, key=lambda it: len(it[2]))
+    halves = [[order[0], order[7], order[2], order[5]], [order[1], order[6], order[3], order[4]]] \
+        if len(order) == 8 else [order[0::2], order[1::2]]
+    for k, grp in enumerate(halves):
+        fns = []
+        for tid, pre, F in grp:
+            xa = {"local_fw_dumpwin": 1, "local_fw_selrec": [o for o in (256, 512, 1024, 1536) if o < len(F)]}
+            fns.append(lambda tid=tid, pre=pre, F=F, xa=xa, k=k: forced("V4n", f"V4n-b1b-{tid}", pre, F, "natural",
+                                                                         xa=xa, batch_id=f"b1b-{k}"))
+        batch(fns)
+    phase("V4n-b1b", t0)
+    t0 = time.time()
+    fns = []
+    for tid, pre, F in items:
+        h = TR[tid]["hist"]
+        extra = list(h[len(F): len(F) + REBUILD2_EXTRA])
+        extra += list(TR[tid]["prompt"][: REBUILD2_EXTRA - len(extra)])
+        nxt = TR[tid]["after"] if len(F) + REBUILD2_EXTRA >= len(h) else h[len(F) + REBUILD2_EXTRA]
+        fns.append(lambda tid=tid, pre=pre, F=F, extra=extra, nxt=nxt: forced(
+            "V4n", f"V4n-rebuild2-{tid}", list(pre) + list(F) + extra, [nxt], "natural",
+            xa={"local_fw_dumpwin": 1, "local_fw_dumprange": [len(pre), len(pre) + len(F)]},
+            batch_id="rebuild2"))
+    batch(fns)
+    phase("V4n-rebuild2", t0)
 
 
 def V3():
@@ -347,6 +421,9 @@ def V3():
                 actual.append((r["tag"], int(r["F"])))
     else:
         actual = [(f"V3-{m}-{tid}", t) for tid, pre, F, m, tg in plan for t in tg[:1]]
+    nosnap = sorted({f"V3-{m}-{tid}" for tid, pre, F, m, tg in plan} - {a for a, _ in actual})
+    if not actual or nosnap:                     # PA2-20: never a silent drop of required coverage
+        rec(dict(kind="coverage_gap", phase="V3-refs", actual=len(actual), requests_without_snapshot=nosnap))
     fns = []
     byid = {f"V3-{m}-{tid}": (pre, F) for tid, pre, F, m, tg in plan}
     for tag, Fa in sorted(set(actual)):
@@ -378,14 +455,18 @@ if __name__ == "__main__":
     if not PLAN:
         import requests
         MODEL = requests.get(f"{BASE}/v1/models", timeout=30).json()["data"][0]["id"]
-    rec(dict(kind="start", t=round(time.time(), 3), plan=PLAN, deadline=DEADLINE,
+    rec(dict(kind="start", t=round(time.time(), 3), plan=PLAN, deadline=DEADLINE, scope="attempt2",
              traces=sorted(TR), matrix=MATRIX, d2set=D2SET))
     dump("start")
-    for ph in (V0, V2a, V2c, V1, V4, V3, V2b):
+    for ph in (V0, V2a, V2c, V4, V3):           # attempt 2 scope (attempt 1: V0, V2a, V2c, V1, V4, V3, V2b)
         if left() < 60:
             rec(dict(kind="skip", phase=ph.__name__))
             continue
         ph()
+    V2a(OPTIONAL_SCHEDULES, optional=True)       # optional, last: H3 on the rebuilt image if time remains
+    rec(dict(kind="coverage", required=REQUIRED, ran=[p for p in REQUIRED if p in DONE],
+             not_run=[p for p in REQUIRED if p not in DONE],
+             optional={"V2a-poison": "ran" if "V2a-poison" in DONE else "optional_skip"}, left=round(left(), 1)))
     rec(dict(kind="end", t=round(time.time(), 3)))
     if PLAN:
         json.dump(PLANNED, open(f"{OUT}/plan.json", "w"), indent=0)

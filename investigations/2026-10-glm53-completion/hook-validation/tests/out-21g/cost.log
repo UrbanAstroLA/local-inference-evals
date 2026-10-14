@@ -1,0 +1,54 @@
+{
+ "basis": "attempt-1 measured phase seconds (run-a1/client.jsonl) and overhead (costs.jsonl); DIAGNOSIS-a1 s.8.4",
+ "attempt1": {
+  "occupied_s": 2181,
+  "client_s": 1435,
+  "overhead_s": 746,
+  "gpu_h": 1.2117
+ },
+ "approved_item_gpu_h": 2.4,
+ "spent_gpu_h": 1.2117,
+ "remaining_gpu_h": 1.1883,
+ "wall_cap_s": 2138,
+ "min_wall_s": 1500,
+ "phase_estimates_s": {
+  "V0": 6.1,
+  "V2a-natural": 58.6,
+  "V2a-oracle": 41.7,
+  "V2c": 7.6,
+  "V4-d2": 48.5,
+  "V4-b1": 48.2,
+  "V4-d2solo": 32.2,
+  "V4-rebuild": 4.9,
+  "V4n-b1b": 96.4,
+  "V4n-rebuild2": 5.4,
+  "V3-forced": 51.5,
+  "V3-refs": 34.8
+ },
+ "optional_estimates_s": {
+  "V2a-poison": 154.1
+ },
+ "rebuild2_token_ratio": 1.11,
+ "mandatory": {
+  "client_s": 514,
+  "occupied_s": 1260,
+  "gpu_h": 0.7,
+  "cumulative_gpu_h": 1.912
+ },
+ "mandatory_plus_optional_poison": {
+  "client_s": 674,
+  "occupied_s": 1420,
+  "gpu_h": 0.789,
+  "cumulative_gpu_h": 2.0
+ },
+ "client_room_s": {
+  "wall_cap": 2138,
+  "minus_reserve": 180,
+  "minus_readiness_a1": 722,
+  "room": 1236,
+  "mandatory_need": 514,
+  "with_poison_need": 674
+ },
+ "worst_case_gpu_h": 1.188,
+ "worst_case_cumulative_gpu_h": 2.3995
+}

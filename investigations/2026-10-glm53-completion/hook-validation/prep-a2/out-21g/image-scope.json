@@ -1,0 +1,51 @@
+{
+ "what": "every file under the installed vllm package, attempt-1 image vs attempt-2 image (CPU containers, --network none); differing .pyc compared without their 16-byte header (source mtime)",
+ "image_a1": "sha256:1b9f8b15d63197ad8b2ef2410321baedf9dcd55a112603bc77b887e8dac293d5",
+ "image_a2": "sha256:ac05230bd94b3114cb6fb202b06402f9e2d45a61b20f041f314e045f967e97ee",
+ "files_a1": 7265,
+ "files_a2": 7265,
+ "listing_sha256": {
+  "a1": "5ac50cad2dcc64b48da215e3e3e4645505036560370e0b73007968ae6aa1fe04",
+  "a2": "4cf4eb1908f12c8ea6ef4fde78d136bf619cb03c8b1c0361f7ea52c3b9ce332c"
+ },
+ "differing_files": [
+  "vllm/__pycache__/forcewin_hooks.cpython-312.pyc",
+  "vllm/forcewin_hooks.py",
+  "vllm/model_executor/layers/__pycache__/sparse_attn_indexer_kpool.cpython-312.pyc",
+  "vllm/v1/attention/backends/mla/__pycache__/indexer.cpython-312.pyc",
+  "vllm/v1/worker/gpu/__pycache__/model_runner.cpython-312.pyc",
+  "vllm/v1/worker/gpu/sample/__pycache__/sampler.cpython-312.pyc",
+  "vllm/v1/worker/gpu/spec_decode/__pycache__/rejection_sampler.cpython-312.pyc"
+ ],
+ "differing_sources": [
+  "vllm/forcewin_hooks.py"
+ ],
+ "pyc": {
+  "vllm/__pycache__/forcewin_hooks.cpython-312.pyc": {
+   "body_equal": false,
+   "source": "vllm/forcewin_hooks.py"
+  },
+  "vllm/model_executor/layers/__pycache__/sparse_attn_indexer_kpool.cpython-312.pyc": {
+   "body_equal": true,
+   "source": "vllm/model_executor/layers/sparse_attn_indexer_kpool.py"
+  },
+  "vllm/v1/attention/backends/mla/__pycache__/indexer.cpython-312.pyc": {
+   "body_equal": true,
+   "source": "vllm/v1/attention/backends/mla/indexer.py"
+  },
+  "vllm/v1/worker/gpu/__pycache__/model_runner.cpython-312.pyc": {
+   "body_equal": true,
+   "source": "vllm/v1/worker/gpu/model_runner.py"
+  },
+  "vllm/v1/worker/gpu/sample/__pycache__/sampler.cpython-312.pyc": {
+   "body_equal": true,
+   "source": "vllm/v1/worker/gpu/sample/sampler.py"
+  },
+  "vllm/v1/worker/gpu/spec_decode/__pycache__/rejection_sampler.cpython-312.pyc": {
+   "body_equal": true,
+   "source": "vllm/v1/worker/gpu/spec_decode/rejection_sampler.py"
+  }
+ },
+ "pyc_with_code_difference_for_unchanged_source": [],
+ "only_hook_module_changed": true
+}

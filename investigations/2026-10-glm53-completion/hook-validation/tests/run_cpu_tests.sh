@@ -3,8 +3,11 @@
 # TRITON_INTERPRET=1, read-only mounts except tests/out. No image is built. No `set -e` (each test's rc recorded).
 HV=<runs>/hook-validation
 IMG=sha256:799d3cf8e5d14a615b89c734a6a38b4be5729bb44bb6b56effc7cf7df747b88a     # B1 local/glm53-v0.9.1-b1-d7:local
-OUT=$HV/tests/out; mkdir -p "$OUT"
-IMGF=sha256:1b9f8b15d63197ad8b2ef2410321baedf9dcd55a112603bc77b887e8dac293d5  # local/glm53-v0.9.1-b1-forcehook-mg:local (built here)
+# Attempt 2 (PA2-5; attempt-1 runner kept as run_cpu_tests.sh.a1): logs go to tests/out-a2 (attempt-1 logs in
+# tests/out stay as frozen); the "image" suites run on the attempt-2 image pinned in build-a2/image-id.txt.
+OUT=$HV/tests/out-a2; mkdir -p "$OUT"
+IMGF=$(awk '{print $2}' "$HV/build-a2/image-id.txt" 2>/dev/null)   # local/glm53-v0.9.1-b1-forcehook-mg2:local
+[ -n "$IMGF" ] || IMGF=missing-build-a2-image
 run() {  # name variant env... -- script args
   local NAME=$1 VAR=$2; shift 2
   local ENVS=(); while [ "$1" != "--" ]; do ENVS+=(-e "$1"); shift; done; shift

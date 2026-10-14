@@ -1,0 +1,651 @@
+{
+ "note": "PA2-1..15: before = attempt-1 frozen hash (SHA256SUMS.a1, sha256 67d8e54f...), after = the hash frozen in SHA256SUMS.pre21g (current/changed_by when a later item changed the file); PA2-16..25: before = SHA256SUMS.pre21g hash, after = the hash frozen in SHA256SUMS.pre21h (current/changed_by when PA2-26 changed it); PA2-26: before = SHA256SUMS.pre21h hash (21g package, sha256 160015e5...), after = current file",
+ "items": [
+  {
+   "id": "PA2-1",
+   "label": "post-inspection",
+   "what": "hook: on_selection maps selection rows to requests through a per-token table (flattened layout)",
+   "files": [
+    {
+     "file": "hook/forcewin_hooks.py",
+     "before": "c079560e7390fac19f71d03cb5f047af90544b9c9a05450bc563ee8635335181",
+     "after": "15e93e236067567ffb9db7116986e8b732ef679e672c5b12b9d78f5884899d83",
+     "a1_copy": "hook/forcewin_hooks.py.a1",
+     "a1_copy_verified": true
+    }
+   ]
+  },
+  {
+   "id": "PA2-2",
+   "label": "post-inspection",
+   "what": "hook: shadow ledger stores the step's real request/token counts (padded FULL-graph steps)",
+   "files": [
+    {
+     "file": "hook/forcewin_hooks.py",
+     "before": "c079560e7390fac19f71d03cb5f047af90544b9c9a05450bc563ee8635335181",
+     "after": "15e93e236067567ffb9db7116986e8b732ef679e672c5b12b9d78f5884899d83",
+     "a1_copy": "hook/forcewin_hooks.py.a1",
+     "a1_copy_verified": true
+    }
+   ]
+  },
+  {
+   "id": "PA2-3",
+   "label": "post-inspection",
+   "what": "tests: X2f/X2fn flattened layout (+ X0 no hook errors); stand-in carries query_start_loc_np",
+   "files": [
+    {
+     "file": "tests/test_exposure.py",
+     "before": "6f77062a9280072b20303cf50a6f241018c3bb37eb93ab3e96a55df564427675",
+     "after": "f08bda70c68aa7d8947ccf5405ccc94af1258bcedadc99ed01d13654c5ab201e",
+     "a1_copy": "tests/test_exposure.py.a1",
+     "a1_copy_verified": true
+    },
+    {
+     "file": "tests/errscan_forcing.sh",
+     "before": "(new file)",
+     "after": "8e24dbefae782b66e793a0cc1accda3aa7da69a362458a3aa6c3d2e69acce0a2"
+    }
+   ]
+  },
+  {
+   "id": "PA2-4",
+   "label": "post-inspection",
+   "what": "tests: D7p/D7pn padded steps through the hook ledger (+ D0); stand-in carries query_start_loc_np",
+   "files": [
+    {
+     "file": "tests/test_d2_inject.py",
+     "before": "dd1f299b12cf7a7d70bbb0c901280a911a5e64b38740113d0e3c911847ab3548",
+     "after": "f6fb7a184267e83b18d19d3fcbab8d86680ad8900e3d97dc56d43d255c03b0ba",
+     "a1_copy": "tests/test_d2_inject.py.a1",
+     "a1_copy_verified": true
+    }
+   ]
+  },
+  {
+   "id": "PA2-5",
+   "label": "post-inspection",
+   "what": "tests: CPU test runner writes tests/out-a2 and pins the attempt-2 image",
+   "files": [
+    {
+     "file": "tests/run_cpu_tests.sh",
+     "before": "fb7378df19f075c70ba907cf697ff0138a87b0fd017e7ae393f1c97153cd613c",
+     "after": "2b3b413249885de770aba9b8f3ca06e50837f0f1d7e7c4f533445cbf817d3fc1",
+     "a1_copy": "tests/run_cpu_tests.sh.a1",
+     "a1_copy_verified": true
+    }
+   ]
+  },
+  {
+   "id": "PA2-6",
+   "label": "post-inspection",
+   "what": "build: attempt-2 image under a new tag (build-a2/)",
+   "files": [
+    {
+     "file": "build-a2/make_build.sh",
+     "before": "(new file)",
+     "after": "5c8bbf04bc6725cfb32b8516fc549d5d56e97b8c7751da5538676d3b20ba2313"
+    },
+    {
+     "file": "build-a2/Dockerfile",
+     "before": "(new file)",
+     "after": "b3baf1bf1d9b1a42c96341d9d392c02bfe08aca3d7952725e8abf6b049a6fec0"
+    },
+    {
+     "file": "build-a2/image-id.txt",
+     "before": "(new file)",
+     "after": "4a74b3fc57eadd5fe307cc67d4962fef2bd4bc262dafec17ece7a36c920e7a78"
+    },
+    {
+     "file": "build-a2/manifest-diff.txt",
+     "before": "(new file)",
+     "after": "58727511d5502f17e7555eb668badb50097067187a942812c5b41e45557d6bf7"
+    },
+    {
+     "file": "build-a2/manifest-diff-vs-a1.txt",
+     "before": "(new file)",
+     "after": "eb21c8dcd21807ee453ceb221f856047e520e3b8d30a68a82c18e01217220d70"
+    }
+   ]
+  },
+  {
+   "id": "PA2-7",
+   "label": "post-inspection",
+   "what": "analysis: original criteria verbatim (a1 code) + labelled fixes PA2-7a..f + DRAFT criteria",
+   "files": [
+    {
+     "file": "analysis/analyze_hookval.py",
+     "before": "6395e0257c9111f45115a9b9c70c7695d92c06e69d51af9a81f142c3797cf1d3",
+     "after": "afbf92b6089ae1e639a293b3f86658a5af091ac1f8fb5f06ba119c6b08b43665",
+     "a1_copy": "analysis/analyze_hookval.py.a1",
+     "a1_copy_verified": true,
+     "current": "4bc5486a594f7c722c47bb1cffd722f6198ac2a803f256d82d25282c5dd87eb6",
+     "changed_by": "PA2-16"
+    }
+   ]
+  },
+  {
+   "id": "PA2-8",
+   "label": "post-inspection",
+   "what": "tests: synthetic attempt-2 runs (real poll format; attempt-1 non-defects built in; 10 planted defects)",
+   "files": [
+    {
+     "file": "tests/make_synthetic_run.py",
+     "before": "2fc3731d83637873086d3a1a3e1776f0525b0e7a94d48a1f95c3ccfd2d2b688e",
+     "after": "72c699d07fde2c27885fdb322b8ec10dbe7a863ba32d169d7c51309250a51430",
+     "a1_copy": "tests/make_synthetic_run.py.a1",
+     "a1_copy_verified": true,
+     "current": "5010a9b610beffd3bd45846c6dc8658ff69b4b206fec65633851abd5d1538f12",
+     "changed_by": "PA2-19"
+    }
+   ]
+  },
+  {
+   "id": "PA2-9",
+   "label": "post-inspection",
+   "what": "runner: scoped attempt-2 client (V0, V2a nat+oracle, V2c, V4 + V4n nulls, V3, optional poison)",
+   "files": [
+    {
+     "file": "runner/client_hookval.py",
+     "before": "422c6b35ce0f4190b219c756711f635286eb0bbcea282b7faa919dfc6107e867",
+     "after": "cda00d8b720a949beb41de01f1f1bf72f421cc4099d21f1c87da502adde63586",
+     "a1_copy": "runner/client_hookval.py.a1",
+     "a1_copy_verified": true,
+     "current": "d088f5c0d9c72c904292dabeeff18b246ecd02a5b9bd86a32c26eb96d4e13533",
+     "changed_by": "PA2-20"
+    }
+   ]
+  },
+  {
+   "id": "PA2-10",
+   "label": "post-inspection",
+   "what": "runner: attempt 2 of 2, cumulative budget gate, new image pin, MIN_WALL 1500",
+   "files": [
+    {
+     "file": "runner/run_hookval.sh",
+     "before": "e6ed0236e74bfc81930b8a86dd5f9b9847186c2b6c51eebb283a1f9a62b010cc",
+     "after": "79ae131c293045e9e48f7c39c16d09aa157389fcaa7ebbbb08cb1ef2bc43152e",
+     "a1_copy": "runner/run_hookval.sh.a1",
+     "a1_copy_verified": true
+    },
+    {
+     "file": "runner/images.txt",
+     "before": "e077540af37674a75d473d43683afe3094d276632e765a7a7a7e371dc0be7f14",
+     "after": "4a74b3fc57eadd5fe307cc67d4962fef2bd4bc262dafec17ece7a36c920e7a78",
+     "a1_copy": "runner/images.txt.a1",
+     "a1_copy_verified": true
+    }
+   ]
+  },
+  {
+   "id": "PA2-11",
+   "label": "post-inspection",
+   "what": "analysis: attempt-1 carry-over (H2 null, H3) with source hashes",
+   "files": [
+    {
+     "file": "prep-a2/make_carryover.py",
+     "before": "(new file)",
+     "after": "01277f9d4d7b8c021dba749ccc00e122f57b348b7a8e72bd2ced2b9f9e20585d",
+     "current": "e2979a45be0cae0a537524a68d60d95ebbeba0311a252038cbdbaf2f3afd2c60",
+     "changed_by": "PA2-18"
+    },
+    {
+     "file": "analysis/carryover-a1.json",
+     "before": "(new file)",
+     "after": "2e7cee0cadf1a75274a4cc870dab905c1097fac3b556a32116661e1cd7d46e09",
+     "current": "02dfbc90d7c1b2775d299b902c4db00a7ddeaf2e42cc6768efb0b0f812108102",
+     "changed_by": "PA2-18"
+    }
+   ]
+  },
+  {
+   "id": "PA2-12",
+   "label": "post-inspection",
+   "what": "runner: attempt-2 cost estimate from attempt-1 phase times; client plan dry run",
+   "files": [
+    {
+     "file": "runner/cost_a2.py",
+     "before": "(new file)",
+     "after": "683254ce4ba494a36ea20e960a9e865b1f7ff467b03288d864802997f56cee75"
+    },
+    {
+     "file": "runner/cost_a2.json",
+     "before": "(new file)",
+     "after": "1bca0fc40ede30f1387cd4fd9359d034e98d262e0769d85125d1eba89e612a6b"
+    },
+    {
+     "file": "runner/plan-dryrun-a2/plan.json",
+     "before": "(new file)",
+     "after": "84c4d28e14dc6545b7f4532970d033c7ceaf0cef0875e4a5c959e89601e56e2f",
+     "current": "8b632b9bb8807859f710ff9622ffae8c667fc046ef7d3d94e6ffba2c8437c16b",
+     "changed_by": "PA2-20"
+    }
+   ]
+  },
+  {
+   "id": "PA2-13",
+   "label": "post-inspection",
+   "what": "tests: runner DRY_RUN and refusal tests with shims",
+   "files": [
+    {
+     "file": "tests/test_runner_a2.sh",
+     "before": "(new file)",
+     "after": "fd623ed7297aa8e0c771071894905ac4523e0092a8781497630e629d928cd56c"
+    },
+    {
+     "file": "tests/out-a2/runner-tests.log",
+     "before": "(new file)",
+     "after": "9936acaabfa18805ef707c6ceca7680cbb7251bb7f05cb7bbdb49b0e6c57bf20",
+     "current": "a91bdd5075720cac5a04b0015b95bb7bcd02e5746f85255d8efe01c164a8ee03",
+     "changed_by": "PA2-25"
+    }
+   ]
+  },
+  {
+   "id": "PA2-14",
+   "label": "post-inspection",
+   "what": "sums: make_sums.sh exclusions; SHA256SUMS regenerated (hash recorded outside the package)",
+   "files": [
+    {
+     "file": "make_sums.sh",
+     "before": "756ab5da5669ec6164a23b1ff6930f11f95c62aecbaada56298c05bc33ff19e3",
+     "after": "8140307fda72a26cc4bd556b92a9cbf344720bc75f19e39c3988d5c3fa6c8fcb",
+     "a1_copy": "make_sums.sh.a1",
+     "a1_copy_verified": true,
+     "current": "483c6257610d00f2108d6a3c475d5c731aaa614e241686a47940c0ac5f9bd76c",
+     "changed_by": "PA2-25"
+    }
+   ]
+  },
+  {
+   "id": "PA2-15",
+   "label": "post-inspection",
+   "what": "criteria basis (attempt-1 data) and attempt-1 replay of the attempt-2 analysis",
+   "files": [
+    {
+     "file": "prep-a2/criteria_basis.py",
+     "before": "(new file)",
+     "after": "498e11a64eddaed9f1bac74e9d9c00111420e7f91067c827e8aa8c3d289d5695"
+    },
+    {
+     "file": "prep-a2/out/criteria_basis.json",
+     "before": "(new file)",
+     "after": "2fca4315924221cd6e415cab6c376b62db52fd21bcfc53409145f0e619821235"
+    },
+    {
+     "file": "prep-a2/replay-a1/verdict.json",
+     "before": "(new file)",
+     "after": "fbbed5ce43aaf6b9994e1236a0cec73d448bcf5b55e19e5a492fae6b5e8492bd"
+    },
+    {
+     "file": "prep-a2/replay-a1/verdict-a2.json",
+     "before": "(new file)",
+     "after": "c78811e5e76f65f628eb0c44f77fa9590f5ca2812ace3814a09993bb21cf7aa0"
+    }
+   ]
+  },
+  {
+   "id": "PA2-16",
+   "label": "post-inspection, amendment 21g",
+   "what": "analysis: amendment 21g criteria (index-K content vs nulls matched per unit, frozen aggregation, per fixture x layer tables, fixture and arm-asymmetry flags; IDX-attrib; KDA H4-slot / H4b-r / H4b-sep / H4b-disagree; carry-over rows CARRY-scope / CARRY-admissible; coverage without silent drops; H1f-unmasked outside-nucleus mass); H5d-r judged on all units",
+   "files": [
+    {
+     "file": "analysis/analyze_hookval.py",
+     "before": "afbf92b6089ae1e639a293b3f86658a5af091ac1f8fb5f06ba119c6b08b43665",
+     "after": "041af4e1dd770ee9794d6f74bcb76c8c7d9f7e112cc866feb30211b70f723279",
+     "pre21g_copy": "analysis/analyze_hookval.py.pre21g",
+     "pre21g_copy_verified": true,
+     "current": "4bc5486a594f7c722c47bb1cffd722f6198ac2a803f256d82d25282c5dd87eb6",
+     "changed_by": "PA2-26"
+    },
+    {
+     "file": "analysis/analyze_hookval.py.pre21g",
+     "before": "(new file)",
+     "after": "afbf92b6089ae1e639a293b3f86658a5af091ac1f8fb5f06ba119c6b08b43665"
+    }
+   ]
+  },
+  {
+   "id": "PA2-17",
+   "label": "post-inspection, amendment 21g",
+   "what": "image scope for the carry-over: every installed vllm file, attempt-1 vs attempt-2 image",
+   "files": [
+    {
+     "file": "prep-a2/scope_a1_a2.sh",
+     "before": "(new file)",
+     "after": "6a809a01a13e0394e0a29a4379a8979a43d773a529517723c7704d9192d75d45"
+    },
+    {
+     "file": "prep-a2/out-21g/image-scope.json",
+     "before": "(new file)",
+     "after": "ee359698ee074e671bbcd4ae1bc5642720edb0ba1d8f4bb11019eb9e8b0582f1"
+    },
+    {
+     "file": "prep-a2/out-21g/image-scope-diff.txt",
+     "before": "(new file)",
+     "after": "9afdf234c467d586c020bd286cdc12f91e699b27a0fab8e4ad5153bdf8fbc4a7"
+    }
+   ]
+  },
+  {
+   "id": "PA2-18",
+   "label": "post-inspection, amendment 21g",
+   "what": "carry-over record: evidence class, corrected-join statement, image scope",
+   "files": [
+    {
+     "file": "prep-a2/make_carryover.py",
+     "before": "01277f9d4d7b8c021dba749ccc00e122f57b348b7a8e72bd2ced2b9f9e20585d",
+     "after": "e2979a45be0cae0a537524a68d60d95ebbeba0311a252038cbdbaf2f3afd2c60",
+     "pre21g_copy": "prep-a2/make_carryover.py.pre21g",
+     "pre21g_copy_verified": true
+    },
+    {
+     "file": "prep-a2/make_carryover.py.pre21g",
+     "before": "(new file)",
+     "after": "01277f9d4d7b8c021dba749ccc00e122f57b348b7a8e72bd2ced2b9f9e20585d"
+    },
+    {
+     "file": "analysis/carryover-a1.json",
+     "before": "2e7cee0cadf1a75274a4cc870dab905c1097fac3b556a32116661e1cd7d46e09",
+     "after": "02dfbc90d7c1b2775d299b902c4db00a7ddeaf2e42cc6768efb0b0f812108102",
+     "pre21g_copy": "analysis/carryover-a1.json.pre21g",
+     "pre21g_copy_verified": true
+    },
+    {
+     "file": "analysis/carryover-a1.json.pre21g",
+     "before": "(new file)",
+     "after": "2e7cee0cadf1a75274a4cc870dab905c1097fac3b556a32116661e1cd7d46e09"
+    }
+   ]
+  },
+  {
+   "id": "PA2-19",
+   "label": "post-inspection, amendment 21g",
+   "what": "synthetic runs: 21g fields (image id, matrix/d2set, dumpranges, accepted counts, snapshot step) and five new plants; wrong-page plant moved to the solo request",
+   "files": [
+    {
+     "file": "tests/make_synthetic_run.py",
+     "before": "72c699d07fde2c27885fdb322b8ec10dbe7a863ba32d169d7c51309250a51430",
+     "after": "5010a9b610beffd3bd45846c6dc8658ff69b4b206fec65633851abd5d1538f12",
+     "pre21g_copy": "tests/make_synthetic_run.py.pre21g",
+     "pre21g_copy_verified": true
+    },
+    {
+     "file": "tests/make_synthetic_run.py.pre21g",
+     "before": "(new file)",
+     "after": "72c699d07fde2c27885fdb322b8ec10dbe7a863ba32d169d7c51309250a51430"
+    }
+   ]
+  },
+  {
+   "id": "PA2-20",
+   "label": "post-inspection, amendment 21g",
+   "what": "client: records only (dump_src_sha, coverage record, V3 coverage_gap) and the optional poison phase's time requirement; plan regenerated (payloads identical); V4n matched-null plan check",
+   "files": [
+    {
+     "file": "runner/client_hookval.py",
+     "before": "cda00d8b720a949beb41de01f1f1bf72f421cc4099d21f1c87da502adde63586",
+     "after": "d088f5c0d9c72c904292dabeeff18b246ecd02a5b9bd86a32c26eb96d4e13533",
+     "pre21g_copy": "runner/client_hookval.py.pre21g",
+     "pre21g_copy_verified": true
+    },
+    {
+     "file": "runner/client_hookval.py.pre21g",
+     "before": "(new file)",
+     "after": "cda00d8b720a949beb41de01f1f1bf72f421cc4099d21f1c87da502adde63586"
+    },
+    {
+     "file": "runner/plan-dryrun-a2/plan.json",
+     "before": "84c4d28e14dc6545b7f4532970d033c7ceaf0cef0875e4a5c959e89601e56e2f",
+     "after": "8d6dff84bd954dfe20bfe824ea51c3c1760c4cf6db0caa77230f079161ab0094",
+     "current": "8b632b9bb8807859f710ff9622ffae8c667fc046ef7d3d94e6ffba2c8437c16b",
+     "changed_by": "PA2-26"
+    },
+    {
+     "file": "runner/plan-dryrun-a2/client.jsonl",
+     "before": "b1aa4f8f9011bc231dcbbddc1f17aee7ec91dd08872853fbe39f4244bc0ba465",
+     "after": "55c351ba62be5abb18aa344674c313f8b36865f23bfd0b4bcea251e0be53fab7",
+     "current": "f66cbac6888a5dad8258a765372a63987daf8f35b084faedb2eac700e8f5e4ce",
+     "changed_by": "PA2-26"
+    },
+    {
+     "file": "tests/check_v4n_matched.py",
+     "before": "(new file)",
+     "after": "1f57c761596ea06193496f9809cfca0ec0a845e170d2e8ccb9ab7505744c6d50"
+    }
+   ]
+  },
+  {
+   "id": "PA2-21",
+   "label": "post-inspection, amendment 21g",
+   "what": "offline fault injection on attempt-1 captures under the revised analysis",
+   "files": [
+    {
+     "file": "prep-a2/faultinj_a1.py",
+     "before": "(new file)",
+     "after": "96781ab585951ede4b9aacfc8b1ee8a9efa9f7f1d79431aa1b391084ee386484"
+    },
+    {
+     "file": "prep-a2/run_faultinj_a1.sh",
+     "before": "(new file)",
+     "after": "6558c4f22cc0cf47c36887f1c94c3f0eb6c0f8b215d3aeff72560fbfd66bd828"
+    },
+    {
+     "file": "prep-a2/faultinj-a1/summary.json",
+     "before": "(new file)",
+     "after": "fbe7ff065512ad3843b793c29280f895511d8d57cba8e390277b2b3955167abb",
+     "current": "9c8bffad304648886c00ee3ff8b04790971147846f0ea8973063da48604070dd",
+     "changed_by": "PA2-26"
+    },
+    {
+     "file": "prep-a2/faultinj-a1/build.json",
+     "before": "(new file)",
+     "after": "8fbc6f317c3aeb71f1b0e2cc943de104308a3c5ec27deb3347784a2e3cba928d"
+    }
+   ]
+  },
+  {
+   "id": "PA2-22",
+   "label": "post-inspection, amendment 21g",
+   "what": "21g CPU suites driver and logs; attempt-1 replay under the revised analysis",
+   "files": [
+    {
+     "file": "tests/run_21g.sh",
+     "before": "(new file)",
+     "after": "dca889cf35be58adb5cc0b7136d288d7d4f15ad342252338fd0713e3723e1d06"
+    },
+    {
+     "file": "tests/out-21g/run_21g.log",
+     "before": "(new file)",
+     "after": "c2e349f14ccb1e64febca287c901f1e818711aa3f5ea4701bcbfb6e6815a9718",
+     "current": "4ff67067e95f98d7c3875cf713f0339c6bdd819960d1fd05eb717631fd04470d",
+     "changed_by": "PA2-26"
+    },
+    {
+     "file": "prep-a2/replay-a1-21g/verdict.json",
+     "before": "(new file)",
+     "after": "fbbed5ce43aaf6b9994e1236a0cec73d448bcf5b55e19e5a492fae6b5e8492bd"
+    },
+    {
+     "file": "prep-a2/replay-a1-21g/verdict-a2.json",
+     "before": "(new file)",
+     "after": "4e95982fd410789d102c36ad2b06a29ec5256efae15b56939d1e303f1832d336",
+     "current": "5c188ef926a80f14a5cf3a2852dbe44820334300721bca4d4aeffc1adc937ce1",
+     "changed_by": "PA2-26"
+    }
+   ]
+  },
+  {
+   "id": "PA2-23",
+   "label": "post-inspection, amendment 21g",
+   "what": "cost recomputed (unchanged: no GPU request added)",
+   "files": [
+    {
+     "file": "runner/cost_a2.json",
+     "before": "1bca0fc40ede30f1387cd4fd9359d034e98d262e0769d85125d1eba89e612a6b",
+     "after": "1bca0fc40ede30f1387cd4fd9359d034e98d262e0769d85125d1eba89e612a6b"
+    }
+   ]
+  },
+  {
+   "id": "PA2-24",
+   "label": "post-inspection, amendment 21g",
+   "what": "documents: ATTEMPT2-21G.md; superseded-by notes in ATTEMPT2-PREP.md and ATTEMPT2-CRITERIA-DRAFT.md",
+   "files": [
+    {
+     "file": "ATTEMPT2-21G.md",
+     "before": "(new file)",
+     "after": "f2d3a79dfafc546147fd9e6d6b9b78ea486e540be1b5c61747d305ea7d7464c8",
+     "current": "382efc46b7c9162b4424010031c4a23e3d04f7a9e2d724b3c73d22e2a453e65b",
+     "changed_by": "PA2-26"
+    },
+    {
+     "file": "ATTEMPT2-PREP.md",
+     "before": "e4147606d7dff810a28396de9a8999bae62a5a58ff851e298a194f5bde247b41",
+     "after": "5031d5addeabd75d43e7a9fe6d806802d8cd9652a302176ecf8d61980d4f069a",
+     "pre21g_copy": "ATTEMPT2-PREP.md.pre21g",
+     "pre21g_copy_verified": true
+    },
+    {
+     "file": "ATTEMPT2-CRITERIA-DRAFT.md",
+     "before": "48813a27cbff4e2d59a89300e707535aafc024bdeaa63d3d10c1e566980415e4",
+     "after": "e4455fcfe94f2df9223add9c05f86a811ffa5e4d76c5353674769e75703871fd",
+     "pre21g_copy": "ATTEMPT2-CRITERIA-DRAFT.md.pre21g",
+     "pre21g_copy_verified": true
+    }
+   ]
+  },
+  {
+   "id": "PA2-25",
+   "label": "post-inspection, amendment 21g",
+   "what": "change log (pre-21g hashes), sums (SHA256SUMS.pre21g kept; new exclusions), runner gate tests rerun",
+   "files": [
+    {
+     "file": "prep-a2/pa2_changes.py",
+     "before": "e8d8f15c098c8403a2b7b1cead77d1904d91a555ad9d91a642369219e759ced2",
+     "after": "a29cef7ede141bb4d09beddcd199095787ec22d95c470ebf5f4791957022da25",
+     "pre21g_copy": "prep-a2/pa2_changes.py.pre21g",
+     "pre21g_copy_verified": true,
+     "current": "de140f9d28410366b17b40abdd9dd29c578e1d321c7888d0aa1cb8f5cd527f46",
+     "changed_by": "PA2-26"
+    },
+    {
+     "file": "prep-a2/pa2_changes.py.pre21g",
+     "before": "(new file)",
+     "after": "e8d8f15c098c8403a2b7b1cead77d1904d91a555ad9d91a642369219e759ced2"
+    },
+    {
+     "file": "make_sums.sh",
+     "before": "8140307fda72a26cc4bd556b92a9cbf344720bc75f19e39c3988d5c3fa6c8fcb",
+     "after": "483c6257610d00f2108d6a3c475d5c731aaa614e241686a47940c0ac5f9bd76c",
+     "pre21g_copy": "make_sums.sh.pre21g",
+     "pre21g_copy_verified": true
+    },
+    {
+     "file": "make_sums.sh.pre21g",
+     "before": "(new file)",
+     "after": "8140307fda72a26cc4bd556b92a9cbf344720bc75f19e39c3988d5c3fa6c8fcb"
+    },
+    {
+     "file": "SHA256SUMS.pre21g",
+     "before": "(new file)",
+     "after": "2ab92f14348508bfbf0935c552a0da62e7bdc84b730212d0f48f110823bf9636"
+    },
+    {
+     "file": "tests/out-a2/runner-tests.log",
+     "before": "9936acaabfa18805ef707c6ceca7680cbb7251bb7f05cb7bbdb49b0e6c57bf20",
+     "after": "a91bdd5075720cac5a04b0015b95bb7bcd02e5746f85255d8efe01c164a8ee03",
+     "pre21g_copy": "tests/out-a2/runner-tests.log.pre21g",
+     "pre21g_copy_verified": true
+    },
+    {
+     "file": "tests/out-a2/runner-tests.log.pre21g",
+     "before": "(new file)",
+     "after": "9936acaabfa18805ef707c6ceca7680cbb7251bb7f05cb7bbdb49b0e6c57bf20"
+    }
+   ]
+  },
+  {
+   "id": "PA2-26",
+   "label": "post-inspection, amendment 21h",
+   "what": "amendment 21h: H5e-r gates on the POOLED matched null of the eight-fixture set; the comparison with the solo fixture's own matched null is a FLAG (H5e-fixture); pre-21g pooled form kept reported; dry runs, attempt-1 replay and fault injection rerun",
+   "files": [
+    {
+     "file": "analysis/analyze_hookval.py",
+     "before": "041af4e1dd770ee9794d6f74bcb76c8c7d9f7e112cc866feb30211b70f723279",
+     "after": "4bc5486a594f7c722c47bb1cffd722f6198ac2a803f256d82d25282c5dd87eb6",
+     "pre21h_copy": "analysis/analyze_hookval.py.pre21h",
+     "pre21h_copy_verified": true
+    },
+    {
+     "file": "analysis/analyze_hookval.py.pre21h",
+     "before": "(new file)",
+     "after": "041af4e1dd770ee9794d6f74bcb76c8c7d9f7e112cc866feb30211b70f723279"
+    },
+    {
+     "file": "ATTEMPT2-21G.md",
+     "before": "f2d3a79dfafc546147fd9e6d6b9b78ea486e540be1b5c61747d305ea7d7464c8",
+     "after": "382efc46b7c9162b4424010031c4a23e3d04f7a9e2d724b3c73d22e2a453e65b",
+     "pre21h_copy": "ATTEMPT2-21G.md.pre21h",
+     "pre21h_copy_verified": true
+    },
+    {
+     "file": "ATTEMPT2-21G.md.pre21h",
+     "before": "(new file)",
+     "after": "f2d3a79dfafc546147fd9e6d6b9b78ea486e540be1b5c61747d305ea7d7464c8"
+    },
+    {
+     "file": "prep-a2/pa2_changes.py",
+     "before": "a29cef7ede141bb4d09beddcd199095787ec22d95c470ebf5f4791957022da25",
+     "after": "de140f9d28410366b17b40abdd9dd29c578e1d321c7888d0aa1cb8f5cd527f46",
+     "pre21h_copy": "prep-a2/pa2_changes.py.pre21h",
+     "pre21h_copy_verified": true
+    },
+    {
+     "file": "prep-a2/pa2_changes.py.pre21h",
+     "before": "(new file)",
+     "after": "a29cef7ede141bb4d09beddcd199095787ec22d95c470ebf5f4791957022da25"
+    },
+    {
+     "file": "SHA256SUMS.pre21h",
+     "before": "(new file)",
+     "after": "160015e51d64f8b9616ed3a56b7d3e77236236e80946a2eea41ca11aad00b746"
+    },
+    {
+     "file": "tests/out-21g/run_21g.log",
+     "before": "c2e349f14ccb1e64febca287c901f1e818711aa3f5ea4701bcbfb6e6815a9718",
+     "after": "4ff67067e95f98d7c3875cf713f0339c6bdd819960d1fd05eb717631fd04470d"
+    },
+    {
+     "file": "prep-a2/replay-a1-21g/verdict-a2.json",
+     "before": "4e95982fd410789d102c36ad2b06a29ec5256efae15b56939d1e303f1832d336",
+     "after": "5c188ef926a80f14a5cf3a2852dbe44820334300721bca4d4aeffc1adc937ce1"
+    },
+    {
+     "file": "prep-a2/faultinj-a1/summary.json",
+     "before": "fbe7ff065512ad3843b793c29280f895511d8d57cba8e390277b2b3955167abb",
+     "after": "9c8bffad304648886c00ee3ff8b04790971147846f0ea8973063da48604070dd"
+    },
+    {
+     "file": "runner/plan-dryrun-a2/plan.json",
+     "before": "8d6dff84bd954dfe20bfe824ea51c3c1760c4cf6db0caa77230f079161ab0094",
+     "after": "8b632b9bb8807859f710ff9622ffae8c667fc046ef7d3d94e6ffba2c8437c16b"
+    },
+    {
+     "file": "runner/plan-dryrun-a2/client.jsonl",
+     "before": "55c351ba62be5abb18aa344674c313f8b36865f23bfd0b4bcea251e0be53fab7",
+     "after": "f66cbac6888a5dad8258a765372a63987daf8f35b084faedb2eac700e8f5e4ce"
+    }
+   ]
+  }
+ ],
+ "a1_copies_all_verified": true,
+ "a1_copy_failures": [],
+ "pre21g_copies_all_verified": true,
+ "pre21g_copy_failures": [],
+ "a1_files_untouched": true,
+ "a1_files_changed": [],
+ "sha256sums_a1": "67d8e54fcbe06ba367da9bc68227710f34cd9bba86dc72c0c13b7e4700006e96",
+ "sha256sums_pre21g": "2ab92f14348508bfbf0935c552a0da62e7bdc84b730212d0f48f110823bf9636",
+ "sha256sums_pre21h": "160015e51d64f8b9616ed3a56b7d3e77236236e80946a2eea41ca11aad00b746"
+}

@@ -1,0 +1,43 @@
+runner under test: sha256 79ae131c293045e9e48f7c39c16d09aa157389fcaa7ebbbb08cb1ef2bc43152e (copy identical)
+PASS T1-dryrun-pass (rc 0)
+    | budget: spent 1.2117 + this attempt's cap 1.188 (wall 2138s) <= approved 2.4 GPU-h
+    | DRY_RUN: budget gate, attempt count, frozen hashes, image pin and client plan passed
+PASS T1b-budget-line (rc 0)
+    | budget: spent 1.2117 + this attempt's cap 1.188 (wall 2138s) <= approved 2.4 GPU-h
+    | DRY_RUN: budget gate, attempt count, frozen hashes, image pin and client plan passed
+PASS T2-no-approval (rc 2)
+    | REFUSED: set APPROVED_GPU_H (authorized item total, at most 2.4)
+PASS T3-over-ceiling (rc 2)
+    | REFUSED: APPROVED_GPU_H=2.5 exceeds the proposed item ceiling 2.4
+PASS T4-attempt-1 (rc 2)
+    | REFUSED: this runner variant is attempt 2 only (got '1')
+PASS T5-attempt-3 (rc 2)
+    | REFUSED: this runner variant is attempt 2 only (got '3')
+PASS T6-two-attempts-recorded (rc 2)
+    | REFUSED: 2 attempts already recorded for hookval (max 2)
+PASS T7-ledger-missing-a1 (rc 2)
+    | REFUSED: cost ledger holds 0 hookval attempt(s); attempt 2 needs exactly 1
+PASS T8-spent-too-high (rc 2)
+    | REFUSED: spent 1.9 of 2.4 GPU-h leaves 900s wall < 1500s needed
+PASS T9-cumulative-gate (rc 2)
+    | REFUSED: spent 1.2117 of 2.0 GPU-h leaves 1418s wall < 1500s needed
+PASS T10-other-items-ignored (rc 0)
+    | budget: spent 1.2117 + this attempt's cap 1.188 (wall 2138s) <= approved 2.4 GPU-h
+    | DRY_RUN: budget gate, attempt count, frozen hashes, image pin and client plan passed
+PASS T11-wallcap-env-capped (rc 0)
+    | budget: spent 1.2117 + this attempt's cap 1.188 (wall 2138s) <= approved 2.4 GPU-h
+    | DRY_RUN: budget gate, attempt count, frozen hashes, image pin and client plan passed
+PASS T12-wrong-image-id (rc 2)
+    | budget: spent 1.2117 + this attempt's cap 1.188 (wall 2138s) <= approved 2.4 GPU-h
+    | ABORT: local/glm53-v0.9.1-b1-forcehook-mg2:local is sha256:dead, expected 'sha256:ac05230bd94b3114cb6fb202b06402f9e2d45a61b20f041f314e045f967e97ee'
+PASS T13-frozen-hash-mismatch (rc 2)
+    | budget: spent 1.2117 + this attempt's cap 1.188 (wall 2138s) <= approved 2.4 GPU-h
+    | ABORT: frozen hashes differ
+    | ./analysis/analyze_hookval.py: FAILED
+    | sha256sum: WARNING: 1 computed checksum did NOT match
+PASS T14-existing-run-dir (rc 2)
+    | ABORT: <runs>/tmp-runner-21g/hv-runner-shim.360639/hv/run-a2 exists (use another ATTEMPT)
+PASS T15-default-attempt-is-2 (rc 0)
+    | budget: spent 1.2117 + this attempt's cap 1.188 (wall 2138s) <= approved 2.4 GPU-h
+    | DRY_RUN: budget gate, attempt count, frozen hashes, image pin and client plan passed
+runner tests: 16 passed, 0 failed

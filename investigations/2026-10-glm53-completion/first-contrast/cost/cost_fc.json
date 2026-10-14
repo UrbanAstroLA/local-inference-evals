@@ -1,0 +1,318 @@
+{
+ "inputs": {
+  "central": {
+   "overhead": 766.0,
+   "prefill": 2410.0,
+   "decode": 33.0,
+   "dump": 3.0
+  },
+  "pessimistic": {
+   "overhead": 800.0,
+   "prefill": 1800.0,
+   "decode": 25.0,
+   "dump": 8.0
+  },
+  "optimistic": {
+   "overhead": 746.0,
+   "prefill": 2600.0,
+   "decode": 40.0,
+   "dump": 2.0
+  }
+ },
+ "totals": {
+  "prefix": 738896,
+  "warm_cached": 718080,
+  "remainder": 20816,
+  "lp_prefix": 796240,
+  "lp_warm_cached": 783360,
+  "lp_remainder": 12880,
+  "forced": 65569,
+  "lp_forced": 8225,
+  "max_forced_list": 8199,
+  "rebuild_tokens_R1": 804465,
+  "rebuild_tokens_R2": 806065
+ },
+ "scenarios": {
+  "central": {
+   "components_s": {
+    "primary_round_warm": 312.6,
+    "rewarm_hit": 14.7,
+    "primary_batch": 287.1,
+    "lp_round_warm": 360.4,
+    "lp_rewarm_hit": 11.4,
+    "lp_batch": 66.6,
+    "ih_R1": 363.9,
+    "ih_R2": 364.5,
+    "short_run": 55.9,
+    "short_rebuilds": 22.9
+   },
+   "options": {
+    "A0  primary only (C x3, D x3), no long-context content check": {
+     "session_s": [
+      3527
+     ],
+     "gpu_h": 1.96
+    },
+    "A   primary + long-context instrument health (R1 ref+dump, R2 dump)": {
+     "session_s": [
+      4256
+     ],
+     "gpu_h": 2.364
+    },
+    "B   one session: primary + LP control x3 (instrument health folded into the LP warms)": {
+     "session_s": [
+      5077
+     ],
+     "gpu_h": 2.82
+    },
+    "B2  one session: primary + LP control x2 per condition": {
+     "session_s": [
+      4560
+     ],
+     "gpu_h": 2.533
+    },
+    "A+S primary + instrument health + short stratum S (attempt-2 D2 set)": {
+     "session_s": [
+      4614
+     ],
+     "gpu_h": 2.563
+    },
+    "B+S one session: primary + LP x3 + short stratum S": {
+     "session_s": [
+      5435
+     ],
+     "gpu_h": 3.02
+    },
+    "C   two sessions: S1 = A; S2 = LP x3 + bridge (one C/D round re-run)": {
+     "session_s": [
+      4256,
+      3244
+     ],
+     "gpu_h": 4.167
+    }
+   }
+  },
+  "pessimistic": {
+   "components_s": {
+    "primary_round_warm": 416.5,
+    "rewarm_hit": 17.6,
+    "primary_batch": 409.6,
+    "lp_round_warm": 512.4,
+    "lp_rewarm_hit": 13.2,
+    "lp_batch": 118.4,
+    "ih_R1": 517.0,
+    "ih_R2": 517.9,
+    "short_run": 70.9,
+    "short_rebuilds": 26.1
+   },
+   "options": {
+    "A0  primary only (C x3, D x3), no long-context content check": {
+     "session_s": [
+      4625
+     ],
+     "gpu_h": 2.57
+    },
+    "A   primary + long-context instrument health (R1 ref+dump, R2 dump)": {
+     "session_s": [
+      5660
+     ],
+     "gpu_h": 3.144
+    },
+    "B   one session: primary + LP control x3 (instrument health folded into the LP warms)": {
+     "session_s": [
+      6952
+     ],
+     "gpu_h": 3.862
+    },
+    "B2  one session: primary + LP control x2 per condition": {
+     "session_s": [
+      6177
+     ],
+     "gpu_h": 3.431
+    },
+    "A+S primary + instrument health + short stratum S (attempt-2 D2 set)": {
+     "session_s": [
+      6112
+     ],
+     "gpu_h": 3.395
+    },
+    "B+S one session: primary + LP x3 + short stratum S": {
+     "session_s": [
+      7404
+     ],
+     "gpu_h": 4.113
+    },
+    "C   two sessions: S1 = A; S2 = LP x3 + bridge (one C/D round re-run)": {
+     "session_s": [
+      5660,
+      4410
+     ],
+     "gpu_h": 5.595
+    }
+   }
+  },
+  "optimistic": {
+   "components_s": {
+    "primary_round_warm": 290.2,
+    "rewarm_hit": 14.1,
+    "primary_batch": 235.0,
+    "lp_round_warm": 328.3,
+    "lp_rewarm_hit": 11.0,
+    "lp_batch": 52.8,
+    "ih_R1": 331.5,
+    "ih_R2": 332.1,
+    "short_run": 55.9,
+    "short_rebuilds": 22.9
+   },
+   "options": {
+    "A0  primary only (C x3, D x3), no long-context content check": {
+     "session_s": [
+      3124
+     ],
+     "gpu_h": 1.735
+    },
+    "A   primary + long-context instrument health (R1 ref+dump, R2 dump)": {
+     "session_s": [
+      3787
+     ],
+     "gpu_h": 2.104
+    },
+    "B   one session: primary + LP control x3 (instrument health folded into the LP warms)": {
+     "session_s": [
+      4491
+     ],
+     "gpu_h": 2.495
+    },
+    "B2  one session: primary + LP control x2 per condition": {
+     "session_s": [
+      4035
+     ],
+     "gpu_h": 2.242
+    },
+    "A+S primary + instrument health + short stratum S (attempt-2 D2 set)": {
+     "session_s": [
+      4146
+     ],
+     "gpu_h": 2.303
+    },
+    "B+S one session: primary + LP x3 + short stratum S": {
+     "session_s": [
+      4850
+     ],
+     "gpu_h": 2.694
+    },
+    "C   two sessions: S1 = A; S2 = LP x3 + bridge (one C/D round re-run)": {
+     "session_s": [
+      3787,
+      2914
+     ],
+     "gpu_h": 3.723
+    }
+   }
+  }
+ },
+ "ceilings": {
+  "A0  primary only (C x3, D x3), no long-context content check": {
+   "estimate_gpu_h": 1.96,
+   "pessimistic_gpu_h": 2.57,
+   "optimistic_gpu_h": 1.735,
+   "ceiling_gpu_h": 2.99,
+   "invalid_start_allowance_gpu_h": 0.423,
+   "sessions": 1,
+   "wall_cap_s_per_session": [
+    4625
+   ],
+   "central_session_s": [
+    3527
+   ]
+  },
+  "A   primary + long-context instrument health (R1 ref+dump, R2 dump)": {
+   "estimate_gpu_h": 2.364,
+   "pessimistic_gpu_h": 3.144,
+   "optimistic_gpu_h": 2.104,
+   "ceiling_gpu_h": 3.57,
+   "invalid_start_allowance_gpu_h": 0.423,
+   "sessions": 1,
+   "wall_cap_s_per_session": [
+    5660
+   ],
+   "central_session_s": [
+    4256
+   ]
+  },
+  "B   one session: primary + LP control x3 (instrument health folded into the LP warms)": {
+   "estimate_gpu_h": 2.82,
+   "pessimistic_gpu_h": 3.862,
+   "optimistic_gpu_h": 2.495,
+   "ceiling_gpu_h": 4.29,
+   "invalid_start_allowance_gpu_h": 0.423,
+   "sessions": 1,
+   "wall_cap_s_per_session": [
+    6952
+   ],
+   "central_session_s": [
+    5077
+   ]
+  },
+  "B2  one session: primary + LP control x2 per condition": {
+   "estimate_gpu_h": 2.533,
+   "pessimistic_gpu_h": 3.431,
+   "optimistic_gpu_h": 2.242,
+   "ceiling_gpu_h": 3.85,
+   "invalid_start_allowance_gpu_h": 0.423,
+   "sessions": 1,
+   "wall_cap_s_per_session": [
+    6177
+   ],
+   "central_session_s": [
+    4560
+   ]
+  },
+  "A+S primary + instrument health + short stratum S (attempt-2 D2 set)": {
+   "estimate_gpu_h": 2.563,
+   "pessimistic_gpu_h": 3.395,
+   "optimistic_gpu_h": 2.303,
+   "ceiling_gpu_h": 3.82,
+   "invalid_start_allowance_gpu_h": 0.423,
+   "sessions": 1,
+   "wall_cap_s_per_session": [
+    6112
+   ],
+   "central_session_s": [
+    4614
+   ]
+  },
+  "B+S one session: primary + LP x3 + short stratum S": {
+   "estimate_gpu_h": 3.02,
+   "pessimistic_gpu_h": 4.113,
+   "optimistic_gpu_h": 2.694,
+   "ceiling_gpu_h": 4.54,
+   "invalid_start_allowance_gpu_h": 0.423,
+   "sessions": 1,
+   "wall_cap_s_per_session": [
+    7404
+   ],
+   "central_session_s": [
+    5435
+   ]
+  },
+  "C   two sessions: S1 = A; S2 = LP x3 + bridge (one C/D round re-run)": {
+   "estimate_gpu_h": 4.167,
+   "pessimistic_gpu_h": 5.595,
+   "optimistic_gpu_h": 3.723,
+   "ceiling_gpu_h": 6.02,
+   "invalid_start_allowance_gpu_h": 0.423,
+   "sessions": 2,
+   "wall_cap_s_per_session": [
+    5660,
+    4410
+   ],
+   "central_session_s": [
+    4256,
+    3244
+   ]
+  }
+ },
+ "early_stop_after_C1_gpu_h": 0.766,
+ "lp_marginal_gpu_h": 0.86
+}

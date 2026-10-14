@@ -1,0 +1,13 @@
+21:31:39 phase V2a-natural done in 0s
+21:31:39 phase V2a-oracle done in 0s
+21:31:39 phase V2c done in 0s
+21:31:39 phase V4-d2 done in 0s
+21:31:39 phase V4-b1 done in 0s
+21:31:39 phase V4-d2solo done in 0s
+21:31:39 phase V4-rebuild done in 0s
+21:31:39 phase V4n-b1b done in 0s
+21:31:39 phase V4n-rebuild2 done in 0s
+21:31:39 phase V3-forced done in 0s
+21:31:39 phase V3-refs done in 0s
+21:31:39 phase V2a-poison done in 0s
+plan: 89 forced/ref requests, 72692 forced tokens, 93845 prompt tokens; 0 free runs

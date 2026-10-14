@@ -1,0 +1,16 @@
+{"kind": "start", "t": 1791952299.189, "plan": true, "deadline": 0.0, "scope": "attempt2", "traces": ["1cb6fdf60ec0", "1e875e978fd4", "3054f627f1c4", "33e2ee47397f", "34b209357e82", "376073921446", "393eb6de0509", "3e8408e8caeb", "48b6306bd279", "4b92a6a90ec4", "4be5a38841ef", "53fa5b3e066f", "57703691f509", "68a96f264430", "6d18c40f58df", "8e59a4b2a745", "94bd772f0ef5", "aa89ec370e9c", "bcd0d7917ece", "bd56b811e5de", "be2e9e349395", "cbac17c70af8", "d9a3e7063fb7", "ddfd287416a4"], "matrix": ["53fa5b3e066f", "57703691f509", "cbac17c70af8", "be2e9e349395", "4b92a6a90ec4", "ddfd287416a4", "34b209357e82", "aa89ec370e9c"], "d2set": ["cbac17c70af8", "be2e9e349395", "4b92a6a90ec4", "ddfd287416a4", "68a96f264430", "376073921446", "1e875e978fd4", "6d18c40f58df"]}
+{"kind": "phase", "tag": "V2a-natural", "t0": 1791952299.189, "t1": 1791952299.193, "secs": 0.0}
+{"kind": "phase", "tag": "V2a-oracle", "t0": 1791952299.193, "t1": 1791952299.196, "secs": 0.0}
+{"kind": "phase", "tag": "V2c", "t0": 1791952299.196, "t1": 1791952299.199, "secs": 0.0}
+{"kind": "phase", "tag": "V4-d2", "t0": 1791952299.199, "t1": 1791952299.202, "secs": 0.0}
+{"kind": "phase", "tag": "V4-b1", "t0": 1791952299.202, "t1": 1791952299.205, "secs": 0.0}
+{"kind": "phase", "tag": "V4-d2solo", "t0": 1791952299.205, "t1": 1791952299.206, "secs": 0.0}
+{"kind": "phase", "tag": "V4-rebuild", "t0": 1791952299.206, "t1": 1791952299.208, "secs": 0.0}
+{"kind": "phase", "tag": "V4n-b1b", "t0": 1791952299.209, "t1": 1791952299.211, "secs": 0.0}
+{"kind": "phase", "tag": "V4n-rebuild2", "t0": 1791952299.211, "t1": 1791952299.214, "secs": 0.0}
+{"kind": "phase", "tag": "V3-forced", "t0": 1791952299.215, "t1": 1791952299.217, "secs": 0.0}
+{"kind": "snap_refs", "n": 8, "actual": [["V3-sched:7-53fa5b3e066f", 520], ["V3-reject:2-57703691f509", 520], ["V3-oracle-cbac17c70af8", 101], ["V3-poison-be2e9e349395", 101], ["V3-natural-4b92a6a90ec4", 101], ["V3-reject:3-ddfd287416a4", 101], ["V3-reject:1-34b209357e82", 101], ["V3-sched:11-aa89ec370e9c", 101]]}
+{"kind": "phase", "tag": "V3-refs", "t0": 1791952299.217, "t1": 1791952299.218, "secs": 0.0}
+{"kind": "phase", "tag": "V2a-poison", "t0": 1791952299.218, "t1": 1791952299.221, "secs": 0.0}
+{"kind": "coverage", "required": ["V0", "V2a-natural", "V2a-oracle", "V2c", "V4-d2", "V4-b1", "V4-d2solo", "V4-rebuild", "V4n-b1b", "V4n-rebuild2", "V3-forced", "V3-refs"], "ran": ["V2a-natural", "V2a-oracle", "V2c", "V4-d2", "V4-b1", "V4-d2solo", "V4-rebuild", "V4n-b1b", "V4n-rebuild2", "V3-forced", "V3-refs"], "not_run": ["V0"], "optional": {"V2a-poison": "ran"}, "left": 1000000000.0}
+{"kind": "end", "t": 1791952299.221}

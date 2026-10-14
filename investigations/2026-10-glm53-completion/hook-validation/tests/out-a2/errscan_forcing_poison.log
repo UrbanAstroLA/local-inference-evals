@@ -1,0 +1,15 @@
+W1014 03:20:44.210000 7 torch/utils/cpp_extension.py:178] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+/usr/local/lib/python3.12/dist-packages/triton/runtime/interpreter.py:594: RuntimeWarning: divide by zero encountered in log
+  return TensorHandle(op(arg.data), arg.dtype.scalar)
+/usr/local/lib/python3.12/dist-packages/triton/runtime/interpreter.py:491: RuntimeWarning: invalid value encountered in add
+  output = op(lhs.data, rhs.data)
+PASS F1[poison] committed ids == history (96 tokens) 
+PASS F2[poison] every window position measured exactly once min/max nmeas 1/1
+PASS F3[poison] measured metrics == single-token reference on the exact prefix max|dlp| 0.00e+00 max|dpost| 0.00e+00 argmax_eq True
+PASS F4[poison] accepted-count histogram as scheduled hist(a=0..3) [95, 0, 0, 0]
+PASS F5[poison] bonus accounting: each step commits a+1 (clamped), sum == W sum 96 W 96
+PASS F6[poison] integer committed state after every step (total_len, num_computed, last, all_token_ids) inv [96, 0, 0, 0]
+PASS F6c per-request record written at removal equals the device buffers (all schedules) 
+test_forcing: 7/7 checks passed
+rc=0
+fw_error_records=0

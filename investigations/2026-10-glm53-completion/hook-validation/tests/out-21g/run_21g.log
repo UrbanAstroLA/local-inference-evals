@@ -1,0 +1,22 @@
+== 21g CPU suites 2026-10-14T04:31:18Z
+hook  15e93e236067567ffb9db7116986e8b732ef679e672c5b12b9d78f5884899d83 (pre-21g: 15e93e236067567ffb9db7116986e8b732ef679e672c5b12b9d78f5884899d83)
+image local/glm53-v0.9.1-b1-forcehook-mg2:local sha256:ac05230bd94b3114cb6fb202b06402f9e2d45a61b20f041f314e045f967e97ee
+PASS S0 hook module unchanged by 21g
+good: revised VALID (failing []), original INVALID
+bad:  revised INVALID, failing ['CARRY-admissible', 'H1c', 'H1f-r', 'H2c-r', 'H3-r', 'H4-slot', 'H4b-r', 'H4b-sep', 'H5e-r', 'H5f-B1', 'H5g-r', 'H5h-r', 'IDX-attrib', 'IDX-content', 'IDX-early', 'IDX-page']; missing []; unexpected []
+bad:  fixture flags {'b1': ['u4', 'u5'], 'b1b': ['u4', 'u5'], 'd2solo': ['u0'], 'arm_asymmetry': ['u3']}
+PASS S1 synthetic dry runs: good VALID; bad fails exactly the 16 planted checks; flags u4, u5 (own null) and u3 (arm asymmetry)
+PASS S2a client plan dry run (plan: 89 forced/ref requests, 72692 forced tokens, 93845 prompt tokens; 0 free runs)
+PASS S2b V4n produces matched nulls for every tested fixture (PASS V4n matched nulls: 169/169 checks; every tested fixture)
+PASS S2c negative control: a misplaced V4n-rebuild2 window fails the plan check
+PASS S2d client writes its explicit coverage record
+original verdict INVALID reproduced check-for-check: True (28 checks)
+revised verdict INVALID; unexpected []
+IDX-attrib on attempt 1: 0 attribution violations; population {'V3': (4774, 4774), 'b1': (27973, 27973), 'b1b': (0, 0), 'd2': (27973, 27973), 'N_dd': (0, 0), 'N_pp': (0, 0), 'd2solo': (5489, 5489)}
+H5d-r PASS; H1f-unmasked outside-nucleus {'rows_determined': 56, 'rows_not_determinable': 0, 'max': 1.0358787250197565e-07, 'sum': 1.6669677386782489e-06, 'median': 2.6230000393923092e-08}
+KDA: 3604 comparisons, layers 0-17 1.0, 18+ 1.0, disagreements 0; H4-slot 106 snapshots, 0 violations; metadata diag {'consistent': 104, 'differs': 2}
+PASS S3 attempt-1 replay: original verdict reproduced; revised checks as DIAGNOSIS-a1; zero attribution violations
+PASS S4 fault injection: base passes every targeted check; every wrong-page / attribution / ledger fault fails its targets
+mandatory {'client_s': 514, 'occupied_s': 1260, 'gpu_h': 0.7, 'cumulative_gpu_h': 1.912}; + optional poison {'client_s': 674, 'occupied_s': 1420, 'gpu_h': 0.789, 'cumulative_gpu_h': 2.0}; wall cap 2138 s; worst case cumulative 2.3995 GPU-h
+PASS S5 cost: item total <= 2.4 GPU-h at the wall cap; wall cap <= 2,138 s
+21g suites: 0 failing

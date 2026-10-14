@@ -1756,3 +1756,178 @@ Nothing from this run is interpreted. A CPU-only diagnosis classifies each failu
 without a measured basis, or a genuine engine finding. H4c/H5b take priority, because gross B1 pools could be a
 comparison misalignment, an expected writer-numerics gap, or a new decode-path defect. There is no attempt 2 before the
 diagnosis is reviewed; one attempt (about 1.19 GPU-hours) remains under the authorization.
+
+**Amendment 21g (2026-10-14; adopts the independent assessment "attempt-2 validation and first-contrast guidance",
+relayed by the operator; before any attempt-2 data).** Proceed with the scoped attempt-2 package after recording these
+qualifications. The existing 2.4 GPU-hour ceiling and the last-attempt rule stand; no additional GPU time is authorized.
+Attempt 1 remains INVALID. Attempt 2 tests the repaired instrument under revised, explicitly post-inspection criteria.
+The PA2-1 to PA2-15 changes are recorded in hook-validation/prep-a2/PA2-changes.json.
+
+1. **Index-K content gate.** gross ≤ max(2 × max(in-session decode null, in-session prefill null), 0.1%) is accepted as a
+   coarse numerical compatibility screen, alongside the exact mapping and ledger checks.
+   - **Conditions:**
+     - the nulls cover the same fixture set, layers and overlapping token positions as the tested comparison (a single
+       trace is insufficient);
+     - aggregation, denominators and exclusions are frozen before attempt 2;
+     - gross counts and rates are reported by fixture and layer as well as pooled;
+     - the original criteria and results are kept beside the revised ones;
+     - the 0.1% floor is an operational tolerance, not a measured universal noise floor.
+   - A fixture substantially outside its null stays flagged and cannot carry a mechanism claim.
+   - **Structural checks retained:** exact request/token attribution and mappings; B1 shadow ledger entirely clean;
+     committed pools byte-stable over time; zero gross pools in layers 3-15; no judged page above 25% gross (unique
+     pools, minimum page population).
+   - The wrong-page and attribution negative controls must stay demonstrably sensitive under the revised analysis
+     (offline fault injection on existing captures where appropriate).
+2. **KDA gate.** Two claims are kept separate: which slot the engine commits, and which slot is numerically nearest the
+   prefill-built reference.
+   - Commit bookkeeping and expected-slot checks stay exact; no wrong-slot commits are permitted.
+   - **Nearest-reference identification:** 100% in layers 0-17 and ≥ 99% deeper, as a diagnostic screen. Every
+     disagreement is reported with its distances and margin. Deep-layer disagreements are unresolved numerical
+     comparisons, and a comfortably separated wrong-slot match requires investigation.
+   - Relative error ≤ 0.02 with margin ≥ 10 applies to layers 0-2 only.
+   - The original 100% criterion and result are kept beside the revised reading.
+3. **H2 and H3 carry-over.** Acceptable because the forcing and commit code is unchanged, provided:
+   - the image diff confirms that scope;
+   - provenance and corrected joins are explicit;
+   - the results are labelled carried-over evidence;
+   - current-image V0, forcing, attribution, ledger and state checks pass.
+   Current-image alignment and the argmax shift control are recomputed from the overlapping V2a/V2c reference rows. The
+   two repaired bookkeeping paths must be revalidated on GPU. The poison phase is retained if it fits the frozen budget;
+   required coverage is never dropped silently.
+4. **Top-p edge case.** The unmasked near-one-hot rows are a separately reported class. The bound applies to the tracked
+   tokens; total retained mass outside the intended nucleus is reported if existing records allow. There is no sampler
+   change during validation.
+5. **What a pass establishes:** forced-token commitment and measurement alignment; exposure and selection attribution;
+   verified D2 injection; numerical comparisons read against measured controls.
+   **What it does not establish:** full-history replay equivalence; the absence of every deep-layer numerical issue;
+   that D2 explains GPQA completion rates.
+   No automatic retry or behavioural evaluation follows.
+6. **Long-prompt / short-output control** (first-contrast design, costed separately, not from the attempt-2 allowance).
+   - **Construction:** the same token history and final context position built two ways: a long prefill with a short
+     forced window, and a shorter prefill with the planned longer window. Compared over common final positions, on clean
+     B1 and on the decode-window D2 injection, with matched batch composition and concurrency. Clean and injected
+     conditions run separately.
+   - **Recorded:** decode-written pool counts, corrupted pool counts, selection of corrupted pools, reasoning-close
+     probability before and after top-p, and EOS and other stops separately.
+   - It distinguishes sensitivity to history construction and to accumulated decode-written state at fixed total
+     context. It is not a pure test of output length.
+7. **Reading the first contrast.**
+   - The primary measure is `</think>` probability and nucleus eligibility. EOS and the other stops are separate
+     outcomes, and premature stopping is not successful completion.
+   - If D2 changes selected keys and termination probabilities beyond the matched null, it is a supported local mechanism
+     candidate.
+   - If the result is null, only this decode-window exposure is excluded; accumulated full-history D2 effects are not.
+   - No full GPQA pass is purchased solely because the instrument validates.
+
+**Amendment 21h (2026-10-14; coordinator, applying amendment 21g's wording; before any attempt-2 data).** The attempt-2
+package implements 21g (PA2-16 to PA2-25; hook-validation/ATTEMPT2-21G.md; image unchanged, sha256:ac05230b…; hook
+module 15e93e23…). Recorded limits and one interpretation:
+- **H5e-r** (the solo injected request) is gated on the pooled matched null of the eight-fixture set, which is 21g's
+  aggregate gate. The comparison against its own fixture's null is reported as a flag, not a failure, following 21g:
+  "An aggregate pass does not clear every fixture. A fixture substantially outside its corresponding null remains
+  flagged." This avoids a false INVALID when a single fixture's decode null happens to be low.
+- **The decode null shares an arm** with each tested comparison. A defect confined to one arm raises its own limit and
+  is absorbed by the content gate; such defects are caught by the exact structural checks and the arm-asymmetry flag.
+  Recorded as a limit of the content gate.
+- **V3 index-K content** has no matched null; it stays descriptive and ungated.
+- **Attempt 1 had no V4n data**, so the content gate has been exercised on synthetic data only. The fault-injection base
+  used proxy nulls.
+- **KDA metadata** disagreed in 2 of 106 attempt-1 snapshots, both at frontier 4,351 next to a block boundary. It is
+  reported as an unexplained, ungated diagnostic and investigated if it recurs.
+
+**Amendment 21i (2026-10-14; frozen attempt-2 package, verified by the coordinator, before any attempt-2 data).**
+- **Package:** hook-validation/SHA256SUMS (333 files) has sha256 4ae4ad22….
+- **H5e-r (PA2-26):** gated on the pooled eight-fixture matched null, with H5e-fixture reported only and H5e-pooled kept
+  beside them.
+- **Reruns:** unchanged verdicts on the synthetic good and bad runs, the attempt-1 replay and all ten fault injections.
+  Two fault cases flip H5e-r to PASS because a one-arm fault inflates the pooled null (the design limit recorded in
+  21h); both still fail their target checks.
+- **Image:** sha256:ac05230b…, unchanged.
+- **Budget:** spent 1.2117, cap 1.188 GPU-hours for this attempt, wall cap 2,138 s.
+- **Launch:** attempt 2 of 2, under the 2.4 GPU-hour authorization of amendment 21c.
+
+**Amendment 21j (2026-10-14; hook-validation attempt 2 result, recorded after the run).**
+- **Verdicts:** the revised verdict (21g/21h criteria) is **VALID**. The original attempt-1 criteria read INVALID and are
+  reported beside it.
+- **Cost:** 0.795 GPU-hours; the item total is 2.0067 of 2.4. No attempts remain.
+
+Revised checks (all pass):
+- V0 unkeyed probes bitwise equal to B1, and full coverage;
+- forcing H1a-e and H1g-j on the current image (73 requests);
+- alignment against prefill on the current image (top-1 ≥ 0.95 within the null) and the argmax shift control
+  (aligned ≥ 0.90, shifted ≤ 0.20);
+- H3: the natural and oracle schedules agree with poison (top-1 0.984);
+- KDA: exact slot bookkeeping, and nearest-reference identification 100% with 0 disagreements;
+- index-K structure: exact attribution, no page above 25%, zero gross in layers 3-15, 4,037 pool pairs byte-identical
+  over time;
+- index-K content: the B1 arms 0.61% against a matched limit of 1.16% (N_dd 0.58%, N_pp 0.46%); the solo injected
+  request 0.18% against the pooled limit;
+- D2 injection at 8 in flight: 59.7% gross, 51.6 times the limit, with the guard pattern exact per rank;
+- B1 shadow ledger all clean (10,172 pools);
+- exposure records at every designated position (7,922, none missing).
+
+Reported, not gated:
+- the solo request against its own fixture's null: not flagged (0.18% against 0.40%);
+- fixture flags under 21g: fixture be2e9e349395 is outside its own matched null in both B1 arms, and fixture
+  376073921446 shows arm asymmetry. Neither may carry a mechanism claim without further examination;
+- KDA metadata disagrees in 2 of 106 snapshots again, so it recurs and is to be investigated (21h);
+- the unmasked top-p rows: 18 rows, tracked kept mass ≤ 2.4e-9, total mass outside the nucleus ≤ 1.0e-7;
+- V3 decode against prefill: 1.78%, descriptive only.
+
+Open check: both B1 arms show the same pooled gross count against the rebuild (172 of 27,973) while their page maxima
+differ. This is to be confirmed as coincidence, not a duplicated comparison, before the instrument is used.
+
+Per 21g §5, a pass establishes forced-token commitment and alignment, exposure and selection attribution, the verified
+D2 injection, and numerical comparisons read against measured controls. It does not establish full-history replay
+equivalence, the absence of every deep-layer numerical issue, or that D2 explains GPQA completion.
+
+**Amendment 21k (2026-10-14; attempt-2 follow-up and the first-contrast proposal, before any first-contrast data).**
+
+Follow-up (hook-validation/followup-a2/, CPU only, post-inspection):
+1. **The two B1 arms' equal pooled gross count (172) is a coincidence, not an aliased comparison.** The arms used
+   different dumps and share 0 of 27,973 byte-identical units. Their gross sets overlap with Jaccard 0.35, and the
+   counts are equal only at the 0.25 threshold. Every frozen value reproduces from raw bytes. The 21j open check is
+   closed.
+2. **The KDA metadata disagreement is explained.** It is one snapshot on both ranks at frontier 4,351. In align mode, a
+   block-column change moves the committed state and sets `num_accepted` to 1; that rule predicts 106 of 106 snapshots
+   in both attempts. The committed state there is correct (34 of 34 layers). The convolution state at the boundary is
+   not compared.
+3. **Both fixture flags are numerical fragility, not instrument defects.** be2e9e349395 is deep-layer only, and 13 of
+   its gross units reproduce across three independent decodes. 376073921446's asymmetry is one position counted per
+   layer against a zero prefill null; by position the arms are symmetric. These fixtures belong to attempt 2's
+   short-trace set and are not in the first-contrast fixtures.
+
+First-contrast proposal (first-contrast/PROPOSAL.md, for independent review; not authorized):
+- **Primary:** B1 ×3 clean against B1 with the decode-window D2 injection ×3, on the 8 first-contrast fixtures
+  (re-tokenized 63k-120k histories, windows of about 8.2k forced tokens). One session, 8 in flight, clean and injected
+  in separate batches, distinct cache salts. A warm prefix request per round keeps the batch's decode starts aligned.
+- **Order:** C1, C2 (repeatability gate), D2, D1, D3, C3 (residue check).
+- **Long-prompt control (21g §6):** the same history and final positions built with a long prefill and a 1,025-token
+  window, ×3 per condition.
+- **Primary statistic:** per fixture, ln of the window-mean pre-top_p P(`</think>`) over prespecified active positions;
+  the run is the unit.
+  - **Beyond the null:** |Δ| > 2·max(N, 0.05) and the D and C runs fully separated. 3 against 3 gives a best exact
+    one-sided level of 1/20, reported as a bound.
+  - **No reading** if the within-arm null exceeds 0.25 nat.
+  - **Selected keys changed:** corrupted window pools selected in every D run and in none of the C runs.
+  - Readings per 21g §7.
+- **Fixture rule:** a pre-data exclusion rule file (empty), and in-session flags with a leave-flagged-out sensitivity,
+  counted by position and by layer-unit.
+- **Environment:** `WMAX` 8448, required because the validated sessions ran with 5120.
+- **Cost (GPU-hours, estimate / ceiling):**
+
+  | Option | Contents | Estimate / ceiling |
+  |---|---|---|
+  | A0 | primary only | 1.96 / 2.99 |
+  | A | primary plus long-context instrument checks | 2.36 / 3.57 |
+  | B (recommended) | primary plus the long-prompt control | 2.82 / 4.29 |
+  | B2 | the control ×2 per condition | 2.53 / 3.85 |
+
+- **Open risks:**
+  - decode speed at long context is unmeasured;
+  - the instrument is validated only below 5k tokens, and windows will cross two blocks;
+  - forced requests on a cached prefix are new;
+  - fewer than 8 in flight at window ends;
+  - the prefill null may be 0;
+  - fixture overlaps;
+  - 45-60 GB of window dumps.

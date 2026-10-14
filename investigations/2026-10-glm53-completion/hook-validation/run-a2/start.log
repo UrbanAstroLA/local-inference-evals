@@ -1,0 +1,11 @@
+Validated 18 checkpoint shards
+Validated DFlash2 K3 draft checkpoint
+35cc0ac72322697830c5e0c24c796689517bbb598864f5432247fc912162f421
+Started glm53-flash-exl3-b12x-vllm on http://127.0.0.1:127.0.0.1:8001/v1. Initial B12x/CuTe compilation can take several minutes.
+Target: k325 profile, wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1@0490d2f708b12145f6516555ab066aaeb401cd21
+Profile: fp8, KV cache: fp8_ds_mla, max length: 1048576, max sequences: 16, GPU memory utilization: 0.95
+MoE topology: TP2, EP1
+Speculation: DFlash2 K3, bfloat16 draft KV, from incoai/GLM-5.3-Flash-DFlash2@bf582e4eacc1810f76656d1811693ff6c6737d2a
+State rollback: baseline full-state rollback
+Vision: disabled (language-model-only mode)
+Follow startup: docker logs -f glm53-flash-exl3-b12x-vllm

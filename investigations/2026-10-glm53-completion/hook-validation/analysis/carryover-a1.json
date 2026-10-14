@@ -1,0 +1,128 @@
+{
+ "label": "POST-INSPECTION carry-over from hook-validation attempt 1 (run-a1); not re-measured in attempt 2",
+ "evidence_class": "carried-over evidence (amendment 21g item 3): attempt-1 measurements on image sha256:1b9f8b15..., admitted for attempt 2 only under CARRY-admissible",
+ "sources": {
+  "h2_corrected": {
+   "path": "diagnosis-a1/out/h2_corrected.json",
+   "sha256": "cd556e06d6bad7021d48f317af8c65cfaffac205378b6591ee3d9319a317775d"
+  },
+  "verdict_a1": {
+   "path": "run-a1/verdict.json",
+   "sha256": "fbbed5ce43aaf6b9994e1236a0cec73d448bcf5b55e19e5a492fae6b5e8492bd"
+  },
+  "client_a1": {
+   "path": "run-a1/client.jsonl",
+   "sha256": "8dbc96f614198b6403050bb43f6f3030f8928e9ed42230863f455c34777cbcbd"
+  },
+  "image_scope": {
+   "path": "prep-a2/out-21g/image-scope.json",
+   "sha256": "ee359698ee074e671bbcd4ae1bc5642720edb0ba1d8f4bb11019eb9e8b0582f1"
+  }
+ },
+ "h2_null": {
+  "n": 7787,
+  "quantiles": {
+   "0.5": 6.659261998720467e-05,
+   "0.9": 0.09682364463806155,
+   "0.99": 0.40648360252380433
+  },
+  "note": "V1: B1's own free-run logprobs vs prefill reference, run-a1 (in-session unhooked null of attempt 1)"
+ },
+ "h2_attempt1_PI": {
+  "n": 140091,
+  "aligned": {
+   "0.5": 0.00011444091796875,
+   "0.9": 0.09956932067871094,
+   "0.99": 0.42170257568359515
+  },
+  "top1": 0.9829253842145462,
+  "shift": {
+   "median_plus1": 0.0321197509765625,
+   "median_minus1": 0.03146553039550781,
+   "top1_plus1": 0.007144132880871584,
+   "top1_minus1": 0.0067940703697088765
+  },
+  "per_request_top1_min": 0.9508196721311475,
+  "per_request_shifted_top1_max": 0.020935960591133004,
+  "H2a_pass": true,
+  "H2c_argmax_failing": []
+ },
+ "h3_attempt1": {
+  "ok": true,
+  "detail": "{\"natural\": {\"n\": 11533, \"top1\": 0.9822249197953699, \"0.5\": 0.00017547607421875, \"0.9\": 0.09761199951171877, \"0.99\": 0.3991555786132816}, \"oracle\": {\"n\": 11533, \"top1\": 0.9828318737535767, \"0.5\": 0.00016021728515625, \"0.9\": 0.09866638183593765, \"0.99\": 0.43851577758789084}, \"reject:1\": {\"n\": 11533, \"top1\": 0.9833521200034683, \"0.5\": 0.0001697540283203125, \"0.9\": 0.0988895416259766, \"0.99\": 0.43247",
+  "h3": {
+   "null_n": 11533,
+   "tol": {
+    "0.5": 0.01,
+    "0.9": 0.5264701843261734,
+    "0.99": 5.243399963378921
+   },
+   "per_schedule": {
+    "natural": {
+     "n": 11533,
+     "top1": 0.9822249197953699,
+     "0.5": 0.00017547607421875,
+     "0.9": 0.09761199951171877,
+     "0.99": 0.3991555786132816
+    },
+    "oracle": {
+     "n": 11533,
+     "top1": 0.9828318737535767,
+     "0.5": 0.00016021728515625,
+     "0.9": 0.09866638183593765,
+     "0.99": 0.43851577758789084
+    },
+    "reject:1": {
+     "n": 11533,
+     "top1": 0.9833521200034683,
+     "0.5": 0.0001697540283203125,
+     "0.9": 0.0988895416259766,
+     "0.99": 0.43247619628906253
+    },
+    "reject:2": {
+     "n": 11533,
+     "top1": 0.9818780889621087,
+     "0.5": 0.0001735687255859375,
+     "0.9": 0.10029754638671881,
+     "0.99": 0.40997726440429705
+    },
+    "reject:3": {
+     "n": 11533,
+     "top1": 0.9823116275036851,
+     "0.5": 0.00017547607421875,
+     "0.9": 0.09787368774414093,
+     "0.99": 0.4171369171142586
+    },
+    "sched:20261013": {
+     "n": 11533,
+     "top1": 0.9833521200034683,
+     "0.5": 0.0001659393310546875,
+     "0.9": 0.09658279418945323,
+     "0.99": 0.41334861755371094
+    }
+   }
+  },
+  "join": "none needed: V2a schedules compared with each other at the same output index"
+ },
+ "h2_join": "corrected (PI-1): reference row k = o + P - ref_from, top-1 on finite reference rows (diagnosis-a1/d_h2_corrected.py); the frozen attempt-1 join is NOT used for any carried value",
+ "scope": {
+  "image_a1": "sha256:1b9f8b15d63197ad8b2ef2410321baedf9dcd55a112603bc77b887e8dac293d5",
+  "image_a2": "sha256:ac05230bd94b3114cb6fb202b06402f9e2d45a61b20f041f314e045f967e97ee",
+  "only_hook_module_changed": true,
+  "differing_sources": [
+   "vllm/forcewin_hooks.py"
+  ],
+  "pyc_header_only": [
+   "vllm/model_executor/layers/__pycache__/sparse_attn_indexer_kpool.cpython-312.pyc",
+   "vllm/v1/attention/backends/mla/__pycache__/indexer.cpython-312.pyc",
+   "vllm/v1/worker/gpu/__pycache__/model_runner.cpython-312.pyc",
+   "vllm/v1/worker/gpu/sample/__pycache__/sampler.cpython-312.pyc",
+   "vllm/v1/worker/gpu/spec_decode/__pycache__/rejection_sampler.cpython-312.pyc"
+  ],
+  "files_compared": 7265,
+  "listing_sha256": {
+   "a1": "5ac50cad2dcc64b48da215e3e3e4645505036560370e0b73007968ae6aa1fe04",
+   "a2": "4cf4eb1908f12c8ea6ef4fde78d136bf619cb03c8b1c0361f7ea52c3b9ce332c"
+  }
+ }
+}

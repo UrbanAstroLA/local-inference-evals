@@ -1,0 +1,3263 @@
+{
+ "label": "REVISED criteria: post-inspection fixes PA2-7a..f + DRAFT criteria (not adopted)",
+ "rows": [
+  {
+   "id": "V0",
+   "original": [
+    "V0"
+   ],
+   "name": "V0 unkeyed probes bitwise equal to B1 run-b1-a1",
+   "status": "PASS",
+   "level": "invalid",
+   "label": "unchanged",
+   "detail": "[('q0', True), ('q1', True), ('q2', True), ('q3', True)]",
+   "original_result": [
+    "PASS"
+   ]
+  },
+  {
+   "id": "coverage-a2",
+   "original": [
+    "coverage:"
+   ],
+   "name": "every attempt-2 mandatory phase ran (optional V2a-poison reported)",
+   "status": "PASS",
+   "level": "inconclusive",
+   "label": "PA2 scope",
+   "detail": "missing []; skips []; optional skipped []",
+   "original_result": [
+    "PASS"
+   ]
+  },
+  {
+   "id": "H1a",
+   "original": [
+    "H1a"
+   ],
+   "name": "H1a returned ids == forced ids for every forced request",
+   "status": "PASS",
+   "level": "invalid",
+   "label": "unchanged",
+   "detail": "73 requests, mismatches []",
+   "original_result": [
+    "PASS"
+   ]
+  },
+  {
+   "id": "H1b",
+   "original": [
+    "H1b"
+   ],
+   "name": "H1b hook records exist for every forced request",
+   "status": "PASS",
+   "level": "invalid",
+   "label": "unchanged",
+   "detail": "missing []",
+   "original_result": [
+    "PASS"
+   ]
+  },
+  {
+   "id": "H1c",
+   "original": [
+    "H1c"
+   ],
+   "name": "H1c every window position measured exactly once",
+   "status": "FAIL",
+   "level": "invalid",
+   "label": "unchanged",
+   "detail": "['V2a-oracle-t2']",
+   "original_result": [
+    "FAIL"
+   ]
+  },
+  {
+   "id": "H1d",
+   "original": [
+    "H1d"
+   ],
+   "name": "H1d no NaN in the tracked pre-mask log-probabilities",
+   "status": "PASS",
+   "level": "invalid",
+   "label": "unchanged",
+   "detail": "[]",
+   "original_result": [
+    "PASS"
+   ]
+  },
+  {
+   "id": "H1e",
+   "original": [
+    "H1e"
+   ],
+   "name": "H1e post-mask values read from the served processed logits on every row",
+   "status": "PASS",
+   "level": "invalid",
+   "label": "unchanged",
+   "detail": "[]",
+   "original_result": [
+    "PASS"
+   ]
+  },
+  {
+   "id": "H1g",
+   "original": [
+    "H1g"
+   ],
+   "name": "H1g last committed token == history after every step",
+   "status": "PASS",
+   "level": "invalid",
+   "label": "unchanged",
+   "detail": "[]",
+   "original_result": [
+    "PASS"
+   ]
+  },
+  {
+   "id": "H1h",
+   "original": [
+    "H1h"
+   ],
+   "name": "H1h both ranks recorded identical metrics (same committed tokens per step)",
+   "status": "PASS",
+   "level": "invalid",
+   "label": "unchanged",
+   "detail": "[]",
+   "original_result": [
+    "PASS"
+   ]
+  },
+  {
+   "id": "H1i",
+   "original": [
+    "H1i"
+   ],
+   "name": "H1i no hook errors",
+   "status": "PASS",
+   "level": "invalid",
+   "label": "unchanged",
+   "detail": "[]",
+   "original_result": [
+    "PASS"
+   ]
+  },
+  {
+   "id": "H1j",
+   "original": [
+    "H1j"
+   ],
+   "name": "H1j accepted-count histograms follow the draft schedules (bonus-token accounting)",
+   "status": "PASS",
+   "level": "invalid",
+   "label": "unchanged",
+   "detail": "[]",
+   "original_result": [
+    "PASS"
+   ]
+  },
+  {
+   "id": "H1f-r",
+   "original": [
+    "H1f"
+   ],
+   "name": "served top_p mask inside the eligibility bounds up to 1e-6 tracked mass; rows left unmasked by the served kernel reported as their own class",
+   "status": "FAIL",
+   "level": "invalid",
+   "label": "PA2-7f",
+   "detail": "{\"cells\": 5, \"rows\": 2, \"unmasked_rows\": 1, \"unmasked_max_kept_p\": 2.5999999930803597e-09, \"other_rows\": 1} gate [{'tag': 'V2a-natural-t3', 'o': 87, 'unmasked': False, 'kept_mass': 0.0010000000474974513, 'max_kept_p': 0.0010000000474974513, 'max_masked_eligible_p_pre': 0.0, 'top1_p': nan}]",
+   "original_result": [
+    "FAIL"
+   ]
+  },
+  {
+   "id": "H2-null-r",
+   "original": [
+    "H2-null"
+   ],
+   "name": "H2 null: attempt-1 in-session null carried over (V1 not in scope)",
+   "status": "CARRIED",
+   "level": "inconclusive",
+   "label": "PA2 scope",
+   "detail": "CARRIED from attempt 1 (run-a1 V1, n=7787; carryover-a1.json)",
+   "original_result": [
+    "FAIL"
+   ]
+  },
+  {
+   "id": "H2a-r",
+   "original": [
+    "H2a"
+   ],
+   "name": "forced decode vs prefill within the null (x2, floors) and top-1 >= 0.95; reference join by position, top-1 on finite reference rows",
+   "status": "PASS",
+   "level": "invalid",
+   "label": "PA2-7a (PI-1)",
+   "detail": "aligned {'0.5': 0.0023381710052490234, '0.9': 0.009345126152038575, '0.99': 0.17048436403274975} top1 0.9838; null CARRIED from attempt 1 (run-a1 V1, n=7787; carryover-a1.json); tol {'0.5': 0.01, '0.9': 0.3, '0.99': 1.5}; join offsets [-5, 0]",
+   "original_result": [
+    "FAIL"
+   ]
+  },
+  {
+   "id": "H2c-r",
+   "original": [
+    "H2c"
+   ],
+   "name": "per request: aligned top-1 >= 0.90 and top-1 at +-1 <= 0.20 (no misattributed request)",
+   "status": "FAIL",
+   "level": "invalid",
+   "label": "PA2-7b (PI-2)",
+   "detail": "24 requests; aligned min 0.8633; shifted max 0.1271; failing ['V2a-oracle-t2']",
+   "original_result": [
+    "FAIL"
+   ]
+  },
+  {
+   "id": "H2c-lp",
+   "original": [
+    "H2c"
+   ],
+   "name": "frozen lp shift rule (reported; uninformative when the forced lp is ~0)",
+   "status": "REPORTED",
+   "level": "invalid",
+   "label": "PA2-7b",
+   "detail": "failing 0 of 24: []",
+   "original_result": [
+    "FAIL"
+   ]
+  },
+  {
+   "id": "H2b-r",
+   "original": [
+    "H2b"
+   ],
+   "name": "aggregate argmax shift control: aligned >= 0.90, +-1 shift <= 0.20",
+   "status": "PASS",
+   "level": "inconclusive",
+   "label": "PA2-7b (PI-2)",
+   "detail": "aligned 0.9838, +1 0.0000, -1 0.0053",
+   "original_result": [
+    "PASS"
+   ]
+  },
+  {
+   "id": "H3-r",
+   "original": [
+    "H3"
+   ],
+   "name": "schedules present (natural, oracle) agree with poison within the frozen floors (decode-vs-decode null not measured in scope: floors only)",
+   "status": "FAIL",
+   "level": "invalid",
+   "label": "PA2 scope",
+   "detail": "{\"natural\": {\"n\": 2400, \"top1\": 0.9745833333333334, \"0.5\": 0.004059553146362305, \"0.9\": 0.013219404220581045, \"0.99\": 0.18999873638153011}, \"oracle\": {\"n\": 2400, \"top1\": 0.96375, \"0.5\": 0.00428009033203125, \"0.9\": 0.014061689376831053, \"0.99\": 0.8055119395255953}}",
+   "original_result": [
+    "FAIL"
+   ]
+  },
+  {
+   "id": "H4a",
+   "original": [
+    "H4a"
+   ],
+   "name": "H4a integer committed state at every snapshot (tokens, total_len, num_computed)",
+   "status": "PASS",
+   "level": "invalid",
+   "label": "unchanged",
+   "detail": "0 of 32 failing",
+   "original_result": [
+    "PASS"
+   ]
+  },
+  {
+   "id": "H4b-r",
+   "original": [
+    "H4b"
+   ],
+   "name": "KDA: committed slot nearest the prefill-built state in 100 % of comparisons; layers 0-2 rel <= 0.02 with margin >= 10; deeper layers reported per depth",
+   "status": "FAIL",
+   "level": "invalid",
+   "label": "DRAFT",
+   "detail": "n 64 identified 0.9375; layers 0-2 n 32 rel max 0.1951 margin min 0.00513",
+   "original_result": [
+    "FAIL"
+   ]
+  },
+  {
+   "id": "H4b-alt",
+   "original": [
+    "H4b"
+   ],
+   "name": "variant for review: identification 100 % in layers 0-17 and >= 99 % in deeper layers (near-ties at depth), same layers 0-2 tolerance",
+   "status": "REPORTED",
+   "level": "invalid",
+   "label": "DRAFT variant",
+   "detail": "would FAIL: {\"ident_0_17\": 0.875, \"ident_18_plus\": 1.0, \"deep_margin_lt_1_25\": 0}",
+   "original_result": [
+    "FAIL"
+   ]
+  },
+  {
+   "id": "H5a",
+   "original": [
+    "H5a"
+   ],
+   "name": "H5a injected tokens: every window token of injected requests, none elsewhere",
+   "status": "PASS",
+   "level": "invalid",
+   "label": "unchanged",
+   "detail": "{\"V4-d2-u0\": 440, \"V4-d2-u1\": 440, \"V4-d2-u2\": 440, \"V4-d2-u3\": 440, \"V4-d2-u4\": 440, \"V4-d2-u5\": 440}",
+   "original_result": [
+    "PASS"
+   ]
+  },
+  {
+   "id": "IDX-page",
+   "original": [
+    "H4c",
+    "H5b"
+   ],
+   "name": "structural addressing: no page with > 25 % gross pools (pages with >= 16 compared pools; B1 arms, solo, V3)",
+   "status": "FAIL",
+   "level": "invalid",
+   "label": "DRAFT",
+   "detail": "{\"b1\": [64, 0.03125, 0], \"b1b\": [64, 1.0, 2], \"d2solo\": [8, 0.015625, 0], \"V3\": [0, null, 0]}",
+   "original_result": [
+    "PASS",
+    "FAIL"
+   ]
+  },
+  {
+   "id": "IDX-early",
+   "original": [
+    "H4c",
+    "H5b"
+   ],
+   "name": "structural addressing: zero gross pools in DSA layers 3-15 (B1 arms, solo, V3)",
+   "status": "FAIL",
+   "level": "invalid",
+   "label": "DRAFT",
+   "detail": "gross {'b1': 2, 'b1b': 0, 'd2solo': 0, 'V3': 0} of {'b1': 1584, 'b1b': 1584, 'd2solo': 198, 'V3': 156}",
+   "original_result": [
+    "PASS",
+    "FAIL"
+   ]
+  },
+  {
+   "id": "IDX-stable",
+   "original": [
+    "H4c"
+   ],
+   "name": "committed pools byte-stable over time (V3: same request, consecutive snapshots)",
+   "status": "PASS",
+   "level": "invalid",
+   "label": "DRAFT",
+   "detail": "{\"pairs\": 264, \"byte_identical\": 1.0}",
+   "original_result": [
+    "PASS"
+   ]
+  },
+  {
+   "id": "IDX-content",
+   "original": [
+    "H5b"
+   ],
+   "name": "B1 arms vs rebuild: gross <= max(2 x max(decode null b1/b1b, prefill null rebuild/rebuild2), 0.1 %)",
+   "status": "PASS",
+   "level": "invalid",
+   "label": "DRAFT",
+   "detail": "b1 0.5051% b1b 4.3561% limit 8.8384% (N_dd 4.4192%, N_pp 0.4419%)",
+   "original_result": [
+    "FAIL"
+   ]
+  },
+  {
+   "id": "H5e-r",
+   "original": [
+    "H5e"
+   ],
+   "name": "injected request alone vs rebuild: gross <= the same limit",
+   "status": "PASS",
+   "level": "invalid",
+   "label": "DRAFT",
+   "detail": "solo 0.5051% limit 8.8384%",
+   "original_result": [
+    "FAIL"
+   ]
+  },
+  {
+   "id": "H5d-r",
+   "original": [
+    "H5d"
+   ],
+   "name": "injected arm at 8 in flight: gross > 30 % (reported as a multiple of the limit)",
+   "status": "PASS",
+   "level": "invalid",
+   "label": "DRAFT",
+   "detail": "d2 87.0581% = 9.8 x limit",
+   "original_result": [
+    "PASS"
+   ]
+  },
+  {
+   "id": "H4c-content",
+   "original": [
+    "H4c"
+   ],
+   "name": "V3 decode vs prefill gross (reported against the same limit)",
+   "status": "REPORTED",
+   "level": "invalid",
+   "label": "DRAFT",
+   "detail": "V3 0.0000% limit 8.8384%",
+   "original_result": [
+    "PASS"
+   ]
+  },
+  {
+   "id": "H5c-r",
+   "original": [
+    "H5c"
+   ],
+   "name": "0.25 threshold discrimination (retired as a gate; reported)",
+   "status": "REPORTED",
+   "level": "inconclusive",
+   "label": "DRAFT",
+   "detail": "{\"b1\": 1.544, \"b1b\": 1.599, \"d2\": 1.68, \"d2solo\": 1.461, \"N_dd\": 1.604, \"N_pp\": 1.464}",
+   "original_result": [
+    "FAIL"
+   ]
+  },
+  {
+   "id": "H5f-B1",
+   "original": [
+    "H5f"
+   ],
+   "name": "shadow ledger, B1 arms (no injection): every processed window pool classified clean (positive control for the PA2-2 fix)",
+   "status": "FAIL",
+   "level": "invalid",
+   "label": "DRAFT (PA2-2)",
+   "detail": "3168 pool records; not clean 2: [('V4-b1-u2', 0, 37, 2), ('V4-b1-u2', 1, 37, 2)]",
+   "original_result": [
+    "PASS"
+   ]
+  },
+  {
+   "id": "H5f-D2",
+   "original": [
+    "H5f"
+   ],
+   "name": "shadow ledger, D2 arm at 8 in flight: clean-labelled pools no grosser than B1 pools (gross <= the content limit); corrupt -> gross reported, not gated",
+   "status": "PASS",
+   "level": "invalid",
+   "label": "DRAFT",
+   "detail": "{\"per_arm\": {\"d2\": {\"clean_n\": 180, \"clean_gross\": 0.0, \"corrupt_n\": 1328, \"corrupt_gross\": 1.0}, \"d2solo\": {\"clean_n\": 396, \"clean_gross\": 0.005050505050505051, \"corrupt_n\": 0, \"corrupt_gross\": null}}, \"combined_clean_nongross\": 0.9965277777777778, \"limit\": 0.08838383838383838}",
+   "original_result": [
+    "PASS"
+   ]
+  },
+  {
+   "id": "H5f-orig-form",
+   "original": [
+    "H5f"
+   ],
+   "name": "original form, injected arms pooled: clean -> non-gross >= 99 % (reported)",
+   "status": "REPORTED",
+   "level": "invalid",
+   "label": "DRAFT",
+   "detail": "combined clean non-gross 0.9965277777777778",
+   "original_result": [
+    "PASS"
+   ]
+  },
+  {
+   "id": "H5g-r",
+   "original": [
+    "H5g"
+   ],
+   "name": "guard per rank, deltas from the client's start dump: tail_w_stash mism == null == owned layers x injected tokens, only in V4-d2/V4-d2solo; zero idx_w_dec, tail_w_seed, D7 and position deltas",
+   "status": "FAIL",
+   "level": "invalid",
+   "label": "PA2-7c (PI-3)",
+   "detail": "{\"injected_tokens\": 3960, \"per_rank\": {\"0\": {\"owned_layers\": 6, \"deltas\": {\"tail_w_stash.mism\": 23760, \"tail_w_stash.null\": 23760, \"idx_w_dec.mism\": 0, \"tail_w_seed.mism\": 0, \"idx_w_pf.s_mism\": 0, \"idx_w_pf.d7_fallback\": 0, \"pos.pos_contig\": 0, \"pos.pos_bounds\": 0}, \"expected_tail\": 23760, \"tail_by_phase\": {\"V4-d2\": 21120, \"V4-d2solo\": 2640}, \"pre_client_pos_bounds\": 4, \"ok\": true}, \"1\": {\"owned_layers\": 5, \"deltas\": {\"tail_w_stash.mism\": 19800, \"tail_w_stash.null\": 19800, \"idx_w_dec.mism\": 0, \"tail_w_seed.mism\": 0, \"idx_w_pf.s_mism\": 0, \"idx_w_pf.d7_fallback\": 0, \"pos.pos_contig\": 3, \"pos.pos",
+   "original_result": [
+    "FAIL"
+   ]
+  },
+  {
+   "id": "H5h-r",
+   "original": [
+    "H5h"
+   ],
+   "name": "exposure: every designated position (o >= 1, W > 1) has a record whose step is the position's measurement step; selection records likewise",
+   "status": "FAIL",
+   "level": "invalid",
+   "label": "PA2-7d",
+   "detail": "{\"designated\": 1176, \"missing\": 0, \"misattributed\": 6, \"all_layers_step_matched\": 1170, \"selections\": 57, \"selections_bad\": 0, \"examples\": [[\"V2a-natural-t5\", 16, \"step [16] vs 15.0\"], [\"V2a-natural-t5\", 64, \"step [32] vs 31.0\"], [\"V2a-natural-t5\", 112, \"step [48] vs 47.0\"], [\"V2a-natural-t5\", 160, \"step [64] vs 63.0\"], [\"V2a-natural-t5\", 208, \"step [80] vs 79.0\"]]}",
+   "original_result": [
+    "FAIL"
+   ]
+  }
+ ],
+ "invalid": [
+  "H1c",
+  "H1f-r",
+  "H2c-r",
+  "H3-r",
+  "H4b-r",
+  "IDX-page",
+  "IDX-early",
+  "H5f-B1",
+  "H5g-r",
+  "H5h-r"
+ ],
+ "inconclusive": [],
+ "h1f": {
+  "cells": 5,
+  "rows": 2,
+  "unmasked_rows": 1,
+  "unmasked_max_kept_p": 2.5999999930803597e-09,
+  "other_rows": 1,
+  "gate_violations": [
+   {
+    "tag": "V2a-natural-t3",
+    "o": 87,
+    "unmasked": false,
+    "kept_mass": 0.0010000000474974513,
+    "max_kept_p": 0.0010000000474974513,
+    "max_masked_eligible_p_pre": 0.0,
+    "top1_p": NaN
+   }
+  ]
+ },
+ "h2": {
+  "n": 7200,
+  "top1": 0.98375,
+  "aligned": {
+   "0.5": 0.0023381710052490234,
+   "0.9": 0.009345126152038575,
+   "0.99": 0.17048436403274975
+  },
+  "null": {
+   "0.5": 6.659261998720467e-05,
+   "0.9": 0.09682364463806155,
+   "0.99": 0.40648360252380433
+  },
+  "null_source": "CARRIED from attempt 1 (run-a1 V1, n=7787; carryover-a1.json)",
+  "tol": {
+   "0.5": 0.01,
+   "0.9": 0.3,
+   "0.99": 1.5
+  },
+  "shift_top1": {
+   "plus1": 0.0,
+   "minus1": 0.005291005291005291
+  },
+  "offsets": [
+   -5,
+   0
+  ],
+  "per_request": {
+   "V2a-natural-t0": {
+    "aligned_top1": 1.0,
+    "shifted_top1": 0.0,
+    "n": 300,
+    "lp_median": 0.0023894309997558594
+   },
+   "V2a-natural-t1": {
+    "aligned_top1": 0.9833333333333333,
+    "shifted_top1": 0.0,
+    "n": 300,
+    "lp_median": 0.0021796226501464844
+   },
+   "V2a-natural-t2": {
+    "aligned_top1": 0.9933333333333333,
+    "shifted_top1": 0.0,
+    "n": 300,
+    "lp_median": 0.002310037612915039
+   },
+   "V2a-natural-t3": {
+    "aligned_top1": 0.9766666666666667,
+    "shifted_top1": 0.0,
+    "n": 300,
+    "lp_median": 0.0023075342178344727
+   },
+   "V2a-natural-t4": {
+    "aligned_top1": 0.9866666666666667,
+    "shifted_top1": 0.0,
+    "n": 300,
+    "lp_median": 0.0023745298385620117
+   },
+   "V2a-natural-t5": {
+    "aligned_top1": 0.9933333333333333,
+    "shifted_top1": 0.0,
+    "n": 300,
+    "lp_median": 0.002330300081666792
+   },
+   "V2a-natural-t6": {
+    "aligned_top1": 0.9866666666666667,
+    "shifted_top1": 0.0,
+    "n": 300,
+    "lp_median": 0.0024882256984710693
+   },
+   "V2a-natural-t7": {
+    "aligned_top1": 0.98,
+    "shifted_top1": 0.0,
+    "n": 300,
+    "lp_median": 0.001983344554901123
+   },
+   "V2a-oracle-t0": {
+    "aligned_top1": 0.9933333333333333,
+    "shifted_top1": 0.0,
+    "n": 300,
+    "lp_median": 0.0022820234298706055
+   },
+   "V2a-oracle-t1": {
+    "aligned_top1": 1.0,
+    "shifted_top1": 0.0,
+    "n": 300,
+    "lp_median": 0.002534151077270508
+   },
+   "V2a-oracle-t2": {
+    "aligned_top1": 0.8633333333333333,
+    "shifted_top1": 0.12709030100334448,
+    "n": 300,
+    "lp_median": 0.003087798166234279
+   },
+   "V2a-oracle-t3": {
+    "aligned_top1": 0.9966666666666667,
+    "shifted_top1": 0.0,
+    "n": 300,
+    "lp_median": 0.0023758411407470703
+   },
+   "V2a-oracle-t4": {
+    "aligned_top1": 0.99,
+    "shifted_top1": 0.0,
+    "n": 300,
+    "lp_median": 0.00200575590133667
+   },
+   "V2a-oracle-t5": {
+    "aligned_top1": 0.99,
+    "shifted_top1": 0.0,
+    "n": 300,
+    "lp_median": 0.0025025606155395508
+   },
+   "V2a-oracle-t6": {
+    "aligned_top1": 0.99,
+    "shifted_top1": 0.0,
+    "n": 300,
+    "lp_median": 0.002097010612487793
+   },
+   "V2a-oracle-t7": {
+    "aligned_top1": 0.99,
+    "shifted_top1": 0.0,
+    "n": 300,
+    "lp_median": 0.0024770498275756836
+   },
+   "V2a-poison-t0": {
+    "aligned_top1": 0.9833333333333333,
+    "shifted_top1": 0.0,
+    "n": 300,
+    "lp_median": 0.002307713031768799
+   },
+   "V2a-poison-t1": {
+    "aligned_top1": 0.9866666666666667,
+    "shifted_top1": 0.0,
+    "n": 300,
+    "lp_median": 0.0024607181549072266
+   },
+   "V2a-poison-t2": {
+    "aligned_top1": 0.9933333333333333,
+    "shifted_top1": 0.0,
+    "n": 300,
+    "lp_median": 0.0021843314170837402
+   },
+   "V2a-poison-t3": {
+    "aligned_top1": 0.99,
+    "shifted_top1": 0.0,
+    "n": 300,
+    "lp_median": 0.0022832155227661133
+   },
+   "V2a-poison-t4": {
+    "aligned_top1": 0.9833333333333333,
+    "shifted_top1": 0.0,
+    "n": 300,
+    "lp_median": 0.0021402835845947266
+   },
+   "V2a-poison-t5": {
+    "aligned_top1": 0.9833333333333333,
+    "shifted_top1": 0.0,
+    "n": 300,
+    "lp_median": 0.0023144036531448364
+   },
+   "V2a-poison-t6": {
+    "aligned_top1": 0.99,
+    "shifted_top1": 0.0,
+    "n": 300,
+    "lp_median": 0.0024023056030273438
+   },
+   "V2a-poison-t7": {
+    "aligned_top1": 0.9866666666666667,
+    "shifted_top1": 0.0,
+    "n": 300,
+    "lp_median": 0.0023827552795410156
+   }
+  }
+ },
+ "h4_kda": {
+  "n": 64,
+  "identified": 0.9375,
+  "early_n": 32,
+  "early_rel_max": 0.19510577619075775,
+  "early_margin_min": 0.005125653653574832,
+  "per_layer": {
+   "0": {
+    "n": 32,
+    "rel_q50": 0.0010000474867410958,
+    "rel_max": 0.19510577619075775,
+    "margin_min": 0.005125653653574832
+   },
+   "20": {
+    "n": 32,
+    "rel_q50": 0.10000002384185791,
+    "rel_max": 0.1000000387430191,
+    "margin_min": 2.0187879770000614
+   }
+  },
+  "alt": {
+   "ident_0_17": 0.875,
+   "ident_18_plus": 1.0,
+   "deep_margin_lt_1_25": 0
+  }
+ },
+ "v3_idx_rows": [
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 0,
+   "layer": 3,
+   "pool": 121,
+   "rel": 0.026618584990501404
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 0,
+   "layer": 3,
+   "pool": 122,
+   "rel": 0.02194272167980671
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 0,
+   "layer": 3,
+   "pool": 123,
+   "rel": 0.01686868630349636
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 0,
+   "layer": 3,
+   "pool": 124,
+   "rel": 0.013678016141057014
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 0,
+   "layer": 3,
+   "pool": 125,
+   "rel": 0.015821591019630432
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 0,
+   "layer": 3,
+   "pool": 126,
+   "rel": 0.013464702293276787
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 0,
+   "layer": 3,
+   "pool": 127,
+   "rel": 0.03406215086579323
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 0,
+   "layer": 3,
+   "pool": 128,
+   "rel": 0.02771974541246891
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 0,
+   "layer": 39,
+   "pool": 121,
+   "rel": 0.016036758199334145
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 0,
+   "layer": 39,
+   "pool": 122,
+   "rel": 0.02582896314561367
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 0,
+   "layer": 39,
+   "pool": 123,
+   "rel": 0.02245800755918026
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 0,
+   "layer": 39,
+   "pool": 124,
+   "rel": 0.026313018053770065
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 0,
+   "layer": 39,
+   "pool": 125,
+   "rel": 0.023533888161182404
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 0,
+   "layer": 39,
+   "pool": 126,
+   "rel": 0.030183717608451843
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 0,
+   "layer": 39,
+   "pool": 127,
+   "rel": 0.025946304202079773
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 0,
+   "layer": 39,
+   "pool": 128,
+   "rel": 0.018739424645900726
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 1,
+   "layer": 3,
+   "pool": 121,
+   "rel": 0.026618584990501404
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 1,
+   "layer": 3,
+   "pool": 122,
+   "rel": 0.02194272167980671
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 1,
+   "layer": 3,
+   "pool": 123,
+   "rel": 0.01686868630349636
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 1,
+   "layer": 3,
+   "pool": 124,
+   "rel": 0.013678016141057014
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 1,
+   "layer": 3,
+   "pool": 125,
+   "rel": 0.015821591019630432
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 1,
+   "layer": 3,
+   "pool": 126,
+   "rel": 0.013464702293276787
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 1,
+   "layer": 3,
+   "pool": 127,
+   "rel": 0.03406215086579323
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 1,
+   "layer": 3,
+   "pool": 128,
+   "rel": 0.02771974541246891
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 1,
+   "layer": 39,
+   "pool": 121,
+   "rel": 0.016036758199334145
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 1,
+   "layer": 39,
+   "pool": 122,
+   "rel": 0.02582896314561367
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 1,
+   "layer": 39,
+   "pool": 123,
+   "rel": 0.02245800755918026
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 1,
+   "layer": 39,
+   "pool": 124,
+   "rel": 0.026313018053770065
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 1,
+   "layer": 39,
+   "pool": 125,
+   "rel": 0.023533888161182404
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 1,
+   "layer": 39,
+   "pool": 126,
+   "rel": 0.030183717608451843
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 1,
+   "layer": 39,
+   "pool": 127,
+   "rel": 0.025946304202079773
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 1,
+   "layer": 39,
+   "pool": 128,
+   "rel": 0.018739424645900726
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 1,
+   "layer": 3,
+   "pool": 129,
+   "rel": 0.02014991268515587
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 1,
+   "layer": 3,
+   "pool": 130,
+   "rel": 0.02478528581559658
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 1,
+   "layer": 39,
+   "pool": 129,
+   "rel": 0.019381344318389893
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 1,
+   "layer": 39,
+   "pool": 130,
+   "rel": 0.01954377442598343
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 0,
+   "layer": 3,
+   "pool": 129,
+   "rel": 0.02014991268515587
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 0,
+   "layer": 3,
+   "pool": 130,
+   "rel": 0.02478528581559658
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 0,
+   "layer": 39,
+   "pool": 129,
+   "rel": 0.019381344318389893
+  },
+  {
+   "tag": "V3-sched_7-t0",
+   "rank": 0,
+   "layer": 39,
+   "pool": 130,
+   "rel": 0.01954377442598343
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 1,
+   "layer": 3,
+   "pool": 121,
+   "rel": 0.016579629853367805
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 1,
+   "layer": 3,
+   "pool": 122,
+   "rel": 0.023473847657442093
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 1,
+   "layer": 3,
+   "pool": 123,
+   "rel": 0.017821194604039192
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 1,
+   "layer": 3,
+   "pool": 124,
+   "rel": 0.02920536883175373
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 1,
+   "layer": 3,
+   "pool": 125,
+   "rel": 0.016644498333334923
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 1,
+   "layer": 3,
+   "pool": 126,
+   "rel": 0.03268555551767349
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 1,
+   "layer": 3,
+   "pool": 127,
+   "rel": 0.02274187281727791
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 1,
+   "layer": 3,
+   "pool": 128,
+   "rel": 0.021158898249268532
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 1,
+   "layer": 3,
+   "pool": 129,
+   "rel": 0.03223545104265213
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 1,
+   "layer": 39,
+   "pool": 121,
+   "rel": 0.01359542179852724
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 1,
+   "layer": 39,
+   "pool": 122,
+   "rel": 0.016340268775820732
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 1,
+   "layer": 39,
+   "pool": 123,
+   "rel": 0.018891675397753716
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 1,
+   "layer": 39,
+   "pool": 124,
+   "rel": 0.01707516238093376
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 1,
+   "layer": 39,
+   "pool": 125,
+   "rel": 0.018605554476380348
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 1,
+   "layer": 39,
+   "pool": 126,
+   "rel": 0.02137422002851963
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 1,
+   "layer": 39,
+   "pool": 127,
+   "rel": 0.027369501069188118
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 1,
+   "layer": 39,
+   "pool": 128,
+   "rel": 0.01729765348136425
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 1,
+   "layer": 39,
+   "pool": 129,
+   "rel": 0.02363947033882141
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 0,
+   "layer": 3,
+   "pool": 121,
+   "rel": 0.016579629853367805
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 0,
+   "layer": 3,
+   "pool": 122,
+   "rel": 0.023473847657442093
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 0,
+   "layer": 3,
+   "pool": 123,
+   "rel": 0.017821194604039192
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 0,
+   "layer": 3,
+   "pool": 124,
+   "rel": 0.02920536883175373
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 0,
+   "layer": 3,
+   "pool": 125,
+   "rel": 0.016644498333334923
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 0,
+   "layer": 3,
+   "pool": 126,
+   "rel": 0.03268555551767349
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 0,
+   "layer": 3,
+   "pool": 127,
+   "rel": 0.02274187281727791
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 0,
+   "layer": 3,
+   "pool": 128,
+   "rel": 0.021158898249268532
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 0,
+   "layer": 3,
+   "pool": 129,
+   "rel": 0.03223545104265213
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 0,
+   "layer": 39,
+   "pool": 121,
+   "rel": 0.01359542179852724
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 0,
+   "layer": 39,
+   "pool": 122,
+   "rel": 0.016340268775820732
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 0,
+   "layer": 39,
+   "pool": 123,
+   "rel": 0.018891675397753716
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 0,
+   "layer": 39,
+   "pool": 124,
+   "rel": 0.01707516238093376
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 0,
+   "layer": 39,
+   "pool": 125,
+   "rel": 0.018605554476380348
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 0,
+   "layer": 39,
+   "pool": 126,
+   "rel": 0.02137422002851963
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 0,
+   "layer": 39,
+   "pool": 127,
+   "rel": 0.027369501069188118
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 0,
+   "layer": 39,
+   "pool": 128,
+   "rel": 0.01729765348136425
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 0,
+   "layer": 39,
+   "pool": 129,
+   "rel": 0.02363947033882141
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 0,
+   "layer": 3,
+   "pool": 130,
+   "rel": 0.02686094306409359
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 0,
+   "layer": 39,
+   "pool": 130,
+   "rel": 0.02688964083790779
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 1,
+   "layer": 3,
+   "pool": 130,
+   "rel": 0.02686094306409359
+  },
+  {
+   "tag": "V3-sched_7-t1",
+   "rank": 1,
+   "layer": 39,
+   "pool": 130,
+   "rel": 0.02688964083790779
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 0,
+   "layer": 3,
+   "pool": 122,
+   "rel": 0.026534326374530792
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 0,
+   "layer": 3,
+   "pool": 123,
+   "rel": 0.03572224825620651
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 0,
+   "layer": 3,
+   "pool": 124,
+   "rel": 0.01544793788343668
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 0,
+   "layer": 3,
+   "pool": 125,
+   "rel": 0.023431362584233284
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 0,
+   "layer": 3,
+   "pool": 126,
+   "rel": 0.027937982231378555
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 0,
+   "layer": 3,
+   "pool": 127,
+   "rel": 0.02506604976952076
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 0,
+   "layer": 3,
+   "pool": 128,
+   "rel": 0.02930012159049511
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 0,
+   "layer": 3,
+   "pool": 129,
+   "rel": 0.021983079612255096
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 0,
+   "layer": 39,
+   "pool": 122,
+   "rel": 0.02695169672369957
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 0,
+   "layer": 39,
+   "pool": 123,
+   "rel": 0.018805159255862236
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 0,
+   "layer": 39,
+   "pool": 124,
+   "rel": 0.02149042673408985
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 0,
+   "layer": 39,
+   "pool": 125,
+   "rel": 0.02558760903775692
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 0,
+   "layer": 39,
+   "pool": 126,
+   "rel": 0.03335218131542206
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 0,
+   "layer": 39,
+   "pool": 127,
+   "rel": 0.013331019319593906
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 0,
+   "layer": 39,
+   "pool": 128,
+   "rel": 0.023990320041775703
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 0,
+   "layer": 39,
+   "pool": 129,
+   "rel": 0.026458049193024635
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 1,
+   "layer": 3,
+   "pool": 122,
+   "rel": 0.026534326374530792
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 1,
+   "layer": 3,
+   "pool": 123,
+   "rel": 0.03572224825620651
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 1,
+   "layer": 3,
+   "pool": 124,
+   "rel": 0.01544793788343668
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 1,
+   "layer": 3,
+   "pool": 125,
+   "rel": 0.023431362584233284
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 1,
+   "layer": 3,
+   "pool": 126,
+   "rel": 0.027937982231378555
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 1,
+   "layer": 3,
+   "pool": 127,
+   "rel": 0.02506604976952076
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 1,
+   "layer": 3,
+   "pool": 128,
+   "rel": 0.02930012159049511
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 1,
+   "layer": 3,
+   "pool": 129,
+   "rel": 0.021983079612255096
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 1,
+   "layer": 39,
+   "pool": 122,
+   "rel": 0.02695169672369957
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 1,
+   "layer": 39,
+   "pool": 123,
+   "rel": 0.018805159255862236
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 1,
+   "layer": 39,
+   "pool": 124,
+   "rel": 0.02149042673408985
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 1,
+   "layer": 39,
+   "pool": 125,
+   "rel": 0.02558760903775692
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 1,
+   "layer": 39,
+   "pool": 126,
+   "rel": 0.03335218131542206
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 1,
+   "layer": 39,
+   "pool": 127,
+   "rel": 0.013331019319593906
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 1,
+   "layer": 39,
+   "pool": 128,
+   "rel": 0.023990320041775703
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 1,
+   "layer": 39,
+   "pool": 129,
+   "rel": 0.026458049193024635
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 0,
+   "layer": 3,
+   "pool": 130,
+   "rel": 0.022318586707115173
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 0,
+   "layer": 39,
+   "pool": 130,
+   "rel": 0.02948835678398609
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 1,
+   "layer": 3,
+   "pool": 130,
+   "rel": 0.022318586707115173
+  },
+  {
+   "tag": "V3-sched_7-t2",
+   "rank": 1,
+   "layer": 39,
+   "pool": 130,
+   "rel": 0.02948835678398609
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 1,
+   "layer": 3,
+   "pool": 122,
+   "rel": 0.026548102498054504
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 1,
+   "layer": 3,
+   "pool": 123,
+   "rel": 0.018880721181631088
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 1,
+   "layer": 3,
+   "pool": 124,
+   "rel": 0.0280662402510643
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 1,
+   "layer": 3,
+   "pool": 125,
+   "rel": 0.0231306254863739
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 1,
+   "layer": 3,
+   "pool": 126,
+   "rel": 0.014815940521657467
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 1,
+   "layer": 3,
+   "pool": 127,
+   "rel": 0.017426365986466408
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 1,
+   "layer": 3,
+   "pool": 128,
+   "rel": 0.019920283928513527
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 1,
+   "layer": 3,
+   "pool": 129,
+   "rel": 0.02524910867214203
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 1,
+   "layer": 39,
+   "pool": 122,
+   "rel": 0.03183950483798981
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 1,
+   "layer": 39,
+   "pool": 123,
+   "rel": 0.024440541863441467
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 1,
+   "layer": 39,
+   "pool": 124,
+   "rel": 0.02738242782652378
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 1,
+   "layer": 39,
+   "pool": 125,
+   "rel": 0.0202401801943779
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 1,
+   "layer": 39,
+   "pool": 126,
+   "rel": 0.024980230256915092
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 1,
+   "layer": 39,
+   "pool": 127,
+   "rel": 0.030698589980602264
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 1,
+   "layer": 39,
+   "pool": 128,
+   "rel": 0.018301019445061684
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 1,
+   "layer": 39,
+   "pool": 129,
+   "rel": 0.025312846526503563
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 0,
+   "layer": 3,
+   "pool": 122,
+   "rel": 0.026548102498054504
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 0,
+   "layer": 3,
+   "pool": 123,
+   "rel": 0.018880721181631088
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 0,
+   "layer": 3,
+   "pool": 124,
+   "rel": 0.0280662402510643
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 0,
+   "layer": 3,
+   "pool": 125,
+   "rel": 0.0231306254863739
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 0,
+   "layer": 3,
+   "pool": 126,
+   "rel": 0.014815940521657467
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 0,
+   "layer": 3,
+   "pool": 127,
+   "rel": 0.017426365986466408
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 0,
+   "layer": 3,
+   "pool": 128,
+   "rel": 0.019920283928513527
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 0,
+   "layer": 3,
+   "pool": 129,
+   "rel": 0.02524910867214203
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 0,
+   "layer": 39,
+   "pool": 122,
+   "rel": 0.03183950483798981
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 0,
+   "layer": 39,
+   "pool": 123,
+   "rel": 0.024440541863441467
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 0,
+   "layer": 39,
+   "pool": 124,
+   "rel": 0.02738242782652378
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 0,
+   "layer": 39,
+   "pool": 125,
+   "rel": 0.0202401801943779
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 0,
+   "layer": 39,
+   "pool": 126,
+   "rel": 0.024980230256915092
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 0,
+   "layer": 39,
+   "pool": 127,
+   "rel": 0.030698589980602264
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 0,
+   "layer": 39,
+   "pool": 128,
+   "rel": 0.018301019445061684
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 0,
+   "layer": 39,
+   "pool": 129,
+   "rel": 0.025312846526503563
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 0,
+   "layer": 3,
+   "pool": 130,
+   "rel": 0.021376529708504677
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 0,
+   "layer": 3,
+   "pool": 131,
+   "rel": 0.024619879201054573
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 0,
+   "layer": 39,
+   "pool": 130,
+   "rel": 0.024016832932829857
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 0,
+   "layer": 39,
+   "pool": 131,
+   "rel": 0.026300227269530296
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 1,
+   "layer": 3,
+   "pool": 130,
+   "rel": 0.021376529708504677
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 1,
+   "layer": 3,
+   "pool": 131,
+   "rel": 0.024619879201054573
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 1,
+   "layer": 39,
+   "pool": 130,
+   "rel": 0.024016832932829857
+  },
+  {
+   "tag": "V3-sched_7-t3",
+   "rank": 1,
+   "layer": 39,
+   "pool": 131,
+   "rel": 0.026300227269530296
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 0,
+   "layer": 3,
+   "pool": 122,
+   "rel": 0.035082899034023285
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 0,
+   "layer": 3,
+   "pool": 123,
+   "rel": 0.03264579921960831
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 0,
+   "layer": 3,
+   "pool": 124,
+   "rel": 0.024590037763118744
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 0,
+   "layer": 3,
+   "pool": 125,
+   "rel": 0.02503451704978943
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 0,
+   "layer": 3,
+   "pool": 126,
+   "rel": 0.025402383878827095
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 0,
+   "layer": 3,
+   "pool": 127,
+   "rel": 0.024010341614484787
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 0,
+   "layer": 3,
+   "pool": 128,
+   "rel": 0.026454798877239227
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 0,
+   "layer": 3,
+   "pool": 129,
+   "rel": 0.019119789823889732
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 0,
+   "layer": 39,
+   "pool": 122,
+   "rel": 0.022978706285357475
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 0,
+   "layer": 39,
+   "pool": 123,
+   "rel": 0.017536822706460953
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 0,
+   "layer": 39,
+   "pool": 124,
+   "rel": 0.026618625968694687
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 0,
+   "layer": 39,
+   "pool": 125,
+   "rel": 0.019434692338109016
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 0,
+   "layer": 39,
+   "pool": 126,
+   "rel": 0.02471553161740303
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 0,
+   "layer": 39,
+   "pool": 127,
+   "rel": 0.025387953966856003
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 0,
+   "layer": 39,
+   "pool": 128,
+   "rel": 0.02632618509232998
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 0,
+   "layer": 39,
+   "pool": 129,
+   "rel": 0.02182958275079727
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 1,
+   "layer": 3,
+   "pool": 122,
+   "rel": 0.035082899034023285
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 1,
+   "layer": 3,
+   "pool": 123,
+   "rel": 0.03264579921960831
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 1,
+   "layer": 3,
+   "pool": 124,
+   "rel": 0.024590037763118744
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 1,
+   "layer": 3,
+   "pool": 125,
+   "rel": 0.02503451704978943
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 1,
+   "layer": 3,
+   "pool": 126,
+   "rel": 0.025402383878827095
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 1,
+   "layer": 3,
+   "pool": 127,
+   "rel": 0.024010341614484787
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 1,
+   "layer": 3,
+   "pool": 128,
+   "rel": 0.026454798877239227
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 1,
+   "layer": 3,
+   "pool": 129,
+   "rel": 0.019119789823889732
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 1,
+   "layer": 39,
+   "pool": 122,
+   "rel": 0.022978706285357475
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 1,
+   "layer": 39,
+   "pool": 123,
+   "rel": 0.017536822706460953
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 1,
+   "layer": 39,
+   "pool": 124,
+   "rel": 0.026618625968694687
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 1,
+   "layer": 39,
+   "pool": 125,
+   "rel": 0.019434692338109016
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 1,
+   "layer": 39,
+   "pool": 126,
+   "rel": 0.02471553161740303
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 1,
+   "layer": 39,
+   "pool": 127,
+   "rel": 0.025387953966856003
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 1,
+   "layer": 39,
+   "pool": 128,
+   "rel": 0.02632618509232998
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 1,
+   "layer": 39,
+   "pool": 129,
+   "rel": 0.02182958275079727
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 0,
+   "layer": 3,
+   "pool": 130,
+   "rel": 0.028768397867679596
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 0,
+   "layer": 3,
+   "pool": 131,
+   "rel": 0.02321777679026127
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 0,
+   "layer": 39,
+   "pool": 130,
+   "rel": 0.022317098453640938
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 0,
+   "layer": 39,
+   "pool": 131,
+   "rel": 0.01913103088736534
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 1,
+   "layer": 3,
+   "pool": 130,
+   "rel": 0.028768397867679596
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 1,
+   "layer": 3,
+   "pool": 131,
+   "rel": 0.02321777679026127
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 1,
+   "layer": 39,
+   "pool": 130,
+   "rel": 0.022317098453640938
+  },
+  {
+   "tag": "V3-sched_7-t4",
+   "rank": 1,
+   "layer": 39,
+   "pool": 131,
+   "rel": 0.01913103088736534
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 1,
+   "layer": 3,
+   "pool": 122,
+   "rel": 0.021540895104408264
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 1,
+   "layer": 3,
+   "pool": 123,
+   "rel": 0.01131734810769558
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 1,
+   "layer": 3,
+   "pool": 124,
+   "rel": 0.01976436749100685
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 1,
+   "layer": 3,
+   "pool": 125,
+   "rel": 0.019565673545002937
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 1,
+   "layer": 3,
+   "pool": 126,
+   "rel": 0.016162969172000885
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 1,
+   "layer": 3,
+   "pool": 127,
+   "rel": 0.023229267448186874
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 1,
+   "layer": 3,
+   "pool": 128,
+   "rel": 0.018801933154463768
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 1,
+   "layer": 3,
+   "pool": 129,
+   "rel": 0.020716285333037376
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 1,
+   "layer": 3,
+   "pool": 130,
+   "rel": 0.02620360255241394
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 1,
+   "layer": 39,
+   "pool": 122,
+   "rel": 0.019394855946302414
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 1,
+   "layer": 39,
+   "pool": 123,
+   "rel": 0.022148169577121735
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 1,
+   "layer": 39,
+   "pool": 124,
+   "rel": 0.02491898275911808
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 1,
+   "layer": 39,
+   "pool": 125,
+   "rel": 0.01576320268213749
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 1,
+   "layer": 39,
+   "pool": 126,
+   "rel": 0.022261999547481537
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 1,
+   "layer": 39,
+   "pool": 127,
+   "rel": 0.017854221165180206
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 1,
+   "layer": 39,
+   "pool": 128,
+   "rel": 0.018603337928652763
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 1,
+   "layer": 39,
+   "pool": 129,
+   "rel": 0.021508777514100075
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 1,
+   "layer": 39,
+   "pool": 130,
+   "rel": 0.023170707747340202
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 0,
+   "layer": 3,
+   "pool": 122,
+   "rel": 0.021540895104408264
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 0,
+   "layer": 3,
+   "pool": 123,
+   "rel": 0.01131734810769558
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 0,
+   "layer": 3,
+   "pool": 124,
+   "rel": 0.01976436749100685
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 0,
+   "layer": 3,
+   "pool": 125,
+   "rel": 0.019565673545002937
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 0,
+   "layer": 3,
+   "pool": 126,
+   "rel": 0.016162969172000885
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 0,
+   "layer": 3,
+   "pool": 127,
+   "rel": 0.023229267448186874
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 0,
+   "layer": 3,
+   "pool": 128,
+   "rel": 0.018801933154463768
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 0,
+   "layer": 3,
+   "pool": 129,
+   "rel": 0.020716285333037376
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 0,
+   "layer": 3,
+   "pool": 130,
+   "rel": 0.02620360255241394
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 0,
+   "layer": 39,
+   "pool": 122,
+   "rel": 0.019394855946302414
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 0,
+   "layer": 39,
+   "pool": 123,
+   "rel": 0.022148169577121735
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 0,
+   "layer": 39,
+   "pool": 124,
+   "rel": 0.02491898275911808
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 0,
+   "layer": 39,
+   "pool": 125,
+   "rel": 0.01576320268213749
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 0,
+   "layer": 39,
+   "pool": 126,
+   "rel": 0.022261999547481537
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 0,
+   "layer": 39,
+   "pool": 127,
+   "rel": 0.017854221165180206
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 0,
+   "layer": 39,
+   "pool": 128,
+   "rel": 0.018603337928652763
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 0,
+   "layer": 39,
+   "pool": 129,
+   "rel": 0.021508777514100075
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 0,
+   "layer": 39,
+   "pool": 130,
+   "rel": 0.023170707747340202
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 0,
+   "layer": 3,
+   "pool": 131,
+   "rel": 0.02606094256043434
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 0,
+   "layer": 39,
+   "pool": 131,
+   "rel": 0.014319461770355701
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 1,
+   "layer": 3,
+   "pool": 131,
+   "rel": 0.02606094256043434
+  },
+  {
+   "tag": "V3-sched_7-t5",
+   "rank": 1,
+   "layer": 39,
+   "pool": 131,
+   "rel": 0.014319461770355701
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 1,
+   "layer": 3,
+   "pool": 123,
+   "rel": 0.02659362554550171
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 1,
+   "layer": 3,
+   "pool": 124,
+   "rel": 0.019023992121219635
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 1,
+   "layer": 3,
+   "pool": 125,
+   "rel": 0.01696137897670269
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 1,
+   "layer": 3,
+   "pool": 126,
+   "rel": 0.019101334735751152
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 1,
+   "layer": 3,
+   "pool": 127,
+   "rel": 0.03394448757171631
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 1,
+   "layer": 3,
+   "pool": 128,
+   "rel": 0.024448346346616745
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 1,
+   "layer": 3,
+   "pool": 129,
+   "rel": 0.02403017319738865
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 1,
+   "layer": 3,
+   "pool": 130,
+   "rel": 0.020327743142843246
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 1,
+   "layer": 39,
+   "pool": 123,
+   "rel": 0.016810474917292595
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 1,
+   "layer": 39,
+   "pool": 124,
+   "rel": 0.023615099489688873
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 1,
+   "layer": 39,
+   "pool": 125,
+   "rel": 0.021133549511432648
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 1,
+   "layer": 39,
+   "pool": 126,
+   "rel": 0.03177165240049362
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 1,
+   "layer": 39,
+   "pool": 127,
+   "rel": 0.021859386935830116
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 1,
+   "layer": 39,
+   "pool": 128,
+   "rel": 0.018453454598784447
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 1,
+   "layer": 39,
+   "pool": 129,
+   "rel": 0.02772335708141327
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 1,
+   "layer": 39,
+   "pool": 130,
+   "rel": 0.021842462942004204
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 0,
+   "layer": 3,
+   "pool": 123,
+   "rel": 0.02659362554550171
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 0,
+   "layer": 3,
+   "pool": 124,
+   "rel": 0.019023992121219635
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 0,
+   "layer": 3,
+   "pool": 125,
+   "rel": 0.01696137897670269
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 0,
+   "layer": 3,
+   "pool": 126,
+   "rel": 0.019101334735751152
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 0,
+   "layer": 3,
+   "pool": 127,
+   "rel": 0.03394448757171631
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 0,
+   "layer": 3,
+   "pool": 128,
+   "rel": 0.024448346346616745
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 0,
+   "layer": 3,
+   "pool": 129,
+   "rel": 0.02403017319738865
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 0,
+   "layer": 3,
+   "pool": 130,
+   "rel": 0.020327743142843246
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 0,
+   "layer": 39,
+   "pool": 123,
+   "rel": 0.016810474917292595
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 0,
+   "layer": 39,
+   "pool": 124,
+   "rel": 0.023615099489688873
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 0,
+   "layer": 39,
+   "pool": 125,
+   "rel": 0.021133549511432648
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 0,
+   "layer": 39,
+   "pool": 126,
+   "rel": 0.03177165240049362
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 0,
+   "layer": 39,
+   "pool": 127,
+   "rel": 0.021859386935830116
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 0,
+   "layer": 39,
+   "pool": 128,
+   "rel": 0.018453454598784447
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 0,
+   "layer": 39,
+   "pool": 129,
+   "rel": 0.02772335708141327
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 0,
+   "layer": 39,
+   "pool": 130,
+   "rel": 0.021842462942004204
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 0,
+   "layer": 3,
+   "pool": 131,
+   "rel": 0.028416166082024574
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 0,
+   "layer": 39,
+   "pool": 131,
+   "rel": 0.01797802373766899
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 1,
+   "layer": 3,
+   "pool": 131,
+   "rel": 0.028416166082024574
+  },
+  {
+   "tag": "V3-sched_7-t6",
+   "rank": 1,
+   "layer": 39,
+   "pool": 131,
+   "rel": 0.01797802373766899
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 0,
+   "layer": 3,
+   "pool": 123,
+   "rel": 0.024748995900154114
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 0,
+   "layer": 3,
+   "pool": 124,
+   "rel": 0.022882554680109024
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 0,
+   "layer": 3,
+   "pool": 125,
+   "rel": 0.030916208401322365
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 0,
+   "layer": 3,
+   "pool": 126,
+   "rel": 0.020051095634698868
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 0,
+   "layer": 3,
+   "pool": 127,
+   "rel": 0.021757002919912338
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 0,
+   "layer": 3,
+   "pool": 128,
+   "rel": 0.02147531509399414
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 0,
+   "layer": 3,
+   "pool": 129,
+   "rel": 0.020267663523554802
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 0,
+   "layer": 3,
+   "pool": 130,
+   "rel": 0.01737152226269245
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 0,
+   "layer": 39,
+   "pool": 123,
+   "rel": 0.02481691725552082
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 0,
+   "layer": 39,
+   "pool": 124,
+   "rel": 0.013649760745465755
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 0,
+   "layer": 39,
+   "pool": 125,
+   "rel": 0.032919153571128845
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 0,
+   "layer": 39,
+   "pool": 126,
+   "rel": 0.025666268542408943
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 0,
+   "layer": 39,
+   "pool": 127,
+   "rel": 0.019246922805905342
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 0,
+   "layer": 39,
+   "pool": 128,
+   "rel": 0.011092768050730228
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 0,
+   "layer": 39,
+   "pool": 129,
+   "rel": 0.029569381847977638
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 0,
+   "layer": 39,
+   "pool": 130,
+   "rel": 0.03050834871828556
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 1,
+   "layer": 3,
+   "pool": 123,
+   "rel": 0.024748995900154114
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 1,
+   "layer": 3,
+   "pool": 124,
+   "rel": 0.022882554680109024
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 1,
+   "layer": 3,
+   "pool": 125,
+   "rel": 0.030916208401322365
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 1,
+   "layer": 3,
+   "pool": 126,
+   "rel": 0.020051095634698868
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 1,
+   "layer": 3,
+   "pool": 127,
+   "rel": 0.021757002919912338
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 1,
+   "layer": 3,
+   "pool": 128,
+   "rel": 0.02147531509399414
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 1,
+   "layer": 3,
+   "pool": 129,
+   "rel": 0.020267663523554802
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 1,
+   "layer": 3,
+   "pool": 130,
+   "rel": 0.01737152226269245
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 1,
+   "layer": 39,
+   "pool": 123,
+   "rel": 0.02481691725552082
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 1,
+   "layer": 39,
+   "pool": 124,
+   "rel": 0.013649760745465755
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 1,
+   "layer": 39,
+   "pool": 125,
+   "rel": 0.032919153571128845
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 1,
+   "layer": 39,
+   "pool": 126,
+   "rel": 0.025666268542408943
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 1,
+   "layer": 39,
+   "pool": 127,
+   "rel": 0.019246922805905342
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 1,
+   "layer": 39,
+   "pool": 128,
+   "rel": 0.011092768050730228
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 1,
+   "layer": 39,
+   "pool": 129,
+   "rel": 0.029569381847977638
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 1,
+   "layer": 39,
+   "pool": 130,
+   "rel": 0.03050834871828556
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 0,
+   "layer": 3,
+   "pool": 131,
+   "rel": 0.021772248670458794
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 0,
+   "layer": 3,
+   "pool": 132,
+   "rel": 0.022389322519302368
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 0,
+   "layer": 39,
+   "pool": 131,
+   "rel": 0.018855899572372437
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 0,
+   "layer": 39,
+   "pool": 132,
+   "rel": 0.03189584240317345
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 1,
+   "layer": 3,
+   "pool": 131,
+   "rel": 0.021772248670458794
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 1,
+   "layer": 3,
+   "pool": 132,
+   "rel": 0.022389322519302368
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 1,
+   "layer": 39,
+   "pool": 131,
+   "rel": 0.018855899572372437
+  },
+  {
+   "tag": "V3-sched_7-t7",
+   "rank": 1,
+   "layer": 39,
+   "pool": 132,
+   "rel": 0.03189584240317345
+  }
+ ],
+ "idx_stable": {
+  "pairs": 264,
+  "byte_identical": 1.0
+ },
+ "h5_content": {
+  "b1": {
+   "n": 3168,
+   "gross": 0.005050505050505051,
+   "q50": 0.02825124841183424,
+   "q999": 1.5435142751932147,
+   "per_trace": {
+    "u0": 0.010101010101010102,
+    "u1": 0.010101010101010102,
+    "u2": 0.010101010101010102,
+    "u3": 0.0,
+    "u4": 0.005050505050505051,
+    "u5": 0.0,
+    "u6": 0.005050505050505051,
+    "u7": 0.0
+   }
+  },
+  "b1b": {
+   "n": 3168,
+   "gross": 0.043560606060606064,
+   "q50": 0.02842260804027319,
+   "q999": 1.599233401536943,
+   "per_trace": {
+    "u0": 0.005050505050505051,
+    "u1": 0.32323232323232326,
+    "u2": 0.010101010101010102,
+    "u3": 0.0,
+    "u4": 0.005050505050505051,
+    "u5": 0.0,
+    "u6": 0.005050505050505051,
+    "u7": 0.0
+   }
+  },
+  "d2": {
+   "n": 3168,
+   "gross": 0.8705808080808081,
+   "q50": 1.39717698097229,
+   "q999": 1.6802406169176107,
+   "per_trace": {
+    "u0": 0.898989898989899,
+    "u1": 0.8434343434343434,
+    "u2": 0.898989898989899,
+    "u3": 0.8383838383838383,
+    "u4": 0.8686868686868687,
+    "u5": 0.8484848484848485,
+    "u6": 0.9191919191919192,
+    "u7": 0.8484848484848485
+   }
+  },
+  "d2solo": {
+   "n": 396,
+   "gross": 0.005050505050505051,
+   "q50": 0.027283480390906334,
+   "q999": 1.4610096216201782,
+   "per_trace": {
+    "u0": 0.005050505050505051
+   }
+  },
+  "N_dd": {
+   "n": 3168,
+   "gross": 0.04419191919191919,
+   "q50": 0.028422636911273003,
+   "q999": 1.6037786376476297,
+   "per_trace": {
+    "u0": 0.010101010101010102,
+    "u1": 0.32323232323232326,
+    "u2": 0.010101010101010102,
+    "u3": 0.0,
+    "u4": 0.005050505050505051,
+    "u5": 0.0,
+    "u6": 0.005050505050505051,
+    "u7": 0.0
+   }
+  },
+  "N_pp": {
+   "n": 3168,
+   "gross": 0.004419191919191919,
+   "q50": 0.028311079367995262,
+   "q999": 1.4643577504158056,
+   "per_trace": {
+    "u0": 0.005050505050505051,
+    "u1": 0.010101010101010102,
+    "u2": 0.010101010101010102,
+    "u3": 0.0,
+    "u4": 0.005050505050505051,
+    "u5": 0.0,
+    "u6": 0.005050505050505051,
+    "u7": 0.0
+   }
+  }
+ },
+ "idx_structure": {
+  "pages": {
+   "b1": {
+    "pages_judged": 64,
+    "page_max": 0.03125,
+    "over": 0,
+    "worst": [
+     [
+      0.0312,
+      64,
+      [
+       "u1",
+       "1",
+       "39",
+       "1"
+      ]
+     ],
+     [
+      0.0312,
+      64,
+      [
+       "u1",
+       "0",
+       "39",
+       "1"
+      ]
+     ],
+     [
+      0.0312,
+      32,
+      [
+       "u6",
+       "1",
+       "39",
+       "0"
+      ]
+     ]
+    ]
+   },
+   "b1b": {
+    "pages_judged": 64,
+    "page_max": 1.0,
+    "over": 2,
+    "worst": [
+     [
+      1.0,
+      64,
+      [
+       "u1",
+       "1",
+       "39",
+       "1"
+      ]
+     ],
+     [
+      1.0,
+      64,
+      [
+       "u1",
+       "0",
+       "39",
+       "1"
+      ]
+     ],
+     [
+      0.0312,
+      32,
+      [
+       "u6",
+       "1",
+       "39",
+       "0"
+      ]
+     ]
+    ]
+   },
+   "d2solo": {
+    "pages_judged": 8,
+    "page_max": 0.015625,
+    "over": 0,
+    "worst": [
+     [
+      0.0156,
+      64,
+      [
+       "u0",
+       "1",
+       "39",
+       "1"
+      ]
+     ],
+     [
+      0.0156,
+      64,
+      [
+       "u0",
+       "0",
+       "39",
+       "1"
+      ]
+     ],
+     [
+      0.0,
+      64,
+      [
+       "u0",
+       "1",
+       "3",
+       "1"
+      ]
+     ]
+    ]
+   },
+   "V3": {
+    "pages_judged": 0,
+    "page_max": null,
+    "over": 0,
+    "worst": []
+   }
+  },
+  "early_gross": {
+   "b1": 2,
+   "b1b": 0,
+   "d2solo": 0,
+   "V3": 0
+  },
+  "early_n": {
+   "b1": 1584,
+   "b1b": 1584,
+   "d2solo": 198,
+   "V3": 156
+  }
+ },
+ "content_limit": {
+  "N_dd": 0.04419191919191919,
+  "N_pp": 0.004419191919191919,
+  "limit": 0.08838383838383838
+ },
+ "h5f": {
+  "per_arm": {
+   "d2": {
+    "clean_n": 180,
+    "clean_gross": 0.0,
+    "corrupt_n": 1328,
+    "corrupt_gross": 1.0
+   },
+   "d2solo": {
+    "clean_n": 396,
+    "clean_gross": 0.005050505050505051,
+    "corrupt_n": 0,
+    "corrupt_gross": null
+   }
+  },
+  "combined_clean_nongross": 0.9965277777777778,
+  "limit": 0.08838383838383838
+ },
+ "h5g": {
+  "injected_tokens": 3960,
+  "per_rank": {
+   "0": {
+    "owned_layers": 6,
+    "deltas": {
+     "tail_w_stash.mism": 23760,
+     "tail_w_stash.null": 23760,
+     "idx_w_dec.mism": 0,
+     "tail_w_seed.mism": 0,
+     "idx_w_pf.s_mism": 0,
+     "idx_w_pf.d7_fallback": 0,
+     "pos.pos_contig": 0,
+     "pos.pos_bounds": 0
+    },
+    "expected_tail": 23760,
+    "tail_by_phase": {
+     "V4-d2": 21120,
+     "V4-d2solo": 2640
+    },
+    "pre_client_pos_bounds": 4,
+    "ok": true
+   },
+   "1": {
+    "owned_layers": 5,
+    "deltas": {
+     "tail_w_stash.mism": 19800,
+     "tail_w_stash.null": 19800,
+     "idx_w_dec.mism": 0,
+     "tail_w_seed.mism": 0,
+     "idx_w_pf.s_mism": 0,
+     "idx_w_pf.d7_fallback": 0,
+     "pos.pos_contig": 3,
+     "pos.pos_bounds": 0
+    },
+    "expected_tail": 19800,
+    "tail_by_phase": {
+     "V4-d2": 17600,
+     "V4-d2solo": 2200
+    },
+    "pre_client_pos_bounds": 4,
+    "ok": false
+   }
+  }
+ },
+ "h5h": {
+  "designated": 1176,
+  "missing": 0,
+  "misattributed": 6,
+  "all_layers_step_matched": 1170,
+  "selections": 57,
+  "selections_bad": 0,
+  "examples": [
+   [
+    "V2a-natural-t5",
+    16,
+    "step [16] vs 15.0"
+   ],
+   [
+    "V2a-natural-t5",
+    64,
+    "step [32] vs 31.0"
+   ],
+   [
+    "V2a-natural-t5",
+    112,
+    "step [48] vs 47.0"
+   ],
+   [
+    "V2a-natural-t5",
+    160,
+    "step [64] vs 63.0"
+   ],
+   [
+    "V2a-natural-t5",
+    208,
+    "step [80] vs 79.0"
+   ]
+  ]
+ },
+ "verdict": "INVALID",
+ "original_verdict": "INVALID",
+ "original_failing": [
+  "H1c every window position measured exactly once",
+  "H1f served top_p mask inside the eligibility bounds",
+  "H2a forced-decode vs prefill gap within the unhooked null (x2, floors) and top-1 >= 0.95",
+  "H2c per request: the aligned offset beats offsets +-1 by 10x (no misattributed request)",
+  "H3 every draft schedule agrees with the single-token (poison) advance within the decode-vs-decode null",
+  "H4b KDA recurrent state: committed slot (num_accepted-1) matches the prefill-built state",
+  "H5b B1 arm: decode-written window pools match the prefill rebuild (gross <= 0.1 %; positive control for addressing)",
+  "H5e injected request alone: no corruption (gross <= 0.1 %; D2's one-request signature)",
+  "H5g guard: tail_w_stash null-block mismatches only from injected tokens (multiple of the injected count over indexer layers); no other mapping, position or D7 violation anywhere",
+  "H5h window-exposure records exist at every designated position (in-graph hook captured)",
+  "H2-null in-session unhooked decode-vs-prefill gap available (V1 free runs)",
+  "H5c the 0.25 threshold discriminates (B1 99.9th percentile below it)"
+ ]
+}

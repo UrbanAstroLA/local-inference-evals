@@ -1,0 +1,93 @@
+PASS F1[natural] committed ids == history (96 tokens) 
+PASS F2[natural] every window position measured exactly once min/max nmeas 1/1
+PASS F3[natural] measured metrics == single-token reference on the exact prefix max|dlp| 0.00e+00 max|dpost| 0.00e+00 argmax_eq True
+PASS F4[natural] accepted-count histogram as scheduled hist(a=0..3) [87, 4, 0, 0]
+PASS F5[natural] bonus accounting: each step commits a+1 (clamped), sum == W sum 96 W 96
+PASS F6[natural] integer committed state after every step (total_len, num_computed, last, all_token_ids) inv [92, 0, 0, 0]
+PASS F6c per-request record written at removal equals the device buffers (all schedules) 
+test_forcing: 7/7 checks passed
+PASS F1[oracle] committed ids == history (96 tokens) 
+PASS F2[oracle] every window position measured exactly once min/max nmeas 1/1
+PASS F3[oracle] measured metrics == single-token reference on the exact prefix max|dlp| 0.00e+00 max|dpost| 0.00e+00 argmax_eq True
+PASS F4[oracle] accepted-count histogram as scheduled hist(a=0..3) [0, 0, 1, 23]
+PASS F5[oracle] bonus accounting: each step commits a+1 (clamped), sum == W sum 96 W 96
+PASS F6[oracle] integer committed state after every step (total_len, num_computed, last, all_token_ids) inv [25, 0, 0, 0]
+PASS F6c per-request record written at removal equals the device buffers (all schedules) 
+PASS F6b out-of-nucleus history tokens flagged (2 planted) flagged 2
+test_forcing: 8/8 checks passed
+PASS F1[poison] committed ids == history (96 tokens) 
+PASS F2[poison] every window position measured exactly once min/max nmeas 1/1
+PASS F3[poison] measured metrics == single-token reference on the exact prefix max|dlp| 0.00e+00 max|dpost| 0.00e+00 argmax_eq True
+PASS F4[poison] accepted-count histogram as scheduled hist(a=0..3) [95, 0, 0, 0]
+PASS F5[poison] bonus accounting: each step commits a+1 (clamped), sum == W sum 96 W 96
+PASS F6[poison] integer committed state after every step (total_len, num_computed, last, all_token_ids) inv [96, 0, 0, 0]
+PASS F6c per-request record written at removal equals the device buffers (all schedules) 
+test_forcing: 7/7 checks passed
+PASS F1[reject:1] committed ids == history (96 tokens) 
+PASS F2[reject:1] every window position measured exactly once min/max nmeas 1/1
+PASS F3[reject:1] measured metrics == single-token reference on the exact prefix max|dlp| 0.00e+00 max|dpost| 0.00e+00 argmax_eq True
+PASS F4[reject:1] accepted-count histogram as scheduled hist(a=0..3) [95, 0, 0, 0]
+PASS F5[reject:1] bonus accounting: each step commits a+1 (clamped), sum == W sum 96 W 96
+PASS F6[reject:1] integer committed state after every step (total_len, num_computed, last, all_token_ids) inv [96, 0, 0, 0]
+PASS F6c per-request record written at removal equals the device buffers (all schedules) 
+test_forcing: 7/7 checks passed
+PASS F1[reject:2] committed ids == history (96 tokens) 
+PASS F2[reject:2] every window position measured exactly once min/max nmeas 1/1
+PASS F3[reject:2] measured metrics == single-token reference on the exact prefix max|dlp| 0.00e+00 max|dpost| 0.00e+00 argmax_eq True
+PASS F4[reject:2] accepted-count histogram as scheduled hist(a=0..3) [1, 47, 0, 0]
+PASS F5[reject:2] bonus accounting: each step commits a+1 (clamped), sum == W sum 96 W 96
+PASS F6[reject:2] integer committed state after every step (total_len, num_computed, last, all_token_ids) inv [49, 0, 0, 0]
+PASS F6c per-request record written at removal equals the device buffers (all schedules) 
+test_forcing: 7/7 checks passed
+PASS F1[reject:3] committed ids == history (96 tokens) 
+PASS F2[reject:3] every window position measured exactly once min/max nmeas 1/1
+PASS F3[reject:3] measured metrics == single-token reference on the exact prefix max|dlp| 0.00e+00 max|dpost| 0.00e+00 argmax_eq True
+PASS F4[reject:3] accepted-count histogram as scheduled hist(a=0..3) [0, 1, 31, 0]
+PASS F5[reject:3] bonus accounting: each step commits a+1 (clamped), sum == W sum 96 W 96
+PASS F6[reject:3] integer committed state after every step (total_len, num_computed, last, all_token_ids) inv [33, 0, 0, 0]
+PASS F6c per-request record written at removal equals the device buffers (all schedules) 
+test_forcing: 7/7 checks passed
+PASS F7 unforced co-runner's committed tokens, num_sampled, num_rejected equal the real sampler output (hook on vs off, same step, 4 steps) (n,rej) on/off per step [(1, 3, 1, 3), (1, 3, 1, 3), (1, 3, 1, 3), (1, 3, 1, 3)]
+PASS F7n negative control: a planted change of the co-runner's committed token is detected 
+PASS F7b forced request commits history tokens in the same step 
+PASS O1 rejection_sample leaves the processed logits it reads unchanged 
+PASS O2 static order: measure (raw, post-mask) < decide < override < commit < propose < draft override verify True call True sampler True runner True tokens True
+PASS N1 negative control: an off-by-one measurement index is detected max|dlp| 12.15 argmax_eq False
+PASS N2 negative control: rows conditioned on rejected drafts counted as measurements are detected max nmeas 4
+PASS R1 prefill reference (chunked, every prompt row) == single-token reference at every index max|dlp| 0.00e+00 once True
+test_forcing: 8/8 checks passed
+PASS F1[sched:7] committed ids == history (96 tokens) 
+PASS F2[sched:7] every window position measured exactly once min/max nmeas 1/1
+PASS F3[sched:7] measured metrics == single-token reference on the exact prefix max|dlp| 0.00e+00 max|dpost| 0.00e+00 argmax_eq True
+PASS F4[sched:7] accepted-count histogram as scheduled hist(a=0..3) [9, 10, 10, 9]
+PASS F5[sched:7] bonus accounting: each step commits a+1 (clamped), sum == W sum 96 W 96
+PASS F6[sched:7] integer committed state after every step (total_len, num_computed, last, all_token_ids) inv [39, 0, 0, 0]
+PASS F6c per-request record written at removal equals the device buffers (all schedules) 
+test_forcing: 7/7 checks passed
+PASS F1[natural] committed ids == history (96 tokens) 
+PASS F2[natural] every window position measured exactly once min/max nmeas 1/1
+PASS F3[natural] measured metrics == single-token reference on the exact prefix max|dlp| 0.00e+00 max|dpost| 0.00e+00 argmax_eq True
+PASS F4[natural] accepted-count histogram as scheduled hist(a=0..3) [87, 4, 0, 0]
+PASS F5[natural] bonus accounting: each step commits a+1 (clamped), sum == W sum 96 W 96
+PASS F6[natural] integer committed state after every step (total_len, num_computed, last, all_token_ids) inv [92, 0, 0, 0]
+PASS F6c per-request record written at removal equals the device buffers (all schedules) 
+PASS O3 measured values independent of the sampler's random draws (request seeds 11 vs 97) 
+test_forcing: 8/8 checks passed
+== inert_orig (orig) 2026-10-14T03:18:45Z
+rc=0
+== inert_hooked_off (hooked) 2026-10-14T03:19:02Z
+rc=0
+== inert_hooked_on_unkeyed (hooked) 2026-10-14T03:19:20Z
+rc=0
+inert_orig 47e7bc7b04923410c5294bc7a20044269706b3595fb932d9480c32a6d9fd8892
+inert_hooked_off 47e7bc7b04923410c5294bc7a20044269706b3595fb932d9480c32a6d9fd8892
+inert_hooked_on_unkeyed 47e7bc7b04923410c5294bc7a20044269706b3595fb932d9480c32a6d9fd8892
+image_inert_off 47e7bc7b04923410c5294bc7a20044269706b3595fb932d9480c32a6d9fd8892
+PASS I1 identical outputs: original B1 files / hooked env unset / hooked env on, no keyed request / built image env unset
+== test_patch_mapguard (hooked-mapguard) 2026-10-14T03:19:37Z
+WARNING 10-14 03:19:43 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-14 03:19:44 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-14 03:19:44 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+PASS MG1 hooked B1-mapguard index-K file imports with both instrumentations (forcewin on: True)
+rc=0
+DONE rc=0

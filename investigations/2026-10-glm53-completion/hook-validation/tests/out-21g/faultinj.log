@@ -1,0 +1,12 @@
+fault injection on attempt-1 captures under the REVISED analysis: ALL AS EXPECTED
+OK    base                     targeted {'IDX-attrib': 'PASS', 'IDX-page': 'PASS', 'IDX-early': 'PASS', 'IDX-stable': 'PASS', 'H5f-B1': 'PASS', 'H5f-D2': 'PASS', 'H2a-r': 'PASS', 'H2c-r': 'PASS', 'H4-slot': 'PASS', 'H4b-r': 'PASS', 'H4b-sep': 'PASS'} (expected PASS)
+OK    F1-wrongpage-b1          targeted {'IDX-page': 'FAIL', 'IDX-early': 'FAIL'} (expected FAIL); newly failing vs base ['IDX-early', 'IDX-page']
+OK    F1-wrongpage-v3          targeted {'IDX-stable': 'FAIL', 'IDX-early': 'FAIL'} (expected FAIL); newly failing vs base ['IDX-early', 'IDX-stable']
+OK    F2-attrib-b1             targeted {'IDX-page': 'FAIL', 'IDX-early': 'FAIL'} (expected FAIL); newly failing vs base ['H5f-D2', 'IDX-early', 'IDX-page']
+OK    F2-attrib-v2a            targeted {'H2c-r': 'FAIL'} (expected FAIL); newly failing vs base ['H2c-r', 'H3-r']
+OK    F2-attrib-v3             targeted {'H4b-r': 'FAIL'} (expected FAIL); newly failing vs base ['H4b-r', 'IDX-early', 'IDX-stable']
+OK    F3-ledger-a1             targeted {'H5f-B1': 'FAIL'} (expected FAIL); newly failing vs base ['H5f-B1']
+OK    F3-ledger-poolshift-b1   targeted {'H5f-B1': 'FAIL'} (expected FAIL); newly failing vs base ['H5f-B1']
+OK    F3-ledger-poolshift-d2   targeted {'H5f-D2': 'FAIL'} (expected FAIL); newly failing vs base ['H5f-D2']
+OK    F3-ledger-reqshift-d2    targeted {'H5f-D2': 'FAIL'} (expected FAIL); newly failing vs base ['H5f-D2']
+base fails (not targeted; see the docstring): ['CARRY-admissible', 'CARRY-scope', 'H5e-r', 'H5h-r', 'IDX-content']
