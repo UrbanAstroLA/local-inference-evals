@@ -1,0 +1,26 @@
+{
+ "b1": {
+  "joined": 1672,
+  "gross": 12,
+  "gross_also_prefill_unstable": [
+   0.4166666666666667,
+   0.23089098185300827
+  ],
+  "nongross_prefill_unstable": [
+   0.0036144578313253013,
+   0.038802044466137886
+  ]
+ },
+ "d2solo": {
+  "joined": 418,
+  "gross": 0,
+  "gross_also_prefill_unstable": [
+   NaN,
+   NaN
+  ],
+  "nongross_prefill_unstable": [
+   0.0,
+   0.033515967428684235
+  ]
+ }
+}

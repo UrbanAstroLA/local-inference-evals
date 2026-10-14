@@ -1,0 +1,60 @@
+{
+ "attempt1": {
+  "occupied_s": 2181,
+  "client_s": 1435,
+  "overhead_s": 746,
+  "gpu_h": 1.2117
+ },
+ "remaining_gpu_h": 1.1883,
+ "max_wall_s": 2138,
+ "plans": {
+  "minimal (fix validation: V0, V2a natural+oracle, V2c, V4 + 2nd rebuild + 2nd B1 arm)": {
+   "client_s": 367,
+   "occupied_s": 1113,
+   "gpu_h": 0.618
+  },
+  "minimal + V3 snapshots (H4 prospective)": {
+   "client_s": 465,
+   "occupied_s": 1211,
+   "gpu_h": 0.673
+  },
+  "minimal + V3 + V2a poison (H3 on the new image)": {
+   "client_s": 625,
+   "occupied_s": 1371,
+   "gpu_h": 0.762
+  },
+  "attempt-1 plan repeated in full": {
+   "client_s": 1434,
+   "occupied_s": 2180,
+   "gpu_h": 1.211
+  }
+ },
+ "phase_secs": {
+  "V0": 6.1,
+  "V2a-natural": 58.6,
+  "V2a-oracle": 41.7,
+  "V2a-poison": 154.1,
+  "V2a-reject:1": 154.1,
+  "V2a-reject:2": 79.8,
+  "V2a-reject:3": 54.6,
+  "V2a-sched:20261013": 64.5,
+  "V2c": 7.6,
+  "V1-free": 38.9,
+  "V1-natural": 38.7,
+  "V1-poison": 99.0,
+  "V1-ref": 3.8,
+  "V4-d2": 48.5,
+  "V4-b1": 48.2,
+  "V4-d2solo": 32.2,
+  "V4-rebuild": 4.9,
+  "V3-forced": 51.5,
+  "V3-refs": 34.8,
+  "V2b-natural-0": 10.3,
+  "V2b-natural-8": 24.9,
+  "V2b-natural-16": 106.2,
+  "V2b-oracle-0": 8.3,
+  "V2b-oracle-8": 20.2,
+  "V2b-oracle-16": 74.4,
+  "V2b-ref": 6.0
+ }
+}

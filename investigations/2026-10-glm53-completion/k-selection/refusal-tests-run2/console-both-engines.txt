@@ -1,0 +1,33 @@
+PASS R01 rc=2  no approval
+      REFUSED: set APPROVED_GPU_H to the operator-approved total for item K (proposed 0.5).
+PASS R02 rc=2  approval below the 0.5 ceiling
+      REFUSED: spent 0.0 + ceiling 0.5 > approved 0.4 GPU-hours
+PASS R03 rc=2  approval not a number
+      REFUSED: APPROVED_GPU_H is not a number
+PASS R04 rc=2  0.3 already spent on K, approval 0.5
+      REFUSED: spent 0.3 + ceiling 0.5 > approved 0.5 GPU-hours
+PASS R05 rc=2  a frozen file was edited
+      REFUSED: fixture files differ from SHA256SUMS (criteria are frozen; re-freeze deliberately)
+PASS R06 rc=2  image id differs from the pin
+      REFUSED: b1 image sha256:799d3cf8e5d14a615b89c734a6a38b4be5729bb44bb6b56effc7cf7df747b88a not present (got 'sha256:0000000000000000')
+PASS R07 rc=0  DRY_RUN with the REAL docker: frozen files, budget and both real image pins pass
+      [00:56:50] DRY_RUN: frozen files, budget gate and image pins passed; stopping before the GPU pre-flight
+PASS R08 rc=2  inference container running
+      REFUSED: an inference/fixture container is running:
+PASS R09 rc=2  GPU memory/utilisation busy
+      REFUSED: GPU 0 not idle (used 20000 MiB, util 95%)
+PASS R10 rc=2  a non-desktop graphics client on the GPU
+      REFUSED: GPU 0 not idle (used 3 MiB, util 0%)
+PASS R11 rc=2  bad GPU index
+      REFUSED: K_GPU_INDEX must be 0 or 1
+PASS R12 rc=2  test root outside refusal-tests
+      REFUSED: K_TEST_ROOT must lie under a refusal-tests directory
+PASS R13 rc=0  idle GPU (desktop client only): run path completes
+      [00:56:51] results in <runs>/k-selection/refusal-tests/R13/run-20261014T005651Z
+PASS R14 rc=2  second run after a billed run (runner's own cost-line format): cumulative budget refuses
+      REFUSED: spent 0.01 + ceiling 0.5 > approved 0.5 GPU-hours
+PASS R15 rc=0  TERM during a run: immediate cleanup and cost line
+      [00:56:55] cost: 4s wall, 0.0011 GPU-hours (status interrupted)
+PASS R16 rc=0  per-container wall cap (test cap 2 s)
+      [00:56:59] results in <runs>/k-selection/refusal-tests/R16/run-20261014T005655Z
+refusal/cleanup tests: 16 pass, 0 fail

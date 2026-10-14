@@ -1,0 +1,5 @@
+b1: 1253 batches x 3 repeats; estimate 262 s (startup 45, compile 120, build 31, ref 16, kernel 14, check 35); pessimistic x3 786 s
+v070: 1057 batches x 3 repeats; estimate 273 s (startup 45, compile 100, build 26, ref 16, kernel 30, check 56); pessimistic x3 818 s
+total (1 GPU): estimate 565 s = 0.157 GPU-h; pessimistic 1664 s = 0.462 GPU-h; ceiling 0.5 GPU-h (wall cap 1,800 s; containers 850 + 850 s)
+  note: b1 pessimistic 786 s exceeds its inner time guard 775 s; cells run in priority order (tiled first), the rest would be NOT-RUN, not silently dropped
+  note: v070 pessimistic 818 s exceeds its inner time guard 775 s; cells run in priority order (tiled first), the rest would be NOT-RUN, not silently dropped

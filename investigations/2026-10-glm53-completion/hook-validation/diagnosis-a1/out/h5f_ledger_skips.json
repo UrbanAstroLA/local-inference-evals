@@ -1,0 +1,154 @@
+{
+ "confusion": {
+  "b1|clean|clean": 2097,
+  "b1|corrupt|clean": 83,
+  "b1|none|none": 326,
+  "b1|corrupt|corrupt": 30,
+  "b1|clean|corrupt": 7,
+  "d2|race|clean": 1863,
+  "d2|corrupt|clean": 263,
+  "d2|none|none": 341,
+  "d2|race|corrupt": 30,
+  "d2|corrupt|corrupt": 7,
+  "d2|clean|clean": 39,
+  "d2solo|clean|clean": 499
+ },
+ "per_request": {
+  "V4-b1-1e875e978fd4": {
+   "steps_with_completion": "63",
+   "inferred_skipped": "0",
+   "conflicting": "0",
+   "skipped_steps_num_reqs": "[]",
+   "skipped_step_parity": "Counter()",
+   "recorded_parity": "Counter({0: 36, 1: 27})"
+  },
+  "V4-b1-376073921446": {
+   "steps_with_completion": "113",
+   "inferred_skipped": "29",
+   "conflicting": "0",
+   "skipped_steps_num_reqs": "[(7, 29)]",
+   "skipped_step_parity": "Counter({0: 15, 1: 14})",
+   "recorded_parity": "Counter({0: 46, 1: 38})"
+  },
+  "V4-b1-4b92a6a90ec4": {
+   "steps_with_completion": "429",
+   "inferred_skipped": "102",
+   "conflicting": "0",
+   "skipped_steps_num_reqs": "[(3, 82), (5, 12), (7, 8)]",
+   "skipped_step_parity": "Counter({0: 53, 1: 49})",
+   "recorded_parity": "Counter({1: 171, 0: 156})"
+  },
+  "V4-b1-68a96f264430": {
+   "steps_with_completion": "306",
+   "inferred_skipped": "47",
+   "conflicting": "0",
+   "skipped_steps_num_reqs": "[(5, 27), (7, 20)]",
+   "skipped_step_parity": "Counter({1: 27, 0: 20})",
+   "recorded_parity": "Counter({0: 137, 1: 122})"
+  },
+  "V4-b1-6d18c40f58df": {
+   "steps_with_completion": "267",
+   "inferred_skipped": "24",
+   "conflicting": "0",
+   "skipped_steps_num_reqs": "[(7, 24)]",
+   "skipped_step_parity": "Counter({0: 12, 1: 12})",
+   "recorded_parity": "Counter({1: 124, 0: 119})"
+  },
+  "V4-b1-be2e9e349395": {
+   "steps_with_completion": "499",
+   "inferred_skipped": "58",
+   "conflicting": "0",
+   "skipped_steps_num_reqs": "[(3, 34), (5, 18), (7, 6)]",
+   "skipped_step_parity": "Counter({1: 33, 0: 25})",
+   "recorded_parity": "Counter({1: 229, 0: 212})"
+  },
+  "V4-b1-cbac17c70af8": {
+   "steps_with_completion": "499",
+   "inferred_skipped": "35",
+   "conflicting": "0",
+   "skipped_steps_num_reqs": "[(3, 18), (5, 9), (7, 8)]",
+   "skipped_step_parity": "Counter({1: 18, 0: 17})",
+   "recorded_parity": "Counter({0: 240, 1: 224})"
+  },
+  "V4-b1-ddfd287416a4": {
+   "steps_with_completion": "367",
+   "inferred_skipped": "31",
+   "conflicting": "0",
+   "skipped_steps_num_reqs": "[(5, 17), (7, 14)]",
+   "skipped_step_parity": "Counter({1: 16, 0: 15})",
+   "recorded_parity": "Counter({1: 171, 0: 165})"
+  },
+  "V4-d2-1e875e978fd4": {
+   "steps_with_completion": "63",
+   "inferred_skipped": "0",
+   "conflicting": "0",
+   "skipped_steps_num_reqs": "[]",
+   "skipped_step_parity": "Counter()",
+   "recorded_parity": "Counter({0: 36, 1: 27})"
+  },
+  "V4-d2-376073921446": {
+   "steps_with_completion": "113",
+   "inferred_skipped": "25",
+   "conflicting": "0",
+   "skipped_steps_num_reqs": "[(7, 25)]",
+   "skipped_step_parity": "Counter({0: 13, 1: 12})",
+   "recorded_parity": "Counter({1: 49, 0: 39})"
+  },
+  "V4-d2-4b92a6a90ec4": {
+   "steps_with_completion": "429",
+   "inferred_skipped": "115",
+   "conflicting": "0",
+   "skipped_steps_num_reqs": "[(3, 88), (5, 14), (7, 13)]",
+   "skipped_step_parity": "Counter({0: 61, 1: 54})",
+   "recorded_parity": "Counter({0: 161, 1: 153})"
+  },
+  "V4-d2-68a96f264430": {
+   "steps_with_completion": "306",
+   "inferred_skipped": "54",
+   "conflicting": "0",
+   "skipped_steps_num_reqs": "[(5, 27), (7, 27)]",
+   "skipped_step_parity": "Counter({1: 31, 0: 23})",
+   "recorded_parity": "Counter({1: 126, 0: 126})"
+  },
+  "V4-d2-6d18c40f58df": {
+   "steps_with_completion": "267",
+   "inferred_skipped": "6",
+   "conflicting": "0",
+   "skipped_steps_num_reqs": "[(7, 6)]",
+   "skipped_step_parity": "Counter({1: 4, 0: 2})",
+   "recorded_parity": "Counter({1: 135, 0: 126})"
+  },
+  "V4-d2-be2e9e349395": {
+   "steps_with_completion": "499",
+   "inferred_skipped": "49",
+   "conflicting": "0",
+   "skipped_steps_num_reqs": "[(3, 29), (5, 11), (7, 9)]",
+   "skipped_step_parity": "Counter({0: 31, 1: 18})",
+   "recorded_parity": "Counter({1: 232, 0: 218})"
+  },
+  "V4-d2-cbac17c70af8": {
+   "steps_with_completion": "499",
+   "inferred_skipped": "59",
+   "conflicting": "0",
+   "skipped_steps_num_reqs": "[(5, 25), (3, 18), (7, 16)]",
+   "skipped_step_parity": "Counter({1: 31, 0: 28})",
+   "recorded_parity": "Counter({0: 224, 1: 216})"
+  },
+  "V4-d2-ddfd287416a4": {
+   "steps_with_completion": "367",
+   "inferred_skipped": "33",
+   "conflicting": "0",
+   "skipped_steps_num_reqs": "[(5, 22), (7, 11)]",
+   "skipped_step_parity": "Counter({0: 19, 1: 14})",
+   "recorded_parity": "Counter({1: 177, 0: 157})"
+  },
+  "V4-d2solo-cbac17c70af8": {
+   "steps_with_completion": "499",
+   "inferred_skipped": "0",
+   "conflicting": "0",
+   "skipped_steps_num_reqs": "[]",
+   "skipped_step_parity": "Counter()",
+   "recorded_parity": "Counter({1: 251, 0: 248})"
+  }
+ }
+}

@@ -1,0 +1,3 @@
+kselect/kref.py: FAILED
+sha256sum: WARNING: 1 computed checksum did NOT match
+REFUSED: fixture files differ from SHA256SUMS (criteria are frozen; re-freeze deliberately)

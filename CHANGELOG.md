@@ -1,5 +1,26 @@
 # Changelog
 
+## 2026-10-14 (completion investigation, amendments 21-21f): review result, K, hook validation attempt 1
+
+Contents unchanged: 65 runs, 13 comparisons. Item 4n is new.
+
+- **`PLAN.md`**:
+  - amendment 21 (revised first stage);
+  - 21a (B0 seed-1236 result);
+  - 21b-21d (K: authorization, diagnosis and post-inspection fixes, results);
+  - 21e (frozen hook-validation package; F7 test change);
+  - 21f (attempt-1 result).
+- **Folders:**
+  - `b0-screen-s1236/` gains its run;
+  - `k-selection/` and `hook-validation/` are new.
+  
+  Binary tensors, engine-source copies, logs and the 32 GB forcing records are withheld and hashed or listed in
+  RAW-SHA256SUMS files. Substitutions are in `PUBLIC-COPIES-21.txt`.
+- **Investigation `README.md`:** the review-step result, and a new section "Instrument validation: K and the
+  force-history hook (amendment 21)".
+- **`costs.jsonl`**: three entries (5.866, 0.2825, 1.2117). `recompute.py` checks them and the cumulative 63.22.
+- **`FINDINGS.md`** (item 4n) and **`LEDGER.md`**.
+
 ## 2026-10-13, night (completion investigation, amendment 20d): discovery reports and probe proposal
 
 Contents unchanged. No run is added.

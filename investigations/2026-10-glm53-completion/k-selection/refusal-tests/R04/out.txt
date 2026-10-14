@@ -1,0 +1,2 @@
+[00:56:50] frozen files verified against SHA256SUMS
+REFUSED: spent 0.3 + ceiling 0.5 > approved 0.5 GPU-hours

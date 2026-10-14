@@ -1,0 +1,9 @@
+{
+ "what": "Stated-answer adjudication of the B0 seed-1236 pass (amendments 19d-19e), by the existing rules (hedged only if the reply commits to no single option). Ids and verdicts only; no reply text.",
+ "rows": [
+  {"doc": 64, "hedged": false, "reason": "commits to a single option"},
+  {"doc": 98, "hedged": false, "reason": "commits to a single option"},
+  {"doc": 166, "hedged": false, "reason": "commits to a single option; a later mention of another option explains a distractor"},
+  {"doc": 171, "hedged": false, "reason": "commits to a single option"}
+ ]
+}

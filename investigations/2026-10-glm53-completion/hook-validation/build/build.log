@@ -1,0 +1,60 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 3.61kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/local/glm53-v0.9.1-b1-mapguard:local
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/9] FROM docker.io/local/glm53-v0.9.1-b1-mapguard:local@sha256:4d7bd73e6f2ef6485289dcb5bcb2f2a65f1846a5959cde7cbd9c275471c72e16
+#4 resolve docker.io/local/glm53-v0.9.1-b1-mapguard:local@sha256:4d7bd73e6f2ef6485289dcb5bcb2f2a65f1846a5959cde7cbd9c275471c72e16 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 294.96kB done
+#5 DONE 0.0s
+
+#6 [2/9] RUN printf '%s\n'     "101e456b28fbebd0cb73e3f43ae38b4726844a43ee96ec61239bbe455853205f  /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_runner.py"     "308d4171f892f27231655289ceb03cd4566533c7d26b8f98bd62ef0a34f986f0  /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/spec_decode/rejection_sampler.py"     "76070739447fc9f7563ef164ef80c0777208d1ea07dec3a6f6d2a0755188d7ae  /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/sample/sampler.py"     "00989c503028216cb349b506ccd7d4dc752bc9a54425a25b901c4905d95f5e0b  /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/indexer.py"     "30ff8bdea2bfba185bf0bf5b591e7999d451baad12238761681f60d56b55b35f  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py"   | sha256sum -c - && ! test -e /usr/local/lib/python3.12/dist-packages/vllm/forcewin_hooks.py
+#6 CACHED
+
+#7 [3/9] COPY files/vllm/forcewin_hooks.py /usr/local/lib/python3.12/dist-packages/vllm/forcewin_hooks.py
+#7 DONE 0.0s
+
+#8 [4/9] COPY files/vllm/v1/worker/gpu/model_runner.py /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_runner.py
+#8 DONE 0.0s
+
+#9 [5/9] COPY files/vllm/v1/worker/gpu/spec_decode/rejection_sampler.py /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/spec_decode/rejection_sampler.py
+#9 DONE 0.0s
+
+#10 [6/9] COPY files/vllm/v1/worker/gpu/sample/sampler.py /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/sample/sampler.py
+#10 DONE 0.0s
+
+#11 [7/9] COPY files/vllm/v1/attention/backends/mla/indexer.py /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/indexer.py
+#11 DONE 0.0s
+
+#12 [8/9] COPY files/vllm/model_executor/layers/sparse_attn_indexer_kpool.py /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py
+#12 DONE 0.0s
+
+#13 [9/9] RUN printf '%s\n'     "c079560e7390fac19f71d03cb5f047af90544b9c9a05450bc563ee8635335181  /usr/local/lib/python3.12/dist-packages/vllm/forcewin_hooks.py"     "8d276b3aac4bd6b5b2ef2c1f4b501140a4f1cd4e0dd1eb95f5a48d93e3a81d65  /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_runner.py"     "f5a875ef0af0f8e5ceda52d1272c56e2badd07893192f44a0421183d29f75539  /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/spec_decode/rejection_sampler.py"     "bbb1df8171c4750bea4f89ff76277a54b4b839caa25ef57d59313b2ce1e146c7  /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/sample/sampler.py"     "6a1ec616ddbdecd6467e25a04bf012b50efb373dcfdf39f7fba6f8dc87980b86  /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/indexer.py"     "f570b068d5515a16d013d258f9db6c5a816cd5ec8ff90d04c09d3f19ee1a0cbe  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py"   | sha256sum -c -  && python3 -m py_compile /usr/local/lib/python3.12/dist-packages/vllm/forcewin_hooks.py /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_runner.py /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/spec_decode/rejection_sampler.py /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/sample/sampler.py /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/indexer.py /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py   && test "$(grep -c local-forcewin /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_runner.py)" = 12  && test "$(grep -c local-forcewin /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/spec_decode/rejection_sampler.py)" = 7  && test "$(grep -c local-forcewin /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/sample/sampler.py)" = 6  && test "$(grep -c local-forcewin /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/indexer.py)" = 5  && test "$(grep -c local-forcewin /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py)" = 5  && test "$(grep -c local-mapguard /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py)" = 9  && test "$(grep -c local-d7 /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py)" = 2
+#13 0.143 /usr/local/lib/python3.12/dist-packages/vllm/forcewin_hooks.py: OK
+#13 0.143 /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_runner.py: OK
+#13 0.143 /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/spec_decode/rejection_sampler.py: OK
+#13 0.143 /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/sample/sampler.py: OK
+#13 0.143 /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/indexer.py: OK
+#13 0.144 /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py: OK
+#13 DONE 0.2s
+
+#14 exporting to image
+#14 exporting layers 0.1s done
+#14 exporting manifest sha256:0438e3fde5dba80fd9674ded167036255866f4ad5ff3e08fd16368f5b71b97fc done
+#14 exporting config sha256:1d4bd376cd1397d199c1a443e19f3c27c843af26d02c1696909a467167572d7b done
+#14 exporting attestation manifest sha256:3b8a7fbb7926f31319cf8c713e50e63bf6c95369a737d7d3fd3d010d02a7ed57 done
+#14 exporting manifest list sha256:1b9f8b15d63197ad8b2ef2410321baedf9dcd55a112603bc77b887e8dac293d5 done
+#14 naming to docker.io/local/glm53-v0.9.1-b1-forcehook-mg:local done
+#14 unpacking to docker.io/local/glm53-v0.9.1-b1-forcehook-mg:local 0.1s done
+#14 DONE 0.4s

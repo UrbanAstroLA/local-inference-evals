@@ -1,0 +1,42 @@
+{
+ "b1": {
+  "seconds": {
+   "startup": 45.0,
+   "compile": 120.0,
+   "build": 31.3,
+   "ref": 16.4,
+   "kernel": 13.8,
+   "check": 35.3
+  },
+  "total_s": 261.9,
+  "pessimistic_s": 785.7,
+  "cells": 34,
+  "batches": 1253
+ },
+ "v070": {
+  "seconds": {
+   "startup": 45.0,
+   "compile": 100.0,
+   "build": 26.4,
+   "ref": 16.2,
+   "kernel": 29.6,
+   "check": 55.5
+  },
+  "total_s": 272.8,
+  "pessimistic_s": 818.3,
+  "cells": 22,
+  "batches": 1057
+ },
+ "total": {
+  "estimate_s": 565,
+  "estimate_gpu_h": 0.157,
+  "pessimistic_s": 1664,
+  "pessimistic_gpu_h": 0.462,
+  "ceiling_gpu_h": 0.5,
+  "per_container_caps_s": {
+   "b1": 850,
+   "v070": 850
+  },
+  "wall_cap_s": 1800
+ }
+}

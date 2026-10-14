@@ -1,0 +1,4 @@
+low : ~  912 s in-container, +~25 s docker/pre-flight -> 0.260 GPU-h
+high: ~ 1124 s in-container, +~25 s docker/pre-flight -> 0.319 GPU-h
+x1.5 pessimistic on high: 0.475 GPU-h
+frozen per-container cap 850 s (inner guard ~775 s) is below the high estimate -> PI-5 raises it to 1200 s; ceiling 0.35 GPU-h keeps the item total at <= 0.1417 + 0.35 = 0.4917 of the 0.5 approved

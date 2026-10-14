@@ -1123,7 +1123,17 @@ D7 attribution, and a separate record from B0's passes.
 - Replies from builds that differ numerically are never byte-identical at the same seed: the identical-reply counts
   first quoted (2-5 of 198) were all pairs of empty replies.
 
-**Review step** (amendments 19d-19e, running): a B0 pass at seed 1236. B0 and B1 differ only in the D7 file, and D7 is
+**Review step** (amendments 19d-19e, 21a; [`b0-screen-s1236/`](b0-screen-s1236)): a B0 pass at seed 1236.
+- **Result:** valid; 5 of 198 empty, all at the cap; raw 169, stated 173.
+- **Frozen reading (b):** B0 is within the stock range, so B1's 9 against B0's 5 is D7 or run-to-run variation, and one
+  pair cannot separate them.
+- **Identical non-empty replies between B0 and B1: 0.** Same-seed passes behave as distinct draws, so variation
+  suffices and no D7 effect is inferred.
+- **Cap volatility:** at a fixed seed on near-identical computation, 8 of the 14 questions that capped in either pass
+  changed status.
+- **B0 across three seeds** against stock 0.9.1 (exploratory): 11 against 16 of 594 empty, −0.84 points [−0.34, 2.02].
+
+The frozen design of the review step was: B0 and B1 differ only in the D7 file, and D7 is
 reconstructed as not reaching GPQA prompts, so this is a near-replicate of B1. It measures run-to-run variation at a
 fixed seed and completes B0's three-seed record. Its readings are frozen: an empty count of 8 or more means the excess
 belongs to the corrected family at this seed, not D7; 6 or fewer means D7 or run-to-run variation, with a weak lean from
@@ -1182,6 +1192,47 @@ Intervals are bootstrapped over questions.
   its own defects.
 - **Limits:** 0.7.0 contributes 14 replies at ≥ 100k over 11 questions, and its first pass is unlogged; seeds are reused
   and controls are historical.
+
+### Instrument validation: K and the force-history hook (amendment 21)
+
+Amendments 21-21f; receipts in [`k-selection/`](k-selection) and [`hook-validation/`](hook-validation). An independent
+assessment (amendment 21) required validating the instruments before any long-context termination contrast. The
+corrected baseline is B1 ×3.
+
+**K, model-free selection-kernel replay** ([`k-selection/`](k-selection/PROPOSAL.md)): each engine's own selection code
+on one GPU at 1-331,779 tokens, across every fold, supertile and trim boundary, on real, synthetic, exact-tie and poison
+inputs, against an fp64 reference. 0.2825 GPU-hours.
+- **B1: 34 of 34 cells PASS** (tiled routes at 24 and 32 rows, fused routes at 4, 8 and 16), so B1's selection failures
+  are retired from about 2k to 330k tokens.
+- **Stock 0.7.0** (rerun after fixture fixes recorded post-inspection, [`DIAGNOSIS-run1.md`](k-selection/DIAGNOSIS-run1.md)):
+  - every cell selects the correct top-512 set within the tie rule;
+  - but its merge assigns output slots through shared-memory atomics, so the pool in column 511, which each GPU then
+    drops, is arbitrary, differs between launches and between its two GPUs, and can be highly ranked;
+  - the attended set therefore varies from run to run and between ranks. This is an extension of the known column-511
+    class (D1); B1 is unaffected. No termination mechanism is inferred.
+  - On the fused cells, 0.7.0 exposes no CTA count, so their boundary placement is unverified.
+
+**Force-history hook, validation attempt 1 (INVALID)** ([`hook-validation/`](hook-validation/VALIDATION.md); diagnosis
+[`DIAGNOSIS-a1.md`](hook-validation/diagnosis-a1/DIAGNOSIS-a1.md)). The hook commits a fixed history's own tokens through
+the real decode path and records termination-token probabilities. 1.2117 of 2.4 authorized GPU-hours.
+- **Validated:**
+  - forced ids are committed exactly;
+  - each position is measured once, before the decision;
+  - acceptance accounting is correct and both ranks agree;
+  - every draft schedule matches the single-token advance;
+  - unkeyed requests are bitwise unchanged.
+- **Hook bugs (fixes in preparation):** exposure records were mis-attributed under the indexer's flattened verify
+  layout, and the shadow ledger shifted by one request in padded graph steps.
+- **Analysis defects, fixed after inspection:** reference windows joined wrongly; only one rank's guard polls read.
+- **Thresholds without a measured basis:** the original FAILs are kept, with the measured null beside each.
+  - KDA: the committed slot is identified in 3,604 of 3,604 cases.
+  - Index-K: about 0.5% of deep-layer pooled keys differ grossly even between two prefill builds of the same tokens.
+    B1's decode-against-rebuild figure of 0.7% sits at that floor; the D2 window injection gives 61%.
+- **Engine edge case, immaterial:** the served Triton top-p kernel skips masking on some near-one-hot rows (kept
+  probability below 1e-8).
+- **No new B1 defect was found.**
+- **Next:** attempt 2 (the last under the authorization) with the hook fixes and revised criteria, after independent
+  review.
 
 ### Observations recorded separately
 

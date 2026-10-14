@@ -1,0 +1,841 @@
+{
+ "fixtures": [
+  {
+   "fixture": "L1",
+   "why": "near close, doc 13, stock 0.7.0 history; window ends AT the close (positive control: </think> next)",
+   "source_id": "ca7fd76b2b7a",
+   "doc": 13,
+   "seed": null,
+   "source_engine": "v0.7.0 stock",
+   "cls": "near_close",
+   "prompt_tokens": 131,
+   "history_sha256": "396f4c0bc1ff94886cb98cf42da15a01b585b905ddc4f76561f5456b771f5693",
+   "weights": "K3.25@701cd745",
+   "window_end_reasoning_index": 102579,
+   "window_start_reasoning_index": 94381,
+   "prefix_len_P": 94512,
+   "P_mod8": 0,
+   "W_forced": 8198,
+   "abs_window_end": 102710,
+   "class_20b_at_window": "natural_close",
+   "repetition_near_window_end": {
+    "at_or_before": {
+     "checkpoint": 96000,
+     "zlib30k": 0.239,
+     "rep200": 0.0075,
+     "repeating": false
+    }
+   },
+   "forced_token_at_end": "</think> 154842 (history's own next token)",
+   "proposal_record": {
+    "fixture": "L1",
+    "source_id": "ca7fd76b2b7a",
+    "cls": "near_close",
+    "note": "stock 0.7.0 history, doc 13",
+    "doc": 13,
+    "seed": null,
+    "source_engine": "v0.7.0 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "396f4c0bc1ff94886cb98cf42da15a01b585b905ddc4f76561f5456b771f5693",
+    "prompt_tokens": 131,
+    "reasoning_tokens_in_history": 102579,
+    "natural_close_index": 102579,
+    "window_start_index": 94387,
+    "window_end_index": 102579,
+    "forced_predictions": 8193,
+    "prefix_tokens": 94518,
+    "abs_window_end": 102710,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      102579
+     ],
+     "tail": [
+      102068,
+      102579
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      94899,
+      102579
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": -1,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 96000,
+      "zlib30k": 0.239,
+      "rep200": 0.0075,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.2379,
+     "rep200": 0.0002,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     95149,
+     95154,
+     95424,
+     95429,
+     95717,
+     95733,
+     95741,
+     96219,
+     96235,
+     96240,
+     96388,
+     96400,
+     96401,
+     96704,
+     96709,
+     96999,
+     97000,
+     97317,
+     97333,
+     97338,
+     97368,
+     97845,
+     97862,
+     97863,
+     98432,
+     98514,
+     98519,
+     98679,
+     98680,
+     98697,
+     98926,
+     98931,
+     98966,
+     99244,
+     99259,
+     99690,
+     99695,
+     100226,
+     100231,
+     100244,
+     100281,
+     100512,
+     100513,
+     100821,
+     101081,
+     101092,
+     101104,
+     101105,
+     101450,
+     101931,
+     101936,
+     102050,
+     102066,
+     102071,
+     102189,
+     102194,
+     102207,
+     102549,
+     102554,
+     102567
+    ],
+    "class_20b_at_window": "natural_close",
+    "batch": "L"
+   }
+  },
+  {
+   "fixture": "L4",
+   "why": "near close, doc 88, stock 0.9.1 history (seed 5005)",
+   "source_id": "f0c2498e7b7f",
+   "doc": 88,
+   "seed": 5005,
+   "source_engine": "v0.9.1 stock",
+   "cls": "near_close",
+   "prompt_tokens": 229,
+   "history_sha256": "8ccb2eb5d205cb65c0a361e92997f0a647a6514401392747627df25c4e4e44db",
+   "weights": "K3.25@0490d2f7",
+   "window_end_reasoning_index": 80324,
+   "window_start_reasoning_index": 72131,
+   "prefix_len_P": 72360,
+   "P_mod8": 0,
+   "W_forced": 8193,
+   "abs_window_end": 80553,
+   "class_20b_at_window": "natural_close",
+   "repetition_near_window_end": {
+    "at_or_before": {
+     "checkpoint": 80000,
+     "zlib30k": 0.3365,
+     "rep200": 0.0,
+     "repeating": false
+    }
+   },
+   "forced_token_at_end": "</think> 154842 (history's own next token)",
+   "proposal_record": {
+    "fixture": "L4",
+    "source_id": "f0c2498e7b7f",
+    "cls": "near_close",
+    "note": "stock 0.9.1 history, doc 88",
+    "doc": 88,
+    "seed": 5005,
+    "source_engine": "v0.9.1 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "8ccb2eb5d205cb65c0a361e92997f0a647a6514401392747627df25c4e4e44db",
+    "prompt_tokens": 229,
+    "reasoning_tokens_in_history": 80324,
+    "natural_close_index": 80324,
+    "window_start_index": 72132,
+    "window_end_index": 80324,
+    "forced_predictions": 8193,
+    "prefix_tokens": 72361,
+    "abs_window_end": 80553,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      80324
+     ],
+     "tail": [
+      79813,
+      80324
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      72644,
+      80324
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 0,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 80000,
+      "zlib30k": 0.3365,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.3359,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     72948,
+     80007
+    ],
+    "class_20b_at_window": "natural_close",
+    "batch": "L"
+   }
+  },
+  {
+   "fixture": "M3",
+   "why": "near close, doc 121, stock 0.7.0 seed-replay history",
+   "source_id": "cd6c18552504",
+   "doc": 121,
+   "seed": 1234,
+   "source_engine": "v0.7.0 stock",
+   "cls": "near_close",
+   "prompt_tokens": 190,
+   "history_sha256": "7406921829e007df41fd410ddf9f06e07cd0faaf17981f6b618736f80c163cac",
+   "weights": "K3.25@701cd745",
+   "window_end_reasoning_index": 71492,
+   "window_start_reasoning_index": 63298,
+   "prefix_len_P": 63488,
+   "P_mod8": 0,
+   "W_forced": 8194,
+   "abs_window_end": 71682,
+   "class_20b_at_window": "natural_close",
+   "repetition_near_window_end": {
+    "at_or_before": {
+     "checkpoint": 64000,
+     "zlib30k": 0.2693,
+     "rep200": 0.0,
+     "repeating": false
+    }
+   },
+   "forced_token_at_end": "</think> 154842 (history's own next token)",
+   "proposal_record": {
+    "fixture": "M3",
+    "source_id": "cd6c18552504",
+    "cls": "near_close",
+    "note": "stock 0.7.0 seed-replay, doc 121",
+    "doc": 121,
+    "seed": 1234,
+    "source_engine": "v0.7.0 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "7406921829e007df41fd410ddf9f06e07cd0faaf17981f6b618736f80c163cac",
+    "prompt_tokens": 190,
+    "reasoning_tokens_in_history": 71492,
+    "natural_close_index": 71492,
+    "window_start_index": 63300,
+    "window_end_index": 71492,
+    "forced_predictions": 8193,
+    "prefix_tokens": 63490,
+    "abs_window_end": 71682,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      71492
+     ],
+     "tail": [
+      70981,
+      71492
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      63812,
+      71492
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 0,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 64000,
+      "zlib30k": 0.2693,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.2757,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     71484
+    ],
+    "class_20b_at_window": "natural_close",
+    "batch": "L2"
+   }
+  },
+  {
+   "fixture": "M4",
+   "why": "near close, doc 127, stock 0.7.0 S7 history (2,795-token prompt)",
+   "source_id": "c253c576662a",
+   "doc": 127,
+   "seed": 1234,
+   "source_engine": "v0.7.0 stock",
+   "cls": "near_close",
+   "prompt_tokens": 2795,
+   "history_sha256": "7f150bf1046a6186f6ecebcdf8228e89f2aa03d31d78945bfa214af0c46abf13",
+   "weights": "K3.25@701cd745",
+   "window_end_reasoning_index": 88819,
+   "window_start_reasoning_index": 80621,
+   "prefix_len_P": 83416,
+   "P_mod8": 0,
+   "W_forced": 8198,
+   "abs_window_end": 91614,
+   "class_20b_at_window": "natural_close",
+   "repetition_near_window_end": {
+    "at_or_before": {
+     "checkpoint": 80000,
+     "zlib30k": 0.2569,
+     "rep200": 0.1022,
+     "repeating": false
+    }
+   },
+   "forced_token_at_end": "</think> 154842 (history's own next token)",
+   "proposal_record": {
+    "fixture": "M4",
+    "source_id": "c253c576662a",
+    "cls": "near_close",
+    "note": "stock 0.7.0 S7, doc 127",
+    "doc": 127,
+    "seed": 1234,
+    "source_engine": "v0.7.0 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "7f150bf1046a6186f6ecebcdf8228e89f2aa03d31d78945bfa214af0c46abf13",
+    "prompt_tokens": 2795,
+    "reasoning_tokens_in_history": 88819,
+    "natural_close_index": 88819,
+    "window_start_index": 80627,
+    "window_end_index": 88819,
+    "forced_predictions": 8193,
+    "prefix_tokens": 83422,
+    "abs_window_end": 91614,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      88819
+     ],
+     "tail": [
+      88308,
+      88819
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      81139,
+      88819
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 0,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 80000,
+      "zlib30k": 0.2569,
+      "rep200": 0.1022,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.2219,
+     "rep200": 0.209,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     87541,
+     87894,
+     88714,
+     88815
+    ],
+    "class_20b_at_window": "natural_close",
+    "batch": "L2"
+   }
+  },
+  {
+   "fixture": "L3",
+   "why": "near close, doc 79, stock 0.9.1 history (seed 5004)",
+   "source_id": "09ba09a88d7b",
+   "doc": 79,
+   "seed": 5004,
+   "source_engine": "v0.9.1 stock",
+   "cls": "near_close",
+   "prompt_tokens": 91,
+   "history_sha256": "e0a7e2ea41cb87224fe4f5f4ec1bd75baa2875e192eee1dbb95afc8b09b1663d",
+   "weights": "K3.25@0490d2f7",
+   "window_end_reasoning_index": 97408,
+   "window_start_reasoning_index": 89213,
+   "prefix_len_P": 89304,
+   "P_mod8": 0,
+   "W_forced": 8195,
+   "abs_window_end": 97499,
+   "class_20b_at_window": "natural_close",
+   "repetition_near_window_end": {
+    "at_or_before": {
+     "checkpoint": 96000,
+     "zlib30k": 0.3352,
+     "rep200": 0.0009,
+     "repeating": false
+    }
+   },
+   "forced_token_at_end": "</think> 154842 (history's own next token)",
+   "proposal_record": {
+    "fixture": "L3",
+    "source_id": "09ba09a88d7b",
+    "cls": "near_close",
+    "note": "stock 0.9.1 history, doc 79 seed 5004 (pairs with L6)",
+    "doc": 79,
+    "seed": 5004,
+    "source_engine": "v0.9.1 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "e0a7e2ea41cb87224fe4f5f4ec1bd75baa2875e192eee1dbb95afc8b09b1663d",
+    "prompt_tokens": 91,
+    "reasoning_tokens_in_history": 97408,
+    "natural_close_index": 97408,
+    "window_start_index": 89216,
+    "window_end_index": 97408,
+    "forced_predictions": 8193,
+    "prefix_tokens": 89307,
+    "abs_window_end": 97499,
+    "below_131072": true,
+    "forced_token_at_end": "</think> 154842 (history's own next token)",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      97408
+     ],
+     "tail": [
+      96897,
+      97408
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      89728,
+      97408
+     ]
+    },
+    "state_of_history": "natural_close",
+    "distance_to_close": 0,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 0,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 96000,
+      "zlib30k": 0.3352,
+      "rep200": 0.0009,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.3443,
+     "rep200": 0.0009,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     90646,
+     91460,
+     92461,
+     96386,
+     96963,
+     97396,
+     97405
+    ],
+    "class_20b_at_window": "natural_close",
+    "batch": "L"
+   }
+  },
+  {
+   "fixture": "L5",
+   "why": "active exhaustion, doc 170, pilot r0 history (no close in reach)",
+   "source_id": "fc3010f3a808",
+   "doc": 170,
+   "seed": 7170,
+   "source_engine": "v0.9.1 stock",
+   "cls": "exhaustion_active",
+   "prompt_tokens": 217,
+   "history_sha256": "f4dac7dddfd8206108d443d09f6a8215cd024047c6191d6a58b83e11566ccc6c",
+   "weights": "K3.25@0490d2f7",
+   "window_end_reasoning_index": 120000,
+   "window_start_reasoning_index": 111807,
+   "prefix_len_P": 112024,
+   "P_mod8": 0,
+   "W_forced": 8193,
+   "abs_window_end": 120217,
+   "class_20b_at_window": "active (exhaustion)",
+   "repetition_near_window_end": {
+    "at_or_before": {
+     "checkpoint": 112000,
+     "zlib30k": 0.3631,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "after": {
+     "checkpoint": 128000,
+     "zlib30k": 0.3724,
+     "rep200": 0.0,
+     "repeating": false
+    }
+   },
+   "forced_token_at_end": "history token e",
+   "proposal_record": {
+    "fixture": "L5",
+    "source_id": "fc3010f3a808",
+    "cls": "exhaustion_active",
+    "note": "phase-2 r0 history (doc 170), active, no close in reach",
+    "doc": 170,
+    "seed": 7170,
+    "source_engine": "v0.9.1 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "f4dac7dddfd8206108d443d09f6a8215cd024047c6191d6a58b83e11566ccc6c",
+    "prompt_tokens": 217,
+    "reasoning_tokens_in_history": 131069,
+    "natural_close_index": null,
+    "window_start_index": 111808,
+    "window_end_index": 120000,
+    "forced_predictions": 8193,
+    "prefix_tokens": 112025,
+    "abs_window_end": 120217,
+    "below_131072": true,
+    "forced_token_at_end": "history token e",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      120000
+     ],
+     "tail": [
+      119489,
+      120000
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      112320,
+      120000
+     ]
+    },
+    "state_of_history": "exhaustion",
+    "distance_to_close": null,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 3,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 112000,
+      "zlib30k": 0.3631,
+      "rep200": 0.0,
+      "repeating": false
+     },
+     "after": {
+      "checkpoint": 128000,
+      "zlib30k": 0.3724,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.3708,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [
+     114289,
+     115284,
+     116103,
+     117476,
+     118612
+    ],
+    "class_20b_at_window": "active (exhaustion)",
+    "batch": "L"
+   }
+  },
+  {
+   "fixture": "A8",
+   "why": "active, loop pre-onset (onset 184k), doc 79, stock 0.7.0 history",
+   "source_id": "4db8bbe82d5c",
+   "doc": 79,
+   "seed": 5012,
+   "source_engine": "v0.7.0 stock image, DFlash x3",
+   "cls": "loop_preonset_active",
+   "prompt_tokens": 91,
+   "history_sha256": "b2845216e1a0cb1a8f448bf0182d692ebbc08b78ba2a0ba90a1255d5e87954db",
+   "weights": "K3.25@701cd745",
+   "window_end_reasoning_index": 120000,
+   "window_start_reasoning_index": 111805,
+   "prefix_len_P": 111896,
+   "P_mod8": 0,
+   "W_forced": 8195,
+   "abs_window_end": 120091,
+   "class_20b_at_window": "active (loop pre-onset)",
+   "repetition_near_window_end": {
+    "at_or_before": {
+     "checkpoint": 112000,
+     "zlib30k": 0.3304,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "after": {
+     "checkpoint": 128000,
+     "zlib30k": 0.295,
+     "rep200": 0.0,
+     "repeating": false
+    }
+   },
+   "forced_token_at_end": "history token e",
+   "proposal_record": {
+    "fixture": "A8",
+    "source_id": "4db8bbe82d5c",
+    "cls": "loop_preonset_active",
+    "note": "stock 0.7.0 doc 79 seed 5012; loop onset 184k, active here",
+    "doc": 79,
+    "seed": 5012,
+    "source_engine": "v0.7.0 stock image, DFlash x3",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "b2845216e1a0cb1a8f448bf0182d692ebbc08b78ba2a0ba90a1255d5e87954db",
+    "prompt_tokens": 91,
+    "reasoning_tokens_in_history": 199943,
+    "natural_close_index": null,
+    "window_start_index": 111808,
+    "window_end_index": 120000,
+    "forced_predictions": 8193,
+    "prefix_tokens": 111899,
+    "abs_window_end": 120091,
+    "below_131072": true,
+    "forced_token_at_end": "history token e",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      120000
+     ],
+     "tail": [
+      119489,
+      120000
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      112320,
+      120000
+     ]
+    },
+    "state_of_history": "loop",
+    "distance_to_close": null,
+    "loop_onset_index": 184000,
+    "loop_onset_after_window": true,
+    "retok_drift": null,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 112000,
+      "zlib30k": 0.3304,
+      "rep200": 0.0,
+      "repeating": false
+     },
+     "after": {
+      "checkpoint": 128000,
+      "zlib30k": 0.295,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.084,
+     "rep200": 0.3977,
+     "repeating": true
+    },
+    "nonrepeating_commitment_positions_in_window": [],
+    "class_20b_at_window": "active (loop pre-onset)",
+    "batch": "L3"
+   }
+  },
+  {
+   "fixture": "L8",
+   "why": "active exhaustion, doc 79, stock 0.9.1 history (seed 5010)",
+   "source_id": "77100ed719f5",
+   "doc": 79,
+   "seed": 5010,
+   "source_engine": "v0.9.1 stock",
+   "cls": "doc79_pair_exhaustion",
+   "prompt_tokens": 91,
+   "history_sha256": "a391beb46a6ae9ea5a992d56392784d38686262e6922fe310ec54a094b0800df",
+   "weights": "K3.25@0490d2f7",
+   "window_end_reasoning_index": 120000,
+   "window_start_reasoning_index": 111805,
+   "prefix_len_P": 111896,
+   "P_mod8": 0,
+   "W_forced": 8195,
+   "abs_window_end": 120091,
+   "class_20b_at_window": "active (exhaustion)",
+   "repetition_near_window_end": {
+    "at_or_before": {
+     "checkpoint": 112000,
+     "zlib30k": 0.3513,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "after": {
+     "checkpoint": 128000,
+     "zlib30k": 0.3442,
+     "rep200": 0.0,
+     "repeating": false
+    }
+   },
+   "forced_token_at_end": "history token e",
+   "proposal_record": {
+    "fixture": "L8",
+    "source_id": "77100ed719f5",
+    "cls": "doc79_pair_exhaustion",
+    "note": "stock 0.9.1 doc 79 seed 5010, exhaustion (pairs with L7)",
+    "doc": 79,
+    "seed": 5010,
+    "source_engine": "v0.9.1 stock",
+    "history_ids": "re-tokenized text (shared counterfactual fixture, not a replay)",
+    "history_sha256": "a391beb46a6ae9ea5a992d56392784d38686262e6922fe310ec54a094b0800df",
+    "prompt_tokens": 91,
+    "reasoning_tokens_in_history": 327678,
+    "natural_close_index": null,
+    "window_start_index": 111808,
+    "window_end_index": 120000,
+    "forced_predictions": 8193,
+    "prefix_tokens": 111899,
+    "abs_window_end": 120091,
+    "below_131072": true,
+    "forced_token_at_end": "history token e",
+    "lead_in": 512,
+    "primary_positions": {
+     "end": [
+      120000
+     ],
+     "tail": [
+      119489,
+      120000
+     ],
+     "grid_every": 64,
+     "grid_range": [
+      112320,
+      120000
+     ]
+    },
+    "state_of_history": "exhaustion",
+    "distance_to_close": null,
+    "loop_onset_index": null,
+    "loop_onset_after_window": null,
+    "retok_drift": 2,
+    "repetition_near_window_end": {
+     "at_or_before": {
+      "checkpoint": 112000,
+      "zlib30k": 0.3513,
+      "rep200": 0.0,
+      "repeating": false
+     },
+     "after": {
+      "checkpoint": 128000,
+      "zlib30k": 0.3442,
+      "rep200": 0.0,
+      "repeating": false
+     }
+    },
+    "repetition_at_history_end": {
+     "zlib30k": 0.3102,
+     "rep200": 0.0,
+     "repeating": false
+    },
+    "nonrepeating_commitment_positions_in_window": [],
+    "class_20b_at_window": "active (exhaustion)",
+    "batch": "L"
+   }
+  }
+ ],
+ "batch_order": [
+  "L1",
+  "L4",
+  "M3",
+  "M4",
+  "L3",
+  "L5",
+  "A8",
+  "L8"
+ ],
+ "docs": {
+  "13": 1,
+  "88": 1,
+  "121": 1,
+  "127": 1,
+  "79": 3,
+  "170": 1
+ },
+ "engines": {
+  "0.7.0": 4,
+  "0.9.1": 4
+ },
+ "classes": {
+  "near_close": 5,
+  "exhaustion_active": 1,
+  "loop_preonset_active": 1,
+  "doc79_pair_exhaustion": 1
+ },
+ "rule": {
+  "W_forced": "8192 + d tokens, d = (P0 + end - 8192) mod 8, so that the prefix length P = prompt + start is a multiple of 8 (window starts on a pool and a ring boundary; no window pool has prefill-seeded members, so the D2 injection never mixes the corrected seed with the old decode mapping); the last forced token is the history's own next token (</think> for windows ending at a close)",
+  "abs_limit": "every window ends below 131072 (Stage K has not validated selection beyond)",
+  "composition": "the same 8 fixtures in this order in ONE batch of 8 in flight, submitted together after the warm phase; identical in every run of both arms",
+  "designated": "primary positions fixed at the Stage-0 freeze: the end position e, the last 512 positions, a 64-token grid after the 512-token lead-in, and the non-repeating commitment events inside the window (positions only, from inventory.json)",
+  "ids": "exact window ids, prefix ids and their sha256 are fixed at the Stage-0 freeze by re-tokenizing in a CPU container (prep as phase-2 prep_requests.py); this list freezes WHICH histories and WHERE"
+ },
+ "note": "Shared counterfactual fixtures (re-tokenized text), not replays; 6 questions (doc 79 three times); K3.25 only; no forced continuation past a natural close."
+}

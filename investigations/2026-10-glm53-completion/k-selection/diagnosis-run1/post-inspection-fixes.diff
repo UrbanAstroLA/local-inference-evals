@@ -1,0 +1,241 @@
+diff -ru a/kselect/kplan.py b/kselect/kplan.py
+--- a/kselect/kplan.py	2026-10-13 17:05:39.568856911 -0700
++++ b/kselect/kplan.py	2026-10-13 17:05:46.046416243 -0700
+@@ -180,7 +180,11 @@
+     if kind.startswith("max"):
+         G = L_MAX // KPOOL
+         offs = [-1024, -64, -3, -2, -1, 0, -5, -4, -128, -65, -512, -2048]
+-    out = [max(1, G + o) for o in offs]
++    # Post-inspection change PI-1 (DIAGNOSIS-run1.md): every row of a request (L-K..L) must have L >= 1,
++    # so the lowest last-row target is cdiv(K+1, KPOOL) pools (was 1: v070 K=5 produced a row with L=-1).
++    # Changes only the four v070 short(P~512) cells; B1 (K=3) is unchanged.
++    lo = cdiv(e["K"] + 1, KPOOL)
++    out = [max(lo, G + o) for o in offs]
+     return out
+ 
+ 
+@@ -220,6 +224,8 @@
+             for b, kind in bnds + controls(e):
+                 tgt = targets(e, b, kind, fused_ctas(e["width_pages"], rows, sms) if route == "fused" else None)
+                 batches, rpb, pad = make_batches(e, rows, tgt)
++                # PI-1: no request row may have a non-positive token length (padding rows are separate)
++                assert all(L >= 1 for bt in batches for L in row_lengths(e, bt, 0)), (name, route, rows, b)
+                 # coverage: some row's local pool count <= b and some > b, on every rank
+                 cov = {}
+                 for r in range(e["dcp"]):
+Only in b/kselect: __pycache__
+diff -ru a/kselect/report.py b/kselect/report.py
+--- a/kselect/report.py	2026-10-13 17:05:39.568992262 -0700
++++ b/kselect/report.py	2026-10-13 17:12:49.004943310 -0700
+@@ -27,6 +27,17 @@
+         print(f"   {c['id']:24s} {k[:34]:34s} ~{tok:>8,d} tok  {c['verdict']:18s} rows {c.get('counts', {}).get('rows', 0):6d} "
+               f"fails {fails if fails else '-'}  err/B max {desc.get('err_over_bound_max', 0):.3g} "
+               f"col511 rank<480 {desc.get('stock_col511_rank_lt480', 0)}/{desc.get('stock_col511_rows', 0)}")
++        if c.get("error"):
++            print(f"      ERROR (confined to this cell): {c['error'].strip().splitlines()[-1][:200]}")
++        if "persp_rows_differ" in desc or "persp0_relaunch_differs" in desc:
++            # PI-4: persp / allgather / c4 / route count batch x repeat records, the rest count rows
++            print(f"      persp (batch x repeat records) {(c.get('counts') or {}).get('persp', 0)}; rows differing "
++                  f"{desc.get('persp_rows_differ', 0)} (order only, same column 511: {desc.get('persp_rows_order_only_cols_0_510', 0)}): "
++                  f"set {desc.get('persp_rows_set_differ', 0)} "
++                  f"(non-tie {desc.get('persp_rows_set_differ_nontie', 0)}), column 511 "
++                  f"{desc.get('persp_rows_col511_differ', 0)} (non-tie {desc.get('persp_rows_col511_differ_nontie', 0)}, "
++                  f"min rank {desc.get('persp_col511_rank_min', '-')}); perspective-0 relaunch differs in "
++                  f"{desc.get('persp0_relaunch_differs', 0)} records")
+     verdicts = [c["verdict"] for c in d.get("cells", [])]
+     if verdicts and all(v == "PASS" for v in verdicts):
+         print(f"   READING: every planned {eng} cell PASS -> the tested selection failures are retired for these "
+diff -ru a/kselect/run_k.py b/kselect/run_k.py
+--- a/kselect/run_k.py	2026-10-13 17:05:39.568937096 -0700
++++ b/kselect/run_k.py	2026-10-13 17:12:38.446349262 -0700
+@@ -187,6 +187,10 @@
+                            and fold_seen.get("slices") == (exp.get("slices") if exp.get("on") else None))
+             if not fold_ok:
+                 agg.n["route"] += 1
++            # PI-3 (DIAGNOSIS-run1.md): a harness exception is confined to its cell (verdict ERROR, traceback
++            # kept) and the next cell runs; the time guard still stops the run; a CUDA context that no longer
++            # synchronises stops the run (remaining cells NOT-RUN), because later results would be meaningless.
++            cell_err = None
+             try:
+                 for fam in fams:
+                     exact = fam in plan["meta"]["EXACT_FAMILIES"]
+@@ -196,17 +200,24 @@
+                             raise TimeoutError("time guard")
+                         run_batch(drv, eng, cell, fam, exact, bi, batch, banks, dev, agg, res_f, fails, timing)
+                         n_done += 1
++            except TimeoutError:
++                raise
++            except Exception:
++                cell_err = traceback.format_exc()
++                log(f"ERROR in {cell['id']} (confined to this cell)\n{cell_err}")
+             finally:
+-                et = sys.exc_info()[0]
+-                v = "ERROR" if (et is not None and et is not TimeoutError) else verdict(agg, n_done == n_planned)
++                v = "ERROR" if cell_err is not None else verdict(agg, n_done == n_planned)
+                 summary["cells"].append(dict(id=cell["id"], kind=cell["kind"], verdict=v, counts=agg.n,
+                                              by_family=agg.by_family, desc=agg.desc, batches=n_done,
+                                              batches_planned=n_planned, fold_seen=fold_seen, fold_ok=fold_ok,
+-                                             secs=round(time.time() - tc, 2)))
++                                             secs=round(time.time() - tc, 2),
++                                             error=cell_err[-4000:] if cell_err else None))
+                 log(f"{cell['id']:24s} {v:18s} rows={agg.n['rows']} fails="
+                     f"{ {k: x for k, x in agg.n.items() if x and k != 'rows'} } "
+                     f"err/B={agg.desc['err_over_bound_max']:.3g} {time.time() - tc:.1f}s "
+                     f"timing={ {k: round(x, 1) for k, x in timing.items()} }")
++            if cell_err is not None:
++                sync(dev)       # raises if the CUDA context is unusable -> outer handler, remaining NOT-RUN
+     except TimeoutError:
+         log("STOPPED: time guard")
+     except Exception:
+@@ -231,6 +242,78 @@
+     return summary
+ 
+ 
++PERSP_CAP = 120
++
++
++def persp_record(agg, fam, rec, persp, rows, row_ref, fails):
++    """PI-4 (descriptive only; verdict() and C5 are unchanged): classify each row whose two merge
++    perspectives differ. ORDER only (same set), SET differs (only among ties at t / inside the fp32 band, or
++    not), and whether column 511 - the one column stock 0.7.0 drops per rank - holds a different pool
++    (tie / non-tie). Keeps both perspectives of the first PERSP_CAP differing rows in failures."""
++    exact = fam in kplan.EXACT_FAMILIES
++    (a_ids, a_sc), (b_ids, b_sc) = persp
++    row_ne = (a_ids != b_ids).any(1)
++    set_ne = (torch.sort(a_ids, 1).values != torch.sort(b_ids, 1).values).any(1)
++    c511_ne = a_ids[:, kref.KEEP] != b_ids[:, kref.KEEP]
++    v = torch.stack([row_ne.sum(), (row_ne & ~set_ne & ~c511_ne).sum()]).tolist()   # one sync
++    d = agg.desc
++    pf = d.setdefault("persp_by_family", {}).setdefault(fam, {})
++
++    def bump(k, n=1):
++        d[k] = d.get(k, 0) + n
++        pf[k] = pf.get(k, 0) + n
++    bump("persp_rows_differ", int(v[0]))
++    bump("persp_rows_order_only_cols_0_510", int(v[1]))      # same set, same column 511
++    n_kept = sum(1 for f in fails if f.get("kind") == "persp")
++    for ri in (set_ne | c511_ne).nonzero().flatten().tolist():
++        s, bb = row_ref(ri)
++        P = int(s.shape[0])
++        a, b = a_ids[ri].long(), b_ids[ri].long()
++        n = min(kref.TOPK, P)
++        if n == 0:
++            continue
++        vals, idx = torch.topk(s, n, largest=True, sorted=True)
++        t, bt = vals[n - 1], bb[idx[n - 1]]
++
++        def tie(x):           # x: ids of pools; True where the pool is free under C2 (tie at t / band)
++            if exact:
++                return s[x] == t
++            return (s[x] - t).abs() <= bb[x] + bt
++        av, bv = a[(a >= 0) & (a < P)], b[(b >= 0) & (b < P)]
++        only_a = av[~torch.isin(av, bv)]
++        only_b = bv[~torch.isin(bv, av)]
++        set_diff = bool(only_a.numel() or only_b.numel())
++        info = dict(set_differs=set_diff, n_only_a=int(only_a.numel()), n_only_b=int(only_b.numel()))
++        if set_diff:
++            bump("persp_rows_set_differ")
++            nontie = bool((~tie(only_a)).any() or (~tie(only_b)).any()) if (only_a.numel() and only_b.numel()) \
++                else True
++            info["set_nontie"] = nontie
++            if nontie:
++                bump("persp_rows_set_differ_nontie")
++        c0, c1 = int(a[kref.KEEP]), int(b[kref.KEEP])
++        if c0 != c1:
++            bump("persp_rows_col511_differ")
++            info["col511"] = [c0, c1]
++            if 0 <= c0 < P and 0 <= c1 < P:
++                cc = torch.tensor([c0, c1], device=s.device)
++                sel = av
++                ranks = [int((s[sel] > s[c]).sum()) for c in (c0, c1)]
++                info["col511_rank"] = ranks
++                d["persp_col511_rank_min"] = min(d.get("persp_col511_rank_min", kref.TOPK), *ranks)
++                same = bool(s[c0] == s[c1]) if exact else bool((s[c0] - s[c1]).abs() <= bb[c0] + bb[c1])
++                info["col511_tie"] = same
++                if not same:
++                    bump("persp_rows_col511_differ_nontie")
++                info["col511_ref"] = s[cc].tolist()
++            else:
++                bump("persp_rows_col511_differ_nontie")
++        if n_kept < PERSP_CAP:
++            n_kept += 1
++            fails.append(dict(kind="persp", rec=dict(rec), row=ri, info=info, ids0=a_ids[ri].cpu(),
++                              ids1=b_ids[ri].cpu(), sc0=a_sc[ri].cpu(), sc1=b_sc[ri].cpu()))
++
++
+ def run_batch(drv, eng, cell, fam, exact, bi, batch, banks, dev, agg, res_f, fails, timing):
+     K, dcp, rows, pad = eng["K"], eng["dcp"], cell["rows"], cell["pad_rows"]
+     b, route = cell["boundary_local"], cell["route"]
+@@ -239,6 +322,8 @@
+     tb = time.time()
+     reqs = kinputs.build_requests(fam, batch, K, b, route, rows, ctas, dcp, seed, dev, banks)
+     Ls = kplan.row_lengths(eng, batch, pad)
++    if min(Ls[:len(batch) * (K + 1)]) < 1:      # PI-1 guard: a request row with L <= 0 is not a decode row
++        raise ValueError(f"plan error: request row with L < 1 in {cell['id']} batch {bi}: {Ls[:K + 1]}")
+     L = torch.tensor(Ls, dtype=torch.int64, device=dev)
+     P = L // kplan.KPOOL
+     nreq = len(reqs)
+@@ -261,7 +346,7 @@
+         ps, _ = kref.ref_scores(r["q8"], r["w"], r["poison_k"][None, :], torch.tensor([r["poison_s"]], device=dev))
+         for j in range(K + 1):
+             pj = int(P[i * (K + 1) + j])
+-            if pj:
++            if pj > 0:          # PI-2: descriptive counter only; was `if pj:` (pj = -1 passed it)
+                 agg.desc["poison_rows"] += 1
+                 agg.desc["poison_beats_live_rows"] += int(bool(ps[j, 0] > s[j, :pj].max()))
+ 
+@@ -358,6 +443,9 @@
+                 sc_l.append(s_)
+                 metas.append(m_)
+             persp, ag_ok, _ = drv.merge_dcp2(ids_l, sc_l, pat)
++            # PI-4 control (descriptive): the same merge relaunched on bit-identical inputs. If perspective 0
++            # differs from its own relaunch, perspective differences are launch nondeterminism, not rank.
++            persp_re, _, _ = drv.merge_dcp2(ids_l, sc_l, pat)
+             ids, sc = persp[0]
+             E = drv.expand(ids, L)
+             sync(dev)
+@@ -374,6 +462,11 @@
+                 agg.bump("persp", fam)
+             if not ag_ok:
+                 agg.bump("allgather", fam)
++            relaunch_eq = bool(torch.equal(persp[0][0], persp_re[0][0]) and
++                               torch.equal(persp[0][1].view(torch.int32), persp_re[0][1].view(torch.int32)))
++            agg.desc["persp0_relaunch_differs"] = agg.desc.get("persp0_relaunch_differs", 0) + int(not relaunch_eq)
++            if not p_eq:
++                persp_record(agg, fam, rec, persp, rows, row_ref, fails)
+             bad_rows = []
+             for ri in range(rows):
+                 s, bb = row_ref(ri)
+@@ -415,6 +508,7 @@
+                 rec["c4"] = c4
+             rec["bad_rows"] = bad_rows
+             rec["persp_equal"] = p_eq
++            rec["persp0_relaunch_equal"] = relaunch_eq
+             rec["allgather_ok"] = ag_ok
+         timing["check"] += time.time() - tc
+         res_f.write(json.dumps(rec) + "\n")
+diff -ru a/run_k_selection.sh b/run_k_selection.sh
+--- a/run_k_selection.sh	2026-10-13 17:05:39.570195695 -0700
++++ b/run_k_selection.sh	2026-10-13 17:06:53.841124933 -0700
+@@ -25,17 +25,17 @@
+ fi
+ COSTS="$BASE/costs.jsonl"
+ ITEM="k-selection"
+-CEILING_GPU_H=0.5
+-WALL_CAP_S=1800                                # whole run, 1 GPU
++CEILING_GPU_H=0.35                             # PI-5: v070-only rerun; spent 0.1417 + 0.35 <= 0.5 approved
++WALL_CAP_S=1260                                # whole run, 1 GPU (PI-5: = 0.35 GPU-h)
+ declare -A IMAGE=(
+   [b1]="sha256:799d3cf8e5d14a615b89c734a6a38b4be5729bb44bb6b56effc7cf7df747b88a"
+   [v070]="sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629"
+ )
+-declare -A CAP_S=([b1]=850 [v070]=850)        # per-container wall caps (sum 1700 < WALL_CAP_S - 60)
++declare -A CAP_S=([b1]=850 [v070]=1200)       # per-container wall caps (PI-5: v070 alone, 1200 <= WALL_CAP_S - 60)
+ MIN_CAP_S=120
+ if [ -n "${K_TEST_ROOT:-}" ] && [ -n "${K_TEST_CAP_S:-}" ]; then CAP_S=([b1]=$K_TEST_CAP_S [v070]=$K_TEST_CAP_S); MIN_CAP_S=1; fi
+ GPU_INDEX="${K_GPU_INDEX:-0}"
+-ENGINES="${K_ENGINES:-b1 v070}"
++ENGINES="${K_ENGINES:-v070}"                   # PI-5: rerun scope is 0.7.0 only (B1 34/34 PASS stands)
+ STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
+ OUT="$BASE/run-$STAMP"
+ START=""

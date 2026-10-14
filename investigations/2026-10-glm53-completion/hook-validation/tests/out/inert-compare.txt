@@ -1,0 +1,5 @@
+inert_orig 47e7bc7b04923410c5294bc7a20044269706b3595fb932d9480c32a6d9fd8892
+inert_hooked_off 47e7bc7b04923410c5294bc7a20044269706b3595fb932d9480c32a6d9fd8892
+inert_hooked_on_unkeyed 47e7bc7b04923410c5294bc7a20044269706b3595fb932d9480c32a6d9fd8892
+image_inert_off 47e7bc7b04923410c5294bc7a20044269706b3595fb932d9480c32a6d9fd8892
+PASS I1 identical outputs: original B1 files / hooked env unset / hooked env on, no keyed request / built image env unset

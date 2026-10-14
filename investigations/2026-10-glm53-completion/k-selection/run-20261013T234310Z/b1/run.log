@@ -1,0 +1,38 @@
+[   12.0s] {"engine": "b1", "image_env": "sha256:799d3cf8e5d14a615b89c734a6a38b4be5729bb44bb6b56effc7cf7df747b88a", "argv": ["/k/kselect/run_k.py", "--engine", "b1", "--plan", "/k/plan.json", "--bank", "/k/bank", "--out", "/o", "--max-seconds", "775", "--max-batches", "0", "--cells", ""], "file_pins_ok": true, "env": {"VLLM_USE_B12X_MHC": "auto", "VLLM_B12X_GLM_H64_QUERY_PROJ": "auto", "VLLM_USE_B12X_SPARSE_INDEXER": "1"}, "device": "NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition", "sm": "120", "sms": 188, "torch": "2.13.0+cu130", "pkg_index_topk_is_paged": false}
+[   12.2s] bank real_L3: 58599 pools, 256 query rows
+[   12.2s] bank real_L43: 58599 pools, 256 query rows
+[   21.0s] b1/tiled32/b16384        PASS               rows=1344 fails={} err/B=0.00336 8.7s timing={'build': 0.7, 'ref': 0.3, 'kernel': 3.7, 'check': 4.0}
+[   26.6s] b1/tiled32/b32768        PASS               rows=1344 fails={} err/B=0.00327 5.7s timing={'build': 1.2, 'ref': 0.6, 'kernel': 4.4, 'check': 8.2}
+[   32.5s] b1/tiled32/b49152        PASS               rows=1344 fails={} err/B=0.00313 5.9s timing={'build': 1.8, 'ref': 0.9, 'kernel': 5.2, 'check': 12.3}
+[   38.5s] b1/tiled32/b65536        PASS               rows=1344 fails={} err/B=0.00313 6.0s timing={'build': 2.4, 'ref': 1.4, 'kernel': 5.9, 'check': 16.4}
+[   44.8s] b1/tiled32/b81920        PASS               rows=1344 fails={} err/B=0.00313 6.3s timing={'build': 3.1, 'ref': 2.0, 'kernel': 6.6, 'check': 20.7}
+[   49.1s] b1/tiled32/b512          PASS               rows=1344 fails={} err/B=0.00346 4.4s timing={'build': 3.4, 'ref': 2.1, 'kernel': 7.4, 'check': 23.9}
+[   54.7s] b1/tiled32/b30000        PASS               rows=1344 fails={} err/B=0.00313 5.6s timing={'build': 3.9, 'ref': 2.3, 'kernel': 8.1, 'check': 28.0}
+[   60.9s] b1/tiled32/b82500        PASS               rows=1344 fails={} err/B=0.00305 6.2s timing={'build': 4.6, 'ref': 2.9, 'kernel': 8.8, 'check': 32.2}
+[   65.0s] b1/tiled24/b16384        PASS               rows=1008 fails={} err/B=0.00313 4.1s timing={'build': 4.9, 'ref': 3.0, 'kernel': 9.6, 'check': 35.1}
+[   69.4s] b1/tiled24/b32768        PASS               rows=1008 fails={} err/B=0.00305 4.4s timing={'build': 5.2, 'ref': 3.2, 'kernel': 10.3, 'check': 38.2}
+[   74.0s] b1/tiled24/b49152        PASS               rows=1008 fails={} err/B=0.00383 4.6s timing={'build': 5.6, 'ref': 3.5, 'kernel': 11.0, 'check': 41.3}
+[   78.7s] b1/tiled24/b65536        PASS               rows=1008 fails={} err/B=0.00313 4.7s timing={'build': 6.1, 'ref': 3.9, 'kernel': 11.8, 'check': 44.5}
+[   83.5s] b1/tiled24/b81920        PASS               rows=1008 fails={} err/B=0.00301 4.8s timing={'build': 6.6, 'ref': 4.3, 'kernel': 12.5, 'check': 47.6}
+[   87.1s] b1/tiled24/b512          PASS               rows=1008 fails={} err/B=0.00448 3.6s timing={'build': 6.8, 'ref': 4.4, 'kernel': 13.2, 'check': 50.1}
+[   91.5s] b1/tiled24/b30000        PASS               rows=1008 fails={} err/B=0.00359 4.4s timing={'build': 7.1, 'ref': 4.6, 'kernel': 14.0, 'check': 53.2}
+[   96.3s] b1/tiled24/b82500        PASS               rows=1008 fails={} err/B=0.00394 4.8s timing={'build': 7.7, 'ref': 5.0, 'kernel': 14.7, 'check': 56.4}
+[  111.2s] b1/fused16/b5632         PASS               rows=1344 fails={} err/B=0.00257 14.9s timing={'build': 8.0, 'ref': 5.1, 'kernel': 25.2, 'check': 60.2}
+[  125.6s] b1/fused16/b10560        PASS               rows=1344 fails={} err/B=0.00398 14.4s timing={'build': 8.3, 'ref': 5.3, 'kernel': 35.2, 'check': 64.1}
+[  139.9s] b1/fused16/b15488        PASS               rows=1344 fails={} err/B=0.00285 14.4s timing={'build': 8.7, 'ref': 5.5, 'kernel': 45.1, 'check': 68.0}
+[  150.4s] b1/fused16/b512          PASS               rows=1008 fails={} err/B=0.00283 10.5s timing={'build': 8.9, 'ref': 5.5, 'kernel': 52.7, 'check': 70.6}
+[  161.6s] b1/fused16/b30000        PASS               rows=1008 fails={} err/B=0.00398 11.1s timing={'build': 9.3, 'ref': 5.7, 'kernel': 60.2, 'check': 73.7}
+[  173.3s] b1/fused16/b82500        PASS               rows=1008 fails={} err/B=0.00369 11.8s timing={'build': 9.8, 'ref': 6.2, 'kernel': 67.7, 'check': 76.9}
+[  198.7s] b1/fused8/b11776         PASS               rows=1344 fails={} err/B=0.00323 25.3s timing={'build': 10.2, 'ref': 6.3, 'kernel': 88.4, 'check': 80.9}
+[  223.9s] b1/fused8/b22080         PASS               rows=1344 fails={} err/B=0.00344 25.2s timing={'build': 10.6, 'ref': 6.5, 'kernel': 108.7, 'check': 85.2}
+[  249.4s] b1/fused8/b32384         PASS               rows=1344 fails={} err/B=0.00369 25.5s timing={'build': 11.1, 'ref': 6.8, 'kernel': 129.1, 'check': 89.6}
+[  268.0s] b1/fused8/b512           PASS               rows=1008 fails={} err/B=0.00236 18.6s timing={'build': 11.4, 'ref': 6.9, 'kernel': 144.6, 'check': 92.2}
+[  282.4s] b1/fused8/b30000         PASS               rows=1008 fails={} err/B=0.00358 14.4s timing={'build': 11.7, 'ref': 7.1, 'kernel': 155.1, 'check': 95.5}
+[  299.8s] b1/fused8/b82500         PASS               rows=1008 fails={} err/B=0.00296 17.5s timing={'build': 12.4, 'ref': 7.6, 'kernel': 168.2, 'check': 98.8}
+[  333.2s] b1/fused4/b24064         PASS               rows=1344 fails={} err/B=0.00294 33.4s timing={'build': 12.8, 'ref': 7.8, 'kernel': 196.5, 'check': 103.2}
+[  366.4s] b1/fused4/b45120         PASS               rows=1344 fails={} err/B=0.00398 33.2s timing={'build': 13.4, 'ref': 8.2, 'kernel': 224.3, 'check': 107.6}
+[  400.7s] b1/fused4/b66176         PASS               rows=1344 fails={} err/B=0.00322 34.3s timing={'build': 14.2, 'ref': 8.6, 'kernel': 252.8, 'check': 112.1}
+[  422.0s] b1/fused4/b512           PASS               rows=1008 fails={} err/B=0.00258 21.3s timing={'build': 14.4, 'ref': 8.7, 'kernel': 270.9, 'check': 114.9}
+[  441.4s] b1/fused4/b30000         PASS               rows=1008 fails={} err/B=0.00398 19.4s timing={'build': 14.7, 'ref': 8.9, 'kernel': 286.4, 'check': 118.2}
+[  460.9s] b1/fused4/b82500         PASS               rows=1008 fails={} err/B=0.00278 19.5s timing={'build': 15.3, 'ref': 9.4, 'kernel': 301.6, 'check': 121.5}
+[  460.9s] tally {'PASS': 34}; done in 460.9s

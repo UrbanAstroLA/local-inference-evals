@@ -1,0 +1,9 @@
+# sha256 of local files not published (reason in brackets). Paths relative to the local folder.
+7e2a4dd6d206f6bf994cc8338da41cd387f393c799aeb663b9a7f6b7d9aa0357  ./bank/bank_L23.pt   (binary tensors (inputs/records))
+41c1a7255d96d7ac6906c664c7941c08f6d3aec6cb22c518eb3d7f07246a8b86  ./bank/bank_L3.pt   (binary tensors (inputs/records))
+8a408291ef310c1862853685ab784e5b28de17e22ecf78285b61ccfcc806c9b2  ./bank/bank_L43.pt   (binary tensors (inputs/records))
+6e8ccaa57530ee584b0ed210ef6583534b5b194af79a7baba69b94c45cc99213  ./bank/bank_manifest.json   (input bank: real captured index-K tensors)
+46ffff5755f7882d2e7341402dbe2fdb882069b134919e6879bbab865d141ec1  ./bank/build_bank.out   (input bank: real captured index-K tensors)
+eb14296ec9b1b5af890225c87ad04a7c6cbd6dc6f5e9bdb125ee23e5f264a6c9  ./run-20261013T234310Z/b1/failures-b1.pt   (binary tensors (inputs/records))
+a43d06228e3fe8e53b75f5409245b683d26bf680c41b4773e453ffd15250d87c  ./run-20261013T234310Z/v070/failures-v070.pt   (binary tensors (inputs/records))
+7adcbc2f78a9d42f35523f7f93c057722c8445ef1603eca022a3935dfa0e81fd  ./run-20261014T005710Z/v070/failures-v070.pt   (binary tensors (inputs/records))

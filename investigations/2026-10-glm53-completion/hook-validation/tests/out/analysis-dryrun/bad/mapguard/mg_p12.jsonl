@@ -1,0 +1,1 @@
+{"kind": "poll", "pid": 12, "t": 1.0, "counters": {"tail_w_stash": {"mism": 19800, "null": 19800}, "tail_w_seed": {"mism": 0}, "idx_w_dec": {"mism": 0}, "idx_w_pf": {"s_mism": 0, "d7_fallback": 0}, "pos": {"pos_contig": 3, "pos_bounds": 0}}}

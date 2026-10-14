@@ -1,0 +1,79 @@
+[23:43:10] frozen files verified against SHA256SUMS
+[23:43:10] budget: spent 0.0, this run ceiling 0.5, approved 0.5
+[23:43:10] images pinned: b1=799d3cf8e5d1 v070=48e254d94f58 
+[23:43:10] pre-flight ok: GPU 0 used 20 MiB, util 0%
+[23:43:10] starting kselect-b1-4072061 (799d3cf8e5d1, wall cap 850s)
+[23:50:55] b1 container finished: rc=0
+run_k_exit=0
+[23:50:56] pre-flight ok: GPU 0 used 20 MiB, util 0%
+[23:50:56] starting kselect-v070-4072061 (48e254d94f58, wall cap 850s)
+[23:51:40] v070 container finished: rc=0
+run_k_exit=0
+== b1: device NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition sm120 SMs 188 file pins ok True time-guard stop False secs 460.9 tally {'PASS': 34}
+   b1/tiled32/b16384        slice2                             ~  65,536 tok  PASS               rows   1344 fails -  err/B max 0.00336 col511 rank<480 1001/1344
+   b1/tiled32/b32768        slice3+chunk2                      ~ 131,072 tok  PASS               rows   1344 fails -  err/B max 0.00327 col511 rank<480 247/1344
+   b1/tiled32/b49152        slice4                             ~ 196,608 tok  PASS               rows   1344 fails -  err/B max 0.00313 col511 rank<480 244/1344
+   b1/tiled32/b65536        slice5+chunk3                      ~ 262,144 tok  PASS               rows   1344 fails -  err/B max 0.00313 col511 rank<480 220/1344
+   b1/tiled32/b81920        slice6                             ~ 327,680 tok  PASS               rows   1344 fails -  err/B max 0.00313 col511 rank<480 232/1344
+   b1/tiled32/b512          short(P~512)                       ~   2,048 tok  PASS               rows   1344 fails -  err/B max 0.00346 col511 rank<480 587/609
+   b1/tiled32/b30000        overlap(~120k tokens; stage-2 real ~ 120,000 tok  PASS               rows   1344 fails -  err/B max 0.00313 col511 rank<480 268/1344
+   b1/tiled32/b82500        max(330k-equivalent)               ~ 330,000 tok  PASS               rows   1344 fails -  err/B max 0.00305 col511 rank<480 263/1344
+   b1/tiled24/b16384        slice2                             ~  65,536 tok  PASS               rows   1008 fails -  err/B max 0.00313 col511 rank<480 670/1008
+   b1/tiled24/b32768        slice3+chunk2                      ~ 131,072 tok  PASS               rows   1008 fails -  err/B max 0.00305 col511 rank<480 188/1008
+   b1/tiled24/b49152        slice4                             ~ 196,608 tok  PASS               rows   1008 fails -  err/B max 0.00383 col511 rank<480 207/1008
+   b1/tiled24/b65536        slice5+chunk3                      ~ 262,144 tok  PASS               rows   1008 fails -  err/B max 0.00313 col511 rank<480 165/1008
+   b1/tiled24/b81920        slice6                             ~ 327,680 tok  PASS               rows   1008 fails -  err/B max 0.00301 col511 rank<480 170/1008
+   b1/tiled24/b512          short(P~512)                       ~   2,048 tok  PASS               rows   1008 fails -  err/B max 0.00448 col511 rank<480 594/609
+   b1/tiled24/b30000        overlap(~120k tokens; stage-2 real ~ 120,000 tok  PASS               rows   1008 fails -  err/B max 0.00359 col511 rank<480 204/1008
+   b1/tiled24/b82500        max(330k-equivalent)               ~ 330,000 tok  PASS               rows   1008 fails -  err/B max 0.00394 col511 rank<480 187/1008
+   b1/fused16/b5632         final-trim(k=9,ctas=11)            ~  22,528 tok  PASS               rows   1344 fails -  err/B max 0.00257 col511 rank<480 193/1344
+   b1/fused16/b10560        mid-trim-1(k=16,ctas=11)           ~  42,240 tok  PASS               rows   1344 fails -  err/B max 0.00398 col511 rank<480 192/1344
+   b1/fused16/b15488        mid-trim-2(k=23,ctas=11)           ~  61,952 tok  PASS               rows   1344 fails -  err/B max 0.00285 col511 rank<480 195/1344
+   b1/fused16/b512          short(P~512)                       ~   2,048 tok  PASS               rows   1008 fails -  err/B max 0.00283 col511 rank<480 171/609
+   b1/fused16/b30000        overlap(~120k tokens; stage-2 real ~ 120,000 tok  PASS               rows   1008 fails -  err/B max 0.00398 col511 rank<480 147/1008
+   b1/fused16/b82500        max(330k-equivalent)               ~ 330,000 tok  PASS               rows   1008 fails -  err/B max 0.00369 col511 rank<480 152/1008
+   b1/fused8/b11776         final-trim(k=9,ctas=23)            ~  47,104 tok  PASS               rows   1344 fails -  err/B max 0.00323 col511 rank<480 200/1344
+   b1/fused8/b22080         mid-trim-1(k=16,ctas=23)           ~  88,320 tok  PASS               rows   1344 fails -  err/B max 0.00344 col511 rank<480 195/1344
+   b1/fused8/b32384         mid-trim-2(k=23,ctas=23)           ~ 129,536 tok  PASS               rows   1344 fails -  err/B max 0.00369 col511 rank<480 196/1344
+   b1/fused8/b512           short(P~512)                       ~   2,048 tok  PASS               rows   1008 fails -  err/B max 0.00236 col511 rank<480 170/609
+   b1/fused8/b30000         overlap(~120k tokens; stage-2 real ~ 120,000 tok  PASS               rows   1008 fails -  err/B max 0.00358 col511 rank<480 148/1008
+   b1/fused8/b82500         max(330k-equivalent)               ~ 330,000 tok  PASS               rows   1008 fails -  err/B max 0.00296 col511 rank<480 144/1008
+   b1/fused4/b24064         final-trim(k=9,ctas=47)            ~  96,256 tok  PASS               rows   1344 fails -  err/B max 0.00294 col511 rank<480 192/1344
+   b1/fused4/b45120         mid-trim-1(k=16,ctas=47)           ~ 180,480 tok  PASS               rows   1344 fails -  err/B max 0.00398 col511 rank<480 192/1344
+   b1/fused4/b66176         mid-trim-2(k=23,ctas=47)           ~ 264,704 tok  PASS               rows   1344 fails -  err/B max 0.00322 col511 rank<480 197/1344
+   b1/fused4/b512           short(P~512)                       ~   2,048 tok  PASS               rows   1008 fails -  err/B max 0.00258 col511 rank<480 172/609
+   b1/fused4/b30000         overlap(~120k tokens; stage-2 real ~ 120,000 tok  PASS               rows   1008 fails -  err/B max 0.00398 col511 rank<480 144/1008
+   b1/fused4/b82500         max(330k-equivalent)               ~ 330,000 tok  PASS               rows   1008 fails -  err/B max 0.00278 col511 rank<480 144/1008
+   READING: every planned b1 cell PASS -> the tested selection failures are retired for these lengths, rows and geometries (not termination equivalence).
+== v070: device NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition sm120 SMs 188 file pins ok True time-guard stop False secs 40.6 tally {'FAIL': 2, 'ERROR': 1, 'NOT-RUN': 19}
+   ABORTED/ERROR: ct, bi, batch, banks, dev, agg, res_f, fails, timing)
+  File "/k/kselect/run_k.py", line 266, in run_batch
+    agg.desc["poison_beats_live_rows"] += int(bool(ps[j, 0] > s[j, :pj].max()))
+                                                              ^^^^^^^^^^^^^^^
+RuntimeError: max(): Expected reduction dim to be specified for input.numel() == 0. Specify the reduction dim with the 'dim' argument.
+
+   v070/tiled48/b16384      slice2                             ~ 131,072 tok  FAIL               rows   2016 fails {'persp': 42}  err/B max 0.00313 col511 rank<480 313/2016
+   v070/tiled48/b32768      slice3+chunk2                      ~ 262,144 tok  FAIL               rows   2016 fails {'persp': 42}  err/B max 0.0039 col511 rank<480 307/2016
+   v070/tiled48/b512        short(P~512)                       ~   4,096 tok  ERROR              rows      0 fails -  err/B max 0 col511 rank<480 0/0
+   v070/tiled48/b15000      overlap(~120k tokens; stage-2 real ~ 120,000 tok  NOT-RUN            rows      0 fails -  err/B max 0 col511 rank<480 0/0
+   v070/tiled48/b41250      max(330k-equivalent)               ~ 330,000 tok  NOT-RUN            rows      0 fails -  err/B max 0 col511 rank<480 0/0
+   v070/tiled24/b16384      slice2                             ~ 131,072 tok  NOT-RUN            rows      0 fails -  err/B max 0 col511 rank<480 0/0
+   v070/tiled24/b32768      slice3+chunk2                      ~ 262,144 tok  NOT-RUN            rows      0 fails -  err/B max 0 col511 rank<480 0/0
+   v070/tiled24/b512        short(P~512)                       ~   4,096 tok  NOT-RUN            rows      0 fails -  err/B max 0 col511 rank<480 0/0
+   v070/tiled24/b15000      overlap(~120k tokens; stage-2 real ~ 120,000 tok  NOT-RUN            rows      0 fails -  err/B max 0 col511 rank<480 0/0
+   v070/tiled24/b41250      max(330k-equivalent)               ~ 330,000 tok  NOT-RUN            rows      0 fails -  err/B max 0 col511 rank<480 0/0
+   v070/fused16/b5632       final-trim(k=9,ctas=11)            ~  45,056 tok  NOT-RUN            rows      0 fails -  err/B max 0 col511 rank<480 0/0
+   v070/fused16/b10560      mid-trim-1(k=16,ctas=11)           ~  84,480 tok  NOT-RUN            rows      0 fails -  err/B max 0 col511 rank<480 0/0
+   v070/fused16/b15488      mid-trim-2(k=23,ctas=11)           ~ 123,904 tok  NOT-RUN            rows      0 fails -  err/B max 0 col511 rank<480 0/0
+   v070/fused16/b512        short(P~512)                       ~   4,096 tok  NOT-RUN            rows      0 fails -  err/B max 0 col511 rank<480 0/0
+   v070/fused16/b15000      overlap(~120k tokens; stage-2 real ~ 120,000 tok  NOT-RUN            rows      0 fails -  err/B max 0 col511 rank<480 0/0
+   v070/fused16/b41250      max(330k-equivalent)               ~ 330,000 tok  NOT-RUN            rows      0 fails -  err/B max 0 col511 rank<480 0/0
+   v070/fused8/b11776       final-trim(k=9,ctas=23)            ~  94,208 tok  NOT-RUN            rows      0 fails -  err/B max 0 col511 rank<480 0/0
+   v070/fused8/b22080       mid-trim-1(k=16,ctas=23)           ~ 176,640 tok  NOT-RUN            rows      0 fails -  err/B max 0 col511 rank<480 0/0
+   v070/fused8/b32384       mid-trim-2(k=23,ctas=23)           ~ 259,072 tok  NOT-RUN            rows      0 fails -  err/B max 0 col511 rank<480 0/0
+   v070/fused8/b512         short(P~512)                       ~   4,096 tok  NOT-RUN            rows      0 fails -  err/B max 0 col511 rank<480 0/0
+   v070/fused8/b15000       overlap(~120k tokens; stage-2 real ~ 120,000 tok  NOT-RUN            rows      0 fails -  err/B max 0 col511 rank<480 0/0
+   v070/fused8/b41250       max(330k-equivalent)               ~ 330,000 tok  NOT-RUN            rows      0 fails -  err/B max 0 col511 rank<480 0/0
+   READING: not all cells PASS (['ERROR', 'FAIL', 'NOT-RUN']); nothing is retired for the cells that did not PASS. FAIL = a selection defect at that cell; FAIL-NUMERIC = kernel scores not bit-exact on an exact family; INCONCLUSIVE-BOUND = fp32 bound exceeded; INVALID-ROUTE = cell did not run the planned route; NOT-RUN/PARTIAL = time guard; ERROR = harness exception (see log).
+[23:51:40] results in <runs>/k-selection/run-20261013T234310Z
+[23:51:40] cost: 510s wall, 0.1417 GPU-hours (status done)

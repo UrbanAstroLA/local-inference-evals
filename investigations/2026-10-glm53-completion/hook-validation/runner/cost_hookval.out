@@ -1,0 +1,18 @@
+== validation
+   V0 readiness probes (4 greedy probes, unkeyed, compared with B1 run-b1-a1)                                30 s
+   V1 free-run 8 x 2,000 tok (served acceptance)                                                             49 s
+   V1 forced replay of the free runs: natural + poison                                                      203 s
+   V2a schedule matrix: 7 schedules x 1 batch of 8 (longest window 2,500)                                   660 s
+   V2b 24 exact traces x {natural, oracle}                                                                  354 s
+   V2c prefill references: 32 histories (every position), ~80k tokens                                        37 s
+   V3 committed-state snapshots: 1 batch of 8 (mixed schedules, 2,500 tok) + 24 prefill refs at the frontiers (~70k tok)     117 s
+   V4 D2 window injection: 8 traces injected + same batch B1 (2,000 tok, shadow on) + 1 in flight injected + index-K dumps + prefill rebuild (20k tok)     230 s
+   guard readouts / idle drains between phases (8 x 8 s)                                                     64 s
+   work 1744 s + start 810 + stop 90 = wall 2644 s = 0.73 h -> 1.47 occupied GPU-h; ceiling (x1.3 + 0.5 invalid-start allowance) 2.41
+== contrast
+   warm prefixes, salt A                                                                                    253 s
+   warm prefixes, salt B                                                                                    253 s
+   6 forced windows (3 B1 + 3 D2-window), remainder chunks + 8,193 forced, shadow on                       1989 s
+   end-of-window index-K dumps + 2 prefill rebuilds (prefix + window, fresh salts)                          579 s
+   drains / readouts                                                                                         60 s
+   work 3135 s + start 810 + stop 90 = wall 4035 s = 1.12 h -> 2.24 occupied GPU-h; ceiling (x1.3 + 0.5 invalid-start allowance) 3.41

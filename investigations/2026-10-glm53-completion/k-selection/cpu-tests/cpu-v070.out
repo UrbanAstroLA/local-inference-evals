@@ -1,0 +1,74 @@
+# 2026-10-13T23:35:04Z image sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629; docker run --rm --network none --memory 12g --cpus 8 -e CUDA_VISIBLE_DEVICES= -e TRITON_INTERPRET=1 (CPU only)
+PASS T1a ref vs b12x torch reference [real_L3] {"worst_err_over_bound": 0.003707461745363681, "beyond_live_all_neginf": true}
+PASS T1a ref vs b12x torch reference [real_L43] {"worst_err_over_bound": 0.004168768605566135, "beyond_live_all_neginf": true}
+PASS T1a ref vs b12x torch reference [gauss] {"worst_err_over_bound": 0.0010243323992507028, "beyond_live_all_neginf": true}
+PASS T1a ref vs b12x torch reference [plateau] {"worst_err_over_bound": 0.0, "beyond_live_all_neginf": true}
+PASS T1a ref vs b12x torch reference [ulp] {"worst_err_over_bound": 0.0, "beyond_live_all_neginf": true}
+PASS T1b fp64 ref vs exact rationals [real_L3] {"exact_equal": false, "max_err_over_fp64_bound": 0.00037883348302662984, "n": 70}
+PASS T1b fp64 ref vs exact rationals [gauss] {"exact_equal": false, "max_err_over_fp64_bound": 0.00010252581804364164, "n": 70}
+PASS T1b fp64 ref vs exact rationals [plateau] {"exact_equal": true, "max_err_over_fp64_bound": 0.0, "n": 70}
+PASS T1b fp64 ref vs exact rationals [zero] {"exact_equal": true, "max_err_over_fp64_bound": 0.0, "n": 70}
+PASS T1b fp64 ref vs exact rationals [ulp] {"exact_equal": true, "max_err_over_fp64_bound": 0.0, "n": 70}
+PASS T1b fp64 ref vs exact rationals [edge] {"exact_equal": true, "max_err_over_fp64_bound": 0.0, "n": 70}
+PASS T1c fp32 orders within bound [real_L3] {"worst_err_over_bound": 0.0030328805848502845, "exact": null}
+PASS T1c fp32 orders within bound [real_L43] {"worst_err_over_bound": 0.0030890686783757635, "exact": null}
+PASS T1c fp32 orders within bound [gauss] {"worst_err_over_bound": 0.0018481689134750654, "exact": null}
+PASS T1c fp32 orders within bound and exact [plateau] {"worst_err_over_bound": 0.0, "exact": true}
+PASS T1c fp32 orders within bound and exact [zero] {"worst_err_over_bound": 0.0, "exact": true}
+PASS T1c fp32 orders within bound and exact [ulp] {"worst_err_over_bound": 0.0, "exact": true}
+PASS T1c fp32 orders within bound and exact [edge] {"worst_err_over_bound": 0.0, "exact": true}
+PASS T1d exact family exact at 330k-equivalent length [plateau] {"P": 82500, "distinct": 1501}
+PASS T1d exact family exact at 330k-equivalent length [zero] {"P": 82500, "distinct": 301}
+PASS T1d exact family exact at 330k-equivalent length [ulp] {"P": 82500, "distinct": 1600}
+PASS T1d exact family exact at 330k-equivalent length [edge] {"P": 82500, "distinct": 1520}
+PASS T2 family property [plateau] {"rows": [{"P": 32768, "t": 32.048828125, "eq_t": 40}, {"P": 32769, "t": 32.048828125, "eq_t": 40}]}
+PASS T2 family property [zero] {"rows": [{"P": 32768, "t": 0.0, "eq_t": 32478}, {"P": 32769, "t": 0.0, "eq_t": 32483}]}
+PASS T2 family property [ulp] {"rows": [{"P": 32768, "t": 32.381805419921875, "eq_t": 1}, {"P": 32769, "t": 32.381805419921875, "eq_t": 1}]}
+PASS T2 family property [edge] {"rows": [{"P": 32768, "t": 32.23876953125, "eq_t": 1}, {"P": 32769, "t": 32.23876953125, "eq_t": 1}]}
+PASS T2 poison outranks live pools (exact) {"poison": 57359.999938964844, "live_max": 32.53662109375}
+PASS T2 bank wrap derivation creates no duplicates {"wraps": 1}
+PASS T3 perfect {}
+PASS T3 permuted {}
+PASS T3 swap-out-lower -> C2 {}
+PASS T3 duplicate -> C1 {}
+PASS T3 ineligible id P -> C1 {}
+PASS T3 id -2 -> C1 {}
+PASS T3 missing slot -> C1 {}
+PASS T3 plateau any subset accepted / below rejected {}
+PASS T3 +0/-0 tie accepted {}
+PASS T3 tol: swap inside band accepted {}
+PASS T3 tol: swap outside band rejected {}
+PASS T3 C2b exact equal {}
+PASS T3 C2b 1-ulp off -> exact mismatch {}
+PASS T3 C2b within bound ok {}
+PASS T3 C2b 3x bound rejected {}
+PASS T3 C3 min last accepted {}
+PASS T3 C3 non-min last rejected {}
+PASS T3 C3 P<512: -1 last accepted {}
+PASS T3 C3 P<512: valid last rejected {}
+PASS T3 C4 reference self-consistent {}
+PASS T3 C4 corrupted entry rejected {}
+PASS T3 C4 missing tail rejected {}
+PASS T3b sync-light checkers == reference checkers {"cases": 336, "mismatches": []}
+PASS T4 expand kernel (interpreted) == torch composition == expand_ref {}
+PASS T4 0.7.0 kpool has no column-511 fix (policy pin) {}
+PASS T5 get_dcp_local_seq_lens == kplan.local_pools {}
+PASS T5 convert kernel (interpreted): local i -> 2i+r, -1 -> -1 with -inf {}
+PASS T5 unpack: Triton kernel (interpreted) == torch fallback {}
+PASS T5 gather-by-position kernel (interpreted) {}
+PASS T5 real _merge_b12x_dcp_topk via stub: global top-512, perspectives equal {"allgather_ok": true}
+PASS T6 fold plan == image _plan_two_level_fold {"detail": [[4097, 4, 17, true], [4097, 8, 17, true], [4097, 16, 17, true], [4097, 24, 17, true], [4097, 32, 17, true], [4097, 48, 17, true]]}
+PASS T6 fused routing rows<=16 on sm120 {"route": [true, true, true, true, true, false, false, false]}
+PASS T6 fused carry slack (topk 512, 32 heads) == 448 {"slack": 448}
+PASS T6 b12x constants == kplan {"slice": true, "max_slices": true, "supertile": true, "page": true, "fused_rows": true}
+PASS T6 fused cross-CTA merge arm (B1 cooperative; 0.7.0 serial at 11/23 CTAs) {"thresholds": {"11": 1073741824, "23": 1073741824, "47": 1073741824}, "force_last_cta": 1073741824}
+PASS T7 pack round trip; poison exactly beyond the live count; null page poisoned {}
+PASS T8 honest fake kernel: every family PASS {"verdict": "PASS", "counts": {"rows": 672}, "desc": {"stock_col511_rank_lt480": 72, "stock_col511_rows": 504, "err_over_bound_max": 0.0036464132701993757, "poison_beats_live_rows": 150, "poison_rows": 168, "wraps_max": 0, "n_band_max": 1763, "unfilled_neginf_false": 0, "n_band_max_by_family": {"rea
+PASS T8 fault: eligibility ignored (poison reachable) -> FAIL via C1 {"verdict": "FAIL", "counts": {"rows": 192, "c1": 144, "rank_c1": 144}}
+PASS T8 fault: newly live region dropped -> FAIL via C2 {"verdict": "FAIL", "counts": {"rows": 96, "c2": 42, "rank_c2": 42}}
+PASS T8 fault: bf16-rounded ranking -> FAIL / FAIL-NUMERIC {"verdict": "FAIL", "counts": {"rows": 192, "c2": 93, "c2_exact_numeric": 72, "c2b_bound": 72, "rank_c2": 84, "rank_c2b_bound": 72, "rank_c2_exact_numeric": 72}}
+PASS T8 fault: merge perspectives differ -> FAIL via persp {"verdict": "FAIL", "counts": {"rows": 96, "persp": 6}}
+PASS T9 run_cells: honest fake PASS, files written {"verdicts": ["PASS", "PASS"], "error": "", "results_lines": 12}
+PASS T9 run_cells: time guard -> NOT-RUN, summary still written {"tally": {"NOT-RUN": 2}}
+v070: 71 pass, 0 fail
+exit=0

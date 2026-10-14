@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# TEST SHIM: idle / busy GPU reports in the formats run_k_selection.sh parses.
+echo "nvidia-smi $*" >> "${SHIM_LOG:-/dev/null}"
+if printf '%s ' "$@" | grep -q -- '--query-gpu'; then
+  if [ "${SHIM_GPU_MEM_BUSY:-0}" = 1 ]; then echo "20000, 95"; else echo "3, 0"; fi
+  exit 0
+fi
+cat <<'T'
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|=========================================================================================|
+T
+[ "${SHIM_GPU_DESKTOP:-0}" = 1 ] && echo "|    0   N/A  N/A            1234      G   /usr/bin/gnome-shell                     50MiB |"
+[ "${SHIM_GPU_PROC:-0}" = 1 ] && echo "|    0   N/A  N/A            4242      G   /opt/someapp/electron                   210MiB |"
+echo "+-----------------------------------------------------------------------------------------+"

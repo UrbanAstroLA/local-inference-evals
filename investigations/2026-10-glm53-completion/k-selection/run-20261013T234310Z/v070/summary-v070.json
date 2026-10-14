@@ -1,0 +1,410 @@
+{
+ "header": {
+  "engine": "v070",
+  "image_env": "sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629",
+  "argv": [
+   "/k/kselect/run_k.py",
+   "--engine",
+   "v070",
+   "--plan",
+   "/k/plan.json",
+   "--bank",
+   "/k/bank",
+   "--out",
+   "/o",
+   "--max-seconds",
+   "775",
+   "--max-batches",
+   "0",
+   "--cells",
+   ""
+  ],
+  "file_pins_ok": true,
+  "env": {
+   "VLLM_USE_B12X_MHC": "auto",
+   "VLLM_B12X_GLM_H64_QUERY_PROJ": "auto",
+   "VLLM_USE_B12X_SPARSE_INDEXER": "1"
+  },
+  "device": "NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition",
+  "sm": "120",
+  "sms": 188,
+  "torch": "2.13.0+cu130",
+  "pkg_index_topk_is_paged": false
+ },
+ "cells": [
+  {
+   "id": "v070/tiled48/b16384",
+   "kind": "slice2",
+   "verdict": "FAIL",
+   "counts": {
+    "rows": 2016,
+    "c1": 0,
+    "c2": 0,
+    "c2_exact_numeric": 0,
+    "c2b_bound": 0,
+    "c3": 0,
+    "c3_first511": 0,
+    "c4": 0,
+    "rank_c1": 0,
+    "rank_c2": 0,
+    "rank_c2b_bound": 0,
+    "rank_c2_exact_numeric": 0,
+    "persp": 42,
+    "allgather": 0,
+    "route": 0
+   },
+   "by_family": {
+    "real_L3": {
+     "persp": 6,
+     "rows": 288
+    },
+    "real_L43": {
+     "persp": 6,
+     "rows": 288
+    },
+    "gauss": {
+     "persp": 6,
+     "rows": 288
+    },
+    "plateau": {
+     "persp": 6,
+     "rows": 288
+    },
+    "zero": {
+     "persp": 6,
+     "rows": 288
+    },
+    "ulp": {
+     "persp": 6,
+     "rows": 288
+    },
+    "edge": {
+     "persp": 6,
+     "rows": 288
+    }
+   },
+   "desc": {
+    "stock_col511_rank_lt480": 313,
+    "stock_col511_rows": 2016,
+    "err_over_bound_max": 0.003132059661603276,
+    "poison_beats_live_rows": 599,
+    "poison_rows": 672,
+    "wraps_max": 1,
+    "n_band_max": 34521,
+    "unfilled_neginf_false": 0,
+    "n_band_max_by_family": {
+     "real_L3": 7,
+     "real_L43": 7,
+     "gauss": 9,
+     "plateau": 40,
+     "zero": 34521,
+     "ulp": 1,
+     "edge": 1
+    }
+   },
+   "batches": 14,
+   "batches_planned": 14,
+   "fold_seen": {
+    "slices": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      1,
+      8
+     ]
+    ],
+    "total_slices": 9,
+    "reason": "within memory budget"
+   },
+   "fold_ok": true,
+   "secs": 15.56
+  },
+  {
+   "id": "v070/tiled48/b32768",
+   "kind": "slice3+chunk2",
+   "verdict": "FAIL",
+   "counts": {
+    "rows": 2016,
+    "c1": 0,
+    "c2": 0,
+    "c2_exact_numeric": 0,
+    "c2b_bound": 0,
+    "c3": 0,
+    "c3_first511": 0,
+    "c4": 0,
+    "rank_c1": 0,
+    "rank_c2": 0,
+    "rank_c2b_bound": 0,
+    "rank_c2_exact_numeric": 0,
+    "persp": 42,
+    "allgather": 0,
+    "route": 0
+   },
+   "by_family": {
+    "real_L3": {
+     "persp": 6,
+     "rows": 288
+    },
+    "real_L43": {
+     "persp": 6,
+     "rows": 288
+    },
+    "gauss": {
+     "persp": 6,
+     "rows": 288
+    },
+    "plateau": {
+     "persp": 6,
+     "rows": 288
+    },
+    "zero": {
+     "persp": 6,
+     "rows": 288
+    },
+    "ulp": {
+     "persp": 6,
+     "rows": 288
+    },
+    "edge": {
+     "persp": 6,
+     "rows": 288
+    }
+   },
+   "desc": {
+    "stock_col511_rank_lt480": 307,
+    "stock_col511_rows": 2016,
+    "err_over_bound_max": 0.003904865487050459,
+    "poison_beats_live_rows": 610,
+    "poison_rows": 672,
+    "wraps_max": 2,
+    "n_band_max": 67285,
+    "unfilled_neginf_false": 0,
+    "n_band_max_by_family": {
+     "real_L3": 8,
+     "real_L43": 10,
+     "gauss": 10,
+     "plateau": 40,
+     "zero": 67285,
+     "ulp": 1,
+     "edge": 1
+    }
+   },
+   "batches": 14,
+   "batches_planned": 14,
+   "fold_seen": {
+    "slices": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      1,
+      8
+     ]
+    ],
+    "total_slices": 9,
+    "reason": "within memory budget"
+   },
+   "fold_ok": true,
+   "secs": 11.95
+  },
+  {
+   "id": "v070/tiled48/b512",
+   "kind": "short(P~512)",
+   "verdict": "ERROR",
+   "counts": {
+    "rows": 0,
+    "c1": 0,
+    "c2": 0,
+    "c2_exact_numeric": 0,
+    "c2b_bound": 0,
+    "c3": 0,
+    "c3_first511": 0,
+    "c4": 0,
+    "rank_c1": 0,
+    "rank_c2": 0,
+    "rank_c2b_bound": 0,
+    "rank_c2_exact_numeric": 0,
+    "persp": 0,
+    "allgather": 0,
+    "route": 0
+   },
+   "by_family": {},
+   "desc": {
+    "stock_col511_rank_lt480": 0,
+    "stock_col511_rows": 0,
+    "err_over_bound_max": 0.0,
+    "poison_beats_live_rows": 0,
+    "poison_rows": 1,
+    "wraps_max": 0,
+    "n_band_max": 0,
+    "unfilled_neginf_false": 0
+   },
+   "batches": 0,
+   "batches_planned": 14,
+   "fold_seen": {
+    "slices": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      1,
+      8
+     ]
+    ],
+    "total_slices": 9,
+    "reason": "within memory budget"
+   },
+   "fold_ok": true,
+   "secs": 0.01
+  },
+  {
+   "id": "v070/tiled48/b15000",
+   "kind": "overlap(~120k tokens; stage-2 real-input range)",
+   "verdict": "NOT-RUN"
+  },
+  {
+   "id": "v070/tiled48/b41250",
+   "kind": "max(330k-equivalent)",
+   "verdict": "NOT-RUN"
+  },
+  {
+   "id": "v070/tiled24/b16384",
+   "kind": "slice2",
+   "verdict": "NOT-RUN"
+  },
+  {
+   "id": "v070/tiled24/b32768",
+   "kind": "slice3+chunk2",
+   "verdict": "NOT-RUN"
+  },
+  {
+   "id": "v070/tiled24/b512",
+   "kind": "short(P~512)",
+   "verdict": "NOT-RUN"
+  },
+  {
+   "id": "v070/tiled24/b15000",
+   "kind": "overlap(~120k tokens; stage-2 real-input range)",
+   "verdict": "NOT-RUN"
+  },
+  {
+   "id": "v070/tiled24/b41250",
+   "kind": "max(330k-equivalent)",
+   "verdict": "NOT-RUN"
+  },
+  {
+   "id": "v070/fused16/b5632",
+   "kind": "final-trim(k=9,ctas=11)",
+   "verdict": "NOT-RUN"
+  },
+  {
+   "id": "v070/fused16/b10560",
+   "kind": "mid-trim-1(k=16,ctas=11)",
+   "verdict": "NOT-RUN"
+  },
+  {
+   "id": "v070/fused16/b15488",
+   "kind": "mid-trim-2(k=23,ctas=11)",
+   "verdict": "NOT-RUN"
+  },
+  {
+   "id": "v070/fused16/b512",
+   "kind": "short(P~512)",
+   "verdict": "NOT-RUN"
+  },
+  {
+   "id": "v070/fused16/b15000",
+   "kind": "overlap(~120k tokens; stage-2 real-input range)",
+   "verdict": "NOT-RUN"
+  },
+  {
+   "id": "v070/fused16/b41250",
+   "kind": "max(330k-equivalent)",
+   "verdict": "NOT-RUN"
+  },
+  {
+   "id": "v070/fused8/b11776",
+   "kind": "final-trim(k=9,ctas=23)",
+   "verdict": "NOT-RUN"
+  },
+  {
+   "id": "v070/fused8/b22080",
+   "kind": "mid-trim-1(k=16,ctas=23)",
+   "verdict": "NOT-RUN"
+  },
+  {
+   "id": "v070/fused8/b32384",
+   "kind": "mid-trim-2(k=23,ctas=23)",
+   "verdict": "NOT-RUN"
+  },
+  {
+   "id": "v070/fused8/b512",
+   "kind": "short(P~512)",
+   "verdict": "NOT-RUN"
+  },
+  {
+   "id": "v070/fused8/b15000",
+   "kind": "overlap(~120k tokens; stage-2 real-input range)",
+   "verdict": "NOT-RUN"
+  },
+  {
+   "id": "v070/fused8/b41250",
+   "kind": "max(330k-equivalent)",
+   "verdict": "NOT-RUN"
+  }
+ ],
+ "error": "Traceback (most recent call last):\n  File \"/k/kselect/run_k.py\", line 197, in run_cells\n    run_batch(drv, eng, cell, fam, exact, bi, batch, banks, dev, agg, res_f, fails, timing)\n  File \"/k/kselect/run_k.py\", line 266, in run_batch\n    agg.desc[\"poison_beats_live_rows\"] += int(bool(ps[j, 0] > s[j, :pj].max()))\n                                                              ^^^^^^^^^^^^^^^\nRuntimeError: max(): Expected reduction dim to be specified for input.numel() == 0. Specify the reduction dim with the 'dim' argument.\n",
+ "stopped_by_time_guard": false,
+ "timing": {
+  "build": 1.5092918872833252,
+  "ref": 1.2704546451568604,
+  "kernel": 6.542834997177124,
+  "check": 18.081358671188354
+ },
+ "secs": 40.6,
+ "tally": {
+  "FAIL": 2,
+  "ERROR": 1,
+  "NOT-RUN": 19
+ }
+}

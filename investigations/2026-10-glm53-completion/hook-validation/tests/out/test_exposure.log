@@ -1,0 +1,9 @@
+W1013 23:46:22.853000 1 torch/utils/cpp_extension.py:178] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+PASS X1 exposure_counts == brute force (40 random batches x 12 rows) 
+PASS X2a forced row lands at (request, output index, layer slot) with the step id got [1, 6, 4, 1, 1, 10, 1, 1] exp [1, 6, 4, 1, 1, 10, 1, 1]
+PASS X2b unforced, padding and non-designated rows write nothing stray cells 0, non-designated 0
+PASS X2d full final selection recorded at the selection-record position (step id + pool ids) [1, 3, 26, 28, 30, 31, 10, -1]
+PASS X2c disarmed (outside a real forward: capture, dummy runs) writes nothing 
+PASS X3 no host-sync constructs in the in-graph / per-step device functions {}
+test_exposure: 6/6 checks passed
+rc=0

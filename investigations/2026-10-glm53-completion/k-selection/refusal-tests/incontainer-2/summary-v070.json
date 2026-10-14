@@ -1,0 +1,1 @@
+{"header": {"engine": "v070", "image_env": null, "argv": ["/k/kselect/run_k.py", "--engine", "v070", "--plan", "/k/plan.json", "--bank", "/k/bank", "--out", "/o", "--max-seconds", "60"], "file_pins_ok": true, "env": {"VLLM_B12X_GLM_H64_QUERY_PROJ": "auto", "VLLM_USE_B12X_MHC": "auto", "VLLM_USE_B12X_SPARSE_INDEXER": "1"}}, "aborted": "device"}

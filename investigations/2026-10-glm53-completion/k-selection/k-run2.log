@@ -1,0 +1,56 @@
+[00:57:10] frozen files verified against SHA256SUMS
+[00:57:10] budget: spent 0.1417, this run ceiling 0.5, approved 0.65
+[00:57:10] images pinned: v070=48e254d94f58 
+[00:57:10] pre-flight ok: GPU 0 used 20 MiB, util 0%
+[00:57:10] starting kselect-v070-1580 (48e254d94f58, wall cap 1740s)
+[01:05:37] v070 container finished: rc=0
+run_k_exit=0
+== b1: no summary (<runs>/k-selection/run-20261014T005710Z/b1/summary-b1.json)
+== v070: device NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition sm120 SMs 188 file pins ok True time-guard stop False secs 502.7 tally {'FAIL': 10, 'INVALID-ROUTE': 12}
+   v070/tiled48/b16384      slice2                             ~ 131,072 tok  FAIL               rows   2016 fails {'persp': 42}  err/B max 0.00313 col511 rank<480 311/2016
+      persp (batch x repeat records) 42; rows differing 2016 (order only, same column 511: 490): set 576 (non-tie 0), column 511 1508 (non-tie 770, min rank 24); perspective-0 relaunch differs in 42 records
+   v070/tiled48/b32768      slice3+chunk2                      ~ 262,144 tok  FAIL               rows   2016 fails {'persp': 42}  err/B max 0.0039 col511 rank<480 314/2016
+      persp (batch x repeat records) 42; rows differing 2016 (order only, same column 511: 391): set 576 (non-tie 0), column 511 1614 (non-tie 876, min rank 36); perspective-0 relaunch differs in 42 records
+   v070/tiled48/b512        short(P~512)                       ~   4,096 tok  FAIL               rows   2016 fails {'persp': 42}  err/B max 0.00299 col511 rank<480 326/1764
+      persp (batch x repeat records) 42; rows differing 1769 (order only, same column 511: 593): set 504 (non-tie 0), column 511 1170 (non-tie 617, min rank 1); perspective-0 relaunch differs in 42 records
+   v070/tiled48/b15000      overlap(~120k tokens; stage-2 real ~ 120,000 tok  FAIL               rows   2016 fails {'persp': 42}  err/B max 0.00297 col511 rank<480 311/2016
+      persp (batch x repeat records) 42; rows differing 2016 (order only, same column 511: 494): set 576 (non-tie 0), column 511 1509 (non-tie 789, min rank 16); perspective-0 relaunch differs in 42 records
+   v070/tiled48/b41250      max(330k-equivalent)               ~ 330,000 tok  FAIL               rows   2016 fails {'persp': 42}  err/B max 0.00327 col511 rank<480 311/2016
+      persp (batch x repeat records) 42; rows differing 2016 (order only, same column 511: 445): set 576 (non-tie 0), column 511 1563 (non-tie 791, min rank 54); perspective-0 relaunch differs in 42 records
+   v070/tiled24/b16384      slice2                             ~ 131,072 tok  FAIL               rows   1512 fails {'persp': 63}  err/B max 0.0033 col511 rank<480 226/1512
+      persp (batch x repeat records) 63; rows differing 1512 (order only, same column 511: 351): set 433 (non-tie 0), column 511 1152 (non-tie 591, min rank 23); perspective-0 relaunch differs in 63 records
+   v070/tiled24/b32768      slice3+chunk2                      ~ 262,144 tok  FAIL               rows   1512 fails {'persp': 63}  err/B max 0.00311 col511 rank<480 230/1512
+      persp (batch x repeat records) 63; rows differing 1512 (order only, same column 511: 367): set 432 (non-tie 0), column 511 1136 (non-tie 561, min rank 94); perspective-0 relaunch differs in 63 records
+   v070/tiled24/b512        short(P~512)                       ~   4,096 tok  FAIL               rows   1512 fails {'persp': 63}  err/B max 0.0028 col511 rank<480 244/1386
+      persp (batch x repeat records) 63; rows differing 1388 (order only, same column 511: 451): set 396 (non-tie 0), column 511 929 (non-tie 496, min rank 1); perspective-0 relaunch differs in 63 records
+   v070/tiled24/b15000      overlap(~120k tokens; stage-2 real ~ 120,000 tok  FAIL               rows   1512 fails {'persp': 63}  err/B max 0.00308 col511 rank<480 258/1512
+      persp (batch x repeat records) 63; rows differing 1512 (order only, same column 511: 386): set 432 (non-tie 0), column 511 1119 (non-tie 571, min rank 3); perspective-0 relaunch differs in 63 records
+   v070/tiled24/b41250      max(330k-equivalent)               ~ 330,000 tok  FAIL               rows   1512 fails {'persp': 63}  err/B max 0.00394 col511 rank<480 242/1512
+      persp (batch x repeat records) 63; rows differing 1512 (order only, same column 511: 304): set 433 (non-tie 0), column 511 1200 (non-tie 659, min rank 30); perspective-0 relaunch differs in 63 records
+   v070/fused16/b5632       final-trim(k=9,ctas=11)            ~  45,056 tok  INVALID-ROUTE      rows   2688 fails {'persp': 168, 'route': 168}  err/B max 0.00328 col511 rank<480 348/2016
+      persp (batch x repeat records) 168; rows differing 2016 (order only, same column 511: 533): set 576 (non-tie 0), column 511 1472 (non-tie 797, min rank 3); perspective-0 relaunch differs in 168 records
+   v070/fused16/b10560      mid-trim-1(k=16,ctas=11)           ~  84,480 tok  INVALID-ROUTE      rows   2688 fails {'persp': 168, 'route': 168}  err/B max 0.00314 col511 rank<480 320/2016
+      persp (batch x repeat records) 168; rows differing 2016 (order only, same column 511: 502): set 576 (non-tie 0), column 511 1500 (non-tie 807, min rank 25); perspective-0 relaunch differs in 168 records
+   v070/fused16/b15488      mid-trim-2(k=23,ctas=11)           ~ 123,904 tok  INVALID-ROUTE      rows   2688 fails {'persp': 168, 'route': 168}  err/B max 0.00398 col511 rank<480 331/2016
+      persp (batch x repeat records) 168; rows differing 2016 (order only, same column 511: 470): set 576 (non-tie 0), column 511 1534 (non-tie 816, min rank 12); perspective-0 relaunch differs in 168 records
+   v070/fused16/b512        short(P~512)                       ~   4,096 tok  INVALID-ROUTE      rows   2016 fails {'persp': 126, 'route': 126}  err/B max 0.00246 col511 rank<480 266/1386
+      persp (batch x repeat records) 126; rows differing 1386 (order only, same column 511: 450): set 396 (non-tie 0), column 511 929 (non-tie 497, min rank 2); perspective-0 relaunch differs in 126 records
+   v070/fused16/b15000      overlap(~120k tokens; stage-2 real ~ 120,000 tok  INVALID-ROUTE      rows   2016 fails {'persp': 126, 'route': 126}  err/B max 0.00369 col511 rank<480 251/1512
+      persp (batch x repeat records) 126; rows differing 1512 (order only, same column 511: 373): set 432 (non-tie 0), column 511 1129 (non-tie 576, min rank 18); perspective-0 relaunch differs in 126 records
+   v070/fused16/b41250      max(330k-equivalent)               ~ 330,000 tok  INVALID-ROUTE      rows   2016 fails {'persp': 126, 'route': 126}  err/B max 0.00314 col511 rank<480 249/1512
+      persp (batch x repeat records) 126; rows differing 1512 (order only, same column 511: 298): set 438 (non-tie 0), column 511 1202 (non-tie 645, min rank 18); perspective-0 relaunch differs in 126 records
+   v070/fused8/b11776       final-trim(k=9,ctas=23)            ~  94,208 tok  INVALID-ROUTE      rows   2688 fails {'persp': 336, 'route': 336}  err/B max 0.0029 col511 rank<480 337/2016
+      persp (batch x repeat records) 336; rows differing 2016 (order only, same column 511: 473): set 576 (non-tie 0), column 511 1530 (non-tie 829, min rank 19); perspective-0 relaunch differs in 336 records
+   v070/fused8/b22080       mid-trim-1(k=16,ctas=23)           ~ 176,640 tok  INVALID-ROUTE      rows   2688 fails {'persp': 336, 'route': 336}  err/B max 0.00296 col511 rank<480 323/2016
+      persp (batch x repeat records) 336; rows differing 2016 (order only, same column 511: 427): set 579 (non-tie 0), column 511 1573 (non-tie 849, min rank 46); perspective-0 relaunch differs in 336 records
+   v070/fused8/b32384       mid-trim-2(k=23,ctas=23)           ~ 259,072 tok  INVALID-ROUTE      rows   2688 fails {'persp': 336, 'route': 336}  err/B max 0.003 col511 rank<480 312/2016
+      persp (batch x repeat records) 336; rows differing 2016 (order only, same column 511: 434): set 576 (non-tie 0), column 511 1568 (non-tie 817, min rank 50); perspective-0 relaunch differs in 336 records
+   v070/fused8/b512         short(P~512)                       ~   4,096 tok  INVALID-ROUTE      rows   2016 fails {'persp': 231, 'route': 252}  err/B max 0.00302 col511 rank<480 244/1386
+      persp (batch x repeat records) 231; rows differing 1386 (order only, same column 511: 428): set 396 (non-tie 0), column 511 948 (non-tie 526, min rank 22); perspective-0 relaunch differs in 231 records
+   v070/fused8/b15000       overlap(~120k tokens; stage-2 real ~ 120,000 tok  INVALID-ROUTE      rows   2016 fails {'persp': 252, 'route': 252}  err/B max 0.0046 col511 rank<480 237/1512
+      persp (batch x repeat records) 252; rows differing 1512 (order only, same column 511: 372): set 434 (non-tie 0), column 511 1129 (non-tie 582, min rank 21); perspective-0 relaunch differs in 252 records
+   v070/fused8/b41250       max(330k-equivalent)               ~ 330,000 tok  INVALID-ROUTE      rows   2016 fails {'persp': 252, 'route': 252}  err/B max 0.00308 col511 rank<480 236/1512
+      persp (batch x repeat records) 252; rows differing 1512 (order only, same column 511: 345): set 432 (non-tie 0), column 511 1161 (non-tie 616, min rank 21); perspective-0 relaunch differs in 252 records
+   READING: not all cells PASS (['FAIL', 'INVALID-ROUTE']); nothing is retired for the cells that did not PASS. FAIL = a selection defect at that cell; FAIL-NUMERIC = kernel scores not bit-exact on an exact family; INCONCLUSIVE-BOUND = fp32 bound exceeded; INVALID-ROUTE = cell did not run the planned route; NOT-RUN/PARTIAL = time guard; ERROR = harness exception (see log).
+[01:05:37] results in <runs>/k-selection/run-20261014T005710Z
+[01:05:37] cost: 507s wall, 0.1408 GPU-hours (status done)

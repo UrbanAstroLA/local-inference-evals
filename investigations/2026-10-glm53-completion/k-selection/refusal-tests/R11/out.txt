@@ -1,0 +1,1 @@
+REFUSED: K_GPU_INDEX must be 0 or 1

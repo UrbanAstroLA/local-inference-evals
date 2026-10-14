@@ -1,0 +1,31 @@
+{
+ "mode": "frozen",
+ "kselect": "/ks",
+ "E1": {
+  "batch0": [
+   4,
+   3585,
+   4090,
+   4095,
+   4096,
+   4101,
+   4106,
+   4111
+  ],
+  "result": "RuntimeError at run_k.py:266: max(): Expected reduction dim to be specified for input.numel() == 0. Specify the reductio",
+  "poison_rows": 1
+ },
+ "E2": {
+  "verdicts": [
+   "PASS",
+   "ERROR",
+   "NOT-RUN"
+  ],
+  "files": [
+   "failures-v070.pt",
+   "results-v070.jsonl",
+   "summary-v070.json"
+  ],
+  "run_error": true
+ }
+}

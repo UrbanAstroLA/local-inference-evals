@@ -1,0 +1,19 @@
+{
+ "b1|clean|clean": 1969,
+ "b1|corrupt|clean": 9,
+ "b1|clean|none": 134,
+ "b1|none|none": 326,
+ "b1|corrupt|none": 97,
+ "b1|corrupt|corrupt": 7,
+ "b1|clean|corrupt": 1,
+ "d2|race|clean": 1722,
+ "d2|corrupt|clean": 202,
+ "d2|race|none": 164,
+ "d2|none|none": 341,
+ "d2|race|corrupt": 7,
+ "d2|corrupt|none": 67,
+ "d2|clean|none": 1,
+ "d2|clean|clean": 38,
+ "d2|corrupt|corrupt": 1,
+ "d2solo|clean|clean": 499
+}

@@ -1,0 +1,32 @@
+== rows of a REQUEST (not padding) with token length L <= 0, per cell
+  v070/tiled48/b512      K=5 dcp=2
+     batch 0 row  0 (request 0, Llast=4): L=-1 P=L//4=-1 per-rank P=[0, -1]  `if pj:` passes=True  s[j,:pj] has 0 elements (s has P_req=1 columns)
+     batch 0 row  1 (request 0, Llast=4): L= 0 P=L//4= 0 per-rank P=[0, 0]  `if pj:` passes=False  s[j,:pj] has 0 elements (s has P_req=1 columns)
+     batch 1 row 24 (request 4, Llast=5): L= 0 P=L//4= 0 per-rank P=[0, 0]  `if pj:` passes=False  s[j,:pj] has 0 elements (s has P_req=1 columns)
+  v070/tiled24/b512      K=5 dcp=2
+     batch 0 row  0 (request 0, Llast=4): L=-1 P=L//4=-1 per-rank P=[0, -1]  `if pj:` passes=True  s[j,:pj] has 0 elements (s has P_req=1 columns)
+     batch 0 row  1 (request 0, Llast=4): L= 0 P=L//4= 0 per-rank P=[0, 0]  `if pj:` passes=False  s[j,:pj] has 0 elements (s has P_req=1 columns)
+  v070/fused16/b512      K=5 dcp=2
+     batch 0 row  0 (request 0, Llast=4): L=-1 P=L//4=-1 per-rank P=[0, -1]  `if pj:` passes=True  s[j,:pj] has 0 elements (s has P_req=1 columns)
+     batch 0 row  1 (request 0, Llast=4): L= 0 P=L//4= 0 per-rank P=[0, 0]  `if pj:` passes=False  s[j,:pj] has 0 elements (s has P_req=1 columns)
+  v070/fused8/b512       K=5 dcp=2
+     batch 0 row  0 (request 0, Llast=4): L=-1 P=L//4=-1 per-rank P=[0, -1]  `if pj:` passes=True  s[j,:pj] has 0 elements (s has P_req=1 columns)
+     batch 0 row  1 (request 0, Llast=4): L= 0 P=L//4= 0 per-rank P=[0, 0]  `if pj:` passes=False  s[j,:pj] has 0 elements (s has P_req=1 columns)
+  cells affected: 4: ['v070/tiled48/b512', 'v070/tiled24/b512', 'v070/fused16/b512', 'v070/fused8/b512']
+
+== first failing evaluation in v070/tiled48/b512 (the ERROR cell)
+  batch 0 request 0: Llast=4 -> rows L=[-1, 0, 1, 2, 3, 4]  P=[-1, 0, 0, 0, 0, 1]
+  run_k.py:263-266: j=0 has pj=-1 (truthy) -> poison_rows += 1, then s[0, :-1] over a (6, 1) score matrix is EMPTY -> max() raises.
+  summary-v070.json for this cell records desc.poison_rows == 1, i.e. exactly one increment before the raise.
+
+== proposed fix A (kplan.targets): lowest target T >= cdiv(K+1, KPOOL) so every request row has L >= 1
+  v070/tiled48/b512      batches old [[4, 3585, 4090, 4095, 4096, 4101, 4106, 4111], [4112, 4613, 8194, 12295, 5, 3586, 4091, 4092]]
+                         batches new [[8, 3585, 4090, 4095, 4096, 4101, 4106, 4111], [4112, 4613, 8194, 12295, 9, 3586, 4091, 4092]]
+  v070/tiled24/b512      batches old [[4, 3585, 4090, 4095], [4096, 4101, 4106, 4111], [4112, 4613, 8194, 12295]]
+                         batches new [[8, 3585, 4090, 4095], [4096, 4101, 4106, 4111], [4112, 4613, 8194, 12295]]
+  v070/fused16/b512      batches old [[4, 3585], [4090, 4095], [4096, 4101], [4106, 4111], [4112, 4613], [8194, 12295]]
+                         batches new [[8, 3585], [4090, 4095], [4096, 4101], [4106, 4111], [4112, 4613], [8194, 12295]]
+  v070/fused8/b512       batches old [[4], [3585], [4090], [4095], [4096], [4101], [4106], [4111], [4112], [4613], [8194], [12295]]
+                         batches new [[8], [3585], [4090], [4095], [4096], [4101], [4106], [4111], [4112], [4613], [8194], [12295]]
+  cells changed: 4 (['v070/tiled48/b512', 'v070/tiled24/b512', 'v070/fused16/b512', 'v070/fused8/b512']); every other cell byte-identical as JSON: True
+  request rows with L <= 0 after fix A: 0

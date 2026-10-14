@@ -1,0 +1,15 @@
+0 on free row [59093, 0, 0, 0] num_sampled 1 num_rejected 3 | forced row [48394, 39177, 59353, 138834] 1 ptr 502155776
+0 off1 free row [59093, 0, 0, 0] num_sampled 1 num_rejected 3 | forced row [30098, 0, 59353, 138834] 1 ptr 502576256
+0 off2 free row [59093, 20, 21, 22] num_sampled 1 num_rejected 3 | forced row [30098, 0, 33, 34] 1 ptr 501914880
+0 on2 free row [59093, 20, 21, 22] num_sampled 1 num_rejected 3 | forced row [48394, 39177, 59353, 138834] 1 ptr 502086016
+0 committed prefix equal on/off: True | num equal: True True | full rows equal on/off: True off1/off2: False
+1 on free row [59093, 0, 0, 0] num_sampled 1 num_rejected 3 | forced row [48394, 39177, 59353, 138834] 1 ptr 501916352
+1 off1 free row [59093, 20, 21, 22] num_sampled 1 num_rejected 3 | forced row [30098, 0, 33, 34] 1 ptr 501312896
+1 off2 free row [59093, 2, 2, 2] num_sampled 1 num_rejected 3 | forced row [30098, 0, 3, 3] 1 ptr 501827904
+1 on2 free row [59093, 19, 0, 0] num_sampled 1 num_rejected 3 | forced row [48394, 39177, 59353, 138834] 1 ptr 500419264
+1 committed prefix equal on/off: True | num equal: True True | full rows equal on/off: False off1/off2: False
+2 on free row [59093, 502838656, 0, 2] num_sampled 1 num_rejected 3 | forced row [48394, 39177, 59353, 138834] 1 ptr 501826880
+2 off1 free row [59093, 504443488, 0, 2] num_sampled 1 num_rejected 3 | forced row [30098, 502775456, 502271024, 0] 1 ptr 501497856
+2 off2 free row [59093, 501831232, 0, 2] num_sampled 1 num_rejected 3 | forced row [30098, 502838448, 502848368, 0] 1 ptr 501978240
+2 on2 free row [59093, 19, 0, 0] num_sampled 1 num_rejected 3 | forced row [48394, 39177, 59353, 138834] 1 ptr 501825280
+2 committed prefix equal on/off: True | num equal: True True | full rows equal on/off: False off1/off2: False

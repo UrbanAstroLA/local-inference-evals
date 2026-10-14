@@ -1,0 +1,37 @@
+{
+ "v1/worker/gpu/model_runner.py": {
+  "pre": "101e456b28fbebd0cb73e3f43ae38b4726844a43ee96ec61239bbe455853205f",
+  "post": "8d276b3aac4bd6b5b2ef2c1f4b501140a4f1cd4e0dd1eb95f5a48d93e3a81d65",
+  "edits": 9,
+  "marker_lines": 12,
+  "added_lines": 24
+ },
+ "v1/worker/gpu/spec_decode/rejection_sampler.py": {
+  "pre": "308d4171f892f27231655289ceb03cd4566533c7d26b8f98bd62ef0a34f986f0",
+  "post": "f5a875ef0af0f8e5ceda52d1272c56e2badd07893192f44a0421183d29f75539",
+  "edits": 4,
+  "marker_lines": 7,
+  "added_lines": 14
+ },
+ "v1/worker/gpu/sample/sampler.py": {
+  "pre": "76070739447fc9f7563ef164ef80c0777208d1ea07dec3a6f6d2a0755188d7ae",
+  "post": "bbb1df8171c4750bea4f89ff76277a54b4b839caa25ef57d59313b2ce1e146c7",
+  "edits": 3,
+  "marker_lines": 6,
+  "added_lines": 11
+ },
+ "v1/attention/backends/mla/indexer.py": {
+  "pre": "00989c503028216cb349b506ccd7d4dc752bc9a54425a25b901c4905d95f5e0b",
+  "post": "6a1ec616ddbdecd6467e25a04bf012b50efb373dcfdf39f7fba6f8dc87980b86",
+  "edits": 2,
+  "marker_lines": 5,
+  "added_lines": 21
+ },
+ "model_executor/layers/sparse_attn_indexer_kpool.py": {
+  "pre": "146a7c6b525d56e17e56b5c55d81cb0c19bfe7e1cfe3304a4974c1047246c6e3",
+  "post": "12e24961bff1a9299e427336087fe60a240246363fc6155cf2c2b52e908b1c77",
+  "edits": 2,
+  "marker_lines": 5,
+  "added_lines": 10
+ }
+}

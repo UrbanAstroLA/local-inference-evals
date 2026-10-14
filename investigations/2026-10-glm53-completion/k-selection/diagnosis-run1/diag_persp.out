@@ -1,0 +1,21 @@
+== v070/tiled48/b16384  (rows per family = 2 batches x 48 = 96; each row ran 3 repeats)
+   family    paths                                                       col511 race (grp>1)  set race (tie)  grp>32 median grp
+   real_L3   {"quick-r1": 3, "quick-r2": 90, "quick-r3": 3}                       86/96             0/96           9         10
+   real_L43  {"coarse-quick": 2, "quick-r1": 17, "quick-r2": 76, "quick-r3": 1}           81/96             0/96           5          5
+   plateau   {"tie-r3": 96}                                                       96/96            96/96          96         39
+   zero      {"tie-r3": 96}                                                       96/96            96/96          96        735
+   ulp       {"quick-r3": 96}                                                     96/96             0/96           0          8
+   edge      {"quick-r2": 52, "quick-r3": 44}                                     52/96             0/96           0         24
+   all six modelled families: rows 576, col511-race rows 507, set-race (exact tie) rows 192, final group > 32 rows 206 (x3 repeats = 618 row-repeats)
+   exact-tie rows: tie group n_eq / slots: plateau:38/12, plateau:39/12, plateau:40/12, zero:728/216, zero:729/217, zero:732/220, zero:733/221, zero:734/222, zero:735/223, zero:736/224, zero:738/226, zero:739/227, zero:740/228, zero:741/229, zero:742/230, zero:743/231
+== v070/tiled48/b32768  (rows per family = 2 batches x 48 = 96; each row ran 3 repeats)
+   family    paths                                                       col511 race (grp>1)  set race (tie)  grp>32 median grp
+   real_L3   {"quick-r1": 1, "quick-r2": 92, "quick-r3": 3}                       87/96             0/96           7         10
+   real_L43  {"quick-r1": 9, "quick-r2": 85, "quick-r3": 2}                       86/96             0/96           5          8
+   plateau   {"tie-r3": 96}                                                       96/96            96/96          96         39
+   zero      {"tie-r3": 96}                                                       96/96            96/96          96        729
+   ulp       {"quick-r3": 96}                                                     96/96             0/96           0          8
+   edge      {"quick-r2": 52, "quick-r3": 44}                                     52/96             0/96           0         24
+   all six modelled families: rows 576, col511-race rows 513, set-race (exact tie) rows 192, final group > 32 rows 204 (x3 repeats = 612 row-repeats)
+   exact-tie rows: tie group n_eq / slots: plateau:38/12, plateau:39/12, plateau:40/12, zero:724/212, zero:725/213, zero:726/214, zero:727/215, zero:728/216, zero:729/217, zero:730/218, zero:732/220, zero:733/221, zero:734/222, zero:735/223, zero:736/224, zero:737/225
+done in 157.8s

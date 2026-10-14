@@ -1,0 +1,2 @@
+v070/tiled48/b16384: observed rank<480 (7 families, 3 repeats) = 313; model: exact families 288 (deterministic), real families ~19.0; remainder for gauss 6.0 of 288 gauss row-repeats
+v070/tiled48/b32768: observed rank<480 (7 families, 3 repeats) = 307; model: exact families 288 (deterministic), real families ~11.5; remainder for gauss 7.5 of 288 gauss row-repeats

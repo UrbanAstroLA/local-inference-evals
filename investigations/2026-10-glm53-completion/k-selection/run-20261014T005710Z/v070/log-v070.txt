@@ -1,0 +1,26 @@
+[   12.9s] {"engine": "v070", "image_env": "sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629", "argv": ["/k/kselect/run_k.py", "--engine", "v070", "--plan", "/k/plan.json", "--bank", "/k/bank", "--out", "/o", "--max-seconds", "1665", "--max-batches", "0", "--cells", ""], "file_pins_ok": true, "env": {"VLLM_USE_B12X_MHC": "auto", "VLLM_B12X_GLM_H64_QUERY_PROJ": "auto", "VLLM_USE_B12X_SPARSE_INDEXER": "1"}, "device": "NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition", "sm": "120", "sms": 188, "torch": "2.13.0+cu130", "pkg_index_topk_is_paged": false}
+[   13.1s] bank real_L3: 58599 pools, 256 query rows
+[   13.1s] bank real_L43: 58599 pools, 256 query rows
+[   30.2s] v070/tiled48/b16384      FAIL               rows=2016 fails={'persp': 42} err/B=0.00313 17.1s timing={'build': 0.8, 'ref': 0.5, 'kernel': 5.2, 'check': 10.6}
+[   44.1s] v070/tiled48/b32768      FAIL               rows=2016 fails={'persp': 42} err/B=0.0039 13.8s timing={'build': 1.4, 'ref': 1.3, 'kernel': 6.6, 'check': 21.6}
+[   55.2s] v070/tiled48/b512        FAIL               rows=2016 fails={'persp': 42} err/B=0.00299 11.2s timing={'build': 1.7, 'ref': 1.4, 'kernel': 8.0, 'check': 30.9}
+[   67.4s] v070/tiled48/b15000      FAIL               rows=2016 fails={'persp': 42} err/B=0.00297 12.2s timing={'build': 2.1, 'ref': 1.8, 'kernel': 8.9, 'check': 41.3}
+[   80.9s] v070/tiled48/b41250      FAIL               rows=2016 fails={'persp': 42} err/B=0.00327 13.5s timing={'build': 2.8, 'ref': 2.7, 'kernel': 9.8, 'check': 52.2}
+[   91.5s] v070/tiled24/b16384      FAIL               rows=1512 fails={'persp': 63} err/B=0.0033 10.5s timing={'build': 3.2, 'ref': 3.1, 'kernel': 11.7, 'check': 60.1}
+[  102.5s] v070/tiled24/b32768      FAIL               rows=1512 fails={'persp': 63} err/B=0.00311 11.1s timing={'build': 3.7, 'ref': 3.6, 'kernel': 13.6, 'check': 68.2}
+[  112.1s] v070/tiled24/b512        FAIL               rows=1512 fails={'persp': 63} err/B=0.0028 9.6s timing={'build': 3.9, 'ref': 3.7, 'kernel': 15.4, 'check': 75.6}
+[  122.0s] v070/tiled24/b15000      FAIL               rows=1512 fails={'persp': 63} err/B=0.00308 9.9s timing={'build': 4.2, 'ref': 4.0, 'kernel': 16.8, 'check': 83.4}
+[  132.9s] v070/tiled24/b41250      FAIL               rows=1512 fails={'persp': 63} err/B=0.00394 10.9s timing={'build': 4.8, 'ref': 4.7, 'kernel': 18.2, 'check': 91.6}
+[  168.3s] v070/fused16/b5632       INVALID-ROUTE      rows=2688 fails={'persp': 168, 'route': 168} err/B=0.00328 35.3s timing={'build': 5.1, 'ref': 5.0, 'kernel': 41.6, 'check': 102.9}
+[  203.8s] v070/fused16/b10560      INVALID-ROUTE      rows=2688 fails={'persp': 168, 'route': 168} err/B=0.00314 35.5s timing={'build': 5.6, 'ref': 5.3, 'kernel': 64.6, 'check': 114.6}
+[  239.5s] v070/fused16/b15488      INVALID-ROUTE      rows=2688 fails={'persp': 168, 'route': 168} err/B=0.00398 35.8s timing={'build': 6.1, 'ref': 5.7, 'kernel': 87.7, 'check': 126.3}
+[  264.0s] v070/fused16/b512        INVALID-ROUTE      rows=2016 fails={'persp': 126, 'route': 126} err/B=0.00246 24.5s timing={'build': 6.3, 'ref': 5.8, 'kernel': 103.8, 'check': 134.3}
+[  283.1s] v070/fused16/b15000      INVALID-ROUTE      rows=2016 fails={'persp': 126, 'route': 126} err/B=0.00369 19.1s timing={'build': 6.7, 'ref': 6.1, 'kernel': 113.4, 'check': 143.0}
+[  303.0s] v070/fused16/b41250      INVALID-ROUTE      rows=2016 fails={'persp': 126, 'route': 126} err/B=0.00314 19.9s timing={'build': 7.2, 'ref': 6.8, 'kernel': 122.9, 'check': 152.1}
+[  344.0s] v070/fused8/b11776       INVALID-ROUTE      rows=2688 fails={'persp': 336, 'route': 336} err/B=0.0029 41.0s timing={'build': 7.7, 'ref': 7.1, 'kernel': 151.2, 'check': 163.9}
+[  385.6s] v070/fused8/b22080       INVALID-ROUTE      rows=2688 fails={'persp': 336, 'route': 336} err/B=0.00296 41.6s timing={'build': 8.3, 'ref': 7.7, 'kernel': 179.2, 'check': 176.2}
+[  427.9s] v070/fused8/b32384       INVALID-ROUTE      rows=2688 fails={'persp': 336, 'route': 336} err/B=0.003 42.3s timing={'build': 9.0, 'ref': 8.4, 'kernel': 207.5, 'check': 188.6}
+[  455.6s] v070/fused8/b512         INVALID-ROUTE      rows=2016 fails={'persp': 231, 'route': 252} err/B=0.00302 27.7s timing={'build': 9.3, 'ref': 8.5, 'kernel': 226.6, 'check': 196.9}
+[  479.9s] v070/fused8/b15000       INVALID-ROUTE      rows=2016 fails={'persp': 252, 'route': 252} err/B=0.0046 24.3s timing={'build': 9.6, 'ref': 8.8, 'kernel': 241.3, 'check': 205.7}
+[  502.7s] v070/fused8/b41250       INVALID-ROUTE      rows=2016 fails={'persp': 252, 'route': 252} err/B=0.00308 22.8s timing={'build': 10.2, 'ref': 9.6, 'kernel': 253.6, 'check': 214.8}
+[  502.7s] tally {'FAIL': 10, 'INVALID-ROUTE': 12}; done in 502.7s

@@ -1,0 +1,41 @@
+W1013 23:07:32.933000 1 torch/utils/cpp_extension.py:178] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+/usr/local/lib/python3.12/dist-packages/triton/runtime/interpreter.py:594: RuntimeWarning: divide by zero encountered in log
+  return TensorHandle(op(arg.data), arg.dtype.scalar)
+PASS F1[natural] committed ids == history (150 tokens) 
+PASS F2[natural] every window position measured exactly once min/max nmeas 1/1
+PASS F3[natural] measured metrics == single-token reference on the exact prefix max|dlp| 0.00e+00 max|dpost| 0.00e+00 argmax_eq True
+PASS F4[natural] accepted-count histogram as scheduled hist(a=0..3) [131, 9, 0, 0]
+PASS F5[natural] bonus accounting: each step commits a+1 (clamped), sum == W sum 150 W 150
+PASS F6[natural] integer committed state after every step (total_len, num_computed, last, all_token_ids) inv [141, 0, 0, 0]
+/usr/local/lib/python3.12/dist-packages/triton/runtime/interpreter.py:491: RuntimeWarning: invalid value encountered in add
+  output = op(lhs.data, rhs.data)
+PASS F1[oracle] committed ids == history (150 tokens) 
+PASS F2[oracle] every window position measured exactly once min/max nmeas 1/1
+PASS F3[oracle] measured metrics == single-token reference on the exact prefix max|dlp| 0.00e+00 max|dpost| 0.00e+00 argmax_eq True
+PASS F4[oracle] accepted-count histogram as scheduled hist(a=0..3) [1, 0, 0, 37]
+PASS F5[oracle] bonus accounting: each step commits a+1 (clamped), sum == W sum 150 W 150
+PASS F6[oracle] integer committed state after every step (total_len, num_computed, last, all_token_ids) inv [39, 0, 0, 0]
+PASS F1[poison] committed ids == history (150 tokens) 
+PASS F2[poison] every window position measured exactly once min/max nmeas 1/1
+PASS F3[poison] measured metrics == single-token reference on the exact prefix max|dlp| 0.00e+00 max|dpost| 0.00e+00 argmax_eq True
+PASS F4[poison] accepted-count histogram as scheduled hist(a=0..3) [149, 0, 0, 0]
+PASS F5[poison] bonus accounting: each step commits a+1 (clamped), sum == W sum 150 W 150
+PASS F6[poison] integer committed state after every step (total_len, num_computed, last, all_token_ids) inv [150, 0, 0, 0]
+PASS F1[reject:1] committed ids == history (150 tokens) 
+PASS F2[reject:1] every window position measured exactly once min/max nmeas 1/1
+PASS F3[reject:1] measured metrics == single-token reference on the exact prefix max|dlp| 0.00e+00 max|dpost| 0.00e+00 argmax_eq True
+PASS F4[reject:1] accepted-count histogram as scheduled hist(a=0..3) [149, 0, 0, 0]
+PASS F5[reject:1] bonus accounting: each step commits a+1 (clamped), sum == W sum 150 W 150
+PASS F6[reject:1] integer committed state after every step (total_len, num_computed, last, all_token_ids) inv [150, 0, 0, 0]
+PASS F1[reject:2] committed ids == history (150 tokens) 
+PASS F2[reject:2] every window position measured exactly once min/max nmeas 1/1
+PASS F3[reject:2] measured metrics == single-token reference on the exact prefix max|dlp| 0.00e+00 max|dpost| 0.00e+00 argmax_eq True
+PASS F4[reject:2] accepted-count histogram as scheduled hist(a=0..3) [1, 74, 0, 0]
+PASS F5[reject:2] bonus accounting: each step commits a+1 (clamped), sum == W sum 150 W 150
+PASS F6[reject:2] integer committed state after every step (total_len, num_computed, last, all_token_ids) inv [76, 0, 0, 0]
+PASS F1[reject:3] committed ids == history (150 tokens) 
+PASS F2[reject:3] every window position measured exactly once min/max nmeas 1/1
+PASS F3[reject:3] measured metrics == single-token reference on the exact prefix max|dlp| 0.00e+00 max|dpost| 0.00e+00 argmax_eq True
+PASS F4[reject:3] accepted-count histogram as scheduled hist(a=0..3) [0, 1, 49, 0]
+PASS F5[reject:3] bonus accounting: each step commits a+1 (clamped), sum == W sum 150 W 150
+PASS F6[reject:3] integer committed state after every step (total_len, num_computed, last, all_token_ids) inv [51, 0, 0, 0]

@@ -1,0 +1,188 @@
+{
+ "final_by_rank": {
+  "0": {
+   "tail_w_stash": {
+    "mism": 100098,
+    "null": 100098,
+    "pos_contig": 0,
+    "pos_bounds": 0,
+    "s_mism": 0,
+    "d7_fallback": 0,
+    "foreign": 0,
+    "stale": 0,
+    "oor": 0,
+    "missing": 0,
+    "unexp": 0
+   },
+   "tail_w_seed": {
+    "mism": 0,
+    "null": 0,
+    "pos_contig": 0,
+    "pos_bounds": 0,
+    "s_mism": 0,
+    "d7_fallback": 0,
+    "foreign": 0,
+    "stale": 0,
+    "oor": 0,
+    "missing": 0,
+    "unexp": 0
+   },
+   "idx_w_dec": {
+    "mism": 0,
+    "null": 0,
+    "pos_contig": 0,
+    "pos_bounds": 0,
+    "s_mism": 0,
+    "d7_fallback": 0,
+    "foreign": 0,
+    "stale": 0,
+    "oor": 0,
+    "missing": 0,
+    "unexp": 0
+   },
+   "idx_w_pf": {
+    "mism": 0,
+    "null": 0,
+    "pos_contig": 0,
+    "pos_bounds": 0,
+    "s_mism": 0,
+    "d7_fallback": 0,
+    "foreign": 0,
+    "stale": 0,
+    "oor": 0,
+    "missing": 0,
+    "unexp": 0
+   },
+   "mla_w": {
+    "mism": 0,
+    "null": 0,
+    "pos_contig": 0,
+    "pos_bounds": 0,
+    "s_mism": 0,
+    "d7_fallback": 0,
+    "foreign": 0,
+    "stale": 0,
+    "oor": 0,
+    "missing": 0,
+    "unexp": 0
+   },
+   "pos": {
+    "mism": 0,
+    "null": 0,
+    "pos_contig": 0,
+    "pos_bounds": 4,
+    "s_mism": 0,
+    "d7_fallback": 0,
+    "foreign": 0,
+    "stale": 0,
+    "oor": 0,
+    "missing": 0,
+    "unexp": 0
+   }
+  },
+  "1": {
+   "tail_w_stash": {
+    "mism": 83415,
+    "null": 83415,
+    "pos_contig": 0,
+    "pos_bounds": 0,
+    "s_mism": 0,
+    "d7_fallback": 0,
+    "foreign": 0,
+    "stale": 0,
+    "oor": 0,
+    "missing": 0,
+    "unexp": 0
+   },
+   "tail_w_seed": {
+    "mism": 0,
+    "null": 0,
+    "pos_contig": 0,
+    "pos_bounds": 0,
+    "s_mism": 0,
+    "d7_fallback": 0,
+    "foreign": 0,
+    "stale": 0,
+    "oor": 0,
+    "missing": 0,
+    "unexp": 0
+   },
+   "idx_w_dec": {
+    "mism": 0,
+    "null": 0,
+    "pos_contig": 0,
+    "pos_bounds": 0,
+    "s_mism": 0,
+    "d7_fallback": 0,
+    "foreign": 0,
+    "stale": 0,
+    "oor": 0,
+    "missing": 0,
+    "unexp": 0
+   },
+   "idx_w_pf": {
+    "mism": 0,
+    "null": 0,
+    "pos_contig": 0,
+    "pos_bounds": 0,
+    "s_mism": 0,
+    "d7_fallback": 0,
+    "foreign": 0,
+    "stale": 0,
+    "oor": 0,
+    "missing": 0,
+    "unexp": 0
+   },
+   "mla_w": {
+    "mism": 0,
+    "null": 0,
+    "pos_contig": 0,
+    "pos_bounds": 0,
+    "s_mism": 0,
+    "d7_fallback": 0,
+    "foreign": 0,
+    "stale": 0,
+    "oor": 0,
+    "missing": 0,
+    "unexp": 0
+   },
+   "pos": {
+    "mism": 0,
+    "null": 0,
+    "pos_contig": 0,
+    "pos_bounds": 4,
+    "s_mism": 0,
+    "d7_fallback": 0,
+    "foreign": 0,
+    "stale": 0,
+    "oor": 0,
+    "missing": 0,
+    "unexp": 0
+   }
+  }
+ },
+ "per_phase": {
+  "0|pos|pos_bounds": {
+   "between/after:start": 4
+  },
+  "1|pos|pos_bounds": {
+   "between/after:start": 4
+  },
+  "1|tail_w_stash|mism": {
+   "V4-d2": 69185,
+   "V4-d2solo": 14230
+  },
+  "1|tail_w_stash|null": {
+   "V4-d2": 69185,
+   "V4-d2solo": 14230
+  },
+  "0|tail_w_stash|mism": {
+   "V4-d2": 83022,
+   "V4-d2solo": 17076
+  },
+  "0|tail_w_stash|null": {
+   "V4-d2": 83022,
+   "V4-d2solo": 17076
+  }
+ }
+}

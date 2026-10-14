@@ -1,0 +1,335 @@
+{
+ "checks": [
+  {
+   "name": "V0 unkeyed probes bitwise equal to B1 run-b1-a1",
+   "ok": true,
+   "detail": "[('q0', True), ('q1', True), ('q2', True), ('q3', True)]",
+   "level": "invalid"
+  },
+  {
+   "name": "coverage: no phase skipped for time",
+   "ok": true,
+   "detail": "[]",
+   "level": "inconclusive"
+  },
+  {
+   "name": "H1a returned ids == forced ids for every forced request",
+   "ok": true,
+   "detail": "113 requests, mismatches []",
+   "level": "invalid"
+  },
+  {
+   "name": "H1b hook records exist for every forced request",
+   "ok": true,
+   "detail": "missing []",
+   "level": "invalid"
+  },
+  {
+   "name": "H1c every window position measured exactly once",
+   "ok": true,
+   "detail": "[]",
+   "level": "invalid"
+  },
+  {
+   "name": "H1d no NaN in the tracked pre-mask log-probabilities",
+   "ok": true,
+   "detail": "[]",
+   "level": "invalid"
+  },
+  {
+   "name": "H1e post-mask values read from the served processed logits on every row",
+   "ok": true,
+   "detail": "[]",
+   "level": "invalid"
+  },
+  {
+   "name": "H1f served top_p mask inside the eligibility bounds",
+   "ok": true,
+   "detail": "[]",
+   "level": "invalid"
+  },
+  {
+   "name": "H1g last committed token == history after every step",
+   "ok": true,
+   "detail": "[]",
+   "level": "invalid"
+  },
+  {
+   "name": "H1h both ranks recorded identical metrics (same committed tokens per step)",
+   "ok": true,
+   "detail": "[]",
+   "level": "invalid"
+  },
+  {
+   "name": "H1i no hook errors",
+   "ok": true,
+   "detail": "[]",
+   "level": "invalid"
+  },
+  {
+   "name": "H1j accepted-count histograms follow the draft schedules (bonus-token accounting)",
+   "ok": true,
+   "detail": "[]",
+   "level": "invalid"
+  },
+  {
+   "name": "H2-null in-session unhooked decode-vs-prefill gap available (V1 free runs)",
+   "ok": true,
+   "detail": "n=3200",
+   "level": "inconclusive"
+  },
+  {
+   "name": "H2a forced-decode vs prefill gap within the unhooked null (x2, floors) and top-1 >= 0.95",
+   "ok": true,
+   "detail": "aligned {'0.5': 0.011465191841125488, '0.9': 0.04511330127716065, '0.99': 0.1189372408390045} top1 0.9891; tol {'0.5': 0.022717872060771693, '0.9': 0.3, '0.99': 1.5}",
+   "level": "invalid"
+  },
+  {
+   "name": "H2c per request: the aligned offset beats offsets +-1 by 10x (no misattributed request)",
+   "ok": true,
+   "detail": "80 requests; failing []",
+   "level": "invalid"
+  },
+  {
+   "name": "H2b alignment power: a one-position shift is grossly worse (median >= 1 nat and >= 20x aligned)",
+   "ok": true,
+   "detail": "shift medians {'median_plus1': 1.3782129883766174, 'median_minus1': 1.3770663142204285}, aligned median 0.01147",
+   "level": "inconclusive"
+  },
+  {
+   "name": "H3 every draft schedule agrees with the single-token (poison) advance within the decode-vs-decode null",
+   "ok": true,
+   "detail": "{\"natural\": {\"n\": 2400, \"top1\": 0.9758333333333333, \"0.5\": 0.020006418228149414, \"0.9\": 0.06710336208343505, \"0.99\": 0.49152664661406664}, \"oracle\": {\"n\": 2400, \"top1\": 0.9766666666666667, \"0.5\": 0.02069854736328125, \"0.9\": 0.0652903378009796, \"0.99\": 0.39168743848800486}, \"reject:1\": {\"n\": 2400, \"top1\": 0.9779166666666667, \"0.5\": 0.020081639289855957, \"0.9\": 0.06752520203590393, \"0.99\": 0.3625063",
+   "level": "invalid"
+  },
+  {
+   "name": "H4a integer committed state at every snapshot (tokens, total_len, num_computed)",
+   "ok": true,
+   "detail": "0 of 16 failing",
+   "level": "invalid"
+  },
+  {
+   "name": "H4b KDA recurrent state: committed slot (num_accepted-1) matches the prefill-built state",
+   "ok": true,
+   "detail": "{\"n\": 16, \"rel_q50\": 0.0010009403340518475, \"rel_max\": 0.001134862657636404, \"margin_min\": 179.80120203113293}",
+   "level": "invalid"
+  },
+  {
+   "name": "H4c index-K pools completed before the frontier: no gross pool (rel L2 > 0.25) vs the prefill build",
+   "ok": true,
+   "detail": "{\"n\": 132, \"q50\": 0.02349032089114189, \"q99\": 0.03781733360141514, \"gross\": 0.0}",
+   "level": "invalid"
+  },
+  {
+   "name": "H5a injected tokens: every window token of injected requests, none elsewhere",
+   "ok": true,
+   "detail": "{\"V4-d2-u0\": 440, \"V4-d2-u1\": 440, \"V4-d2-u2\": 440, \"V4-d2-u3\": 440, \"V4-d2-u4\": 440, \"V4-d2-u5\": 440}",
+   "level": "invalid"
+  },
+  {
+   "name": "H5b B1 arm: decode-written window pools match the prefill rebuild (gross <= 0.1 %; positive control for addressing)",
+   "ok": true,
+   "detail": "{\"n\": 800, \"gross\": 0.0, \"q50\": 0.02315666526556015, \"q999\": 0.042435905817896136}",
+   "level": "invalid"
+  },
+  {
+   "name": "H5c the 0.25 threshold discriminates (B1 99.9th percentile below it)",
+   "ok": true,
+   "detail": "{\"n\": 800, \"gross\": 0.0, \"q50\": 0.02315666526556015, \"q999\": 0.042435905817896136}",
+   "level": "inconclusive"
+  },
+  {
+   "name": "H5d injected arm at 8 in flight: corruption present (gross > 30 %)",
+   "ok": true,
+   "detail": "{\"n\": 800, \"gross\": 0.85375, \"q50\": 1.3983423709869385, \"q999\": 1.6906078722476963}",
+   "level": "invalid"
+  },
+  {
+   "name": "H5e injected request alone: no corruption (gross <= 0.1 %; D2's one-request signature)",
+   "ok": true,
+   "detail": "{\"n\": 100, \"gross\": 0.0, \"q50\": 0.022418553940951824, \"q999\": 0.03771103282272815}",
+   "level": "invalid"
+  },
+  {
+   "name": "H5f shadow ledger agrees with measured bytes (clean -> non-gross >= 99 %, corrupt -> gross >= 95 %)",
+   "ok": true,
+   "detail": "{\"clean_n\": 114, \"clean_ok\": 1.0, \"corrupt_n\": 349, \"corrupt_ok\": 1.0}",
+   "level": "invalid"
+  },
+  {
+   "name": "H5g guard: tail_w_stash null-block mismatches only from injected tokens (multiple of the injected count over indexer layers); no other mapping, position or D7 violation anywhere",
+   "ok": true,
+   "detail": "{\"tail_mism\": 43560, \"tail_null\": 43560, \"injected_tokens\": 3960, \"other_violations\": 0}",
+   "level": "invalid"
+  },
+  {
+   "name": "H5h window-exposure records exist at every designated position (in-graph hook captured)",
+   "ok": true,
+   "detail": "0 of 2193 designated positions without any layer record",
+   "level": "invalid"
+  }
+ ],
+ "invalid": [],
+ "inconclusive": [],
+ "h2_null_quantiles": {
+  "n": 3200,
+  "0.5": 0.011358936030385847,
+  "0.9": 0.04289596573442512,
+  "0.99": 0.10453179366989945
+ },
+ "h2_tolerances": {
+  "0.5": 0.022717872060771693,
+  "0.9": 0.3,
+  "0.99": 1.5
+ },
+ "h2_aligned": {
+  "n": 25600,
+  "top1": 0.989140625,
+  "0.5": 0.011465191841125488,
+  "0.9": 0.04511330127716065,
+  "0.99": 0.1189372408390045
+ },
+ "h2_power": {
+  "median_plus1": 1.3782129883766174,
+  "median_minus1": 1.3770663142204285
+ },
+ "h3": {
+  "null_n": 2400,
+  "tol": {
+   "0.5": 0.04306507110595703,
+   "0.9": 0.3,
+   "0.99": 1.5
+  },
+  "per_schedule": {
+   "natural": {
+    "n": 2400,
+    "top1": 0.9758333333333333,
+    "0.5": 0.020006418228149414,
+    "0.9": 0.06710336208343505,
+    "0.99": 0.49152664661406664
+   },
+   "oracle": {
+    "n": 2400,
+    "top1": 0.9766666666666667,
+    "0.5": 0.02069854736328125,
+    "0.9": 0.0652903378009796,
+    "0.99": 0.39168743848800486
+   },
+   "reject:1": {
+    "n": 2400,
+    "top1": 0.9779166666666667,
+    "0.5": 0.020081639289855957,
+    "0.9": 0.06752520203590393,
+    "0.99": 0.36250631809234324
+   },
+   "reject:2": {
+    "n": 2400,
+    "top1": 0.9783333333333334,
+    "0.5": 0.022005558013916016,
+    "0.9": 0.06892225742340086,
+    "0.99": 0.4379697656631454
+   },
+   "reject:3": {
+    "n": 2400,
+    "top1": 0.9775,
+    "0.5": 0.02031075954437256,
+    "0.9": 0.06551115512847899,
+    "0.99": 0.4179494857788068
+   },
+   "sched:20261013": {
+    "n": 2400,
+    "top1": 0.975,
+    "0.5": 0.020154714584350586,
+    "0.9": 0.06546715497970579,
+    "0.99": 0.5366445851325974
+   }
+  }
+ },
+ "h4_kda": {
+  "n": 16,
+  "rel_q50": 0.0010009403340518475,
+  "rel_max": 0.001134862657636404,
+  "margin_min": 179.80120203113293
+ },
+ "h4_idx": {
+  "n": 132,
+  "q50": 0.02349032089114189,
+  "q99": 0.03781733360141514,
+  "gross": 0.0
+ },
+ "h5_content": {
+  "d2": {
+   "n": 800,
+   "gross": 0.85375,
+   "q50": 1.3983423709869385,
+   "q999": 1.6906078722476963
+  },
+  "b1": {
+   "n": 800,
+   "gross": 0.0,
+   "q50": 0.02315666526556015,
+   "q999": 0.042435905817896136
+  },
+  "d2solo": {
+   "n": 100,
+   "gross": 0.0,
+   "q50": 0.022418553940951824,
+   "q999": 0.03771103282272815
+  }
+ },
+ "h5_shadow": {
+  "clean_n": 114,
+  "clean_ok": 1.0,
+  "corrupt_n": 349,
+  "corrupt_ok": 1.0
+ },
+ "guard_final": {
+  "11": {
+   "tail_w_stash": {
+    "mism": 23760,
+    "null": 23760
+   },
+   "tail_w_seed": {
+    "mism": 0
+   },
+   "idx_w_dec": {
+    "mism": 0
+   },
+   "idx_w_pf": {
+    "s_mism": 0,
+    "d7_fallback": 0
+   },
+   "pos": {
+    "pos_contig": 0,
+    "pos_bounds": 0
+   }
+  },
+  "12": {
+   "tail_w_stash": {
+    "mism": 19800,
+    "null": 19800
+   },
+   "tail_w_seed": {
+    "mism": 0
+   },
+   "idx_w_dec": {
+    "mism": 0
+   },
+   "idx_w_pf": {
+    "s_mism": 0,
+    "d7_fallback": 0
+   },
+   "pos": {
+    "pos_contig": 0,
+    "pos_bounds": 0
+   }
+  }
+ },
+ "guard_d2": {
+  "tail_mism": 43560,
+  "tail_null": 43560,
+  "injected_tokens": 3960,
+  "other_violations": 0
+ },
+ "verdict": "VALID"
+}

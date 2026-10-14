@@ -469,6 +469,37 @@ What was asked, run, found, corrected and withdrawn, in date order.
   added as factors. No GPU use is authorized yet, and no probability difference will be read as explaining completion
   rates.
 
+**2026-10-13 to 10-14. Review result, selection kernels, and the first hook validation (amendments 21-21f).**
+- **Where things stand:**
+  - corrections established;
+  - the completion gap's cause not established;
+  - fewer long replies finishing on stock 0.9.1 than on 0.7.0 is a hypothesis;
+  - finishing less is not looping more.
+- **B0 at seed 1236** (the review of B1's 9): 5 of 198 empty. Frozen reading (b): B1's excess is D7 or run-to-run
+  variation, and no D7 effect is inferred. 0 identical non-empty replies between B0 and B1, and 8 of 14 capped questions
+  changed status at the same seed. Single passes cannot resolve differences this size. 5.866 GPU-hours.
+- **An independent assessment (amendment 21)** revised the next stage:
+  - validate instruments first: K, then the hook;
+  - use B1 ×3 as the corrected baseline;
+  - test D2 by injecting the old tail mapping only during a forced decode window, never by removing D2 globally while
+    keeping D7.
+- **K:**
+  - B1's selection is correct at 1-330k tokens (34 of 34).
+  - Stock 0.7.0 selects correct sets, but its merge drops an arbitrary pool at column 511, differently per launch and per
+    GPU.
+  - **Owned:** the first run's plan gave 0.7.0 a negative-length row, which aborted most of its cells; the plan was fixed
+    after inspection and the rerun completed.
+  - 0.2825 GPU-hours.
+- **Hook validation attempt 1: INVALID.**
+  - The forcing logic is validated.
+  - Two hook bookkeeping bugs, analysis join errors, and thresholds without a measured basis account for every failure.
+  - No new B1 defect was found.
+  - Deep-layer pooled index-K keys vary grossly in about 0.5% of pools even between two prefills of the same tokens.
+  - 1.2117 GPU-hours.
+- **Next:** hook fixes and revised criteria go to independent review before the last authorized attempt. Cumulative
+  63.22 GPU-hours.
+  [Instrument validation](investigations/2026-10-glm53-completion/README.md#instrument-validation-k-and-the-force-history-hook-amendment-21).
+
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough
   qualification. They also said the D7 path "cannot run" where the basis is a reconstruction. These are reworded in the

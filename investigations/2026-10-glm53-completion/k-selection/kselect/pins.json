@@ -1,0 +1,31 @@
+{
+ "note": "sha256 of the selection-path files inside each pinned image (read on CPU, 2026-10-13, docker run --network none --entrypoint sha256sum). b12x and sparse_attn_indexer.py agree with source-review-lc/sources.sha256 prefixes; B1's kpool file is B0 + d7-fix.diff.",
+ "b1": {
+  "image": "sha256:799d3cf8e5d14a615b89c734a6a38b4be5729bb44bb6b56effc7cf7df747b88a",
+  "files": {
+   "/opt/b12x/b12x/attention/dsa_indexer/paged.py": "31ec54cecb81a486e6ac6239e4760d911aade1e94b0ef4810d815eae967888ff",
+   "/opt/b12x/b12x/attention/dsa_indexer/fused_indexer.py": "21665103519631520fefb98c425dcd781bb839ef6b41ff0f0699ef3fc443417d",
+   "/opt/b12x/b12x/attention/dsa_indexer/tiled_topk.py": "c4890290637233d95256e9d8e810e0e73a1bffe3e7997d435697427e37099c1b",
+   "/opt/b12x/b12x/attention/dsa_indexer/scratch.py": "d5561c6097ff8bc067e4367f6894d2c72f6d61e9d468312ae38985fd4a35e442",
+   "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer.py": "890c597b6ef2b016a9a476397800e47c1453b3700abf1a8cb324ea7d797d62b7",
+   "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py": "146a7c6b525d56e17e56b5c55d81cb0c19bfe7e1cfe3304a4974c1047246c6e3",
+   "/usr/local/lib/python3.12/dist-packages/vllm/models/glm5next/nvidia/ops/kpool_compress.py": "7fb8eab0d71c2c576f995cc91ffc79c5055269b9bed3b094247f36bc503b241d",
+   "/usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/b12x_dcp_topk.py": "2d7ba2fa090dcc2521fcb30f5674530492af564f7c2866d2e4b052149a593da4",
+   "/usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/utils.py": "cb9a34eb45a94847c8c9862952fe9ca5df4e7c7510425a5280afcbb48d941890"
+  }
+ },
+ "v070": {
+  "image": "sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629",
+  "files": {
+   "/opt/b12x/b12x/attention/dsa_indexer/paged.py": "c4b01d8a5900ef5fbebcbff54bc3e3af1587d02a96f065342aca435489bf3b22",
+   "/opt/b12x/b12x/attention/dsa_indexer/fused_indexer.py": "206c8b27cf7795e6b90d3d733741e44638823e5755228e78e2da400cdaa3776f",
+   "/opt/b12x/b12x/attention/dsa_indexer/tiled_topk.py": "d0d43d9f02ff6c683d0c0c4efcfcb2324749c9dc9998f0d46b3952bbbb6e8d6d",
+   "/opt/b12x/b12x/attention/dsa_indexer/scratch.py": "d66426d08a936d08280c65cb2e362f62435a3e2ca4496090dd75ba7e7246eff9",
+   "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer.py": "d5091557f9b12d968b323a6778838197464cf9e9c4959239de834648c001984d",
+   "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py": "e7935f2a9b8ecbc75410defff571d9940ad2abf511286bf0936d0c324936df39",
+   "/usr/local/lib/python3.12/dist-packages/vllm/models/glm5next/nvidia/ops/kpool_compress.py": "52959ea33234db6e7cfa94289dd263a15add3be4d2107285418c830b5c19e472",
+   "/usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/b12x_dcp_topk.py": "2d7ba2fa090dcc2521fcb30f5674530492af564f7c2866d2e4b052149a593da4",
+   "/usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/utils.py": "cb9a34eb45a94847c8c9862952fe9ca5df4e7c7510425a5280afcbb48d941890"
+  }
+ }
+}

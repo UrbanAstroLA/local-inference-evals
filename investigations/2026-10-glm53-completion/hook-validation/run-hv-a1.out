@@ -1,0 +1,89 @@
+budget: spent 0.0 + this attempt's cap 1.8 (wall 3240s) <= approved 2.4 GPU-h
+== preflight 2026-10-14T01:35:43Z
+index, memory.used [MiB], utilization.gpu [%]
+0, 20 MiB, 0 %
+1, 2269 MiB, 1 %
+== start 2026-10-14T01:35:43Z image=local/glm53-v0.9.1-b1-forcehook-mg:local (sha256:1b9f8b15d63197ad8b2ef2410321baedf9dcd55a112603bc77b887e8dac293d5) cap 3240s
+Validated 18 checkpoint shards
+Validated DFlash2 K3 draft checkpoint
+06a3b9d4b6583e1341aa06f0b167899f5a37bb3e20a4ddebb904b0ae15c4f6b6
+Started glm53-flash-exl3-b12x-vllm on http://127.0.0.1:127.0.0.1:8001/v1. Initial B12x/CuTe compilation can take several minutes.
+Target: k325 profile, wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1@0490d2f708b12145f6516555ab066aaeb401cd21
+Profile: fp8, KV cache: fp8_ds_mla, max length: 1048576, max sequences: 16, GPU memory utilization: 0.95
+MoE topology: TP2, EP1
+Speculation: DFlash2 K3, bfloat16 draft KV, from incoai/GLM-5.3-Flash-DFlash2@bf582e4eacc1810f76656d1811693ff6c6737d2a
+State rollback: baseline full-state rollback
+Vision: disabled (language-model-only mode)
+Follow startup: docker logs -f glm53-flash-exl3-b12x-vllm
+== readiness gate (cap 1080s)
+ready after 722s
+47:(EngineCore pid=273) INFO 10-14 01:36:15 [core.py:122] Initializing a V1 LLM engine (v0.1.dev20051+g487ecf187) with config: model='/model-repo/snapshots/0490d2f708b12145f6516555ab066aaeb401cd21', speculative_config=SpeculativeConfig(method='dflash', model='/draft-repo/snapshots/bf582e4eacc1810f76
+61:(Worker pid=369) INFO 10-14 01:36:38 [gpu_worker.py:386] Using V2 Model Runner
+242:(EngineCore pid=273) INFO 10-14 01:40:10 [kv_cache_utils.py:2299] GPU KV cache size: 4,707,515 tokens, Maximum concurrency for 1,048,576 tokens per request: 4.49x
+400:(Worker_TP0 pid=369) INFO 10-14 01:46:08 [model_runner.py:1044] Graph capturing finished in 160 secs, took 0.80 GiB
+402:(Worker_TP1 pid=403) INFO 10-14 01:46:08 [model_runner.py:1044] Graph capturing finished in 160 secs, took 0.76 GiB
+forcewin registered on 2 rank files; guard init on 2
+== client (deadline in 2338s)
+18:48:07 phase V0 done in 6s
+18:49:11 phase V2a-natural done in 59s
+18:49:59 phase V2a-oracle done in 42s
+18:52:39 phase V2a-poison done in 154s
+18:55:19 phase V2a-reject:1 done in 154s
+18:56:45 phase V2a-reject:2 done in 80s
+18:57:46 phase V2a-reject:3 done in 55s
+18:58:56 phase V2a-sched:20261013 done in 65s
+18:59:10 phase V2c done in 8s
+18:59:55 phase V1-free done in 39s
+19:00:40 phase V1-natural done in 39s
+19:02:25 phase V1-poison done in 99s
+19:02:35 phase V1-ref done in 4s
+19:03:29 phase V4-d2 done in 48s
+19:04:23 phase V4-b1 done in 48s
+19:05:02 phase V4-d2solo done in 32s
+19:05:13 phase V4-rebuild done in 5s
+19:06:10 phase V3-forced done in 52s
+19:06:51 phase V3-refs done in 35s
+19:07:08 phase V2b-natural-0 done in 10s
+19:07:38 phase V2b-natural-8 done in 25s
+19:09:31 phase V2b-natural-16 done in 106s
+19:09:45 phase V2b-oracle-0 done in 8s
+19:10:11 phase V2b-oracle-8 done in 20s
+19:11:32 phase V2b-oracle-16 done in 74s
+19:11:44 phase V2b-ref done in 6s
+client rc=0
+== cleanup 2026-10-14T02:11:50Z
+Stopped glm53-flash-exl3-b12x-vllm (container retained; start.sh replaces it on the next launch).
+stop rc=0
+no glm53* container running
+occupied 2181s x 2 GPU = 1.2117 GPU-h
+docker cp forcewin rc=0
+docker cp mapguard rc=0
+VERDICT INVALID
+PASS V0 unkeyed probes bitwise equal to B1 run-b1-a1  [[('q0', True), ('q1', True), ('q2', True), ('q3', True)]]
+PASS coverage: no phase skipped for time  [[]]
+PASS H1a returned ids == forced ids for every forced request  [153 requests, mismatches []]
+PASS H1b hook records exist for every forced request  [missing []]
+PASS H1c every window position measured exactly once  [[]]
+PASS H1d no NaN in the tracked pre-mask log-probabilities  [[]]
+PASS H1e post-mask values read from the served processed logits on every row  [[]]
+FAIL H1f served top_p mask inside the eligibility bounds  [['V2a-oracle-ddfd287416a4', 'V2a-oracle-4b92a6a90ec4', 'V2a-poison-34b209357e82', 'V2a-reject:1-34b209357e82', 'V2a-reject:3-ddfd287416a4']]
+PASS H1g last committed token == history after every step  [[]]
+PASS H1h both ranks recorded identical metrics (same committed tokens per step)  [[]]
+PASS H1i no hook errors  [[]]
+PASS H1j accepted-count histograms follow the draft schedules (bonus-token accounting)  [[]]
+PASS H2-null in-session unhooked decode-vs-prefill gap available (V1 free runs)  [n=7787]
+FAIL H2a forced-decode vs prefill gap within the unhooked null (x2, floors) and top-1 >= 0.95  [aligned {'0.5': 0.0001354217529296875, '0.9': 0.11318206787109375, '0.99': 0.7375808715820362} top1 0.8451; tol {'0.5': 0.01, '0.9': 0.3, '0.99': 1.5}]
+FAIL H2c per request: the aligned offset beats offsets +-1 by 10x (no misattributed request)  [120 requests; failing ['V1-natural-free6-doc4', 'V1-poison-free6-doc4', 'V2b-natural-57703691f509', 'V2b-natural-53fa5b3e066f', 'V2b-oracle-53fa5b3e066f']]
+FAIL H2b alignment power: a one-position shift is grossly worse (median >= 1 nat and >= 20x aligned)  [shift medians {'median_plus1': 0.0317840576171875, 'median_minus1': 0.030992507934570312}, aligned median 0.0001354]
+PASS H3 every draft schedule agrees with the single-token (poison) advance within the decode-vs-decode null  [{"natural": {"n": 11533, "top1": 0.9822249197953699, "0.5": 0.00017547607421875, "0.9": 0.09761199951171877, "0.99": 0.3991555786132816}, "oracle": {"n": 11533, "top1": 0.9828318737535767, "0.5": 0.00016021728515625, "0.9": 0.09866638183593765, "0.99": 0.43851577758789084}, "reject:1": {"n": 11533, "top1": 0.9833521200034683, "0.5": 0.0001697540283203125, "0.9": 0.0988895416259766, "0.99": 0.43247]
+PASS H4a integer committed state at every snapshot (tokens, total_len, num_computed)  [0 of 106 failing]
+FAIL H4b KDA recurrent state: committed slot (num_accepted-1) matches the prefill-built state  [{"n": 3604, "rel_q50": 0.044839883223176, "rel_max": 0.3641917109489441, "margin_min": 1.0422936274867878}]
+FAIL H4c index-K pools completed before the frontier: no gross pool (rel L2 > 0.25) vs the prefill build  [{"n": 4774, "q50": 0.035524412989616394, "q99": 0.2932922840118408, "gross": 0.014872224549643905}]
+PASS H5a injected tokens: every window token of injected requests, none elsewhere  [{"V4-d2-1e875e978fd4": 366, "V4-d2-376073921446": 518, "V4-d2-6d18c40f58df": 1427, "V4-d2-68a96f264430": 1582, "V4-d2-ddfd287416a4": 1862, "V4-d2-4b92a6a90ec4": 2282}]
+FAIL H5b B1 arm: decode-written window pools match the prefill rebuild (gross <= 0.1 %; positive control for addressing)  [{"n": 27984, "gross": 0.007111206403659234, "q50": 0.03239518217742443, "q999": 1.091868248105045}]
+FAIL H5c the 0.25 threshold discriminates (B1 99.9th percentile below it)  [{"n": 27984, "gross": 0.007111206403659234, "q50": 0.03239518217742443, "q999": 1.091868248105045}]
+PASS H5d injected arm at 8 in flight: corruption present (gross > 30 %)  [{"n": 27984, "gross": 0.6084905660377359, "q50": 0.326647087931633, "q999": 1.1659658577442158}]
+FAIL H5e injected request alone: no corruption (gross <= 0.1 %; D2's one-request signature)  [{"n": 5489, "gross": 0.0018218254691200583, "q50": 0.0311701912432909, "q999": 0.3504550549983759}]
+FAIL H5f shadow ledger agrees with measured bytes (clean -> non-gross >= 99 %, corrupt -> gross >= 95 %)  [{"clean_n": 5918, "clean_ok": 0.9957755998648192, "corrupt_n": 2970, "corrupt_ok": 0.6087542087542087}]
+FAIL H5g guard: tail_w_stash null-block mismatches only from injected tokens (multiple of the injected count over indexer layers); no other mapping, position or D7 violation anywhere  [{"tail_mism": 83415, "tail_null": 83415, "injected_tokens": 16683, "other_violations": 4}]
+FAIL H5h window-exposure records exist at every designated position (in-graph hook captured)  [14127 of 20469 designated positions without any layer record]

@@ -1,0 +1,14 @@
+[00:56:55] frozen files verified against SHA256SUMS
+[00:56:55] budget: spent 0.0, this run ceiling 0.5, approved 0.5
+[00:56:55] images pinned: b1=799d3cf8e5d1 v070=48e254d94f58 
+[00:56:55] pre-flight ok: GPU 0 used 3 MiB, util 0%
+[00:56:55] starting kselect-b1-1122 (799d3cf8e5d1, wall cap 2s)
+[00:56:57] b1 hit the wall cap (rc 124)
+[00:56:57] pre-flight ok: GPU 0 used 3 MiB, util 0%
+[00:56:57] starting kselect-v070-1122 (48e254d94f58, wall cap 2s)
+[00:56:59] v070 hit the wall cap (rc 124)
+== b1: no summary (<runs>/k-selection/refusal-tests/R16/run-20261014T005655Z/b1/summary-b1.json)
+== v070: no summary (<runs>/k-selection/refusal-tests/R16/run-20261014T005655Z/v070/summary-v070.json)
+[00:56:59] results in <runs>/k-selection/refusal-tests/R16/run-20261014T005655Z
+[00:56:59] cost: 4s wall, 0.0011 GPU-hours (status wall-cap-v070)
+CHECKED: wall cap -> status wall-cap-v070, both containers removed, 4 s billed

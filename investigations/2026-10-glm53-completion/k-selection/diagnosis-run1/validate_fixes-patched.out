@@ -1,0 +1,98 @@
+{
+ "mode": "patched",
+ "kselect": "/ks",
+ "E1": {
+  "batch0": [
+   8,
+   3585,
+   4090,
+   4095,
+   4096,
+   4101,
+   4106,
+   4111
+  ],
+  "result": "reference phase completed; first driver call reached",
+  "poison_rows": 47
+ },
+ "E2": {
+  "verdicts": [
+   "PASS",
+   "ERROR",
+   "PASS"
+  ],
+  "files": [
+   "failures-v070.pt",
+   "results-v070.jsonl",
+   "summary-v070.json"
+  ],
+  "run_error": false
+ },
+ "E3": {
+  "order_only": [
+   {
+    "persp_rows_differ": 1,
+    "persp_rows_order_only_cols_0_510": 1
+   },
+   0,
+   null
+  ],
+  "col511_swap_nontie": [
+   {
+    "persp_rows_differ": 1,
+    "persp_rows_order_only_cols_0_510": 0,
+    "persp_rows_col511_differ": 1,
+    "persp_col511_rank_min": 0,
+    "persp_rows_col511_differ_nontie": 1
+   },
+   0,
+   {
+    "set_differs": false,
+    "n_only_a": 0,
+    "n_only_b": 0,
+    "col511": [
+     1488,
+     1999
+    ],
+    "col511_rank": [
+     500,
+     0
+    ],
+    "col511_tie": false,
+    "col511_ref": [
+     1490.0,
+     1999.0
+    ]
+   }
+  ],
+  "set_diff_tie": [
+   {
+    "persp_rows_differ": 1,
+    "persp_rows_order_only_cols_0_510": 0,
+    "persp_rows_set_differ": 1,
+    "persp_rows_col511_differ": 1,
+    "persp_col511_rank_min": 500
+   },
+   0,
+   {
+    "set_differs": true,
+    "n_only_a": 1,
+    "n_only_b": 1,
+    "set_nontie": false,
+    "col511": [
+     1488,
+     1480
+    ],
+    "col511_rank": [
+     500,
+     500
+    ],
+    "col511_tie": true,
+    "col511_ref": [
+     1490.0,
+     1490.0
+    ]
+   }
+  ]
+ }
+}

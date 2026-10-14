@@ -1,0 +1,111 @@
+== test_d2_inject (hooked) 2026-10-13T23:45:59Z
+WARNING 10-13 23:46:06 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-13 23:46:06 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-13 23:46:06 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+PASS D1a injected window tokens -> OLD mapping (null tail block 0, pos % 8) got [4, 5, 6, 7] generic [4, 5, 6, 7]
+PASS D1b other request and the injected request's PREFILL rows keep B1's circular mapping r1 [53, 54, 55, 48] r2 [56, 57, 58, 59]
+PASS D1c padding rows (null block) stay PAD [-1, -1, -1, -1]
+PASS D1d persistent slot-mapping buffer holds the final mapping (graph-safe write kept) 
+PASS D1e injection off (step not armed): builder output byte-identical to B1 
+PASS D1f no request keyed: builder output byte-identical to B1 
+PASS D1g window bounds respected: positions >= P+hi revert to B1 [4, 5, 46, 47]
+PASS D2 B1 arm: every committed decode pool == compress of the request's own keys (incl. redo) 21 pools, shadow classes [1]
+PASS D3a injected arm (3 requests): committed pools are corrupted 17 of 21 pools wrong
+PASS D3b shadow ledger: every 'clean' pool is byte-correct, every 'corrupt' pool is wrong clean 2 (all ok True), corrupt 2 (any ok False), race 17 (ok 2)
+PASS D4 one injected request alone: zero corrupted pools (D2's 1-in-flight signature) 10 pools
+PASS D5a frozen guard, B1 arm: zero tail_w_stash / idx_w_dec mismatches {'tail_mism': 0, 'tail_null': 0, 'tail_checked': 12, 'idx_mism': 0, 'idx_written': 3}
+PASS D5b frozen guard, injected arm: tail_w_stash mism == null-class == every injected token; idx_w_dec slots still correct {'tail_mism': 12, 'tail_null': 12, 'tail_checked': 12, 'idx_mism': 0, 'idx_written': 3}
+PASS D6a d2_tail_mapping counts injected tokens per request [4, 4, 0]
+PASS D6b shadow input recorded for the step (final mapping, positions, qsl) 
+PASS D6c _shadow_step fills the device class table (colliding requests -> race; uninjected r2 clean) [[3, 0, 0, 0], [3, 0, 0, 0], [1, 0, 0, 0]]
+test_d2_inject: 16/16 checks passed
+rc=0
+== test_exposure (hooked) 2026-10-13T23:46:16Z
+PASS X1 exposure_counts == brute force (40 random batches x 12 rows) 
+PASS X2a forced row lands at (request, output index, layer slot) with the step id got [1, 6, 4, 1, 1, 10, 1, 1] exp [1, 6, 4, 1, 1, 10, 1, 1]
+PASS X2b unforced, padding and non-designated rows write nothing stray cells 0, non-designated 0
+PASS X2d full final selection recorded at the selection-record position (step id + pool ids) [1, 3, 26, 28, 30, 31, 10, -1]
+PASS X2c disarmed (outside a real forward: capture, dummy runs) writes nothing 
+PASS X3 no host-sync constructs in the in-graph / per-step device functions {}
+test_exposure: 6/6 checks passed
+rc=0
+== inert_orig (orig) 2026-10-13T23:46:24Z
+rc=0
+== inert_hooked_off (hooked) 2026-10-13T23:46:42Z
+rc=0
+== inert_hooked_on_unkeyed (hooked) 2026-10-13T23:47:00Z
+rc=0
+inert_orig 47e7bc7b04923410c5294bc7a20044269706b3595fb932d9480c32a6d9fd8892
+inert_hooked_off 47e7bc7b04923410c5294bc7a20044269706b3595fb932d9480c32a6d9fd8892
+inert_hooked_on_unkeyed 47e7bc7b04923410c5294bc7a20044269706b3595fb932d9480c32a6d9fd8892
+PASS I1 identical outputs: original files / hooked env unset / hooked env on, no keyed request
+== test_patch_mapguard (hooked-mapguard) 2026-10-13T23:47:17Z
+WARNING 10-13 23:47:24 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-13 23:47:24 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-13 23:47:24 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+PASS MG1 hooked B1-mapguard index-K file imports with both instrumentations (forcewin on: True)
+rc=0
+== image_installed (image) 2026-10-13T23:47:31Z
+PASS forcewin_hooks.py c079560e7390fac1
+PASS v1/attention/backends/mla/indexer.py 6a1ec616ddbdecd6
+PASS v1/worker/gpu/model_runner.py 8d276b3aac4bd6b5
+PASS v1/worker/gpu/sample/sampler.py bbb1df8171c4750b
+PASS v1/worker/gpu/spec_decode/rejection_sampler.py f5a875ef0af0f8e5
+PASS model_executor/layers/sparse_attn_indexer_kpool.py f570b068d5515a16
+PASS IMG1 installed files == reviewed hook copies (6 files)
+rc=0
+== image_mapguard_import (image) 2026-10-13T23:47:31Z
+WARNING 10-13 23:47:38 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-13 23:47:38 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-13 23:47:38 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+PASS MG1 hooked B1-mapguard index-K file imports with both instrumentations (forcewin on: True)
+rc=0
+== image_inert_off (image) 2026-10-13T23:47:45Z
+WARNING 10-13 23:47:51 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-13 23:47:51 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-13 23:47:51 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+Traceback (most recent call last):
+ImportError: cannot import name 'SparseAttnIndexerKpool' from partially initialized module 'vllm.model_executor.layers.sparse_attn_indexer_kpool' (most likely due to a circular import) (/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py)
+rc=1
+== image_d2_inject (image) 2026-10-13T23:47:59Z
+WARNING 10-13 23:48:05 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-13 23:48:05 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-13 23:48:05 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+PASS D1a injected window tokens -> OLD mapping (null tail block 0, pos % 8) got [4, 5, 6, 7] generic [4, 5, 6, 7]
+PASS D1b other request and the injected request's PREFILL rows keep B1's circular mapping r1 [53, 54, 55, 48] r2 [56, 57, 58, 59]
+PASS D1c padding rows (null block) stay PAD [-1, -1, -1, -1]
+PASS D1d persistent slot-mapping buffer holds the final mapping (graph-safe write kept) 
+PASS D1e injection off (step not armed): builder output byte-identical to B1 
+PASS D1f no request keyed: builder output byte-identical to B1 
+PASS D1g window bounds respected: positions >= P+hi revert to B1 [4, 5, 46, 47]
+PASS D2 B1 arm: every committed decode pool == compress of the request's own keys (incl. redo) 21 pools, shadow classes [1]
+PASS D3a injected arm (3 requests): committed pools are corrupted 17 of 21 pools wrong
+PASS D3b shadow ledger: every 'clean' pool is byte-correct, every 'corrupt' pool is wrong clean 2 (all ok True), corrupt 2 (any ok False), race 17 (ok 2)
+PASS D4 one injected request alone: zero corrupted pools (D2's 1-in-flight signature) 10 pools
+PASS D5a frozen guard, B1 arm: zero tail_w_stash / idx_w_dec mismatches {'tail_mism': 0, 'tail_null': 0, 'tail_checked': 12, 'idx_mism': 0, 'idx_written': 3}
+PASS D5b frozen guard, injected arm: tail_w_stash mism == null-class == every injected token; idx_w_dec slots still correct {'tail_mism': 12, 'tail_null': 12, 'tail_checked': 12, 'idx_mism': 0, 'idx_written': 3}
+PASS D6a d2_tail_mapping counts injected tokens per request [4, 4, 0]
+PASS D6b shadow input recorded for the step (final mapping, positions, qsl) 
+PASS D6c _shadow_step fills the device class table (colliding requests -> race; uninjected r2 clean) [[3, 0, 0, 0], [3, 0, 0, 0], [1, 0, 0, 0]]
+test_d2_inject: 16/16 checks passed
+rc=0
+== image_exposure (image) 2026-10-13T23:48:15Z
+PASS X1 exposure_counts == brute force (40 random batches x 12 rows) 
+PASS X2a forced row lands at (request, output index, layer slot) with the step id got [1, 6, 4, 1, 1, 10, 1, 1] exp [1, 6, 4, 1, 1, 10, 1, 1]
+PASS X2b unforced, padding and non-designated rows write nothing stray cells 0, non-designated 0
+PASS X2d full final selection recorded at the selection-record position (step id + pool ids) [1, 3, 26, 28, 30, 31, 10, -1]
+PASS X2c disarmed (outside a real forward: capture, dummy runs) writes nothing 
+PASS X3 no host-sync constructs in the in-graph / per-step device functions {}
+test_exposure: 6/6 checks passed
+rc=0
+== analysis dry run (good)
+VERDICT VALID
+== analysis dry run (bad)
+VERDICT INVALID
+FAIL H1c every window position measured exactly once  [['V2a-oracle-t0']]
+FAIL H2c per request: the aligned offset beats offsets +-1 by 10x (no misattributed request)  [80 requests; failing ['V2a-oracle-t0']]
+FAIL H3 every draft schedule agrees with the single-token (poison) advance within the decode-vs-decode null  [{"natural": {"n": 2400, "top1": 0.9766666666666667
+FAIL H4b KDA recurrent state: committed slot (num_accepted-1) matches the prefill-built state  [{"n": 16, "rel_q50": 0.0010104863322339952, "rel_max": 0.2021776
+FAIL H5b B1 arm: decode-written window pools match the prefill rebuild (gross <= 0.1 %; positive control for addressing)  [{"n": 800, "gross": 0.00125, "q50": 0
+FAIL H5c the 0.25 threshold discriminates (B1 99.9th percentile below it)  [{"n": 800, "gross": 0.00125, "q50": 0.023482336662709713, "q999": 0.3092132070847148
+FAIL H5g guard: tail_w_stash null-block mismatches only from injected tokens (multiple of the injected count over indexer layers); no other mapping, position or

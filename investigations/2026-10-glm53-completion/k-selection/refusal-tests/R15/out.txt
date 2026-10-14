@@ -1,0 +1,7 @@
+[00:56:51] frozen files verified against SHA256SUMS
+[00:56:51] budget: spent 0.0, this run ceiling 0.5, approved 0.5
+[00:56:51] images pinned: b1=799d3cf8e5d1 v070=48e254d94f58 
+[00:56:51] pre-flight ok: GPU 0 used 3 MiB, util 0%
+[00:56:51] starting kselect-b1-916 (799d3cf8e5d1, wall cap 850s)
+[00:56:55] cost: 4s wall, 0.0011 GPU-hours (status interrupted)
+CHECKED: TERM -> exit 130 after 4s, cost line 'interrupted', container removed

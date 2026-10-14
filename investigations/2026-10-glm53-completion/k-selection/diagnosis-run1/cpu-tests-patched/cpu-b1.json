@@ -1,0 +1,540 @@
+{
+ "engine": "b1",
+ "tests": [
+  {
+   "name": "T1a ref vs b12x torch reference [real_L3]",
+   "ok": true,
+   "worst_err_over_bound": 0.004094031603099746,
+   "beyond_live_all_neginf": true
+  },
+  {
+   "name": "T1a ref vs b12x torch reference [real_L43]",
+   "ok": true,
+   "worst_err_over_bound": 0.003393435608614383,
+   "beyond_live_all_neginf": true
+  },
+  {
+   "name": "T1a ref vs b12x torch reference [gauss]",
+   "ok": true,
+   "worst_err_over_bound": 0.0009292902493280991,
+   "beyond_live_all_neginf": true
+  },
+  {
+   "name": "T1a ref vs b12x torch reference [plateau]",
+   "ok": true,
+   "worst_err_over_bound": 0.0,
+   "beyond_live_all_neginf": true
+  },
+  {
+   "name": "T1a ref vs b12x torch reference [ulp]",
+   "ok": true,
+   "worst_err_over_bound": 0.0,
+   "beyond_live_all_neginf": true
+  },
+  {
+   "name": "T1b fp64 ref vs exact rationals [real_L3]",
+   "ok": true,
+   "exact_equal": false,
+   "max_err_over_fp64_bound": 0.00048435519092268647,
+   "n": 70
+  },
+  {
+   "name": "T1b fp64 ref vs exact rationals [gauss]",
+   "ok": true,
+   "exact_equal": false,
+   "max_err_over_fp64_bound": 0.00022615598185370386,
+   "n": 70
+  },
+  {
+   "name": "T1b fp64 ref vs exact rationals [plateau]",
+   "ok": true,
+   "exact_equal": true,
+   "max_err_over_fp64_bound": 0.0,
+   "n": 70
+  },
+  {
+   "name": "T1b fp64 ref vs exact rationals [zero]",
+   "ok": true,
+   "exact_equal": true,
+   "max_err_over_fp64_bound": 0.0,
+   "n": 70
+  },
+  {
+   "name": "T1b fp64 ref vs exact rationals [ulp]",
+   "ok": true,
+   "exact_equal": true,
+   "max_err_over_fp64_bound": 0.0,
+   "n": 70
+  },
+  {
+   "name": "T1b fp64 ref vs exact rationals [edge]",
+   "ok": true,
+   "exact_equal": true,
+   "max_err_over_fp64_bound": 0.0,
+   "n": 70
+  },
+  {
+   "name": "T1c fp32 orders within bound [real_L3]",
+   "ok": true,
+   "worst_err_over_bound": 0.003273432762752125,
+   "exact": null
+  },
+  {
+   "name": "T1c fp32 orders within bound [real_L43]",
+   "ok": true,
+   "worst_err_over_bound": 0.0037124809790681826,
+   "exact": null
+  },
+  {
+   "name": "T1c fp32 orders within bound [gauss]",
+   "ok": true,
+   "worst_err_over_bound": 0.001299866318652498,
+   "exact": null
+  },
+  {
+   "name": "T1c fp32 orders within bound and exact [plateau]",
+   "ok": true,
+   "worst_err_over_bound": 0.0,
+   "exact": true
+  },
+  {
+   "name": "T1c fp32 orders within bound and exact [zero]",
+   "ok": true,
+   "worst_err_over_bound": 0.0,
+   "exact": true
+  },
+  {
+   "name": "T1c fp32 orders within bound and exact [ulp]",
+   "ok": true,
+   "worst_err_over_bound": 0.0,
+   "exact": true
+  },
+  {
+   "name": "T1c fp32 orders within bound and exact [edge]",
+   "ok": true,
+   "worst_err_over_bound": 0.0,
+   "exact": true
+  },
+  {
+   "name": "T1d exact family exact at 330k-equivalent length [plateau]",
+   "ok": true,
+   "P": 82500,
+   "distinct": 1501
+  },
+  {
+   "name": "T1d exact family exact at 330k-equivalent length [zero]",
+   "ok": true,
+   "P": 82500,
+   "distinct": 298
+  },
+  {
+   "name": "T1d exact family exact at 330k-equivalent length [ulp]",
+   "ok": true,
+   "P": 82500,
+   "distinct": 1600
+  },
+  {
+   "name": "T1d exact family exact at 330k-equivalent length [edge]",
+   "ok": true,
+   "P": 82500,
+   "distinct": 1520
+  },
+  {
+   "name": "T2 family property [plateau]",
+   "ok": true,
+   "rows": [
+    {
+     "P": 16384,
+     "t": 32.048828125,
+     "eq_t": 40
+    },
+    {
+     "P": 16385,
+     "t": 32.048828125,
+     "eq_t": 40
+    }
+   ]
+  },
+  {
+   "name": "T2 family property [zero]",
+   "ok": true,
+   "rows": [
+    {
+     "P": 16384,
+     "t": 0.0,
+     "eq_t": 16104
+    },
+    {
+     "P": 16385,
+     "t": 0.0,
+     "eq_t": 16109
+    }
+   ]
+  },
+  {
+   "name": "T2 family property [ulp]",
+   "ok": true,
+   "rows": [
+    {
+     "P": 16384,
+     "t": 32.381805419921875,
+     "eq_t": 1
+    },
+    {
+     "P": 16385,
+     "t": 32.381805419921875,
+     "eq_t": 1
+    }
+   ]
+  },
+  {
+   "name": "T2 family property [edge]",
+   "ok": true,
+   "rows": [
+    {
+     "P": 16384,
+     "t": 32.23876953125,
+     "eq_t": 1
+    },
+    {
+     "P": 16385,
+     "t": 32.23876953125,
+     "eq_t": 1
+    }
+   ]
+  },
+  {
+   "name": "T2 poison outranks live pools (exact)",
+   "ok": true,
+   "poison": 57359.999938964844,
+   "live_max": 32.53662109375
+  },
+  {
+   "name": "T2 bank wrap derivation creates no duplicates",
+   "ok": true,
+   "wraps": 1
+  },
+  {
+   "name": "T3 perfect",
+   "ok": true
+  },
+  {
+   "name": "T3 permuted",
+   "ok": true
+  },
+  {
+   "name": "T3 swap-out-lower -> C2",
+   "ok": true
+  },
+  {
+   "name": "T3 duplicate -> C1",
+   "ok": true
+  },
+  {
+   "name": "T3 ineligible id P -> C1",
+   "ok": true
+  },
+  {
+   "name": "T3 id -2 -> C1",
+   "ok": true
+  },
+  {
+   "name": "T3 missing slot -> C1",
+   "ok": true
+  },
+  {
+   "name": "T3 plateau any subset accepted / below rejected",
+   "ok": true
+  },
+  {
+   "name": "T3 +0/-0 tie accepted",
+   "ok": true
+  },
+  {
+   "name": "T3 tol: swap inside band accepted",
+   "ok": true
+  },
+  {
+   "name": "T3 tol: swap outside band rejected",
+   "ok": true
+  },
+  {
+   "name": "T3 C2b exact equal",
+   "ok": true
+  },
+  {
+   "name": "T3 C2b 1-ulp off -> exact mismatch",
+   "ok": true
+  },
+  {
+   "name": "T3 C2b within bound ok",
+   "ok": true
+  },
+  {
+   "name": "T3 C2b 3x bound rejected",
+   "ok": true
+  },
+  {
+   "name": "T3 C3 min last accepted",
+   "ok": true
+  },
+  {
+   "name": "T3 C3 non-min last rejected",
+   "ok": true
+  },
+  {
+   "name": "T3 C3 P<512: -1 last accepted",
+   "ok": true
+  },
+  {
+   "name": "T3 C3 P<512: valid last rejected",
+   "ok": true
+  },
+  {
+   "name": "T3 C4 reference self-consistent",
+   "ok": true
+  },
+  {
+   "name": "T3 C4 corrupted entry rejected",
+   "ok": true
+  },
+  {
+   "name": "T3 C4 missing tail rejected",
+   "ok": true
+  },
+  {
+   "name": "T3b sync-light checkers == reference checkers",
+   "ok": true,
+   "cases": 336,
+   "mismatches": []
+  },
+  {
+   "name": "T4 expand kernel (interpreted) == torch composition == expand_ref",
+   "ok": true
+  },
+  {
+   "name": "T4 B1 _move_lowest_selected_pool_last satisfies C3 and first-511",
+   "ok": true
+  },
+  {
+   "name": "T5 get_dcp_local_seq_lens == kplan.local_pools",
+   "ok": true
+  },
+  {
+   "name": "T5 convert kernel (interpreted): local i -> 2i+r, -1 -> -1 with -inf",
+   "ok": true
+  },
+  {
+   "name": "T5 unpack: Triton kernel (interpreted) == torch fallback",
+   "ok": true
+  },
+  {
+   "name": "T5 gather-by-position kernel (interpreted)",
+   "ok": true
+  },
+  {
+   "name": "T5 real _merge_b12x_dcp_topk via stub: global top-512, perspectives equal",
+   "ok": true,
+   "allgather_ok": true
+  },
+  {
+   "name": "T6 fold plan == image _plan_two_level_fold",
+   "ok": true,
+   "detail": [
+    [
+     4097,
+     4,
+     17,
+     true
+    ],
+    [
+     4097,
+     8,
+     17,
+     true
+    ],
+    [
+     4097,
+     16,
+     17,
+     true
+    ],
+    [
+     4097,
+     24,
+     17,
+     true
+    ],
+    [
+     4097,
+     32,
+     17,
+     true
+    ],
+    [
+     4097,
+     48,
+     17,
+     true
+    ]
+   ]
+  },
+  {
+   "name": "T6 fused routing rows<=16 on sm120",
+   "ok": true,
+   "route": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false
+   ]
+  },
+  {
+   "name": "T6 fused carry slack (topk 512, 32 heads) == 448",
+   "ok": true,
+   "slack": 448
+  },
+  {
+   "name": "T6 b12x constants == kplan",
+   "ok": true,
+   "slice": true,
+   "max_slices": true,
+   "supertile": true,
+   "page": true,
+   "fused_rows": true
+  },
+  {
+   "name": "T6 fused cross-CTA merge arm (B1 cooperative; 0.7.0 serial at 11/23 CTAs)",
+   "ok": true,
+   "thresholds": {
+    "11": 0,
+    "23": 0,
+    "47": 0
+   },
+   "force_last_cta": 1073741824
+  },
+  {
+   "name": "T7 pack round trip; poison exactly beyond the live count; null page poisoned",
+   "ok": true
+  },
+  {
+   "name": "T8 honest fake kernel: every family PASS",
+   "ok": true,
+   "verdict": "PASS",
+   "counts": {
+    "rows": 336
+   },
+   "desc": {
+    "stock_col511_rank_lt480": 324,
+    "stock_col511_rows": 336,
+    "err_over_bound_max": 0.0025128740452840565,
+    "poison_beats_live_rows": 100,
+    "poison_rows": 112,
+    "wraps_max": 0,
+    "n_band_max": 749,
+    "unfilled_neginf_false": 0,
+    "n_band_max_by_family": {
+     "real_L3": 3,
+     "real_L43": 4,
+     "gauss": 4,
+     "plateau": 40,
+     "zero": 749,
+     "ulp": 1,
+     "edge": 1
+    }
+   }
+  },
+  {
+   "name": "T8 fault: eligibility ignored (poison reachable) -> FAIL via C1",
+   "ok": true,
+   "verdict": "FAIL",
+   "counts": {
+    "rows": 96,
+    "c1": 96,
+    "c3": 96,
+    "c3_first511": 96
+   }
+  },
+  {
+   "name": "T8 fault: newly live region dropped -> FAIL via C2",
+   "ok": true,
+   "verdict": "FAIL",
+   "counts": {
+    "rows": 48,
+    "c2": 21,
+    "c3_first511": 21
+   }
+  },
+  {
+   "name": "T8 fault: bf16-rounded ranking -> FAIL / FAIL-NUMERIC",
+   "ok": true,
+   "verdict": "FAIL",
+   "counts": {
+    "rows": 96,
+    "c2": 57,
+    "c2_exact_numeric": 48,
+    "c2b_bound": 48,
+    "c3": 40,
+    "c3_first511": 56
+   }
+  },
+  {
+   "name": "T8 fault: column-511 fix skipped -> FAIL via C3",
+   "ok": true,
+   "verdict": "FAIL",
+   "counts": {
+    "rows": 96,
+    "c3": 94,
+    "c3_first511": 94
+   }
+  },
+  {
+   "name": "T9 run_cells: honest fake PASS, files written",
+   "ok": true,
+   "verdicts": [
+    "PASS",
+    "PASS"
+   ],
+   "error": "",
+   "results_lines": 12
+  },
+  {
+   "name": "T9 run_cells: time guard -> NOT-RUN, summary still written",
+   "ok": true,
+   "tally": {
+    "NOT-RUN": 2
+   }
+  }
+ ],
+ "started": "2026-10-14T00:16:30Z",
+ "code_sha256": {
+  "build_bank.py": "c7917d5115ba44f15ad440bf0f59af8baa5a2b59b185a610de8eeea10bd854f9",
+  "inner.sh": "b04e1d2648f78d6f4261070386ebf70703372d9d7a83adf14c46637972c97ad3",
+  "kdrive.py": "d349749d73c1d849567d0d4c6a48ea562667c7ca680aec45bdbd3c871d17fb52",
+  "kinputs.py": "587afa5adcdfe044076c2d66af0fa78b9c38f32bd90525cbd51f642db2dc4b78",
+  "kplan.py": "7f212c485ea31d01906a1dc5990eb6c744f84a3aa874f980d2c520a8fca2f345",
+  "kref.py": "517b35d23f15ac86be33a4600ecef0827dbc6a897f26d47892d4d712b05f28d6",
+  "pins.json": "861a9913f87129e79f8824ffbdd3b300a7217fdaf87051e394c886a448917fe7",
+  "report.py": "e6db738d8b728cf18e7ffdec51f4907696bbdb60090ad100534054c51acb9d3e",
+  "run_k.py": "e021301d346ac309abccd01a2569cd4e83310136bb049cc5438fdb2e0284ee60",
+  "test_cpu.py": "42af34152dbda0cd427382b27273bf734e3c29591e647fb50a1005cf1021a4ee"
+ },
+ "secs": {
+  "T1": 4.4,
+  "T2": 0.3,
+  "T3": 0.0,
+  "T3b": 0.1,
+  "T4": 10.8,
+  "T5": 0.5,
+  "T6": 0.0,
+  "T7": 0.0,
+  "T8": 22.8,
+  "T9": 3.3
+ },
+ "n_pass": 71,
+ "n_fail": 0
+}

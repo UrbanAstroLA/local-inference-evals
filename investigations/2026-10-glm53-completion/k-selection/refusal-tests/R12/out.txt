@@ -1,0 +1,1 @@
+REFUSED: K_TEST_ROOT must lie under a refusal-tests directory

@@ -1,0 +1,2 @@
+[00:56:50] frozen files verified against SHA256SUMS
+REFUSED: set APPROVED_GPU_H to the operator-approved total for item K (proposed 0.5).

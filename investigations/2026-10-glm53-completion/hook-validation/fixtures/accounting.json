@@ -1,0 +1,202 @@
+{
+ "inventory_sha256": "786ba0aef34af528bdd5082b4b7ad7a3e9fe943772fd0ab558dfd6d204a846d9",
+ "fixtures_sha256": "b2e96f455ac578bbffc9c7c91e9c48361aad9acb7ab52241b9f677e1e96b26f2",
+ "n_rows": 901,
+ "states": {
+  "natural_close": 527,
+  "loop": 224,
+  "exhaustion": 92,
+  "exhaustion_cut120k": 18,
+  "error": 40
+ },
+ "n_in_three_classes": 843,
+ "n_other": 58,
+ "other_by_state": {
+  "exhaustion_cut120k": {
+   "n": 18,
+   "arms": {
+    "diagnostics/k4-k5-share-screen-2026-10-01/replay-C-k4-default": 18
+   },
+   "engines": {
+    "v0.8.0 stock": 18
+   },
+   "weights": {
+    "K4@a5fee929": 18
+   },
+   "finish": {
+    "None": 18
+   },
+   "censored": {
+    "client cut 120k": 18
+   },
+   "spec": {
+    "DFlash2 x3": 18
+   },
+   "conc": {
+    "8": 18
+   },
+   "docs": {
+    "127": 6,
+    "13": 2,
+    "79": 8,
+    "88": 2
+   },
+   "seeds": {
+    "1234": 2,
+    "1236": 3,
+    "1237": 2,
+    "1238": 2,
+    "1239": 3,
+    "1241": 3,
+    "1240": 2,
+    "1235": 1
+   },
+   "reasoning_tokens": {
+    "min": 119987,
+    "median": 119999,
+    "max": 120003,
+    "zero": 0,
+    "ge_64k": 18
+   },
+   "end_repeating": {
+    "False": 18
+   },
+   "any_repeating_checkpoint": 1,
+   "closed": 0,
+   "special_ids_in_retok": 0,
+   "k325": 0
+  },
+  "error": {
+   "n": 40,
+   "arms": {
+    "eval-matrix-2026-10-04/screens/S7K4p": 40
+   },
+   "engines": {
+    "v0.7.0 local kpoolring (INVALID: engine crash)": 40
+   },
+   "weights": {
+    "K4@a5fee929": 40
+   },
+   "finish": {
+    "ERROR no stream data (server error or engine down)": 36,
+    "ERROR stream ended without a finish reason (server error or ": 4
+   },
+   "censored": {
+    "token cap": 40
+   },
+   "spec": {
+    "DFlash2 x5": 40
+   },
+   "conc": {
+    "8": 40
+   },
+   "docs": {
+    "121": 8,
+    "127": 8,
+    "13": 8,
+    "79": 8,
+    "88": 8
+   },
+   "seeds": {
+    "1234": 40
+   },
+   "reasoning_tokens": {
+    "min": 0,
+    "median": 0,
+    "max": 198565,
+    "zero": 36,
+    "ge_64k": 2
+   },
+   "end_repeating": {
+    "None": 36,
+    "False": 4
+   },
+   "any_repeating_checkpoint": 0,
+   "closed": 0,
+   "special_ids_in_retok": 0,
+   "k325": 0
+  }
+ },
+ "error_rows_with_text": [
+  {
+   "id": "cd0c11d4178b",
+   "doc": 127,
+   "n_reasoning_tokens": 33269,
+   "finish": "ERROR stream ended without a finish reason (server error or ",
+   "end": {
+    "zlib30k": 0.2839,
+    "rep200": 0.199,
+    "repeating": false
+   }
+  },
+  {
+   "id": "d90272c391dc",
+   "doc": 79,
+   "n_reasoning_tokens": 194602,
+   "finish": "ERROR stream ended without a finish reason (server error or ",
+   "end": {
+    "zlib30k": 0.3805,
+    "rep200": 0.0,
+    "repeating": false
+   }
+  },
+  {
+   "id": "07e1862b44f6",
+   "doc": 79,
+   "n_reasoning_tokens": 925,
+   "finish": "ERROR stream ended without a finish reason (server error or ",
+   "end": {
+    "zlib30k": 0.4842,
+    "rep200": 0.0,
+    "repeating": false
+   }
+  },
+  {
+   "id": "d2a9fdbde514",
+   "doc": 79,
+   "n_reasoning_tokens": 198565,
+   "finish": "ERROR stream ended without a finish reason (server error or ",
+   "end": {
+    "zlib30k": 0.3213,
+    "rep200": 0.012,
+    "repeating": false
+   }
+  }
+ ],
+ "classified_by_weights": {
+  "exhaustion": {
+   "K3.25": 87,
+   "K4 (inferred)": 1,
+   "K4@a5fee929": 4
+  },
+  "loop": {
+   "K3.25": 212,
+   "K4 (inferred)": 1,
+   "K4@a5fee929": 11
+  },
+  "natural_close": {
+   "K3.25": 465,
+   "K4 (inferred)": 16,
+   "K4@a5fee929": 46
+  }
+ },
+ "k4_rows_total": 137,
+ "k4_rows_by_arm_state": {
+  "diagnostics/empties-k4-v0.8.0-2026-09-29 | exhaustion": 1,
+  "diagnostics/empties-k4-v0.8.0-2026-09-29 | loop": 1,
+  "diagnostics/empties-k4-v0.8.0-2026-09-29 | natural_close": 16,
+  "diagnostics/k4-k5-share-screen-2026-10-01/replay-C-k4-default | exhaustion_cut120k": 18,
+  "diagnostics/k4-k5-share-screen-2026-10-01/replay-C-k4-default | natural_close": 14,
+  "diagnostics/k4-k5-share-screen-2026-10-01/replay-K5 | natural_close": 7,
+  "eval-matrix-2026-10-04/screens/S7K4p | error": 40,
+  "eval-matrix-2026-10-04/screens/S8K4p | exhaustion": 4,
+  "eval-matrix-2026-10-04/screens/S8K4p | loop": 11,
+  "eval-matrix-2026-10-04/screens/S8K4p | natural_close": 25
+ },
+ "k325_eligible_by_state": {
+  "natural_close": 465,
+  "loop": 212,
+  "exhaustion": 87
+ },
+ "reading": "The 58 rows outside 527/224/92 are all K4-weight histories (K4@a5fee929), so none is eligible for a K3.25 probe whatever its state. 40 'error' rows = the S7K4p screen (v0.7.0 local kpoolring, K4, DFlash2 x5, 8 in flight), declared INVALID for an engine crash: 36 'no stream data' with no reasoning text, 4 'stream ended without a finish reason' with partial text (925 - 198,565 tokens, not repeating at the end): unterminated by a server failure, i.e. neither close, loop nor exhaustion. 18 'exhaustion_cut120k' rows = k4-k5-share-screen replay-C-k4-default (v0.8.0 stock, K4, DFlash2 x3, 8 in flight): the client cut every reply at 120k tokens (administrative censoring by the client, not the engine cap); none was repeating at the cut (17 of 18 never repeating at any checkpoint, 1 repeating at 88k-96k but not at the end), so under the 20b rule they are client-censored exhaustions. They are kept out of the 92 exhaustions because the censoring mechanism differs (client cut at 120k, not the server's max_tokens). In addition, the three classes themselves contain K4 rows (natural close 62, loop 12, exhaustion 5); they are excluded from fixtures for the same weights reason."
+}

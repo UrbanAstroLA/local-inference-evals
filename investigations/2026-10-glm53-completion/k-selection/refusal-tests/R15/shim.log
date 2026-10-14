@@ -1,0 +1,7 @@
+docker image inspect sha256:799d3cf8e5d14a615b89c734a6a38b4be5729bb44bb6b56effc7cf7df747b88a --format {{.Id}}
+docker image inspect sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629 --format {{.Id}}
+docker ps --format {{.Names}} {{.Image}}
+nvidia-smi -i 0 --query-gpu=memory.used,utilization.gpu --format=csv,noheader,nounits
+nvidia-smi -i 0
+docker run --rm --name kselect-b1-916 --gpus device=0 --network none --memory 32g --shm-size 2g --user 1000:1000 -e HOME=/tmp -e TRITON_CACHE_DIR=/tmp/triton -e PYTHONDONTWRITEBYTECODE=1 -e K_IMAGE_ID=sha256:799d3cf8e5d14a615b89c734a6a38b4be5729bb44bb6b56effc7cf7df747b88a -e K_ENGINE=b1 -e K_MAX_SECONDS=805 -e K_MAX_BATCHES=0 -e K_CELLS= -v <runs>/k-selection/kselect:/k/kselect:ro -v <runs>/k-selection/plan.json:/k/plan.json:ro -v <runs>/k-selection/bank:/k/bank:ro -v <runs>/k-selection/refusal-tests/R15/run-20261014T005651Z/b1:/o --entrypoint bash sha256:799d3cf8e5d14a615b89c734a6a38b4be5729bb44bb6b56effc7cf7df747b88a /k/kselect/inner.sh
+docker rm -f kselect-b1-916

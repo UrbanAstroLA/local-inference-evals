@@ -1,0 +1,14 @@
+[00:56:51] frozen files verified against SHA256SUMS
+[00:56:51] budget: spent 0.0, this run ceiling 0.5, approved 0.5
+[00:56:51] images pinned: b1=799d3cf8e5d1 v070=48e254d94f58 
+[00:56:51] pre-flight ok: GPU 0 used 3 MiB, util 0%
+[00:56:51] starting kselect-b1-768 (799d3cf8e5d1, wall cap 850s)
+[00:56:51] b1 container finished: rc=0
+[00:56:51] pre-flight ok: GPU 0 used 3 MiB, util 0%
+[00:56:51] starting kselect-v070-768 (48e254d94f58, wall cap 1740s)
+[00:56:51] v070 container finished: rc=0
+== b1: no summary (<runs>/k-selection/refusal-tests/R13/run-20261014T005651Z/b1/summary-b1.json)
+== v070: no summary (<runs>/k-selection/refusal-tests/R13/run-20261014T005651Z/v070/summary-v070.json)
+[00:56:51] results in <runs>/k-selection/refusal-tests/R13/run-20261014T005651Z
+[00:56:51] cost: 0s wall, 0.0 GPU-hours (status done)
+CHECKED: one cost line (done), two shimmed containers, both removed, REPORT.txt written

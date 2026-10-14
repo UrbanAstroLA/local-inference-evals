@@ -1,0 +1,39 @@
+POST-INSPECTION (attempt 1); original verdict INVALID stands
+INVALID: hook defects H5f, H5h (need fixed hook + GPU data); H1f engine edge case reclassified; H2a/H5g pass under analysis fixes; H2b/H2c/H4b/H4c/H5b/H5c/H5e criteria lack a measured basis and the measured values sit within 2x of measured nulls
+
+H1f  original FAIL -> FAIL kept; reclassified as served-kernel skip
+     class: (c) engine edge case, immaterial + (b) no tolerance for underflow-level mass
+     224 violating cells on 56 rows, all 'kept although not eligible', all four termination ids, never the forced token; every row has fp32 top-1 p == 1.0 and p_post == p_pre (row left unmasked by the Triton top-p path, batch >= 8 rows); max kept post-mask p 2.65e-09; 56 of 23,751 Triton rows with fp32 top-1 == 1.0 and a representable tail (0.24%). Emulation: fp32 overflow of exp(max_logit - max_sample) > ~88.7 -> S = inf -> final_pivot = inf -> 'skip masking'.
+H2a  original FAIL -> PASS under PI-1 (frozen tolerances)
+     class: (a) analysis defect (reference join; NaN rows counted as disagreements)
+     aligned q50/q90/q99 1.14e-04/0.100/0.422 vs null 6.66e-05/0.097/0.406 (tol 0.01/0.30/1.50); top-1 0.9829 (>= 0.95); n 140091
+H2c  original FAIL -> lp rule: 2 of 120 still fail (V1-*-free6-doc4, ratio 0.12 vs 0.1); argmax rule: 0 of 120
+     class: (a) for 4 of 6 failing requests (same join defect); (b) for 2 (forced-token lp is uninformative under a shift on near-deterministic text)
+     per-request aligned top-1 min 0.9508; shifted (+-1) top-1 max 0.0209
+H2b  original FAIL -> INCONCLUSIVE kept on the lp rule; argmax shift control separates
+     class: (b) power control without measured basis (adjacent forced-token log-probs are both ~0 on ~90% of positions)
+     lp shift medians 0.032/0.031 nat; argmax agreement aligned 0.9829 vs shifted 0.0071/0.0068
+H4b  original FAIL -> FAIL kept; slot identification 100%
+     class: (b) tolerance and margin without measured basis; no slot misidentification
+     committed slot nearest the prefill-built state in 3604 of 3604 comparisons; layers 0-2 (identical inputs) rel median 0.0051 max 0.0089; rel grows with depth to ~0.13 median at layers 33-42 where one token's update is ~0.2, so a 3x margin is unattainable there by construction
+H4c  original FAIL -> FAIL/INCONCLUSIVE kept; within 2x of the measured null (H4c: 1.7x the same-pool null)
+     class: (b) threshold without measured basis; no misalignment; no writer defect found
+     H4c V3 dec-vs-prefill gross 0.0149 q999 1.033 | null prefill-vs-prefill gross 0.0053 q999 0.671 max 1.36 (same pools: 0.0089, n 23122) | decode b8-vs-b1 gross 0.0011 | same decode over time: byte-identical 100% | layers 3-15: 0 gross in every comparison
+H5b  original FAIL -> FAIL/INCONCLUSIVE kept; within 2x of the measured null (H4c: 1.7x the same-pool null)
+     class: (b) threshold without measured basis; no misalignment; no writer defect found
+     H5b B1 dec-vs-rebuild gross 0.0071 q999 1.092 | null prefill-vs-prefill gross 0.0053 q999 0.671 max 1.36 | decode b8-vs-b1 gross 0.0011 | same decode over time: byte-identical 100% | layers 3-15: 0 gross in every comparison
+H5e  original FAIL -> FAIL/INCONCLUSIVE kept; within 2x of the measured null (H4c: 1.7x the same-pool null)
+     class: (b) threshold without measured basis; no misalignment; no writer defect found
+     H5e solo dec-vs-rebuild gross 0.0018 q999 0.350 | null prefill-vs-prefill gross 0.0053 q999 0.671 max 1.36 | decode b8-vs-b1 gross 0.0011 | same decode over time: byte-identical 100% | layers 3-15: 0 gross in every comparison
+H5c  original FAIL -> FAIL/INCONCLUSIVE kept; within 2x of the measured null (H4c: 1.7x the same-pool null)
+     class: (b) threshold without measured basis; no misalignment; no writer defect found
+     H5b B1 dec-vs-rebuild gross 0.0071 q999 1.092 | null prefill-vs-prefill gross 0.0053 q999 0.671 max 1.36 | decode b8-vs-b1 gross 0.0011 | same decode over time: byte-identical 100% | layers 3-15: 0 gross in every comparison
+H5f  original FAIL -> FAIL kept; not repairable offline
+     class: (a) hook defect: shadow ledger mis-slices FULL-graph padded steps (3/5/7 in flight)
+     B1 arm (must be all clean): corrupt 1243, none 3597 of 27984 pools, byte-correct (q50 0.030); every 'none' pool completes in a padded step; CPU repro r_h5f_padded.py shifts attributions by one request
+H5g  original FAIL -> PASS under PI-3
+     class: (a) analysis defect (polls keyed by an absent 'pid'; pre-client warm-up artefact counted)
+     rank0 tail_w_stash mism=null=100098 = 6 x 16,683; rank1 83415 = 5 x 16,683; only in V4-d2/V4-d2solo; pos_bounds 4 per rank at warm-up steps 4-6 before any request (same in run-b1-a1 and b0-mapguard; b0-mapguard/DIAGNOSIS-a2 s.5); every other violation counter 0
+H5h  original FAIL -> FAIL kept; not repairable offline (records misattributed, not just missing)
+     class: (a) hook defect: on_selection assumes [B, next_n] rows; SM120 indexer flattens to [B*4, 1]
+     server.log 'use_flattening=True ... next_n=4'; of 6,342 present records 3,457 carry a step other than the measurement step (misattributed); CPU repro r_h5h_flatten.py: native layout 8/8 correct, flattened 1/8 correct + 1 misattributed; full selections (selbuf) share the defect

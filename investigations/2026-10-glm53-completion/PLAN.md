@@ -1555,3 +1555,204 @@ Proposal (probe-proposal/PROPOSAL.md) for independent review:
   restored as a remedy; no claim that a probability difference explains completion rates.
 
 No GPU use is authorized by this amendment.
+
+**Amendment 21 (2026-10-13; adopts the independent assessment "revised first stage: validate the instrument and isolate
+long-context effects", relayed by the operator; before any probe data).** Stage 1 and 1-min are not run as written.
+Revised CPU preparation proceeds. K is proposed first, then a bounded GPU validation of the hook, each needing its own
+authorization. D6/ring-4, extra context arms and the larger fixture campaign are deferred.
+
+1. **Corrected baseline:** B1 ×3. B0's unfixed D7 is exposed by long cold prefills, so B0 is not "corrected" for this
+   preparation. Stock 0.7.0, if compared at all, is labelled shipped computation with its known prefill and decode
+   defects documented; it is not a fidelity reference. No difference is attributed to D2 or D6 without isolation.
+2. **D2 diagnostic by decode-window-only fault injection:**
+   - prepare the prefix with verified B1 computation;
+   - introduce the old tail-mapping behaviour only during the forced decode window;
+   - keep D7-correct prefill and every other correction;
+   - verify the injected mapping and the resulting corruption with the existing guards.
+   This is controlled fault injection, not the stock engine. If it cannot be implemented and validated cheaply, the D2
+   contrast is deferred; D2 is never removed globally while D7 is retained.
+3. **K, model-free selection validation (proposed ceiling 0.5 GPU-hours):**
+   - covers both sides of the fold and supertile transitions, the corresponding old-engine DCP2 boundaries, and contexts
+     up to the equivalent of 330k;
+   - uses the actual kernels on finite quantized inputs against the validated reference, with explicit treatment of
+     ties and rounding;
+   - checks the selected top-512 set, the final attended selection after the truncation and tail policy, eligibility
+     masks and output ordering.
+   A clean result retires the tested selection failures; it does not establish termination equivalence.
+4. **Hook validation before any probability is interpreted:**
+   - short exact-id histories, covering zero accepted drafts, fully matching drafts, rejection at different draft
+     positions, bonus-token accounting, and block and ring boundaries;
+   - compared against a validated single-token history-advance reference;
+   - committed state checked: token positions, KDA recurrent and convolution state, MLA records, index-K pools and tail
+     contents, kept distinct from permitted speculative scratch, with justified tolerances;
+   - returned ids matching the fixture are necessary, not sufficient;
+   - it must be shown that designated logits are measured on the intended prefix, once per position, before forcing
+     changes the decision.
+5. **First long-context contrast (priced after validation):** B1 ×3 against the validated decode-only D2 injection at
+   ×3, on existing diverse histories with a fixed batch composition. Per-window results are preserved and batch-level
+   dependence is accounted for, since D2 couples requests. Repeated measurements in each arm; no range rule is applied
+   to a single run. A stock-0.7.0/B1 comparison may follow if it answers a distinct question; depth-matched and ring-4
+   contrasts are conditional follow-ups.
+6. **Metrics:**
+   - primary candidate: reasoning-close probability at prespecified active-reasoning positions, including positions near
+     natural closes;
+   - reported separately: `</think>` probability and top_p eligibility, each generation-stop token, forced-token
+     likelihood, entropy and argmax agreement;
+   - reasoning close and premature generation stop are never combined into one score;
+   - window aggregation and the primary contrast are specified before data;
+   - the 0.5-nat and 6-of-8 rules are operational screens, not statistical proof or equivalence.
+7. **Window limitation:**
+   - measure how many final attended pools were written during the decode window, including corrupted ones, because the
+     fraction of all pools is not enough when recent pools may be selected disproportionately;
+   - a negative window result cannot exclude corruption accumulated over a whole generated history;
+   - introduce the oracle-draft bracket before attributing a rejection-dependent signal to the served D6 mechanism.
+8. **Extension gate:**
+   - before additional arms or whole-history replay, report hook validity, within-arm variation, actual
+     corrupted-state exposure, the first contrast with its limits, and measured cost;
+   - extend only when the next observation distinguishes stated alternatives;
+   - account for the 58 histories not in the 527 / 224 / 92 classification before freezing fixtures.
+   No probability difference alone explains benchmark completion rates.
+
+**Amendment 21a (2026-10-13; B0 seed-1236 result under the frozen rules of amendment 19e, recorded after the run).**
+- **Validity:** valid. 5.866 occupied GPU-hours, watchdog not reached.
+- **Result:** 5 of 198 replies empty, all at the cap, 0 stopped early. Raw 169 and stated 173; four replies were hand-read
+  and none was hedged. 3.98 M tokens were generated.
+- **B0 against B1 at seed 1236:** 6 rescued (docs 8, 69, 88, 127, 130, 147), 2 newly empty (docs 160, 182), 3 empty in
+  both (docs 79, 81, 145). Identical non-empty replies: 0.
+- **Frozen reading (b):** B0 is within the stock range, so the B1/B0 difference is either D7, which would contradict the
+  zero-exposure reconstruction, or run-to-run variation. One pair of passes cannot separate them. I_ne = 0 gives the
+  weak lean that same-seed passes behave as distinct draws, so variation alone suffices; no D7 effect is inferred.
+- **Amendment 20 §1 qualifications:** B0's censoring is not high, so the D7-not-necessary qualification does not apply.
+  Reply identity measures transcript repeatability, not outcome independence. One B0/B1 pair cannot isolate D7.
+- **Continuity** (15b against stock 0.9.1 at seed 1236, 6 empty): MODEST IMPROVEMENT, NO CLEAR SEPARATION; no accuracy
+  or material concern.
+- **B0 three-seed record against stock 0.9.1 at the same seeds** (exploratory: historical controls, seed reuse, and this
+  pass chosen after inspecting B1's): 11 against 16 empty of 594; reduction 0.84 points [−0.34, 2.02]; one-sided
+  p = 0.13.
+- **Observation:** at a fixed seed on near-identical computation, 8 of the 14 questions that capped in either pass
+  changed status. Per-question cap outcomes are highly volatile between runs.
+- B0, B1 and stock records stay separate.
+
+**Amendment 21b (2026-10-13; operator authorization "proceed", before any K data).** K runs as frozen in k-selection/,
+with its SHA256SUMS verified by the coordinator.
+- **What runs:** each image's own selection code (the B12x tiled and fused routes, 0.7.0's DCP2 merge, B1's column-511
+  policy, expand plus tail) on both sides of every fold, supertile and trim boundary, at lengths from 1 to 331,779 tokens.
+- **Inputs:** real, synthetic, exact-arithmetic adversarial and poison families.
+- **Criteria:** C1-C7 as frozen.
+- **Limits:** one GPU, ceiling 0.5 occupied GPU-hours, one session; cells cut by the time guard are reported as not run.
+- **What a clean result means:** the tested selection failures are retired. It establishes nothing about termination,
+  decode-written index-K bytes or prefill top-k.
+
+**Amendment 21c (2026-10-13; K run 1 diagnosis, post-inspection fixes and operator authorizations, before any rerun
+data).**
+
+K run 1 (0.1417 GPU-hours):
+- **B1:** 34 of 34 cells PASS. This retires the tested B1 selection failures from about 2k to 330k tokens, on the tiled
+  route at 24 and 32 rows and the fused route at 4, 8 and 16 rows.
+- **0.7.0:** 2 FAIL (C5), 1 ERROR, 19 NOT-RUN.
+
+Diagnosis (k-selection/DIAGNOSIS-run1.md, CPU only):
+- **The ERROR was a plan defect.** The shortest target gave 0.7.0 (K = 5) a row with L = −1, and the resulting error
+  aborted the loop. It is a harness fault, not an engine result.
+- **The C5 failures were not a harness artefact.** Both perspectives saw identical inputs in engine rank order. 0.7.0's
+  `run_row_topk` assigns output slots through shared-memory atomics, so the output order varies between launches, and
+  the selected set varies only among exact ties at the threshold.
+- **Column 511 is a genuine 0.7.0 cross-rank inconsistency**, within the known column-511 class (D1). Each rank drops
+  its own column 511, so the ranks can drop different low-ranked pools. The modelled exposure is about 88% of rows in
+  the tested cells, a race among the lowest few selected pools. How often the ranks actually diverge is not measured.
+
+Post-inspection fixes, with no criterion changed:
+- **PI-1:** the minimum target accounts for draft slots.
+- **PI-2:** the descriptive counter is guarded.
+- **PI-3:** a cell's error no longer aborts the cells after it.
+- **PI-4:** perspective mismatches are classified as order-only, tie-set or column-511, and recorded with a relaunch
+  control.
+- **PI-5:** 0.7.0-only rerun settings.
+
+C5 is expected to fail again in the rerun, and the report will quote the PI-4 breakdown beside it.
+
+Operator authorizations:
+- **K:** cumulative 0.65 occupied GPU-hours, with the 0.7.0-only rerun capped at 0.5.
+- **Hook validation session:** 2.4 GPU-hours, at most 2 attempts. It runs only after the forcing CPU test F7 (unforced
+  co-runners unchanged with the hook on) passes for an understood reason and the package's hashes are frozen and
+  verified.
+
+**Amendment 21d (2026-10-14; K rerun result, 0.7.0 only, recorded after the run).** All 22 cells ran; 0.1408 GPU-hours,
+for a K total of 0.2825 of the 0.65 approved.
+
+**Tally:** 10 FAIL (tiled; C5 only) and 12 INVALID-ROUTE (fused; C5 plus C7). C1-C4 are met in every cell: the
+selected-id validity, the top-512 set within the tie rule, and the expand-and-tail reference.
+
+**C5 breakdown (PI-4):**
+- **Set differences:** only among exact ties at the threshold (non-tie 0 in every cell).
+- **Column 511:** differs between the two rank perspectives in about 60-80% of rows; about half of those are non-tied
+  pools. The pool landing in column 511 can be highly ranked (minimum rank 1-94 per cell).
+- **Relaunch control:** relaunching perspective 0 on identical inputs also differs in every record. The variation is
+  launch nondeterminism of 0.7.0's atomic-slot merge, not a rank effect.
+
+**Reading:**
+- In stock 0.7.0 (DCP2) each rank drops an arbitrary selected pool, and differently on each launch.
+- Its attended set therefore varies run to run and between its two GPUs: 510 whole pools plus half of two possibly
+  different pools.
+- This extends the known D1 (column-511) class to a cross-rank inconsistency. It is a property of the old engine's
+  path; B1 is unaffected.
+- No termination mechanism is inferred.
+
+**C7 on the fused cells:** the route was fused as planned, but 0.7.0's planner exposes no CTA count (`None`), so the
+trim geometry the cells target cannot be confirmed. Those cells' C1-C4 results stand; their boundary placement is
+unverified.
+
+**K summary:** B1's selection is verified at 2k-330k (34/34). 0.7.0's selection is correct as a set, but
+nondeterministic and inconsistent across ranks at column 511.
+
+**Amendment 21e (2026-10-14; frozen hook-validation package, verified by the coordinator, before any GPU data).**
+Package: hook-validation/SHA256SUMS (100 files) has sha256 67d8e54f…. The hook module is `forcewin_hooks.py` (published name)
+c079560e…, in image sha256:1b9f8b15… (B1-mapguard plus the hook; its `.py` manifest differs from the base in 6 files).
+
+CPU results:
+- forcing tests 66/66 across 9 shards;
+- D2 window injection 16/16;
+- inertness check I1: identical outputs with the hook off, unset, or on without a keyed request.
+
+**Post-inspection change to F7** (test only; hook unchanged):
+- **Before:** the co-runner's full sampler row was compared hook on against hook off.
+- **Why it failed:** entries past `num_sampled` are uninitialised scratch (`torch.empty`) that differ even between two
+  hook-off calls.
+- **After:** over 4 steps, the committed tokens, `num_sampled` and `num_rejected` must be equal, plus the new negative
+  control F7n.
+- **Supporting evidence:** the co-runner's processed (top_p) logits are bitwise equal with the hook on and off, and its
+  committed state is identical over 6 steps. Nothing the engine consumes reads the scratch.
+
+The 58 non-classified histories are K4, so none is a K3.25 fixture.
+
+The session runs under the 2.4 GPU-hour authorization of amendment 21c: at most 2 attempts, a 3,240 s wall cap per
+attempt, 1.8 GPU-hours per attempt.
+
+**Amendment 21f (2026-10-14; hook-validation attempt 1 result, recorded after the run; diagnosis pending).** Verdict
+INVALID; 1.2117 GPU-hours of the 2.4 authorized.
+
+Passed:
+- V0: unkeyed probes bitwise equal to B1's earlier record;
+- H1a-e and H1g-j: forced ids committed exactly, each position measured once, post-mask values from the served logits,
+  history correct after every step, both ranks identical, acceptance accounting correct, no hook errors;
+- H3: every draft schedule agrees with the single-token advance within the decode-vs-decode null;
+- H4a: integer committed state;
+- H5a: injection exactly on the intended tokens;
+- H5d: injected arm 61% gross pools at 8 in flight.
+
+Failed:
+- **H1f:** top_p eligibility bounds, 5 requests.
+- **H2a:** forced decode against prefill, top-1 0.845.
+- **H2b/H2c:** the alignment-power controls.
+- **H4b:** KDA state against the prefill build, median 4.5% relative, maximum 36%.
+- **H4c and H5b:** index-K pools against the prefill rebuild on B1 without injection, 0.7-1.5% gross.
+- **H5c:** threshold discrimination.
+- **H5e:** the solo injected request, 0.18% gross.
+- **H5f:** the shadow ledger, corrupt agreement 0.61.
+- **H5g:** the guard count rule.
+- **H5h:** in-graph exposure records missing at 14,127 of 20,469 positions.
+
+Nothing from this run is interpreted. A CPU-only diagnosis classifies each failure as a harness defect, a criterion
+without a measured basis, or a genuine engine finding. H4c/H5b take priority, because gross B1 pools could be a
+comparison misalignment, an expected writer-numerics gap, or a new decode-path defect. There is no attempt 2 before the
+diagnosis is reviewed; one attempt (about 1.19 GPU-hours) remains under the authorization.

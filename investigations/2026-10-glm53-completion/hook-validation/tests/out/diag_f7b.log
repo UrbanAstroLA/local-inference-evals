@@ -1,0 +1,10 @@
+a step 0 | processed logits co-runner rows bitwise equal on/off: True | forced rows too: True | raw logits unchanged by the hooked call: True | committed on/off: [59093] [59093] num_sampled 1 1 num_rejected 3 3 | scratch past num_sampled on/off: [0, 0, 0] [57373664, 0, 2]
+a step 1 | processed logits co-runner rows bitwise equal on/off: True | forced rows too: True | raw logits unchanged by the hooked call: True | committed on/off: [72416] [72416] num_sampled 1 1 num_rejected 3 3 | scratch past num_sampled on/off: [0, 0, 19] [250174320, 0, 2]
+a step 2 | processed logits co-runner rows bitwise equal on/off: True | forced rows too: True | raw logits unchanged by the hooked call: True | committed on/off: [56499] [56499] num_sampled 1 1 num_rejected 3 3 | scratch past num_sampled on/off: [0, 0, 0] [0, 0, 19]
+b step 0 co-runner state equal (out, num_computed, total_len, last, all_token_ids, drafts): {'out': True, 'nc': True, 'tl': True, 'last': True, 'ids': True, 'drafts': True} | co-runner committed so far: 2
+b step 1 co-runner state equal (out, num_computed, total_len, last, all_token_ids, drafts): {'out': True, 'nc': True, 'tl': True, 'last': True, 'ids': True, 'drafts': True} | co-runner committed so far: 3
+b step 2 co-runner state equal (out, num_computed, total_len, last, all_token_ids, drafts): {'out': True, 'nc': True, 'tl': True, 'last': True, 'ids': True, 'drafts': True} | co-runner committed so far: 4
+b step 3 co-runner state equal (out, num_computed, total_len, last, all_token_ids, drafts): {'out': True, 'nc': True, 'tl': True, 'last': True, 'ids': True, 'drafts': True} | co-runner committed so far: 5
+b step 4 co-runner state equal (out, num_computed, total_len, last, all_token_ids, drafts): {'out': True, 'nc': True, 'tl': True, 'last': True, 'ids': True, 'drafts': True} | co-runner committed so far: 6
+b step 5 co-runner state equal (out, num_computed, total_len, last, all_token_ids, drafts): {'out': True, 'nc': True, 'tl': True, 'last': True, 'ids': True, 'drafts': True} | co-runner committed so far: 7
+b forced request differs between A and B as expected (forced vs sampled): True

@@ -1,0 +1,4480 @@
+{
+ "meta": {
+  "TOPK": 512,
+  "KEEP": 511,
+  "KPOOL": 4,
+  "PAGE": 64,
+  "SLICE": 16384,
+  "SUPERTILE": 32768,
+  "SLACK": 448,
+  "SMS": 188,
+  "L_MAX": 330000,
+  "FAMILIES": [
+   "real_L3",
+   "real_L43",
+   "gauss",
+   "plateau",
+   "zero",
+   "ulp",
+   "edge"
+  ],
+  "EXACT_FAMILIES": [
+   "plateau",
+   "zero",
+   "ulp",
+   "edge"
+  ],
+  "REPEATS": 3,
+  "engines": {
+   "b1": {
+    "label": "B1 = 0.9.1 + bundle d1234 + D7 fix (corrected computation)",
+    "image": "sha256:799d3cf8e5d14a615b89c734a6a38b4be5729bb44bb6b56effc7cf7df747b88a",
+    "image_tag": "local/glm53-v0.9.1-b1-d7:local",
+    "K": 3,
+    "dcp": 1,
+    "width_pages": 4097,
+    "col511_fix": true,
+    "tiled_rows": [
+     32,
+     24
+    ],
+    "fused_rows": [
+     16,
+     8,
+     4
+    ]
+   },
+   "v070": {
+    "label": "stock 0.7.0 (shipped computation; DCP2 per-rank geometry + merge)",
+    "image": "sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629",
+    "image_tag": "ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx (0.7.0)",
+    "K": 5,
+    "dcp": 2,
+    "width_pages": 2058,
+    "col511_fix": false,
+    "tiled_rows": [
+     48,
+     24
+    ],
+    "fused_rows": [
+     16,
+     8
+    ]
+   }
+  },
+  "fold": {
+   "b1": {
+    "on": true,
+    "slice_rows": 16384,
+    "n_chunks": 9,
+    "slices": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      2,
+      8
+     ],
+     [
+      2,
+      10
+     ],
+     [
+      2,
+      12
+     ],
+     [
+      2,
+      14
+     ],
+     [
+      1,
+      16
+     ]
+    ],
+    "total_slices": 17,
+    "split_extent": [
+     16384,
+     16384,
+     16384,
+     16384,
+     16384,
+     16384,
+     16384,
+     16384,
+     512
+    ],
+    "candidate_nbytes": 2228352
+   },
+   "v070": {
+    "on": true,
+    "slice_rows": 16384,
+    "n_chunks": 5,
+    "slices": [
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      1,
+      8
+     ]
+    ],
+    "total_slices": 9,
+    "split_extent": [
+     16384,
+     16384,
+     16384,
+     16384,
+     1024
+    ],
+    "candidate_nbytes": 1769664
+   }
+  }
+ },
+ "cells": [
+  {
+   "id": "b1/tiled32/b16384",
+   "engine": "b1",
+   "route": "tiled",
+   "rows": 32,
+   "boundary_local": 16384,
+   "kind": "slice2",
+   "boundary_tokens_global": 65536,
+   "requests_per_batch": 8,
+   "pad_rows": 0,
+   "batches": [
+    [
+     63488,
+     65281,
+     65530,
+     65535,
+     65536,
+     65541,
+     65546,
+     65551
+    ],
+    [
+     65792,
+     65797,
+     67586,
+     69635,
+     63489,
+     65282,
+     65531,
+     65532
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 15871,
+     "max": 17408,
+     "at_or_below": 38,
+     "above": 26
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 9,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       2,
+       8
+      ],
+      [
+       2,
+       10
+      ],
+      [
+       2,
+       12
+      ],
+      [
+       2,
+       14
+      ],
+      [
+       1,
+       16
+      ]
+     ],
+     "total_slices": 17,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      512
+     ],
+     "candidate_nbytes": 2228352
+    }
+   },
+   "max_tokens": 69635
+  },
+  {
+   "id": "b1/tiled32/b32768",
+   "engine": "b1",
+   "route": "tiled",
+   "rows": 32,
+   "boundary_local": 32768,
+   "kind": "slice3+chunk2",
+   "boundary_tokens_global": 131072,
+   "requests_per_batch": 8,
+   "pad_rows": 0,
+   "batches": [
+    [
+     129024,
+     130817,
+     131066,
+     131071,
+     131072,
+     131077,
+     131082,
+     131087
+    ],
+    [
+     131328,
+     131333,
+     133122,
+     135171,
+     129025,
+     130818,
+     131067,
+     131068
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 32255,
+     "max": 33792,
+     "at_or_below": 38,
+     "above": 26
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 9,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       2,
+       8
+      ],
+      [
+       2,
+       10
+      ],
+      [
+       2,
+       12
+      ],
+      [
+       2,
+       14
+      ],
+      [
+       1,
+       16
+      ]
+     ],
+     "total_slices": 17,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      512
+     ],
+     "candidate_nbytes": 2228352
+    }
+   },
+   "max_tokens": 135171
+  },
+  {
+   "id": "b1/tiled32/b49152",
+   "engine": "b1",
+   "route": "tiled",
+   "rows": 32,
+   "boundary_local": 49152,
+   "kind": "slice4",
+   "boundary_tokens_global": 196608,
+   "requests_per_batch": 8,
+   "pad_rows": 0,
+   "batches": [
+    [
+     194560,
+     196353,
+     196602,
+     196607,
+     196608,
+     196613,
+     196618,
+     196623
+    ],
+    [
+     196864,
+     196869,
+     198658,
+     200707,
+     194561,
+     196354,
+     196603,
+     196604
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 48639,
+     "max": 50176,
+     "at_or_below": 38,
+     "above": 26
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 9,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       2,
+       8
+      ],
+      [
+       2,
+       10
+      ],
+      [
+       2,
+       12
+      ],
+      [
+       2,
+       14
+      ],
+      [
+       1,
+       16
+      ]
+     ],
+     "total_slices": 17,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      512
+     ],
+     "candidate_nbytes": 2228352
+    }
+   },
+   "max_tokens": 200707
+  },
+  {
+   "id": "b1/tiled32/b65536",
+   "engine": "b1",
+   "route": "tiled",
+   "rows": 32,
+   "boundary_local": 65536,
+   "kind": "slice5+chunk3",
+   "boundary_tokens_global": 262144,
+   "requests_per_batch": 8,
+   "pad_rows": 0,
+   "batches": [
+    [
+     260096,
+     261889,
+     262138,
+     262143,
+     262144,
+     262149,
+     262154,
+     262159
+    ],
+    [
+     262400,
+     262405,
+     264194,
+     266243,
+     260097,
+     261890,
+     262139,
+     262140
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 65023,
+     "max": 66560,
+     "at_or_below": 38,
+     "above": 26
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 9,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       2,
+       8
+      ],
+      [
+       2,
+       10
+      ],
+      [
+       2,
+       12
+      ],
+      [
+       2,
+       14
+      ],
+      [
+       1,
+       16
+      ]
+     ],
+     "total_slices": 17,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      512
+     ],
+     "candidate_nbytes": 2228352
+    }
+   },
+   "max_tokens": 266243
+  },
+  {
+   "id": "b1/tiled32/b81920",
+   "engine": "b1",
+   "route": "tiled",
+   "rows": 32,
+   "boundary_local": 81920,
+   "kind": "slice6",
+   "boundary_tokens_global": 327680,
+   "requests_per_batch": 8,
+   "pad_rows": 0,
+   "batches": [
+    [
+     325632,
+     327425,
+     327674,
+     327679,
+     327680,
+     327685,
+     327690,
+     327695
+    ],
+    [
+     327936,
+     327941,
+     329730,
+     331779,
+     325633,
+     327426,
+     327675,
+     327676
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 81407,
+     "max": 82944,
+     "at_or_below": 38,
+     "above": 26
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 9,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       2,
+       8
+      ],
+      [
+       2,
+       10
+      ],
+      [
+       2,
+       12
+      ],
+      [
+       2,
+       14
+      ],
+      [
+       1,
+       16
+      ]
+     ],
+     "total_slices": 17,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      512
+     ],
+     "candidate_nbytes": 2228352
+    }
+   },
+   "max_tokens": 331779
+  },
+  {
+   "id": "b1/tiled32/b512",
+   "engine": "b1",
+   "route": "tiled",
+   "rows": 32,
+   "boundary_local": 512,
+   "kind": "short(P~512)",
+   "boundary_tokens_global": 2048,
+   "requests_per_batch": 8,
+   "pad_rows": 0,
+   "batches": [
+    [
+     4,
+     1793,
+     2042,
+     2047,
+     2048,
+     2053,
+     2058,
+     2063
+    ],
+    [
+     2304,
+     2309,
+     4098,
+     6147,
+     5,
+     1794,
+     2043,
+     2044
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 0,
+     "max": 1536,
+     "at_or_below": 38,
+     "above": 26
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 9,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       2,
+       8
+      ],
+      [
+       2,
+       10
+      ],
+      [
+       2,
+       12
+      ],
+      [
+       2,
+       14
+      ],
+      [
+       1,
+       16
+      ]
+     ],
+     "total_slices": 17,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      512
+     ],
+     "candidate_nbytes": 2228352
+    }
+   },
+   "max_tokens": 6147
+  },
+  {
+   "id": "b1/tiled32/b30000",
+   "engine": "b1",
+   "route": "tiled",
+   "rows": 32,
+   "boundary_local": 30000,
+   "kind": "overlap(~120k tokens; stage-2 real-input range)",
+   "boundary_tokens_global": 120000,
+   "requests_per_batch": 8,
+   "pad_rows": 0,
+   "batches": [
+    [
+     117952,
+     119745,
+     119994,
+     119999,
+     120000,
+     120005,
+     120010,
+     120015
+    ],
+    [
+     120256,
+     120261,
+     122050,
+     124099,
+     117953,
+     119746,
+     119995,
+     119996
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 29487,
+     "max": 31024,
+     "at_or_below": 38,
+     "above": 26
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 9,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       2,
+       8
+      ],
+      [
+       2,
+       10
+      ],
+      [
+       2,
+       12
+      ],
+      [
+       2,
+       14
+      ],
+      [
+       1,
+       16
+      ]
+     ],
+     "total_slices": 17,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      512
+     ],
+     "candidate_nbytes": 2228352
+    }
+   },
+   "max_tokens": 124099
+  },
+  {
+   "id": "b1/tiled32/b82500",
+   "engine": "b1",
+   "route": "tiled",
+   "rows": 32,
+   "boundary_local": 82500,
+   "kind": "max(330k-equivalent)",
+   "boundary_tokens_global": 330000,
+   "requests_per_batch": 8,
+   "pad_rows": 0,
+   "batches": [
+    [
+     325904,
+     329745,
+     329990,
+     329995,
+     329996,
+     330001,
+     329982,
+     329987
+    ],
+    [
+     329488,
+     329741,
+     327954,
+     321811,
+     325905,
+     329746,
+     329991,
+     329992
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 80452,
+     "max": 82500,
+     "at_or_below": 64,
+     "above": 0
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 9,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       2,
+       8
+      ],
+      [
+       2,
+       10
+      ],
+      [
+       2,
+       12
+      ],
+      [
+       2,
+       14
+      ],
+      [
+       1,
+       16
+      ]
+     ],
+     "total_slices": 17,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      512
+     ],
+     "candidate_nbytes": 2228352
+    }
+   },
+   "max_tokens": 330001
+  },
+  {
+   "id": "b1/tiled24/b16384",
+   "engine": "b1",
+   "route": "tiled",
+   "rows": 24,
+   "boundary_local": 16384,
+   "kind": "slice2",
+   "boundary_tokens_global": 65536,
+   "requests_per_batch": 6,
+   "pad_rows": 0,
+   "batches": [
+    [
+     63488,
+     65281,
+     65530,
+     65535,
+     65536,
+     65541
+    ],
+    [
+     65546,
+     65551,
+     65792,
+     65797,
+     67586,
+     69635
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 15871,
+     "max": 17408,
+     "at_or_below": 22,
+     "above": 26
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 9,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       2,
+       8
+      ],
+      [
+       2,
+       10
+      ],
+      [
+       2,
+       12
+      ],
+      [
+       2,
+       14
+      ],
+      [
+       1,
+       16
+      ]
+     ],
+     "total_slices": 17,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      512
+     ],
+     "candidate_nbytes": 1671264
+    }
+   },
+   "max_tokens": 69635
+  },
+  {
+   "id": "b1/tiled24/b32768",
+   "engine": "b1",
+   "route": "tiled",
+   "rows": 24,
+   "boundary_local": 32768,
+   "kind": "slice3+chunk2",
+   "boundary_tokens_global": 131072,
+   "requests_per_batch": 6,
+   "pad_rows": 0,
+   "batches": [
+    [
+     129024,
+     130817,
+     131066,
+     131071,
+     131072,
+     131077
+    ],
+    [
+     131082,
+     131087,
+     131328,
+     131333,
+     133122,
+     135171
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 32255,
+     "max": 33792,
+     "at_or_below": 22,
+     "above": 26
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 9,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       2,
+       8
+      ],
+      [
+       2,
+       10
+      ],
+      [
+       2,
+       12
+      ],
+      [
+       2,
+       14
+      ],
+      [
+       1,
+       16
+      ]
+     ],
+     "total_slices": 17,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      512
+     ],
+     "candidate_nbytes": 1671264
+    }
+   },
+   "max_tokens": 135171
+  },
+  {
+   "id": "b1/tiled24/b49152",
+   "engine": "b1",
+   "route": "tiled",
+   "rows": 24,
+   "boundary_local": 49152,
+   "kind": "slice4",
+   "boundary_tokens_global": 196608,
+   "requests_per_batch": 6,
+   "pad_rows": 0,
+   "batches": [
+    [
+     194560,
+     196353,
+     196602,
+     196607,
+     196608,
+     196613
+    ],
+    [
+     196618,
+     196623,
+     196864,
+     196869,
+     198658,
+     200707
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 48639,
+     "max": 50176,
+     "at_or_below": 22,
+     "above": 26
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 9,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       2,
+       8
+      ],
+      [
+       2,
+       10
+      ],
+      [
+       2,
+       12
+      ],
+      [
+       2,
+       14
+      ],
+      [
+       1,
+       16
+      ]
+     ],
+     "total_slices": 17,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      512
+     ],
+     "candidate_nbytes": 1671264
+    }
+   },
+   "max_tokens": 200707
+  },
+  {
+   "id": "b1/tiled24/b65536",
+   "engine": "b1",
+   "route": "tiled",
+   "rows": 24,
+   "boundary_local": 65536,
+   "kind": "slice5+chunk3",
+   "boundary_tokens_global": 262144,
+   "requests_per_batch": 6,
+   "pad_rows": 0,
+   "batches": [
+    [
+     260096,
+     261889,
+     262138,
+     262143,
+     262144,
+     262149
+    ],
+    [
+     262154,
+     262159,
+     262400,
+     262405,
+     264194,
+     266243
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 65023,
+     "max": 66560,
+     "at_or_below": 22,
+     "above": 26
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 9,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       2,
+       8
+      ],
+      [
+       2,
+       10
+      ],
+      [
+       2,
+       12
+      ],
+      [
+       2,
+       14
+      ],
+      [
+       1,
+       16
+      ]
+     ],
+     "total_slices": 17,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      512
+     ],
+     "candidate_nbytes": 1671264
+    }
+   },
+   "max_tokens": 266243
+  },
+  {
+   "id": "b1/tiled24/b81920",
+   "engine": "b1",
+   "route": "tiled",
+   "rows": 24,
+   "boundary_local": 81920,
+   "kind": "slice6",
+   "boundary_tokens_global": 327680,
+   "requests_per_batch": 6,
+   "pad_rows": 0,
+   "batches": [
+    [
+     325632,
+     327425,
+     327674,
+     327679,
+     327680,
+     327685
+    ],
+    [
+     327690,
+     327695,
+     327936,
+     327941,
+     329730,
+     331779
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 81407,
+     "max": 82944,
+     "at_or_below": 22,
+     "above": 26
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 9,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       2,
+       8
+      ],
+      [
+       2,
+       10
+      ],
+      [
+       2,
+       12
+      ],
+      [
+       2,
+       14
+      ],
+      [
+       1,
+       16
+      ]
+     ],
+     "total_slices": 17,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      512
+     ],
+     "candidate_nbytes": 1671264
+    }
+   },
+   "max_tokens": 331779
+  },
+  {
+   "id": "b1/tiled24/b512",
+   "engine": "b1",
+   "route": "tiled",
+   "rows": 24,
+   "boundary_local": 512,
+   "kind": "short(P~512)",
+   "boundary_tokens_global": 2048,
+   "requests_per_batch": 6,
+   "pad_rows": 0,
+   "batches": [
+    [
+     4,
+     1793,
+     2042,
+     2047,
+     2048,
+     2053
+    ],
+    [
+     2058,
+     2063,
+     2304,
+     2309,
+     4098,
+     6147
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 0,
+     "max": 1536,
+     "at_or_below": 22,
+     "above": 26
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 9,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       2,
+       8
+      ],
+      [
+       2,
+       10
+      ],
+      [
+       2,
+       12
+      ],
+      [
+       2,
+       14
+      ],
+      [
+       1,
+       16
+      ]
+     ],
+     "total_slices": 17,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      512
+     ],
+     "candidate_nbytes": 1671264
+    }
+   },
+   "max_tokens": 6147
+  },
+  {
+   "id": "b1/tiled24/b30000",
+   "engine": "b1",
+   "route": "tiled",
+   "rows": 24,
+   "boundary_local": 30000,
+   "kind": "overlap(~120k tokens; stage-2 real-input range)",
+   "boundary_tokens_global": 120000,
+   "requests_per_batch": 6,
+   "pad_rows": 0,
+   "batches": [
+    [
+     117952,
+     119745,
+     119994,
+     119999,
+     120000,
+     120005
+    ],
+    [
+     120010,
+     120015,
+     120256,
+     120261,
+     122050,
+     124099
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 29487,
+     "max": 31024,
+     "at_or_below": 22,
+     "above": 26
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 9,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       2,
+       8
+      ],
+      [
+       2,
+       10
+      ],
+      [
+       2,
+       12
+      ],
+      [
+       2,
+       14
+      ],
+      [
+       1,
+       16
+      ]
+     ],
+     "total_slices": 17,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      512
+     ],
+     "candidate_nbytes": 1671264
+    }
+   },
+   "max_tokens": 124099
+  },
+  {
+   "id": "b1/tiled24/b82500",
+   "engine": "b1",
+   "route": "tiled",
+   "rows": 24,
+   "boundary_local": 82500,
+   "kind": "max(330k-equivalent)",
+   "boundary_tokens_global": 330000,
+   "requests_per_batch": 6,
+   "pad_rows": 0,
+   "batches": [
+    [
+     325904,
+     329745,
+     329990,
+     329995,
+     329996,
+     330001
+    ],
+    [
+     329982,
+     329987,
+     329488,
+     329741,
+     327954,
+     321811
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 80452,
+     "max": 82500,
+     "at_or_below": 48,
+     "above": 0
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 9,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       2,
+       8
+      ],
+      [
+       2,
+       10
+      ],
+      [
+       2,
+       12
+      ],
+      [
+       2,
+       14
+      ],
+      [
+       1,
+       16
+      ]
+     ],
+     "total_slices": 17,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      16384,
+      512
+     ],
+     "candidate_nbytes": 1671264
+    }
+   },
+   "max_tokens": 330001
+  },
+  {
+   "id": "b1/fused16/b5632",
+   "engine": "b1",
+   "route": "fused",
+   "rows": 16,
+   "boundary_local": 5632,
+   "kind": "final-trim(k=9,ctas=11)",
+   "boundary_tokens_global": 22528,
+   "requests_per_batch": 4,
+   "pad_rows": 0,
+   "batches": [
+    [
+     20480,
+     22273,
+     22522,
+     22527
+    ],
+    [
+     22528,
+     22533,
+     22538,
+     22543
+    ],
+    [
+     22784,
+     22789,
+     24578,
+     26627
+    ],
+    [
+     19712,
+     19717,
+     25346,
+     25351
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 4927,
+     "max": 6656,
+     "at_or_below": 30,
+     "above": 34
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 11,
+    "fold": null
+   },
+   "max_tokens": 26627
+  },
+  {
+   "id": "b1/fused16/b10560",
+   "engine": "b1",
+   "route": "fused",
+   "rows": 16,
+   "boundary_local": 10560,
+   "kind": "mid-trim-1(k=16,ctas=11)",
+   "boundary_tokens_global": 42240,
+   "requests_per_batch": 4,
+   "pad_rows": 0,
+   "batches": [
+    [
+     40192,
+     41985,
+     42234,
+     42239
+    ],
+    [
+     42240,
+     42245,
+     42250,
+     42255
+    ],
+    [
+     42496,
+     42501,
+     44290,
+     46339
+    ],
+    [
+     39424,
+     39429,
+     45058,
+     45063
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 9855,
+     "max": 11584,
+     "at_or_below": 30,
+     "above": 34
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 11,
+    "fold": null
+   },
+   "max_tokens": 46339
+  },
+  {
+   "id": "b1/fused16/b15488",
+   "engine": "b1",
+   "route": "fused",
+   "rows": 16,
+   "boundary_local": 15488,
+   "kind": "mid-trim-2(k=23,ctas=11)",
+   "boundary_tokens_global": 61952,
+   "requests_per_batch": 4,
+   "pad_rows": 0,
+   "batches": [
+    [
+     59904,
+     61697,
+     61946,
+     61951
+    ],
+    [
+     61952,
+     61957,
+     61962,
+     61967
+    ],
+    [
+     62208,
+     62213,
+     64002,
+     66051
+    ],
+    [
+     59136,
+     59141,
+     64770,
+     64775
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 14783,
+     "max": 16512,
+     "at_or_below": 30,
+     "above": 34
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 11,
+    "fold": null
+   },
+   "max_tokens": 66051
+  },
+  {
+   "id": "b1/fused16/b512",
+   "engine": "b1",
+   "route": "fused",
+   "rows": 16,
+   "boundary_local": 512,
+   "kind": "short(P~512)",
+   "boundary_tokens_global": 2048,
+   "requests_per_batch": 4,
+   "pad_rows": 0,
+   "batches": [
+    [
+     4,
+     1793,
+     2042,
+     2047
+    ],
+    [
+     2048,
+     2053,
+     2058,
+     2063
+    ],
+    [
+     2304,
+     2309,
+     4098,
+     6147
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 0,
+     "max": 1536,
+     "at_or_below": 22,
+     "above": 26
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 11,
+    "fold": null
+   },
+   "max_tokens": 6147
+  },
+  {
+   "id": "b1/fused16/b30000",
+   "engine": "b1",
+   "route": "fused",
+   "rows": 16,
+   "boundary_local": 30000,
+   "kind": "overlap(~120k tokens; stage-2 real-input range)",
+   "boundary_tokens_global": 120000,
+   "requests_per_batch": 4,
+   "pad_rows": 0,
+   "batches": [
+    [
+     117952,
+     119745,
+     119994,
+     119999
+    ],
+    [
+     120000,
+     120005,
+     120010,
+     120015
+    ],
+    [
+     120256,
+     120261,
+     122050,
+     124099
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 29487,
+     "max": 31024,
+     "at_or_below": 22,
+     "above": 26
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 11,
+    "fold": null
+   },
+   "max_tokens": 124099
+  },
+  {
+   "id": "b1/fused16/b82500",
+   "engine": "b1",
+   "route": "fused",
+   "rows": 16,
+   "boundary_local": 82500,
+   "kind": "max(330k-equivalent)",
+   "boundary_tokens_global": 330000,
+   "requests_per_batch": 4,
+   "pad_rows": 0,
+   "batches": [
+    [
+     325904,
+     329745,
+     329990,
+     329995
+    ],
+    [
+     329996,
+     330001,
+     329982,
+     329987
+    ],
+    [
+     329488,
+     329741,
+     327954,
+     321811
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 80452,
+     "max": 82500,
+     "at_or_below": 48,
+     "above": 0
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 11,
+    "fold": null
+   },
+   "max_tokens": 330001
+  },
+  {
+   "id": "b1/fused8/b11776",
+   "engine": "b1",
+   "route": "fused",
+   "rows": 8,
+   "boundary_local": 11776,
+   "kind": "final-trim(k=9,ctas=23)",
+   "boundary_tokens_global": 47104,
+   "requests_per_batch": 2,
+   "pad_rows": 0,
+   "batches": [
+    [
+     45056,
+     46849
+    ],
+    [
+     47098,
+     47103
+    ],
+    [
+     47104,
+     47109
+    ],
+    [
+     47114,
+     47119
+    ],
+    [
+     47360,
+     47365
+    ],
+    [
+     49154,
+     51203
+    ],
+    [
+     41216,
+     41221
+    ],
+    [
+     52994,
+     52999
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 10303,
+     "max": 13249,
+     "at_or_below": 30,
+     "above": 34
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 23,
+    "fold": null
+   },
+   "max_tokens": 52999
+  },
+  {
+   "id": "b1/fused8/b22080",
+   "engine": "b1",
+   "route": "fused",
+   "rows": 8,
+   "boundary_local": 22080,
+   "kind": "mid-trim-1(k=16,ctas=23)",
+   "boundary_tokens_global": 88320,
+   "requests_per_batch": 2,
+   "pad_rows": 0,
+   "batches": [
+    [
+     86272,
+     88065
+    ],
+    [
+     88314,
+     88319
+    ],
+    [
+     88320,
+     88325
+    ],
+    [
+     88330,
+     88335
+    ],
+    [
+     88576,
+     88581
+    ],
+    [
+     90370,
+     92419
+    ],
+    [
+     82432,
+     82437
+    ],
+    [
+     94210,
+     94215
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 20607,
+     "max": 23553,
+     "at_or_below": 30,
+     "above": 34
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 23,
+    "fold": null
+   },
+   "max_tokens": 94215
+  },
+  {
+   "id": "b1/fused8/b32384",
+   "engine": "b1",
+   "route": "fused",
+   "rows": 8,
+   "boundary_local": 32384,
+   "kind": "mid-trim-2(k=23,ctas=23)",
+   "boundary_tokens_global": 129536,
+   "requests_per_batch": 2,
+   "pad_rows": 0,
+   "batches": [
+    [
+     127488,
+     129281
+    ],
+    [
+     129530,
+     129535
+    ],
+    [
+     129536,
+     129541
+    ],
+    [
+     129546,
+     129551
+    ],
+    [
+     129792,
+     129797
+    ],
+    [
+     131586,
+     133635
+    ],
+    [
+     123648,
+     123653
+    ],
+    [
+     135426,
+     135431
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 30911,
+     "max": 33857,
+     "at_or_below": 30,
+     "above": 34
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 23,
+    "fold": null
+   },
+   "max_tokens": 135431
+  },
+  {
+   "id": "b1/fused8/b512",
+   "engine": "b1",
+   "route": "fused",
+   "rows": 8,
+   "boundary_local": 512,
+   "kind": "short(P~512)",
+   "boundary_tokens_global": 2048,
+   "requests_per_batch": 2,
+   "pad_rows": 0,
+   "batches": [
+    [
+     4,
+     1793
+    ],
+    [
+     2042,
+     2047
+    ],
+    [
+     2048,
+     2053
+    ],
+    [
+     2058,
+     2063
+    ],
+    [
+     2304,
+     2309
+    ],
+    [
+     4098,
+     6147
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 0,
+     "max": 1536,
+     "at_or_below": 22,
+     "above": 26
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 23,
+    "fold": null
+   },
+   "max_tokens": 6147
+  },
+  {
+   "id": "b1/fused8/b30000",
+   "engine": "b1",
+   "route": "fused",
+   "rows": 8,
+   "boundary_local": 30000,
+   "kind": "overlap(~120k tokens; stage-2 real-input range)",
+   "boundary_tokens_global": 120000,
+   "requests_per_batch": 2,
+   "pad_rows": 0,
+   "batches": [
+    [
+     117952,
+     119745
+    ],
+    [
+     119994,
+     119999
+    ],
+    [
+     120000,
+     120005
+    ],
+    [
+     120010,
+     120015
+    ],
+    [
+     120256,
+     120261
+    ],
+    [
+     122050,
+     124099
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 29487,
+     "max": 31024,
+     "at_or_below": 22,
+     "above": 26
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 23,
+    "fold": null
+   },
+   "max_tokens": 124099
+  },
+  {
+   "id": "b1/fused8/b82500",
+   "engine": "b1",
+   "route": "fused",
+   "rows": 8,
+   "boundary_local": 82500,
+   "kind": "max(330k-equivalent)",
+   "boundary_tokens_global": 330000,
+   "requests_per_batch": 2,
+   "pad_rows": 0,
+   "batches": [
+    [
+     325904,
+     329745
+    ],
+    [
+     329990,
+     329995
+    ],
+    [
+     329996,
+     330001
+    ],
+    [
+     329982,
+     329987
+    ],
+    [
+     329488,
+     329741
+    ],
+    [
+     327954,
+     321811
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 80452,
+     "max": 82500,
+     "at_or_below": 48,
+     "above": 0
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 23,
+    "fold": null
+   },
+   "max_tokens": 330001
+  },
+  {
+   "id": "b1/fused4/b24064",
+   "engine": "b1",
+   "route": "fused",
+   "rows": 4,
+   "boundary_local": 24064,
+   "kind": "final-trim(k=9,ctas=47)",
+   "boundary_tokens_global": 96256,
+   "requests_per_batch": 1,
+   "pad_rows": 0,
+   "batches": [
+    [
+     94208
+    ],
+    [
+     96001
+    ],
+    [
+     96250
+    ],
+    [
+     96255
+    ],
+    [
+     96256
+    ],
+    [
+     96261
+    ],
+    [
+     96266
+    ],
+    [
+     96271
+    ],
+    [
+     96512
+    ],
+    [
+     96517
+    ],
+    [
+     98306
+    ],
+    [
+     100355
+    ],
+    [
+     84224
+    ],
+    [
+     84229
+    ],
+    [
+     108290
+    ],
+    [
+     108295
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 21055,
+     "max": 27073,
+     "at_or_below": 30,
+     "above": 34
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 47,
+    "fold": null
+   },
+   "max_tokens": 108295
+  },
+  {
+   "id": "b1/fused4/b45120",
+   "engine": "b1",
+   "route": "fused",
+   "rows": 4,
+   "boundary_local": 45120,
+   "kind": "mid-trim-1(k=16,ctas=47)",
+   "boundary_tokens_global": 180480,
+   "requests_per_batch": 1,
+   "pad_rows": 0,
+   "batches": [
+    [
+     178432
+    ],
+    [
+     180225
+    ],
+    [
+     180474
+    ],
+    [
+     180479
+    ],
+    [
+     180480
+    ],
+    [
+     180485
+    ],
+    [
+     180490
+    ],
+    [
+     180495
+    ],
+    [
+     180736
+    ],
+    [
+     180741
+    ],
+    [
+     182530
+    ],
+    [
+     184579
+    ],
+    [
+     168448
+    ],
+    [
+     168453
+    ],
+    [
+     192514
+    ],
+    [
+     192519
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 42111,
+     "max": 48129,
+     "at_or_below": 30,
+     "above": 34
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 47,
+    "fold": null
+   },
+   "max_tokens": 192519
+  },
+  {
+   "id": "b1/fused4/b66176",
+   "engine": "b1",
+   "route": "fused",
+   "rows": 4,
+   "boundary_local": 66176,
+   "kind": "mid-trim-2(k=23,ctas=47)",
+   "boundary_tokens_global": 264704,
+   "requests_per_batch": 1,
+   "pad_rows": 0,
+   "batches": [
+    [
+     262656
+    ],
+    [
+     264449
+    ],
+    [
+     264698
+    ],
+    [
+     264703
+    ],
+    [
+     264704
+    ],
+    [
+     264709
+    ],
+    [
+     264714
+    ],
+    [
+     264719
+    ],
+    [
+     264960
+    ],
+    [
+     264965
+    ],
+    [
+     266754
+    ],
+    [
+     268803
+    ],
+    [
+     252672
+    ],
+    [
+     252677
+    ],
+    [
+     276738
+    ],
+    [
+     276743
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 63167,
+     "max": 69185,
+     "at_or_below": 30,
+     "above": 34
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 47,
+    "fold": null
+   },
+   "max_tokens": 276743
+  },
+  {
+   "id": "b1/fused4/b512",
+   "engine": "b1",
+   "route": "fused",
+   "rows": 4,
+   "boundary_local": 512,
+   "kind": "short(P~512)",
+   "boundary_tokens_global": 2048,
+   "requests_per_batch": 1,
+   "pad_rows": 0,
+   "batches": [
+    [
+     4
+    ],
+    [
+     1793
+    ],
+    [
+     2042
+    ],
+    [
+     2047
+    ],
+    [
+     2048
+    ],
+    [
+     2053
+    ],
+    [
+     2058
+    ],
+    [
+     2063
+    ],
+    [
+     2304
+    ],
+    [
+     2309
+    ],
+    [
+     4098
+    ],
+    [
+     6147
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 0,
+     "max": 1536,
+     "at_or_below": 22,
+     "above": 26
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 47,
+    "fold": null
+   },
+   "max_tokens": 6147
+  },
+  {
+   "id": "b1/fused4/b30000",
+   "engine": "b1",
+   "route": "fused",
+   "rows": 4,
+   "boundary_local": 30000,
+   "kind": "overlap(~120k tokens; stage-2 real-input range)",
+   "boundary_tokens_global": 120000,
+   "requests_per_batch": 1,
+   "pad_rows": 0,
+   "batches": [
+    [
+     117952
+    ],
+    [
+     119745
+    ],
+    [
+     119994
+    ],
+    [
+     119999
+    ],
+    [
+     120000
+    ],
+    [
+     120005
+    ],
+    [
+     120010
+    ],
+    [
+     120015
+    ],
+    [
+     120256
+    ],
+    [
+     120261
+    ],
+    [
+     122050
+    ],
+    [
+     124099
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 29487,
+     "max": 31024,
+     "at_or_below": 22,
+     "above": 26
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 47,
+    "fold": null
+   },
+   "max_tokens": 124099
+  },
+  {
+   "id": "b1/fused4/b82500",
+   "engine": "b1",
+   "route": "fused",
+   "rows": 4,
+   "boundary_local": 82500,
+   "kind": "max(330k-equivalent)",
+   "boundary_tokens_global": 330000,
+   "requests_per_batch": 1,
+   "pad_rows": 0,
+   "batches": [
+    [
+     325904
+    ],
+    [
+     329745
+    ],
+    [
+     329990
+    ],
+    [
+     329995
+    ],
+    [
+     329996
+    ],
+    [
+     330001
+    ],
+    [
+     329982
+    ],
+    [
+     329987
+    ],
+    [
+     329488
+    ],
+    [
+     329741
+    ],
+    [
+     327954
+    ],
+    [
+     321811
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 80452,
+     "max": 82500,
+     "at_or_below": 48,
+     "above": 0
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 47,
+    "fold": null
+   },
+   "max_tokens": 330001
+  },
+  {
+   "id": "v070/tiled48/b16384",
+   "engine": "v070",
+   "route": "tiled",
+   "rows": 48,
+   "boundary_local": 16384,
+   "kind": "slice2",
+   "boundary_tokens_global": 131072,
+   "requests_per_batch": 8,
+   "pad_rows": 0,
+   "batches": [
+    [
+     126976,
+     130561,
+     131066,
+     131071,
+     131072,
+     131077,
+     131082,
+     131087
+    ],
+    [
+     131088,
+     131589,
+     135170,
+     139271,
+     126977,
+     130562,
+     131067,
+     131068
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 15871,
+     "max": 17409,
+     "at_or_below": 58,
+     "above": 38
+    },
+    "1": {
+     "min": 15871,
+     "max": 17408,
+     "at_or_below": 63,
+     "above": 33
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 5,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       1,
+       8
+      ]
+     ],
+     "total_slices": 9,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      1024
+     ],
+     "candidate_nbytes": 1769664
+    }
+   },
+   "max_tokens": 139271
+  },
+  {
+   "id": "v070/tiled48/b32768",
+   "engine": "v070",
+   "route": "tiled",
+   "rows": 48,
+   "boundary_local": 32768,
+   "kind": "slice3+chunk2",
+   "boundary_tokens_global": 262144,
+   "requests_per_batch": 8,
+   "pad_rows": 0,
+   "batches": [
+    [
+     258048,
+     261633,
+     262138,
+     262143,
+     262144,
+     262149,
+     262154,
+     262159
+    ],
+    [
+     262160,
+     262661,
+     266242,
+     270343,
+     258049,
+     261634,
+     262139,
+     262140
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 32255,
+     "max": 33793,
+     "at_or_below": 58,
+     "above": 38
+    },
+    "1": {
+     "min": 32255,
+     "max": 33792,
+     "at_or_below": 63,
+     "above": 33
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 5,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       1,
+       8
+      ]
+     ],
+     "total_slices": 9,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      1024
+     ],
+     "candidate_nbytes": 1769664
+    }
+   },
+   "max_tokens": 270343
+  },
+  {
+   "id": "v070/tiled48/b512",
+   "engine": "v070",
+   "route": "tiled",
+   "rows": 48,
+   "boundary_local": 512,
+   "kind": "short(P~512)",
+   "boundary_tokens_global": 4096,
+   "requests_per_batch": 8,
+   "pad_rows": 0,
+   "batches": [
+    [
+     4,
+     3585,
+     4090,
+     4095,
+     4096,
+     4101,
+     4106,
+     4111
+    ],
+    [
+     4112,
+     4613,
+     8194,
+     12295,
+     5,
+     3586,
+     4091,
+     4092
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 0,
+     "max": 1537,
+     "at_or_below": 55,
+     "above": 38
+    },
+    "1": {
+     "min": 0,
+     "max": 1536,
+     "at_or_below": 60,
+     "above": 33
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 5,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       1,
+       8
+      ]
+     ],
+     "total_slices": 9,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      1024
+     ],
+     "candidate_nbytes": 1769664
+    }
+   },
+   "max_tokens": 12295
+  },
+  {
+   "id": "v070/tiled48/b15000",
+   "engine": "v070",
+   "route": "tiled",
+   "rows": 48,
+   "boundary_local": 15000,
+   "kind": "overlap(~120k tokens; stage-2 real-input range)",
+   "boundary_tokens_global": 120000,
+   "requests_per_batch": 8,
+   "pad_rows": 0,
+   "batches": [
+    [
+     115904,
+     119489,
+     119994,
+     119999,
+     120000,
+     120005,
+     120010,
+     120015
+    ],
+    [
+     120016,
+     120517,
+     124098,
+     128199,
+     115905,
+     119490,
+     119995,
+     119996
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 14487,
+     "max": 16025,
+     "at_or_below": 58,
+     "above": 38
+    },
+    "1": {
+     "min": 14487,
+     "max": 16024,
+     "at_or_below": 63,
+     "above": 33
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 5,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       1,
+       8
+      ]
+     ],
+     "total_slices": 9,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      1024
+     ],
+     "candidate_nbytes": 1769664
+    }
+   },
+   "max_tokens": 128199
+  },
+  {
+   "id": "v070/tiled48/b41250",
+   "engine": "v070",
+   "route": "tiled",
+   "rows": 48,
+   "boundary_local": 41250,
+   "kind": "max(330k-equivalent)",
+   "boundary_tokens_global": 330000,
+   "requests_per_batch": 8,
+   "pad_rows": 0,
+   "batches": [
+    [
+     325904,
+     329745,
+     329990,
+     329995,
+     329996,
+     330001,
+     329982,
+     329987
+    ],
+    [
+     329488,
+     329741,
+     327954,
+     321811,
+     325905,
+     329746,
+     329991,
+     329992
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 40226,
+     "max": 41250,
+     "at_or_below": 96,
+     "above": 0
+    },
+    "1": {
+     "min": 40225,
+     "max": 41250,
+     "at_or_below": 96,
+     "above": 0
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 5,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       1,
+       8
+      ]
+     ],
+     "total_slices": 9,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      1024
+     ],
+     "candidate_nbytes": 1769664
+    }
+   },
+   "max_tokens": 330001
+  },
+  {
+   "id": "v070/tiled24/b16384",
+   "engine": "v070",
+   "route": "tiled",
+   "rows": 24,
+   "boundary_local": 16384,
+   "kind": "slice2",
+   "boundary_tokens_global": 131072,
+   "requests_per_batch": 4,
+   "pad_rows": 0,
+   "batches": [
+    [
+     126976,
+     130561,
+     131066,
+     131071
+    ],
+    [
+     131072,
+     131077,
+     131082,
+     131087
+    ],
+    [
+     131088,
+     131589,
+     135170,
+     139271
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 15871,
+     "max": 17409,
+     "at_or_below": 34,
+     "above": 38
+    },
+    "1": {
+     "min": 15871,
+     "max": 17408,
+     "at_or_below": 39,
+     "above": 33
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 5,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       1,
+       8
+      ]
+     ],
+     "total_slices": 9,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      1024
+     ],
+     "candidate_nbytes": 884832
+    }
+   },
+   "max_tokens": 139271
+  },
+  {
+   "id": "v070/tiled24/b32768",
+   "engine": "v070",
+   "route": "tiled",
+   "rows": 24,
+   "boundary_local": 32768,
+   "kind": "slice3+chunk2",
+   "boundary_tokens_global": 262144,
+   "requests_per_batch": 4,
+   "pad_rows": 0,
+   "batches": [
+    [
+     258048,
+     261633,
+     262138,
+     262143
+    ],
+    [
+     262144,
+     262149,
+     262154,
+     262159
+    ],
+    [
+     262160,
+     262661,
+     266242,
+     270343
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 32255,
+     "max": 33793,
+     "at_or_below": 34,
+     "above": 38
+    },
+    "1": {
+     "min": 32255,
+     "max": 33792,
+     "at_or_below": 39,
+     "above": 33
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 5,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       1,
+       8
+      ]
+     ],
+     "total_slices": 9,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      1024
+     ],
+     "candidate_nbytes": 884832
+    }
+   },
+   "max_tokens": 270343
+  },
+  {
+   "id": "v070/tiled24/b512",
+   "engine": "v070",
+   "route": "tiled",
+   "rows": 24,
+   "boundary_local": 512,
+   "kind": "short(P~512)",
+   "boundary_tokens_global": 4096,
+   "requests_per_batch": 4,
+   "pad_rows": 0,
+   "batches": [
+    [
+     4,
+     3585,
+     4090,
+     4095
+    ],
+    [
+     4096,
+     4101,
+     4106,
+     4111
+    ],
+    [
+     4112,
+     4613,
+     8194,
+     12295
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 0,
+     "max": 1537,
+     "at_or_below": 32,
+     "above": 38
+    },
+    "1": {
+     "min": 0,
+     "max": 1536,
+     "at_or_below": 37,
+     "above": 33
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 5,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       1,
+       8
+      ]
+     ],
+     "total_slices": 9,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      1024
+     ],
+     "candidate_nbytes": 884832
+    }
+   },
+   "max_tokens": 12295
+  },
+  {
+   "id": "v070/tiled24/b15000",
+   "engine": "v070",
+   "route": "tiled",
+   "rows": 24,
+   "boundary_local": 15000,
+   "kind": "overlap(~120k tokens; stage-2 real-input range)",
+   "boundary_tokens_global": 120000,
+   "requests_per_batch": 4,
+   "pad_rows": 0,
+   "batches": [
+    [
+     115904,
+     119489,
+     119994,
+     119999
+    ],
+    [
+     120000,
+     120005,
+     120010,
+     120015
+    ],
+    [
+     120016,
+     120517,
+     124098,
+     128199
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 14487,
+     "max": 16025,
+     "at_or_below": 34,
+     "above": 38
+    },
+    "1": {
+     "min": 14487,
+     "max": 16024,
+     "at_or_below": 39,
+     "above": 33
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 5,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       1,
+       8
+      ]
+     ],
+     "total_slices": 9,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      1024
+     ],
+     "candidate_nbytes": 884832
+    }
+   },
+   "max_tokens": 128199
+  },
+  {
+   "id": "v070/tiled24/b41250",
+   "engine": "v070",
+   "route": "tiled",
+   "rows": 24,
+   "boundary_local": 41250,
+   "kind": "max(330k-equivalent)",
+   "boundary_tokens_global": 330000,
+   "requests_per_batch": 4,
+   "pad_rows": 0,
+   "batches": [
+    [
+     325904,
+     329745,
+     329990,
+     329995
+    ],
+    [
+     329996,
+     330001,
+     329982,
+     329987
+    ],
+    [
+     329488,
+     329741,
+     327954,
+     321811
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 40226,
+     "max": 41250,
+     "at_or_below": 72,
+     "above": 0
+    },
+    "1": {
+     "min": 40225,
+     "max": 41250,
+     "at_or_below": 72,
+     "above": 0
+    }
+   },
+   "expect": {
+    "route": "paged_tiled",
+    "ctas_per_group": 1,
+    "fold": {
+     "on": true,
+     "slice_rows": 16384,
+     "n_chunks": 5,
+     "slices": [
+      [
+       2,
+       0
+      ],
+      [
+       2,
+       2
+      ],
+      [
+       2,
+       4
+      ],
+      [
+       2,
+       6
+      ],
+      [
+       1,
+       8
+      ]
+     ],
+     "total_slices": 9,
+     "split_extent": [
+      16384,
+      16384,
+      16384,
+      16384,
+      1024
+     ],
+     "candidate_nbytes": 884832
+    }
+   },
+   "max_tokens": 330001
+  },
+  {
+   "id": "v070/fused16/b5632",
+   "engine": "v070",
+   "route": "fused",
+   "rows": 16,
+   "boundary_local": 5632,
+   "kind": "final-trim(k=9,ctas=11)",
+   "boundary_tokens_global": 45056,
+   "requests_per_batch": 2,
+   "pad_rows": 4,
+   "batches": [
+    [
+     40960,
+     44545
+    ],
+    [
+     45050,
+     45055
+    ],
+    [
+     45056,
+     45061
+    ],
+    [
+     45066,
+     45071
+    ],
+    [
+     45072,
+     45573
+    ],
+    [
+     49154,
+     53255
+    ],
+    [
+     39428,
+     39433
+    ],
+    [
+     50694,
+     50699
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 4928,
+     "max": 6657,
+     "at_or_below": 46,
+     "above": 50
+    },
+    "1": {
+     "min": 4927,
+     "max": 6656,
+     "at_or_below": 51,
+     "above": 45
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 11,
+    "fold": null
+   },
+   "max_tokens": 53255
+  },
+  {
+   "id": "v070/fused16/b10560",
+   "engine": "v070",
+   "route": "fused",
+   "rows": 16,
+   "boundary_local": 10560,
+   "kind": "mid-trim-1(k=16,ctas=11)",
+   "boundary_tokens_global": 84480,
+   "requests_per_batch": 2,
+   "pad_rows": 4,
+   "batches": [
+    [
+     80384,
+     83969
+    ],
+    [
+     84474,
+     84479
+    ],
+    [
+     84480,
+     84485
+    ],
+    [
+     84490,
+     84495
+    ],
+    [
+     84496,
+     84997
+    ],
+    [
+     88578,
+     92679
+    ],
+    [
+     78852,
+     78857
+    ],
+    [
+     90118,
+     90123
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 9856,
+     "max": 11585,
+     "at_or_below": 46,
+     "above": 50
+    },
+    "1": {
+     "min": 9855,
+     "max": 11584,
+     "at_or_below": 51,
+     "above": 45
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 11,
+    "fold": null
+   },
+   "max_tokens": 92679
+  },
+  {
+   "id": "v070/fused16/b15488",
+   "engine": "v070",
+   "route": "fused",
+   "rows": 16,
+   "boundary_local": 15488,
+   "kind": "mid-trim-2(k=23,ctas=11)",
+   "boundary_tokens_global": 123904,
+   "requests_per_batch": 2,
+   "pad_rows": 4,
+   "batches": [
+    [
+     119808,
+     123393
+    ],
+    [
+     123898,
+     123903
+    ],
+    [
+     123904,
+     123909
+    ],
+    [
+     123914,
+     123919
+    ],
+    [
+     123920,
+     124421
+    ],
+    [
+     128002,
+     132103
+    ],
+    [
+     118276,
+     118281
+    ],
+    [
+     129542,
+     129547
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 14784,
+     "max": 16513,
+     "at_or_below": 46,
+     "above": 50
+    },
+    "1": {
+     "min": 14783,
+     "max": 16512,
+     "at_or_below": 51,
+     "above": 45
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 11,
+    "fold": null
+   },
+   "max_tokens": 132103
+  },
+  {
+   "id": "v070/fused16/b512",
+   "engine": "v070",
+   "route": "fused",
+   "rows": 16,
+   "boundary_local": 512,
+   "kind": "short(P~512)",
+   "boundary_tokens_global": 4096,
+   "requests_per_batch": 2,
+   "pad_rows": 4,
+   "batches": [
+    [
+     4,
+     3585
+    ],
+    [
+     4090,
+     4095
+    ],
+    [
+     4096,
+     4101
+    ],
+    [
+     4106,
+     4111
+    ],
+    [
+     4112,
+     4613
+    ],
+    [
+     8194,
+     12295
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 0,
+     "max": 1537,
+     "at_or_below": 32,
+     "above": 38
+    },
+    "1": {
+     "min": 0,
+     "max": 1536,
+     "at_or_below": 37,
+     "above": 33
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 11,
+    "fold": null
+   },
+   "max_tokens": 12295
+  },
+  {
+   "id": "v070/fused16/b15000",
+   "engine": "v070",
+   "route": "fused",
+   "rows": 16,
+   "boundary_local": 15000,
+   "kind": "overlap(~120k tokens; stage-2 real-input range)",
+   "boundary_tokens_global": 120000,
+   "requests_per_batch": 2,
+   "pad_rows": 4,
+   "batches": [
+    [
+     115904,
+     119489
+    ],
+    [
+     119994,
+     119999
+    ],
+    [
+     120000,
+     120005
+    ],
+    [
+     120010,
+     120015
+    ],
+    [
+     120016,
+     120517
+    ],
+    [
+     124098,
+     128199
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 14487,
+     "max": 16025,
+     "at_or_below": 34,
+     "above": 38
+    },
+    "1": {
+     "min": 14487,
+     "max": 16024,
+     "at_or_below": 39,
+     "above": 33
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 11,
+    "fold": null
+   },
+   "max_tokens": 128199
+  },
+  {
+   "id": "v070/fused16/b41250",
+   "engine": "v070",
+   "route": "fused",
+   "rows": 16,
+   "boundary_local": 41250,
+   "kind": "max(330k-equivalent)",
+   "boundary_tokens_global": 330000,
+   "requests_per_batch": 2,
+   "pad_rows": 4,
+   "batches": [
+    [
+     325904,
+     329745
+    ],
+    [
+     329990,
+     329995
+    ],
+    [
+     329996,
+     330001
+    ],
+    [
+     329982,
+     329987
+    ],
+    [
+     329488,
+     329741
+    ],
+    [
+     327954,
+     321811
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 40226,
+     "max": 41250,
+     "at_or_below": 72,
+     "above": 0
+    },
+    "1": {
+     "min": 40225,
+     "max": 41250,
+     "at_or_below": 72,
+     "above": 0
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 11,
+    "fold": null
+   },
+   "max_tokens": 330001
+  },
+  {
+   "id": "v070/fused8/b11776",
+   "engine": "v070",
+   "route": "fused",
+   "rows": 8,
+   "boundary_local": 11776,
+   "kind": "final-trim(k=9,ctas=23)",
+   "boundary_tokens_global": 94208,
+   "requests_per_batch": 1,
+   "pad_rows": 2,
+   "batches": [
+    [
+     90112
+    ],
+    [
+     93697
+    ],
+    [
+     94202
+    ],
+    [
+     94207
+    ],
+    [
+     94208
+    ],
+    [
+     94213
+    ],
+    [
+     94218
+    ],
+    [
+     94223
+    ],
+    [
+     94224
+    ],
+    [
+     94725
+    ],
+    [
+     98306
+    ],
+    [
+     102407
+    ],
+    [
+     82436
+    ],
+    [
+     82441
+    ],
+    [
+     105990
+    ],
+    [
+     105995
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 10304,
+     "max": 13249,
+     "at_or_below": 46,
+     "above": 50
+    },
+    "1": {
+     "min": 10303,
+     "max": 13249,
+     "at_or_below": 51,
+     "above": 45
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 23,
+    "fold": null
+   },
+   "max_tokens": 105995
+  },
+  {
+   "id": "v070/fused8/b22080",
+   "engine": "v070",
+   "route": "fused",
+   "rows": 8,
+   "boundary_local": 22080,
+   "kind": "mid-trim-1(k=16,ctas=23)",
+   "boundary_tokens_global": 176640,
+   "requests_per_batch": 1,
+   "pad_rows": 2,
+   "batches": [
+    [
+     172544
+    ],
+    [
+     176129
+    ],
+    [
+     176634
+    ],
+    [
+     176639
+    ],
+    [
+     176640
+    ],
+    [
+     176645
+    ],
+    [
+     176650
+    ],
+    [
+     176655
+    ],
+    [
+     176656
+    ],
+    [
+     177157
+    ],
+    [
+     180738
+    ],
+    [
+     184839
+    ],
+    [
+     164868
+    ],
+    [
+     164873
+    ],
+    [
+     188422
+    ],
+    [
+     188427
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 20608,
+     "max": 23553,
+     "at_or_below": 46,
+     "above": 50
+    },
+    "1": {
+     "min": 20607,
+     "max": 23553,
+     "at_or_below": 51,
+     "above": 45
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 23,
+    "fold": null
+   },
+   "max_tokens": 188427
+  },
+  {
+   "id": "v070/fused8/b32384",
+   "engine": "v070",
+   "route": "fused",
+   "rows": 8,
+   "boundary_local": 32384,
+   "kind": "mid-trim-2(k=23,ctas=23)",
+   "boundary_tokens_global": 259072,
+   "requests_per_batch": 1,
+   "pad_rows": 2,
+   "batches": [
+    [
+     254976
+    ],
+    [
+     258561
+    ],
+    [
+     259066
+    ],
+    [
+     259071
+    ],
+    [
+     259072
+    ],
+    [
+     259077
+    ],
+    [
+     259082
+    ],
+    [
+     259087
+    ],
+    [
+     259088
+    ],
+    [
+     259589
+    ],
+    [
+     263170
+    ],
+    [
+     267271
+    ],
+    [
+     247300
+    ],
+    [
+     247305
+    ],
+    [
+     270854
+    ],
+    [
+     270859
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 30912,
+     "max": 33857,
+     "at_or_below": 46,
+     "above": 50
+    },
+    "1": {
+     "min": 30911,
+     "max": 33857,
+     "at_or_below": 51,
+     "above": 45
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 23,
+    "fold": null
+   },
+   "max_tokens": 270859
+  },
+  {
+   "id": "v070/fused8/b512",
+   "engine": "v070",
+   "route": "fused",
+   "rows": 8,
+   "boundary_local": 512,
+   "kind": "short(P~512)",
+   "boundary_tokens_global": 4096,
+   "requests_per_batch": 1,
+   "pad_rows": 2,
+   "batches": [
+    [
+     4
+    ],
+    [
+     3585
+    ],
+    [
+     4090
+    ],
+    [
+     4095
+    ],
+    [
+     4096
+    ],
+    [
+     4101
+    ],
+    [
+     4106
+    ],
+    [
+     4111
+    ],
+    [
+     4112
+    ],
+    [
+     4613
+    ],
+    [
+     8194
+    ],
+    [
+     12295
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 0,
+     "max": 1537,
+     "at_or_below": 32,
+     "above": 38
+    },
+    "1": {
+     "min": 0,
+     "max": 1536,
+     "at_or_below": 37,
+     "above": 33
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 23,
+    "fold": null
+   },
+   "max_tokens": 12295
+  },
+  {
+   "id": "v070/fused8/b15000",
+   "engine": "v070",
+   "route": "fused",
+   "rows": 8,
+   "boundary_local": 15000,
+   "kind": "overlap(~120k tokens; stage-2 real-input range)",
+   "boundary_tokens_global": 120000,
+   "requests_per_batch": 1,
+   "pad_rows": 2,
+   "batches": [
+    [
+     115904
+    ],
+    [
+     119489
+    ],
+    [
+     119994
+    ],
+    [
+     119999
+    ],
+    [
+     120000
+    ],
+    [
+     120005
+    ],
+    [
+     120010
+    ],
+    [
+     120015
+    ],
+    [
+     120016
+    ],
+    [
+     120517
+    ],
+    [
+     124098
+    ],
+    [
+     128199
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 14487,
+     "max": 16025,
+     "at_or_below": 34,
+     "above": 38
+    },
+    "1": {
+     "min": 14487,
+     "max": 16024,
+     "at_or_below": 39,
+     "above": 33
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 23,
+    "fold": null
+   },
+   "max_tokens": 128199
+  },
+  {
+   "id": "v070/fused8/b41250",
+   "engine": "v070",
+   "route": "fused",
+   "rows": 8,
+   "boundary_local": 41250,
+   "kind": "max(330k-equivalent)",
+   "boundary_tokens_global": 330000,
+   "requests_per_batch": 1,
+   "pad_rows": 2,
+   "batches": [
+    [
+     325904
+    ],
+    [
+     329745
+    ],
+    [
+     329990
+    ],
+    [
+     329995
+    ],
+    [
+     329996
+    ],
+    [
+     330001
+    ],
+    [
+     329982
+    ],
+    [
+     329987
+    ],
+    [
+     329488
+    ],
+    [
+     329741
+    ],
+    [
+     327954
+    ],
+    [
+     321811
+    ]
+   ],
+   "coverage": {
+    "0": {
+     "min": 40226,
+     "max": 41250,
+     "at_or_below": 72,
+     "above": 0
+    },
+    "1": {
+     "min": 40225,
+     "max": 41250,
+     "at_or_below": 72,
+     "above": 0
+    }
+   },
+   "expect": {
+    "route": "paged_fused",
+    "ctas_per_group": 23,
+    "fold": null
+   },
+   "max_tokens": 330001
+  }
+ ]
+}

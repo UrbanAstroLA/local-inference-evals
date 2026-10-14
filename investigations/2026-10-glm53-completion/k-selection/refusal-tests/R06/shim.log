@@ -1,0 +1,1 @@
+docker image inspect sha256:799d3cf8e5d14a615b89c734a6a38b4be5729bb44bb6b56effc7cf7df747b88a --format {{.Id}}

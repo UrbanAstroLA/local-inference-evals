@@ -1,0 +1,57 @@
+b1/tiled32/b16384            slice2                                       tokens~  65,536 batches  2 x 7 families x 3 repeats; max L 69,635; route paged_tiled fold slices 17
+b1/tiled32/b32768            slice3+chunk2                                tokens~ 131,072 batches  2 x 7 families x 3 repeats; max L 135,171; route paged_tiled fold slices 17
+b1/tiled32/b49152            slice4                                       tokens~ 196,608 batches  2 x 7 families x 3 repeats; max L 200,707; route paged_tiled fold slices 17
+b1/tiled32/b65536            slice5+chunk3                                tokens~ 262,144 batches  2 x 7 families x 3 repeats; max L 266,243; route paged_tiled fold slices 17
+b1/tiled32/b81920            slice6                                       tokens~ 327,680 batches  2 x 7 families x 3 repeats; max L 331,779; route paged_tiled fold slices 17
+b1/tiled32/b512              short(P~512)                                 tokens~   2,048 batches  2 x 7 families x 3 repeats; max L 6,147; route paged_tiled fold slices 17
+b1/tiled32/b30000            overlap(~120k tokens; stage-2 real-input range) tokens~ 120,000 batches  2 x 7 families x 3 repeats; max L 124,099; route paged_tiled fold slices 17
+b1/tiled32/b82500            max(330k-equivalent)                         tokens~ 330,000 batches  2 x 7 families x 3 repeats; max L 330,001; route paged_tiled fold slices 17
+b1/tiled24/b16384            slice2                                       tokens~  65,536 batches  2 x 7 families x 3 repeats; max L 69,635; route paged_tiled fold slices 17
+b1/tiled24/b32768            slice3+chunk2                                tokens~ 131,072 batches  2 x 7 families x 3 repeats; max L 135,171; route paged_tiled fold slices 17
+b1/tiled24/b49152            slice4                                       tokens~ 196,608 batches  2 x 7 families x 3 repeats; max L 200,707; route paged_tiled fold slices 17
+b1/tiled24/b65536            slice5+chunk3                                tokens~ 262,144 batches  2 x 7 families x 3 repeats; max L 266,243; route paged_tiled fold slices 17
+b1/tiled24/b81920            slice6                                       tokens~ 327,680 batches  2 x 7 families x 3 repeats; max L 331,779; route paged_tiled fold slices 17
+b1/tiled24/b512              short(P~512)                                 tokens~   2,048 batches  2 x 7 families x 3 repeats; max L 6,147; route paged_tiled fold slices 17
+b1/tiled24/b30000            overlap(~120k tokens; stage-2 real-input range) tokens~ 120,000 batches  2 x 7 families x 3 repeats; max L 124,099; route paged_tiled fold slices 17
+b1/tiled24/b82500            max(330k-equivalent)                         tokens~ 330,000 batches  2 x 7 families x 3 repeats; max L 330,001; route paged_tiled fold slices 17
+b1/fused16/b5632             final-trim(k=9,ctas=11)                      tokens~  22,528 batches  4 x 7 families x 3 repeats; max L 26,627; route paged_fused ctas 11
+b1/fused16/b10560            mid-trim-1(k=16,ctas=11)                     tokens~  42,240 batches  4 x 7 families x 3 repeats; max L 46,339; route paged_fused ctas 11
+b1/fused16/b15488            mid-trim-2(k=23,ctas=11)                     tokens~  61,952 batches  4 x 7 families x 3 repeats; max L 66,051; route paged_fused ctas 11
+b1/fused16/b512              short(P~512)                                 tokens~   2,048 batches  3 x 7 families x 3 repeats; max L 6,147; route paged_fused ctas 11
+b1/fused16/b30000            overlap(~120k tokens; stage-2 real-input range) tokens~ 120,000 batches  3 x 7 families x 3 repeats; max L 124,099; route paged_fused ctas 11
+b1/fused16/b82500            max(330k-equivalent)                         tokens~ 330,000 batches  3 x 7 families x 3 repeats; max L 330,001; route paged_fused ctas 11
+b1/fused8/b11776             final-trim(k=9,ctas=23)                      tokens~  47,104 batches  8 x 7 families x 3 repeats; max L 52,999; route paged_fused ctas 23
+b1/fused8/b22080             mid-trim-1(k=16,ctas=23)                     tokens~  88,320 batches  8 x 7 families x 3 repeats; max L 94,215; route paged_fused ctas 23
+b1/fused8/b32384             mid-trim-2(k=23,ctas=23)                     tokens~ 129,536 batches  8 x 7 families x 3 repeats; max L 135,431; route paged_fused ctas 23
+b1/fused8/b512               short(P~512)                                 tokens~   2,048 batches  6 x 7 families x 3 repeats; max L 6,147; route paged_fused ctas 23
+b1/fused8/b30000             overlap(~120k tokens; stage-2 real-input range) tokens~ 120,000 batches  6 x 7 families x 3 repeats; max L 124,099; route paged_fused ctas 23
+b1/fused8/b82500             max(330k-equivalent)                         tokens~ 330,000 batches  6 x 7 families x 3 repeats; max L 330,001; route paged_fused ctas 23
+b1/fused4/b24064             final-trim(k=9,ctas=47)                      tokens~  96,256 batches 16 x 7 families x 3 repeats; max L 108,295; route paged_fused ctas 47
+b1/fused4/b45120             mid-trim-1(k=16,ctas=47)                     tokens~ 180,480 batches 16 x 7 families x 3 repeats; max L 192,519; route paged_fused ctas 47
+b1/fused4/b66176             mid-trim-2(k=23,ctas=47)                     tokens~ 264,704 batches 16 x 7 families x 3 repeats; max L 276,743; route paged_fused ctas 47
+b1/fused4/b512               short(P~512)                                 tokens~   2,048 batches 12 x 7 families x 3 repeats; max L 6,147; route paged_fused ctas 47
+b1/fused4/b30000             overlap(~120k tokens; stage-2 real-input range) tokens~ 120,000 batches 12 x 7 families x 3 repeats; max L 124,099; route paged_fused ctas 47
+b1/fused4/b82500             max(330k-equivalent)                         tokens~ 330,000 batches 12 x 7 families x 3 repeats; max L 330,001; route paged_fused ctas 47
+v070/tiled48/b16384          slice2                                       tokens~ 131,072 batches  2 x 7 families x 3 repeats; max L 139,271; route paged_tiled fold slices 9
+v070/tiled48/b32768          slice3+chunk2                                tokens~ 262,144 batches  2 x 7 families x 3 repeats; max L 270,343; route paged_tiled fold slices 9
+v070/tiled48/b512            short(P~512)                                 tokens~   4,096 batches  2 x 7 families x 3 repeats; max L 12,295; route paged_tiled fold slices 9
+v070/tiled48/b15000          overlap(~120k tokens; stage-2 real-input range) tokens~ 120,000 batches  2 x 7 families x 3 repeats; max L 128,199; route paged_tiled fold slices 9
+v070/tiled48/b41250          max(330k-equivalent)                         tokens~ 330,000 batches  2 x 7 families x 3 repeats; max L 330,001; route paged_tiled fold slices 9
+v070/tiled24/b16384          slice2                                       tokens~ 131,072 batches  3 x 7 families x 3 repeats; max L 139,271; route paged_tiled fold slices 9
+v070/tiled24/b32768          slice3+chunk2                                tokens~ 262,144 batches  3 x 7 families x 3 repeats; max L 270,343; route paged_tiled fold slices 9
+v070/tiled24/b512            short(P~512)                                 tokens~   4,096 batches  3 x 7 families x 3 repeats; max L 12,295; route paged_tiled fold slices 9
+v070/tiled24/b15000          overlap(~120k tokens; stage-2 real-input range) tokens~ 120,000 batches  3 x 7 families x 3 repeats; max L 128,199; route paged_tiled fold slices 9
+v070/tiled24/b41250          max(330k-equivalent)                         tokens~ 330,000 batches  3 x 7 families x 3 repeats; max L 330,001; route paged_tiled fold slices 9
+v070/fused16/b5632           final-trim(k=9,ctas=11)                      tokens~  45,056 batches  8 x 7 families x 3 repeats; max L 53,255; route paged_fused ctas 11
+v070/fused16/b10560          mid-trim-1(k=16,ctas=11)                     tokens~  84,480 batches  8 x 7 families x 3 repeats; max L 92,679; route paged_fused ctas 11
+v070/fused16/b15488          mid-trim-2(k=23,ctas=11)                     tokens~ 123,904 batches  8 x 7 families x 3 repeats; max L 132,103; route paged_fused ctas 11
+v070/fused16/b512            short(P~512)                                 tokens~   4,096 batches  6 x 7 families x 3 repeats; max L 12,295; route paged_fused ctas 11
+v070/fused16/b15000          overlap(~120k tokens; stage-2 real-input range) tokens~ 120,000 batches  6 x 7 families x 3 repeats; max L 128,199; route paged_fused ctas 11
+v070/fused16/b41250          max(330k-equivalent)                         tokens~ 330,000 batches  6 x 7 families x 3 repeats; max L 330,001; route paged_fused ctas 11
+v070/fused8/b11776           final-trim(k=9,ctas=23)                      tokens~  94,208 batches 16 x 7 families x 3 repeats; max L 105,995; route paged_fused ctas 23
+v070/fused8/b22080           mid-trim-1(k=16,ctas=23)                     tokens~ 176,640 batches 16 x 7 families x 3 repeats; max L 188,427; route paged_fused ctas 23
+v070/fused8/b32384           mid-trim-2(k=23,ctas=23)                     tokens~ 259,072 batches 16 x 7 families x 3 repeats; max L 270,859; route paged_fused ctas 23
+v070/fused8/b512             short(P~512)                                 tokens~   4,096 batches 12 x 7 families x 3 repeats; max L 12,295; route paged_fused ctas 23
+v070/fused8/b15000           overlap(~120k tokens; stage-2 real-input range) tokens~ 120,000 batches 12 x 7 families x 3 repeats; max L 128,199; route paged_fused ctas 23
+v070/fused8/b41250           max(330k-equivalent)                         tokens~ 330,000 batches 12 x 7 families x 3 repeats; max L 330,001; route paged_fused ctas 23
+56 cells, 2310 batches x 3 repeats = 6930 kernel calls (v070 calls are per rank, plus one merge per perspective)

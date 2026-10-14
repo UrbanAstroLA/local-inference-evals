@@ -1,0 +1,5 @@
+[00:56:51] frozen files verified against SHA256SUMS
+[00:56:51] budget: spent 0.0, this run ceiling 0.5, approved 0.5
+[00:56:51] images pinned: b1=799d3cf8e5d1 v070=48e254d94f58 
+REFUSED: an inference/fixture container is running:
+  glm53-flash-exl3-b12x-vllm 08d1cb902ddb
