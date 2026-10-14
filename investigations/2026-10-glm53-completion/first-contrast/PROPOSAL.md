@@ -160,8 +160,9 @@ Consequences for the design:
 
 ### 2.7 Other inputs
 
-- **Open check from 21j.** Both B1 arms showed the same pooled gross count (172 of 27,973) with different page
-  maxima. It must be confirmed as a coincidence before the instrument is used (precondition, section 9).
+- **Open check from 21j: resolved.** Both B1 arms showed the same pooled gross count (172 of 27,973). FOLLOWUP-a2 §1
+  found a coincidence, not a duplicated comparison: the per-layer counts differ and the comparisons reproduce from
+  raw bytes.
 - **The served (natural) draft schedule** leaves finishing times unequal. The last positions of the slowest requests
   may run with fewer than 8 in flight. In-flight count is derived per position from the hook's step column and
   reported. A sensitivity analysis restricts to positions with all 8 in flight.
@@ -256,8 +257,37 @@ separate from the primary salts (section 2.5).
 
 ### 3.6 Instrument health without the LP control (option A)
 
-- **R1:** prompt P + W + 1 under its own salt, cold, with `local_fw_ref = P` and dumpwin over [P, P + W].
-- **R2:** the same build plus 200 further ids of the history (attempt 2's N_pp construction), under its own salt.
+- **RB1:** prompt P + W + 1 under its own salt, cold, with `local_fw_ref = P` and dumpwin over [P, P + W].
+- **RB2:** the same build plus 200 further ids of the history (attempt 2's N_pp construction), under its own salt.
+
+### 3.7 Optional short stratum S (the attempt-2 D2 set; coordinator decision)
+
+S is the only way the two attempt-2 flagged fixtures enter this contrast (section 2.1).
+
+- **Fixtures:** the 8 exact-id traces of attempt 2's `D2SET`: cbac17c70af8, be2e9e349395, 4b92a6a90ec4, ddfd287416a4,
+  68a96f264430, 376073921446, 1e875e978fd4 and 6d18c40f58df.
+  - Windows of 256-2,000 tokens start at the prompt (124-365 tokens), payloads exactly as attempt 2's V4.
+  - Exact generated ids, so these are replays, unlike the long fixtures.
+  - No warm request is needed: cold prefills are under 400 tokens.
+- **Runs:**
+  - SC ×3 and SD ×3, as one batch of 8 per run, clean and injected in separate batches.
+  - Order SC1 SC2 SD1 SD2 SD3 SC3, run after the long primary and before the LP control.
+  - Plus two prefill rebuilds, SR1 (prompt + window) and SR2 (+200 ids), for the content nulls.
+- **Analysis:** S's primary aggregate uses the same statistics as the long stratum, over all 8 S fixtures, **both
+  flagged fixtures included** (R1).
+  - S's Q set is every 16th output index from 64 (a 64-position lead-in, as in the prior null) to the window end,
+    plus the end. Designated exposure positions are the hook default: the 16-grid plus the last 64.
+  - Six windows are whole histories ending at the natural close, so `</think>` is the last forced token; two are
+    capped at 2,000 tokens.
+  - S is reported beside the long stratum, **never pooled with it**: the context range, fixture type and
+    replay status differ.
+  - The leave-flagged-out sensitivity (R2), position-level flags (R3) and the known fragile set (R4) apply.
+- **What S adds:**
+  - an in-session, short-context replication of attempt 2's injection with three runs per arm;
+  - a short-context termination contrast on exact-id histories;
+  - a check that the fragility at be2e9e349395 is common to both arms (FOLLOWUP-a2 §3.3: the arms agree with each
+    other at those positions).
+- **Cost:** about 0.20 GPU-hours, from attempt 2's measured phase times (section 8).
 
 ---
 
@@ -290,7 +320,8 @@ This is frozen before data.
    - This is ln of the window-mean pre-mask close probability, computed with logsumexp.
    - Effects are log ratios of close propensity, in nats.
 3. **Run (the unit).** Y(a, r) = mean of y(a, r, f) over f in F_primary.
-   - F_primary is all 8 fixtures unless the pre-data exclusion rule lists some (section 5.4).
+   - F_primary is all 8 fixtures. No fixture is excluded (section 5.4, R1); flagged fixtures stay in and are dropped
+     only in the R2 sensitivity.
    - Fixtures within a run share a batch, and D2 couples them, so they are never treated as independent samples.
 4. **Arm contrast.** Δ = mean over r of Y(D, r) − mean over r of Y(C, r).
 5. **Matched null.** N = the maximum over the six within-arm run pairs (C-C ×3, D-D ×3) of |Y − Y′|, measured
@@ -315,7 +346,7 @@ These are labelled operational. They are not statistical tests.
   - Δ_f is the difference of the arm means of y.
   - N_f is the per-fixture within-arm maximum.
   - **Screen:** |Δ_f| ≥ 0.5 nats, |Δ_f| > 2 × max(N_f, 0.05), and complete separation.
-- **Direction:** at least 6 of 8 fixtures share the sign of Δ (⌈0.75 n⌉ after any pre-data exclusion).
+- **Direction:** at least 6 of 8 fixtures share the sign of Δ (in the R2 sensitivity, ⌈0.75 n⌉ of the n remaining).
 
 ### 4.5 Selected-keys criterion
 
@@ -356,7 +387,8 @@ Each reading applies only if the instrument gates pass and the repeatability ste
 | No | Any | The injection did not reach selection beyond the null, so the contrast is uninformative about the mechanism. Check D gross and exposure first |
 | No | Yes | Unexplained. No mechanism claim; investigate |
 
-Fixtures flagged in-session and pre-data exclusions never carry a mechanism claim (section 5.4). Rejection-dependent
+Flagged fixtures never carry a mechanism claim; every reading is repeated in the leave-flagged-out sensitivity
+(section 5.4). Rejection-dependent
 signals are not attributed to the served D6 mechanism without the oracle-draft bracket (21 §7).
 
 ---
@@ -370,7 +402,7 @@ signals are not attributed to the served D6 mechanism without the oracle-draft b
 | Termination null | C-C and D-D run pairs (section 4.2) |
 | Selection null | Within-arm Jaccard (section 4.5) |
 | Index-K decode null N_dd | C1 against C2 window dumps (same composition) |
-| Index-K prefill null N_pp | Option B: LW1 against LW2, the same build length, so possibly exactly 0. Option A: R1 against R2, build +200 |
+| Index-K prefill null N_pp | Option B: LW1 against LW2, the same build length, so possibly exactly 0. Option A: RB1 against RB2, build +200 |
 
 When N_pp is 0, the content limit falls to the 0.1 % operational floor.
 
@@ -388,21 +420,35 @@ C1 and C2 decode-written pools are compared against prefill-written pools over t
 - **Requirement:** top-1 agreement ≥ 0.95.
 - **Argmax shift control:** aligned ≥ 0.90 and shifted ≤ 0.20.
 
-### 5.4 Fixture exclusion hook and flags
+### 5.4 Flagged fixtures (rules R1-R5)
 
 The full rule is in `fixtures/exclusion_rule.json`.
 
-- **E1-E3, before data.** If the follow-up review of the two attempt-2 fixtures recommends exclusion, it does so as a
-  fixture property. Every first-contrast fixture with that property is listed before launch.
-  - Listed fixtures still run, keeping the composition at 8, and are reported.
-  - They leave F_primary and the direction screen.
-  - With no recommendation by the freeze, the list is empty.
-  - The list is immutable once GPU data exists.
-- **E4, after data.** In-session flags use attempt 2's frozen definitions (outside its own null; arm asymmetry C1 vs
-  C2).
-  - A flagged fixture stays in F_primary but cannot carry a mechanism claim.
-  - The primary statistic is also reported without it, as a sensitivity.
-  - Option A0 cannot compute these flags.
+These rules apply the coordinator's decision on FOLLOWUP-a2. **No fixture is excluded**; the exclusion list is
+empty and immutable once GPU data exists.
+
+- **R1. Keep flagged fixtures in.** A flagged fixture stays in its stratum's primary aggregate but carries no
+  mechanism claim.
+  - In S, that covers be2e9e349395 and 376073921446, flagged from attempt 2.
+  - In either stratum, it covers any fixture flagged in-session.
+- **R2. Leave-flagged-out sensitivity.** Every statistic, screen and reading is recomputed without the flagged
+  fixtures and reported beside the primary, never instead of it. The direction screen becomes ⌈0.75 n⌉ of the
+  remaining n.
+- **R3. Flags by position as well as by layer-unit.** A gross position is a (fixture, pool) that is gross in at least
+  one DSA layer on either rank.
+  - Attempt 2's two definitions are evaluated with layer-units (at least 10 gross units) and again with positions (at
+    least 3 gross positions):
+    - outside its own null: gross_f > max(2 × max(N_dd_f, N_pp_f), 0.1 %);
+    - arm asymmetry.
+  - Both counts are reported. A flag on either count marks the fixture.
+  - Reason: 376073921446's flag came from one position (pool 128) counted in many deep layers.
+- **R4. Known fragile set.** be2e9e349395's 13 units that are gross in all three independent decodes (a2-b1, a2-b1b
+  and a1-b1) are listed in `known_fragile_be2e9e349395.json`.
+  - They are reported separately, and S's content rows are given with and without them.
+  - Any pool-level effect located on them is attributed first to pre-existing decode-vs-prefill numerics.
+- **R5. In-session flags (after data).** The attempt-2 definitions with R3 counting are applied to the long fixtures
+  (C1 against C2, and against the prefill-written pools). Flagged fixtures follow R1 and R2.
+- Option A0 cannot compute in-session flags.
 
 ### 5.5 Gates per run (exact; a failing run is INVALID, reported, and excluded)
 
@@ -514,7 +560,9 @@ New phases:
 - `C(r)` and `D(r)`;
 - `LW(r)`: keyed reference warm;
 - `LC(r)` and `LD(r)`;
-- `R1` and `R2` (option A only).
+- the rebuilds of section 3.6 (option A only);
+- `SC(r)`, `SD(r)`, `SR1` and `SR2` (stratum S only). These use attempt 2's V4 payloads and seeds scheme with new
+  seeds; payloads are identical otherwise.
 
 Other behaviour:
 - Ids are read from the frozen re-tokenized fixture file, sha-checked.
@@ -593,7 +641,7 @@ release.
 | Primary batch (8 × up to 8,199 forced tokens + remainder + dumps) | 287 | 410 |
 | LP round warm (796,240-token keyed reference prefill + 8 dumps) | 360 | 512 |
 | LP batch (8 × up to 1,031 forced) | 67 | 118 |
-| R1 / R2 cold rebuild (option A) | 364 each | 517 each |
+| RB1 / RB2 cold rebuild (option A) | 364 each | 517 each |
 
 ### 8.3 Options (GPU-hours)
 
@@ -602,13 +650,17 @@ The ceiling is max(estimate × 1.3, pessimistic) plus one invalid-start allowanc
 | Option | Estimate | Pessimistic | Optimistic | **Ceiling** | Wall cap per session |
 |---|---:|---:|---:|---:|---|
 | A0: primary only (C ×3, D ×3), no long-context content check | 1.96 | 2.57 | 1.74 | 2.99 | 4,625 s |
-| A: primary + instrument health (R1, R2) | 2.36 | 3.14 | 2.10 | **3.57** | 5,660 s |
+| A: primary + instrument health (RB1, RB2) | 2.36 | 3.14 | 2.10 | **3.57** | 5,660 s |
 | B: one session, primary + LP ×3 (health folded into the LP warms) | 2.82 | 3.86 | 2.50 | **4.29** | 6,952 s |
 | B2: one session, primary + LP ×2 per condition | 2.53 | 3.43 | 2.24 | 3.85 | 6,177 s |
+| A+S: A + short stratum S | 2.56 | 3.40 | 2.30 | 3.82 | 6,112 s |
+| B+S: B + short stratum S | 3.02 | 4.11 | 2.69 | **4.54** | 7,404 s |
 | C: two sessions, S1 = A, then S2 = LP ×3 + a bridge round (C + D re-run) | 4.17 | 5.59 | 3.72 | 6.02 | 5,660 + 4,410 s |
 
 - **The LP control costs about 0.86 GPU-hours more** than the primary alone (B − A0, central). About 0.40 of that (A − A0) is
   A's instrument-health work, which B absorbs.
+- **The short stratum S costs about 0.20 GPU-hours** (6 × 56 s runs plus 23 s of rebuilds, from attempt 2's measured
+  phases; pessimistic ×1.3).
 - **An early structural stop after C1** costs about 0.77 GPU-hours.
 - **The dominant uncertainty is the hooked decode rate at long context.** At 25 tok/s instead of 33, B rises from 2.82
   to 3.86.
@@ -624,7 +676,8 @@ The ceiling is max(estimate × 1.3, pessimistic) plus one invalid-start allowanc
 
 The design favours B. C only buys a decision point, at about 1.35 GPU-hours.
 
-**Recommendation:** option B at a ceiling of 4.3 GPU-hours, one session, wall cap 6,952 s. If the LP control is not
+**Recommendation:** option B at a ceiling of 4.3 GPU-hours, one session, wall cap 6,952 s. If the coordinator wants
+the flagged fixtures in this contrast (section 2.1), use B+S at a ceiling of 4.6 and a wall cap of 7,404 s. If the LP control is not
 wanted now, the recommendation is A at 3.6, not A0: A0 cannot compute the long-context content gate or the in-session
 fixture flags.
 
@@ -634,9 +687,11 @@ fixture flags.
 
 ### 9.1 Preconditions before any launch
 
-1. **The 21j open check is resolved:** identical pooled gross 172/27,973 in both B1 arms, a coincidence rather than a
-   duplicated comparison.
-2. **`exclusion_rule.json` is frozen**, with or without the follow-up review's property-based recommendation.
+1. **The 21j open check: resolved by FOLLOWUP-a2 §1.** The two arms' equal 172/27,973 is a coincidence: their
+   per-layer counts differ (for example 26 against 23), and IDX-content and N_dd reproduce exactly from the raw bytes.
+   The amendment should record this.
+2. **`exclusion_rule.json` (R1-R5) and `known_fragile_be2e9e349395.json` are frozen**, and the decision on S is
+   recorded.
 3. **Re-tokenized ids are frozen** and every convention assert passes.
 4. **The CPU tests in section 7.4 pass**, and the package SHA256SUMS is recorded in an amendment.
 5. **The operator authorizes an option and a GPU-hour total.** The GPUs are idle, with browsers and Electron apps
@@ -659,8 +714,10 @@ fixture flags.
    131,072. It does not exclude full-history accumulation, D6, or ranges beyond 131k.
 8. **Doc 79 contributes 3 fixtures**, and A8 and L8 have identical positions. **M3 crosses the 65,536 selection
    regime** inside its window. All three are covered by sensitivities and per-fixture reporting.
-9. **KDA metadata disagreement** (2 of 106 snapshots, twice) is unexplained. This design takes no snapshots, so it
-   neither tests nor resolves it.
+9. **KDA metadata disagreement: explained by FOLLOWUP-a2.** The align-mode column change at frontier 4,351 sets
+   num_accepted = 1, so the expectation was mis-specified, not a commit issue. **Limit:** the KDA conv state at a
+   block boundary was not compared. The long windows cross two block boundaries each, and this design takes no
+   snapshots. Conv-state fidelity at boundaries is covered only indirectly, by the long-context alignment check.
 10. **Disk:** about 45-60 GB of window dumps per session in the container layer under <docker-root>, copied after GPU
     release. /data has 2.1 TB free.
 11. **Stock 0.7.0, D6/ring-4, depth-matched arms and whole-history replay are out of scope.** Each needs its own
