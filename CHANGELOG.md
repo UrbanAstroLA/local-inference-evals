@@ -8,7 +8,9 @@ Contents unchanged. No reading is added.
   structural stop) and 22c (diagnosis and proposed fixes).
 - **`first-contrast/`** gains the frozen package, the run's records (tensor records listed by count only) and
   `diagnosis-fc1/`. Substitutions are in `PUBLIC-COPIES-22c.txt`.
-- **`costs.jsonl`** (1.0861) and **`recompute.py`**: cumulative 65.10.
+- **`costs.jsonl`** (1.0861) and **`recompute.py`**: cumulative 65.10. The first push of this entry left five
+  historical cumulative checks failing, because they excluded later entries by name. They now sum the entries before a
+  named step in ledger order, and every check passes.
 - **Investigation `README.md`** and **`LEDGER.md`**, including the owned planning errors.
 
 ## 2026-10-14, later (completion investigation, amendments 21g-21k): hook validation attempt 2, first-contrast proposal

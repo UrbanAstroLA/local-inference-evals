@@ -331,6 +331,10 @@ check("pilot 2.01 and replication 1.54 GPU-hours (two GPUs each); later runs log
       [hours(sum(a["wall_s"] for a in c["arms"]), 2) for k, c in later.items() if c["allocated_gpus"] == 2] == ["2.01", "1.54"]
       and all(abs(c["gpu_hours"] - round(c["allocated_gpus"] * sum(a["wall_s"] for a in c["arms"]) / 3600, 3)) < 1e-9 for c in later.values()))
 allcost = [json.loads(l) for l in (HERE / "costs.jsonl").read_text().splitlines()]
+def before(prefixes):
+    """Index of the first ledger entry whose step starts with any of the given prefixes (entries are in date order)."""
+    prefixes = (prefixes,) if isinstance(prefixes, str) else prefixes
+    return next(i for i, c in enumerate(allcost) if str(c.get("step", "")).startswith(prefixes))
 print(f"  cumulative GPU-hours, every ledger entry: {sum(c['gpu_hours'] for c in allcost):.2f}")
 st = lambda prefix: [c for c in allcost if str(c.get("step", "")).startswith(prefix)]
 sa, bg, bs, b2 = st("stage A verification"), st("bundle gate"), st("bundle screen"), st("bundle seed-1235 pass")
@@ -355,34 +359,34 @@ check("amendment 16 as separate steps, arms add up (GPUs x wall): all-reduce 0.0
       and [a["gpu_hours"] for a in ar[0]["arms"]] == [0.0139, 0.0561] and ar[0]["gpu_hours"] == 0.07
       and kv[0]["gpu_hours"] == 0.0069 and ca[0]["gpu_hours"] == 0.0392
       and sum(a["wall_s"] == 0 and a["gpu_hours"] == 0.0 for a in ca[0]["arms"]) == 1
-      and f"{sum(c['gpu_hours'] for c in allcost if not str(c.get('step', '')).startswith(('B0 live slot-mapping', 'B1 D7', 'B1 checkpoint GPQA', 'B0 seed-1236', 'K selection', 'Hook validation'))):.2f}" == "47.91")
+      and f"{sum(c['gpu_hours'] for c in allcost[:before(('B0 live slot-mapping', 'B1 D7', 'B1 checkpoint GPQA', 'B0 seed-1236', 'K selection', 'Hook validation'))]):.2f}" == "47.91")
 mg = st("B0 live slot-mapping guard session")
 print(f"  amendment 17: slot-mapping guard {sum(c['gpu_hours'] for c in mg):.4f} "
       f"({sum(len(c['arms']) for c in mg)} attempts, one refused at 0, one invalid)")
 check("amendment 17 arms add up (GPUs x wall): refused 0, invalid 0.4211, complete 0.5722; 0.9933 of 1.45; cumulative 48.90 GPU-hours before amendment 18",
       len(mg) == 1 and arms_ok(mg[0]) and [a["gpu_hours"] for a in mg[0]["arms"]] == [0.0, 0.4211, 0.5722]
-      and mg[0]["gpu_hours"] == 0.9933 and f"{sum(c['gpu_hours'] for c in allcost if not str(c.get('step', '')).startswith(('B1 D7', 'B1 checkpoint GPQA', 'B0 seed-1236', 'K selection', 'Hook validation'))):.2f}" == "48.90")
+      and mg[0]["gpu_hours"] == 0.9933 and f"{sum(c['gpu_hours'] for c in allcost[:before(('B1 D7', 'B1 checkpoint GPQA', 'B0 seed-1236', 'K selection', 'Hook validation'))]):.2f}" == "48.90")
 b1 = st("B1 D7 verification session")
 print(f"  amendment 18: B1 D7 verification {sum(c['gpu_hours'] for c in b1):.4f} ({sum(len(c['arms']) for c in b1)} attempt)")
 check("amendment 18 arm adds up (GPUs x wall): 0.6244 of 2.0, one attempt; cumulative 49.52 GPU-hours before amendment 19",
       len(b1) == 1 and arms_ok(b1[0]) and b1[0]["gpu_hours"] == 0.6244 and len(b1[0]["arms"]) == 1
-      and f"{sum(c['gpu_hours'] for c in allcost if not str(c.get('step', '')).startswith(('B1 checkpoint GPQA', 'B0 seed-1236', 'K selection', 'Hook validation'))):.2f}" == "49.52")
+      and f"{sum(c['gpu_hours'] for c in allcost[:before(('B1 checkpoint GPQA', 'B0 seed-1236', 'K selection', 'Hook validation'))]):.2f}" == "49.52")
 b1s = st("B1 checkpoint GPQA pass")
 print(f"  amendment 19: B1 checkpoint pass {sum(c['gpu_hours'] for c in b1s):.3f}")
 check("amendment 19 B1 pass: 6.33 of 7.5 (2 GPUs x 11,394 s); cumulative 55.85 GPU-hours before amendment 19d results",
       len(b1s) == 1 and b1s[0]["gpu_hours"] == 6.33 == round(2 * b1s[0]["arms"][0]["wall_s"] / 3600, 2)
-      and f"{sum(c['gpu_hours'] for c in allcost if not str(c.get('step', '')).startswith(('B0 seed-1236', 'K selection', 'Hook validation'))):.2f}" == "55.85")
+      and f"{sum(c['gpu_hours'] for c in allcost[:before(('B0 seed-1236', 'K selection', 'Hook validation'))]):.2f}" == "55.85")
 b0s, kk, hv = st("B0 seed-1236 GPQA pass"), st("K selection-kernel validation"), st("Hook validation attempt 1")
 print(f"  amendments 19d-21f: B0 seed-1236 {sum(c['gpu_hours'] for c in b0s):.3f}, K {sum(c['gpu_hours'] for c in kk):.4f}, hook validation {sum(c['gpu_hours'] for c in hv):.4f}")
 check("amendments 19d-21f: B0 seed-1236 5.866 (2 x 10,559 s), K 0.2825 (0.1417 + 0.1408, 1 GPU), hook validation 1.2117 (2 x 2,181 s); cumulative 63.22 GPU-hours before attempt 2",
       len(b0s) == len(kk) == len(hv) == 1 and b0s[0]["gpu_hours"] == 5.866 == round(2 * 10559 / 3600, 3)
       and arms_ok(kk[0]) and kk[0]["gpu_hours"] == 0.2825 and arms_ok(hv[0]) and hv[0]["gpu_hours"] == 1.2117
-      and f"{sum(c['gpu_hours'] for c in allcost if not str(c.get('step', '')).startswith('Hook validation attempt 2')):.2f}" == "63.22")
+      and f"{sum(c['gpu_hours'] for c in allcost[:before('Hook validation attempt 2')]):.2f}" == "63.22")
 hv2 = st("Hook validation attempt 2")
 check("amendment 21j: hook validation attempt 2 0.795 (2 x 1,431 s); hook item 2.0067 of 2.4; cumulative 64.01 GPU-hours before the first contrast",
       len(hv2) == 1 and arms_ok(hv2[0]) and hv2[0]["gpu_hours"] == 0.795
       and round(hv[0]["gpu_hours"] + hv2[0]["gpu_hours"], 4) == 2.0067
-      and f"{sum(c['gpu_hours'] for c in allcost if not str(c.get('step', '')).startswith('First long-context contrast')):.2f}" == "64.01")
+      and f"{sum(c['gpu_hours'] for c in allcost[:before('First long-context contrast')]):.2f}" == "64.01")
 fc = st("First long-context contrast attempt 1")
 check("amendment 22b: first contrast attempt 1 1.0861 (2 x 1,955 s), structural stop, no reading; cumulative 65.10 GPU-hours",
       len(fc) == 1 and arms_ok(fc[0]) and fc[0]["gpu_hours"] == 1.0861
