@@ -1,0 +1,129 @@
+== 1. schedule (base): phase kind secs steps lead submission order
+  V0         probe     38.8    392  None 
+  LW1        build    288.6    412  None M3 L4 M4 L3 L1 A8 L8 L5
+  LW2        build    291.5    416  None M3 L4 M4 L3 L1 A8 L8 L5
+  warm-s1-a  build    159.5    231  None L1 A8 L8 L5
+  T-s1-a     touch     17.7     28  None L1 A8 L8 L5
+  warm-s1-b  build    116.4    169  None M3 L4 M4 L3
+  T-s1       touch     27.7     55  None L1 A8 L8 L5 M3 L4 M4 L3
+  LC1        run       89.6    501   156 L1 A8 L8 L5 M3 L4 M4 L3
+  LC2        run       64.4    497    55 A8 L1 M4 L8 L3 L5 M3 L4
+  C1         run      319.0   3645    84 M4 L3 A8 L1 L8 M3 L5 L4
+  CV         run       40.5     96  None L5 L5 L5 L5 L1 L1 L1 L1
+  warm-s2-a  build    159.5    231  None L1 A8 L8 L5
+  T-s2-a     touch     17.7     28  None L1 A8 L8 L5
+  warm-s2-b  build    116.4    169  None M3 L4 M4 L3
+  T-s2       touch     27.7     55  None L1 A8 L8 L5 M3 L4 M4 L3
+  C2         run      320.9   3668    75 L1 A8 L8 L5 M3 L4 M4 L3
+  PS-a       ps        27.7     55  None M4 L3 A8 L1 L8 L5 M3 L4
+  PS-b       ps        27.7     55  None M4 L3 A8 L1 L8 L5 M3 L4
+  GATE-1R    gate     120.0      0  None 
+  D2         run      320.3   3660    74 M4 L3 A8 L1 L8 L5 M3 L4
+  PS-c       ps        27.7     55  None M4 L3 A8 L1 L8 M3 L5 L4
+  warm-s4-a  build    159.5    231  None L1 A8 L8 L5
+  T-s4-a     touch     17.7     28  None L1 A8 L8 L5
+  warm-s4-b  build    116.4    169  None M3 L4 M4 L3
+  T-s4       touch     27.7     55  None L1 A8 L8 L5 M3 L4 M4 L3
+  LD1        run       89.2    496   148 L1 A8 L8 L5 M3 L4 M4 L3
+  LD2        run       62.8    478    71 L1 A8 M4 L8 L3 L5 M3 L4
+  D1         run      320.4   3660    84 M4 L3 A8 L1 L8 M3 L5 L4
+  warm-s3-a  build    159.5    231  None L1 A8 L8 L5
+  T-s3-a     touch     17.7     28  None L1 A8 L8 L5
+  warm-s3-b  build    116.4    169  None M3 L4 M4 L3
+  T-s3       touch     27.7     55  None L1 A8 L8 L5 M3 L4 M4 L3
+  LD3        run       90.2    507   132 L1 A8 L8 L5 M3 L4 M4 L3
+  LC3        run       63.4    487    60 A8 M4 L1 L3 L8 L5 M3 L4
+  D3         run      319.8   3653    75 M4 L3 A8 L1 L8 L5 M3 L4
+  C3         run      320.2   3658    81 M4 L3 A8 L1 L8 L5 M3 L4
+== 2. occupancy by group (base): live max [mla tail kda0..6 draft] | cached-free min..max mla / kda0 | free min
+  V0         live [1, 1, 4, 4, 4, 4, 4, 4, 4, 1] | mla 4..4 kda0 4..4 | free 1243..1274
+  LW1        live [36, 4, 18, 18, 18, 18, 18, 18, 18, 15] | mla 4..153 kda0 4..153 | free 1100..1242
+  LW2        live [37, 4, 18, 18, 18, 18, 18, 18, 18, 15] | mla 127..164 kda0 137..154 | free 1099..1224
+  warm-s1-a  live [35, 4, 18, 18, 18, 18, 18, 18, 18, 16] | mla 125..165 kda0 139..153 | free 1099..1223
+  T-s1-a     live [25, 1, 5, 5, 5, 5, 5, 5, 5, 4] | mla 156..179 kda0 150..151 | free 1209..1274
+  warm-s1-b  live [26, 3, 14, 14, 14, 14, 14, 14, 14, 15] | mla 130..181 kda0 142..154 | free 1143..1240
+  T-s1       live [26, 1, 5, 5, 5, 5, 5, 5, 5, 6] | mla 146..175 kda0 151..152 | free 1207..1274
+  LC1        live [189, 8, 33, 33, 33, 33, 33, 33, 33, 27] | mla 17..180 kda0 115..150 | free 822..1224
+  LC2        live [189, 8, 33, 33, 33, 33, 33, 33, 33, 28] | mla 25..188 kda0 113..118 | free 820..1224
+  C1         live [188, 8, 33, 33, 33, 33, 33, 33, 33, 24] | mla 49..230 kda0 110..116 | free 823..1274
+  CV         live [59, 7, 28, 28, 28, 28, 28, 28, 28, 20] | mla 186..246 kda0 110..118 | free 994..1274
+  warm-s2-a  live [36, 4, 18, 18, 18, 18, 18, 18, 18, 15] | mla 246..293 kda0 119..135 | free 1102..1274
+  T-s2-a     live [26, 1, 5, 5, 5, 5, 5, 5, 5, 6] | mla 270..272 kda0 133..134 | free 1207..1213
+  warm-s2-b  live [24, 4, 17, 17, 17, 17, 17, 17, 17, 14] | mla 130..297 kda0 123..153 | free 1113..1229
+  T-s2       live [26, 1, 5, 5, 5, 5, 5, 5, 5, 6] | mla 146..174 kda0 151..152 | free 1207..1274
+  C2         live [188, 8, 33, 33, 33, 33, 33, 33, 33, 24] | mla 17..198 kda0 115..144 | free 824..1274
+  PS-a       live [26, 1, 5, 5, 5, 5, 5, 5, 5, 6] | mla 176..205 kda0 117..124 | free 1207..1274
+  PS-b       live [26, 1, 5, 5, 5, 5, 5, 5, 5, 6] | mla 184..212 kda0 124..131 | free 1207..1274
+  D2         live [188, 8, 33, 33, 33, 33, 33, 33, 33, 25] | mla 50..213 kda0 110..132 | free 827..1224
+  PS-c       live [26, 1, 5, 5, 5, 5, 5, 5, 5, 6] | mla 209..239 kda0 113..120 | free 1207..1274
+  warm-s4-a  live [36, 4, 18, 18, 18, 18, 18, 18, 18, 15] | mla 238..285 kda0 121..136 | free 1102..1274
+  T-s4-a     live [26, 1, 5, 5, 5, 5, 5, 5, 5, 6] | mla 262..264 kda0 134..135 | free 1207..1213
+  warm-s4-b  live [24, 4, 17, 17, 17, 17, 17, 17, 17, 14] | mla 130..289 kda0 124..153 | free 1113..1229
+  T-s4       live [26, 1, 5, 5, 5, 5, 5, 5, 5, 6] | mla 146..174 kda0 151..152 | free 1207..1274
+  LD1        live [189, 8, 33, 33, 33, 33, 33, 33, 33, 26] | mla 17..180 kda0 115..144 | free 823..1224
+  LD2        live [189, 8, 33, 33, 33, 33, 33, 33, 33, 24] | mla 25..188 kda0 113..118 | free 822..1224
+  D1         live [188, 8, 33, 33, 33, 33, 33, 33, 33, 24] | mla 49..212 kda0 110..118 | free 825..1224
+  warm-s3-a  live [33, 4, 19, 19, 19, 19, 19, 19, 19, 15] | mla 230..293 kda0 112..134 | free 1094..1240
+  T-s3-a     live [26, 1, 5, 5, 5, 5, 5, 5, 5, 6] | mla 278..305 kda0 132..133 | free 1207..1274
+  warm-s3-b  live [25, 3, 14, 14, 14, 14, 14, 14, 14, 14] | mla 130..293 kda0 120..153 | free 1144..1228
+  T-s3       live [25, 1, 5, 5, 5, 5, 5, 5, 5, 6] | mla 148..177 kda0 151..152 | free 1209..1274
+  LD3        live [189, 8, 34, 34, 34, 34, 34, 34, 34, 26] | mla 17..180 kda0 114..145 | free 819..1224
+  LC3        live [189, 8, 32, 32, 32, 32, 32, 32, 32, 24] | mla 25..188 kda0 114..118 | free 829..1224
+  D3         live [188, 8, 34, 34, 34, 34, 34, 34, 34, 24] | mla 49..230 kda0 110..117 | free 825..1274
+  C3         live [188, 8, 34, 34, 34, 34, 34, 34, 34, 24] | mla 73..236 kda0 107..115 | free 824..1224
+== 3. lookups: phase -> classes over 25 design scenarios (ablations ['no_touch', 'no_touch_blocks1225', 'no_touch_jitter1'] excluded), min margin, boundary-state writer
+  T-s1-a   {'hit': 100} min margin 477 writers ['warm-s1-a/prefill'] kinds ['prefill']
+  T-s1     {'hit': 200} min margin 359 writers ['warm-s1-a/prefill', 'warm-s1-b/prefill'] kinds ['prefill']
+  C1       {'hit': 200} min margin 389 writers ['warm-s1-a/prefill', 'warm-s1-b/prefill'] kinds ['prefill']
+  CV       {'hit': 200} min margin 571 writers ['warm-s1-a/prefill'] kinds ['prefill']
+  T-s2-a   {'hit': 100} min margin 477 writers ['warm-s2-a/prefill'] kinds ['prefill']
+  T-s2     {'hit': 200} min margin 359 writers ['warm-s2-a/prefill', 'warm-s2-b/prefill'] kinds ['prefill']
+  C2       {'hit': 200} min margin 438 writers ['warm-s2-a/prefill', 'warm-s2-b/prefill'] kinds ['prefill']
+  PS-a     {'hit': 200} min margin 631 writers ['warm-s2-a/prefill', 'warm-s2-b/prefill'] kinds ['prefill']
+  PS-b     {'hit': 200} min margin 786 writers ['warm-s2-a/prefill', 'warm-s2-b/prefill'] kinds ['prefill']
+  D2       {'hit': 200} min margin 438 writers ['warm-s2-a/prefill', 'warm-s2-b/prefill'] kinds ['prefill']
+  PS-c     {'hit': 200} min margin 639 writers ['warm-s2-a/prefill', 'warm-s2-b/prefill'] kinds ['prefill']
+  T-s4-a   {'hit': 100} min margin 477 writers ['warm-s4-a/prefill'] kinds ['prefill']
+  T-s4     {'hit': 200} min margin 359 writers ['warm-s4-a/prefill', 'warm-s4-b/prefill'] kinds ['prefill']
+  D1       {'hit': 200} min margin 388 writers ['warm-s4-a/prefill', 'warm-s4-b/prefill'] kinds ['prefill']
+  T-s3-a   {'hit': 100} min margin 477 writers ['warm-s3-a/prefill'] kinds ['prefill']
+  T-s3     {'hit': 200} min margin 359 writers ['warm-s3-a/prefill', 'warm-s3-b/prefill'] kinds ['prefill']
+  D3       {'hit': 200} min margin 389 writers ['warm-s3-a/prefill', 'warm-s3-b/prefill'] kinds ['prefill']
+  C3       {'hit': 200} min margin 438 writers ['warm-s3-a/prefill', 'warm-s3-b/prefill'] kinds ['prefill']
+  LC1      {'hit': 184} min margin 430 writers ['warm-s1-a/prefill', 'warm-s1-b/prefill'] kinds ['prefill']
+  LC2      {'hit': 184} min margin 524 writers ['LC1/prefill', 'warm-s1-b/prefill'] kinds ['prefill']
+  LD1      {'hit': 184} min margin 430 writers ['warm-s4-a/prefill', 'warm-s4-b/prefill'] kinds ['prefill']
+  LD2      {'hit': 184} min margin 524 writers ['LD1/prefill', 'warm-s4-b/prefill'] kinds ['prefill']
+  LD3      {'hit': 184} min margin 430 writers ['warm-s3-a/prefill', 'warm-s3-b/prefill'] kinds ['prefill']
+  LC3      {'hit': 184} min margin 524 writers ['LD3/prefill', 'warm-s3-b/prefill'] kinds ['prefill']
+== 4. max lead by batch (design scenarios): {'C1': 95, 'C2': 83, 'D2': 90, 'D1': 93, 'D3': 88, 'C3': 93, 'LC1': 157, 'LC2': 71, 'LD1': 159, 'LD2': 71, 'LD3': 159, 'LC3': 75}
+== 5. block identity (base): {'C2~D2': '8/8 identical', 'C2~PS-a': '8/8 identical', 'PS-a~PS-b': '8/8 identical', 'PS-b~PS-c': '8/8 identical', 'D2~PS-c': '8/8 identical', 'D3~C3': '8/8 identical', 'LC1~C1': '8/8 identical', 'LD1~D1': '8/8 identical', 'LD3~D3': '8/8 identical', 'C1~CV': '2/2 identical'}
+== 6. scenarios
+  A0                     non-hits   0 min margin   534 max lead   83 modelled  4071.6 s
+  A0_blocks1200          non-hits   0 min margin   459 max lead   83 modelled  4071.6 s
+  base                   non-hits   0 min margin   534 max lead  156 modelled  4528.2 s
+  blocks1100             non-hits   0 min margin   359 max lead  156 modelled  4528.2 s
+  blocks1150             non-hits   0 min margin   409 max lead  156 modelled  4528.2 s
+  blocks1200             non-hits   0 min margin   459 max lead  156 modelled  4528.2 s
+  blocks1225             non-hits   0 min margin   484 max lead  156 modelled  4528.2 s
+  blocks1250             non-hits   0 min margin   509 max lead  156 modelled  4528.2 s
+  build_longest          non-hits   0 min margin   534 max lead  130 modelled  4530.0 s
+  build_sequential       non-hits   0 min margin   534 max lead  156 modelled  4595.8 s
+  gate600                non-hits   0 min margin   534 max lead  156 modelled  5008.2 s
+  jitter1                non-hits   0 min margin   534 max lead  159 modelled  4539.4 s
+  jitter3                non-hits   0 min margin   534 max lead  143 modelled  4553.7 s
+  model_start            non-hits   0 min margin   534 max lead  156 modelled  4528.2 s
+  no_touch               non-hits   0 min margin   100 max lead  156 modelled  4346.4 s
+  no_touch_blocks1225    non-hits   0 min margin    50 max lead  156 modelled  4346.4 s
+  no_touch_jitter1       non-hits   0 min margin    49 max lead  159 modelled  4357.5 s
+  order_plan             non-hits   0 min margin   486 max lead  159 modelled  4510.1 s
+  order_random1          non-hits   0 min margin   486 max lead  155 modelled  4522.7 s
+  order_random2          non-hits   0 min margin   478 max lead  157 modelled  4518.8 s
+  order_reverse          non-hits   0 min margin   478 max lead  132 modelled  4516.9 s
+  seed2                  non-hits   0 min margin   534 max lead  156 modelled  4530.9 s
+  seed3                  non-hits   0 min margin   534 max lead  148 modelled  4534.2 s
+  seed4                  non-hits   0 min margin   534 max lead  150 modelled  4527.7 s
+  seed5                  non-hits   0 min margin   534 max lead  156 modelled  4546.2 s
+  stagger0.1             non-hits   0 min margin   534 max lead  156 modelled  4528.2 s
+  stagger2               non-hits   0 min margin   534 max lead  156 modelled  4529.1 s
+  stagger4               non-hits   0 min margin   534 max lead  149 modelled  4537.6 s

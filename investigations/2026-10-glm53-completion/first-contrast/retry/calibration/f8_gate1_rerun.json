@@ -1,0 +1,1030 @@
+{
+ "gate": "GATE-1",
+ "verdict": "FAIL",
+ "reading": "INVALID (structural): ['G1-coverage', 'G1-cache', 'G1-idx-struct', 'G1-CV-slot', 'G1-CV-book', 'G1-CV-cross', 'G1-CV-persist'] ; long-context instrument UNVALIDATED under these bounds (['G1-align', 'G1-cross', 'G1-content', 'G1-CV-conv', 'G1-CV-ssm']). This does not make B1 defective; no threshold is revised after viewing data",
+ "rows": [
+  {
+   "id": "G1-V0",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "V0: unkeyed probes bitwise equal to B1's record (hook on, WMAX 8448)",
+   "detail": [
+    [
+     "q0",
+     true
+    ],
+    [
+     "q1",
+     true
+    ],
+    [
+     "q2",
+     true
+    ],
+    [
+     "q3",
+     true
+    ]
+   ],
+   "label": "A22"
+  },
+  {
+   "id": "G1-coverage",
+   "kind": "structural",
+   "status": "FAIL",
+   "name": "every planned request present, returned without error, with its hook record on disk",
+   "detail": {
+    "missing": [
+     "C2-A8",
+     "C2-L1",
+     "C2-L3",
+     "C2-L4",
+     "C2-L5",
+     "C2-L8",
+     "C2-M3",
+     "C2-M4",
+     "CV-natural-L1",
+     "CV-natural-L5"
+    ],
+    "errors": [],
+    "no_hook_record": [],
+    "expected": 40
+   },
+   "label": "A22"
+  },
+  {
+   "id": "G1-cache",
+   "kind": "structural",
+   "status": "FAIL",
+   "name": "exact cache accounting: every reference, run, CV and sentinel request's cached_tokens equals its planned value (0 cold; c0 / c0_L on a cached prefix); warms 0 when cold, a block multiple <= the hit value on re-warm",
+   "detail": {
+    "violations": [
+     [
+      "C1-L3",
+      82688,
+      87040
+     ],
+     [
+      "C1-M4",
+      78336,
+      82688
+     ],
+     [
+      "C1-A8",
+      104448,
+      108800
+     ],
+     [
+      "C1-L1",
+      87040,
+      91392
+     ],
+     [
+      "C1-L8",
+      104448,
+      108800
+     ],
+     [
+      "C1-M3",
+      0,
+      60928
+     ],
+     [
+      "C1-L5",
+      104448,
+      108800
+     ],
+     [
+      "C1-L4",
+      65280,
+      69632
+     ]
+    ],
+    "warm_violations": [],
+    "warms": {
+     "cold": 8
+    }
+   },
+   "label": "A22"
+  },
+  {
+   "id": "G1-wmax",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "WMAX = 8448 on both ranks; every keyed request's hook record holds its full planned forced list (no truncation)",
+   "detail": {
+    "init": [
+     [
+      0,
+      8448
+     ],
+     [
+      1,
+      8448
+     ]
+    ],
+    "violations": []
+   },
+   "label": "A22"
+  },
+  {
+   "id": "G1-abspos",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "absolute positions on cached prefixes: hook prompt length = planned P (both ranks); dumps carry their tag, P and planned range; snapshots: frontier = P + F - 2 and committed tokens equal the history",
+   "detail": [],
+   "label": "A22"
+  },
+  {
+   "id": "G1-forcing",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "forced ids committed exactly (ids_equal) and every output index measured exactly once; every reference row measured once",
+   "detail": [],
+   "label": "A22"
+  },
+  {
+   "id": "G1-errors",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "no fw_error / guard_error",
+   "detail": [],
+   "label": "A22"
+  },
+  {
+   "id": "G1-attrib",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "exact request attribution: every designated position (o >= 1) has records in every tracked layer whose step is its measurement step, in flattened and in padded (FULL-graph padding) steps alike; selection records likewise",
+   "detail": {
+    "flattened_n": 3529,
+    "sel_n": 512,
+    "padded_n": 1535,
+    "examples": [],
+    "padded_exercised": true
+   },
+   "label": "A22"
+  },
+  {
+   "id": "G1-inflight",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "all 8 requests of every run decoding before output index 512 of every request (fixed batch composition)",
+   "detail": [],
+   "label": "A22"
+  },
+  {
+   "id": "G1-clean",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "clean runs: d2_injected_tokens = 0; shadow ledger clean on every processed window pool; n_win_corrupt = n_sel_win_corrupt = 0 at every designated position",
+   "detail": [],
+   "label": "A22"
+  },
+  {
+   "id": "G1-align",
+   "kind": "numerical",
+   "status": "FAIL",
+   "name": "long-context alignment: forced decode vs prefill reference on output indices >= 512: pooled top-1 >= 0.95 and |dlp| quantiles within max(2 x carried null, floors); per request aligned top-1 >= 0.90 and top-1 at +-1 <= 0.20",
+   "detail": {
+    "pairs": [
+     [
+      "C1",
+      "LW1"
+     ],
+     [
+      "C2",
+      "LW2"
+     ]
+    ],
+    "n": 53248,
+    "top1": 0.9844125600961539,
+    "lp": {
+     "0.5": 0.000244140625,
+     "0.9": 0.09199771881103516,
+     "0.99": 0.36939849853515616
+    },
+    "tol": {
+     "0.5": 0.01,
+     "0.9": 0.3,
+     "0.99": 1.5
+    },
+    "failing": [
+     "C2/LW2-L1",
+     "C2/LW2-L4",
+     "C2/LW2-M3",
+     "C2/LW2-M4",
+     "C2/LW2-L3",
+     "C2/LW2-L5",
+     "C2/LW2-A8",
+     "C2/LW2-L8"
+    ],
+    "per_request": {
+     "C1/LW1-L1": {
+      "n": 6656,
+      "top1": 0.9891826923076923,
+      "shifted": 0.004658151765589782,
+      "lp": {
+       "0.5": 3.4332275390625e-05,
+       "0.9": 0.06583595275878906,
+       "0.99": 0.3110301971435545
+      }
+     },
+     "C1/LW1-L4": {
+      "n": 6656,
+      "top1": 0.9732572115384616,
+      "shifted": 0.016378662659654396,
+      "lp": {
+       "0.5": 0.009282112121582031,
+       "0.9": 0.1426229476928711,
+       "0.99": 0.4469883918762202
+      }
+     },
+     "C1/LW1-M3": {
+      "n": 6656,
+      "top1": 0.9771634615384616,
+      "shifted": 0.008413461538461538,
+      "lp": {
+       "0.5": 0.005099296569824219,
+       "0.9": 0.12053394317626953,
+       "0.99": 0.3627766609191894
+      }
+     },
+     "C1/LW1-M4": {
+      "n": 6656,
+      "top1": 0.9968449519230769,
+      "shifted": 0.009917355371900827,
+      "lp": {
+       "0.5": 3.814697265625e-06,
+       "0.9": 0.0036296844482421875,
+       "0.99": 0.184877681732177
+      }
+     },
+     "C1/LW1-L3": {
+      "n": 6656,
+      "top1": 0.9903846153846154,
+      "shifted": 0.0037560096153846155,
+      "lp": {
+       "0.5": 3.0517578125e-05,
+       "0.9": 0.03959941864013672,
+       "0.99": 0.3151753425598144
+      }
+     },
+     "C1/LW1-L5": {
+      "n": 6656,
+      "top1": 0.9779146634615384,
+      "shifted": 0.005709992486851991,
+      "lp": {
+       "0.5": 0.0014810562133789062,
+       "0.9": 0.11955738067626953,
+       "0.99": 0.4503350257873514
+      }
+     },
+     "C1/LW1-A8": {
+      "n": 6656,
+      "top1": 0.9876802884615384,
+      "shifted": 0.0025544703230653645,
+      "lp": {
+       "0.5": 0.000270843505859375,
+       "0.9": 0.06456947326660156,
+       "0.99": 0.3221931457519531
+      }
+     },
+     "C1/LW1-L8": {
+      "n": 6656,
+      "top1": 0.9828725961538461,
+      "shifted": 0.0033052884615384615,
+      "lp": {
+       "0.5": 0.000324249267578125,
+       "0.9": 0.10951042175292969,
+       "0.99": 0.4573840141296386
+      }
+     },
+     "C2/LW2-L1": null,
+     "C2/LW2-L4": null,
+     "C2/LW2-M3": null,
+     "C2/LW2-M4": null,
+     "C2/LW2-L3": null,
+     "C2/LW2-L5": null,
+     "C2/LW2-A8": null,
+     "C2/LW2-L8": null
+    }
+   },
+   "label": "21g-3 rule; A22-4"
+  },
+  {
+   "id": "G1-cross",
+   "kind": "numerical",
+   "status": "FAIL",
+   "name": "both block crossings of every window: in +-128 output indices around each crossing, aligned top-1 >= 0.90 and top-1 at +-1 <= 0.20 against a prefill reference; every crossing covered",
+   "detail": {
+    "uncovered": [
+     [
+      "M4",
+      1
+     ]
+    ],
+    "failing": [],
+    "windows": {
+     "C1/LW1-L1-x1": {
+      "n": 256,
+      "top1": 0.984375,
+      "shifted": 0.00390625,
+      "lp": {
+       "0.5": 3.24249267578125e-05,
+       "0.9": 0.07662582397460938,
+       "0.99": 0.3266728401184063
+      }
+     },
+     "C1/LW1-L1-x2": {
+      "n": 256,
+      "top1": 0.98828125,
+      "shifted": 0.015625,
+      "lp": {
+       "0.5": 1.811981201171875e-05,
+       "0.9": 0.08008956909179688,
+       "0.99": 0.3334488868713378
+      }
+     },
+     "C1/LW1-L4-x1": {
+      "n": 256,
+      "top1": 0.97265625,
+      "shifted": 0.01171875,
+      "lp": {
+       "0.5": 0.019179344177246094,
+       "0.9": 0.1807699203491211,
+       "0.99": 0.733007812499997
+      }
+     },
+     "C1/LW1-L4-x2": {
+      "n": 256,
+      "top1": 0.9609375,
+      "shifted": 0.03515625,
+      "lp": {
+       "0.5": 0.007487297058105469,
+       "0.9": 0.1772003173828125,
+       "0.99": 0.574887561798094
+      }
+     },
+     "C1/LW1-M3-x1": {
+      "n": 256,
+      "top1": 0.95703125,
+      "shifted": 0.0078125,
+      "lp": {
+       "0.5": 0.004855155944824219,
+       "0.9": 0.13458633422851562,
+       "0.99": 0.516464424133299
+      }
+     },
+     "C1/LW1-M3-x2": {
+      "n": 256,
+      "top1": 0.9921875,
+      "shifted": 0.0,
+      "lp": {
+       "0.5": 0.0025997161865234375,
+       "0.9": 0.09680557250976562,
+       "0.99": 0.33127393722534093
+      }
+     },
+     "C1/LW1-M4-x1": {
+      "n": 256,
+      "top1": 1.0,
+      "shifted": 0.015625,
+      "lp": {
+       "0.5": 3.814697265625e-06,
+       "0.9": 0.0030832290649414062,
+       "0.99": 0.14977264404296775
+      }
+     },
+     "C1/LW1-L3-x1": {
+      "n": 256,
+      "top1": 0.97265625,
+      "shifted": 0.0078125,
+      "lp": {
+       "0.5": 0.00043582916259765625,
+       "0.9": 0.10479736328125,
+       "0.99": 0.541698646545409
+      }
+     },
+     "C1/LW1-L3-x2": {
+      "n": 256,
+      "top1": 0.9921875,
+      "shifted": 0.00390625,
+      "lp": {
+       "0.5": 1.049041748046875e-05,
+       "0.9": 0.029211044311523438,
+       "0.99": 0.32958307266235337
+      }
+     },
+     "C1/LW1-L5-x1": {
+      "n": 256,
+      "top1": 0.97265625,
+      "shifted": 0.00390625,
+      "lp": {
+       "0.5": 0.0011148452758789062,
+       "0.9": 0.15503978729248047,
+       "0.99": 0.6351673126220687
+      }
+     },
+     "C1/LW1-L5-x2": {
+      "n": 256,
+      "top1": 0.98046875,
+      "shifted": 0.0,
+      "lp": {
+       "0.5": 0.0021533966064453125,
+       "0.9": 0.13833904266357422,
+       "0.99": 0.38776788711547844
+      }
+     },
+     "C1/LW1-A8-x1": {
+      "n": 256,
+      "top1": 0.9921875,
+      "shifted": 0.00390625,
+      "lp": {
+       "0.5": 8.296966552734375e-05,
+       "0.9": 0.030412673950195312,
+       "0.99": 0.14978113174438448
+      }
+     },
+     "C1/LW1-A8-x2": {
+      "n": 256,
+      "top1": 0.99609375,
+      "shifted": 0.00390625,
+      "lp": {
+       "0.5": 0.0004119873046875,
+       "0.9": 0.0625467300415039,
+       "0.99": 0.3723034858703612
+      }
+     },
+     "C1/LW1-L8-x1": {
+      "n": 256,
+      "top1": 0.97265625,
+      "shifted": 0.0078125,
+      "lp": {
+       "0.5": 0.0008668899536132812,
+       "0.9": 0.14426708221435547,
+       "0.99": 0.4933610916137687
+      }
+     },
+     "C1/LW1-L8-x2": {
+      "n": 256,
+      "top1": 0.9765625,
+      "shifted": 0.00390625,
+      "lp": {
+       "0.5": 0.00046253204345703125,
+       "0.9": 0.096435546875,
+       "0.99": 0.4574468612670883
+      }
+     }
+    }
+   },
+   "label": "A22"
+  },
+  {
+   "id": "G1-regime",
+   "kind": "numerical",
+   "status": "PASS",
+   "name": "M3's 65,536 selection-regime crossing: +-256 output indices aligned with the prefill reference (top-1 >= 0.90, +-1 <= 0.20) and every recorded final selection in the window holds 511 distinct causal pool ids",
+   "detail": {
+    "fixtures": [
+     "M3"
+    ],
+    "windows": {
+     "C1/LW1-M3": {
+      "n": 512,
+      "top1": 0.98046875,
+      "shifted": 0.0078125,
+      "lp": {
+       "0.5": 0.003543853759765625,
+       "0.9": 0.11012687683105472,
+       "0.99": 0.29778282165527337
+      }
+     }
+    },
+    "selection_rows": 18,
+    "selection_violations": []
+   },
+   "label": "A22"
+  },
+  {
+   "id": "G1-content",
+   "kind": "numerical",
+   "status": "FAIL",
+   "name": "index-K content vs the prefill reference LW1: gross <= max(2 x max(N_dd, N_pp), 0.1 %) with N_dd = C1 vs C2, N_pp = LW1 vs LW2 (different build length), matched by fixture x rank x layer x shared causal pool; pooled over units; coverage >= 99 % and every fixture",
+   "detail": {
+    "C1": {
+     "tested": 157696,
+     "evaluated": 0,
+     "coverage": 0.0,
+     "fixtures": [
+      "A8",
+      "L1",
+      "L3",
+      "L4",
+      "L5",
+      "L8",
+      "M3",
+      "M4"
+     ],
+     "fixtures_without_null": [
+      "A8",
+      "L1",
+      "L3",
+      "L4",
+      "L5",
+      "L8",
+      "M3",
+      "M4"
+     ],
+     "gross": NaN,
+     "gross_n": 0,
+     "N_dd": NaN,
+     "N_pp": NaN,
+     "N_dd_n": 0,
+     "N_pp_n": 0,
+     "limit": NaN,
+     "orig_pass": false,
+     "cover_ok": false
+    },
+    "C2": {
+     "tested": 0,
+     "evaluated": 0,
+     "coverage": 0.0,
+     "fixtures": [],
+     "fixtures_without_null": [],
+     "gross": NaN,
+     "gross_n": 0,
+     "N_dd": NaN,
+     "N_pp": NaN,
+     "N_dd_n": 0,
+     "N_pp_n": 0,
+     "limit": NaN,
+     "orig_pass": false,
+     "cover_ok": false
+    }
+   },
+   "label": "21g-1; A22-3"
+  },
+  {
+   "id": "G1-content-orig",
+   "kind": "reported",
+   "status": "REPORTED",
+   "name": "ORIGINAL attempt-1 criterion beside: gross <= 0.1 %",
+   "detail": {
+    "C1": {
+     "gross": NaN,
+     "passes": false
+    },
+    "C2": {
+     "gross": NaN,
+     "passes": false
+    }
+   },
+   "label": "attempt-1 frozen"
+  },
+  {
+   "id": "G1-content-ref2",
+   "kind": "reported",
+   "status": "REPORTED",
+   "name": "the same rule against the second reference LW2",
+   "detail": {
+    "C1": {
+     "tested": 157696,
+     "evaluated": 0,
+     "coverage": 0.0,
+     "fixtures": [
+      "A8",
+      "L1",
+      "L3",
+      "L4",
+      "L5",
+      "L8",
+      "M3",
+      "M4"
+     ],
+     "fixtures_without_null": [
+      "A8",
+      "L1",
+      "L3",
+      "L4",
+      "L5",
+      "L8",
+      "M3",
+      "M4"
+     ],
+     "gross": NaN,
+     "gross_n": 0,
+     "N_dd": NaN,
+     "N_pp": NaN,
+     "N_dd_n": 0,
+     "N_pp_n": 0,
+     "limit": NaN,
+     "orig_pass": false,
+     "cover_ok": false
+    },
+    "C2": {
+     "tested": 0,
+     "evaluated": 0,
+     "coverage": 0.0,
+     "fixtures": [],
+     "fixtures_without_null": [],
+     "gross": NaN,
+     "gross_n": 0,
+     "N_dd": NaN,
+     "N_pp": NaN,
+     "N_dd_n": 0,
+     "N_pp_n": 0,
+     "limit": NaN,
+     "orig_pass": false,
+     "cover_ok": false
+    }
+   },
+   "label": "A22"
+  },
+  {
+   "id": "G1-content-table",
+   "kind": "reported",
+   "status": "REPORTED",
+   "name": "gross counts per fixture x layer and per fixture, with both matched nulls (21g-1 reporting)",
+   "detail": {
+    "C1": {
+     "pooled": {
+      "n": 0,
+      "gross_n": 0,
+      "gross": null,
+      "N_dd_n": 0,
+      "N_pp_n": 0
+     },
+     "per_fixture": {},
+     "per_fixture_layer": {}
+    },
+    "C2": {
+     "pooled": {
+      "n": 0,
+      "gross_n": 0,
+      "gross": null,
+      "N_dd_n": 0,
+      "N_pp_n": 0
+     },
+     "per_fixture": {},
+     "per_fixture_layer": {}
+    }
+   },
+   "label": "A22"
+  },
+  {
+   "id": "G1-flags",
+   "kind": "reported",
+   "status": "REPORTED",
+   "name": "R3/R5 fixture flags (layer-units AND positions); a flagged fixture stays in the aggregate, carries no mechanism claim and is dropped in the R2 sensitivity",
+   "detail": {
+    "C1": [],
+    "C2": [],
+    "arm_asymmetry": []
+   },
+   "label": "R1-R5"
+  },
+  {
+   "id": "G1-content-crossings",
+   "kind": "reported",
+   "status": "REPORTED",
+   "name": "content in +-128 positions of each block crossing (own matched limit; small samples, not gated; M4's second crossing lies beyond P_L: no matched N_pp)",
+   "detail": {},
+   "label": "A22"
+  },
+  {
+   "id": "G1-idx-struct",
+   "kind": "structural",
+   "status": "FAIL",
+   "name": "index-K structure (exact): every dump attributed to its request; every comparison >= 99 % of its expected units; no judged page > 25 % gross; zero gross pools in DSA layers 3-15",
+   "detail": {
+    "attrib": [],
+    "population": {
+     "dd": [
+      0,
+      0
+     ],
+     "pp": [
+      157696,
+      157696
+     ],
+     "t_C1": [
+      157696,
+      157696
+     ],
+     "t_C2": [
+      0,
+      0
+     ],
+     "x_C1": [
+      157696,
+      157696
+     ],
+     "x_C2": [
+      0,
+      0
+     ]
+    },
+    "failing_population": [
+     "dd",
+     "t_C2",
+     "x_C2"
+    ],
+    "pages": {
+     "pages_judged": 2486,
+     "page_max": 0.484375,
+     "over": 8,
+     "worst": [
+      [
+       0.4844,
+       64,
+       [
+        "C1-M4",
+        "1",
+        "43",
+        "336"
+       ]
+      ],
+      [
+       0.4062,
+       64,
+       [
+        "C1-M4",
+        "1",
+        "27",
+        "336"
+       ]
+      ],
+      [
+       0.375,
+       64,
+       [
+        "C1-M4",
+        "1",
+        "27",
+        "334"
+       ]
+      ]
+     ]
+    },
+    "early": [
+     3,
+     57344
+    ]
+   },
+   "label": "21g-1 structural"
+  },
+  {
+   "id": "G1-CV-slot",
+   "kind": "structural",
+   "status": "FAIL",
+   "name": "actual conv-state slot: every KDA layer's speculative slots = the running column's block-id run of one mamba group (conv row = slots[0] = the engine's conv_state_indices)",
+   "detail": {
+    "violations": [],
+    "missing": [
+     [
+      "L1",
+      "natural",
+      0
+     ],
+     [
+      "L1",
+      "natural",
+      1
+     ],
+     [
+      "L1",
+      "oracle",
+      0
+     ],
+     [
+      "L1",
+      "oracle",
+      1
+     ],
+     [
+      "L1",
+      "poison",
+      0
+     ],
+     [
+      "L1",
+      "poison",
+      1
+     ],
+     [
+      "L1",
+      "reject:2",
+      0
+     ],
+     [
+      "L1",
+      "reject:2",
+      1
+     ],
+     [
+      "L5",
+      "natural",
+      0
+     ],
+     [
+      "L5",
+      "natural",
+      1
+     ],
+     [
+      "L5",
+      "oracle",
+      0
+     ],
+     [
+      "L5",
+      "oracle",
+      1
+     ],
+     [
+      "L5",
+      "poison",
+      0
+     ],
+     [
+      "L5",
+      "poison",
+      1
+     ],
+     [
+      "L5",
+      "reject:2",
+      0
+     ],
+     [
+      "L5",
+      "reject:2",
+      1
+     ]
+    ]
+   },
+   "label": "A22"
+  },
+  {
+   "id": "G1-CV-book",
+   "kind": "structural",
+   "status": "FAIL",
+   "name": "bookkeeping (exact): num_accepted = hook accepted count at the snapshot step + 1; poison / oracle / reject:2 snapshots exactly at their targets (shared F with the reference)",
+   "detail": [],
+   "label": "A22"
+  },
+  {
+   "id": "G1-CV-cross",
+   "kind": "structural",
+   "status": "FAIL",
+   "name": "the block crossing is exercised: every CV request has snapshots in the old and the new align-mode column",
+   "detail": [],
+   "label": "A22"
+  },
+  {
+   "id": "G1-CV-persist",
+   "kind": "structural",
+   "status": "FAIL",
+   "name": "migration (exact): conv rows of shared committed positions are bitwise identical between consecutive snapshots of a request, including a pair straddling the column change (poison, oracle, reject:2)",
+   "detail": {
+    "total": {
+     "rows": 0,
+     "identical": 0,
+     "straddling": 0
+    },
+    "mismatching": [],
+    "no_straddle": []
+   },
+   "label": "A22"
+  },
+  {
+   "id": "G1-CV-conv",
+   "kind": "numerical",
+   "status": "FAIL",
+   "name": "conv rows vs the matched decode reference (poison, single-token advance) at shared committed positions: nearest-row identification 100 % in layers 0-17, >= 99 % deeper; layers 0-2 rel <= 0.02 with margin >= 10 (21g-2 screen)",
+   "detail": {
+    "n": 0
+   },
+   "label": "21g-2; A22-5"
+  },
+  {
+   "id": "G1-CV-ssm",
+   "kind": "numerical",
+   "status": "FAIL",
+   "name": "KDA recurrent state vs the matched decode reference at the same committed count F (oracle, reject:2, natural vs poison): committed-slot identification, same screen",
+   "detail": {
+    "n": 0
+   },
+   "label": "21g-2; A22-5"
+  },
+  {
+   "id": "G1-refref",
+   "kind": "reported",
+   "status": "REPORTED",
+   "name": "prefill vs prefill (LW1 vs LW2, build lengths P + 7,168 vs P + 8,192) on shared rows: the reference-side alignment null",
+   "detail": {
+    "L1": {
+     "n": 7168,
+     "top1": 0.9884207589285714,
+     "shifted": 0.0050230221850146506,
+     "lp": {
+      "0.5": 3.4332275390625e-05,
+      "0.9": 0.06884441375732422,
+      "0.99": 0.31193099975585903
+     }
+    },
+    "L4": {
+     "n": 7168,
+     "top1": 0.9708426339285714,
+     "shifted": 0.01688293567741035,
+     "lp": {
+      "0.5": 0.010683059692382812,
+      "0.9": 0.14625015258789065,
+      "0.99": 0.4610791969299316
+     }
+    },
+    "M3": {
+     "n": 7168,
+     "top1": 0.9762834821428571,
+     "shifted": 0.0082321752476629,
+     "lp": {
+      "0.5": 0.0056705474853515625,
+      "0.9": 0.12245540618896485,
+      "0.99": 0.38279930114746086
+     }
+    },
+    "M4": {
+     "n": 7168,
+     "top1": 0.9966517857142857,
+     "shifted": 0.009486607142857142,
+     "lp": {
+      "0.5": 3.814697265625e-06,
+      "0.9": 0.005001449584960953,
+      "0.99": 0.17307933807373038
+     }
+    },
+    "L3": {
+     "n": 7168,
+     "top1": 0.9906529017857143,
+     "shifted": 0.003627232142857143,
+     "lp": {
+      "0.5": 3.4332275390625e-05,
+      "0.9": 0.04440784454345705,
+      "0.99": 0.35474176406860347
+     }
+    },
+    "L5": {
+     "n": 7168,
+     "top1": 0.9779575892857143,
+     "shifted": 0.0051625505790428355,
+     "lp": {
+      "0.5": 0.0014801025390625,
+      "0.9": 0.11718902587890626,
+      "0.99": 0.42957401275634755
+     }
+    },
+    "A8": {
+     "n": 7168,
+     "top1": 0.9886997767857143,
+     "shifted": 0.0029296875,
+     "lp": {
+      "0.5": 0.00026702880859375,
+      "0.9": 0.06290874481201174,
+      "0.99": 0.3229809570312499
+     }
+    },
+    "L8": {
+     "n": 7168,
+     "top1": 0.984375,
+     "shifted": 0.0034882098507046182,
+     "lp": {
+      "0.5": 0.0003452301025390625,
+      "0.9": 0.1066366195678711,
+      "0.99": 0.46290969848632785
+     }
+    }
+   },
+   "label": "A22"
+  }
+ ],
+ "failing": {
+  "structural": [
+   "G1-coverage",
+   "G1-cache",
+   "G1-idx-struct",
+   "G1-CV-slot",
+   "G1-CV-book",
+   "G1-CV-cross",
+   "G1-CV-persist"
+  ],
+  "numerical": [
+   "G1-align",
+   "G1-cross",
+   "G1-content",
+   "G1-CV-conv",
+   "G1-CV-ssm"
+  ]
+ },
+ "flagged_fixtures": []
+}

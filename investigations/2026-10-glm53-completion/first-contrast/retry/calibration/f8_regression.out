@@ -1,0 +1,2 @@
+F8 part 1: gate_fc re-run identical to gate-asrun: True (verdict FAIL, 27 rows)
+F8 part 2 (POST-INSPECTION, C1 only): F2 safe True classes {'C1-L1': 'hit', 'C1-L4': 'hit', 'C1-M3': 'miss', 'C1-M4': 'hit', 'C1-L5': 'hit', 'C1-L3': 'hit', 'C1-A8': 'hit', 'C1-L8': 'hit'}; F6 ok True (original criteria pass False); attempt-1 rows passed: ['G1-V0', 'G1-wmax', 'G1-abspos', 'G1-forcing', 'G1-errors', 'G1-attrib', 'G1-inflight', 'G1-clean', 'G1-regime']

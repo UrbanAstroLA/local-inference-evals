@@ -1,0 +1,689 @@
+{
+ "measured": {
+  "startup": 732.0,
+  "v0": 6.0,
+  "gap": 6.3,
+  "prefill": 2770.0,
+  "prefill_pess": 2410.0,
+  "decode": 36.6,
+  "decode_pess": 25.0,
+  "gate_cpu_fc1": 54.0,
+  "end_overhead": 19.0,
+  "c1_measured": 300.0,
+  "lw1_measured": 298.0,
+  "lw2_measured": 301.0,
+  "warm_measured": 267.0
+ },
+ "gate": {
+  "central": 270.0,
+  "pessimistic": 600.0
+ },
+ "miss_cold_s": 40.4,
+ "calibration": {
+  "LW1 (modelled incl. gap / measured + gap)": [
+   288.6,
+   304.3
+  ],
+  "LW2": [
+   291.5,
+   307.3
+  ],
+  "8-fixture build (warm-s1-a + warm-s1-b, 2 gaps) vs warm-s1": [
+   275.9,
+   279.6
+  ],
+  "C1 (all hits) vs measured C1 (one cold fixture)": [
+   319.0,
+   306.3
+  ]
+ },
+ "sessions": {
+  "B": {
+   "rows": [
+    {
+     "phase": "V0",
+     "kind": "probe",
+     "central_s": 12.3,
+     "pess_s": 12.3,
+     "cum_central_gh": 0.424,
+     "cum_pess_gh": 0.462
+    },
+    {
+     "phase": "LW1",
+     "kind": "build",
+     "central_s": 288.6,
+     "pess_s": 330.8,
+     "cum_central_gh": 0.584,
+     "cum_pess_gh": 0.646
+    },
+    {
+     "phase": "LW2",
+     "kind": "build",
+     "central_s": 291.5,
+     "pess_s": 334.1,
+     "cum_central_gh": 0.746,
+     "cum_pess_gh": 0.831
+    },
+    {
+     "phase": "warm-s1-a",
+     "kind": "build",
+     "central_s": 159.5,
+     "pess_s": 182.4,
+     "cum_central_gh": 0.835,
+     "cum_pess_gh": 0.933
+    },
+    {
+     "phase": "T-s1-a",
+     "kind": "touch",
+     "central_s": 17.7,
+     "pess_s": 19.4,
+     "cum_central_gh": 0.845,
+     "cum_pess_gh": 0.943
+    },
+    {
+     "phase": "warm-s1-b",
+     "kind": "build",
+     "central_s": 116.4,
+     "pess_s": 132.8,
+     "cum_central_gh": 0.909,
+     "cum_pess_gh": 1.017
+    },
+    {
+     "phase": "T-s1",
+     "kind": "touch",
+     "central_s": 27.7,
+     "pess_s": 30.9,
+     "cum_central_gh": 0.925,
+     "cum_pess_gh": 1.034
+    },
+    {
+     "phase": "LC1",
+     "kind": "run",
+     "central_s": 89.6,
+     "pess_s": 156.9,
+     "cum_central_gh": 0.975,
+     "cum_pess_gh": 1.121
+    },
+    {
+     "phase": "LC2",
+     "kind": "run",
+     "central_s": 64.4,
+     "pess_s": 123.6,
+     "cum_central_gh": 1.01,
+     "cum_pess_gh": 1.19
+    },
+    {
+     "phase": "C1",
+     "kind": "run",
+     "central_s": 319.0,
+     "pess_s": 496.7,
+     "cum_central_gh": 1.188,
+     "cum_pess_gh": 1.466
+    },
+    {
+     "phase": "CV",
+     "kind": "run",
+     "central_s": 40.5,
+     "pess_s": 51.0,
+     "cum_central_gh": 1.21,
+     "cum_pess_gh": 1.494
+    },
+    {
+     "phase": "warm-s2-a",
+     "kind": "build",
+     "central_s": 159.5,
+     "pess_s": 182.4,
+     "cum_central_gh": 1.299,
+     "cum_pess_gh": 1.596
+    },
+    {
+     "phase": "T-s2-a",
+     "kind": "touch",
+     "central_s": 17.7,
+     "pess_s": 19.4,
+     "cum_central_gh": 1.309,
+     "cum_pess_gh": 1.606
+    },
+    {
+     "phase": "warm-s2-b",
+     "kind": "build",
+     "central_s": 116.4,
+     "pess_s": 132.8,
+     "cum_central_gh": 1.373,
+     "cum_pess_gh": 1.68
+    },
+    {
+     "phase": "T-s2",
+     "kind": "touch",
+     "central_s": 27.7,
+     "pess_s": 30.9,
+     "cum_central_gh": 1.389,
+     "cum_pess_gh": 1.697
+    },
+    {
+     "phase": "C2",
+     "kind": "run",
+     "central_s": 320.9,
+     "pess_s": 499.4,
+     "cum_central_gh": 1.567,
+     "cum_pess_gh": 1.975
+    },
+    {
+     "phase": "PS-a",
+     "kind": "ps",
+     "central_s": 27.7,
+     "pess_s": 30.9,
+     "cum_central_gh": 1.582,
+     "cum_pess_gh": 1.992
+    },
+    {
+     "phase": "PS-b",
+     "kind": "ps",
+     "central_s": 27.7,
+     "pess_s": 30.9,
+     "cum_central_gh": 1.598,
+     "cum_pess_gh": 2.009
+    },
+    {
+     "phase": "GATE-1R",
+     "kind": "gate",
+     "central_s": 270.0,
+     "pess_s": 600.0,
+     "cum_central_gh": 1.748,
+     "cum_pess_gh": 2.343
+    },
+    {
+     "phase": "D2",
+     "kind": "run",
+     "central_s": 320.3,
+     "pess_s": 498.5,
+     "cum_central_gh": 1.926,
+     "cum_pess_gh": 2.619
+    },
+    {
+     "phase": "PS-c",
+     "kind": "ps",
+     "central_s": 27.7,
+     "pess_s": 30.9,
+     "cum_central_gh": 1.941,
+     "cum_pess_gh": 2.637
+    },
+    {
+     "phase": "warm-s4-a",
+     "kind": "build",
+     "central_s": 159.5,
+     "pess_s": 182.4,
+     "cum_central_gh": 2.03,
+     "cum_pess_gh": 2.738
+    },
+    {
+     "phase": "T-s4-a",
+     "kind": "touch",
+     "central_s": 17.7,
+     "pess_s": 19.4,
+     "cum_central_gh": 2.039,
+     "cum_pess_gh": 2.749
+    },
+    {
+     "phase": "warm-s4-b",
+     "kind": "build",
+     "central_s": 116.4,
+     "pess_s": 132.8,
+     "cum_central_gh": 2.104,
+     "cum_pess_gh": 2.823
+    },
+    {
+     "phase": "T-s4",
+     "kind": "touch",
+     "central_s": 27.7,
+     "pess_s": 30.9,
+     "cum_central_gh": 2.119,
+     "cum_pess_gh": 2.84
+    },
+    {
+     "phase": "LD1",
+     "kind": "run",
+     "central_s": 89.2,
+     "pess_s": 156.4,
+     "cum_central_gh": 2.169,
+     "cum_pess_gh": 2.927
+    },
+    {
+     "phase": "LD2",
+     "kind": "run",
+     "central_s": 62.8,
+     "pess_s": 121.5,
+     "cum_central_gh": 2.204,
+     "cum_pess_gh": 2.994
+    },
+    {
+     "phase": "D1",
+     "kind": "run",
+     "central_s": 320.4,
+     "pess_s": 498.7,
+     "cum_central_gh": 2.382,
+     "cum_pess_gh": 3.271
+    },
+    {
+     "phase": "warm-s3-a",
+     "kind": "build",
+     "central_s": 159.5,
+     "pess_s": 182.4,
+     "cum_central_gh": 2.471,
+     "cum_pess_gh": 3.372
+    },
+    {
+     "phase": "T-s3-a",
+     "kind": "touch",
+     "central_s": 17.7,
+     "pess_s": 19.4,
+     "cum_central_gh": 2.48,
+     "cum_pess_gh": 3.383
+    },
+    {
+     "phase": "warm-s3-b",
+     "kind": "build",
+     "central_s": 116.4,
+     "pess_s": 132.8,
+     "cum_central_gh": 2.545,
+     "cum_pess_gh": 3.457
+    },
+    {
+     "phase": "T-s3",
+     "kind": "touch",
+     "central_s": 27.7,
+     "pess_s": 30.9,
+     "cum_central_gh": 2.56,
+     "cum_pess_gh": 3.474
+    },
+    {
+     "phase": "LD3",
+     "kind": "run",
+     "central_s": 90.2,
+     "pess_s": 157.7,
+     "cum_central_gh": 2.611,
+     "cum_pess_gh": 3.562
+    },
+    {
+     "phase": "LC3",
+     "kind": "run",
+     "central_s": 63.4,
+     "pess_s": 122.3,
+     "cum_central_gh": 2.646,
+     "cum_pess_gh": 3.63
+    },
+    {
+     "phase": "D3",
+     "kind": "run",
+     "central_s": 319.8,
+     "pess_s": 497.8,
+     "cum_central_gh": 2.823,
+     "cum_pess_gh": 3.906
+    },
+    {
+     "phase": "C3",
+     "kind": "run",
+     "central_s": 320.2,
+     "pess_s": 498.4,
+     "cum_central_gh": 3.001,
+     "cum_pess_gh": 4.183
+    }
+   ],
+   "central_s": 5402.4,
+   "pess_s": 7529.7,
+   "central_gh": 3.001,
+   "pess_gh": 4.183,
+   "runs": 12,
+   "early_stops": [
+    {
+     "point": "pre-traffic stop (readiness, instrumentation, pool geometry: rc 5-8, 16)",
+     "central_gh": 0.417,
+     "pess_gh": 0.455
+    },
+    {
+     "point": "V0 / references (rc 9 after LW1 or LW2)",
+     "central_gh": 0.746,
+     "pess_gh": 0.831
+    },
+    {
+     "point": "unsafe restoration or replay-model deviation at the first touch pass (rc 12)",
+     "central_gh": 0.925,
+     "pess_gh": 1.034
+    },
+    {
+     "point": "insufficient concurrent decoding in the first batch (rc 13)",
+     "central_gh": 0.975,
+     "pess_gh": 1.121
+    },
+    {
+     "point": "structural stop after C1 (rc 9)",
+     "central_gh": 1.188,
+     "pess_gh": 1.466
+    },
+    {
+     "point": "GATE-1R not PASS (rc 10): alignment, numerical content, sentinel or CV coverage",
+     "central_gh": 1.748,
+     "pess_gh": 2.343
+    },
+    {
+     "point": "missing sentinel coverage after D2 (rc 14)",
+     "central_gh": 1.941,
+     "pess_gh": 2.637
+    },
+    {
+     "point": "complete",
+     "central_gh": 3.001,
+     "pess_gh": 4.183
+    }
+   ],
+   "ceiling_rule": "max(1.3 x central, pessimistic)",
+   "ceiling_gh": 4.18,
+   "wall_cap_s": 7523,
+   "min_wall_s": 4942,
+   "invalid_start_allowance_gh": 0.455
+  },
+  "A0": {
+   "rows": [
+    {
+     "phase": "V0",
+     "kind": "probe",
+     "central_s": 12.3,
+     "pess_s": 12.3,
+     "cum_central_gh": 0.424,
+     "cum_pess_gh": 0.462
+    },
+    {
+     "phase": "LW1",
+     "kind": "build",
+     "central_s": 288.6,
+     "pess_s": 330.8,
+     "cum_central_gh": 0.584,
+     "cum_pess_gh": 0.646
+    },
+    {
+     "phase": "LW2",
+     "kind": "build",
+     "central_s": 291.5,
+     "pess_s": 334.1,
+     "cum_central_gh": 0.746,
+     "cum_pess_gh": 0.831
+    },
+    {
+     "phase": "warm-s1-a",
+     "kind": "build",
+     "central_s": 159.5,
+     "pess_s": 182.4,
+     "cum_central_gh": 0.835,
+     "cum_pess_gh": 0.933
+    },
+    {
+     "phase": "T-s1-a",
+     "kind": "touch",
+     "central_s": 17.7,
+     "pess_s": 19.4,
+     "cum_central_gh": 0.845,
+     "cum_pess_gh": 0.943
+    },
+    {
+     "phase": "warm-s1-b",
+     "kind": "build",
+     "central_s": 116.4,
+     "pess_s": 132.8,
+     "cum_central_gh": 0.909,
+     "cum_pess_gh": 1.017
+    },
+    {
+     "phase": "T-s1",
+     "kind": "touch",
+     "central_s": 27.7,
+     "pess_s": 30.9,
+     "cum_central_gh": 0.925,
+     "cum_pess_gh": 1.034
+    },
+    {
+     "phase": "C1",
+     "kind": "run",
+     "central_s": 320.7,
+     "pess_s": 499.1,
+     "cum_central_gh": 1.103,
+     "cum_pess_gh": 1.312
+    },
+    {
+     "phase": "CV",
+     "kind": "run",
+     "central_s": 40.5,
+     "pess_s": 51.0,
+     "cum_central_gh": 1.126,
+     "cum_pess_gh": 1.34
+    },
+    {
+     "phase": "warm-s2-a",
+     "kind": "build",
+     "central_s": 159.5,
+     "pess_s": 182.4,
+     "cum_central_gh": 1.214,
+     "cum_pess_gh": 1.441
+    },
+    {
+     "phase": "T-s2-a",
+     "kind": "touch",
+     "central_s": 17.7,
+     "pess_s": 19.4,
+     "cum_central_gh": 1.224,
+     "cum_pess_gh": 1.452
+    },
+    {
+     "phase": "warm-s2-b",
+     "kind": "build",
+     "central_s": 116.4,
+     "pess_s": 132.8,
+     "cum_central_gh": 1.289,
+     "cum_pess_gh": 1.526
+    },
+    {
+     "phase": "T-s2",
+     "kind": "touch",
+     "central_s": 27.7,
+     "pess_s": 30.9,
+     "cum_central_gh": 1.304,
+     "cum_pess_gh": 1.543
+    },
+    {
+     "phase": "C2",
+     "kind": "run",
+     "central_s": 321.6,
+     "pess_s": 500.4,
+     "cum_central_gh": 1.483,
+     "cum_pess_gh": 1.821
+    },
+    {
+     "phase": "PS-a",
+     "kind": "ps",
+     "central_s": 27.7,
+     "pess_s": 30.9,
+     "cum_central_gh": 1.498,
+     "cum_pess_gh": 1.838
+    },
+    {
+     "phase": "PS-b",
+     "kind": "ps",
+     "central_s": 27.7,
+     "pess_s": 30.9,
+     "cum_central_gh": 1.513,
+     "cum_pess_gh": 1.855
+    },
+    {
+     "phase": "GATE-1R",
+     "kind": "gate",
+     "central_s": 270.0,
+     "pess_s": 600.0,
+     "cum_central_gh": 1.663,
+     "cum_pess_gh": 2.189
+    },
+    {
+     "phase": "D2",
+     "kind": "run",
+     "central_s": 323.4,
+     "pess_s": 503.0,
+     "cum_central_gh": 1.843,
+     "cum_pess_gh": 2.468
+    },
+    {
+     "phase": "PS-c",
+     "kind": "ps",
+     "central_s": 27.7,
+     "pess_s": 30.9,
+     "cum_central_gh": 1.858,
+     "cum_pess_gh": 2.485
+    },
+    {
+     "phase": "warm-s4-a",
+     "kind": "build",
+     "central_s": 159.5,
+     "pess_s": 182.4,
+     "cum_central_gh": 1.947,
+     "cum_pess_gh": 2.587
+    },
+    {
+     "phase": "T-s4-a",
+     "kind": "touch",
+     "central_s": 17.7,
+     "pess_s": 19.4,
+     "cum_central_gh": 1.957,
+     "cum_pess_gh": 2.597
+    },
+    {
+     "phase": "warm-s4-b",
+     "kind": "build",
+     "central_s": 116.4,
+     "pess_s": 132.8,
+     "cum_central_gh": 2.022,
+     "cum_pess_gh": 2.671
+    },
+    {
+     "phase": "T-s4",
+     "kind": "touch",
+     "central_s": 27.7,
+     "pess_s": 30.9,
+     "cum_central_gh": 2.037,
+     "cum_pess_gh": 2.688
+    },
+    {
+     "phase": "D1",
+     "kind": "run",
+     "central_s": 322.1,
+     "pess_s": 501.1,
+     "cum_central_gh": 2.216,
+     "cum_pess_gh": 2.967
+    },
+    {
+     "phase": "warm-s3-a",
+     "kind": "build",
+     "central_s": 159.5,
+     "pess_s": 182.4,
+     "cum_central_gh": 2.305,
+     "cum_pess_gh": 3.068
+    },
+    {
+     "phase": "T-s3-a",
+     "kind": "touch",
+     "central_s": 17.7,
+     "pess_s": 19.4,
+     "cum_central_gh": 2.314,
+     "cum_pess_gh": 3.079
+    },
+    {
+     "phase": "warm-s3-b",
+     "kind": "build",
+     "central_s": 116.4,
+     "pess_s": 132.8,
+     "cum_central_gh": 2.379,
+     "cum_pess_gh": 3.153
+    },
+    {
+     "phase": "T-s3",
+     "kind": "touch",
+     "central_s": 27.7,
+     "pess_s": 30.9,
+     "cum_central_gh": 2.394,
+     "cum_pess_gh": 3.17
+    },
+    {
+     "phase": "D3",
+     "kind": "run",
+     "central_s": 317.0,
+     "pess_s": 493.8,
+     "cum_central_gh": 2.571,
+     "cum_pess_gh": 3.444
+    },
+    {
+     "phase": "C3",
+     "kind": "run",
+     "central_s": 318.7,
+     "pess_s": 496.2,
+     "cum_central_gh": 2.748,
+     "cum_pess_gh": 3.72
+    }
+   ],
+   "central_s": 4945.7,
+   "pess_s": 6695.6,
+   "central_gh": 2.748,
+   "pess_gh": 3.72,
+   "runs": 6,
+   "early_stops": [
+    {
+     "point": "pre-traffic stop (readiness, instrumentation, pool geometry: rc 5-8, 16)",
+     "central_gh": 0.417,
+     "pess_gh": 0.455
+    },
+    {
+     "point": "V0 / references (rc 9 after LW1 or LW2)",
+     "central_gh": 0.746,
+     "pess_gh": 0.831
+    },
+    {
+     "point": "unsafe restoration or replay-model deviation at the first touch pass (rc 12)",
+     "central_gh": 0.925,
+     "pess_gh": 1.034
+    },
+    {
+     "point": "insufficient concurrent decoding in the first batch (rc 13)",
+     "central_gh": 1.103,
+     "pess_gh": 1.312
+    },
+    {
+     "point": "structural stop after C1 (rc 9)",
+     "central_gh": 1.103,
+     "pess_gh": 1.312
+    },
+    {
+     "point": "GATE-1R not PASS (rc 10): alignment, numerical content, sentinel or CV coverage",
+     "central_gh": 1.663,
+     "pess_gh": 2.189
+    },
+    {
+     "point": "missing sentinel coverage after D2 (rc 14)",
+     "central_gh": 1.858,
+     "pess_gh": 2.485
+    },
+    {
+     "point": "complete",
+     "central_gh": 2.748,
+     "pess_gh": 3.72
+    }
+   ],
+   "ceiling_rule": "max(1.3 x central, pessimistic)",
+   "ceiling_gh": 3.72,
+   "wall_cap_s": 6696,
+   "min_wall_s": 4945,
+   "invalid_start_allowance_gh": 0.455
+  }
+ },
+ "decode_rate_sensitivity_B": {
+  "20.0": 3.907,
+  "25.0": 3.508,
+  "30.0": 3.241,
+  "36.6": 3.001,
+  "41.6": 2.87
+ }
+}

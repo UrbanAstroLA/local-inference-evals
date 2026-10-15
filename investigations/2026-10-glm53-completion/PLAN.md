@@ -2053,3 +2053,123 @@ completed, `ids_equal` held 8 of 8, and there were 0 hook errors. The only faili
 **Cost and authorization:** the spent attempt cost 1.0861 GPU-hours, and the single-attempt authorization is
 exhausted. A new attempt needs a new operator authorization and independent review. Full option B with eviction
 designed out is estimated at about 2.77 GPU-hours.
+
+**Amendment 22d (2026-10-15; adopts the independent review "first-contrast retry: review and required preparation",
+relayed by the operator; before any retry data).** Proceed with CPU corrections and replay. No launch from the current
+cost sketch; no new GPU authorization is implied. The preferred form is one session with an integrated validation gate
+followed conditionally by the contrast. B1, the hook and the served configuration stay unchanged unless that proves
+infeasible.
+
+1. **F1 accepted, scoped.** The corrected rule applies to exact repeats without eviction; every other case uses the
+   image's actual cache lookup. Tests cover exact repeats, extensions of warm prompts, lengths immediately below, at
+   and above block boundaries, cold and partially or fully evicted prefixes, and the actual C, D, CV and sentinel
+   request forms. They are validated against earlier measured records, not only synthetic ones.
+2. **F2 accepted, with construction accounting kept.** Exact safety checks stay: block alignment, no hit beyond the
+   permissible prefix, no decode-written history admitted as clean prefill state, and correct restored-state and
+   request attribution.
+   - Hit, partial hit or miss is recorded for every request.
+   - If C and D cache construction differs, that is reported, its distribution across conditions assessed, and
+     prefix-reconstruction variability included in the clean null. Such a pair is not described as sharing an identical
+     prefix.
+   - Cache behaviour must not differ systematically by treatment.
+3. **F3: strategy (a), demonstrated as feasible.** The revised proposal shows:
+   - the actual request and warm order;
+   - live and cached block occupancy by group;
+   - which boundary states survive each lookup;
+   - expected hits and permitted misses;
+   - all eight requests decoding together before the lead-in ends;
+   - survival of the shared state the sentinels need.
+   Adjacent C/D pairs are tested for reduced churn, without assuming they eliminate it. Batches are not split into
+   four-request batches, because D2 exposure depends on concurrency. If eviction cannot be eliminated economically, an
+   explicitly designed, balanced partial-cache experiment with costed cold work is acceptable. 2.77 GPU-hours stays
+   provisional.
+4. **F4 accepted, without claiming determinism.** Actual admission and scheduling order are recorded, and the gates test
+   the properties the experiment needs, not agreement with a timing prediction.
+5. **F5 accepted.** The sentinel is defined from the actual restored boundary c and the shared physical block
+   [c − 4,352, c). Block identity is verified as well as bytes. A missing shared-block measurement is incomplete
+   coverage, not a successful sentinel.
+6. **F6 accepted.**
+   - The old numerical page and early-layer thresholds are replaced by frozen, matched long-context null comparisons,
+     reported by fixture, layer and page alongside the pooled results.
+   - Exact structural requirements stay: request identity, token position, physical mapping, ledger attribution,
+     prohibited writes, and stable committed bytes.
+   - A noisy M4 null does not excuse failures elsewhere. Fixture flags and the leave-flagged-out sensitivity stay, and
+     the original criteria and failures are kept.
+   - The reading is "compatible with measured long-context numerical variation". Planted wrong-page, foreign-request
+     and stale-state controls must stay detectable.
+7. **F7 required.** A CPU replay through the image's actual cache-manager code first reproduces run-fc1 (the dropped
+   block, M3's eviction, the sentinel's private recompute), then exercises the proposed session under plausible
+   interleavings and resource pressure, with conservative occupancy bounds where exact prediction is unavailable. This
+   is required for future experiments whose validity or costing depends on cache residency, restoration or eviction.
+8. **F8 accepted.** The original as-run verdict stays unchanged. Revised checks on C1 are labelled post-inspection.
+9. **Integrated gate.** Reference builds and clean checks come before injected traffic. The session stops early on
+   unsafe restoration, insufficient concurrent decoding, a long-context alignment failure, uninterpretable numerical
+   content, or missing boundary or shared-prefix coverage. The ordering is repriced from measured rates and expected
+   misses.
+10. **C1's permitted use:** a labelled long-context instrument-characterization run (forcing, position and attribution,
+    alignment, observed crossings, numerical calibration). It is not a clean-repeatability estimate, not pooled with or
+    paired against new runs, and not evidence about D2.
+
+**Deliverable before GPU authorization:** one revised package with the feasible schedule; the CPU replay against
+historical records and the proposed workload; cache-construction and concurrency acceptance rules; frozen long-context
+numerical criteria; sentinel and boundary coverage; measured-rate costing including misses and early-stop cost; and a
+new explicit ceiling and attempt policy.
+
+**Amendment 22e (2026-10-15; retry package prepared under 22d, CPU only; for independent review, not authorized).**
+first-contrast/retry/: SHA256SUMS (287 files) has sha256 c7374d75…; changes R-1 to R-9 are in CHANGES-R.json. B1, the
+hook and the served configuration are unchanged (image ac05230b…, hook 15e93e23…).
+
+- **F7 replay.** The image's own scheduler, KV-cache manager, coordinator, per-type managers and block pool, run in a CPU
+  container of the serving image.
+  - It reproduces run-fc1 exactly: 5,609 scheduler steps including block ids and free counts, all 32 cached counts, the
+    one-block drop, and the sentinel's private-recompute location.
+  - It matches historical records: b0-mapguard run-a3 at all 2,482 steps; 253 measured cached counts across 5
+    sessions. Four deliberately wrong configurations are each detected.
+- **Correction to 22c.** M3's warm state survived the warm phase. It was evicted by C1's own earlier admissions, because
+  the HTTP race admitted M3 fifth. The replayed counterfactuals agree: recorded order gives the miss, warm-completion
+  order gives 8/8 hits, reverse order gives 2 misses. The 22c statement that the warm round exceeded the cache reach is
+  superseded.
+- **F1:** c = max(0, (min(⌊P_build/4352⌋, ⌊(P−1)/4352⌋) − 1)·4352), for same-stream, same-salt builds without eviction;
+  the image's lookup decides elsewhere. 70/70 tests against the image's lookup, and all 253 measured counts match.
+- **F3 feasible schedule (strategy (a), configuration unchanged).**
+  - Each salt is built in two halves of 4 prompts, each followed by a sequential touch pass.
+  - LP runs reuse the primary builds. C2/D2 share s2 across the gate; D3/C3 share s3.
+  - Construction is balanced by arm, and there are no 4-request batches.
+  - Every lookup is a full hit in 25 replayed scenarios (orders, staggers, jitter, pools of 1,100-1,275 blocks, a long
+    gate wait), with a survival margin of at least 359 blocks.
+  - All 8 requests decode by output index 95 (159 for LP), and the sentinels' shared state survives with at least 438
+    blocks of margin. No partial-cache design is needed.
+- **F2:** exact safety gates (block-aligned; within prefill coverage; no decode-written block restored; num_computed
+  equals cached, with attribution from the scheduler log). Hit, partial, miss or cold recorded per request. On stage A
+  every lookup must hit, or the session stops. C and D (LC and LD) must have equal non-hit counts. "Identical prefix" is
+  used only when block identity is verified.
+- **F4:** a fixed staggered order, with actual admission recorded; gates test properties.
+- **F5:** sentinels PS-a, PS-b and PS-c dump exactly [c − 4,352, c), checking block identity, MLA and index-K bytes and
+  the KDA boundary state. A missing measurement stops the session.
+- **F6:** per page ≤ max(2 × the matched prefill null on that page, 0.25); layers 3-15 ≤ max(2 × prefill null, 0.1%);
+  the pooled rule keeps both nulls; the originals are reported beside.
+  - **Recorded pre-freeze change:** the page and early-layer rules use the prefill null only. A synthetic planted page
+    fault slipped through when the decode null (which contains the faulty run) was included.
+  - **Calibration on run-fc1 (post-inspection):** C1 passes (pooled 0.765% against 1.54%; 0 of 2,486 pages; 3 of
+    57,344 early pools); the originals still fail and are kept beside. All 6 planted faults are detected.
+- **F8:** the frozen attempt-1 gate reproduces gate-asrun exactly (27 rows, FAIL).
+- **Gate order:** pre-traffic geometry; per phase structural and unsafe-restoration stops; an all-8 lead ≥ 512 per batch;
+  GATE-1R before any injected traffic; the sentinel after injected traffic.
+- **Cost:**
+
+  | Variant | Central | Pessimistic = proposed ceiling |
+  |---|---|---|
+  | B | 3.00 GPU-hours | 4.18 |
+  | A0 | 2.75 GPU-hours | 3.72 |
+
+  Early-stop costs (central/pessimistic): 0.42/0.46 before traffic; 1.19/1.47 after C1; 1.75/2.34 if GATE-1R fails.
+  The recommended attempt policy is single.
+- **Tests:** F1 70/70; units 25/25; tampered plans 19/19; runner refusals 23/23; synthetic dry runs 27/27; F6 planted
+  faults 6/6; F8 exact; DRY_RUN B and A0 pass.
+- **Limits:**
+  - KDA block ids are not in the guard's record, so the sentinel certifies KDA state by restored length and snapshot
+    bytes;
+  - the EAGLE flag on the KDA groups is not identifiable;
+  - the long-context gates have never seen an in-session decode null;
+  - the replay's decode acceptance comes from C1 alone;
+  - GATE-1R idles the GPUs about 270 s.

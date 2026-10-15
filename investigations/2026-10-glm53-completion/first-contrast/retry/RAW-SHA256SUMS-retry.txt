@@ -1,0 +1,3 @@
+# sha256 of local files not published (reason in brackets). Paths relative to the local folder.
+
+# run-fc1/forcewin/ and tests/out/: 30160 per-request tensor record files, 38.6 GB, not published or hashed here (hold forced token ids of fixture histories)

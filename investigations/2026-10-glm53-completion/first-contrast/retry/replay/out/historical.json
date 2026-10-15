@@ -1,0 +1,2351 @@
+{
+ "b0-mapguard/run-a3": {
+  "session": "b0-mapguard/run-a3",
+  "mode": "trace",
+  "steps": 2482,
+  "exact": true,
+  "mismatching_steps": 0,
+  "first_mismatch_after_phase2d_start": false,
+  "steps_exact_before_phase2d": 2482,
+  "first_mismatch": [],
+  "last_mismatch_step": null,
+  "unmapped": [],
+  "requests": [
+   {
+    "phase": "P0",
+    "id": "q0",
+    "P": 124,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "P0",
+    "id": "q1",
+    "P": 134,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "P0",
+    "id": "q2",
+    "P": 158,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "P0",
+    "id": "q3",
+    "P": 133,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "warm",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "warm",
+    "id": "r6",
+    "P": 8240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "warm",
+    "id": "r5",
+    "P": 16240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 8704,
+    "kind": "first-use"
+   },
+   {
+    "phase": "warm",
+    "id": "r4",
+    "P": 16478,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 8704,
+    "kind": "first-use"
+   },
+   {
+    "phase": "warm",
+    "id": "r3",
+    "P": 32478,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 26112,
+    "kind": "first-use"
+   },
+   {
+    "phase": "warm",
+    "id": "r2",
+    "P": 64478,
+    "measured": 26112,
+    "replay": 26112,
+    "equal": true,
+    "rule": 56576,
+    "kind": "first-use"
+   },
+   {
+    "phase": "warm",
+    "id": "r1",
+    "P": 64217,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 56576,
+    "kind": "first-use"
+   },
+   {
+    "phase": "warm",
+    "id": "r0",
+    "P": 120217,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 113152,
+    "kind": "first-use"
+   },
+   {
+    "phase": "T0",
+    "id": "r0",
+    "P": 120217,
+    "measured": 113152,
+    "replay": 113152,
+    "equal": true,
+    "rule": 113152,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T0",
+    "id": "r1",
+    "P": 64217,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T0",
+    "id": "r2",
+    "P": 64478,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T0",
+    "id": "r3",
+    "P": 32478,
+    "measured": 26112,
+    "replay": 26112,
+    "equal": true,
+    "rule": 26112,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T0",
+    "id": "r4",
+    "P": 16478,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T0",
+    "id": "r5",
+    "P": 16240,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T0",
+    "id": "r6",
+    "P": 8240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T0",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "F0",
+    "id": "r0",
+    "P": 120217,
+    "measured": 113152,
+    "replay": 113152,
+    "equal": true,
+    "rule": 113152,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "F0",
+    "id": "r2",
+    "P": 64478,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "F0",
+    "id": "r4",
+    "P": 16478,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "F0",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T1",
+    "id": "r0",
+    "P": 120217,
+    "measured": 113152,
+    "replay": 113152,
+    "equal": true,
+    "rule": 113152,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T1",
+    "id": "r1",
+    "P": 64217,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T1",
+    "id": "r2",
+    "P": 64478,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T1",
+    "id": "r3",
+    "P": 32478,
+    "measured": 26112,
+    "replay": 26112,
+    "equal": true,
+    "rule": 26112,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T1",
+    "id": "r4",
+    "P": 16478,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T1",
+    "id": "r6",
+    "P": 8240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T1",
+    "id": "r5",
+    "P": 16240,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T1",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "F1",
+    "id": "r0",
+    "P": 120217,
+    "measured": 113152,
+    "replay": 113152,
+    "equal": true,
+    "rule": 113152,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "F1",
+    "id": "r2",
+    "P": 64478,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "F1",
+    "id": "r4",
+    "P": 16478,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "F1",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "D",
+    "id": "r0",
+    "P": 120217,
+    "measured": 113152,
+    "replay": 113152,
+    "equal": true,
+    "rule": 113152,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "D",
+    "id": "r1",
+    "P": 64217,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "D",
+    "id": "r2",
+    "P": 64478,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "D",
+    "id": "r3",
+    "P": 32478,
+    "measured": 26112,
+    "replay": 26112,
+    "equal": true,
+    "rule": 26112,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "D",
+    "id": "r4",
+    "P": 16478,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "D",
+    "id": "r5",
+    "P": 16240,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "D",
+    "id": "r6",
+    "P": 8240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "D",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "S",
+    "id": "r0",
+    "P": 120217,
+    "measured": 113152,
+    "replay": 113152,
+    "equal": true,
+    "rule": 113152,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "S",
+    "id": "r2",
+    "P": 64478,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "S",
+    "id": "r4",
+    "P": 16478,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "S",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "S",
+    "id": "r1",
+    "P": 64217,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "S",
+    "id": "r3",
+    "P": 32478,
+    "measured": 26112,
+    "replay": 26112,
+    "equal": true,
+    "rule": 26112,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "S",
+    "id": "r5",
+    "P": 16240,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "S",
+    "id": "r6",
+    "P": 8240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "Q",
+    "id": "q0",
+    "P": 124,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "Q",
+    "id": "q1",
+    "P": 134,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "Q",
+    "id": "q2",
+    "P": 158,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "Q",
+    "id": "q3",
+    "P": 133,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "Q",
+    "id": "q4",
+    "P": 365,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "Q",
+    "id": "q6",
+    "P": 172,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "Q",
+    "id": "q5",
+    "P": 181,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "Q",
+    "id": "q7",
+    "P": 447,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "Q",
+    "id": "q8",
+    "P": 238,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "Q",
+    "id": "q9",
+    "P": 131,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "Q",
+    "id": "q10",
+    "P": 376,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "Q",
+    "id": "q11",
+    "P": 146,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "Q",
+    "id": "q12",
+    "P": 322,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "Q",
+    "id": "q13",
+    "P": 131,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "Q",
+    "id": "q14",
+    "P": 283,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "Q",
+    "id": "q15",
+    "P": 204,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "P1",
+    "id": "q0",
+    "P": 124,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "P1",
+    "id": "q1",
+    "P": 134,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "P1",
+    "id": "q2",
+    "P": 158,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "P1",
+    "id": "q3",
+    "P": 133,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   }
+  ]
+ },
+ "d7/step2/run-b1-a1": {
+  "session": "d7/step2/run-b1-a1",
+  "mode": "trace",
+  "steps": 2554,
+  "exact": false,
+  "mismatching_steps": 24,
+  "first_mismatch_after_phase2d_start": true,
+  "steps_exact_before_phase2d": 2400,
+  "first_mismatch": [
+   [
+    2441,
+    [
+     [
+      "blocks",
+      "2-0-86c1c96e",
+      [
+       [
+        862
+       ],
+       [
+        948
+       ],
+       [
+        1,
+        1,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        2
+       ]
+      ],
+      [
+       [
+        698
+       ],
+       [
+        565
+       ],
+       [
+        1,
+        1,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        2
+       ]
+      ]
+     ]
+    ]
+   ],
+   [
+    2443,
+    [
+     [
+      "blocks",
+      "d-0-a04eea9b",
+      [
+       [
+        713
+       ],
+       [
+        615
+       ],
+       [
+        1,
+        1,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        2
+       ]
+      ],
+      [
+       [
+        907
+       ],
+       [
+        896
+       ],
+       [
+        1,
+        1,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        2
+       ]
+      ]
+     ]
+    ]
+   ]
+  ],
+  "last_mismatch_step": 2539,
+  "unmapped": [],
+  "requests": [
+   {
+    "phase": "P0",
+    "id": "q0",
+    "P": 124,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "P0",
+    "id": "q1",
+    "P": 134,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "P0",
+    "id": "q2",
+    "P": 158,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "P0",
+    "id": "q3",
+    "P": 133,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "warm",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "warm",
+    "id": "r6",
+    "P": 8240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "warm",
+    "id": "r5",
+    "P": 16240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 8704,
+    "kind": "first-use"
+   },
+   {
+    "phase": "warm",
+    "id": "r4",
+    "P": 16478,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 8704,
+    "kind": "first-use"
+   },
+   {
+    "phase": "warm",
+    "id": "r3",
+    "P": 32478,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 26112,
+    "kind": "first-use"
+   },
+   {
+    "phase": "warm",
+    "id": "r2",
+    "P": 64478,
+    "measured": 26112,
+    "replay": 26112,
+    "equal": true,
+    "rule": 56576,
+    "kind": "first-use"
+   },
+   {
+    "phase": "warm",
+    "id": "r1",
+    "P": 64217,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 56576,
+    "kind": "first-use"
+   },
+   {
+    "phase": "warm",
+    "id": "r0",
+    "P": 120217,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 113152,
+    "kind": "first-use"
+   },
+   {
+    "phase": "T0",
+    "id": "r0",
+    "P": 120217,
+    "measured": 113152,
+    "replay": 113152,
+    "equal": true,
+    "rule": 113152,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T0",
+    "id": "r1",
+    "P": 64217,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T0",
+    "id": "r2",
+    "P": 64478,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T0",
+    "id": "r3",
+    "P": 32478,
+    "measured": 26112,
+    "replay": 26112,
+    "equal": true,
+    "rule": 26112,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T0",
+    "id": "r4",
+    "P": 16478,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T0",
+    "id": "r5",
+    "P": 16240,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T0",
+    "id": "r6",
+    "P": 8240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T0",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "F0",
+    "id": "r0",
+    "P": 120217,
+    "measured": 113152,
+    "replay": 113152,
+    "equal": true,
+    "rule": 113152,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "F0",
+    "id": "r2",
+    "P": 64478,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "F0",
+    "id": "r4",
+    "P": 16478,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "F0",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T1",
+    "id": "r0",
+    "P": 120217,
+    "measured": 113152,
+    "replay": 113152,
+    "equal": true,
+    "rule": 113152,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T1",
+    "id": "r1",
+    "P": 64217,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T1",
+    "id": "r2",
+    "P": 64478,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T1",
+    "id": "r3",
+    "P": 32478,
+    "measured": 26112,
+    "replay": 26112,
+    "equal": true,
+    "rule": 26112,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T1",
+    "id": "r4",
+    "P": 16478,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T1",
+    "id": "r5",
+    "P": 16240,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T1",
+    "id": "r6",
+    "P": 8240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "T1",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "F1",
+    "id": "r0",
+    "P": 120217,
+    "measured": 113152,
+    "replay": 113152,
+    "equal": true,
+    "rule": 113152,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "F1",
+    "id": "r2",
+    "P": 64478,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "F1",
+    "id": "r4",
+    "P": 16478,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "F1",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "D",
+    "id": "r0",
+    "P": 120217,
+    "measured": 113152,
+    "replay": 113152,
+    "equal": true,
+    "rule": 113152,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "D",
+    "id": "r2",
+    "P": 64478,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "D",
+    "id": "r1",
+    "P": 64217,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "D",
+    "id": "r3",
+    "P": 32478,
+    "measured": 26112,
+    "replay": 26112,
+    "equal": true,
+    "rule": 26112,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "D",
+    "id": "r4",
+    "P": 16478,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "D",
+    "id": "r5",
+    "P": 16240,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "D",
+    "id": "r6",
+    "P": 8240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "D",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "S",
+    "id": "r2",
+    "P": 64478,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "S",
+    "id": "r0",
+    "P": 120217,
+    "measured": 113152,
+    "replay": 113152,
+    "equal": true,
+    "rule": 113152,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "S",
+    "id": "r4",
+    "P": 16478,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "S",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "S",
+    "id": "r1",
+    "P": 64217,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "S",
+    "id": "r3",
+    "P": 32478,
+    "measured": 26112,
+    "replay": 26112,
+    "equal": true,
+    "rule": 26112,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "S",
+    "id": "r5",
+    "P": 16240,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "S",
+    "id": "r6",
+    "P": 8240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "Q",
+    "id": "q0",
+    "P": 124,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "Q",
+    "id": "q1",
+    "P": 134,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "Q",
+    "id": "q2",
+    "P": 158,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "Q",
+    "id": "q3",
+    "P": 133,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "Q",
+    "id": "q4",
+    "P": 365,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "Q",
+    "id": "q5",
+    "P": 181,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "Q",
+    "id": "q6",
+    "P": 172,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "Q",
+    "id": "q7",
+    "P": 447,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "Q",
+    "id": "q8",
+    "P": 238,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "Q",
+    "id": "q9",
+    "P": 131,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "Q",
+    "id": "q10",
+    "P": 376,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "Q",
+    "id": "q11",
+    "P": 146,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "Q",
+    "id": "q12",
+    "P": 322,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "Q",
+    "id": "q13",
+    "P": 131,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "Q",
+    "id": "q14",
+    "P": 283,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "Q",
+    "id": "q15",
+    "P": 204,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "first-use"
+   },
+   {
+    "phase": "P1",
+    "id": "q0",
+    "P": 124,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "P1",
+    "id": "q1",
+    "P": 134,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "P1",
+    "id": "q2",
+    "P": 158,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   },
+   {
+    "phase": "P1",
+    "id": "q3",
+    "P": 133,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0,
+    "kind": "exact-repeat"
+   }
+  ]
+ },
+ "phase2-stage2": {
+  "session": "phase2-stage2",
+  "mode": "model",
+  "requests": [
+   {
+    "segment": "a1",
+    "phase": "warm",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0
+   },
+   {
+    "segment": "a1",
+    "phase": "warm",
+    "id": "r6",
+    "P": 8240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0
+   },
+   {
+    "segment": "a1",
+    "phase": "warm",
+    "id": "r5",
+    "P": 16240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 8704
+   },
+   {
+    "segment": "a1",
+    "phase": "warm",
+    "id": "r4",
+    "P": 16478,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 8704
+   },
+   {
+    "segment": "a1",
+    "phase": "warm",
+    "id": "r3",
+    "P": 32478,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 26112
+   },
+   {
+    "segment": "a1",
+    "phase": "warm",
+    "id": "r2",
+    "P": 64478,
+    "measured": 26112,
+    "replay": 26112,
+    "equal": true,
+    "rule": 56576
+   },
+   {
+    "segment": "a1",
+    "phase": "warm",
+    "id": "r1",
+    "P": 64217,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 56576
+   },
+   {
+    "segment": "a1",
+    "phase": "warm",
+    "id": "r0",
+    "P": 120217,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 113152
+   },
+   {
+    "segment": "a1",
+    "phase": "hitcheck",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0
+   },
+   {
+    "segment": "a1",
+    "phase": "tiled-T1",
+    "id": "r0",
+    "P": 120217,
+    "measured": 113152,
+    "replay": 113152,
+    "equal": true,
+    "rule": 113152
+   },
+   {
+    "segment": "a1",
+    "phase": "tiled-T1",
+    "id": "r1",
+    "P": 64217,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576
+   },
+   {
+    "segment": "a1",
+    "phase": "tiled-T1",
+    "id": "r2",
+    "P": 64478,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576
+   },
+   {
+    "segment": "a1",
+    "phase": "tiled-T1",
+    "id": "r3",
+    "P": 32478,
+    "measured": 26112,
+    "replay": 26112,
+    "equal": true,
+    "rule": 26112
+   },
+   {
+    "segment": "a1",
+    "phase": "tiled-T1",
+    "id": "r4",
+    "P": 16478,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704
+   },
+   {
+    "segment": "a1",
+    "phase": "tiled-T1",
+    "id": "r5",
+    "P": 16240,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704
+   },
+   {
+    "segment": "a1",
+    "phase": "tiled-T1",
+    "id": "r6",
+    "P": 8240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0
+   },
+   {
+    "segment": "a1",
+    "phase": "tiled-T1",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0
+   },
+   {
+    "segment": "a1",
+    "phase": "fused-F1",
+    "id": "r0",
+    "P": 120217,
+    "measured": 113152,
+    "replay": 113152,
+    "equal": true,
+    "rule": 113152
+   },
+   {
+    "segment": "a1",
+    "phase": "fused-F1",
+    "id": "r2",
+    "P": 64478,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576
+   },
+   {
+    "segment": "a1",
+    "phase": "fused-F1",
+    "id": "r4",
+    "P": 16478,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704
+   },
+   {
+    "segment": "a1",
+    "phase": "fused-F1",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0
+   },
+   {
+    "segment": "a1",
+    "phase": "fused-F2",
+    "id": "r1",
+    "P": 64217,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576
+   },
+   {
+    "segment": "a1",
+    "phase": "fused-F2",
+    "id": "r3",
+    "P": 32478,
+    "measured": 26112,
+    "replay": 26112,
+    "equal": true,
+    "rule": 26112
+   },
+   {
+    "segment": "a1",
+    "phase": "fused-F2",
+    "id": "r5",
+    "P": 16240,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704
+   },
+   {
+    "segment": "a1",
+    "phase": "fused-F2",
+    "id": "r6",
+    "P": 8240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0
+   },
+   {
+    "segment": "a2",
+    "phase": "warm",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0
+   },
+   {
+    "segment": "a2",
+    "phase": "warm",
+    "id": "r6",
+    "P": 8240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0
+   },
+   {
+    "segment": "a2",
+    "phase": "warm",
+    "id": "r5",
+    "P": 16240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 8704
+   },
+   {
+    "segment": "a2",
+    "phase": "warm",
+    "id": "r4",
+    "P": 16478,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 8704
+   },
+   {
+    "segment": "a2",
+    "phase": "warm",
+    "id": "r3",
+    "P": 32478,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 26112
+   },
+   {
+    "segment": "a2",
+    "phase": "warm",
+    "id": "r2",
+    "P": 64478,
+    "measured": 26112,
+    "replay": 26112,
+    "equal": true,
+    "rule": 56576
+   },
+   {
+    "segment": "a2",
+    "phase": "warm",
+    "id": "r1",
+    "P": 64217,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 56576
+   },
+   {
+    "segment": "a2",
+    "phase": "warm",
+    "id": "r0",
+    "P": 120217,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 113152
+   },
+   {
+    "segment": "a2",
+    "phase": "tiled-T3",
+    "id": "r0",
+    "P": 120217,
+    "measured": 113152,
+    "replay": 113152,
+    "equal": true,
+    "rule": 113152
+   },
+   {
+    "segment": "a2",
+    "phase": "tiled-T3",
+    "id": "r1",
+    "P": 64217,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576
+   },
+   {
+    "segment": "a2",
+    "phase": "tiled-T3",
+    "id": "r2",
+    "P": 64478,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576
+   },
+   {
+    "segment": "a2",
+    "phase": "tiled-T3",
+    "id": "r3",
+    "P": 32478,
+    "measured": 26112,
+    "replay": 26112,
+    "equal": true,
+    "rule": 26112
+   },
+   {
+    "segment": "a2",
+    "phase": "tiled-T3",
+    "id": "r4",
+    "P": 16478,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704
+   },
+   {
+    "segment": "a2",
+    "phase": "tiled-T3",
+    "id": "r5",
+    "P": 16240,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704
+   },
+   {
+    "segment": "a2",
+    "phase": "tiled-T3",
+    "id": "r6",
+    "P": 8240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0
+   },
+   {
+    "segment": "a2",
+    "phase": "tiled-T3",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0
+   },
+   {
+    "segment": "a2",
+    "phase": "tiled-T4",
+    "id": "r0",
+    "P": 120217,
+    "measured": 113152,
+    "replay": 113152,
+    "equal": true,
+    "rule": 113152
+   },
+   {
+    "segment": "a2",
+    "phase": "tiled-T4",
+    "id": "r1",
+    "P": 64217,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576
+   },
+   {
+    "segment": "a2",
+    "phase": "tiled-T4",
+    "id": "r3",
+    "P": 32478,
+    "measured": 26112,
+    "replay": 26112,
+    "equal": true,
+    "rule": 26112
+   },
+   {
+    "segment": "a2",
+    "phase": "tiled-T4",
+    "id": "r2",
+    "P": 64478,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576
+   },
+   {
+    "segment": "a2",
+    "phase": "tiled-T4",
+    "id": "r4",
+    "P": 16478,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704
+   },
+   {
+    "segment": "a2",
+    "phase": "tiled-T4",
+    "id": "r5",
+    "P": 16240,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704
+   },
+   {
+    "segment": "a2",
+    "phase": "tiled-T4",
+    "id": "r6",
+    "P": 8240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0
+   },
+   {
+    "segment": "a2",
+    "phase": "tiled-T4",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0
+   }
+  ]
+ },
+ "phase3": {
+  "session": "phase3",
+  "mode": "model",
+  "requests": [
+   {
+    "segment": "c1",
+    "phase": "warm",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0
+   },
+   {
+    "segment": "c1",
+    "phase": "warm",
+    "id": "r6",
+    "P": 8240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0
+   },
+   {
+    "segment": "c1",
+    "phase": "warm",
+    "id": "r5",
+    "P": 16240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 8704
+   },
+   {
+    "segment": "c1",
+    "phase": "warm",
+    "id": "r4",
+    "P": 16478,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 8704
+   },
+   {
+    "segment": "c1",
+    "phase": "warm",
+    "id": "r3",
+    "P": 32478,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 26112
+   },
+   {
+    "segment": "c1",
+    "phase": "warm",
+    "id": "r2",
+    "P": 64478,
+    "measured": 26112,
+    "replay": 26112,
+    "equal": true,
+    "rule": 56576
+   },
+   {
+    "segment": "c1",
+    "phase": "warm",
+    "id": "r1",
+    "P": 64217,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 56576
+   },
+   {
+    "segment": "c1",
+    "phase": "warm",
+    "id": "r0",
+    "P": 120217,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 113152
+   },
+   {
+    "segment": "c1",
+    "phase": "tiled-T3",
+    "id": "r0",
+    "P": 120217,
+    "measured": 113152,
+    "replay": 113152,
+    "equal": true,
+    "rule": 113152
+   },
+   {
+    "segment": "c1",
+    "phase": "tiled-T3",
+    "id": "r1",
+    "P": 64217,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576
+   },
+   {
+    "segment": "c1",
+    "phase": "tiled-T3",
+    "id": "r2",
+    "P": 64478,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576
+   },
+   {
+    "segment": "c1",
+    "phase": "tiled-T3",
+    "id": "r3",
+    "P": 32478,
+    "measured": 26112,
+    "replay": 26112,
+    "equal": true,
+    "rule": 26112
+   },
+   {
+    "segment": "c1",
+    "phase": "tiled-T3",
+    "id": "r4",
+    "P": 16478,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704
+   },
+   {
+    "segment": "c1",
+    "phase": "tiled-T3",
+    "id": "r5",
+    "P": 16240,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704
+   },
+   {
+    "segment": "c1",
+    "phase": "tiled-T3",
+    "id": "r6",
+    "P": 8240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0
+   },
+   {
+    "segment": "c1",
+    "phase": "tiled-T3",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0
+   },
+   {
+    "segment": "c1",
+    "phase": "tiled-T4",
+    "id": "r0",
+    "P": 120217,
+    "measured": 113152,
+    "replay": 113152,
+    "equal": true,
+    "rule": 113152
+   },
+   {
+    "segment": "c1",
+    "phase": "tiled-T4",
+    "id": "r1",
+    "P": 64217,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576
+   },
+   {
+    "segment": "c1",
+    "phase": "tiled-T4",
+    "id": "r2",
+    "P": 64478,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576
+   },
+   {
+    "segment": "c1",
+    "phase": "tiled-T4",
+    "id": "r3",
+    "P": 32478,
+    "measured": 26112,
+    "replay": 26112,
+    "equal": true,
+    "rule": 26112
+   },
+   {
+    "segment": "c1",
+    "phase": "tiled-T4",
+    "id": "r4",
+    "P": 16478,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704
+   },
+   {
+    "segment": "c1",
+    "phase": "tiled-T4",
+    "id": "r5",
+    "P": 16240,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704
+   },
+   {
+    "segment": "c1",
+    "phase": "tiled-T4",
+    "id": "r6",
+    "P": 8240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0
+   },
+   {
+    "segment": "c1",
+    "phase": "tiled-T4",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0
+   },
+   {
+    "segment": "c1",
+    "phase": "fused-F3",
+    "id": "r0",
+    "P": 120217,
+    "measured": 113152,
+    "replay": 113152,
+    "equal": true,
+    "rule": 113152
+   },
+   {
+    "segment": "c1",
+    "phase": "fused-F3",
+    "id": "r2",
+    "P": 64478,
+    "measured": 56576,
+    "replay": 56576,
+    "equal": true,
+    "rule": 56576
+   },
+   {
+    "segment": "c1",
+    "phase": "fused-F3",
+    "id": "r7",
+    "P": 4240,
+    "measured": 0,
+    "replay": 0,
+    "equal": true,
+    "rule": 0
+   },
+   {
+    "segment": "c1",
+    "phase": "fused-F3",
+    "id": "r4",
+    "P": 16478,
+    "measured": 8704,
+    "replay": 8704,
+    "equal": true,
+    "rule": 8704
+   }
+  ]
+ }
+}

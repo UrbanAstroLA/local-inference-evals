@@ -1254,12 +1254,18 @@ the real decode path and records termination-token probabilities. 1.2117 of 2.4 
     - the plan expected one more cached 4,352-token block than this stack reuses on an exact repeat. The last token is
       recomputed and the speculative-decoding path drops the last matched block; earlier sessions' records already
       follow the correct rule. Owned;
-    - KDA state blocks in the shared pool limit prefix-cache reach to about 0.66 M tokens, so one warm prefix was
-      evicted;
+    - one warm prefix (M3) was evicted. A replay of the image's own cache code later showed the cause: C1's own earlier
+      admissions, because of the HTTP admission race, rather than the warm round exceeding the cache reach as first
+      stated (amendment 22e);
     - a short-context-calibrated page criterion fails even between two identical long prefills.
   - **No instrument or engine fault:** C1's forced windows pass forcing, position, attribution and alignment checks
     post-inspection.
-  - **Next:** fixes F1-F8 and a new attempt (about 2.8 GPU-hours) are proposed for independent review and new
+  - **Retry package** ([`retry/RETRY-PROPOSAL.md`](first-contrast/retry/RETRY-PROPOSAL.md), amendment 22e):
+    - a CPU replay through the image's own cache machinery reproduces run-fc1 step for step;
+    - a schedule in which every prefix restore hits in 25 replayed scenarios, with the configuration unchanged;
+    - exact cache-safety gates; a shared-block sentinel; long-context numerical criteria calibrated on C1, with planted
+      faults detected.
+    Variant B: about 3.0 GPU-hours central, 4.18 ceiling, single attempt. It awaits independent review and
     authorization.
 
 ### Observations recorded separately

@@ -1,0 +1,9 @@
+C1 vs LW1 (post-inspection, N_dd absent): ok True | pooled 0.00765 limit 0.01538 cov 1.000 | pages judged 2486 failing 0 | early 3/57344 gross, limit 0.00100 | ORIGINAL pass False (pages over 25% 8, early 3)
+C1 vs LW2 (post-inspection): ok True pages failing 0 flags []
+flags C1 vs LW1: []
+plant wrong_page_L3_all_layers_rank0         detected True  by ['pages', 'early', 'fixture flag (reported)'] (pooled 0.01250 / 0.01538, pages failing 12)
+plant wrong_page_L1_one_layer_rank1          detected True  by ['pages', 'fixture flag (reported)'] (pooled 0.00845 / 0.01538, pages failing 2)
+plant wrong_page_M4_fragile_region_rank1     detected True  by ['pages'] (pooled 0.01110 / 0.01538, pages failing 10)
+plant foreign_request_A8_gets_L8             detected True  by ['pooled', 'pages', 'early', 'fixture flag (reported)'] (pooled 0.13206 / 0.01538, pages failing 308)
+plant stale_state_L1_rank1_2_pages           detected True  by ['pages', 'fixture flag (reported)'] (pooled 0.01170 / 0.01538, pages failing 10)
+plant unwritten_page_L5_rank0                detected True  by ['pages', 'early', 'fixture flag (reported)'] (pooled 0.01008 / 0.01538, pages failing 6)

@@ -535,6 +535,9 @@ What was asked, run, found, corrected and withdrawn, in date order.
 - **No instrument or engine fault:** C1's forced windows look valid post-inspection.
 - **Observation:** deep-layer pooled index-K is more fragile at long context.
 - **Next:** fixes and a new attempt go to independent review and new authorization. Cumulative 65.10 GPU-hours.
+- **Correction (amendment 22e):** a CPU replay of the image's own cache code shows M3 was evicted by C1's own earlier
+  admissions (HTTP admission race), not because the warm round exceeded the cache reach as first written. The retry
+  package (variant B, about 3.0 GPU-hours, ceiling 4.18, single attempt) awaits review.
   [First contrast](investigations/2026-10-glm53-completion/README.md#instrument-validation-k-and-the-force-history-hook-amendment-21).
 
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or

@@ -1,0 +1,558 @@
+{
+ "results": [
+  {
+   "test": "T1 repeat P=1*4352-1",
+   "got": 0,
+   "want": 0,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T1 repeat P=1*4352+0",
+   "got": 0,
+   "want": 0,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T1 repeat P=1*4352+1",
+   "got": 0,
+   "want": 0,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T1 repeat P=1*4352+2727",
+   "got": 0,
+   "want": 0,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T1 repeat P=2*4352-1",
+   "got": 0,
+   "want": 0,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T1 repeat P=2*4352+0",
+   "got": 0,
+   "want": 0,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T1 repeat P=2*4352+1",
+   "got": 4352,
+   "want": 4352,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T1 repeat P=2*4352+2727",
+   "got": 4352,
+   "want": 4352,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T1 repeat P=3*4352-1",
+   "got": 4352,
+   "want": 4352,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T1 repeat P=3*4352+0",
+   "got": 4352,
+   "want": 4352,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T1 repeat P=3*4352+1",
+   "got": 8704,
+   "want": 8704,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T1 repeat P=3*4352+2727",
+   "got": 8704,
+   "want": 8704,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T1 repeat P=15*4352-1",
+   "got": 56576,
+   "want": 56576,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T1 repeat P=15*4352+0",
+   "got": 56576,
+   "want": 56576,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T1 repeat P=15*4352+1",
+   "got": 60928,
+   "want": 60928,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T1 repeat P=15*4352+2727",
+   "got": 60928,
+   "want": 60928,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T1 repeat P=25*4352-1",
+   "got": 100096,
+   "want": 100096,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T1 repeat P=25*4352+0",
+   "got": 100096,
+   "want": 100096,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T1 repeat P=25*4352+1",
+   "got": 104448,
+   "want": 104448,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T1 repeat P=25*4352+2727",
+   "got": 104448,
+   "want": 104448,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T2 extension W=15*4352+1234 +1 (Q=66515)",
+   "got": 60928,
+   "want": 60928,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T2 extension W=15*4352+1234 to boundary-1 (Q=69631)",
+   "got": 60928,
+   "want": 60928,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T2 extension W=15*4352+1234 to boundary (Q=69632)",
+   "got": 60928,
+   "want": 60928,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T2 extension W=15*4352+1234 +1 block (Q=70866)",
+   "got": 60928,
+   "want": 60928,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T2 extension W=15*4352+1234 +2 blocks (Q=75218)",
+   "got": 60928,
+   "want": 60928,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T2 extension W=15*4352+1234 +7168 (Q=73682)",
+   "got": 60928,
+   "want": 60928,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T2 extension W=15*4352+1234 +10 blocks (Q=110034)",
+   "got": 60928,
+   "want": 60928,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T3 LW2-like build P+8192 -> P_L=P+7168",
+   "got": 91392,
+   "want": 91392,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T3 build 25 blocks -> prompt 10 blocks + 5",
+   "got": 39168,
+   "want": 39168,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T3 build -> prompt at its boundary",
+   "got": 43520,
+   "want": 43520,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T4 cold first use",
+   "got": 0,
+   "want": 0,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T4 same tokens, other salt",
+   "got": 0,
+   "want": 0,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T4 same tokens, no salt",
+   "got": 0,
+   "want": 0,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T5 full eviction by 0.88 M tokens of other prefill",
+   "got": 0,
+   "want": 0,
+   "ok": true,
+   "note": "rule would say 82688"
+  },
+  {
+   "test": "T5 FIFO eviction of a build: hit is the rule value or 0, block-aligned",
+   "ok": true,
+   "detail": {
+    "series": [
+     [
+      5,
+      82688
+     ],
+     [
+      6,
+      82688
+     ],
+     [
+      7,
+      0
+     ],
+     [
+      8,
+      0
+     ],
+     [
+      9,
+      0
+     ]
+    ],
+    "rule": 82688
+   }
+  },
+  {
+   "test": "T5 partial: KDA state at c evicted (7 groups)",
+   "got": 78336,
+   "want": 78336,
+   "ok": true,
+   "note": "rule 82688 -> partial (block-aligned)"
+  },
+  {
+   "test": "T5 partial: MLA block idx 5 evicted",
+   "got": 17408,
+   "want": 17408,
+   "ok": true,
+   "note": "rule 82688 -> partial (block-aligned)"
+  },
+  {
+   "test": "T5 partial: MLA eagle-check block [c, c0) evicted",
+   "got": 78336,
+   "want": 78336,
+   "ok": true,
+   "note": "rule 82688 -> partial (block-aligned)"
+  },
+  {
+   "test": "T6 prompt reaching a decode window restores beyond prefill coverage",
+   "ok": true,
+   "detail": {
+    "hit": 73984,
+    "prefill_coverage_rule": 65280
+   }
+  },
+  {
+   "test": "T6 ... and the restored blocks include decode-written history (provenance flags it)",
+   "ok": true,
+   "detail": {
+    "provenance": [
+     [
+      "C",
+      "decode"
+     ],
+     [
+      "warm",
+      "prefill"
+     ]
+    ]
+   }
+  },
+  {
+   "test": "T6 the plan invariant refuses that prompt",
+   "ok": true,
+   "detail": {
+    "violations": [
+     [
+      "x",
+      "L4",
+      "L4",
+      "t6",
+      78336,
+      72360
+     ]
+    ]
+   }
+  },
+  {
+   "test": "T7 M3 touch (repeat of the build)",
+   "got": 56576,
+   "want": 56576,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T7 M3 LC first user (P_L on the P build)",
+   "got": 56576,
+   "want": 56576,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T7 M3 LC second user (P_L on LC1's prefill)",
+   "got": 65280,
+   "want": 65280,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T7 M3 LC second user restores prefill-written blocks only",
+   "ok": true,
+   "detail": {
+    "prov": [
+     [
+      "LC1",
+      "prefill"
+     ],
+     [
+      "warm",
+      "prefill"
+     ]
+    ]
+   }
+  },
+  {
+   "test": "T7 M3 C after the LP runs (prompt P)",
+   "got": 56576,
+   "want": 56576,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T7 M3 PS after C (prompt P)",
+   "got": 56576,
+   "want": 56576,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T7 M3 D after C and PS (prompt P)",
+   "got": 56576,
+   "want": 56576,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T7 M3 C and D restore the identical physical MLA/index-K blocks",
+   "ok": true,
+   "detail": {}
+  },
+  {
+   "test": "T7 M3 LC on an LW2 build (P+8192)",
+   "got": 65280,
+   "want": 65280,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T7 L5 touch (repeat of the build)",
+   "got": 104448,
+   "want": 104448,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T7 L5 LC first user (P_L on the P build)",
+   "got": 104448,
+   "want": 104448,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T7 L5 LC second user (P_L on LC1's prefill)",
+   "got": 113152,
+   "want": 113152,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T7 L5 LC second user restores prefill-written blocks only",
+   "ok": true,
+   "detail": {
+    "prov": [
+     [
+      "LC1",
+      "prefill"
+     ],
+     [
+      "warm",
+      "prefill"
+     ]
+    ]
+   }
+  },
+  {
+   "test": "T7 L5 C after the LP runs (prompt P)",
+   "got": 104448,
+   "want": 104448,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T7 L5 CV (P' = B1 - 63) after C",
+   "got": 104448,
+   "want": 104448,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T7 L5 PS after C (prompt P)",
+   "got": 104448,
+   "want": 104448,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T7 L5 D after C and PS (prompt P)",
+   "got": 104448,
+   "want": 104448,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T7 L5 C and D restore the identical physical MLA/index-K blocks",
+   "ok": true,
+   "detail": {}
+  },
+  {
+   "test": "T7 L5 LC on an LW2 build (P+8192)",
+   "got": 113152,
+   "want": 113152,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T7 L1 touch (repeat of the build)",
+   "got": 87040,
+   "want": 87040,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T7 L1 LC first user (P_L on the P build)",
+   "got": 87040,
+   "want": 87040,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T7 L1 LC second user (P_L on LC1's prefill)",
+   "got": 95744,
+   "want": 95744,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T7 L1 LC second user restores prefill-written blocks only",
+   "ok": true,
+   "detail": {
+    "prov": [
+     [
+      "LC1",
+      "prefill"
+     ],
+     [
+      "warm",
+      "prefill"
+     ]
+    ]
+   }
+  },
+  {
+   "test": "T7 L1 C after the LP runs (prompt P)",
+   "got": 87040,
+   "want": 87040,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T7 L1 CV (P' = B1 - 63) after C",
+   "got": 87040,
+   "want": 87040,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T7 L1 PS after C (prompt P)",
+   "got": 87040,
+   "want": 87040,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T7 L1 D after C and PS (prompt P)",
+   "got": 87040,
+   "want": 87040,
+   "ok": true,
+   "note": ""
+  },
+  {
+   "test": "T7 L1 C and D restore the identical physical MLA/index-K blocks",
+   "ok": true,
+   "detail": {}
+  },
+  {
+   "test": "T7 L1 LC on an LW2 build (P+8192)",
+   "got": 95744,
+   "want": 95744,
+   "ok": true,
+   "note": ""
+  }
+ ],
+ "passed": 70,
+ "total": 70
+}

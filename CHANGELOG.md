@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-10-15, later (completion investigation, amendments 22d-22e): retry package for review
+
+Contents unchanged. No run is added.
+
+- **`PLAN.md`**: amendments 22d (independent review of the retry) and 22e (the retry package; a correction to 22c's
+  account of the M3 eviction).
+- **New `first-contrast/retry/`:** the cache replay through the image's own code, the feasible schedule, gates, F6
+  calibration, runner, client, analysis and tests. Raw synthetic test data is withheld. Substitutions are in
+  `PUBLIC-COPIES-22e.txt`.
+- **Investigation `README.md`** and **`LEDGER.md`**: the correction and the retry status.
+
 ## 2026-10-15 (completion investigation, amendments 22-22c): first contrast attempt 1 stopped
 
 Contents unchanged. No reading is added.

@@ -1,0 +1,14 @@
+{
+ "scope": "first-contrast retry package (PLAN.md amendment 22d); attempt-1 files unchanged and imported read-only",
+ "labels": {
+  "R-1": {"fix": "F7", "what": "CPU replay of the serving image's own AsyncScheduler / KVCacheManager / HybridKVCacheCoordinator / single-type managers / BlockPool (replay/)", "files": ["replay/engine_replay.py", "replay/trace_replay.py", "replay/reproduce_fc1.py", "replay/neg_controls.py", "replay/historical.py", "replay/session_sim.py", "replay/run_scenarios.sh", "replay/schedule_report.py", "replay/fc1_counterfactual.py", "replay/run_cpu.sh", "runner/geometry_check_fcr.py"]},
+  "R-2": {"fix": "F1 + F2", "what": "scoped cache rule (prefill coverage of the stream under its salt) with engine-driven tests; per-request safety gates S1-S4, hit/partial/miss accounting, balance by treatment, block identity", "files": ["analysis/fcr_geometry.py", "analysis/cache_gate.py", "replay/cache_rule_tests.py"]},
+  "R-3": {"fix": "F3", "what": "feasible schedule under strategy (a): split builds (4 longest / touch / 4 shortest / touch all), LP runs on the primary builds before any primary decode, C2/D2 and D3/C3 sharing builds, no 4-request batches", "files": ["analysis/fcr_geometry.py", "replay/out/F3_schedule.json"]},
+  "R-4": {"fix": "F4", "what": "fixed staggered submission; runs, touch and sentinel passes in oldest-last-freed-first order; actual submission and admission recorded; gates on properties", "files": ["runner/client_fcr.py", "replay/fc1_counterfactual.py"]},
+  "R-5": {"fix": "F5", "what": "sentinel from the actual restored boundary c on the shared physical block [c - 4352, c): coverage, block identity (scheduler + dump block tables), bytes, boundary state", "files": ["analysis/sentinel.py"]},
+  "R-6": {"fix": "F6", "what": "null-relative page and early-layer index-K criteria matched by fixture x rank x layer x page; originals kept beside; calibration and planted-fault sensitivity on run-fc1's real C1 / LW1 / LW2", "files": ["analysis/f6_criteria.py", "calibration/f6_calibration.json"]},
+  "R-7": {"fix": "22d s.9", "what": "integrated GATE-1R and in-session early stops (unsafe restoration, replay-model deviation, insufficient concurrent decoding, alignment, numerical content, sentinel / boundary coverage)", "files": ["analysis/gate_fcr.py", "runner/gate_step_fcr.sh", "runner/client_fcr.py"]},
+  "R-8": {"fix": "F8 + runner", "what": "gate-asrun regression fixture and C1 post-inspection checks; runner / client / plan check / analysis with refusal, tampered-plan, synthetic and real-data tests; DRY_RUN; attempt policy options", "files": ["tests/", "runner/run_fcr.sh", "runner/plan_check_fcr.py", "analysis/analyze_fcr.py"]},
+  "R-9": {"fix": "costing", "what": "measured-rate costing with replay step counts, misses, cold work, early-stop costs, ceilings", "files": ["cost/cost_fcr.py", "cost/cost_fcr.json"]}
+ }
+}

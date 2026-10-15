@@ -1,0 +1,52 @@
+{
+ "regression": {
+  "identical": true,
+  "verdict_rerun": "FAIL",
+  "verdict_asrun": "FAIL",
+  "rows_equal": true,
+  "n_rows": 27
+ },
+ "post_inspection": {
+  "label": "POST-INSPECTION: C1 of run-fc1 shown against the newly specified checks; instrument characterization only; not pooled with or paired against any retry run; no D2 evidence",
+  "F2": {
+   "safe": true,
+   "classes": {
+    "C1-L1": "hit",
+    "C1-L4": "hit",
+    "C1-M3": "miss",
+    "C1-M4": "hit",
+    "C1-L5": "hit",
+    "C1-L3": "hit",
+    "C1-A8": "hit",
+    "C1-L8": "hit"
+   },
+   "note": "M3 is a safe miss; under the retry gate it would stop the session before injected traffic (R-cache-model), as the replay explains (warm order vs admission order)"
+  },
+  "F6": {
+   "ok": true,
+   "pooled": 0.007647625811688312,
+   "limit": 0.015384030032467532,
+   "pages_failing": 0,
+   "early_gross": 3,
+   "original": {
+    "page_over_25": 8,
+    "page_max": 0.484375,
+    "early_gross": 3,
+    "early_units": 57344,
+    "orig_pass": false
+   },
+   "dd_absent": true
+  },
+  "attempt1_rows_passed_on_C1": [
+   "G1-V0",
+   "G1-wmax",
+   "G1-abspos",
+   "G1-forcing",
+   "G1-errors",
+   "G1-attrib",
+   "G1-inflight",
+   "G1-clean",
+   "G1-regime"
+  ]
+ }
+}
