@@ -1,0 +1,1406 @@
+{
+ "limits": "close propensity on this counterfactual fixture panel (re-tokenized histories, prespecified positions, pre-top_p); not a finishing hazard and not a GPQA completion probability; 3 runs per arm in one session with a fixed order; screens are operational, no significance or equivalence is claimed",
+ "labels": "A22-n = PLAN.md amendment 22 item n",
+ "gate1": {
+  "in_session": null,
+  "recomputed": "FAIL",
+  "reading": "INVALID (structural): ['G1-coverage', 'G1-cache', 'G1-idx-struct', 'G1-CV-slot', 'G1-CV-book', 'G1-CV-cross', 'G1-CV-persist'] ; long-context instrument UNVALIDATED under these bounds (['G1-align', 'G1-cross', 'G1-content', 'G1-CV-conv', 'G1-CV-ssm']). This does not make B1 defective; no threshold is revised after viewing data",
+  "failing": {
+   "structural": [
+    "G1-coverage",
+    "G1-cache",
+    "G1-idx-struct",
+    "G1-CV-slot",
+    "G1-CV-book",
+    "G1-CV-cross",
+    "G1-CV-persist"
+   ],
+   "numerical": [
+    "G1-align",
+    "G1-cross",
+    "G1-content",
+    "G1-CV-conv",
+    "G1-CV-ssm"
+   ]
+  }
+ },
+ "valid_runs": {
+  "C1": false,
+  "C2": false,
+  "C3": false,
+  "LC1": false,
+  "LC2": false,
+  "LC3": false,
+  "D1": false,
+  "D2": false,
+  "D3": false,
+  "LD1": false,
+  "LD2": false,
+  "LD3": false
+ },
+ "run_rows_failing": {
+  "C1": [
+   "C1-cache"
+  ],
+  "C2": [
+   "C2-coverage",
+   "C2-attrib"
+  ],
+  "C3": [
+   "C3-coverage",
+   "C3-attrib"
+  ],
+  "LC1": [
+   "LC1-coverage",
+   "LC1-attrib"
+  ],
+  "LC2": [
+   "LC2-coverage",
+   "LC2-attrib"
+  ],
+  "LC3": [
+   "LC3-coverage",
+   "LC3-attrib"
+  ],
+  "D1": [
+   "D1-coverage",
+   "D1-attrib"
+  ],
+  "D2": [
+   "D2-coverage",
+   "D2-attrib"
+  ],
+  "D3": [
+   "D3-coverage",
+   "D3-attrib"
+  ],
+  "LD1": [
+   "LD1-coverage",
+   "LD1-attrib"
+  ],
+  "LD2": [
+   "LD2-coverage",
+   "LD2-attrib"
+  ],
+  "LD3": [
+   "LD3-coverage",
+   "LD3-attrib"
+  ]
+ },
+ "c3_rows": [
+  {
+   "id": "C3-align",
+   "kind": "numerical",
+   "status": "FAIL",
+   "name": "long-context alignment: forced decode vs prefill reference on output indices >= 512: pooled top-1 >= 0.95 and |dlp| quantiles within max(2 x carried null, floors); per request aligned top-1 >= 0.90 and top-1 at +-1 <= 0.20",
+   "detail": {
+    "pairs": [
+     [
+      "C3",
+      "LW1"
+     ],
+     [
+      "C3",
+      "LW2"
+     ]
+    ],
+    "n": 0,
+    "top1": NaN,
+    "lp": {
+     "0.5": NaN,
+     "0.9": NaN,
+     "0.99": NaN
+    },
+    "tol": {
+     "0.5": 0.01,
+     "0.9": 0.3,
+     "0.99": 1.5
+    },
+    "failing": [
+     "C3/LW1-L1",
+     "C3/LW1-L4",
+     "C3/LW1-M3",
+     "C3/LW1-M4",
+     "C3/LW1-L3",
+     "C3/LW1-L5",
+     "C3/LW1-A8",
+     "C3/LW1-L8",
+     "C3/LW2-L1",
+     "C3/LW2-L4"
+    ],
+    "per_request": {
+     "C3/LW1-L1": null,
+     "C3/LW1-L4": null,
+     "C3/LW1-M3": null,
+     "C3/LW1-M4": null,
+     "C3/LW1-L3": null,
+     "C3/LW1-L5": null,
+     "C3/LW1-A8": null,
+     "C3/LW1-L8": null,
+     "C3/LW2-L1": null,
+     "C3/LW2-L4": null,
+     "C3/LW2-M3": null,
+     "C3/LW2-M4": null,
+     "C3/LW2-L3": null,
+     "C3/LW2-L5": null,
+     "C3/LW2-A8": null,
+     "C3/LW2-L8": null
+    }
+   },
+   "label": "21g-3 rule; A22-4"
+  },
+  {
+   "id": "C3-cross",
+   "kind": "numerical",
+   "status": "FAIL",
+   "name": "both block crossings of every window: in +-128 output indices around each crossing, aligned top-1 >= 0.90 and top-1 at +-1 <= 0.20 against a prefill reference; every crossing covered",
+   "detail": {
+    "uncovered": [
+     [
+      "A8",
+      0
+     ],
+     [
+      "A8",
+      1
+     ],
+     [
+      "L1",
+      0
+     ],
+     [
+      "L1",
+      1
+     ],
+     [
+      "L3",
+      0
+     ],
+     [
+      "L3",
+      1
+     ],
+     [
+      "L4",
+      0
+     ],
+     [
+      "L4",
+      1
+     ],
+     [
+      "L5",
+      0
+     ],
+     [
+      "L5",
+      1
+     ],
+     [
+      "L8",
+      0
+     ],
+     [
+      "L8",
+      1
+     ],
+     [
+      "M3",
+      0
+     ],
+     [
+      "M3",
+      1
+     ],
+     [
+      "M4",
+      0
+     ],
+     [
+      "M4",
+      1
+     ]
+    ],
+    "failing": [],
+    "windows": {}
+   },
+   "label": "A22"
+  },
+  {
+   "id": "C3-content",
+   "kind": "numerical",
+   "status": "FAIL",
+   "name": "index-K content vs the prefill reference LW1: gross <= max(2 x max(N_dd, N_pp), 0.1 %) with N_dd = C1 vs C2, N_pp = LW1 vs LW2 (different build length), matched by fixture x rank x layer x shared causal pool; pooled over units; coverage >= 99 % and every fixture",
+   "detail": {
+    "C3": {
+     "tested": 0,
+     "evaluated": 0,
+     "coverage": 0.0,
+     "fixtures": [],
+     "fixtures_without_null": [],
+     "gross": NaN,
+     "gross_n": 0,
+     "N_dd": NaN,
+     "N_pp": NaN,
+     "N_dd_n": 0,
+     "N_pp_n": 0,
+     "limit": NaN,
+     "orig_pass": false,
+     "cover_ok": false
+    }
+   },
+   "label": "21g-1; A22-3"
+  },
+  {
+   "id": "C3-content-orig",
+   "kind": "reported",
+   "status": "REPORTED",
+   "name": "ORIGINAL attempt-1 criterion beside: gross <= 0.1 %",
+   "detail": {
+    "C3": {
+     "gross": NaN,
+     "passes": false
+    }
+   },
+   "label": "attempt-1 frozen"
+  },
+  {
+   "id": "C3-content-table",
+   "kind": "reported",
+   "status": "REPORTED",
+   "name": "gross counts per fixture x layer and per fixture, with both matched nulls (21g-1 reporting)",
+   "detail": {
+    "C3": {
+     "pooled": {
+      "n": 0,
+      "gross_n": 0,
+      "gross": null,
+      "N_dd_n": 0,
+      "N_pp_n": 0
+     },
+     "per_fixture": {},
+     "per_fixture_layer": {}
+    }
+   },
+   "label": "A22"
+  },
+  {
+   "id": "C3-flags",
+   "kind": "reported",
+   "status": "REPORTED",
+   "name": "R3/R5 fixture flags (layer-units AND positions); a flagged fixture stays in the aggregate, carries no mechanism claim and is dropped in the R2 sensitivity",
+   "detail": {
+    "C3": []
+   },
+   "label": "R1-R5"
+  },
+  {
+   "id": "C3-content-crossings",
+   "kind": "reported",
+   "status": "REPORTED",
+   "name": "content in +-128 positions of each block crossing (own matched limit; small samples, not gated; M4's second crossing lies beyond P_L: no matched N_pp)",
+   "detail": {},
+   "label": "A22"
+  },
+  {
+   "id": "C3-idx-struct",
+   "kind": "structural",
+   "status": "FAIL",
+   "name": "index-K structure (exact): every dump attributed to its request; every comparison >= 99 % of its expected units; no judged page > 25 % gross; zero gross pools in DSA layers 3-15",
+   "detail": {
+    "attrib": [],
+    "population": {
+     "dd": [
+      0,
+      0
+     ],
+     "pp": [
+      157696,
+      157696
+     ],
+     "t_C3": [
+      0,
+      0
+     ]
+    },
+    "failing_population": [
+     "dd",
+     "t_C3"
+    ],
+    "pages": {
+     "pages_judged": 0,
+     "page_max": null,
+     "over": 0,
+     "worst": []
+    },
+    "early": [
+     0,
+     0
+    ]
+   },
+   "label": "21g-1 structural"
+  }
+ ],
+ "primary": {
+  "statistic": "Y = mean over 8 fixtures of ln mean_{o in Q_f} P_pre(</think>)",
+  "complete": false,
+  "per_fixture_y": {
+   "C1": {
+    "L1": -10.387994119314467,
+    "L4": -4.865919492463595,
+    "M3": -4.897263652914733,
+    "M4": -4.837471867809473,
+    "L3": -5.832854574345746,
+    "L5": -20.050121178579964,
+    "A8": -20.774888095370144,
+    "L8": -21.039130976954322
+   },
+   "C2": {
+    "L1": NaN,
+    "L4": NaN,
+    "M3": NaN,
+    "M4": NaN,
+    "L3": NaN,
+    "L5": NaN,
+    "A8": NaN,
+    "L8": NaN
+   },
+   "C3": {
+    "L1": NaN,
+    "L4": NaN,
+    "M3": NaN,
+    "M4": NaN,
+    "L3": NaN,
+    "L5": NaN,
+    "A8": NaN,
+    "L8": NaN
+   },
+   "D1": {
+    "L1": NaN,
+    "L4": NaN,
+    "M3": NaN,
+    "M4": NaN,
+    "L3": NaN,
+    "L5": NaN,
+    "A8": NaN,
+    "L8": NaN
+   },
+   "D2": {
+    "L1": NaN,
+    "L4": NaN,
+    "M3": NaN,
+    "M4": NaN,
+    "L3": NaN,
+    "L5": NaN,
+    "A8": NaN,
+    "L8": NaN
+   },
+   "D3": {
+    "L1": NaN,
+    "L4": NaN,
+    "M3": NaN,
+    "M4": NaN,
+    "L3": NaN,
+    "L5": NaN,
+    "A8": NaN,
+    "L8": NaN
+   }
+  }
+ },
+ "fixture_screens": {},
+ "direction_screen": {},
+ "sensitivities": {},
+ "exposure_by_run_fixture_layer": {
+  "C1|L1|L3": {
+   "n_sel": 345947,
+   "n_sel_win": 180455,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1186261,
+   "n_win_corrupt": 0,
+   "positions": 677,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L1|L7": {
+   "n_sel": 345947,
+   "n_sel_win": 26172,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1186261,
+   "n_win_corrupt": 0,
+   "positions": 677,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L1|L11": {
+   "n_sel": 345947,
+   "n_sel_win": 116026,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1186261,
+   "n_win_corrupt": 0,
+   "positions": 677,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L1|L15": {
+   "n_sel": 345947,
+   "n_sel_win": 86696,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1186261,
+   "n_win_corrupt": 0,
+   "positions": 677,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L1|L19": {
+   "n_sel": 345947,
+   "n_sel_win": 86735,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1186261,
+   "n_win_corrupt": 0,
+   "positions": 677,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L1|L23": {
+   "n_sel": 345947,
+   "n_sel_win": 52774,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1186261,
+   "n_win_corrupt": 0,
+   "positions": 677,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L1|L27": {
+   "n_sel": 345947,
+   "n_sel_win": 70578,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1186261,
+   "n_win_corrupt": 0,
+   "positions": 677,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L1|L31": {
+   "n_sel": 345947,
+   "n_sel_win": 62076,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1186261,
+   "n_win_corrupt": 0,
+   "positions": 677,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L1|L35": {
+   "n_sel": 345947,
+   "n_sel_win": 56569,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1186261,
+   "n_win_corrupt": 0,
+   "positions": 677,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L1|L39": {
+   "n_sel": 345947,
+   "n_sel_win": 77212,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1186261,
+   "n_win_corrupt": 0,
+   "positions": 677,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L1|L43": {
+   "n_sel": 345947,
+   "n_sel_win": 58755,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1186261,
+   "n_win_corrupt": 0,
+   "positions": 677,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L4|L3": {
+   "n_sel": 319886,
+   "n_sel_win": 183023,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131724,
+   "n_win_corrupt": 0,
+   "positions": 626,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L4|L7": {
+   "n_sel": 319886,
+   "n_sel_win": 45258,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131724,
+   "n_win_corrupt": 0,
+   "positions": 626,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L4|L11": {
+   "n_sel": 319886,
+   "n_sel_win": 142101,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131724,
+   "n_win_corrupt": 0,
+   "positions": 626,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L4|L15": {
+   "n_sel": 319886,
+   "n_sel_win": 134330,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131724,
+   "n_win_corrupt": 0,
+   "positions": 626,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L4|L19": {
+   "n_sel": 319886,
+   "n_sel_win": 122358,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131724,
+   "n_win_corrupt": 0,
+   "positions": 626,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L4|L23": {
+   "n_sel": 319886,
+   "n_sel_win": 123728,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131724,
+   "n_win_corrupt": 0,
+   "positions": 626,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L4|L27": {
+   "n_sel": 319886,
+   "n_sel_win": 111931,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131724,
+   "n_win_corrupt": 0,
+   "positions": 626,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L4|L31": {
+   "n_sel": 319886,
+   "n_sel_win": 118669,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131724,
+   "n_win_corrupt": 0,
+   "positions": 626,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L4|L35": {
+   "n_sel": 319886,
+   "n_sel_win": 80938,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131724,
+   "n_win_corrupt": 0,
+   "positions": 626,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L4|L39": {
+   "n_sel": 319886,
+   "n_sel_win": 117212,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131724,
+   "n_win_corrupt": 0,
+   "positions": 626,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L4|L43": {
+   "n_sel": 319886,
+   "n_sel_win": 110810,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131724,
+   "n_win_corrupt": 0,
+   "positions": 626,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|M3|L27": {
+   "n_sel": 319375,
+   "n_sel_win": 75717,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131648,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|M3|L31": {
+   "n_sel": 319375,
+   "n_sel_win": 108599,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131648,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|M3|L35": {
+   "n_sel": 319375,
+   "n_sel_win": 68702,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131648,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|M3|L39": {
+   "n_sel": 319375,
+   "n_sel_win": 91484,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131648,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|M3|L43": {
+   "n_sel": 319375,
+   "n_sel_win": 98343,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131648,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|M3|L3": {
+   "n_sel": 319375,
+   "n_sel_win": 164332,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131648,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|M3|L7": {
+   "n_sel": 319375,
+   "n_sel_win": 33826,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131648,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|M3|L11": {
+   "n_sel": 319375,
+   "n_sel_win": 123070,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131648,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|M3|L15": {
+   "n_sel": 319375,
+   "n_sel_win": 101694,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131648,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|M3|L19": {
+   "n_sel": 319375,
+   "n_sel_win": 80235,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131648,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|M3|L23": {
+   "n_sel": 319375,
+   "n_sel_win": 72257,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131648,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|M4|L3": {
+   "n_sel": 320397,
+   "n_sel_win": 168537,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1135708,
+   "n_win_corrupt": 0,
+   "positions": 627,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|M4|L7": {
+   "n_sel": 320397,
+   "n_sel_win": 16789,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1135708,
+   "n_win_corrupt": 0,
+   "positions": 627,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|M4|L11": {
+   "n_sel": 320397,
+   "n_sel_win": 90559,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1135708,
+   "n_win_corrupt": 0,
+   "positions": 627,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|M4|L15": {
+   "n_sel": 320397,
+   "n_sel_win": 86369,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1135708,
+   "n_win_corrupt": 0,
+   "positions": 627,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|M4|L19": {
+   "n_sel": 320397,
+   "n_sel_win": 78330,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1135708,
+   "n_win_corrupt": 0,
+   "positions": 627,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|M4|L23": {
+   "n_sel": 320397,
+   "n_sel_win": 85636,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1135708,
+   "n_win_corrupt": 0,
+   "positions": 627,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|M4|L27": {
+   "n_sel": 320397,
+   "n_sel_win": 94081,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1135708,
+   "n_win_corrupt": 0,
+   "positions": 627,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|M4|L31": {
+   "n_sel": 320397,
+   "n_sel_win": 83219,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1135708,
+   "n_win_corrupt": 0,
+   "positions": 627,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|M4|L35": {
+   "n_sel": 320397,
+   "n_sel_win": 69143,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1135708,
+   "n_win_corrupt": 0,
+   "positions": 627,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|M4|L39": {
+   "n_sel": 320397,
+   "n_sel_win": 84429,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1135708,
+   "n_win_corrupt": 0,
+   "positions": 627,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|M4|L43": {
+   "n_sel": 320397,
+   "n_sel_win": 85913,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1135708,
+   "n_win_corrupt": 0,
+   "positions": 627,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L3|L3": {
+   "n_sel": 321419,
+   "n_sel_win": 144187,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1135300,
+   "n_win_corrupt": 0,
+   "positions": 629,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L3|L7": {
+   "n_sel": 321419,
+   "n_sel_win": 30680,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1135300,
+   "n_win_corrupt": 0,
+   "positions": 629,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L3|L11": {
+   "n_sel": 321419,
+   "n_sel_win": 150661,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1135300,
+   "n_win_corrupt": 0,
+   "positions": 629,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L3|L15": {
+   "n_sel": 321419,
+   "n_sel_win": 98377,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1135300,
+   "n_win_corrupt": 0,
+   "positions": 629,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L3|L19": {
+   "n_sel": 321419,
+   "n_sel_win": 68747,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1135300,
+   "n_win_corrupt": 0,
+   "positions": 629,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L3|L23": {
+   "n_sel": 321419,
+   "n_sel_win": 69603,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1135300,
+   "n_win_corrupt": 0,
+   "positions": 629,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L3|L27": {
+   "n_sel": 321419,
+   "n_sel_win": 60029,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1135300,
+   "n_win_corrupt": 0,
+   "positions": 629,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L3|L31": {
+   "n_sel": 321419,
+   "n_sel_win": 75677,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1135300,
+   "n_win_corrupt": 0,
+   "positions": 629,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L3|L35": {
+   "n_sel": 321419,
+   "n_sel_win": 55292,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1135300,
+   "n_win_corrupt": 0,
+   "positions": 629,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L3|L39": {
+   "n_sel": 321419,
+   "n_sel_win": 70103,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1135300,
+   "n_win_corrupt": 0,
+   "positions": 629,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L3|L43": {
+   "n_sel": 321419,
+   "n_sel_win": 91784,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1135300,
+   "n_win_corrupt": 0,
+   "positions": 629,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L5|L3": {
+   "n_sel": 321930,
+   "n_sel_win": 141547,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1137201,
+   "n_win_corrupt": 0,
+   "positions": 630,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L5|L7": {
+   "n_sel": 321930,
+   "n_sel_win": 20873,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1137201,
+   "n_win_corrupt": 0,
+   "positions": 630,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L5|L11": {
+   "n_sel": 321930,
+   "n_sel_win": 92224,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1137201,
+   "n_win_corrupt": 0,
+   "positions": 630,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L5|L15": {
+   "n_sel": 321930,
+   "n_sel_win": 78501,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1137201,
+   "n_win_corrupt": 0,
+   "positions": 630,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L5|L19": {
+   "n_sel": 321930,
+   "n_sel_win": 53448,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1137201,
+   "n_win_corrupt": 0,
+   "positions": 630,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L5|L23": {
+   "n_sel": 321930,
+   "n_sel_win": 47480,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1137201,
+   "n_win_corrupt": 0,
+   "positions": 630,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L5|L27": {
+   "n_sel": 321930,
+   "n_sel_win": 50839,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1137201,
+   "n_win_corrupt": 0,
+   "positions": 630,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L5|L31": {
+   "n_sel": 321930,
+   "n_sel_win": 68186,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1137201,
+   "n_win_corrupt": 0,
+   "positions": 630,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L5|L35": {
+   "n_sel": 321930,
+   "n_sel_win": 50520,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1137201,
+   "n_win_corrupt": 0,
+   "positions": 630,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L5|L39": {
+   "n_sel": 321930,
+   "n_sel_win": 72296,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1137201,
+   "n_win_corrupt": 0,
+   "positions": 630,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L5|L43": {
+   "n_sel": 321930,
+   "n_sel_win": 56819,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1137201,
+   "n_win_corrupt": 0,
+   "positions": 630,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|A8|L27": {
+   "n_sel": 319375,
+   "n_sel_win": 88652,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131776,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|A8|L31": {
+   "n_sel": 319375,
+   "n_sel_win": 91716,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131776,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|A8|L35": {
+   "n_sel": 319375,
+   "n_sel_win": 74060,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131776,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|A8|L39": {
+   "n_sel": 319375,
+   "n_sel_win": 95569,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131776,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|A8|L43": {
+   "n_sel": 319375,
+   "n_sel_win": 64117,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131776,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|A8|L3": {
+   "n_sel": 319375,
+   "n_sel_win": 131297,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131776,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|A8|L7": {
+   "n_sel": 319375,
+   "n_sel_win": 19807,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131776,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|A8|L11": {
+   "n_sel": 319375,
+   "n_sel_win": 72234,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131776,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|A8|L15": {
+   "n_sel": 319375,
+   "n_sel_win": 77223,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131776,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|A8|L19": {
+   "n_sel": 319375,
+   "n_sel_win": 87903,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131776,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|A8|L23": {
+   "n_sel": 319375,
+   "n_sel_win": 89294,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131776,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L8|L27": {
+   "n_sel": 319375,
+   "n_sel_win": 44052,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131776,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L8|L31": {
+   "n_sel": 319375,
+   "n_sel_win": 55710,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131776,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L8|L35": {
+   "n_sel": 319375,
+   "n_sel_win": 45066,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131776,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L8|L39": {
+   "n_sel": 319375,
+   "n_sel_win": 65836,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131776,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L8|L43": {
+   "n_sel": 319375,
+   "n_sel_win": 54915,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131776,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L8|L3": {
+   "n_sel": 319375,
+   "n_sel_win": 145523,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131776,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L8|L7": {
+   "n_sel": 319375,
+   "n_sel_win": 24860,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131776,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L8|L11": {
+   "n_sel": 319375,
+   "n_sel_win": 98057,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131776,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L8|L15": {
+   "n_sel": 319375,
+   "n_sel_win": 59675,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131776,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L8|L19": {
+   "n_sel": 319375,
+   "n_sel_win": 50125,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131776,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  },
+  "C1|L8|L23": {
+   "n_sel": 319375,
+   "n_sel_win": 44210,
+   "n_sel_win_corrupt": 0,
+   "n_win": 1131776,
+   "n_win_corrupt": 0,
+   "positions": 625,
+   "share_selected_corrupt": 0.0
+  }
+ },
+ "exposure_by_run": {
+  "C1": {
+   "n_sel": 28464744,
+   "n_sel_win": 7353444,
+   "n_sel_win_corrupt": 0,
+   "n_win": 100335334,
+   "n_win_corrupt": 0,
+   "positions": 55704
+  },
+  "C2": {},
+  "C3": {},
+  "D1": {},
+  "D2": {},
+  "D3": {},
+  "LC1": {},
+  "LC2": {},
+  "LC3": {},
+  "LD1": {},
+  "LD2": {},
+  "LD3": {}
+ },
+ "selection": {
+  "exposure_ok": false,
+  "within_arm_jaccard": [
+   NaN,
+   NaN,
+   NaN,
+   NaN,
+   NaN,
+   NaN
+  ],
+  "across_arm_jaccard": [
+   NaN,
+   NaN,
+   NaN,
+   NaN,
+   NaN,
+   NaN,
+   NaN,
+   NaN,
+   NaN
+  ],
+  "divergence_ok": false,
+  "keys_change": false
+ },
+ "lp_control": {},
+ "reading": "NO READING: a gate failed (['GATE1', 'H5a-fc', 'H5g-fc', 'PS-prefix', 'C3-residue']); results are instrument findings only",
+ "direction_statement": null,
+ "flagged_fixtures": [],
+ "notes": [
+  "flagged fixtures carry no mechanism claim (R1); every reading is repeated in the R2 sensitivity",
+  "rejection-dependent signals are not attributed to the served D6 mechanism without the oracle-draft bracket (21 s.7)",
+  "a null result excludes only decode-window D2 exposure on these 8 fixtures below 131,072; not full-history accumulation, D6, or longer ranges"
+ ],
+ "gate_rows": [
+  {
+   "id": "GATE1",
+   "kind": "structural",
+   "status": "FAIL",
+   "name": "GATE-1 passed in-session (before any injected batch) and recomputes to PASS on the full data",
+   "detail": {
+    "in_session": null,
+    "recomputed": "FAIL",
+    "reading": "INVALID (structural): ['G1-coverage', 'G1-cache', 'G1-idx-struct', 'G1-CV-slot', 'G1-CV-book', 'G1-CV-cross', 'G1-CV-persist'] ; long-context instrument UNVALIDATED under these bounds (['G1-align', 'G1-cross', 'G1-content', 'G1-CV-conv', 'G1-CV-ssm']). This does not make B1 defective; no threshold is revised after viewing data",
+    "failing": {
+     "structural": [
+      "G1-coverage",
+      "G1-cache",
+      "G1-idx-struct",
+      "G1-CV-slot",
+      "G1-CV-book",
+      "G1-CV-cross",
+      "G1-CV-persist"
+     ],
+     "numerical": [
+      "G1-align",
+      "G1-cross",
+      "G1-content",
+      "G1-CV-conv",
+      "G1-CV-ssm"
+     ]
+    }
+   },
+   "label": "A22"
+  },
+  {
+   "id": "H5a-fc",
+   "kind": "structural",
+   "status": "FAIL",
+   "name": "injection exactly on the intended requests: every D / LD request injected >= its forced-list tokens, no other request injected",
+   "detail": [],
+   "label": "A22"
+  },
+  {
+   "id": "H5g-fc",
+   "kind": "structural",
+   "status": "FAIL",
+   "name": "guard per rank: every mismatched tail write went to the null tail block (mism == null == owned layers x injected tokens), only during D / LD phases; zero decode, seed, prefill, D7 and position mismatches: the injection cannot write into a shared cached prefix (index-K and tail writes; mapping level)",
+   "detail": {
+    "0": {
+     "owned_layers": 6,
+     "deltas": {
+      "tail_w_stash.mism": 0,
+      "tail_w_stash.null": 0,
+      "idx_w_dec.mism": 0,
+      "tail_w_seed.mism": 0,
+      "idx_w_pf.s_mism": 0,
+      "idx_w_pf.d7_fallback": 0,
+      "pos.pos_contig": 0,
+      "pos.pos_bounds": 0
+     },
+     "expected_tail": 0,
+     "by_phase": {},
+     "ok": false
+    },
+    "1": {
+     "owned_layers": 5,
+     "deltas": {
+      "tail_w_stash.mism": 0,
+      "tail_w_stash.null": 0,
+      "idx_w_dec.mism": 0,
+      "tail_w_seed.mism": 0,
+      "idx_w_pf.s_mism": 0,
+      "idx_w_pf.d7_fallback": 0,
+      "pos.pos_contig": 0,
+      "pos.pos_bounds": 0
+     },
+     "expected_tail": 0,
+     "by_phase": {},
+     "ok": false
+    }
+   },
+   "label": "A22"
+  },
+  {
+   "id": "PS-prefix",
+   "kind": "structural",
+   "status": "FAIL",
+   "name": "prefix sentinel: last cached (shared) block's pages byte-identical before and after D3 (MLA, index-K, attention pages); KDA state rebuilt from the cached boundary state bitwise equal (or within 2 x the PS-a / PS-b null when PS-a / PS-b differ)",
+   "detail": {
+    "pages": 0,
+    "page_mismatches": [
+     [
+      "L1",
+      "dump missing"
+     ],
+     [
+      "L4",
+      "dump missing"
+     ],
+     [
+      "M3",
+      "dump missing"
+     ],
+     [
+      "M4",
+      "dump missing"
+     ],
+     [
+      "L3",
+      "dump missing"
+     ],
+     [
+      "L5",
+      "dump missing"
+     ],
+     [
+      "A8",
+      "dump missing"
+     ],
+     [
+      "L8",
+      "dump missing"
+     ]
+    ],
+    "block_tables_differ": [],
+    "kda_bitwise_ab": 0,
+    "kda_rows": 0,
+    "kda_failing": []
+   },
+   "label": "A22"
+  },
+  {
+   "id": "C3-residue",
+   "kind": "structural",
+   "status": "FAIL",
+   "name": "C3 (after injected traffic, on s3's prefix): valid and clean run, aligned with the prefill references and within the GATE-1 content rule",
+   "detail": {
+    "failing": [
+     "C3-align",
+     "C3-cross",
+     "C3-content",
+     "C3-idx-struct"
+    ],
+    "valid": false
+   },
+   "label": "A22"
+  }
+ ]
+}

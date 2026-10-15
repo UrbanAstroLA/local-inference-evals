@@ -521,6 +521,22 @@ What was asked, run, found, corrected and withdrawn, in date order.
   proposed and costed (about 2.8 GPU-hours, ceiling 4.3) and awaits independent review and authorization. Cumulative
   64.01 GPU-hours.
 
+**2026-10-15. First long-context contrast, attempt 1: stopped, no reading (amendments 22-22c).**
+- **Amendment 22,** from independent review, set the design: option B, in-session validation before any injected batch,
+  a stronger prefill null, a convolution-state boundary control, corrected readings, and no permutation p-value.
+- **Session:** a structural stop after C1, so no injected run, no gate and no reading; 1.0861 GPU-hours. The
+  single-attempt authorization is spent.
+- **Owned:**
+  - The plan's cache expectation was one 4,352-token block too high. This stack reuses (⌊(P−1)/4352⌋ − 1) blocks on an
+    exact repeat, and our own earlier records already showed that rule. The CPU checks tested the plan against itself.
+  - The plan also assumed a prefix-cache capacity the shared KDA state blocks do not leave (reach about 0.66 M tokens),
+    so one warm prefix was evicted.
+  - A page criterion calibrated at short context fails between two identical long prefills.
+- **No instrument or engine fault:** C1's forced windows look valid post-inspection.
+- **Observation:** deep-layer pooled index-K is more fragile at long context.
+- **Next:** fixes and a new attempt go to independent review and new authorization. Cumulative 65.10 GPU-hours.
+  [First contrast](investigations/2026-10-glm53-completion/README.md#instrument-validation-k-and-the-force-history-hook-amendment-21).
+
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough
   qualification. They also said the D7 path "cannot run" where the basis is a reconstruction. These are reworded in the

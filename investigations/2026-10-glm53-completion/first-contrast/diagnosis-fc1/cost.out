@@ -1,0 +1,49 @@
+inputs {'startup': 732.0, 'V0': 6.2, 'LW1': 297.9, 'LW2': 301.4, 'warm_cold': 266.7, 'C_batch': 299.6, 'dump': 6.0, 'tail': 15.0, 'prefill_tok_s': 2771, 'decode_tok_s_per_request': 36.6, 'gate_cpu_s': 54.0}
+A_stageA_only          2842 s  1.58 GPU-h
+      startup                                732.0
+      V0                                      12.2
+      LW1+LW2                                611.3
+      warm s1, s2 (cold)                     545.4
+      C1, C2                                 611.2
+      CV (cold, worst case)                  315.3
+      tail                                    15.0
+B_full_all_misses      8077 s  4.49 GPU-h
+      startup                                732.0
+      V0                                      12.2
+      LW1+LW2                                611.3
+      warm s1, s2 (cold)                     545.4
+      C1, C2                                 611.2
+      CV (cold)                              315.3
+      LC1, LC2 re-warms cold                 586.8
+      LC1, LC2                               102.7
+      LD2, LD1 re-warms cold                 586.8
+      LD2, LD1                               102.7
+      LW3 + LD3 + re-warm l3 cold + LC3      700.0
+      D2, D1 re-warms cold                   545.4
+      D2, D1                                 611.2
+      warm s3 cold                           272.7
+      PS x3 (cold)                           842.1
+      D3                                     305.6
+      re-warm s3 cold                        272.7
+      C3                                     305.6
+      tail                                    15.0
+C_full_hits            4984 s  2.77 GPU-h
+      startup                                732.0
+      V0                                      12.2
+      LW1+LW2                                611.3
+      warm s1, s2 (cold)                     545.4
+      C1, C2                                 611.2
+      CV (hit)                                38.8
+      LC1, LC2 re-warms hit                   52.2
+      LC1, LC2                               102.7
+      LD2, LD1 re-warms hit                   52.2
+      LD2, LD1                               102.7
+      LW3 + LD3 + re-warm l3 hit + LC3       432.7
+      D2, D1 re-warms hit                     52.2
+      D2, D1                                 611.2
+      warm s3 cold                           272.7
+      PS x3 (hit)                            102.2
+      D3                                     305.6
+      re-warm s3 hit                          26.1
+      C3                                     305.6
+      tail                                    15.0

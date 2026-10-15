@@ -1247,8 +1247,20 @@ the real decode path and records termination-token probabilities. 1.2117 of 2.4 
   - **What a pass establishes, and does not:** forced-token commitment, alignment, attribution and a verified D2
     injection. Not full-history replay equivalence, not the absence of every deep-layer numerical issue, and not that
     D2 explains GPQA completion.
-- **Next:** the first contrast, B1 against B1 with the decode-window D2 injection plus the long-prompt control
-  ([`first-contrast/PROPOSAL.md`](first-contrast/PROPOSAL.md)), awaiting independent review and authorization.
+- **First contrast, attempt 1** (amendments 22-22c; [`first-contrast/`](first-contrast/PROPOSAL.md)):
+  - **Result: stopped at the structural gate after C1; no reading.** 1.0861 GPU-hours of a single-attempt 4.29
+    authorization.
+  - **Diagnosis** ([`DIAGNOSIS-fc1.md`](first-contrast/diagnosis-fc1/DIAGNOSIS-fc1.md)):
+    - the plan expected one more cached 4,352-token block than this stack reuses on an exact repeat. The last token is
+      recomputed and the speculative-decoding path drops the last matched block; earlier sessions' records already
+      follow the correct rule. Owned;
+    - KDA state blocks in the shared pool limit prefix-cache reach to about 0.66 M tokens, so one warm prefix was
+      evicted;
+    - a short-context-calibrated page criterion fails even between two identical long prefills.
+  - **No instrument or engine fault:** C1's forced windows pass forcing, position, attribution and alignment checks
+    post-inspection.
+  - **Next:** fixes F1-F8 and a new attempt (about 2.8 GPU-hours) are proposed for independent review and new
+    authorization.
 
 ### Observations recorded separately
 

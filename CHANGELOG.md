@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-10-15 (completion investigation, amendments 22-22c): first contrast attempt 1 stopped
+
+Contents unchanged. No reading is added.
+
+- **`PLAN.md`**: amendments 22 (first-contrast design from independent review), 22a (authorization), 22b (the
+  structural stop) and 22c (diagnosis and proposed fixes).
+- **`first-contrast/`** gains the frozen package, the run's records (tensor records listed by count only) and
+  `diagnosis-fc1/`. Substitutions are in `PUBLIC-COPIES-22c.txt`.
+- **`costs.jsonl`** (1.0861) and **`recompute.py`**: cumulative 65.10.
+- **Investigation `README.md`** and **`LEDGER.md`**, including the owned planning errors.
+
 ## 2026-10-14, later (completion investigation, amendments 21g-21k): hook validation attempt 2, first-contrast proposal
 
 Contents unchanged: 65 runs, 13 comparisons. Item 4o is new.

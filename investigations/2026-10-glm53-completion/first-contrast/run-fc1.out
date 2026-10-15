@@ -1,0 +1,60 @@
+budget: spent 0.0 + this attempt's cap 4.286 (wall 7714s) <= approved 4.29 GPU-h; disk ok (>= 200 GB)
+== preflight 2026-10-15T17:27:10Z
+index, memory.used [MiB], utilization.gpu [%]
+0, 20 MiB, 0 %
+1, 2274 MiB, 1 %
+NOTE: desktop graphics clients on the GPUs (tolerated within the memory limits; close them for a quiet GPU 1):
+|    0   N/A  N/A           89543      G   /usr/bin/gnome-shell                      8MiB |
+|    1   N/A  N/A           89543      G   /usr/bin/gnome-shell                    703MiB |
+|    1   N/A  N/A           89997      G   /usr/bin/Xwayland                        14MiB |
+|    1   N/A  N/A           90086      G   ...exec/xdg-desktop-portal-gnome         13MiB |
+|    1   N/A  N/A           91069      G   .../8969/usr/lib/firefox/firefox        578MiB |
+|    1   N/A  N/A           97151      G   ...nap-store/1419/bin/snap-store        368MiB |
+|    1   N/A  N/A           99539    C+G   ...88185955192 --disable-logging        374MiB |
+== start 2026-10-15T17:27:11Z image=local/glm53-v0.9.1-b1-forcehook-mg2:local (sha256:ac05230bd94b3114cb6fb202b06402f9e2d45a61b20f041f314e045f967e97ee) cap 7714s
+Validated 18 checkpoint shards
+Validated DFlash2 K3 draft checkpoint
+01a3a04cf5c20e945e2d2459ccd5aa6da96ad1fc0b5d3a14bef58dde12f4aa57
+Started glm53-flash-exl3-b12x-vllm on http://127.0.0.1:127.0.0.1:8001/v1. Initial B12x/CuTe compilation can take several minutes.
+Target: k325 profile, wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1@0490d2f708b12145f6516555ab066aaeb401cd21
+Profile: fp8, KV cache: fp8_ds_mla, max length: 1048576, max sequences: 16, GPU memory utilization: 0.95
+MoE topology: TP2, EP1
+Speculation: DFlash2 K3, bfloat16 draft KV, from incoai/GLM-5.3-Flash-DFlash2@bf582e4eacc1810f76656d1811693ff6c6737d2a
+State rollback: baseline full-state rollback
+Vision: disabled (language-model-only mode)
+Follow startup: docker logs -f glm53-flash-exl3-b12x-vllm
+== readiness gate (cap 1080s)
+ready after 732s
+47:(EngineCore pid=274) INFO 10-15 17:27:44 [core.py:122] Initializing a V1 LLM engine (v0.1.dev20051+g487ecf187) with config: model='/model-repo/snapshots/0490d2f708b12145f6516555ab066aaeb401cd21', speculative_config=SpeculativeConfig(method='dflash', model='/draft-repo/snapshots/bf582e4eacc1810f76
+61:(Worker pid=370) INFO 10-15 17:28:06 [gpu_worker.py:386] Using V2 Model Runner
+242:(EngineCore pid=274) INFO 10-15 17:31:50 [kv_cache_utils.py:2299] GPU KV cache size: 4,707,515 tokens, Maximum concurrency for 1,048,576 tokens per request: 4.49x
+400:(Worker_TP0 pid=370) INFO 10-15 17:37:47 [model_runner.py:1044] Graph capturing finished in 159 secs, took 0.80 GiB
+402:(Worker_TP1 pid=404) INFO 10-15 17:37:47 [model_runner.py:1044] Graph capturing finished in 159 secs, took 0.76 GiB
+forcewin registered on 2 rank files; guard init on 2
+hook sha256 15e93e236067567ffb9db7116986e8b732ef679e672c5b12b9d78f5884899d83; hook init wmax [8448]
+== client (deadline in 6741s)
+10:39:36 phase V0 done in 6s
+10:44:40 phase LW1 done in 298s
+10:49:48 phase LW2 done in 301s
+10:54:20 phase warm-s1 done in 267s
+10:59:26 phase C1 done in 300s
+client rc=9 (0 complete; 9 structural stop; 10 GATE-1 not PASS: no injected batch ran; 11 phase did not fit)
+== cleanup 2026-10-15T17:59:32Z
+Stopped glm53-flash-exl3-b12x-vllm (container retained; start.sh replaces it on the next launch).
+stop rc=0
+no glm53* container running
+occupied 1955s x 2 GPU = 1.0861 GPU-h
+docker cp forcewin rc=0
+docker cp mapguard rc=0
+18G	<runs>/first-contrast/run-fc1
+READING: NO READING: a gate failed (['GATE1', 'H5a-fc', 'H5g-fc', 'PS-prefix', 'C3-residue']); results are instrument findings only
+DIRECTION: None
+LIMITS: close propensity on this counterfactual fixture panel (re-tokenized histories, prespecified positions, pre-top_p); not a finishing hazard and not a GPQA completion probability; 3 runs per arm in one session with a fixed order; screens are operational, no significance or equivalence is claimed
+GATE-1 in-session None, recomputed FAIL
+FAIL     GATE1          {"in_session": null, "recomputed": "FAIL", "reading": "INVALID (structural): ['G1-coverage', 'G1-cache', 'G1-idx-struct', 'G1-CV-slot', 'G1-CV-book', 'G1-CV-cross', 'G1-CV-persist'] ; long-context ins
+FAIL     H5a-fc         []
+FAIL     H5g-fc         {"0": {"owned_layers": 6, "deltas": {"tail_w_stash.mism": 0, "tail_w_stash.null": 0, "idx_w_dec.mism": 0, "tail_w_seed.mism": 0, "idx_w_pf.s_mism": 0, "idx_w_pf.d7_fallback": 0, "pos.pos_contig": 0, "
+FAIL     PS-prefix      {"pages": 0, "page_mismatches": [["L1", "dump missing"], ["L4", "dump missing"], ["M3", "dump missing"], ["M4", "dump missing"], ["L3", "dump missing"], ["L5", "dump missing"], ["A8", "dump missing"],
+FAIL     C3-residue     {"failing": ["C3-align", "C3-cross", "C3-content", "C3-idx-struct"], "valid": false}
+valid runs: {'C1': False, 'C2': False, 'C3': False, 'LC1': False, 'LC2': False, 'LC3': False, 'D1': False, 'D2': False, 'D3': False, 'LD1': False, 'LD2': False, 'LD3': False}
+selection: {"exposure_ok": false, "within_arm_jaccard": [NaN, NaN, NaN, NaN, NaN, NaN], "across_arm_jaccard": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN], "divergence_ok": false, "keys_change": false}

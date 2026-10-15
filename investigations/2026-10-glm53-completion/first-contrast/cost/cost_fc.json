@@ -4,19 +4,28 @@
    "overhead": 766.0,
    "prefill": 2410.0,
    "decode": 33.0,
-   "dump": 3.0
+   "dump": 3.0,
+   "snap": 0.3,
+   "gate_wait": 0.0,
+   "evict": 0
   },
   "pessimistic": {
    "overhead": 800.0,
    "prefill": 1800.0,
    "decode": 25.0,
-   "dump": 8.0
+   "dump": 8.0,
+   "snap": 0.8,
+   "gate_wait": 200.0,
+   "evict": 1
   },
   "optimistic": {
    "overhead": 746.0,
    "prefill": 2600.0,
    "decode": 40.0,
-   "dump": 2.0
+   "dump": 2.0,
+   "snap": 0.3,
+   "gate_wait": 0.0,
+   "evict": 0
   }
  },
  "totals": {
@@ -32,287 +41,145 @@
   "rebuild_tokens_R1": 804465,
   "rebuild_tokens_R2": 806065
  },
+ "assumption": "hooked decode at 63-120k: 33 tok/s central (UNMEASURED)",
  "scenarios": {
   "central": {
    "components_s": {
-    "primary_round_warm": 312.6,
-    "rewarm_hit": 14.7,
-    "primary_batch": 287.1,
-    "lp_round_warm": 360.4,
-    "lp_rewarm_hit": 11.4,
+    "V0": 12.3,
+    "LW_P_L": 360.4,
+    "LW2_ref2": 363.8,
+    "warm_cold": 312.6,
+    "rewarm": 14.7,
+    "lp_rewarm": 11.4,
+    "batch": 287.1,
     "lp_batch": 66.6,
-    "ih_R1": 363.9,
-    "ih_R2": 364.5,
-    "short_run": 55.9,
-    "short_rebuilds": 22.9
+    "CV": 42.5,
+    "PS_set": 23.7,
+    "gate_wait": 0.0,
+    "evict": 0.0
    },
-   "options": {
-    "A0  primary only (C x3, D x3), no long-context content check": {
-     "session_s": [
-      3527
-     ],
-     "gpu_h": 1.96
-    },
-    "A   primary + long-context instrument health (R1 ref+dump, R2 dump)": {
-     "session_s": [
-      4256
-     ],
-     "gpu_h": 2.364
-    },
-    "B   one session: primary + LP control x3 (instrument health folded into the LP warms)": {
-     "session_s": [
-      5077
-     ],
-     "gpu_h": 2.82
-    },
-    "B2  one session: primary + LP control x2 per condition": {
-     "session_s": [
-      4560
-     ],
-     "gpu_h": 2.533
-    },
-    "A+S primary + instrument health + short stratum S (attempt-2 D2 set)": {
-     "session_s": [
-      4614
-     ],
-     "gpu_h": 2.563
-    },
-    "B+S one session: primary + LP x3 + short stratum S": {
-     "session_s": [
-      5435
-     ],
-     "gpu_h": 3.02
-    },
-    "C   two sessions: S1 = A; S2 = LP x3 + bridge (one C/D round re-run)": {
-     "session_s": [
-      4256,
-      3244
-     ],
-     "gpu_h": 4.167
-    }
-   }
+   "session_parts_s": {
+    "overhead": 766.0,
+    "V0": 12.3,
+    "stageA_refs": 724.3,
+    "stageA_primary": 1199.6,
+    "CV": 42.5,
+    "stageL": 156.1,
+    "gate_wait": 0.0,
+    "stageB_primary": 1505.3,
+    "stageB_lp": 661.2,
+    "PS": 71.0,
+    "evict": 0.0
+   },
+   "session_s": 5138,
+   "gpu_h": 2.855,
+   "pre22_B_same_inputs_gpu_h": 2.82,
+   "stop_after_C1_gpu_h": 1.168,
+   "stop_at_gate1_gpu_h": 1.612
   },
   "pessimistic": {
    "components_s": {
-    "primary_round_warm": 416.5,
-    "rewarm_hit": 17.6,
-    "primary_batch": 409.6,
-    "lp_round_warm": 512.4,
-    "lp_rewarm_hit": 13.2,
+    "V0": 12.3,
+    "LW_P_L": 512.4,
+    "LW2_ref2": 517.0,
+    "warm_cold": 416.5,
+    "rewarm": 17.6,
+    "lp_rewarm": 13.2,
+    "batch": 409.6,
     "lp_batch": 118.4,
-    "ih_R1": 517.0,
-    "ih_R2": 517.9,
-    "short_run": 70.9,
-    "short_rebuilds": 26.1
+    "CV": 73.8,
+    "PS_set": 38.0,
+    "gate_wait": 200.0,
+    "evict": 435.2
    },
-   "options": {
-    "A0  primary only (C x3, D x3), no long-context content check": {
-     "session_s": [
-      4625
-     ],
-     "gpu_h": 2.57
-    },
-    "A   primary + long-context instrument health (R1 ref+dump, R2 dump)": {
-     "session_s": [
-      5660
-     ],
-     "gpu_h": 3.144
-    },
-    "B   one session: primary + LP control x3 (instrument health folded into the LP warms)": {
-     "session_s": [
-      6952
-     ],
-     "gpu_h": 3.862
-    },
-    "B2  one session: primary + LP control x2 per condition": {
-     "session_s": [
-      6177
-     ],
-     "gpu_h": 3.431
-    },
-    "A+S primary + instrument health + short stratum S (attempt-2 D2 set)": {
-     "session_s": [
-      6112
-     ],
-     "gpu_h": 3.395
-    },
-    "B+S one session: primary + LP x3 + short stratum S": {
-     "session_s": [
-      7404
-     ],
-     "gpu_h": 4.113
-    },
-    "C   two sessions: S1 = A; S2 = LP x3 + bridge (one C/D round re-run)": {
-     "session_s": [
-      5660,
-      4410
-     ],
-     "gpu_h": 5.595
-    }
-   }
+   "session_parts_s": {
+    "overhead": 800.0,
+    "V0": 12.3,
+    "stageA_refs": 1029.4,
+    "stageA_primary": 1652.2,
+    "CV": 73.8,
+    "stageL": 263.3,
+    "gate_wait": 200.0,
+    "stageB_primary": 2107.7,
+    "stageB_lp": 1025.8,
+    "PS": 114.1,
+    "evict": 435.2
+   },
+   "session_s": 7714,
+   "gpu_h": 4.286,
+   "pre22_B_same_inputs_gpu_h": 3.862,
+   "stop_after_C1_gpu_h": 1.482,
+   "stop_at_gate1_gpu_h": 2.239
   },
   "optimistic": {
    "components_s": {
-    "primary_round_warm": 290.2,
-    "rewarm_hit": 14.1,
-    "primary_batch": 235.0,
-    "lp_round_warm": 328.3,
-    "lp_rewarm_hit": 11.0,
+    "V0": 12.3,
+    "LW_P_L": 328.3,
+    "LW2_ref2": 331.4,
+    "warm_cold": 290.2,
+    "rewarm": 14.1,
+    "lp_rewarm": 11.0,
+    "batch": 235.0,
     "lp_batch": 52.8,
-    "ih_R1": 331.5,
-    "ih_R2": 332.1,
-    "short_run": 55.9,
-    "short_rebuilds": 22.9
+    "CV": 40.1,
+    "PS_set": 20.4,
+    "gate_wait": 0.0,
+    "evict": 0.0
    },
-   "options": {
-    "A0  primary only (C x3, D x3), no long-context content check": {
-     "session_s": [
-      3124
-     ],
-     "gpu_h": 1.735
-    },
-    "A   primary + long-context instrument health (R1 ref+dump, R2 dump)": {
-     "session_s": [
-      3787
-     ],
-     "gpu_h": 2.104
-    },
-    "B   one session: primary + LP control x3 (instrument health folded into the LP warms)": {
-     "session_s": [
-      4491
-     ],
-     "gpu_h": 2.495
-    },
-    "B2  one session: primary + LP control x2 per condition": {
-     "session_s": [
-      4035
-     ],
-     "gpu_h": 2.242
-    },
-    "A+S primary + instrument health + short stratum S (attempt-2 D2 set)": {
-     "session_s": [
-      4146
-     ],
-     "gpu_h": 2.303
-    },
-    "B+S one session: primary + LP x3 + short stratum S": {
-     "session_s": [
-      4850
-     ],
-     "gpu_h": 2.694
-    },
-    "C   two sessions: S1 = A; S2 = LP x3 + bridge (one C/D round re-run)": {
-     "session_s": [
-      3787,
-      2914
-     ],
-     "gpu_h": 3.723
-    }
-   }
+   "session_parts_s": {
+    "overhead": 746.0,
+    "V0": 12.3,
+    "stageA_refs": 659.7,
+    "stageA_primary": 1050.5,
+    "CV": 40.1,
+    "stageL": 127.6,
+    "gate_wait": 0.0,
+    "stageB_primary": 1272.5,
+    "stageB_lp": 572.4,
+    "PS": 61.3,
+    "evict": 0.0
+   },
+   "session_s": 4543,
+   "gpu_h": 2.524,
+   "pre22_B_same_inputs_gpu_h": 2.495,
+   "stop_after_C1_gpu_h": 1.08,
+   "stop_at_gate1_gpu_h": 1.465
   }
  },
- "ceilings": {
-  "A0  primary only (C x3, D x3), no long-context content check": {
-   "estimate_gpu_h": 1.96,
-   "pessimistic_gpu_h": 2.57,
-   "optimistic_gpu_h": 1.735,
-   "ceiling_gpu_h": 2.99,
-   "invalid_start_allowance_gpu_h": 0.423,
-   "sessions": 1,
-   "wall_cap_s_per_session": [
-    4625
-   ],
-   "central_session_s": [
-    3527
-   ]
-  },
-  "A   primary + long-context instrument health (R1 ref+dump, R2 dump)": {
-   "estimate_gpu_h": 2.364,
-   "pessimistic_gpu_h": 3.144,
-   "optimistic_gpu_h": 2.104,
-   "ceiling_gpu_h": 3.57,
-   "invalid_start_allowance_gpu_h": 0.423,
-   "sessions": 1,
-   "wall_cap_s_per_session": [
-    5660
-   ],
-   "central_session_s": [
-    4256
-   ]
-  },
-  "B   one session: primary + LP control x3 (instrument health folded into the LP warms)": {
-   "estimate_gpu_h": 2.82,
-   "pessimistic_gpu_h": 3.862,
-   "optimistic_gpu_h": 2.495,
-   "ceiling_gpu_h": 4.29,
-   "invalid_start_allowance_gpu_h": 0.423,
-   "sessions": 1,
-   "wall_cap_s_per_session": [
-    6952
-   ],
-   "central_session_s": [
-    5077
-   ]
-  },
-  "B2  one session: primary + LP control x2 per condition": {
-   "estimate_gpu_h": 2.533,
-   "pessimistic_gpu_h": 3.431,
-   "optimistic_gpu_h": 2.242,
-   "ceiling_gpu_h": 3.85,
-   "invalid_start_allowance_gpu_h": 0.423,
-   "sessions": 1,
-   "wall_cap_s_per_session": [
-    6177
-   ],
-   "central_session_s": [
-    4560
-   ]
-  },
-  "A+S primary + instrument health + short stratum S (attempt-2 D2 set)": {
-   "estimate_gpu_h": 2.563,
-   "pessimistic_gpu_h": 3.395,
-   "optimistic_gpu_h": 2.303,
-   "ceiling_gpu_h": 3.82,
-   "invalid_start_allowance_gpu_h": 0.423,
-   "sessions": 1,
-   "wall_cap_s_per_session": [
-    6112
-   ],
-   "central_session_s": [
-    4614
-   ]
-  },
-  "B+S one session: primary + LP x3 + short stratum S": {
-   "estimate_gpu_h": 3.02,
-   "pessimistic_gpu_h": 4.113,
-   "optimistic_gpu_h": 2.694,
-   "ceiling_gpu_h": 4.54,
-   "invalid_start_allowance_gpu_h": 0.423,
-   "sessions": 1,
-   "wall_cap_s_per_session": [
-    7404
-   ],
-   "central_session_s": [
-    5435
-   ]
-  },
-  "C   two sessions: S1 = A; S2 = LP x3 + bridge (one C/D round re-run)": {
-   "estimate_gpu_h": 4.167,
-   "pessimistic_gpu_h": 5.595,
-   "optimistic_gpu_h": 3.723,
-   "ceiling_gpu_h": 6.02,
-   "invalid_start_allowance_gpu_h": 0.423,
-   "sessions": 2,
-   "wall_cap_s_per_session": [
-    5660,
-    4410
-   ],
-   "central_session_s": [
-    4256,
-    3244
-   ]
-  }
+ "ceiling": {
+  "estimate_gpu_h": 2.855,
+  "pessimistic_gpu_h": 4.286,
+  "optimistic_gpu_h": 2.524,
+  "single_attempt_ceiling_gpu_h": 4.29,
+  "invalid_start_allowance_gpu_h": 0.423,
+  "pre22_formula_ceiling_gpu_h": 4.71,
+  "target_gpu_h": 4.29,
+  "single_attempt_within_target": true,
+  "pre22_formula_within_target": false,
+  "wall_cap_s": 7714,
+  "min_wall_s": 4477,
+  "delta_vs_pre22_B_central_gpu_h": 0.035
  },
- "early_stop_after_C1_gpu_h": 0.766,
- "lp_marginal_gpu_h": 0.86
+ "decode_sensitivity_central_other_inputs": {
+  "20.0 tok/s": {
+   "session_s": 6234,
+   "gpu_h": 3.463,
+   "fits_wall_cap": true
+  },
+  "25.0 tok/s": {
+   "session_s": 5678,
+   "gpu_h": 3.154,
+   "fits_wall_cap": true
+  },
+  "33.0 tok/s": {
+   "session_s": 5138,
+   "gpu_h": 2.855,
+   "fits_wall_cap": true
+  },
+  "41.6 tok/s": {
+   "session_s": 4790,
+   "gpu_h": 2.661,
+   "fits_wall_cap": true
+  }
+ }
 }

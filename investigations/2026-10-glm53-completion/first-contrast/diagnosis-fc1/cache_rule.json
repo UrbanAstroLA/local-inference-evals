@@ -1,0 +1,347 @@
+{
+ "quick_struct_C1": [
+  {
+   "tag": "C1-L3",
+   "P": 89304,
+   "warm_P": 89304,
+   "same_prompt": true,
+   "salt_same": true,
+   "error": null,
+   "ids_equal": true,
+   "W": 8196,
+   "completion_tokens": 8196,
+   "finish": "length",
+   "cached_expected": 87040,
+   "cached": 82688,
+   "blocks_expected": 20,
+   "blocks_observed": 19,
+   "eagle_rule": 82688,
+   "matches_eagle_rule": true,
+   "fails": [
+    "cached"
+   ]
+  },
+  {
+   "tag": "C1-M4",
+   "P": 83416,
+   "warm_P": 83416,
+   "same_prompt": true,
+   "salt_same": true,
+   "error": null,
+   "ids_equal": true,
+   "W": 8199,
+   "completion_tokens": 8199,
+   "finish": "length",
+   "cached_expected": 82688,
+   "cached": 78336,
+   "blocks_expected": 19,
+   "blocks_observed": 18,
+   "eagle_rule": 78336,
+   "matches_eagle_rule": true,
+   "fails": [
+    "cached"
+   ]
+  },
+  {
+   "tag": "C1-A8",
+   "P": 111896,
+   "warm_P": 111896,
+   "same_prompt": true,
+   "salt_same": true,
+   "error": null,
+   "ids_equal": true,
+   "W": 8196,
+   "completion_tokens": 8196,
+   "finish": "length",
+   "cached_expected": 108800,
+   "cached": 104448,
+   "blocks_expected": 25,
+   "blocks_observed": 24,
+   "eagle_rule": 104448,
+   "matches_eagle_rule": true,
+   "fails": [
+    "cached"
+   ]
+  },
+  {
+   "tag": "C1-L1",
+   "P": 94512,
+   "warm_P": 94512,
+   "same_prompt": true,
+   "salt_same": true,
+   "error": null,
+   "ids_equal": true,
+   "W": 8199,
+   "completion_tokens": 8199,
+   "finish": "length",
+   "cached_expected": 91392,
+   "cached": 87040,
+   "blocks_expected": 21,
+   "blocks_observed": 20,
+   "eagle_rule": 87040,
+   "matches_eagle_rule": true,
+   "fails": [
+    "cached"
+   ]
+  },
+  {
+   "tag": "C1-L8",
+   "P": 111896,
+   "warm_P": 111896,
+   "same_prompt": true,
+   "salt_same": true,
+   "error": null,
+   "ids_equal": true,
+   "W": 8196,
+   "completion_tokens": 8196,
+   "finish": "length",
+   "cached_expected": 108800,
+   "cached": 104448,
+   "blocks_expected": 25,
+   "blocks_observed": 24,
+   "eagle_rule": 104448,
+   "matches_eagle_rule": true,
+   "fails": [
+    "cached"
+   ]
+  },
+  {
+   "tag": "C1-M3",
+   "P": 63488,
+   "warm_P": 63488,
+   "same_prompt": true,
+   "salt_same": true,
+   "error": null,
+   "ids_equal": true,
+   "W": 8195,
+   "completion_tokens": 8195,
+   "finish": "length",
+   "cached_expected": 60928,
+   "cached": 0,
+   "blocks_expected": 14,
+   "blocks_observed": 0,
+   "eagle_rule": 56576,
+   "matches_eagle_rule": false,
+   "fails": [
+    "cached"
+   ]
+  },
+  {
+   "tag": "C1-L5",
+   "P": 112024,
+   "warm_P": 112024,
+   "same_prompt": true,
+   "salt_same": true,
+   "error": null,
+   "ids_equal": true,
+   "W": 8194,
+   "completion_tokens": 8194,
+   "finish": "length",
+   "cached_expected": 108800,
+   "cached": 104448,
+   "blocks_expected": 25,
+   "blocks_observed": 24,
+   "eagle_rule": 104448,
+   "matches_eagle_rule": true,
+   "fails": [
+    "cached"
+   ]
+  },
+  {
+   "tag": "C1-L4",
+   "P": 72360,
+   "warm_P": 72360,
+   "same_prompt": true,
+   "salt_same": true,
+   "error": null,
+   "ids_equal": true,
+   "W": 8194,
+   "completion_tokens": 8194,
+   "finish": "length",
+   "cached_expected": 69632,
+   "cached": 65280,
+   "blocks_expected": 16,
+   "blocks_observed": 15,
+   "eagle_rule": 65280,
+   "matches_eagle_rule": true,
+   "fails": [
+    "cached"
+   ]
+  }
+ ],
+ "other_phases_cached": [],
+ "scheduler": {
+  "L4": {
+   "c1_first_seq": 1961,
+   "computed_before": 65280,
+   "warm_first_seq": 1587,
+   "warm_fin_seq": 1704,
+   "warm_mla_blocks": 17,
+   "c1_reused_warm_mla": 15,
+   "warm_mla_reallocated_before_lookup": []
+  },
+  "L1": {
+   "c1_first_seq": 1963,
+   "computed_before": 87040,
+   "warm_first_seq": 1581,
+   "warm_fin_seq": 1674,
+   "warm_mla_blocks": 22,
+   "c1_reused_warm_mla": 20,
+   "warm_mla_reallocated_before_lookup": []
+  },
+  "L3": {
+   "c1_first_seq": 1966,
+   "computed_before": 82688,
+   "warm_first_seq": 1622,
+   "warm_fin_seq": 1753,
+   "warm_mla_blocks": 21,
+   "c1_reused_warm_mla": 19,
+   "warm_mla_reallocated_before_lookup": []
+  },
+  "A8": {
+   "c1_first_seq": 1970,
+   "computed_before": 104448,
+   "warm_first_seq": 1667,
+   "warm_fin_seq": 1811,
+   "warm_mla_blocks": 26,
+   "c1_reused_warm_mla": 24,
+   "warm_mla_reallocated_before_lookup": []
+  },
+  "M3": {
+   "c1_first_seq": 1973,
+   "computed_before": 0,
+   "warm_first_seq": 1579,
+   "warm_fin_seq": 1624,
+   "warm_mla_blocks": 15,
+   "c1_reused_warm_mla": 0,
+   "warm_mla_reallocated_before_lookup": [
+    {
+     "seq": 1966,
+     "block": 344,
+     "warm_idx": 7,
+     "new_owner": "2-0-a26cadb3"
+    }
+   ]
+  },
+  "M4": {
+   "c1_first_seq": 1977,
+   "computed_before": 78336,
+   "warm_first_seq": 1704,
+   "warm_fin_seq": 1846,
+   "warm_mla_blocks": 20,
+   "c1_reused_warm_mla": 18,
+   "warm_mla_reallocated_before_lookup": []
+  },
+  "L8": {
+   "c1_first_seq": 1983,
+   "computed_before": 104448,
+   "warm_first_seq": 1786,
+   "warm_fin_seq": 1960,
+   "warm_mla_blocks": 26,
+   "c1_reused_warm_mla": 24,
+   "warm_mla_reallocated_before_lookup": [
+    {
+     "seq": 1966,
+     "block": 568,
+     "warm_idx": 25,
+     "new_owner": "9-0-b2d7802b"
+    }
+   ]
+  },
+  "L5": {
+   "c1_first_seq": 1992,
+   "computed_before": 104448,
+   "warm_first_seq": 1740,
+   "warm_fin_seq": 1907,
+   "warm_mla_blocks": 26,
+   "c1_reused_warm_mla": 24,
+   "warm_mla_reallocated_before_lookup": []
+  }
+ },
+ "c1_admission_order": [
+  "L4",
+  "L1",
+  "L3",
+  "A8",
+  "M3",
+  "M4",
+  "L8",
+  "L5"
+ ],
+ "warm_completion_order": [
+  "M3",
+  "L1",
+  "L4",
+  "L3",
+  "A8",
+  "M4",
+  "L5",
+  "L8"
+ ],
+ "lru_horizon": {
+  "free_seq": 1624,
+  "realloc_seq": 1966,
+  "prompt_and_decode_tokens_between": 657147,
+  "free_queue_median": 1154,
+  "blocks_per_4352_tokens": 7.64,
+  "note": "first re-allocation of a warm-M3 MLA block (idx 7); its later-freed tail blocks and its earlier-freed KDA state blocks precede it in the LRU queue"
+ },
+ "prior_sessions_exact_repeats": {
+  "b0-mapguard/run-a3/client.jsonl": {
+   "repeat_requests": {
+    "eagle_rule": 34
+   },
+   "exceptions": []
+  },
+  "phase2-stage2/client.jsonl": {
+   "repeat_requests": {
+    "eagle_rule": 29,
+    "other": 6
+   },
+   "exceptions": [
+    [
+     "warm",
+     "r5",
+     16240,
+     0
+    ],
+    [
+     "warm",
+     "r4",
+     16478,
+     0
+    ],
+    [
+     "warm",
+     "r3",
+     32478,
+     0
+    ],
+    [
+     "warm",
+     "r2",
+     64478,
+     26112
+    ],
+    [
+     "warm",
+     "r1",
+     64217,
+     0
+    ]
+   ]
+  },
+  "phase3/client.jsonl": {
+   "repeat_requests": {
+    "eagle_rule": 17
+   },
+   "exceptions": []
+  },
+  "d7/step2/run-b1-a1/client.jsonl": {
+   "repeat_requests": {
+    "eagle_rule": 34
+   },
+   "exceptions": []
+  }
+ }
+}

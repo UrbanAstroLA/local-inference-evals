@@ -1,0 +1,26 @@
+C1_vs_LW1 pooled {'n': 157696, 'gross_n': 1206} pages {'pages_judged': 2486, 'page_max': 0.484375, 'over': 8} early (3, 57344)
+   over: {'tag': 'C1-M4', 'rank': 1, 'layer': 43, 'page': 336, 'frac': 0.4844, 'n': 64, 'pos': [86016, 86272], 'o': [2600, 2856]}
+   over: {'tag': 'C1-M4', 'rank': 1, 'layer': 27, 'page': 336, 'frac': 0.4062, 'n': 64, 'pos': [86016, 86272], 'o': [2600, 2856]}
+   over: {'tag': 'C1-M4', 'rank': 1, 'layer': 27, 'page': 334, 'frac': 0.375, 'n': 64, 'pos': [85504, 85760], 'o': [2088, 2344]}
+   over: {'tag': 'C1-M4', 'rank': 0, 'layer': 23, 'page': 336, 'frac': 0.2969, 'n': 64, 'pos': [86016, 86272], 'o': [2600, 2856]}
+   over: {'tag': 'C1-M4', 'rank': 1, 'layer': 27, 'page': 337, 'frac': 0.2969, 'n': 64, 'pos': [86272, 86528], 'o': [2856, 3112]}
+   over: {'tag': 'C1-M4', 'rank': 1, 'layer': 27, 'page': 340, 'frac': 0.2812, 'n': 64, 'pos': [87040, 87296], 'o': [3624, 3880]}
+   over: {'tag': 'C1-M4', 'rank': 1, 'layer': 39, 'page': 336, 'frac': 0.2812, 'n': 64, 'pos': [86016, 86272], 'o': [2600, 2856]}
+   over: {'tag': 'C1-M4', 'rank': 1, 'layer': 43, 'page': 334, 'frac': 0.2812, 'n': 64, 'pos': [85504, 85760], 'o': [2088, 2344]}
+C1_vs_LW2 pooled {'n': 157696, 'gross_n': 1113} pages {'pages_judged': 2486, 'page_max': 0.46875, 'over': 8} early (2, 57344)
+   over: {'tag': 'C1-M4', 'rank': 1, 'layer': 43, 'page': 336, 'frac': 0.4688, 'n': 64, 'pos': [86016, 86272], 'o': [2600, 2856]}
+   over: {'tag': 'C1-M4', 'rank': 1, 'layer': 27, 'page': 334, 'frac': 0.3438, 'n': 64, 'pos': [85504, 85760], 'o': [2088, 2344]}
+   over: {'tag': 'C1-M4', 'rank': 1, 'layer': 27, 'page': 336, 'frac': 0.3281, 'n': 64, 'pos': [86016, 86272], 'o': [2600, 2856]}
+   over: {'tag': 'C1-M4', 'rank': 1, 'layer': 39, 'page': 336, 'frac': 0.3281, 'n': 64, 'pos': [86016, 86272], 'o': [2600, 2856]}
+   over: {'tag': 'C1-M4', 'rank': 1, 'layer': 43, 'page': 334, 'frac': 0.3281, 'n': 64, 'pos': [85504, 85760], 'o': [2088, 2344]}
+   over: {'tag': 'C1-M4', 'rank': 0, 'layer': 23, 'page': 336, 'frac': 0.2969, 'n': 64, 'pos': [86016, 86272], 'o': [2600, 2856]}
+   over: {'tag': 'C1-M4', 'rank': 1, 'layer': 27, 'page': 337, 'frac': 0.2656, 'n': 64, 'pos': [86272, 86528], 'o': [2856, 3112]}
+   over: {'tag': 'C1-M4', 'rank': 1, 'layer': 35, 'page': 336, 'frac': 0.2656, 'n': 64, 'pos': [86016, 86272], 'o': [2600, 2856]}
+LW1_vs_LW2 pooled {'n': 157696, 'gross_n': 1213} pages {'pages_judged': 2486, 'page_max': 0.453125, 'over': 7} early (1, 57344)
+   over: {'tag': 'LW1-M4', 'rank': 1, 'layer': 43, 'page': 336, 'frac': 0.4531, 'n': 64, 'pos': [86016, 86272], 'o': [2600, 2856]}
+   over: {'tag': 'LW1-M4', 'rank': 1, 'layer': 27, 'page': 336, 'frac': 0.4219, 'n': 64, 'pos': [86016, 86272], 'o': [2600, 2856]}
+   over: {'tag': 'LW1-M4', 'rank': 1, 'layer': 43, 'page': 334, 'frac': 0.3906, 'n': 64, 'pos': [85504, 85760], 'o': [2088, 2344]}
+   over: {'tag': 'LW1-M4', 'rank': 1, 'layer': 27, 'page': 334, 'frac': 0.3594, 'n': 64, 'pos': [85504, 85760], 'o': [2088, 2344]}
+   over: {'tag': 'LW1-M4', 'rank': 0, 'layer': 23, 'page': 336, 'frac': 0.3125, 'n': 64, 'pos': [86016, 86272], 'o': [2600, 2856]}
+   over: {'tag': 'LW1-M4', 'rank': 1, 'layer': 39, 'page': 336, 'frac': 0.3125, 'n': 64, 'pos': [86016, 86272], 'o': [2600, 2856]}
+   over: {'tag': 'LW1-M4', 'rank': 1, 'layer': 39, 'page': 334, 'frac': 0.2812, 'n': 64, 'pos': [85504, 85760], 'o': [2088, 2344]}

@@ -1,0 +1,787 @@
+{
+ "source": "freeze_ids.py",
+ "tokenizer": "/model/snapshots/0490d2f708b12145f6516555ab066aaeb401cd21/tokenizer.json",
+ "tokenizer_sha256": "19e773648cb4e65de8660ea6365e10acca112d42a854923df93db4a6f333a82d",
+ "first_contrast_sha256": "8df042ec7c014da7e4b99a306016725d1af6974555f9281d037e201c9002b8d7",
+ "fixtures": {
+  "L1": {
+   "file": "ids/L1.json.gz",
+   "file_sha256": "363de8b22b58acda74b06f727513a4587a3571a31b670327398443522ebc8b5b",
+   "payload_sha256": "4d669b1c8b1fda9e73008af125c488b06bc14c0fab33bd823e1636be94b7211a",
+   "P": 94512,
+   "W": 8198,
+   "forced_list_len": 8199,
+   "prompt_len": 131,
+   "prefix_sha256": "7ad83953c1ef40ee59b0c3442ebc1d8a09609d5ee084a51badd2c450fca698c5",
+   "forced_sha256": "4ce4361a8ef11540b60c4d446ba7dde9c4c92c63f5d758e713ae50096e11c983",
+   "lp_prefix_sha256": "67b21da4c28041a0bdc1f4c014e8224002e4c3c97a39e5f2b9eefd6870f0d108",
+   "lp_forced_sha256": "7fd4070a60eb6593cc9f12f0236d7750d4a02316fa64e4d1b72fad02436ac3fa",
+   "ref2_prompt_sha256": "97b42dff071cdca5e67ce9ad92fe236b539904a6bc0781c8f99d81d8b9b03f9f",
+   "next_token": 154842,
+   "source_path": "diagnostics/empties-k325-v0.7.0-2026-09-30/doc13_rep2.reasoning.txt",
+   "history_sha256": "396f4c0bc1ff94886cb98cf42da15a01b585b905ddc4f76561f5456b771f5693"
+  },
+  "L4": {
+   "file": "ids/L4.json.gz",
+   "file_sha256": "17e420b5365690e24689a703aa0f10f0abb0a1984fcbbda9b83098698df80d8e",
+   "payload_sha256": "cbc0907a11f32776cb8ea02ebc1d092821e1e1703cdd8ac342fcf8316a65c100",
+   "P": 72360,
+   "W": 8193,
+   "forced_list_len": 8194,
+   "prompt_len": 229,
+   "prefix_sha256": "8cb0a6f2608e250d5df6a377c8b95438cdf8813fe2541d4aa8d8f18eb489c5ae",
+   "forced_sha256": "ae61f68eb9cb3726047c5f78c8bbee453ec44b1f0efa9525f74a7d93b8b3c3b5",
+   "lp_prefix_sha256": "b76d21a710107026e06f83551088f2bf30abc5d360283d552205937446c3e252",
+   "lp_forced_sha256": "8f7c2bbba27ab9b204c8f03ee623fa16f4f6f10b4ba73b86e8886effd554f9ff",
+   "ref2_prompt_sha256": "483deca728e7ac0195c5386231bbd8a69345df8d868bba72a51b05d43521dd01",
+   "next_token": 154842,
+   "source_path": "diagnostics/component-screen-2026-10-09/B/doc88_rep5.reasoning.txt",
+   "history_sha256": "8ccb2eb5d205cb65c0a361e92997f0a647a6514401392747627df25c4e4e44db"
+  },
+  "M3": {
+   "file": "ids/M3.json.gz",
+   "file_sha256": "1c557fe42142ece95d801d309f13d71b6ae7d2819be55b33ec963d86645caa89",
+   "payload_sha256": "688bf28b78e005aa66b5612609dbcf7747c5af52d70cc8397502382ca052fc17",
+   "P": 63488,
+   "W": 8194,
+   "forced_list_len": 8195,
+   "prompt_len": 190,
+   "prefix_sha256": "b187f84ce7fd3a1785ab5119b2571a8dd427b175386efc247df27a9a9d429266",
+   "forced_sha256": "b33d4d58c5a605134d374bda1f180bba257a42112082586f86b8c72a14fc1c07",
+   "lp_prefix_sha256": "62ed39d69ed364d903648e4def8baa3878998e93cc1e7efce4b6aab2d219a08d",
+   "lp_forced_sha256": "f405a7678bdef565395f9bad35ea5cc66c0180a3cfdaac2c5200e3a9b8675a00",
+   "ref2_prompt_sha256": "cf49b60a782ef1fa07ad37f303161ca79d64742345427961b98ab4fcdcad79cc",
+   "next_token": 154842,
+   "source_path": "diagnostics/seed-replay-2026-09-30/v0.7.0/doc121_rep4.reasoning.txt",
+   "history_sha256": "7406921829e007df41fd410ddf9f06e07cd0faaf17981f6b618736f80c163cac"
+  },
+  "M4": {
+   "file": "ids/M4.json.gz",
+   "file_sha256": "dd9072a3c0fcd08fbafe4a525917d90eebd544dcd869d6a2612df66aca4c69cc",
+   "payload_sha256": "85146b45d4c0edb7506c04757598aea16745b49ba080b4483e892da57886710f",
+   "P": 83416,
+   "W": 8198,
+   "forced_list_len": 8199,
+   "prompt_len": 2795,
+   "prefix_sha256": "b65dc950f98bba1314f1247629084fd43b239d04defb7bffdde2da2fce7872b2",
+   "forced_sha256": "2ec6bd70043bd775779c9775a34e08bb9bc698c6d139ad699d439ab13479c6f4",
+   "lp_prefix_sha256": "17fd81ee107abf19824db93106c8d8f89969c3a324877e3fa40dc872d55b9392",
+   "lp_forced_sha256": "c12e6e22f99fdd6e7df3d3f025d3829c38194584cdc3f72a85c31fb2f5e1839f",
+   "ref2_prompt_sha256": "8c301190177dac7af8b755fd8afc61571ae2f22ec3f159317efb6dcca4c262c4",
+   "next_token": 154842,
+   "source_path": "eval-matrix-2026-10-04/screens/S7/doc127_rep5.reasoning.txt",
+   "history_sha256": "7f150bf1046a6186f6ecebcdf8228e89f2aa03d31d78945bfa214af0c46abf13"
+  },
+  "L3": {
+   "file": "ids/L3.json.gz",
+   "file_sha256": "965308e254a0668aebbfebd3a64858855d70a88ff76c356dc9195d029d2fc0a7",
+   "payload_sha256": "248ddc6204081ae9653107cc29b70b1eeeb4a554718a33c40b3b31ca4b9d6423",
+   "P": 89304,
+   "W": 8195,
+   "forced_list_len": 8196,
+   "prompt_len": 91,
+   "prefix_sha256": "0dec680eb9af49a97d1a007ef7886567bb575e4da001889f2c9ab38bc2309276",
+   "forced_sha256": "f64463e6248eee4fdc419ec1b634bae3086a659bf4e6f04be38be5127d8300c8",
+   "lp_prefix_sha256": "f6e46bfb099f5e96e4f55eb224cb3058c971bc132cd673ec2d02e7142f0352ad",
+   "lp_forced_sha256": "139f7ae41abdab1de02f0d035efd1202f2455ec17113848e7aaba0dc65fde85f",
+   "ref2_prompt_sha256": "ea489284565607936d2d0c11b6721ac30101e582b452039be653401662a5e822",
+   "next_token": 154842,
+   "source_path": "diagnostics/component-screen-2026-10-09/B79/doc79_rep4.reasoning.txt",
+   "history_sha256": "e0a7e2ea41cb87224fe4f5f4ec1bd75baa2875e192eee1dbb95afc8b09b1663d"
+  },
+  "L5": {
+   "file": "ids/L5.json.gz",
+   "file_sha256": "38dbf3c545cdecec5dc8601f37f74075c56fa01ff80692376fc43b6b0bff62de",
+   "payload_sha256": "9f61f5afd09da57fd1117451ec6a93623ae805c3c87660238397cdff1a623b76",
+   "P": 112024,
+   "W": 8193,
+   "forced_list_len": 8194,
+   "prompt_len": 217,
+   "prefix_sha256": "4356e0fda879d15954d93b535d82f28c0987a8a3b2f5e7a468c554e94c43bf7f",
+   "forced_sha256": "5eeca84b23ab558e6b8f193ab12e33125b052581873794feff96d044989ba25d",
+   "lp_prefix_sha256": "cb8f8dd13c00fb4ae461f87ade9a3929849be845482b6f60b03d35f549a5f07e",
+   "lp_forced_sha256": "e0163d1c4194c6c2e60a91c9a54bf418de844927e7507de0a464a32dc7ce34f9",
+   "ref2_prompt_sha256": "4f0c0020fb2210fd4ecdc7c5ad629e936f13b0aa6f834fd9fc66e9fc1948cecf",
+   "next_token": 11336,
+   "source_path": "investigations/2026-10-glm53-completion/pilot/A/doc170_repfresh.reasoning.txt",
+   "history_sha256": "f4dac7dddfd8206108d443d09f6a8215cd024047c6191d6a58b83e11566ccc6c"
+  },
+  "A8": {
+   "file": "ids/A8.json.gz",
+   "file_sha256": "ed1e067809b7c5914f789073a75b06e645f8a8530ae03717d04e3275b2bb09d5",
+   "payload_sha256": "2f976f164cff3e27c3e31107666734a97a6cb86eaf47b30591e15f7dbe0fe74e",
+   "P": 111896,
+   "W": 8195,
+   "forced_list_len": 8196,
+   "prompt_len": 91,
+   "prefix_sha256": "8a2229c32094280534ca4382285d7b0195f835ab4b14ec5c41eb19749b09828a",
+   "forced_sha256": "4e88500b3818840668a89a5cd454faf175a8e86b887c29bbe466c5bb538ac16c",
+   "lp_prefix_sha256": "11c347b2cdc73a093254a6cf2a43516b3a62fc3860dcdb337cefa8a32cdf53c8",
+   "lp_forced_sha256": "c375809309b57e472588bce624c060a837c6743725849f8a6a91c780c4e6a3d7",
+   "ref2_prompt_sha256": "dc954b5dc659805798c9629b79d27ed245cb2a26e662a80d94ea69fe7cf760bc",
+   "next_token": 220,
+   "source_path": "diagnostics/component-screen-2026-10-09/V79/doc79_rep12.reasoning.txt",
+   "history_sha256": "b2845216e1a0cb1a8f448bf0182d692ebbc08b78ba2a0ba90a1255d5e87954db"
+  },
+  "L8": {
+   "file": "ids/L8.json.gz",
+   "file_sha256": "22d045c092b0bd6d00dcfef8e490524283ac7f71a6c3a7ba4a7499dcdc2aabe2",
+   "payload_sha256": "ba327c462b62b6c8bde579f0f3ed344243fb186b2cea6bbe72f515be639c6624",
+   "P": 111896,
+   "W": 8195,
+   "forced_list_len": 8196,
+   "prompt_len": 91,
+   "prefix_sha256": "2ecc4b4df8749461f0bd1d844d1ef78079ca95c05de0e7c8e6d4b404db6d601f",
+   "forced_sha256": "688fa3556d96b58b0421c0a322e7000fc9691707a7b9bba9b2567c5ee748663d",
+   "lp_prefix_sha256": "5ed4fb183578fada3e840e0f9819a706cb41b025f6224b689b0c4313609cf872",
+   "lp_forced_sha256": "63a151e23185802ad797ca42f51f4199ce5579b5effdfd3458cbf6ceb46043a1",
+   "ref2_prompt_sha256": "96e78584682f0a08e06f08a0a5b6b1333ee3b7455ff6579921df2181df42a39d",
+   "next_token": 20,
+   "source_path": "diagnostics/component-screen-2026-10-09/B79/doc79_rep10.reasoning.txt",
+   "history_sha256": "a391beb46a6ae9ea5a992d56392784d38686262e6922fe310ec54a094b0800df"
+  }
+ },
+ "checks": [
+  [
+   "L1",
+   "prompt len == prompt_tokens",
+   true
+  ],
+  [
+   "L1",
+   "prompt ends in <think>",
+   true
+  ],
+  [
+   "L1",
+   "prompt sha == termination_tokens.json rendered",
+   true
+  ],
+  [
+   "L1",
+   "reasoning ids sha == history_sha256",
+   true
+  ],
+  [
+   "L1",
+   "reasoning len == inventory n_reasoning_tokens",
+   true
+  ],
+  [
+   "L1",
+   "P == prompt + s",
+   true
+  ],
+  [
+   "L1",
+   "P % 8 == 0",
+   true
+  ],
+  [
+   "L1",
+   "W == end - s",
+   true
+  ],
+  [
+   "L1",
+   "forced list len == W + 1",
+   true
+  ],
+  [
+   "L1",
+   "next token determined",
+   true
+  ],
+  [
+   "L1",
+   "near-close: forced list ends in </think> exactly at o = W",
+   true
+  ],
+  [
+   "L1",
+   "no </think> or stop id inside the window",
+   true
+  ],
+  [
+   "L1",
+   "no special ids in prefix reasoning",
+   true
+  ],
+  [
+   "L1",
+   "LP forced list = forced[7168:], len W - 7168 + 1",
+   true
+  ],
+  [
+   "L1",
+   "reference-2 build P + 8192 within the history window",
+   true
+  ],
+  [
+   "L1",
+   "P + W < 131072",
+   true
+  ],
+  [
+   "L4",
+   "prompt len == prompt_tokens",
+   true
+  ],
+  [
+   "L4",
+   "prompt ends in <think>",
+   true
+  ],
+  [
+   "L4",
+   "prompt sha == termination_tokens.json rendered",
+   true
+  ],
+  [
+   "L4",
+   "reasoning ids sha == history_sha256",
+   true
+  ],
+  [
+   "L4",
+   "reasoning len == inventory n_reasoning_tokens",
+   true
+  ],
+  [
+   "L4",
+   "P == prompt + s",
+   true
+  ],
+  [
+   "L4",
+   "P % 8 == 0",
+   true
+  ],
+  [
+   "L4",
+   "W == end - s",
+   true
+  ],
+  [
+   "L4",
+   "forced list len == W + 1",
+   true
+  ],
+  [
+   "L4",
+   "next token determined",
+   true
+  ],
+  [
+   "L4",
+   "near-close: forced list ends in </think> exactly at o = W",
+   true
+  ],
+  [
+   "L4",
+   "no </think> or stop id inside the window",
+   true
+  ],
+  [
+   "L4",
+   "no special ids in prefix reasoning",
+   true
+  ],
+  [
+   "L4",
+   "LP forced list = forced[7168:], len W - 7168 + 1",
+   true
+  ],
+  [
+   "L4",
+   "reference-2 build P + 8192 within the history window",
+   true
+  ],
+  [
+   "L4",
+   "P + W < 131072",
+   true
+  ],
+  [
+   "M3",
+   "prompt len == prompt_tokens",
+   true
+  ],
+  [
+   "M3",
+   "prompt ends in <think>",
+   true
+  ],
+  [
+   "M3",
+   "prompt sha == termination_tokens.json rendered",
+   true
+  ],
+  [
+   "M3",
+   "reasoning ids sha == history_sha256",
+   true
+  ],
+  [
+   "M3",
+   "reasoning len == inventory n_reasoning_tokens",
+   true
+  ],
+  [
+   "M3",
+   "P == prompt + s",
+   true
+  ],
+  [
+   "M3",
+   "P % 8 == 0",
+   true
+  ],
+  [
+   "M3",
+   "W == end - s",
+   true
+  ],
+  [
+   "M3",
+   "forced list len == W + 1",
+   true
+  ],
+  [
+   "M3",
+   "next token determined",
+   true
+  ],
+  [
+   "M3",
+   "near-close: forced list ends in </think> exactly at o = W",
+   true
+  ],
+  [
+   "M3",
+   "no </think> or stop id inside the window",
+   true
+  ],
+  [
+   "M3",
+   "no special ids in prefix reasoning",
+   true
+  ],
+  [
+   "M3",
+   "LP forced list = forced[7168:], len W - 7168 + 1",
+   true
+  ],
+  [
+   "M3",
+   "reference-2 build P + 8192 within the history window",
+   true
+  ],
+  [
+   "M3",
+   "P + W < 131072",
+   true
+  ],
+  [
+   "M4",
+   "prompt len == prompt_tokens",
+   true
+  ],
+  [
+   "M4",
+   "prompt ends in <think>",
+   true
+  ],
+  [
+   "M4",
+   "prompt sha == termination_tokens.json rendered",
+   true
+  ],
+  [
+   "M4",
+   "reasoning ids sha == history_sha256",
+   true
+  ],
+  [
+   "M4",
+   "reasoning len == inventory n_reasoning_tokens",
+   true
+  ],
+  [
+   "M4",
+   "P == prompt + s",
+   true
+  ],
+  [
+   "M4",
+   "P % 8 == 0",
+   true
+  ],
+  [
+   "M4",
+   "W == end - s",
+   true
+  ],
+  [
+   "M4",
+   "forced list len == W + 1",
+   true
+  ],
+  [
+   "M4",
+   "next token determined",
+   true
+  ],
+  [
+   "M4",
+   "near-close: forced list ends in </think> exactly at o = W",
+   true
+  ],
+  [
+   "M4",
+   "no </think> or stop id inside the window",
+   true
+  ],
+  [
+   "M4",
+   "no special ids in prefix reasoning",
+   true
+  ],
+  [
+   "M4",
+   "LP forced list = forced[7168:], len W - 7168 + 1",
+   true
+  ],
+  [
+   "M4",
+   "reference-2 build P + 8192 within the history window",
+   true
+  ],
+  [
+   "M4",
+   "P + W < 131072",
+   true
+  ],
+  [
+   "L3",
+   "prompt len == prompt_tokens",
+   true
+  ],
+  [
+   "L3",
+   "prompt ends in <think>",
+   true
+  ],
+  [
+   "L3",
+   "prompt sha == termination_tokens.json rendered",
+   true
+  ],
+  [
+   "L3",
+   "reasoning ids sha == history_sha256",
+   true
+  ],
+  [
+   "L3",
+   "reasoning len == inventory n_reasoning_tokens",
+   true
+  ],
+  [
+   "L3",
+   "P == prompt + s",
+   true
+  ],
+  [
+   "L3",
+   "P % 8 == 0",
+   true
+  ],
+  [
+   "L3",
+   "W == end - s",
+   true
+  ],
+  [
+   "L3",
+   "forced list len == W + 1",
+   true
+  ],
+  [
+   "L3",
+   "next token determined",
+   true
+  ],
+  [
+   "L3",
+   "near-close: forced list ends in </think> exactly at o = W",
+   true
+  ],
+  [
+   "L3",
+   "no </think> or stop id inside the window",
+   true
+  ],
+  [
+   "L3",
+   "no special ids in prefix reasoning",
+   true
+  ],
+  [
+   "L3",
+   "LP forced list = forced[7168:], len W - 7168 + 1",
+   true
+  ],
+  [
+   "L3",
+   "reference-2 build P + 8192 within the history window",
+   true
+  ],
+  [
+   "L3",
+   "P + W < 131072",
+   true
+  ],
+  [
+   "L5",
+   "prompt len == prompt_tokens",
+   true
+  ],
+  [
+   "L5",
+   "prompt ends in <think>",
+   true
+  ],
+  [
+   "L5",
+   "prompt sha == termination_tokens.json rendered",
+   true
+  ],
+  [
+   "L5",
+   "reasoning ids sha == history_sha256",
+   true
+  ],
+  [
+   "L5",
+   "reasoning len == inventory n_reasoning_tokens",
+   true
+  ],
+  [
+   "L5",
+   "P == prompt + s",
+   true
+  ],
+  [
+   "L5",
+   "P % 8 == 0",
+   true
+  ],
+  [
+   "L5",
+   "W == end - s",
+   true
+  ],
+  [
+   "L5",
+   "forced list len == W + 1",
+   true
+  ],
+  [
+   "L5",
+   "next token determined",
+   true
+  ],
+  [
+   "L5",
+   "near-close: forced list ends in </think> exactly at o = W",
+   true
+  ],
+  [
+   "L5",
+   "no </think> or stop id inside the window",
+   true
+  ],
+  [
+   "L5",
+   "no special ids in prefix reasoning",
+   true
+  ],
+  [
+   "L5",
+   "LP forced list = forced[7168:], len W - 7168 + 1",
+   true
+  ],
+  [
+   "L5",
+   "reference-2 build P + 8192 within the history window",
+   true
+  ],
+  [
+   "L5",
+   "P + W < 131072",
+   true
+  ],
+  [
+   "A8",
+   "prompt len == prompt_tokens",
+   true
+  ],
+  [
+   "A8",
+   "prompt ends in <think>",
+   true
+  ],
+  [
+   "A8",
+   "prompt sha == termination_tokens.json rendered",
+   true
+  ],
+  [
+   "A8",
+   "reasoning ids sha == history_sha256",
+   true
+  ],
+  [
+   "A8",
+   "reasoning len == inventory n_reasoning_tokens",
+   true
+  ],
+  [
+   "A8",
+   "P == prompt + s",
+   true
+  ],
+  [
+   "A8",
+   "P % 8 == 0",
+   true
+  ],
+  [
+   "A8",
+   "W == end - s",
+   true
+  ],
+  [
+   "A8",
+   "forced list len == W + 1",
+   true
+  ],
+  [
+   "A8",
+   "next token determined",
+   true
+  ],
+  [
+   "A8",
+   "near-close: forced list ends in </think> exactly at o = W",
+   true
+  ],
+  [
+   "A8",
+   "no </think> or stop id inside the window",
+   true
+  ],
+  [
+   "A8",
+   "no special ids in prefix reasoning",
+   true
+  ],
+  [
+   "A8",
+   "LP forced list = forced[7168:], len W - 7168 + 1",
+   true
+  ],
+  [
+   "A8",
+   "reference-2 build P + 8192 within the history window",
+   true
+  ],
+  [
+   "A8",
+   "P + W < 131072",
+   true
+  ],
+  [
+   "L8",
+   "prompt len == prompt_tokens",
+   true
+  ],
+  [
+   "L8",
+   "prompt ends in <think>",
+   true
+  ],
+  [
+   "L8",
+   "prompt sha == termination_tokens.json rendered",
+   true
+  ],
+  [
+   "L8",
+   "reasoning ids sha == history_sha256",
+   true
+  ],
+  [
+   "L8",
+   "reasoning len == inventory n_reasoning_tokens",
+   true
+  ],
+  [
+   "L8",
+   "P == prompt + s",
+   true
+  ],
+  [
+   "L8",
+   "P % 8 == 0",
+   true
+  ],
+  [
+   "L8",
+   "W == end - s",
+   true
+  ],
+  [
+   "L8",
+   "forced list len == W + 1",
+   true
+  ],
+  [
+   "L8",
+   "next token determined",
+   true
+  ],
+  [
+   "L8",
+   "near-close: forced list ends in </think> exactly at o = W",
+   true
+  ],
+  [
+   "L8",
+   "no </think> or stop id inside the window",
+   true
+  ],
+  [
+   "L8",
+   "no special ids in prefix reasoning",
+   true
+  ],
+  [
+   "L8",
+   "LP forced list = forced[7168:], len W - 7168 + 1",
+   true
+  ],
+  [
+   "L8",
+   "reference-2 build P + 8192 within the history window",
+   true
+  ],
+  [
+   "L8",
+   "P + W < 131072",
+   true
+  ]
+ ],
+ "checks_pass": true
+}

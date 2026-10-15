@@ -1,0 +1,1 @@
+budget: spent 0.0 + this attempt's cap 4.286 (wall 7714s) <= approved 4.29 GPU-h; disk ok (>= 200 GB)

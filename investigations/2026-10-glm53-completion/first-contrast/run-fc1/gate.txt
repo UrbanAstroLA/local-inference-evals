@@ -1,0 +1,8 @@
+ready after 732s
+47:(EngineCore pid=274) INFO 10-15 17:27:44 [core.py:122] Initializing a V1 LLM engine (v0.1.dev20051+g487ecf187) with config: model='/model-repo/snapshots/0490d2f708b12145f6516555ab066aaeb401cd21', speculative_config=SpeculativeConfig(method='dflash', model='/draft-repo/snapshots/bf582e4eacc1810f76
+61:(Worker pid=370) INFO 10-15 17:28:06 [gpu_worker.py:386] Using V2 Model Runner
+242:(EngineCore pid=274) INFO 10-15 17:31:50 [kv_cache_utils.py:2299] GPU KV cache size: 4,707,515 tokens, Maximum concurrency for 1,048,576 tokens per request: 4.49x
+400:(Worker_TP0 pid=370) INFO 10-15 17:37:47 [model_runner.py:1044] Graph capturing finished in 159 secs, took 0.80 GiB
+402:(Worker_TP1 pid=404) INFO 10-15 17:37:47 [model_runner.py:1044] Graph capturing finished in 159 secs, took 0.76 GiB
+forcewin registered on 2 rank files; guard init on 2
+hook sha256 15e93e236067567ffb9db7116986e8b732ef679e672c5b12b9d78f5884899d83; hook init wmax [8448]

@@ -1,0 +1,11 @@
+READING: NO READING: a gate failed (['GATE1', 'H5a-fc', 'H5g-fc', 'PS-prefix', 'C3-residue']); results are instrument findings only
+DIRECTION: None
+LIMITS: close propensity on this counterfactual fixture panel (re-tokenized histories, prespecified positions, pre-top_p); not a finishing hazard and not a GPQA completion probability; 3 runs per arm in one session with a fixed order; screens are operational, no significance or equivalence is claimed
+GATE-1 in-session None, recomputed FAIL
+FAIL     GATE1          {"in_session": null, "recomputed": "FAIL", "reading": "INVALID (structural): ['G1-coverage', 'G1-cache', 'G1-idx-struct', 'G1-CV-slot', 'G1-CV-book', 'G1-CV-cross', 'G1-CV-persist'] ; long-context ins
+FAIL     H5a-fc         []
+FAIL     H5g-fc         {"0": {"owned_layers": 6, "deltas": {"tail_w_stash.mism": 0, "tail_w_stash.null": 0, "idx_w_dec.mism": 0, "tail_w_seed.mism": 0, "idx_w_pf.s_mism": 0, "idx_w_pf.d7_fallback": 0, "pos.pos_contig": 0, "
+FAIL     PS-prefix      {"pages": 0, "page_mismatches": [["L1", "dump missing"], ["L4", "dump missing"], ["M3", "dump missing"], ["M4", "dump missing"], ["L3", "dump missing"], ["L5", "dump missing"], ["A8", "dump missing"],
+FAIL     C3-residue     {"failing": ["C3-align", "C3-cross", "C3-content", "C3-idx-struct"], "valid": false}
+valid runs: {'C1': False, 'C2': False, 'C3': False, 'LC1': False, 'LC2': False, 'LC3': False, 'D1': False, 'D2': False, 'D3': False, 'LD1': False, 'LD2': False, 'LD3': False}
+selection: {"exposure_ok": false, "within_arm_jaccard": [NaN, NaN, NaN, NaN, NaN, NaN], "across_arm_jaccard": [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN], "divergence_ok": false, "keys_change": false}

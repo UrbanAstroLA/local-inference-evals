@@ -379,10 +379,14 @@ check("amendments 19d-21f: B0 seed-1236 5.866 (2 x 10,559 s), K 0.2825 (0.1417 +
       and arms_ok(kk[0]) and kk[0]["gpu_hours"] == 0.2825 and arms_ok(hv[0]) and hv[0]["gpu_hours"] == 1.2117
       and f"{sum(c['gpu_hours'] for c in allcost if not str(c.get('step', '')).startswith('Hook validation attempt 2')):.2f}" == "63.22")
 hv2 = st("Hook validation attempt 2")
-check("amendment 21j: hook validation attempt 2 0.795 (2 x 1,431 s); hook item 2.0067 of 2.4; cumulative 64.01 GPU-hours",
+check("amendment 21j: hook validation attempt 2 0.795 (2 x 1,431 s); hook item 2.0067 of 2.4; cumulative 64.01 GPU-hours before the first contrast",
       len(hv2) == 1 and arms_ok(hv2[0]) and hv2[0]["gpu_hours"] == 0.795
       and round(hv[0]["gpu_hours"] + hv2[0]["gpu_hours"], 4) == 2.0067
-      and f"{sum(c['gpu_hours'] for c in allcost):.2f}" == "64.01")
+      and f"{sum(c['gpu_hours'] for c in allcost if not str(c.get('step', '')).startswith('First long-context contrast')):.2f}" == "64.01")
+fc = st("First long-context contrast attempt 1")
+check("amendment 22b: first contrast attempt 1 1.0861 (2 x 1,955 s), structural stop, no reading; cumulative 65.10 GPU-hours",
+      len(fc) == 1 and arms_ok(fc[0]) and fc[0]["gpu_hours"] == 1.0861
+      and f"{sum(c['gpu_hours'] for c in allcost):.2f}" == "65.10")
 
 print("\n## Checks (checks.jsonl)")
 for line in (HERE / "checks.jsonl").read_text().splitlines():

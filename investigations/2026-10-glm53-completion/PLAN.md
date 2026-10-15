@@ -1931,3 +1931,125 @@ First-contrast proposal (first-contrast/PROPOSAL.md, for independent review; not
   - the prefill null may be 0;
   - fixture overlaps;
   - 45-60 GB of window dumps.
+
+**Amendment 22 (2026-10-14; adopts the independent assessment "first long-context contrast: recommended amendments",
+relayed by the operator; before any first-contrast data).**
+
+**Option B:** the primary contrast plus the long-prompt / short-window control, with three repeats per condition and a
+budgeting target of a 4.29 occupied GPU-hour ceiling. Any added reference build or boundary check is repriced before
+authorization; the invalid-start allowance is not consumed silently. There is no separate validation session:
+validation is integrated, and the run stops before further injected runs if it fails.
+
+1. **Primary statistic kept,** with its limits stated: it measures close propensity on this counterfactual fixture
+   panel, not a finishing hazard or GPQA completion probability.
+   - **Kept:** per-fixture results, a question-weighted sensitivity, near-close and active groups, the common-tail
+     construction comparison, post-top_p probability and eligibility, and each actual stopping token separately.
+   - **Added:** an end-position-excluded sensitivity.
+   - A pre-mask change that stays outside the nucleus is a computational finding whose relevance to sampled termination
+     is unestablished.
+2. **No exact permutation claim.** C_r and D_r share a prefix construction, which makes three paired rounds, and the
+   order is fixed within one session. The three paired differences are reported explicitly. Complete separation and the
+   beyond-null rule are operational screens; no exact significance is claimed.
+3. **Stronger prefill null before launch.** A prefill reference at a different build length, or a validated different
+   batch shape, compared only on shared causal positions. An already planned reference warm is adapted if its cache
+   safety can be shown; otherwise one more independently salted rebuild is priced.
+   - **Kept:** fixture × layer × shared-position matching, exact cache accounting, per-fixture flags, and the pooled
+     gate with the original criteria beside it.
+   - **Correction:** N_pp = 0 does not force the limit to 0.1% when N_dd is nonzero.
+   - If the numerical gate fails, the long-context instrument is unvalidated under these bounds. B1 is not
+     automatically defective, and no threshold is revised after viewing the contrast.
+4. **Expanded envelope validated in-session, before the injected batches.** Long-context alignment and content checks
+   come from the clean runs and the reference builds, with reference warms moved earlier where practical. Explicit
+   checks:
+   - `WMAX` 8448 without truncation;
+   - absolute positions on cached prefixes;
+   - exact attribution in flattened and padded steps;
+   - both block crossings, and M3's selection-regime crossing;
+   - a clean prefix state after injected traffic.
+   The guard establishes that the injection cannot write into the shared cached prefix or its committed recurrent state,
+   with sampled before/after state checks if that protection is incomplete.
+5. **Convolution-state boundary coverage.** A small control around a block crossing, reusing the snapshot capability,
+   checks the actual convolution-state slot and its migration alongside KDA state and bookkeeping, against a matched
+   decode reference where feasible. If it needs substantial new instrumentation, it is costed separately and the
+   limitation is stated.
+6. **Long-prompt control kept.** It is named a history-construction and accumulated-decode-state comparison, not an
+   output-length experiment. Selected corrupted pools are reported quantitatively by fixture and layer.
+7. **Short stratum S omitted.** A labelled exploratory short-context comparison may later use attempt-2 records, after
+   the first-contrast definitions are frozen.
+8. **Readings:**
+
+   | Outcome | Reading |
+   |---|---|
+   | Selected keys and close probabilities both change beyond the null | supported local computational mechanism candidate; behavioural relevance assessed via post-top_p and eligibility; no GPQA explanation |
+   | Selected keys change, close probabilities do not resolvably change | no termination-propensity effect detected under this exposure and design; the mechanism is not excluded |
+   | Insufficient selected-key exposure | uninformative |
+
+   Direction matters. If D2 increases close propensity, that is consistent with more corrupted old-engine computation
+   helping termination. If it decreases it, that supports a harmful D2 effect, and stock 0.7.0 finishing more often
+   would then need an interaction or another contributor. "No effect detected by the prespecified screen" replaces
+   "equivalent within resolution".
+9. **Budget and stopping:**
+   - the amended analysis, reference design and cost are frozen before launch;
+   - the run stops on structural or long-context instrument failure, and an incomplete contrast stays incomplete;
+   - there is no automatic additional attempt, and no full GPQA pass follows from instrument validity or a local logit
+     effect.
+
+**Amendment 22a (2026-10-15; operator authorization "proceed", before any first-contrast data).** The first contrast runs
+as frozen: first-contrast/SHA256SUMS (186 files) has sha256 2bf5e4b2…, verified by the coordinator, and the DRY_RUN
+passed (240 requests, 0 plan failures).
+- **Pins:** image ac05230b…, hook 15e93e23….
+- **Order:** stage A (V0, LW1, LW2, C1, C2, CV); GATE-1 before any injected batch; stage B (D2, D1, LD2, LD1); then the
+  round-3 sentinel and residue checks.
+- **Limits:** ceiling 4.29 occupied GPU-hours, single attempt, no retry.
+- **Desktop load:** the usual graphics load on GPU 1 (Firefox and the desktop app's GPU process) is present and
+  recorded by the pre-flight, within the attempt-2 tolerance.
+
+**Amendment 22b (2026-10-15; first-contrast session result, recorded after the run).** The session stopped at the
+structural gate after C1: the client's quick structural check failed for all 8 C1 requests, with no hook errors.
+- **Not run:** C2, the CV control, GATE-1 and every injected batch.
+- **Reading:** NO READING. The contrast is incomplete and stays incomplete (amendment 22 §9).
+- **Cost:** 1.0861 occupied GPU-hours of the 4.29 single-attempt authorization. No retry is permitted under it.
+- **Initial observations, before diagnosis:**
+  - every request completed;
+  - C1-L3 committed 8,196 tokens, with 82,688 cached tokens on an 89,304-token warm prefix (19 whole blocks);
+  - several gate inputs (prefix sentinel dumps) were absent because their phases never ran.
+- A CPU diagnosis classifies the failure as a harness, plan or cache-accounting defect, or as an engine finding. Nothing
+  is interpreted about D2 or termination.
+
+**Amendment 22c (2026-10-15; diagnosis of the first-contrast structural stop, recorded after inspection;
+first-contrast/diagnosis-fc1/DIAGNOSIS-fc1.md, CPU only).** No instrument or engine fault was found. Every C1 request
+completed, `ids_equal` held 8 of 8, and there were 0 hook errors. The only failing sub-check was
+`cached_tokens == cached_expected`.
+
+1. **The plan expected one block too many from the cache** (a plan defect rooted in correct engine behaviour). The
+   engine recomputes the last token. DFlash counts as an EAGLE-type speculator, so the last matched block is dropped
+   (`GLM53_DFLASH_BOUNDARY_LOOKUP=0`). Prefix hits are whole 4,352-token blocks.
+   - **Correct invariant:** cached = max(0, (⌊(P−1)/4352⌋ − 1)·4352). The plan used ⌊P/4352⌋·4352.
+   - **Already in our records:** exact repeats in earlier sessions follow the rule (34/34, 17/17, 34/34).
+   - **Owned:** the plan was not checked against those records.
+   - Cache safety (P6) is unaffected. The prefix-sentinel dump range was placed in the privately recomputed block.
+2. **Eviction.** The 7 KDA groups store a state block at every 4,352-token boundary in the shared 1,275-block pool. That
+   limits prefix-cache reach to about 0.66 M tokens, against the plan's assumption of about 3.4 M. A warm round is
+   0.74 M, so M3's warm prefix was evicted before C1 read it.
+3. **The frozen G1-idx-struct page criterion fails even between two cold prefills of the same tokens at this context
+   length** (7 pages above 25% gross at the same M4 pages; pooled 0.77%). It was calibrated at short context, so it is
+   a calibration defect. As an observation in its own right, deep-layer pooled index-K is more fragile at long context.
+4. **C1's forced windows look valid on post-inspection re-check:** WMAX, absolute positions, once-only measurement,
+   attribution, all 8 in flight, the clean ledger, M3's regime crossing, and alignment against LW1 (top-1 0.973-0.997).
+   C1 is usable as a labelled instrument run, not as a pass. There is no C2, CV or D data.
+5. **The CPU tests missed it** because they checked the plan against its own rule using synthetic records. Nobody
+   compared the rule with measured cache hits or modelled KDA churn in the shared pool.
+
+**Fixes proposed for review (none applied):**
+- **F1:** the corrected cache rule everywhere.
+- **F2:** gate cache safety, and require exact counts only where a measurement depends on restored state.
+- **F3:** design within the measured reach.
+- **F4:** a fixed, staggered submission order.
+- **F5:** the prefix sentinel moved to the real last shared block.
+- **F6:** index-K page and early-layer criteria made relative to the long-context prefill null.
+- **F7:** a CPU replay of the session's requests through the engine's own KV-cache manager before freezing.
+- **F8:** the as-run gate kept as a regression fixture.
+
+**Cost and authorization:** the spent attempt cost 1.0861 GPU-hours, and the single-attempt authorization is
+exhausted. A new attempt needs a new operator authorization and independent review. Full option B with eviction
+designed out is estimated at about 2.77 GPU-hours.

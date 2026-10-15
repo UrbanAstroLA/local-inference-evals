@@ -1,0 +1,4 @@
+budget: spent 0.0 + this attempt's cap 4.286 (wall 7714s) <= approved 4.29 GPU-h; disk ok (>= 200 GB)
+DRY_RUN: budget gate, single attempt, disk, frozen hashes, image pin, client plan and plan check passed (plan_check: 240 requests, 0 failures)
+rc=0
+SHA256SUMS sha256 2bf5e4b2af349fdffb9d88e7f1baedeec07dbf37b095a6c2ad88b879ba5185d4 (186 files)

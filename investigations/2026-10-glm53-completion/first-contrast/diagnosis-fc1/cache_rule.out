@@ -1,0 +1,26 @@
+== quick_struct C1 sub-checks
+C1-L3   P  89304 warm  89304 same True  err None ids_equal True  W 8196 ct 8196  cached  82688 exp  87040 (19 vs 20 blocks) eagle-rule  82688 match True  FAILS ['cached']
+C1-M4   P  83416 warm  83416 same True  err None ids_equal True  W 8199 ct 8199  cached  78336 exp  82688 (18 vs 19 blocks) eagle-rule  78336 match True  FAILS ['cached']
+C1-A8   P 111896 warm 111896 same True  err None ids_equal True  W 8196 ct 8196  cached 104448 exp 108800 (24 vs 25 blocks) eagle-rule 104448 match True  FAILS ['cached']
+C1-L1   P  94512 warm  94512 same True  err None ids_equal True  W 8199 ct 8199  cached  87040 exp  91392 (20 vs 21 blocks) eagle-rule  87040 match True  FAILS ['cached']
+C1-L8   P 111896 warm 111896 same True  err None ids_equal True  W 8196 ct 8196  cached 104448 exp 108800 (24 vs 25 blocks) eagle-rule 104448 match True  FAILS ['cached']
+C1-M3   P  63488 warm  63488 same True  err None ids_equal True  W 8195 ct 8195  cached      0 exp  60928 (0 vs 14 blocks) eagle-rule  56576 match False  FAILS ['cached']
+C1-L5   P 112024 warm 112024 same True  err None ids_equal True  W 8194 ct 8194  cached 104448 exp 108800 (24 vs 25 blocks) eagle-rule 104448 match True  FAILS ['cached']
+C1-L4   P  72360 warm  72360 same True  err None ids_equal True  W 8194 ct 8194  cached  65280 exp  69632 (15 vs 16 blocks) eagle-rule  65280 match True  FAILS ['cached']
+other phases with cached != expected: []
+== scheduler
+L4 {'c1_first_seq': 1961, 'computed_before': 65280, 'warm_first_seq': 1587, 'warm_fin_seq': 1704, 'warm_mla_blocks': 17, 'c1_reused_warm_mla': 15} warm MLA re-allocated before lookup: []
+L1 {'c1_first_seq': 1963, 'computed_before': 87040, 'warm_first_seq': 1581, 'warm_fin_seq': 1674, 'warm_mla_blocks': 22, 'c1_reused_warm_mla': 20} warm MLA re-allocated before lookup: []
+L3 {'c1_first_seq': 1966, 'computed_before': 82688, 'warm_first_seq': 1622, 'warm_fin_seq': 1753, 'warm_mla_blocks': 21, 'c1_reused_warm_mla': 19} warm MLA re-allocated before lookup: []
+A8 {'c1_first_seq': 1970, 'computed_before': 104448, 'warm_first_seq': 1667, 'warm_fin_seq': 1811, 'warm_mla_blocks': 26, 'c1_reused_warm_mla': 24} warm MLA re-allocated before lookup: []
+M3 {'c1_first_seq': 1973, 'computed_before': 0, 'warm_first_seq': 1579, 'warm_fin_seq': 1624, 'warm_mla_blocks': 15, 'c1_reused_warm_mla': 0} warm MLA re-allocated before lookup: [{'seq': 1966, 'block': 344, 'warm_idx': 7, 'new_owner': '2-0-a26cadb3'}]
+M4 {'c1_first_seq': 1977, 'computed_before': 78336, 'warm_first_seq': 1704, 'warm_fin_seq': 1846, 'warm_mla_blocks': 20, 'c1_reused_warm_mla': 18} warm MLA re-allocated before lookup: []
+L8 {'c1_first_seq': 1983, 'computed_before': 104448, 'warm_first_seq': 1786, 'warm_fin_seq': 1960, 'warm_mla_blocks': 26, 'c1_reused_warm_mla': 24} warm MLA re-allocated before lookup: [{'seq': 1966, 'block': 568, 'warm_idx': 25, 'new_owner': '9-0-b2d7802b'}]
+L5 {'c1_first_seq': 1992, 'computed_before': 104448, 'warm_first_seq': 1740, 'warm_fin_seq': 1907, 'warm_mla_blocks': 26, 'c1_reused_warm_mla': 24} warm MLA re-allocated before lookup: []
+C1 admission order ['L4', 'L1', 'L3', 'A8', 'M3', 'M4', 'L8', 'L5'] ; warm completion order ['M3', 'L1', 'L4', 'L3', 'A8', 'M4', 'L5', 'L8']
+== LRU horizon {'free_seq': 1624, 'realloc_seq': 1966, 'prompt_and_decode_tokens_between': 657147, 'free_queue_median': 1154, 'blocks_per_4352_tokens': 7.64, 'note': 'first re-allocation of a warm-M3 MLA block (idx 7); its later-freed tail blocks and its earlier-freed KDA state blocks precede it in the LRU queue'}
+== prior sessions (exact repeats, P > 4352)
+   b0-mapguard/run-a3/client.jsonl {'repeat_requests': {'eagle_rule': 34}, 'exceptions': []}
+   phase2-stage2/client.jsonl {'repeat_requests': {'eagle_rule': 29, 'other': 6}, 'exceptions': [('warm', 'r5', 16240, 0), ('warm', 'r4', 16478, 0), ('warm', 'r3', 32478, 0), ('warm', 'r2', 64478, 26112), ('warm', 'r1', 64217, 0)]}
+   phase3/client.jsonl {'repeat_requests': {'eagle_rule': 17}, 'exceptions': []}
+   d7/step2/run-b1-a1/client.jsonl {'repeat_requests': {'eagle_rule': 34}, 'exceptions': []}
