@@ -1,0 +1,32 @@
+| file | engine cfg | arm | accept | conc | pools | wrong | % wrong | per-seed % | shadow agrees | wrong-pool classes (pooled over seeds) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| b1-r4-k3-a0.6.json | b1: DCP 1, ring 4, K=3 | positions | 0.6 | 1 | 121 | 51 | 42.1 | 50/46/30 | all | own-rejected-draft 51 |
+| b1-r4-k3-a0.6.json | b1: DCP 1, ring 4, K=3 | positions | 0.6 | 2 | 241 | 89 | 36.9 | 33/38/40 | all | own-rejected-draft 89 |
+| b1-r4-k3-a0.6.json | b1: DCP 1, ring 4, K=3 | positions | 0.6 | 8 | 967 | 392 | 40.5 | 39/42/40 | all | own-rejected-draft 392 |
+| b1-r4-k3-a0.77.json | b1: DCP 1, ring 4, K=3 | positions | 0.77 | 1 | 120 | 29 | 24.2 | 20/22/30 | all | own-rejected-draft 29 |
+| b1-r4-k3-a0.77.json | b1: DCP 1, ring 4, K=3 | positions | 0.77 | 2 | 242 | 51 | 21.1 | 20/20/24 | all | own-rejected-draft 51 |
+| b1-r4-k3-a0.77.json | b1: DCP 1, ring 4, K=3 | positions | 0.77 | 8 | 966 | 175 | 18.1 | 18/19/18 | all | own-rejected-draft 175 |
+| b1-r4-k3-a0.85.json | b1: DCP 1, ring 4, K=3 | positions | 0.85 | 1 | 120 | 19 | 15.8 | 20/12/15 | all | own-rejected-draft 19 |
+| b1-r4-k3-a0.85.json | b1: DCP 1, ring 4, K=3 | positions | 0.85 | 2 | 242 | 29 | 12.0 | 7/17/11 | all | own-rejected-draft 29 |
+| b1-r4-k3-a0.85.json | b1: DCP 1, ring 4, K=3 | positions | 0.85 | 8 | 965 | 119 | 12.3 | 11/13/13 | all | own-rejected-draft 119 |
+| b1-r4-k5-a0.72.json | b1: DCP 1, ring 4, K=5 | positions | 0.72 | 1 | 120 | 69 | 57.5 | 60/60/52 | all | own-rejected-draft 69 |
+| b1-r4-k5-a0.72.json | b1: DCP 1, ring 4, K=5 | positions | 0.72 | 2 | 242 | 125 | 51.7 | 45/52/58 | all | own-rejected-draft 125 |
+| b1-r4-k5-a0.72.json | b1: DCP 1, ring 4, K=5 | positions | 0.72 | 8 | 972 | 433 | 44.5 | 47/45/42 | all | own-rejected-draft 433 |
+| b1-r8-k3-a0.77.json | b1: DCP 1, ring 8, K=3 | positions | 0.77 | 1 | 120 | 0 | 0.0 | 0/0/0 | all |  |
+| b1-r8-k3-a0.77.json | b1: DCP 1, ring 8, K=3 | positions | 0.77 | 2 | 242 | 0 | 0.0 | 0/0/0 | all |  |
+| b1-r8-k3-a0.77.json | b1: DCP 1, ring 8, K=3 | positions | 0.77 | 8 | 966 | 0 | 0.0 | 0/0/0 | all |  |
+| b1-r8-k5-a0.72.json | b1: DCP 1, ring 8, K=5 | positions | 0.72 | 1 | 120 | 0 | 0.0 | 0/0/0 | all |  |
+| b1-r8-k5-a0.72.json | b1: DCP 1, ring 8, K=5 | positions | 0.72 | 2 | 242 | 0 | 0.0 | 0/0/0 | all |  |
+| b1-r8-k5-a0.72.json | b1: DCP 1, ring 8, K=5 | positions | 0.72 | 8 | 972 | 0 | 0.0 | 0/0/0 | all |  |
+| v070-a0.72.json | 070: DCP 2, ring 4, K=5 | positions | 0.72 | 1 | 120 | 69 | 57.5 | 60/60/52 | all | own-rejected-draft 69 |
+| v070-a0.72.json | 070: DCP 2, ring 4, K=5 | positions | 0.72 | 2 | 242 | 127 | 52.5 | 46/54/58 | all | own-rejected-draft 125, missing 2 |
+| v070-a0.72.json | 070: DCP 2, ring 4, K=5 | positions | 0.72 | 8 | 972 | 444 | 45.7 | 48/46/43 | all | own-rejected-draft 433, missing 11 |
+| v070-a0.72.json | 070: DCP 2, ring 4, K=5 | shipped | 0.72 | 1 | 120 | 120 | 100.0 | 100/100/100 | all | missing+own-other-position 34, own-other-position+own-rejected-draft 32, own-other-position 28, missing+own-other-position+own-rejected-draft 26 |
+| v070-a0.72.json | 070: DCP 2, ring 4, K=5 | shipped | 0.72 | 2 | 242 | 242 | 100.0 | 100/100/100 | all | foreign+own-other-position 90, foreign+missing 67, missing 33, foreign 20, foreign+missing+own-other-position 13, own-other-position 8, missing+own-other-position 5, missing+own-other-position+own-rejected-draft 3, foreign+own-other-position+own-rejected-draft 1, foreign+missing+own-rejected-draft 1, missing+own-rejected-draft 1 |
+| v070-a0.72.json | 070: DCP 2, ring 4, K=5 | shipped | 0.72 | 8 | 972 | 972 | 100.0 | 100/100/100 | all | foreign 754, foreign+own-other-position 195, own-other-position 16, foreign+missing 2, missing+own-other-position+own-rejected-draft 1, missing+own-other-position 1, missing+own-rejected-draft 1, foreign+own-rejected-draft 1, foreign+missing+own-other-position 1 |
+| v091-dcp2-r8-k3-a0.77.json | 091: DCP 2, ring 8, K=3 | positions | 0.77 | 1 | 120 | 0 | 0.0 | 0/0/0 | all |  |
+| v091-dcp2-r8-k3-a0.77.json | 091: DCP 2, ring 8, K=3 | positions | 0.77 | 2 | 242 | 0 | 0.0 | 0/0/0 | all |  |
+| v091-dcp2-r8-k3-a0.77.json | 091: DCP 2, ring 8, K=3 | positions | 0.77 | 8 | 966 | 0 | 0.0 | 0/0/0 | all |  |
+| v091-dcp2-r8-k3-a0.77.json | 091: DCP 2, ring 8, K=3 | shipped | 0.77 | 1 | 120 | 120 | 100.0 | 100/100/100 | all | missing 60, missing+own-other-position 40, own-other-position 20 |
+| v091-dcp2-r8-k3-a0.77.json | 091: DCP 2, ring 8, K=3 | shipped | 0.77 | 2 | 242 | 242 | 100.0 | 100/100/100 | all | foreign+missing 89, foreign+own-other-position 79, missing 51, missing+own-other-position 16, foreign+missing+own-other-position 7 |
+| v091-dcp2-r8-k3-a0.77.json | 091: DCP 2, ring 8, K=3 | shipped | 0.77 | 8 | 966 | 966 | 100.0 | 100/100/100 | all | foreign 641, foreign+own-other-position 140, foreign+missing 137, own-other-position 17, missing+own-other-position 15, foreign+missing+own-other-position 10, missing 6 |

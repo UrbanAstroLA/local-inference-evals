@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-10-16, later (completion investigation, amendments 22k-22l): contrast line closed; mechanism ranking
+
+Contents unchanged. No run or reading is added.
+
+- **`PLAN.md`**: amendments 22k (independent review's disposition after the retry) and 22l (the zero-GPU mechanism
+  ranking and the operator's decision).
+- **New `first-contrast/retry/review-22k/`**: the bounded CPU review of the failed gates and the prospective validation
+  design.
+- **New `mechanism-ranking/`**: the ranking, its sources with hashes, and CPU receipts (tail-ring harness exposure runs,
+  served speculative-decoding metrics, a long-reply power simulation). Substitutions are in `PUBLIC-COPIES-22l.txt`.
+- **Investigation `README.md`**: disposition, ranking, and new evidence in the step-6 open question. **`LEDGER.md`**.
+
 ## 2026-10-16 (completion investigation, amendments 22f-22j): first contrast retry, no reading
 
 Contents unchanged. No reading is added.

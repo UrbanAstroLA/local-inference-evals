@@ -1286,7 +1286,23 @@ the real decode path and records termination-token probabilities. 1.2117 of 2.4 
       median ratio to the baseline difference is 0.98 / 0.93. The same 2× rule applied to a pre-injection baseline
       fires 2 / 22 times.
     - Neither shows contamination of the cached prefix; both point to gate limits built on too little baseline data.
-  - **Next:** a re-run with gates corrected before new data, or closing the contrast line, goes to independent review.
+  - **Disposition** (amendment 22k, independent review): no repeat of the full contrast; the line closes as
+    **unresolved**, not as evidence against full-history D2 effects. A bounded CPU review
+    ([`retry/review-22k/REVIEW-22k.md`](first-contrast/retry/review-22k/REVIEW-22k.md)) compares H5f's 176 judged units
+    like with like (injected runs 10 gross of 286 unit-runs; clean arm and nulls 1-6 of 176 on the same units; the
+    gross ones are 4 M4 units, gross in the clean arm and the prefill null too) and assesses the sentinel's
+    calibration (judged symmetrically, the post-injection restoration is the odd one out in 3 SSM / 12 conv rows, the
+    pre-injection ones in 3 / 38 and 2 / 22). This bears on the gates' calibration; it does not show that the ledger
+    is right or that contamination was absent. A prospective instrument design is documented, not implemented
+    ([`VALIDATION-DESIGN.md`](first-contrast/retry/review-22k/VALIDATION-DESIGN.md)).
+- **Mechanism ranking** (amendment 22l, zero GPU; [`mechanism-ranking/RANKING.md`](mechanism-ranking/RANKING.md)):
+  - **0.7.0's ring-4 / depth-5 rejected-draft defect:** in the CPU harness at the served acceptance and concurrency,
+    D2 already makes 100% of 0.7.0's decode-built pools wrong with or without it; its own signature appears in 3 of 972
+    wrong pools at 8 in flight. A contrast on B1 would measure a computation 0.7.0 never served. Not funded.
+  - **0.7.0's atomic-slot top-k merge:** a launch- and rank-dependent loss within the column-511 class, which B1
+    already corrects and whose correction alone was null on empty replies. Not funded.
+  - **Next:** the decision returned to a stock 0.7.0 replication or stopping work on the historical gap. The operator
+    chose the replication route; its package is re-frozen and reviewed before any GPU authorization.
 
 ### Observations recorded separately
 
@@ -1316,7 +1332,7 @@ Stated with their evidence so far.
 | Do long replies terminate less often on 0.9.1 than on 0.7.0, and if so why? | Hypothesis from a post-hoc analysis (amendment 19f; pooled configurations, small counts; audit pending under amendment 20): replies reach ≥ 100k tokens at similar rates on every engine, but P(finish \| ≥ 100k) is 0.71 on 0.7.0, 0.40 on the 0.9.1 family and 0.12 on B0+B1; beyond about 150k the 0.9.1 family almost never finishes. Decode behaviour at contexts of about 64-100k tokens and beyond was not measured by any probe so far. Whether the cause is 0.9.1 failing to terminate or 0.7.0 terminating for another reason is open. |
 | What do the targeted invariants on B0 leave unexamined? | Amendment 17 checked block-table and slot-mapping construction under real scheduling, including the index-K readers' mappings, and found only D7. Still not ruled down: copy-on-write prefix paths (unreachable in that workload); contention-dependent races; the values the index-K readers compute (B12x paged top-k and the compiled prefill readers); the sparse-MLA extend reader under graph replay; the mamba postprocess kernel; communication paths other than the tested transport (PyNCCL above 48 rows was only cross-checked; the owner exchange; contention with model kernels); the mixed-quant MoE path, whose reference harness was deferred (amendment 16). Rank 1's cache tensors were not driven by the cache fixture (same geometry per tensor; amendment 17 checked both ranks' mappings in serving). No evidence yet points to any of these. |
 | Do legitimate numerical differences shift how often long deliberation runs past the cap? | Non-completion is a low-rate tail event (about 1 in 10 fresh draws at these caps on two hard questions); small pilots cannot resolve rates near 2.7% vs 0.7% of replies. |
-| Which part of the 0.7.0 layout bundle goes with the higher disagreement? | Step 6 changed EP, DCP, MLA ownership, KV record, draft pages and the top-k merge path together, and still differs from stock 0.7.0 in the top-k merge path, draft depth (×3 vs ×5), vision and engine code. Inconclusive by component. |
+| Which part of the 0.7.0 layout bundle goes with the higher disagreement? | Step 6 changed EP, DCP, MLA ownership, KV record, draft pages and the top-k merge path together, and still differs from stock 0.7.0 in the top-k merge path, draft depth (×3 vs ×5), vision and engine code. Inconclusive by component. Added 2026-10-16 (amendment 22l; [`mechanism-ranking/`](mechanism-ranking/RANKING.md)): in the CPU tail-ring harness, 0.9.1's kernels under 0.7.0's DCP2 mapping write 100% of decode-built index-K pools wrong even at one request, so at the concurrency 1 of steps 4-6 the D2 exposure is 100% (0.7.0), 100% (0.7.0 with the ring and seed-stride fixes), 100% (step 6) and 0% (0.9.1 as shipped), the same split as the measured disagreement. Since prefill rebuilds index-K correctly, D2 alone could produce step 6's rise without a separate layout effect. Untested; the harness scheduler, keys and drafts are synthetic, and the measure covers continuation after the reply had ended. |
 | Why does prompt 0 not follow the other prompts in step 6? | One prompt, two runs; inconclusive. |
 
 ## Limits

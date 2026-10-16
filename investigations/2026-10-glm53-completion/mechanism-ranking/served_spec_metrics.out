@@ -1,0 +1,9 @@
+glm53-flash-exl3-k3.25@tpurtell+ps.server.log
+  lines 2751 K=5 accepted/drafted=0.410 mean acceptance length=3.05 per-pos=[0.71, 0.503, 0.363, 0.269, 0.206]
+  status lines 2752; share running>=8: 0.87; share running 1-2: 0.06; share running 3-4: 0.02; max kv 85.8
+glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps.server.log
+  lines 1995 K=3 accepted/drafted=0.596 mean acceptance length=2.79 per-pos=[0.755, 0.579, 0.454]
+  status lines 1996; share running>=8: 0.81; share running 1-2: 0.08; share running 3-4: 0.08; max kv 41.6
+glm53-flash-exl3-k3.25@tpurtell+v0.9.1.server.log
+  lines 858 K=3 accepted/drafted=0.598 mean acceptance length=2.79 per-pos=[0.756, 0.58, 0.456]
+  status lines 859; share running>=8: 0.92; share running 1-2: 0.03; share running 3-4: 0.02; max kv 39.6

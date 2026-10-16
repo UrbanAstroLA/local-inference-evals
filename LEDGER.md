@@ -559,6 +559,24 @@ What was asked, run, found, corrected and withdrawn, in date order.
   review. Cumulative 68.03 GPU-hours.
   [First contrast](investigations/2026-10-glm53-completion/README.md#instrument-validation-k-and-the-force-history-hook-amendment-21).
 
+**2026-10-16, later. Contrast line closed as unresolved; mechanism ranking; replication route (amendments 22k-22l).**
+- **Disposition (22k, independent review):** no repeat of the full contrast. The line closes as unresolved, not as
+  evidence against whole-history D2 effects.
+- **Bounded CPU review** of the failed gates:
+  - On the 176 units H5f judged, the injected runs' gross count (10 of 286 unit-runs) lies within the clean arm's and
+    the nulls' (1-6 of 176). The gross units are 4 fragile M4 units, gross without injection too.
+  - Judged symmetrically, the post-injection sentinel state is the odd one out no more often than the pre-injection
+    ones.
+  - This bears on calibration only; it shows neither that the ledger is right nor that contamination was absent.
+  - A prospective instrument design is documented, not implemented.
+- **Zero-GPU mechanism ranking (22l):** 0.7.0's ring-4 / depth-5 rejected-draft defect is masked by D2 in served
+  0.7.0, and its atomic-slot merge sits inside a class B1 already corrects. Neither earns a GPU experiment.
+- **New open question:** D2 exposure at one request (CPU harness) splits steps 4-6 the same way as their measured
+  disagreement, so step 6's layout signal may not be separate from D2. Untested.
+- **Next:** the operator chose the stock 0.7.0 replication route. Its draft (expected about 23 GPU-hours) is re-frozen
+  and goes to review and authorization before any data. No GPU-hours added (cumulative 68.03).
+  [Investigation](investigations/2026-10-glm53-completion/README.md#open-questions).
+
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough
   qualification. They also said the D7 path "cannot run" where the basis is a reconstruction. These are reworded in the

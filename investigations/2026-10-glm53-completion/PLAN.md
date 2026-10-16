@@ -2276,3 +2276,60 @@ launch.
     injected batch. A limit set from one baseline pair per row does not separate PS-c from the baselines' own spread.
 - **Not established:** whether either gate would pass under a redesign; no redesign is adopted here. Any further
   session needs a new dated amendment before data, as before.
+
+**Amendment 22k (2026-10-16; adopts the independent review "disposition after first-contrast retry", relayed by the
+operator, before any further work).**
+- **Decision:** the full contrast is not repeated solely to repair the failed gates. The frozen NO READING verdict, the
+  descriptive measurements, the post-hoc diagnoses (labelled as such) and the verified B1 checkpoint and corrections are
+  retained. This experiment line closes as **unresolved**, not as evidence against full-history D2 effects.
+- **Why no repeat now:** the termination contrast (0.106 against 0.200 nats) and selection divergence (not beyond the
+  within-arm null) were also unmet. They stay descriptive, because structural gates failed, but they give no compelling
+  signal that a near-identical repeat would resolve the mechanism. Complete separation of three runs per arm does not
+  override those screens.
+- **What the session establishes.** *Operationally:* the long-window execution and cache schedule worked; every planned
+  request completed; forcing, attribution, injection placement and cache safety passed; the measured shared MLA /
+  index-K pages were unchanged; the remaining numerical criteria were inadequate or unresolved. *Scientifically:* no
+  supported D2-to-termination reading; no exclusion of accumulated full-history D2 effects; no explanation of 0.7.0's
+  completion advantage.
+- **Bounded CPU review (existing records only), to test whether the failures fit the proposed explanations:**
+  - *H5f, like with like:* the exact clean-labelled fixture / rank / layer / pool units, compared with the same units in
+    the clean arm and in the prefill reference; counts and identities, not percentages alone; M4's earlier fragility
+    flags kept. No pool is removed and H5f is not dropped because it failed; H5g (placement) does not replace the
+    content check.
+  - *Sentinel:* the original component-wise failures retained; exact-equality cases, per-component distances, both
+    baseline orientations, fixture and layer concentration, and whether failures coincide with unusually small baseline
+    denominators. The mirror comparison is evidence that the single-pair ratio gate is unstable, not proof that
+    post-injection contamination was absent. No retrospective PASS is sought.
+- **Instrument:** a prospective validation design is documented for future use (exact structural checks; content
+  controls matched to the judged subset; multiple clean sentinel baselines; separate SSM and convolution limits;
+  planted-fault sensitivity; direct inspection of cached state before and after treatment where feasible). It is not
+  implemented or GPU-validated until a specified experiment needs it.
+- **Next work targets a different uncertainty:** a zero-GPU ranking of mechanisms that differ between releases and
+  matter for long decode, starting with 0.7.0's ring-4 / depth-5 rejected-draft defect (the index-K tail ring of 4
+  entries against a 6-token verify window at 5 drafts, fixed in engine 0.9.0) and its atomic-slot top-k merge.
+  Each needs a concrete mechanism, evidence of exposure in served execution, a discriminating measurement,
+  a costed experiment, and a result that would change the next decision. Neither arm is launched automatically. If no
+  economical mechanism experiment emerges, the decision returns to funding a stock 0.7.0 replication or stopping work
+  on the historical gap.
+- **Reporting:** verified correctness defects are reportable independently of the unresolved completion question, each
+  separating the demonstrated defect and correction, the verified serving coverage, and the unestablished completion
+  impact. Publication stays the operator's decision.
+
+**Amendment 22l (2026-10-16; zero-GPU mechanism ranking and operator decision, before any further GPU work).**
+- **Ranking** (`mechanism-ranking/`, CPU only; the tail-ring harness of `tail-fix/two-rank/` with configuration
+  overrides, on the 0.7.0, 0.9.1 and B1 images):
+  - *Ring-4 / depth-5 rejected-draft defect (0.7.0, fixed in 0.9.0):* at acceptance 0.72 and 1, 2 and 8 requests, 0.7.0
+    as released writes 100% of decode-completed pools wrong with or without it, because of D2. With positions passed
+    (D2 removed) it leaves 57.5 / 52.5 / 45.7% wrong. At 8 requests, 3 of 972 wrong pools carry its signature
+    [M harness]. Step 5 removed it from 0.7.0 with D2 kept and measured no change in disagreement [M]. Criterion 5 not
+    met: not funded.
+  - *Atomic-slot top-k merge (0.7.0):* real and launch-dependent, inside the column-511 class B1 corrects; that
+    correction alone was null on empty replies (15 vs 16). Criterion 5 not met: not funded.
+  - *Observation added as an open question [I, with M harness]:* 0.9.1's kernels under 0.7.0's DCP2 mapping write 100%
+    of decode pools wrong at one request, so D2 exposure across steps 4-6 matches their disagreement split. Step 6's
+    rise may not be separate from D2. Untested; it says nothing about completion.
+  - The harness's scheduler, keys and drafts are synthetic; its percentages describe exposure, not served outcomes.
+- **Operator decision:** "publish and proceed", taken as the replication route the ranking leaves. The stock 0.7.0
+  replication draft (expected 22.97 GPU-hours, valid-run ceiling 26.45, maximum 35.0 as drafted before the long-reply
+  framing) is re-frozen: seed policy (recorded or fresh), the long-reply finishing secondary and its power, and
+  current tooling. It goes to independent review and a GPU authorization before any data.

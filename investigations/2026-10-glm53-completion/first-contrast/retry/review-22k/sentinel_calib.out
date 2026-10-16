@@ -1,0 +1,44 @@
+== ssm: 544 rows (8 fixtures x 2 ranks x KDA layers)
+  exact equality: PS-a = PS-b in 48 rows; in all of them PS-c = PS-a: True; by fixture {'L1': 6, 'L4': 6, 'M3': 6, 'M4': 6, 'L3': 6, 'L5': 6, 'A8': 6, 'L8': 6}; by layer {0: 16, 1: 16, 2: 16}
+  rel_ab over the 496 non-identical rows: median 0.0304, p10 0.0065, p90 0.0743, max 0.1886
+  rel_ac over the 496 non-identical rows: median 0.0294, p10 0.0068, p90 0.0745, max 0.1795
+  rel_bc over the 496 non-identical rows: median 0.0302, p10 0.0066, p90 0.0694, max 0.1837
+  fail, reference PS-a (the gate): 3; reference PS-b: 3; both: 3
+  mirror (a pre-injection phase judged against the other two): PS-b vs (PS-a, PS-c) 2; PS-a vs (PS-b, PS-c) 7
+  failing rows by fixture {'L1': 1, 'M3': 2}; by layer {5: 1, 6: 2}; rank pairs (same fixture and layer on both ranks): 1
+  small denominators: percentile of each failing row's rel(PS-a, PS-b) within its fixture and within its layer
+   M3 r0 L6  ab 0.0046 (fixture pct  6.5, layer pct  6.2) ac 0.0115 bc 0.0115 ratio 2.48; ac's pct within layer 87.5
+   M3 r1 L6  ab 0.0057 (fixture pct 11.3, layer pct 12.5) ac 0.0131 bc 0.0132 ratio 2.31; ac's pct within layer 93.8
+   L1 r0 L5  ab 0.0041 (fixture pct  4.8, layer pct 43.8) ac 0.0092 bc 0.0086 ratio 2.23; ac's pct within layer 87.5
+  rows in the lowest decile of rel(PS-a, PS-b) within their layer: 31, of which failing 1; other rows: 465, failing 2
+== conv: 544 rows (8 fixtures x 2 ranks x KDA layers)
+  exact equality: PS-a = PS-b in 48 rows; in all of them PS-c = PS-a: True; by fixture {'L1': 6, 'L4': 6, 'M3': 6, 'M4': 6, 'L3': 6, 'L5': 6, 'A8': 6, 'L8': 6}; by layer {0: 16, 1: 16, 2: 16}
+  rel_ab over the 496 non-identical rows: median 0.0531, p10 0.0107, p90 0.2012, max 0.3922
+  rel_ac over the 496 non-identical rows: median 0.0488, p10 0.0086, p90 0.1598, max 0.3568
+  rel_bc over the 496 non-identical rows: median 0.0537, p10 0.0075, p90 0.1386, max 0.2650
+  fail, reference PS-a (the gate): 13; reference PS-b: 12; both: 12
+  mirror (a pre-injection phase judged against the other two): PS-b vs (PS-a, PS-c) 22; PS-a vs (PS-b, PS-c) 44
+  failing rows by fixture {'L1': 1, 'L4': 4, 'M3': 2, 'L3': 2, 'A8': 2, 'L8': 2}; by layer {4: 2, 6: 4, 12: 2, 13: 4, 16: 1}; rank pairs (same fixture and layer on both ranks): 6
+  small denominators: percentile of each failing row's rel(PS-a, PS-b) within its fixture and within its layer
+   M3 r1 L6  ab 0.0048 (fixture pct  9.7, layer pct 12.5) ac 0.0398 bc 0.0397 ratio 8.33; ac's pct within layer 100.0
+   M3 r0 L6  ab 0.0046 (fixture pct  6.5, layer pct  6.2) ac 0.0375 bc 0.0374 ratio 8.24; ac's pct within layer 93.8
+   L8 r1 L6  ab 0.0049 (fixture pct  9.7, layer pct 25.0) ac 0.0208 bc 0.0207 ratio 4.25; ac's pct within layer 62.5
+   L8 r0 L6  ab 0.0048 (fixture pct  8.1, layer pct 18.8) ac 0.0202 bc 0.0202 ratio 4.21; ac's pct within layer 56.2
+   L4 r1 L12 ab 0.0098 (fixture pct 22.6, layer pct 12.5) ac 0.0390 bc 0.0386 ratio 4.00; ac's pct within layer 87.5
+   L4 r0 L12 ab 0.0096 (fixture pct 21.0, layer pct  6.2) ac 0.0372 bc 0.0367 ratio 3.87; ac's pct within layer 81.2
+   L4 r0 L13 ab 0.0106 (fixture pct 24.2, layer pct  6.2) ac 0.0297 bc 0.0295 ratio 2.80; ac's pct within layer 31.2
+   L4 r1 L13 ab 0.0107 (fixture pct 25.8, layer pct 12.5) ac 0.0299 bc 0.0296 ratio 2.79; ac's pct within layer 37.5
+   L3 r0 L13 ab 0.0168 (fixture pct  4.8, layer pct 31.2) ac 0.0443 bc 0.0435 ratio 2.64; ac's pct within layer 87.5
+   A8 r1 L4  ab 0.0030 (fixture pct  1.6, layer pct 18.8) ac 0.0077 bc 0.0075 ratio 2.61; ac's pct within layer 100.0
+   L3 r1 L13 ab 0.0170 (fixture pct  8.1, layer pct 37.5) ac 0.0442 bc 0.0433 ratio 2.60; ac's pct within layer 81.2
+   A8 r0 L4  ab 0.0030 (fixture pct  3.2, layer pct 25.0) ac 0.0076 bc 0.0074 ratio 2.56; ac's pct within layer 93.8
+   L1 r0 L16 ab 0.0197 (fixture pct 24.2, layer pct 12.5) ac 0.0400 bc 0.0394 ratio 2.03; ac's pct within layer 75.0
+  rows in the lowest decile of rel(PS-a, PS-b) within their layer: 31, of which failing 3; other rows: 465, failing 10
+
+== symmetric odd-one-out count (each phase farther than 2x from BOTH others than they are from each other)
+  ssm: PS-a (before the injection) odd one out in 3 of 496 rows (both ranks at the same fixture and layer: 1); fixtures {'L3': 3}
+  ssm: PS-b (before the injection) odd one out in 2 of 496 rows (both ranks at the same fixture and layer: 0); fixtures {'M4': 1, 'L5': 1}
+  ssm: PS-c (after the injection) odd one out in 3 of 496 rows (both ranks at the same fixture and layer: 1); fixtures {'L1': 1, 'M3': 2}
+  conv: PS-a (before the injection) odd one out in 38 of 496 rows (both ranks at the same fixture and layer: 18); fixtures {'L1': 4, 'L3': 32, 'A8': 2}
+  conv: PS-b (before the injection) odd one out in 22 of 496 rows (both ranks at the same fixture and layer: 11); fixtures {'L1': 2, 'L4': 4, 'M3': 2, 'M4': 4, 'L5': 10}
+  conv: PS-c (after the injection) odd one out in 12 of 496 rows (both ranks at the same fixture and layer: 6); fixtures {'L4': 4, 'M3': 2, 'L3': 2, 'A8': 2, 'L8': 2}

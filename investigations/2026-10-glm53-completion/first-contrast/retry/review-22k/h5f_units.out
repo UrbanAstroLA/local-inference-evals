@@ -1,0 +1,19 @@
+clean-labelled units (fixture, rank, layer, window pool): 176 | by fixture: {'L3': 22, 'L4': 33, 'M3': 33, 'M4': 88} | labelled clean in 1/2/3 D runs: {1: 110, 2: 22, 3: 44}
+  D runs: unit-runs 286, gross 10
+  C1    on the same units: measured 176, gross 1
+  C2    on the same units: measured 176, gross 5
+  C3    on the same units: measured 176, gross 6
+  N_dd  on the same units: measured 176, gross 6
+  N_pp  on the same units: measured 176, gross 4
+units gross in any D run:
+  M4 r0 L23 pool 3  D {'D1': 0.328, 'D2': 0.307, 'D3': 0.306} | C1 0.226 C2 0.305 C3 0.28 | N_dd 0.211 N_pp 0.289 | F6 flags -
+  M4 r1 L27 pool 3  D {'D1': 0.532, 'D2': 0.449, 'D3': 0.373} | C1 0.236 C2 0.464 C3 0.354 | N_dd 0.431 N_pp 0.444 | F6 flags -
+  M4 r1 L27 pool 5  D {'D2': 0.304} | C1 0.309 C2 0.357 C3 0.334 | N_dd 0.195 N_pp 0.271 | F6 flags -
+  M4 r1 L43 pool 3  D {'D1': 0.5, 'D2': 0.32, 'D3': 0.404} | C1 0.209 C2 0.469 C3 0.355 | N_dd 0.435 N_pp 0.406 | F6 flags -
+units gross in a clean-arm or null comparison but in no D run:
+  M4 r0 L23 pool 8  D {'D3': 0.192} | C1 0.209 C2 0.084 C3 0.251 | N_dd 0.236 N_pp 0.18
+  M4 r1 L27 pool 8  D {'D3': 0.205} | C1 0.213 C2 0.141 C3 0.241 | N_dd 0.286 N_pp 0.194
+  M4 r1 L39 pool 5  D {'D2': 0.127} | C1 0.232 C2 0.186 C3 0.296 | N_dd 0.305 N_pp 0.192
+  M4 r1 L43 pool 2  D {'D1': 0.152, 'D2': 0.137, 'D3': 0.105} | C1 0.131 C2 0.371 C3 0.177 | N_dd 0.436 N_pp 0.225
+  M4 r1 L43 pool 4  D {'D2': 0.08} | C1 0.191 C2 0.228 C3 0.14 | N_dd 0.336 N_pp 0.1
+where the clean-labelled units sit: window pools {0: 22, 1: 22, 2: 11, 3: 11, 4: 11, 5: 11, 7: 11, 8: 11, 1707: 11, 1737: 11, 1739: 11, 1780: 11, 1784: 11, 1791: 11}
