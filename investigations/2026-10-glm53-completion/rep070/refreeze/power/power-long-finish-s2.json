@@ -1,0 +1,190 @@
+{
+ "observed": {
+  "v091": {
+   "at_risk": 25,
+   "finished": 10,
+   "questions": 15,
+   "passes": 3
+  },
+  "old070": {
+   "at_risk": 14,
+   "finished": 10,
+   "questions": 11,
+   "passes": 2
+  }
+ },
+ "fits": {
+  "v091": {
+   "fit_reach": {
+    "mu": 0.04208754208754209,
+    "s": 1.0204945764167686,
+    "a": 0.042950108435049185,
+    "b": 0.9775444679817193,
+    "loglik": -81.4532963440946,
+    "at_bound": false,
+    "pooled": 0.04208754208754209
+   },
+   "fit_finish": {
+    "mu": 0.4,
+    "s": 2.0,
+    "a": 0.8,
+    "b": 1.2,
+    "loglik": -16.82531334552914,
+    "at_bound": true,
+    "pooled": 0.4,
+    "imposed_s": 2.0
+   }
+  },
+  "old070": {
+   "fit_reach": {
+    "mu": 0.03535353535353535,
+    "s": 1.4791083881682088,
+    "a": 0.05229171069281546,
+    "b": 1.4268166774753932,
+    "loglik": -54.473715569528494,
+    "at_bound": false,
+    "pooled": 0.03535353535353535
+   },
+   "fit_finish": {
+    "mu": 0.7142857142857143,
+    "s": 2.0,
+    "a": 1.4285714285714286,
+    "b": 0.5714285714285714,
+    "loglik": -8.375776244443841,
+    "at_bound": true,
+    "pooled": 0.7142857142857143,
+    "imposed_s": 2.0
+   }
+  }
+ },
+ "sims": 4000,
+ "boot": 1000,
+ "seed": 20261016,
+ "finish_s": 2.0,
+ "results": [
+  {
+   "scenario": "S1: rep = old 0.7.0 record (reach and finish)",
+   "mean_at_risk": 20.9,
+   "mean_finished": 15.12,
+   "P_no_rep_reply_at_risk": {
+    "P": 0.0,
+    "mc_se": 0.0
+   },
+   "P_detect_finishing_advantage_over_v091_(CI_lo>0)": {
+    "P": 0.57,
+    "mc_se": 0.008
+   },
+   "P_detect_finishing_deficit_vs_old070_(CI_hi<0)": {
+    "P": 0.003,
+    "mc_se": 0.001
+   },
+   "P_CI_excludes_0_either_direction_vs_v091": {
+    "P": 0.57,
+    "mc_se": 0.008
+   },
+   "P_CI_excludes_0_either_direction_vs_old070": {
+    "P": 0.017,
+    "mc_se": 0.002
+   },
+   "P_unclustered_fisher_one_sided_vs_v091_p<0.05": {
+    "P": 0.621,
+    "mc_se": 0.008
+   },
+   "median_CI_width_vs_v091": 0.551,
+   "median_CI_width_vs_old070": 0.579
+  },
+  {
+   "scenario": "S2: rep = 0.9.1 record (reach and finish)",
+   "mean_at_risk": 25.05,
+   "mean_finished": 9.88,
+   "P_no_rep_reply_at_risk": {
+    "P": 0.0,
+    "mc_se": 0.0
+   },
+   "P_detect_finishing_advantage_over_v091_(CI_lo>0)": {
+    "P": 0.009,
+    "mc_se": 0.001
+   },
+   "P_detect_finishing_deficit_vs_old070_(CI_hi<0)": {
+    "P": 0.422,
+    "mc_se": 0.008
+   },
+   "P_CI_excludes_0_either_direction_vs_v091": {
+    "P": 0.033,
+    "mc_se": 0.003
+   },
+   "P_CI_excludes_0_either_direction_vs_old070": {
+    "P": 0.422,
+    "mc_se": 0.008
+   },
+   "P_unclustered_fisher_one_sided_vs_v091_p<0.05": {
+    "P": 0.004,
+    "mc_se": 0.001
+   },
+   "median_CI_width_vs_v091": 0.486,
+   "median_CI_width_vs_old070": 0.634
+  },
+  {
+   "scenario": "S3: reach of 0.9.1, finishing of 0.7.0",
+   "mean_at_risk": 25.1,
+   "mean_finished": 17.54,
+   "P_no_rep_reply_at_risk": {
+    "P": 0.0,
+    "mc_se": 0.0
+   },
+   "P_detect_finishing_advantage_over_v091_(CI_lo>0)": {
+    "P": 0.542,
+    "mc_se": 0.008
+   },
+   "P_detect_finishing_deficit_vs_old070_(CI_hi<0)": {
+    "P": 0.006,
+    "mc_se": 0.001
+   },
+   "P_CI_excludes_0_either_direction_vs_v091": {
+    "P": 0.542,
+    "mc_se": 0.008
+   },
+   "P_CI_excludes_0_either_direction_vs_old070": {
+    "P": 0.012,
+    "mc_se": 0.002
+   },
+   "P_unclustered_fisher_one_sided_vs_v091_p<0.05": {
+    "P": 0.608,
+    "mc_se": 0.008
+   },
+   "median_CI_width_vs_v091": 0.536,
+   "median_CI_width_vs_old070": 0.57
+  },
+  {
+   "scenario": "S4: reach of 0.7.0, finishing of 0.9.1",
+   "mean_at_risk": 20.97,
+   "mean_finished": 8.27,
+   "P_no_rep_reply_at_risk": {
+    "P": 0.0,
+    "mc_se": 0.0
+   },
+   "P_detect_finishing_advantage_over_v091_(CI_lo>0)": {
+    "P": 0.007,
+    "mc_se": 0.001
+   },
+   "P_detect_finishing_deficit_vs_old070_(CI_hi<0)": {
+    "P": 0.387,
+    "mc_se": 0.008
+   },
+   "P_CI_excludes_0_either_direction_vs_v091": {
+    "P": 0.025,
+    "mc_se": 0.002
+   },
+   "P_CI_excludes_0_either_direction_vs_old070": {
+    "P": 0.387,
+    "mc_se": 0.008
+   },
+   "P_unclustered_fisher_one_sided_vs_v091_p<0.05": {
+    "P": 0.008,
+    "mc_se": 0.001
+   },
+   "median_CI_width_vs_v091": 0.578,
+   "median_CI_width_vs_old070": 0.662
+  }
+ ]
+}

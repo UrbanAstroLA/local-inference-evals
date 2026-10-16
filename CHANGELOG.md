@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-10-16 (completion investigation, amendments 22m-22n): stock 0.7.0 replication frozen before data
+
+Contents unchanged. No run is added.
+
+- **`PLAN.md`**: amendments 22m (the re-frozen replication package) and 22n (independent review's disposition: fresh
+  seeds, 36.5 GPU-hour watchdog, incomplete-run handling, category meanings, local raw records).
+- **New `rep070/`**: the 2026-10-11 draft and `refreeze/`, the frozen package (proposal, analysis, runner, proxy copy,
+  incomplete-run report, power and budget models, dry runs, tests). Superseded copies, the seed-scan file inventory and
+  the local eval-chain copy are withheld by hash; the chain copy's frozen diff is published. Substitutions are in
+  `PUBLIC-COPIES-22n.txt`.
+- **Investigation `README.md`** and **`LEDGER.md`**.
+
 ## 2026-10-16, later (completion investigation, amendments 22k-22l): contrast line closed; mechanism ranking
 
 Contents unchanged. No run or reading is added.

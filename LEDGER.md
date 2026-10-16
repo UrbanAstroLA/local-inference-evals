@@ -577,6 +577,17 @@ What was asked, run, found, corrected and withdrawn, in date order.
   and goes to review and authorization before any data. No GPU-hours added (cumulative 68.03).
   [Investigation](investigations/2026-10-glm53-completion/README.md#open-questions).
 
+**2026-10-16. Stock 0.7.0 replication frozen before data (amendments 22m-22n).**
+- **What it tests:** whether stock 0.7.0's low empty-reply count holds at fresh request seeds (70701 / 70702 / 70703).
+  Task, prompts and answer order are gated identical to both historical records.
+- **Why fresh seeds:** same-seed passes measured as coupled, with reply-length correlation 0.66-0.91 against 0.37-0.48
+  for different seeds.
+- **Reporting:** outcome categories as drafted, with clarified meanings. Both comparisons are always reported, and the
+  long-reply finishing rate is a descriptive secondary.
+- **Budget:** 36.5 GPU-hour watchdog; incomplete runs reported, never classified.
+- **Status:** independent review done; awaiting GPU authorization. No GPU-hours added (cumulative 68.03).
+  [Replication](investigations/2026-10-glm53-completion/rep070/refreeze/PROPOSAL-v2.md).
+
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough
   qualification. They also said the D7 path "cannot run" where the basis is a reconstruction. These are reworded in the

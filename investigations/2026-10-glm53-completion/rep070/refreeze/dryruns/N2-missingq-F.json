@@ -1,0 +1,563 @@
+{
+ "checks": [
+  [
+   "0.9.1 record relabelled (question 17 missing from pass 3; expect INVALID) pass 1: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.9.1 record relabelled (question 17 missing from pass 3; expect INVALID) pass 1: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.9.1 record relabelled (question 17 missing from pass 3; expect INVALID) pass 1: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.9.1 record relabelled (question 17 missing from pass 3; expect INVALID) pass 1: every request HTTP 200, seed 70701, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 record relabelled (question 17 missing from pass 3; expect INVALID) pass 1: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 record relabelled (question 17 missing from pass 3; expect INVALID) pass 2: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.9.1 record relabelled (question 17 missing from pass 3; expect INVALID) pass 2: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.9.1 record relabelled (question 17 missing from pass 3; expect INVALID) pass 2: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.9.1 record relabelled (question 17 missing from pass 3; expect INVALID) pass 2: every request HTTP 200, seed 70702, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 record relabelled (question 17 missing from pass 3; expect INVALID) pass 2: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 record relabelled (question 17 missing from pass 3; expect INVALID) pass 3: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.9.1 record relabelled (question 17 missing from pass 3; expect INVALID) pass 3: 198 questions, ids 0-197, both filters",
+   false,
+   197
+  ],
+  [
+   "0.9.1 record relabelled (question 17 missing from pass 3; expect INVALID) pass 3: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.9.1 record relabelled (question 17 missing from pass 3; expect INVALID) pass 3: every request HTTP 200, seed 70703, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 record relabelled (question 17 missing from pass 3; expect INVALID) pass 3: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 1: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 1: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 1: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 1: every request HTTP 200, seed 1234, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 1: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 2: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 2: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 2: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 2: every request HTTP 200, seed 1235, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 2: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 3: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 3: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 3: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 3: every request HTTP 200, seed 1236, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 3: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record): rows derived here reproduce the published rows (594 rows; empty, raw, strict, stated, hashes, finish reason, tokens)",
+   true,
+   "0 field mismatches"
+  ],
+  [
+   "0.7.0 K3.25 DFlash2 x5 (historical 3-pass record) pass 1: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.7.0 K3.25 DFlash2 x5 (historical 3-pass record) pass 1: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.7.0 K3.25 DFlash2 x5 (historical 3-pass record) pass 2: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.7.0 K3.25 DFlash2 x5 (historical 3-pass record) pass 2: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.7.0 K3.25 DFlash2 x5 (historical 3-pass record) pass 2: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.7.0 K3.25 DFlash2 x5 (historical 3-pass record) pass 2: every request HTTP 200, seed 1235, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.7.0 K3.25 DFlash2 x5 (historical 3-pass record) pass 2: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.7.0 K3.25 DFlash2 x5 (historical 3-pass record) pass 3: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.7.0 K3.25 DFlash2 x5 (historical 3-pass record) pass 3: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.7.0 K3.25 DFlash2 x5 (historical 3-pass record) pass 3: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.7.0 K3.25 DFlash2 x5 (historical 3-pass record) pass 3: every request HTTP 200, seed 1236, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.7.0 K3.25 DFlash2 x5 (historical 3-pass record) pass 3: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.7.0 K3.25 DFlash2 x5 (historical 3-pass record): rows derived here reproduce the published rows (594 rows; empty, raw, strict, stated, hashes, finish reason, tokens)",
+   true,
+   "0 field mismatches"
+  ],
+  [
+   "rep: every pass has its proxy request log (finish reasons and token counts)",
+   false,
+   593
+  ],
+  [
+   "variant F: three distinct fresh seeds, none in the frozen inventory of seeds used by GPQA passes",
+   true,
+   [
+    70701,
+    70702,
+    70703
+   ]
+  ],
+  [
+   "rep request logs: request seeds are exactly the variant's [70701, 70702, 70703], 198 requests each, nothing else",
+   true,
+   "{\"70701\": 198, \"70702\": 198, \"70703\": 198}"
+  ],
+  [
+   "rep pass 1: lm-eval model_args seed 70701 (sent in every request) and process seed 1235",
+   true,
+   "model_args seed 70701, process seed 1235"
+  ],
+  [
+   "rep pass 2: lm-eval model_args seed 70702 (sent in every request) and process seed 1236",
+   true,
+   "model_args seed 70702, process seed 1236"
+  ],
+  [
+   "rep pass 3: lm-eval model_args seed 70703 (sent in every request) and process seed 1237",
+   true,
+   "model_args seed 70703, process seed 1237"
+  ],
+  [
+   "rep pass 1: lm-eval task hash 87e807b3b27c8661 (same task, rendering and answer ordering as both records)",
+   true,
+   "87e807b3b27c8661"
+  ],
+  [
+   "rep pass 2: lm-eval task hash 87e807b3b27c8661 (same task, rendering and answer ordering as both records)",
+   true,
+   "87e807b3b27c8661"
+  ],
+  [
+   "rep pass 3: lm-eval task hash 87e807b3b27c8661 (same task, rendering and answer ordering as both records)",
+   true,
+   "87e807b3b27c8661"
+  ],
+  [
+   "v091 record: task hash 87e807b3b27c8661 in all three passes",
+   true,
+   "87e807b3,87e807b3,87e807b3"
+  ],
+  [
+   "old070 record: task hash 87e807b3b27c8661 in all three passes",
+   true,
+   "87e807b3,87e807b3,87e807b3"
+  ],
+  [
+   "rep vs v091: both arms have all 594 question-passes",
+   false,
+   "arm 593, cmp 594"
+  ],
+  [
+   "rep vs old070: both arms have all 594 question-passes",
+   false,
+   "arm 593, cmp 594"
+  ],
+  [
+   "rep session 1 warm-up: exactly one engine start in the server log",
+   true,
+   1
+  ],
+  [
+   "rep session 1 warm-up: 9 release warm-up lines (record's count), ending with the ready line",
+   true,
+   "9 warm-up lines, 1 ready lines"
+  ],
+  [
+   "rep session 1 warm-up: no GPQA chat-completion request logged before the ready line",
+   true,
+   "0 before"
+  ],
+  [
+   "rep session 1 warm-up: first GPQA request after the last timestamped line before the ready line",
+   true,
+   "first request 1791506343.238, last line before ready 1791506314.0"
+  ],
+  [
+   "rep session 2 warm-up: exactly one engine start in the server log",
+   true,
+   1
+  ],
+  [
+   "rep session 2 warm-up: 9 release warm-up lines (record's count), ending with the ready line",
+   true,
+   "9 warm-up lines, 1 ready lines"
+  ],
+  [
+   "rep session 2 warm-up: no GPQA chat-completion request logged before the ready line",
+   true,
+   "0 before"
+  ],
+  [
+   "rep session 2 warm-up: first GPQA request after the last timestamped line before the ready line",
+   true,
+   "first request 1791574231.417, last line before ready 1791574215.0"
+  ],
+  [
+   "rep session 1: non_default_args_sha256 equals the old 0.7.0 record's passes 2-3 server log (informative for this stand-in)",
+   false,
+   "7025a96888a67642741db00a vs 74f26837e0e20391bbc8e39c"
+  ],
+  [
+   "rep session 1: vllm_version equals the old 0.7.0 record's passes 2-3 server log (informative for this stand-in)",
+   true,
+   "['0.1.dev20051+g487ecf18 vs ['0.1.dev20051+g487ecf18"
+  ],
+  [
+   "rep session 1: model_snapshots equals the old 0.7.0 record's passes 2-3 server log (informative for this stand-in)",
+   false,
+   "['0490d2f708b12145f65165 vs ['701cd7456c13d87bf0147a"
+  ],
+  [
+   "rep session 1: env_names_logged_sha256 equals the old 0.7.0 record's passes 2-3 server log (informative for this stand-in)",
+   false,
+   "f85d9d360488c02bc9ba2bbb vs 014d31a48bdd11c1a48236e5"
+  ],
+  [
+   "rep session 1: cudagraph_mode equals the old 0.7.0 record's passes 2-3 server log (informative for this stand-in)",
+   true,
+   "['FULL_AND_PIECEWISE'] vs ['FULL_AND_PIECEWISE']"
+  ],
+  [
+   "rep session 2: non_default_args_sha256 equals the old 0.7.0 record's passes 2-3 server log (informative for this stand-in)",
+   false,
+   "7025a96888a67642741db00a vs 74f26837e0e20391bbc8e39c"
+  ],
+  [
+   "rep session 2: vllm_version equals the old 0.7.0 record's passes 2-3 server log (informative for this stand-in)",
+   true,
+   "['0.1.dev20051+g487ecf18 vs ['0.1.dev20051+g487ecf18"
+  ],
+  [
+   "rep session 2: model_snapshots equals the old 0.7.0 record's passes 2-3 server log (informative for this stand-in)",
+   false,
+   "['0490d2f708b12145f65165 vs ['701cd7456c13d87bf0147a"
+  ],
+  [
+   "rep session 2: env_names_logged_sha256 equals the old 0.7.0 record's passes 2-3 server log (informative for this stand-in)",
+   false,
+   "f85d9d360488c02bc9ba2bbb vs 014d31a48bdd11c1a48236e5"
+  ],
+  [
+   "rep session 2: cudagraph_mode equals the old 0.7.0 record's passes 2-3 server log (informative for this stand-in)",
+   true,
+   "['FULL_AND_PIECEWISE'] vs ['FULL_AND_PIECEWISE']"
+  ],
+  [
+   "stated adjudicator source unchanged since freeze (informative)",
+   true,
+   "731f27d4a436805baae367096db8b039ae2d723f7944dda52f81fd2a96d017f6"
+  ]
+ ],
+ "dry_run": "N2-missingq-F question 17 missing from pass 3; expect INVALID",
+ "frozen_module_sha256": "b5b13ce2155085ca46fb24877f12b7cd0a5cdd16eb4cf19012958e7b86ae0033",
+ "inputs": {
+  "old070": {
+   "published": {
+    "file": "results.jsonl",
+    "sha256": "da381c6b175392d59d37f7922772bb9732dc1c17d3c1d72b22ad314d75dae837"
+   },
+   "reqlogs": {
+    "glm53-flash-exl3-k3.25@tpurtell+ps.requests.jsonl": "8e51f8f504034abffd004336422025a8239b8da0edb41823a1adf21cefb3dc0a"
+   },
+   "samples": {
+    "pass1": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+ps__pass1",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1235,
+      "seed_arg": null,
+      "timeout": 10800
+     },
+     "sha256": "0bf51197d934337eab7a1837fd5aea9847dfc5ef388c3639348a438bc7e4ae59"
+    },
+    "pass2": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+ps__pass2",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1236,
+      "seed_arg": 1235,
+      "timeout": 10800
+     },
+     "sha256": "e7bae2038110adab0db6bc65848a9c4ef77f82bf63e7ac1e0c2b3113a50f55d5"
+    },
+    "pass3": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+ps__pass3",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1237,
+      "seed_arg": 1236,
+      "timeout": 10800
+     },
+     "sha256": "aae579ab4587cd68003576d86a7ae1fa1096bc7681b3ad87bf65627222e9ef4e"
+    }
+   }
+  },
+  "rep": {
+   "reqlogs": {
+    "s1.requests.jsonl": "a9aaf801f702ff52846582b7087c5ca09d02371f46f09914acf33221a5b32f9b",
+    "s2.requests.jsonl": "cedd153d7787e8eac43622e6aab06063c20a5ca254ca7029b94c75975324d3b4"
+   },
+   "samples": {
+    "pass1": {
+     "dir": "pass1",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1235,
+      "seed_arg": 70701,
+      "timeout": 10800
+     },
+     "sha256": "be5c567defff894ac898e7e90ea2149e4fd5ff64486216a6c26f736efb447fc1"
+    },
+    "pass2": {
+     "dir": "pass2",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1236,
+      "seed_arg": 70702,
+      "timeout": 10800
+     },
+     "sha256": "c9105163deefe174f6b903caaa6344650ac8cd589d58f1a3b9a03d7199546920"
+    },
+    "pass3": {
+     "dir": "pass3",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1237,
+      "seed_arg": 70703,
+      "timeout": 10800
+     },
+     "sha256": "f75c7d8bd5de302a2ca0536924b6830060297d6591d6b50b5a5e8cff0ed88bbd"
+    }
+   }
+  },
+  "v091": {
+   "published": {
+    "file": "results.jsonl",
+    "sha256": "9d2f57c9c4c1c5fe0833f5d534a290bfc61793101ca0f5cf1cf6bb04cbc970b2"
+   },
+   "reqlogs": {
+    "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps.requests.jsonl": "dbe4520b3ea49c21a40985511da3b0b71770ac781e9d9a1bbdd72cfd423c8f5f",
+    "glm53-flash-exl3-k3.25@tpurtell+v0.9.1.requests.jsonl": "ecba3773ba0fc520957f640f3e45e20e450ad831da474306d668a26b46cd8493"
+   },
+   "samples": {
+    "pass1": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps__pass1",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1235,
+      "seed_arg": null,
+      "timeout": 10800
+     },
+     "sha256": "be5c567defff894ac898e7e90ea2149e4fd5ff64486216a6c26f736efb447fc1"
+    },
+    "pass2": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps__pass2",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1236,
+      "seed_arg": 1235,
+      "timeout": 10800
+     },
+     "sha256": "c9105163deefe174f6b903caaa6344650ac8cd589d58f1a3b9a03d7199546920"
+    },
+    "pass3": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps__pass3",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1237,
+      "seed_arg": 1236,
+      "timeout": 10800
+     },
+     "sha256": "bcaa1e011ce13b202205e12f37f399f57bdf39ad4b83ee8bdd885c8715d728b7"
+    }
+   }
+  }
+ },
+ "refreeze_candidate": true,
+ "script_sha256": "54c7fa4f850a4802178931911a3ad665dd3438f6e3ab7c3c65f9d0aec2940410",
+ "seeds": [
+  70701,
+  70702,
+  70703
+ ],
+ "thresholds_proposed": {
+  "O1_max_empties": 8,
+  "O2_min_empties": 12,
+  "alpha": 0.05
+ },
+ "valid": false,
+ "variant": "F"
+}

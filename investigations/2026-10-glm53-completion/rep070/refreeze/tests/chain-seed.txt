@@ -1,0 +1,8 @@
+# chain-seed run 2026-10-15T23:46:35-07:00 (CPU only; zero GPU; change set 22n)
+PASS copy, variant R list (runner): [,seed=1234][,seed=1235][,seed=1236]
+PASS copy, variant F list (runner): [,seed=70701][,seed=70702][,seed=70703]
+PASS original, GPQA_SEED_PER_PASS=1 (record passes 2-3): [,seed=1234][,seed=1235][,seed=1236]
+PASS copy without a list = original behaviour: [,seed=1234][,seed=1235][,seed=1236]
+PASS copy, no seed variables = no seed argument (record pass 1): [][][]
+PASS chain copy differs from the original exactly by the frozen diff
+chain seed tests: all passed

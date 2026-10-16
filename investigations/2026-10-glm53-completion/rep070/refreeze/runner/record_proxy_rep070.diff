@@ -1,0 +1,133 @@
+7a8,25
+> rep070 copy of <eval-tools>/diag/record_proxy.py (sha256 946d880e...). The main log is unchanged (same rows, same
+> bytes, only for requests that got an upstream response). Added: a SIDECAR event log, OUT with '.jsonl' replaced by
+> '.events.jsonl' (e.g. x.requests.jsonl -> x.requests.events.jsonl), one line per event:
+>   start        on arrival of a chat-completion request: t, messages_sha256, seed, max_tokens
+>   interrupted  the upstream call raised (server stopped, connection reset, timeout): error type, secs, t_start,
+>                messages_sha256, seed; also written for every request still in flight when the proxy gets SIGTERM/SIGINT
+>                (error 'proxy_terminated')
+>   client_gone  the response could not be written back to the client (broken pipe or reset); the main-log row, if any,
+>                was already written
+> The proxy never crashes on a broken client pipe.
+> Added (review section 6, local only, never published): a RAW file with the full request body and the full upstream
+> response body of every chat-completion exchange (reasoning and final text, finish reason, usage), one gzip member per
+> exchange (gzip-readable as one stream). Path: 4th argument, default OUT with '.jsonl' replaced by '.raw.jsonl.gz'. It is
+> created under umask 077 with mode 0600 before the server starts. Raw, sidecar and main log are appended in that order
+> under one lock, so every main-log row has its raw record. The main log stays byte-compatible with the original proxy.
+> 
+> usage (copy): record_proxy_rep070.py LISTEN_PORT UPSTREAM_BASE OUT.jsonl [RAW.jsonl.gz]
+> 
+10c28
+< import hashlib, json, sys, threading, time, urllib.error, urllib.request
+---
+> import gzip, hashlib, json, os, signal, sys, threading, time, urllib.error, urllib.request
+14a33,64
+> BASE = OUT[:-len(".jsonl")] if OUT.endswith(".jsonl") else OUT
+> EVENTS = BASE + ".events.jsonl"
+> RAW = sys.argv[4] if len(sys.argv) > 4 else BASE + ".raw.jsonl.gz"
+> INFLIGHT = {}   # id -> (t_start, messages_sha256, seed, request body)
+> 
+> 
+> def event(rec):   # caller holds LOCK
+>     with open(EVENTS, "a") as f:
+>         f.write(json.dumps(rec) + "\n")
+> 
+> 
+> def raw_open():
+>     """Create the raw file under umask 077, mode 0600 (before any request is served)."""
+>     old = os.umask(0o077)
+>     try:
+>         fd = os.open(RAW, os.O_CREAT | os.O_APPEND | os.O_WRONLY, 0o600)
+>         os.close(fd)
+>         os.chmod(RAW, 0o600)
+>     finally:
+>         os.umask(old)
+> 
+> 
+> def raw(rec):     # caller holds LOCK; one gzip member per exchange
+>     with open(RAW, "ab") as f, gzip.GzipFile(fileobj=f, mode="ab") as g:
+>         g.write((json.dumps(rec, ensure_ascii=False) + "\n").encode("utf-8"))
+> 
+> 
+> def body_obj(b):
+>     try:
+>         return json.loads(b)
+>     except Exception:  # noqa: BLE001
+>         return {"unparsed_body_text": b.decode("utf-8", "replace")}
+37,42c87,98
+<     def _reply(self, status, data, ctype):
+<         self.send_response(status)
+<         self.send_header("Content-Type", ctype)
+<         self.send_header("Content-Length", str(len(data)))
+<         self.end_headers()
+<         self.wfile.write(data)
+---
+>     def _reply(self, status, data, ctype, ident=None):
+>         try:
+>             self.send_response(status)
+>             self.send_header("Content-Type", ctype)
+>             self.send_header("Content-Length", str(len(data)))
+>             self.end_headers()
+>             self.wfile.write(data)
+>         except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError, OSError) as e:
+>             if ident is not None:
+>                 with LOCK:
+>                     event({"event": "client_gone", "t": round(time.time(), 3), "error": type(e).__name__,
+>                            "messages_sha256": ident[1], "seed": ident[2]})
+50,51c106,129
+<         status, data, ctype = self._forward("POST", body)
+<         if self.path.rstrip("/").endswith("/chat/completions"):
+---
+>         chat = self.path.rstrip("/").endswith("/chat/completions")
+>         ident = None
+>         if chat:
+>             try:
+>                 q0 = json.loads(body)
+>                 ident = (round(t0, 3), messages_hash(q0.get("messages")), q0.get("seed"), q0.get("max_tokens"))
+>             except Exception:  # noqa: BLE001 - record, never break the request
+>                 ident = (round(t0, 3), None, None, None)
+>             with LOCK:
+>                 INFLIGHT[id(self)] = ident[:3] + (body,)
+>                 event({"event": "start", "t": ident[0], "messages_sha256": ident[1], "seed": ident[2], "max_tokens": ident[3]})
+>         try:
+>             status, data, ctype = self._forward("POST", body)
+>         except Exception as e:  # noqa: BLE001 - upstream failure: sidecar only, the main log is untouched
+>             if chat:
+>                 with LOCK:
+>                     INFLIGHT.pop(id(self), None)
+>                     raw({"kind": "interrupted", "t_start": ident[0], "secs": round(time.time() - t0, 3), "error": type(e).__name__,
+>                          "messages_sha256": ident[1], "seed": ident[2], "request": body_obj(body), "response": None})
+>                     event({"event": "interrupted", "t": round(time.time(), 3), "t_start": ident[0], "secs": round(time.time() - t0, 3),
+>                            "error": type(e).__name__, "messages_sha256": ident[1], "seed": ident[2]})
+>             self._reply(502, b'{"error": "upstream failure (rep070 proxy)"}', "application/json", ident)
+>             return
+>         if chat:
+72,74c150,156
+<             with LOCK, open(OUT, "a") as f:
+<                 f.write(json.dumps(rec) + "\n")
+<         self._reply(status, data, ctype)
+---
+>             with LOCK:
+>                 raw({"kind": "exchange", "t_start": rec["t_start"], "secs": rec["secs"], "http_status": status,
+>                      "messages_sha256": rec.get("messages_sha256"), "seed": rec.get("seed"), "request": body_obj(body), "response": body_obj(data)})
+>                 with open(OUT, "a") as f:
+>                     f.write(json.dumps(rec) + "\n")
+>                 INFLIGHT.pop(id(self), None)
+>         self._reply(status, data, ctype, ident)
+79a162,173
+> def _terminate(signum, frame):
+>     with LOCK:
+>         now = time.time()
+>         for t_start, msha, seed, body in list(INFLIGHT.values()):
+>             raw({"kind": "interrupted", "t_start": t_start, "secs": round(now - t_start, 3), "error": "proxy_terminated",
+>                  "messages_sha256": msha, "seed": seed, "request": body_obj(body), "response": None})
+>             event({"event": "interrupted", "t": round(now, 3), "t_start": t_start, "secs": round(now - t_start, 3),
+>                    "error": "proxy_terminated", "messages_sha256": msha, "seed": seed})
+>         INFLIGHT.clear()
+>     os._exit(0)
+> 
+> 
+80a175,177
+>     raw_open()
+>     signal.signal(signal.SIGTERM, _terminate)
+>     signal.signal(signal.SIGINT, _terminate)

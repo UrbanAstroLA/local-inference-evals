@@ -1303,6 +1303,17 @@ the real decode path and records termination-token probabilities. 1.2117 of 2.4 
     already corrects and whose correction alone was null on empty replies. Not funded.
   - **Next:** the decision returned to a stock 0.7.0 replication or stopping work on the historical gap. The operator
     chose the replication route; its package is re-frozen and reviewed before any GPU authorization.
+- **Stock 0.7.0 replication, frozen before data** (amendments 22m-22n; [`rep070/refreeze/PROPOSAL-v2.md`](rep070/refreeze/PROPOSAL-v2.md)):
+  - **Design:** stock 0.7.0 re-run on the GPQA Diamond protocol, three passes in the record's two-session split. Only
+    the request sampling seeds change, to fresh seeds 70701 / 70702 / 70703. lm-eval's task seed, prompts, answer
+    order and all question hashes are gated identical to both records.
+  - **Readings:** O1 / O2 / O3 as drafted, against the historical 0.9.1 record (C1) and the old 0.7.0 record (C2),
+    both always reported with counts, effects and uncertainty. The long-reply finishing rate is a descriptive secondary.
+  - **Measured beforehand:** same-seed passes are coupled (log reply-length correlation 0.66-0.91 against 0.37-0.48 for
+    different seeds), which is why fresh seeds were chosen.
+  - **Budget:** watchdog at 36.5 occupied GPU-hours, single attempt, no retry; expected about 23 (about 31 if 0.7.0
+    behaves like 0.9.1). A watchdog stop is reported as incomplete, never classified.
+  - **Status:** awaiting the operator's GPU authorization. Nothing has run.
 
 ### Observations recorded separately
 

@@ -1,0 +1,16 @@
+# incomplete run 2026-10-15T23:46:35-07:00 (CPU only; zero GPU; change set 22n)
+PASS (a) probe: INCOMPLETE (exit 10), causes watchdog and pass 3 ({"complete": false, "causes": ["watchdog fired (approved GPU-hour ceiling reached)", "pass 3 incomplete or missing (0 samples files)"]})
+PASS (a) report labelled INCOMPLETE with the watchdog cause
+PASS (a) passes 1-2 reported as completed, results preserved (empties 5 and 5, as the source record's passes) (5, 5)
+PASS (a) pass 3 interrupted: completed + cap + other + interrupted + unstarted = 198; interrupted > 0; unstarted > 0 ({'completed_finish_stop': 120, 'cap_reached_finish_length_at_327680': 0, 'interrupted_started_no_response': 8, 'unstarted': 70})
+PASS (a) no outcome category, no 594-based test, no empty count over the run
+PASS (a) artifacts listed with hashes (logs, sidecars, pass dirs)
+PASS (b) probe: INCOMPLETE, cause session 2 not started
+PASS (b) pass 1 completed (empties 5); passes 2-3 not started with 198 unstarted each, none counted empty
+PASS (c) pass 2 interrupted with cap-reached > 0 and interrupted > 0; counts sum to 198 ({'completed_finish_stop': 124, 'cap_reached_finish_length_at_327680': 1, 'cap_reached_with_empty_content': 1, 'interrupted_started_no_response': 8, 'unstarted': 65})
+PASS (c) cap-reached counted as cap-reached (empty only by content), interrupted never counted as empty
+PASS (c) pass 3 not started (198 unstarted); pass 1 completed
+PASS (d) probe: COMPLETE (exit 0) -> frozen analysis ({"complete": true, "causes": []})
+PASS (d) frozen analysis on the complete run: valid, same reading, C1, C2, secondary and descriptives as dry run D3 ({'valid': True, 'reading': True, 'C1_rep_vs_v091': True, 'C2_rep_vs_old070': True, 'secondary_long_reply_finishing': True, 'repeatability_descriptive': True})
+PASS (d) same checks (names and results) as D3
+incomplete-run tests: 14 passed, 0 failed

@@ -1,0 +1,20 @@
+# runner-refusals run 2026-10-15T23:46:35-07:00 (CPU only; zero GPU; change set 22n)
+PASS [variant unset] rc=1: ABORT: VARIANT must be R or F (got '')
+PASS [variant invalid] rc=1: ABORT: VARIANT must be R or F (got 'X')
+PASS [budget unset] rc=1: ABORT: APPROVED_GPU_H is not set (the operator's approved occupied GPU-hours)
+PASS [budget above plan maximum (36.51)] rc=1: ABORT: APPROVED_GPU_H=36.51 must be a number in (0, 36.5] (the plan's maximum)
+PASS [budget at the plan maximum (36.5) accepted, variant F] rc=0: DRY_RUN: all refusal checks passed. A real run would now: create <runs>/rep070/run-F; start the GPU logger
+PASS [budget not a number] rc=1: ABORT: APPROVED_GPU_H=abc must be a number in (0, 36.5] (the plan's maximum)
+PASS [budget zero] rc=1: ABORT: APPROVED_GPU_H=0 must be a number in (0, 36.5] (the plan's maximum)
+PASS [IMAGE override] rc=1: ABORT: override variables set in the environment (not the shipped configuration): IMAGE
+PASS [PORT override] rc=1: ABORT: override variables set in the environment (not the shipped configuration): PORT
+PASS [seed list override] rc=1: ABORT: override variables set in the environment (not the shipped configuration): GPQA_SEED_LIST
+PASS [GLM container running (stub)] rc=1: ABORT: a GLM container is running:
+PASS [wrong image digest (stub)] rc=1: ABORT: image ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629 has Id 'sha256:00
+PASS [compute process on the GPUs (stub)] rc=1: ABORT: compute process 999999 on the GPUs
+PASS [lm_eval process running (dummy process)] rc=1: ABORT: an lm_eval process is running (pids 46935)
+PASS [a process merely mentioning lm_eval does not block (dummy)] rc=0: DRY_RUN: all refusal checks passed. A real run would now: create <runs>/rep070/run-F; start the GPU logger
+PASS [real machine, variant R] rc=0: DRY_RUN: all refusal checks passed. A real run would now: create <runs>/rep070/run-R; start the GPU logger
+PASS [real machine, variant F] rc=0: DRY_RUN: all refusal checks passed. A real run would now: create <runs>/rep070/run-F; start the GPU logger
+PASS [no files created by DRY_RUN]
+runner refusal tests: 18 passed, 0 failed

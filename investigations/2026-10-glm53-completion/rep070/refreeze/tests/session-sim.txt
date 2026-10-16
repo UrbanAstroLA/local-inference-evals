@@ -1,0 +1,75 @@
+# session-sim run 2026-10-15T23:46:35-07:00 (CPU only; zero GPU; change set 22n)
+== (a) normal completion, variant R (two sessions)
+  runner rc=0
+  ok    exactly 2 cost line(s), 2 GPUs each
+  ok    no refused docker call
+  ok    fake chain gone
+  ok    proxy gone (8002 free)
+  ok    no runner process left (GPU logger, watchdog)
+  ok    no orphaned logger/watchdog sleep left (children of the runner's loops)
+  ok    session 1: GPQA_PASSES=1, seeds 1234 1235 1236, concurrency 8, via the proxy, tag +rep070-R
+  ok    session 2: GPQA_PASSES=3; pass 1 skipped; passes 2 and 3 run at 1235 and 1236
+  ok    server stopped after each session (2 docker stop calls)
+  ok    server log and docker inspect saved per session
+  ok    inspect check reports the digest and loopback-only publish
+  ok    cost lines: chain_rc 0, watchdog_fired false
+  ok    finalize ran: placeholder passes probed INCOMPLETE, report written, no outcome category
+  ok    cache inventory before session 1 and after each session, with diffs
+  ok    planned seeds written per pass (request seed and lm-eval --seed)
+  ok    raw directory is mode 0700
+  ok    package verification saved
+== (b) SIGTERM to the runner during session 2
+  runner rc=4
+  ok    exactly 2 cost line(s), 2 GPUs each
+  ok    no refused docker call
+  ok    fake chain gone
+  ok    proxy gone (8002 free)
+  ok    no runner process left (GPU logger, watchdog)
+  ok    no orphaned logger/watchdog sleep left (children of the runner's loops)
+  ok    runner exited 4 and reported the interrupted-session cleanup
+  ok    session-2 cost line has chain_rc null
+  ok    server stopped in the cleanup (2 docker stop calls)
+== (c) watchdog at APPROVED_GPU_H=0.04 (72 s wall; checked every 60 s), variant F
+  runner rc=0
+  ok    exactly 1 cost line(s), 2 GPUs each
+  ok    no refused docker call
+  ok    fake chain gone
+  ok    proxy gone (8002 free)
+  ok    no runner process left (GPU logger, watchdog)
+  ok    no orphaned logger/watchdog sleep left (children of the runner's loops)
+  ok    watchdog fired, killed the chain and stopped the server
+  ok    cost line: watchdog_fired true; variant F seeds
+  ok    session 2 not started
+== (d) approved budget too small for session 2 (15 GPU-h = 27,000 s < 27,955 s)
+  runner rc=0
+  ok    exactly 1 cost line(s), 2 GPUs each
+  ok    no refused docker call
+  ok    fake chain gone
+  ok    proxy gone (8002 free)
+  ok    no runner process left (GPU logger, watchdog)
+  ok    no orphaned logger/watchdog sleep left (children of the runner's loops)
+  ok    budget stop reported; session 2 not started
+== (e) session 1 fails (chain rc 1, no pass 1)
+  runner rc=0
+  ok    exactly 1 cost line(s), 2 GPUs each
+  ok    no refused docker call
+  ok    fake chain gone
+  ok    proxy gone (8002 free)
+  ok    no runner process left (GPU logger, watchdog)
+  ok    no orphaned logger/watchdog sleep left (children of the runner's loops)
+  ok    stopped after session 1, no retry
+  ok    cost line has chain_rc 1
+== (f) watchdog while a request is in flight through the proxy copy, variant F
+  runner rc=0
+  ok    exactly 1 cost line(s), 2 GPUs each
+  ok    no refused docker call
+  ok    fake chain gone
+  ok    proxy gone (8002 free)
+  ok    no runner process left (GPU logger, watchdog)
+  ok    no orphaned logger/watchdog sleep left (children of the runner's loops)
+  ok    watchdog fired; fake upstream stopped by the docker shim
+  ok    sidecar: start then interrupted for seed 70701
+  ok    no main-log row for the interrupted request
+  ok    raw file mode 0600 with the interrupted record
+  ok    INCOMPLETE report: watchdog cause; pass 1 interrupted 1, unstarted 197, never counted empty
+session simulation: 61 passed, 0 failed

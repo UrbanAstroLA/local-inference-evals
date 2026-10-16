@@ -2333,3 +2333,87 @@ operator, before any further work).**
   replication draft (expected 22.97 GPU-hours, valid-run ceiling 26.45, maximum 35.0 as drafted before the long-reply
   framing) is re-frozen: seed policy (recorded or fresh), the long-reply finishing secondary and its power, and
   current tooling. It goes to independent review and a GPU authorization before any data.
+
+**Amendment 22m (2026-10-16; stock 0.7.0 replication package re-frozen for review, before any GPU use).**
+- **Package:** `rep070/refreeze/` (SHA256SUMS sha256 29a2fb11…; the 2026-10-11 draft verifies unchanged). Nothing run
+  on the GPUs; no file of the new run tags exists.
+- **Re-verified against the current machine:** image by digest, weights, draft and template blobs, stack and recipe,
+  lm-eval install and task, proxy, host kernel / driver / runtime, port binding on 127.0.0.1. Draft correction: the
+  stack's start-up script carries a one-line TileLang cache addition dated 2026-09-05, present in both record sessions.
+  The compile cache gained 61 files after the record ended, none since the draft.
+- **Added:** a gating warm-up check (specified in the draft, not implemented there) and a configuration-identity check
+  against the record's passes 2-3 server log; an eval-chain copy differing from the original in exactly the seed list
+  and log name (frozen diff).
+- **Measured coupling [M]:** across 24 pairs of existing passes, no same-seed pair shares a byte-identical answered
+  reply, but the correlation of log reply length over questions is 0.66-0.91 for same-seed pairs against 0.37-0.48
+  for different seeds. Same-seed passes are not independent draws.
+- **Seed policy, for decision:** R = recorded seeds 1234 / 1235 / 1236 (does this record repeat?) or F = fresh seeds
+  70701 / 70702 / 70703, unused on this machine (does the engine leave fewer empties?). Under the power model with a
+  coupling sensitivity, if 0.7.0 truly behaves like the 0.9.1 record, R reads O2 with probability 0.88 / 0.70 / 0.44
+  at no / one-quarter / one-half inherited outcomes; F is not exposed to this. Same cost.
+- **Secondary (descriptive, never the reading):** P(finish | still generating at 100,000 tokens). Power about 0.59
+  (new run finishing like the old 0.7.0 record) and 0.41 (like 0.9.1), intervals 0.5-0.65 wide.
+- **Budget, for decision:** expected 22.97, valid-run ceiling 26.45, maximum 35.0 GPU-hours (option A, as drafted).
+  If the run leaves 0.9.1-like numbers of capped replies, expected cost is 26.4-31.2 and up to 11% of such runs would
+  reach a 35.0 watchdog, so A is most likely to cut off the runs that would read O2. Option B: valid-run ceiling 36.5,
+  maximum 50.0; or B-lean: watchdog 36.5, no pre-authorized invalid run.
+- **CPU checks:** dry runs O1 / O2 as drafted and a fresh-seed relabel valid; 6 negative cases invalid; runner refusals
+  17 / 17 (Docker read-only); session simulation 42 / 42 (one runner logging fault found and fixed before freezing).
+- **Not determinable:** the record's pass-1 configuration and warm-up; coupling strength for empty replies
+  specifically.
+
+**Amendment 22n (2026-10-16; adopts the independent review "stock 0.7.0 replication: review disposition", relayed by
+the operator; package changes before any GPU use).**
+- **Recommended choices:**
+  - seed policy F (request seeds 70701 / 70702 / 70703);
+  - budget B-lean (36.5 occupied GPU-hours, no pre-authorized invalid-run retry);
+  - the frozen three-pass analysis and outcome rules retained.
+  Operator authorization is still required.
+- **Seeds and task:**
+  - Only the request sampling seed changes. lm-eval's process/task seed stays 1234 + pass (1235 / 1236 / 1237).
+  - Unchanged, and checked against both records as gating checks: task hash 87e807b3b27c8661, rendered prompts and
+    answer order, question / target / doc / message hashes, sampling, stopping, parser, concurrency 8, cap 327,680.
+  - Both seeds are recorded per pass.
+  - Session 1 = pass 1 and session 2 = passes 2 then 3, as in the record. Known differences: the record's pass 1 had
+    no proxy, its first chain was interrupted and re-attached, and the publish address is now loopback.
+- **Budget:** watchdog at 36.5. Estimated P(total ≥ 36.5): 0 under the old 0.7.0 record's rates; 0 or 0.044 under
+  0.9.1-like rates (empirical or token-based slope). P(session 2 not started) is 0 in every scenario. Seeds, cap and
+  requests are never changed to fit the budget.
+- **Watchdog interruption:**
+  - Completed passes and partial requests are preserved.
+  - The run is labelled INCOMPLETE with its cause.
+  - Completed, protocol-cap, interrupted (started, no response) and unstarted requests are counted separately, from a
+    package-local proxy copy that adds a start / interruption sidecar. The main request log stays byte-compatible.
+  - Interrupted or unstarted requests are never counted as empty replies, and no 594-based classification is applied.
+  - No automatic restart or replacement run.
+- **Category meanings (rules unchanged):**
+  - O1: the fresh-seed run sustains a low empty count and separates from the historical 0.9.1 comparator under the
+    specified test. This is not equivalence to the original 0.7.0 rate, nor a contemporaneous causal engine advantage.
+  - O2: the original low-empty result is not sustained under the rules. This does not necessarily mean no advantage
+    over 0.9.1 remains.
+  - O3: inconclusive.
+  - Both comparisons, counts, effects and uncertainty are always reported. The sign-flip tests assume
+    historical-comparator and question-level exchangeability; "exact" refers to the calculation under those
+    assumptions. The coupling power figures are sensitivity assumptions, not measured dependence of empty outcomes.
+- **Tail secondary:** descriptive. It is reported with numerator, denominator and question-clustered intervals. It
+  cannot adjudicate a termination mechanism, and reaching 100k selects different trajectories on each engine.
+- **Durable records (local, never published):**
+  - full request and response bodies (reasoning and final text, finish reasons, usage), mode 0600;
+  - timings; whole server logs, including admission, concurrency and preemption lines;
+  - configuration and response hashes;
+  - a compile-cache inventory before session 1 and a diff after each session (cache not cleared).
+  Generated token ids are not retained: the 0.7.0 image returns them only on a request flag, and requests are not
+  changed. No engine hook. Scoring is unchanged.
+- **Prespecified next steps:**
+  - O1: further investigation, with a contemporaneous comparison considered before another broad mechanism search.
+  - O2: reassess whether the 4-versus-16 contrast remains an appropriate target; the verified fixes keep their value.
+  - O3: report the uncertainty and make a new budget decision; no automatic extra passes.
+- **Package:** rep070/refreeze/ SHA256SUMS sha256 131e72ea… (110 files; 33 changed files with `.pre22n` copies and
+  before/after hashes in CHANGES-22n.json; 12 new). Checks:
+  - runner refusals 18/18;
+  - proxy copy 17/17;
+  - incomplete-run cases 14/14;
+  - session simulation 61/61;
+  - chain seed 6/6;
+  - dry runs D1 O1, D2 O2, D3 O2 valid, and N1-N8 invalid (including a wrong task hash and a target mismatch);
+  - DRY_RUN of F at 36.5 passes and creates nothing.
