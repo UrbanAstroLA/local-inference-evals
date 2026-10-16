@@ -1,7 +1,12 @@
-# First-contrast retry: frozen package under PLAN.md amendment 22d (CPU only; NOT launched)
+# First-contrast retry: frozen package under PLAN.md amendments 22d, 22f and 22h (CPU only; NOT launched)
 
 2026-10-15. Design: `RETRY-PROPOSAL.md`. Changes are labelled R-n (`CHANGES-R.json`). This file maps each amendment-22d
-requirement to its implementation and its test evidence. Nothing here authorizes GPU time.
+requirement, and each amendment-22f correction (R-10 to R-15, applied before any retry data), to its implementation and
+its test evidence. It also maps each amendment-22h change (R-16 to R-18, the operator's decision "both") to the same.
+Nothing here authorizes GPU time.
+
+For R-10 onward, `CHANGES-R.json` records before and after sha256 per file. The pre-22f files are kept beside the new
+ones as `*.pre22f`, and the pre-22h files as `*.pre22h`.
 
 How it was prepared:
 - **No GPU.** No GPU or glm53* container; nothing used `--gpus`; no `sudo`; only DRY_RUN was launched.
@@ -59,7 +64,7 @@ How it was prepared:
 | Survival of the sentinels' shared state | — | PS-a / b / c, C2 and D2 always restore it; minimum margin 438 blocks |
 | Adjacent C/D pairs tested for reduced churn | Shared builds (C2, D2) and (D3, C3) | Identical physical blocks (base 8 / 8); the across-gate share relies on an idle gate |
 | Never 4-request batches | Plan rule Q10 | Every run holds the 8 fixtures |
-| Partial-cache design if eviction cannot be eliminated | Not needed: eviction eliminated with margin | Single-build ablation lost M3 at 1,250 blocks; LW builds lose M3: both rejected (`out/design_single_build/`) |
+| Partial-cache design if eviction cannot be eliminated | Not needed: eviction avoided in the replayed scenarios, with measured survival margins; the actual-session gates are authoritative [R-15] | Single-build ablation lost M3 at 1,250 blocks; LW builds lose M3: both rejected (`out/design_single_build/`) |
 
 ### 22d item 2 (F2): safety gates and construction accounting [R-2]
 
@@ -80,7 +85,7 @@ How it was prepared:
 
 | Requirement | Implementation | Evidence |
 |---|---|---|
-| Defined from the actual restored boundary c and the shared physical block [c − 4,352, c); block identity AND bytes; a missing shared-block measurement = incomplete coverage | `analysis/sentinel.py`: R-PS-coverage, -identity (scheduler ids, writer's id, dump block tables), -bytes (MLA and index-K pages), -state; in-session rc 14 for PS-c; plan rule Q15 | Unit U4 (all 8 fixtures); tamper T14; synthetic a-ps (byte flip) → R-PS-bytes; r-ps-cover → R-PS-coverage; r-ps-ident → R-PS-identity |
+| Defined from the actual restored boundary c and the shared physical block [c − 4,352, c); block identity AND bytes; a missing shared-block measurement = incomplete coverage | `analysis/sentinel.py`: R-PS-coverage, -identity (scheduler ids, writer's id, dump block tables), -bytes (MLA and index-K pages), -state-ssm and -state-conv (R-10, below), -limits (R-13); in-session rc 14 for PS-c; plan rule Q15 | Unit U4 (all 8 fixtures); tamper T14; synthetic a-ps (byte flip) → R-PS-bytes; r-ps-cover → R-PS-coverage; r-ps-ident → R-PS-identity |
 
 ### 22d item 6 (F6): numerical criteria [R-6]
 
@@ -113,6 +118,26 @@ How it was prepared:
 |---|---|---|
 | Measured-rate costing including expected misses, cold work and early-stop costs; explicit ceiling and attempt policy | `cost/cost_fcr.py` → `cost_fcr.json`, `.out`; runner constants equal (unit U8) | B 3.00 / 4.18 / ceiling **4.18**; A0 2.75 / 3.72 / **3.72** GPU-h; early-stop table; policies single and invalid-start |
 
+### Amendment 22f corrections [R-10 to R-15] (before any retry data)
+
+| 22f item | Implementation | Evidence |
+|---|---|---|
+| s.2 Sentinel: SSM and convolution evaluated separately, each with its own PS-a / PS-b baseline; each PS-c comparison meets its own criterion; only the intended committed state and the relevant conv entries; analysis only, no hook change [R-10] | `analysis/sentinel.py`: `committed_ssm`, `relevant_conv` (positions P − 3 .. P − 1 via `fc_common.conv_entries`), `state_rows`; rows R-PS-state-ssm and R-PS-state-conv replace R-PS-state. A frontier other than P − 1, or a missing component, fails. Hook unchanged (15e93e23…) | `tests/test_sentinel_fcr.py` on REAL attempt-2 KDA prefill snapshots: **14 / 14**. Clean 5: identical; non-identical baseline within 1.5 ×; unwritten rows only; dim-first layout; a non-committed slot. Negative 9, each failing exactly its component: conv-only; SSM-only; non-identical SSM baseline then excessive conv; non-identical both then excessive conv; then excessive SSM; committed slot; wrong frontier; missing conv; dim-first conv-only. The pre-22f module passes 4 of the 9 negatives (N3, N4, N7, N9). Synthetic end to end: r-ps-conv → R-PS-state-conv; r-ps-ssm → R-PS-state-ssm; r-ps-nonid → R-PS-state-conv; r-ps-nonid-ok → clean reading (`tests/out/sentinel-tests.log`, `synth-check.log`) |
+| s.3 Acceptance stress: single-token, maximum and strongly unequal advance, primary and LP batches; cache survival and all-8 before the lead-in ends; runtime in the cost; whether 4.18 holds [R-11] | `replay/session_sim.py` acceptance modes (default unchanged); `replay/run_stress.sh` (10 scenarios: single, max, unequal-a / -b at 1,275 and 1,150 blocks, unequal with reverse admission) and a recheck; `replay/stress_report.py`; `cost/cost_fcr.py` stress section with the client's own time rules under the B wall cap; `schedule_report.py` excludes stress runs from the 25-scenario table | The recheck equals `sim_base.json` exactly. **All 10: every lookup a full hit**; minimum margin 478 blocks at 1,275, 393 at 1,150 (primary 393, LP 409, sentinel 409); max lead 93 primary, 193 LP, < 512. C / D batches 674-694 s (single / unequal) against about 320 s. **4.18 does NOT hold** for single or unequal advance: complete session 4.33-4.40 central, 6.08-6.18 pessimistic. Under the cap, rc 11 before C3 (central) or a cut during D1 (pessimistic), primary incomplete. Max advance: 2.52 / 3.50, holds. Break-even 17.6 tok/s per request. Base at pessimistic rates also stops before C3 under the client rules (pre-existing). Reported, not changed (`replay/out/F3_stress.out`, `cost/cost_fcr.out`) |
+| s.4 F6 pages whose null makes the threshold non-discriminating reported, not called independently verified; a pass = compatibility with measured long-context variation [R-12] | `analysis/f6_criteria.py`: bound 0.5 on the page limit, defined before data (limit ≥ 1.0 also flagged); `page_rule` reports them; GATE-1R row R-idx-pages-nd, `gate1r.json` `not_independently_verified` and a `gate1r.txt` line; `fcr_result.json` / `.txt` for GATE-1R C1 / C2 and C3 | Units U10a-b; calibration rerun: run-fc1 results otherwise identical, **7 of 2,486** C1 pages non-discriminating (all M4, limits 0.56-0.91), the planted M4 fault still detected on 3 of them; synthetic r-f6-nd: GATE-1R PASS, 2 pages reported for C1, C2 and C3 |
+| s.5 Sentinel limits stated [R-13] | `sentinel.LIMITS`; row R-PS-limits; `gate1r.json` / `.txt`, `fcr_result.json` / `.txt`, notes; RETRY-PROPOSAL s.7, s.12 | Unit U12; synthetic content checks on every variant |
+| s.6 LP same-depth comparison (LC1 / LD1, LC2 / LD2), LC3 / LD3 separately as depth-mismatched; no three-repeat rule on the matched pairs; "unresolved construction sensitivity" if the conclusion depends on the mismatched pair [R-14] | `analysis/analyze_fcr.lp_same_depth`; dependence rule fixed before data (beyond-null status or sign of LD − LC and of the interaction, recomputed with the matched mean) | Units U11a-d (independent; beyond-null needing the mismatched pair; null produced by it; incomplete pair); synthetic good / null / r-f6-nd / r-ps-nonid-ok carry `same_depth` |
+| s.1 Wording: "eviction avoided in the replayed scenarios, with measured survival margins"; the actual-session gates authoritative [R-15] | RETRY-PROPOSAL s.2.2, s.4.3; this file; `analyze_fcr.CACHE_WORDING` in `fcr_result.json` / `.txt`; `F3_stress.out` | Synthetic content checks |
+| s.7 Recommended GPU scope | Unchanged: variant B, ceiling 4.18, single attempt, existing early-stop gates, no automatic retry | Runner constants = cost model (U8). The 22f s.3 stress result above is the operator's to weigh |
+
+### Amendment 22h changes [R-16 to R-18] (before any retry data; runner, client and costing only)
+
+| 22h item | Implementation | Evidence |
+|---|---|---|
+| s.1 Ceiling 6.2 occupied GPU-hours, variant B, single attempt, no automatic retry; 4.18 values recorded as superseded [R-16] | `runner/run_fcr.sh`: B CEILING=6.2, WALL_MAX=11160 (6.2 × 3,600 / 2), with the superseded 4.18 / 7,523 in the line and header. `cost/cost_fcr.py`: B ceiling = the operator's decision, the computed 4.18 under `superseded`. The R-11 section is still evaluated against the superseded values, as reported under 22f. A0 unchanged | U8 (runner = cost model: 6.2 / 11,160 / 4,942); U13g. Runner refusals 27 / 27, including: DRY_RUN B at 6.2; budget line "cap 6.2 (wall 11160s)"; 6.7 refused (above 6.2 + 0.46); 6.21 and 6.2001 refused without invalid-start; 4.18 and 5.0 accepted with lower caps; A0 still 3.72 |
+| s.2 Batch guard: a batch starts only if its projected completion fits in the remaining budget and wall time, from the session's measured decode rate with a conservative margin; never cut mid-way; a guard stop recorded as an incomplete contrast [R-17] | `runner/batch_guard_fcr.py` (pure; also used by the cost replay); `client_fcr.py` calls it before every build, touch pass, sentinel pass and run batch. Records `guard` / `rate`, rc 17; rc 11 and the 25 tok/s never-truncate rule superseded. `run_fcr.sh`: the client timeout coincides with the hard watchdog. `analyze_fcr.py`: reading "incomplete contrast (batch guard)", NOT RUN rows, `batch_guard` block | Units U13a-f: first-batch prior; fits → start; does not fit → stop before (rc 17); measured rates replace the prior per form; the slowest rate counts; the first D batch uses the prior; LP reserve incl. GATE-1R, skip and LP-off propagation. Synthetic r-guard-stop: GATE-1R PASS, reading "incomplete contrast (batch guard)", C3-residue NOT RUN, no FAIL row. Plan unchanged (plan check, 19 / 19 tampered plans) |
+| s.3 Stress replay under 6.2 + guard, all 10 scenarios and the base, central and pessimistic [R-18] | `cost/cost_fcr.py` `guard_timeline` runs the guard's own code on every modelled timeline under the 11,160 s wall cap | **Never mid-phase; no guard stop in any case.** Base: complete with LP, 3.00 GPU-h central (expected spend unchanged), 4.18 pessimistic (no longer stops before C3). Max: complete, 2.52 / 3.50. Single: complete, 4.33 central; pessimistic primary complete with LD1-LD3 / LC3 skipped, 5.64. Unequal (6): complete, 4.39-4.40; pessimistic primary complete with LP after the gate skipped, 5.73. Actual / projected ≤ 0.78, except the first batch of a form at pessimistic stress rates, ≤ 1.04, with ≥ 4,400 s of slack (`cost/cost_fcr.out`) |
+
 ---
 
 ## Test summary (all CPU)
@@ -125,14 +150,17 @@ How it was prepared:
 | F7 counterfactual (admission order on run-fc1's history) | 3 / 3 as stated | `replay/out/fc1_counterfactual.out` |
 | F7 / F3 scenario sweep | 25 / 25 design scenarios all hits; 3 ablations | `replay/out/F3_schedule.out` |
 | F1 cache-rule tests | 70 / 70 | `replay/out/cache_rule_tests.out` |
-| F6 calibration and planted faults | C1 passes the new rules; 6 / 6 faults detected | `calibration/f6_calibration.out` |
-| F8 regression | identical (27 rows); C1 post-inspection recorded | `calibration/f8_regression.out` |
-| Unit and real-data tests | 25 / 25 | `tests/out/units.log` |
+| F6 calibration and planted faults | C1 passes the new rules; 6 / 6 faults detected; 7 non-discriminating pages reported [R-12] (results otherwise identical to pre-22f) | `calibration/f6_calibration.out` |
+| F8 regression | identical (27 rows); C1 post-inspection recorded; re-run after 22f, byte-identical outputs | `calibration/f8_regression.out` |
+| Unit and real-data tests | 39 / 39 (25 + U10a-b, U11a-d, U12 + U13a-g) | `tests/out/units.log` |
+| Batch guard under 6.2, stress replay [R-18] | base + 10 scenarios × central / pessimistic: never mid-phase, no guard stop, primary complete in every case | `cost/cost_fcr.out` |
+| Sentinel boundary-state tests [R-10] | 14 / 14 (5 clean, 9 negative; the pre-22f module misses 4 of 9) | `tests/out/sentinel-tests.log`, `sentinel_tests.json` |
+| Acceptance stress scenarios [R-11] | 10 / 10 all hits, all-8 leads < 512; recheck = base exactly; 4.18 not held under single / unequal advance (reported) | `replay/out/F3_stress.out`, `cost/cost_fcr.out` |
 | Plan check on the session plans | B: 224 requests, 0 failures; A0: 176, 0 | `tests/out/plan-check.log` |
 | Tampered plans | 19 / 19 (untampered passes; 18 refused with their rules) | `tests/out/plan-tamper-tests.log` |
-| Runner refusals with shims | 23 / 23 (DRY_RUN B and A0, budget lines, approval and policy refusals, attempt rules incl. invalid-start, min wall, variant, image pin, disk, both frozen-hash gates, ids tamper, existing run dir) | `tests/out/runner-tests.log` |
-| Synthetic dry runs (attempt 1's 20 variants under the retry pipeline + 7 retry plants) | 27 / 27 behave as expected (GATE-1R verdict, exactly the planted rows, reading class) | `tests/out/synth-check.log` |
-| Final DRY_RUN | B and A0 pass (line and SHA256SUMS sha256 in DRYRUN.out) | `DRYRUN.out` |
+| Runner refusals with shims | 27 / 27 (DRY_RUN B at 6.2 and A0, budget lines, approval and policy refusals at the 6.2 ceiling, lower approvals, A0 unchanged, attempt rules incl. invalid-start, min wall, variant, image pin, disk, both frozen-hash gates, ids tamper, existing run dir) | `tests/out/runner-tests.log` |
+| Synthetic dry runs (attempt 1's 20 variants under the retry pipeline + 7 retry plants + 5 22f plants + r-guard-stop) | 33 / 33 behave as expected (GATE-1R verdict, exactly the planted rows, reading class, and output content: limits, cache wording, non-discriminating pages, LP same-depth) | `tests/out/synth-check.log` |
+| Final DRY_RUN | B with APPROVED_GPU_H=6.2, and A0, pass (line and SHA256SUMS sha256 in DRYRUN.out) | `DRYRUN.out` |
 
 ## Freeze
 
@@ -144,6 +172,15 @@ How it was prepared:
 
 Its own sha256 and the final DRY_RUN line are in `DRYRUN.out`. Attempt-1 files are pinned by `../SHA256SUMS`, and the
 runner verifies both.
+
+**22h re-freeze.** The 22f freeze (358 files, sha256 0b1c7927…) is kept as `SHA256SUMS.pre22h` and
+`DRYRUN.out.pre22h`. The files changed by R-16 to R-18 have `*.pre22h` copies; before and after sha256 are in
+`CHANGES-R.json`.
+
+**22f re-freeze.** The pre-22f freeze (amendment 22e: 287 files, sha256 c7374d75…) is kept as `SHA256SUMS.pre22f`,
+with its DRY_RUN line in `DRYRUN.out.pre22f`. Every file changed by R-10 to R-15 has a `*.pre22f` copy, and
+`CHANGES-R.json` gives the before and after sha256. The regenerated `SHA256SUMS` also covers the `*.pre22f` copies,
+the new tests, the stress outputs and their logs. Its sha256 is in `DRYRUN.out`.
 
 ## Not met, limits and deviations
 
@@ -158,4 +195,16 @@ runner verifies both.
    the pessimistic total (4.18 B, 3.72 A0), below amendment 22's 4.29.
 6. **The long-context numerical gates** are first in-session measurements with N_dd. The F6 calibration had no N_dd
    (C2 never ran).
-7. **The decode acceptance model** comes from C1 of run-fc1 only; step timing is modelled to within about 5 %.
+7. **The decode acceptance model** comes from C1 of run-fc1 only; step timing is modelled to within about 5 %. The
+   22f stress scenarios bound acceptance from both sides for cache survival and lead-in [R-11].
+8. **Superseded by 22h:** the 4.18 ceiling did not complete the session under single-token or strongly unequal advance
+   (RETRY-PROPOSAL s.11.1). Under 6.2 with the batch guard the primary completes in every stress scenario (s.11.2). At
+   pessimistic stress rates the LP batches after the gate are skipped, so there is no LP reading.
+9. **Sentinel limits (22f s.5):** MLA / index-K shared-block identity is directly checked; KDA restoration and
+   captured-state consistency are checked; physical KDA block identity and the complete unsampled state are not
+   established.
+10. **LP attribution** is limited to the descriptive same-depth pairs [R-14].
+11. **Non-discriminating F6 pages** are reported, not called independently verified [R-12].
+12. **The batch guard's decode prior** (11.0 tok/s per request) is below the central single-token rate but above the
+    pessimistic one (about 8.4). A first batch of a form can run a few percent past its projection; the session's
+    early slack covers this. The hard watchdog stays the last resort and is the only thing that can cut a phase.

@@ -21,6 +21,13 @@ has no C2 and N_dd is marked absent):
   reported      by fixture, by fixture x layer, by page; pooled; per-fixture flags (R3) with leave-flagged-out; the
                 ORIGINAL criteria and their results beside.
 Reading of a pass: "compatible with measured long-context numerical variation" (never "equivalent").
+[R-12, PLAN.md amendment 22f s.4; defined 2026-10-15 before any retry data] non-discriminating pages: a judged page
+whose limit max(2 x N_pp page, 0.25) is >= ND_BOUND = 0.5 (its own matched prefill null N_pp >= 0.25, i.e. the null
+alone already reaches the attempt-1 page value) is NON-DISCRIMINATING: a fault confined to half of the page's judged
+pools or fewer cannot be distinguished from that page's null (at a limit >= 1.0 no fault on the page can fail it;
+planted whole-page faults give a fraction of 1.0). Such a page is still judged, never fails a rule it would otherwise
+pass or vice versa, and is reported in every output as "not independently verified by the numerical check": its pass
+rests on the exact structural rows alone.
 
 Calibration and sensitivity (main; CPU container of the B1 image, run-fc1's real C1 / LW1 / LW2 dumps; post-inspection,
 calibration only, no D2 interpretation): the rules on C1 vs LW1 against N_pp, and planted faults that must stay
@@ -46,6 +53,9 @@ PAGE_FLOOR = fc.PAGE_MAX_GROSS          # 0.25: attempt-1 page value, now the fl
 FACTOR = fc.CONTENT_FACTOR              # 2
 EARLY = (3, fc.EARLY_IDX_LAYERS)        # DSA layers 3-15
 WORDING = "compatible with measured long-context numerical variation"
+ND_BOUND = 0.5                          # [R-12] page limit at or above which the page check is non-discriminating
+ND_UNDETECTABLE = 1.0                   # limit at or above which no fault on the page can fail it
+ND_WORDING = "not independently verified by the numerical check"
 
 
 def rows_for(run, G, a, b):
@@ -67,7 +77,7 @@ def page_table(rows):
 
 def page_rule(T, DD, PP):
     """T, DD, PP: page tables. Returns (ok, detail)."""
-    judged, fails, no_null = 0, [], 0
+    judged, fails, no_null, nd = 0, [], 0, []
     for k, (f, n) in T.items():
         if n < fc.PAGE_MINP:
             continue
@@ -81,10 +91,22 @@ def page_rule(T, DD, PP):
         if f > lim:
             fails.append(dict(fixture=k[0], rank=k[1], layer=k[2], page=k[3], frac=round(f, 4), limit=round(lim, 4),
                               nulls=[round(x, 4) for x in nulls]))
+        if lim >= ND_BOUND:
+            nd.append(dict(fixture=k[0], rank=k[1], layer=k[2], page=k[3], frac=round(f, 4), limit=round(lim, 4),
+                           undetectable=lim >= ND_UNDETECTABLE))
     cover = 1 - no_null / judged if judged else 0.0
+    nd = sorted(nd, key=lambda d: -d["limit"])
     return (judged > 0 and not fails and cover >= fc.NULL_COVER_MIN,
             dict(pages_judged=judged, failing=sorted(fails, key=lambda d: -d["frac"])[:20], n_failing=len(fails),
-                 null_coverage=cover))
+                 null_coverage=cover,
+                 non_discriminating=dict(
+                     n=len(nd), n_undetectable=sum(1 for d in nd if d["undetectable"]), bound=ND_BOUND,
+                     wording=ND_WORDING, by_fixture={fx: sum(1 for d in nd if d["fixture"] == fx)
+                                                     for fx in sorted({d["fixture"] for d in nd})},
+                     pages=nd[:40],
+                     rule="limit >= %.2f (own prefill null >= %.3f): a fault on <= half the page's pools is "
+                          "indistinguishable from the null; limit >= 1.0: no fault can fail the page" % (
+                              ND_BOUND, ND_BOUND / FACTOR))))
 
 
 def units(T, DD, PP):
@@ -275,11 +297,13 @@ def main():
         pl[name] = dict(detected=bool([k for k in detected_by if k != "fixture flag (reported)"]),
                         detected_by=detected_by, pooled=ev["pooled"]["gross"], limit=ev["pooled"]["limit"],
                         pages_failing=ev["pages"]["failing"][:3], n_pages_failing=ev["pages"]["n_failing"],
+                        n_failing_on_nd_pages=sum(1 for x in ev["pages"]["failing"] if x["limit"] >= ND_BOUND),
                         early=ev["early"]["gross_n"], flags=[x["fixture"] for x in ev["flags"]],
                         attribution_violations=attrib)
     res["planted"] = pl
     res["rules"] = dict(page_floor=PAGE_FLOOR, factor=FACTOR, early_layers=EARLY, gross=fc.GROSS,
-                        content_floor=fc.CONTENT_FLOOR, page_minp=fc.PAGE_MINP, wording=WORDING)
+                        content_floor=fc.CONTENT_FLOOR, page_minp=fc.PAGE_MINP, wording=WORDING, nd_bound=ND_BOUND,
+                        nd_wording=ND_WORDING)
     json.dump(res, open(outp, "w"), indent=1, default=str)
     b = res["C1_vs_LW1_post_inspection"]
     print("C1 vs LW1 (post-inspection, N_dd absent): ok", b["ok"], "| pooled %.5f limit %.5f cov %.3f | pages judged %d "
@@ -287,6 +311,9 @@ def main():
               b["pooled"]["gross"], b["pooled"]["limit"], b["pooled"]["coverage"], b["pages"]["pages_judged"],
               b["pages"]["n_failing"], b["early"]["gross_n"], b["early"]["n"], b["early"]["limit"],
               b["original"]["orig_pass"], b["original"]["page_over_25"], b["original"]["early_gross"]))
+    nd_ = b["pages"]["non_discriminating"]
+    print("C1 vs LW1 non-discriminating pages (limit >= %.2f; %s): %d of %d judged (%d with limit >= 1.0) by fixture %s"
+          % (ND_BOUND, ND_WORDING, nd_["n"], b["pages"]["pages_judged"], nd_["n_undetectable"], nd_["by_fixture"]))
     c = res["C1_vs_LW2_post_inspection"]
     print("C1 vs LW2 (post-inspection): ok", c["ok"], "pages failing", c["pages"]["n_failing"], "flags",
           [x["fixture"] for x in c["flags"]])

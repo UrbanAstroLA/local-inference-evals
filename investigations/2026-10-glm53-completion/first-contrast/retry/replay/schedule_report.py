@@ -24,6 +24,8 @@ def load():
     S = {}
     for f in sorted(glob.glob(os.path.join(OUT, "sim_*.json"))):
         d = json.load(open(f))
+        if d["scenario"]["name"].startswith("stress_"):
+            continue            # [R-11] acceptance stress scenarios are reported by stress_report.py, not here
         S[d["scenario"]["name"]] = d
     return S
 

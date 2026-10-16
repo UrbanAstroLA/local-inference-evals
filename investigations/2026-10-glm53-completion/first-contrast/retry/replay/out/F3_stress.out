@@ -1,0 +1,30 @@
+R-11 acceptance stress scenarios (22f s.3; stress scenarios, NOT predictions of D2)
+measured_recheck (base scenario re-run with the R-11 code) equals sim_base.json exactly: True
+
+scenario                       blocks  lookups  non-hits  min_marg  marg_prim    marg_LP  marg_sent  lead_pr  lead_LP session_s   vs_base
+stress_max                       1275      176         0       518        518        534        534       93      193      3661      -867
+stress_max_blocks1150            1150      176         0       393        393        409        409       93      193      3661      -867
+stress_single                    1275      176         0       518        518        534        534       24       49      6925     +2396
+stress_single_blocks1150         1150      176         0       393        393        409        409       24       49      6925     +2396
+stress_unequal_a                 1275      176         0       526        526        534        534       93      193      7053     +2525
+stress_unequal_a_blocks1150      1150      176         0       401        401        409        409       93      193      7053     +2525
+stress_unequal_a_reverse         1275      176         0       478        478        478        478       93      193      7042     +2514
+stress_unequal_b                 1275      176         0       518        518        534        534       89       81      7042     +2514
+stress_unequal_b_blocks1150      1150      176         0       393        393        409        409       89       81      7042     +2514
+stress_unequal_b_reverse         1275      176         0       478        478        478        478       37       81      7037     +2509
+
+realised advance (committed tokens per speculative decode step; min..max over batches) and C / D, LC / LD batch seconds (modelled):
+  stress_max                     primary adv (4.0, 4.0), 191-191 s per batch | LP adv (4.0, 4.0), 47-75 s per batch
+  stress_max_blocks1150          primary adv (4.0, 4.0), 191-191 s per batch | LP adv (4.0, 4.0), 47-75 s per batch
+  stress_single                  primary adv (1.0, 1.0), 674-674 s per batch | LP adv (1.0, 1.0), 108-135 s per batch
+  stress_single_blocks1150       primary adv (1.0, 1.0), 674-674 s per batch | LP adv (1.0, 1.0), 108-135 s per batch
+  stress_unequal_a               primary adv (1.6, 1.6), 694-694 s per batch | LP adv (1.602, 1.602), 110-138 s per batch
+  stress_unequal_a_blocks1150    primary adv (1.6, 1.6), 694-694 s per batch | LP adv (1.602, 1.602), 110-138 s per batch
+  stress_unequal_a_reverse       primary adv (1.6, 1.6), 692-694 s per batch | LP adv (1.602, 1.602), 109-138 s per batch
+  stress_unequal_b               primary adv (1.6, 1.6), 692-693 s per batch | LP adv (1.602, 1.602), 110-135 s per batch
+  stress_unequal_b_blocks1150    primary adv (1.6, 1.6), 692-693 s per batch | LP adv (1.602, 1.602), 110-135 s per batch
+  stress_unequal_b_reverse       primary adv (1.6, 1.6), 692-693 s per batch | LP adv (1.602, 1.602), 109-136 s per batch
+  base (measured acceptance)     primary 319-321 s per batch | LP 63-90 s per batch; session 4528 s
+
+SUMMARY: 10 stress scenarios; every lookup a full hit: True (non-hits 0); all 8 decoding before the lead-in ends in every primary and LP batch: True (max lead primary 93, LP 193, < 512); sentinel shared state restored in every scenario; minimum survival margin 478 blocks at 1,275 (393 at the 1,150 floor; primary 393, LP 409, sentinel 409)
+Wording: eviction avoided in the replayed scenarios, with measured survival margins; the actual-session gates remain authoritative.

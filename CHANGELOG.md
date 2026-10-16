@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-10-16 (completion investigation, amendments 22f-22j): first contrast retry, no reading
+
+Contents unchanged. No reading is added.
+
+- **`PLAN.md`**: amendments 22f (independent review of the retry package), 22g-22h (authorization: variant B, 6.2
+  GPU-hour ceiling, batch guard), 22i (the frozen package) and 22j (the result).
+- **`first-contrast/retry/`**: the package as frozen after 22f-22i, the session `run-fcr1/` (tensor records listed by
+  count only; container logs and pre-flight listings by hash) and the post-hoc `diagnosis-fcr1/`. Substitutions are in
+  `PUBLIC-COPIES-22j.txt`.
+- **`costs.jsonl`** (2.9317) and **`recompute.py`**: cumulative 68.03.
+- **Investigation `README.md`** and **`LEDGER.md`**.
+- Removed `run-hv-a2.out` from the repository root: a one-line shell error committed by mistake on 2026-10-14.
+
 ## 2026-10-15, later (completion investigation, amendments 22d-22e): retry package for review
 
 Contents unchanged. No run is added.

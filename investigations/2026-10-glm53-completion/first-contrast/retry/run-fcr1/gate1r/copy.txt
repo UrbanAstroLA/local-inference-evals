@@ -1,0 +1,2 @@
+copy: rc 0/0/0, files 396 of 396, scheduler logs 1, 56G, 73 s
+gate_fcr rc 0 after 245 s

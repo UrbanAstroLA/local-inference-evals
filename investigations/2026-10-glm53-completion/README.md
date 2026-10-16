@@ -1265,8 +1265,28 @@ the real decode path and records termination-token probabilities. 1.2117 of 2.4 
     - a schedule in which every prefix restore hits in 25 replayed scenarios, with the configuration unchanged;
     - exact cache-safety gates; a shared-block sentinel; long-context numerical criteria calibrated on C1, with planted
       faults detected.
-    Variant B: about 3.0 GPU-hours central, 4.18 ceiling, single attempt. It awaits independent review and
-    authorization.
+    Variant B: about 3.0 GPU-hours central, single attempt. After independent review (amendment 22f: the sentinel's
+    SSM and convolution state judged separately, F6 page reporting, LP same-depth pairs, cache wording) and stress
+    replays, the operator authorized a 6.2 GPU-hour ceiling with a batch guard (amendments 22g-22i).
+- **First contrast, retry** (amendment 22j; [`retry/run-fcr1/`](first-contrast/retry/run-fcr1/fcr_result.txt)):
+  - **Result: complete session, NO READING.** Every planned phase ran (224 requests); 2.9317 GPU-hours of 6.2; no
+    batch-guard stop. Three structural gates failed: H5f-fc (ledger against bytes), R-PS-state-ssm and
+    R-PS-state-conv (the sentinel's boundary state). GATE-1R, run validity, injection placement, cache safety and
+    balance, and the sentinel's coverage, block identity and bytes (7,480 pages, 0 mismatches) pass.
+  - **Descriptive, not a reading:** Δ = 0.106 nats, within-arm null 0.100, beyond-null threshold 0.200 (not met); the
+    three injected runs lie on one side of the three clean runs. Injected pools were selected; selection divergence did
+    not exceed the within-arm null. LP same-depth pairs −0.003 and −0.009 nats.
+  - **Post-hoc diagnostics** ([`retry/diagnosis-fcr1/`](first-contrast/retry/diagnosis-fcr1/); written after the data,
+    verdict unchanged):
+    - H5f-fc: 7-11 clean-labelled pools per layer per injected run; every gross one is fixture M4, window pool 3 (once
+      pool 5), at layers 23, 27 and 43, and the same pools are gross in the uninjected C2 and C3. A pooled 1.51% limit
+      was applied to a small, non-random subset.
+    - Sentinel: 3 of 544 SSM and 13 of 544 convolution rows fail (the gate output lists at most 10). Where the two
+      pre-injection baselines are bitwise equal (48 rows), the post-injection state is bitwise equal too; elsewhere the
+      median ratio to the baseline difference is 0.98 / 0.93. The same 2× rule applied to a pre-injection baseline
+      fires 2 / 22 times.
+    - Neither shows contamination of the cached prefix; both point to gate limits built on too little baseline data.
+  - **Next:** a re-run with gates corrected before new data, or closing the contrast line, goes to independent review.
 
 ### Observations recorded separately
 

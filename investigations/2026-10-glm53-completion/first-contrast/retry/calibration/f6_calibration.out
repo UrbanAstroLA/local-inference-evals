@@ -1,4 +1,5 @@
 C1 vs LW1 (post-inspection, N_dd absent): ok True | pooled 0.00765 limit 0.01538 cov 1.000 | pages judged 2486 failing 0 | early 3/57344 gross, limit 0.00100 | ORIGINAL pass False (pages over 25% 8, early 3)
+C1 vs LW1 non-discriminating pages (limit >= 0.50; not independently verified by the numerical check): 7 of 2486 judged (0 with limit >= 1.0) by fixture {'M4': 7}
 C1 vs LW2 (post-inspection): ok True pages failing 0 flags []
 flags C1 vs LW1: []
 plant wrong_page_L3_all_layers_rank0         detected True  by ['pages', 'early', 'fixture flag (reported)'] (pooled 0.01250 / 0.01538, pages failing 12)

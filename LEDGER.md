@@ -540,6 +540,25 @@ What was asked, run, found, corrected and withdrawn, in date order.
   package (variant B, about 3.0 GPU-hours, ceiling 4.18, single attempt) awaits review.
   [First contrast](investigations/2026-10-glm53-completion/README.md#instrument-validation-k-and-the-force-history-hook-amendment-21).
 
+**2026-10-16. First long-context contrast, retry: complete session, no reading (amendments 22f-22j).**
+- **Review and authorization (22f-22i):** independent review corrected the sentinel (SSM and convolution state judged
+  separately), F6 page reporting, LP same-depth pairs and cache wording before any data. The operator authorized variant
+  B with a 6.2 GPU-hour ceiling and a batch guard after stress replays showed 4.18 could not cover a complete session.
+- **Session:** every planned phase ran (224 requests), 2.9317 GPU-hours, no guard stop. GATE-1R, run validity,
+  injection placement, cache safety and balance, and the sentinel's coverage, block identity and bytes all pass.
+- **Result: NO READING.** Three structural gates failed: H5f-fc (ledger against bytes) and the sentinel's SSM and
+  convolution boundary-state rows. The session supports no statement about D2 and reasoning close propensity.
+- **Descriptive only:** Δ = 0.106 nats against a beyond-null threshold of 0.200 (screen not met), with the three injected
+  runs on one side of the three clean runs; selection divergence within the within-arm null.
+- **Post-hoc diagnostics (after the data; they do not change the verdict):** the H5f failures are one high-variance
+  fixture's pools, gross in the uninjected runs too, inside a small clean-labelled subset. The sentinel failures sit
+  where the two pre-injection baselines happened to be unusually close; the same 2× rule applied to a pre-injection
+  baseline fires as often. Neither shows contamination of the cached prefix; both point to gate limits built on too
+  little baseline data.
+- **Next:** whether to re-run with gates corrected before new data, or close the contrast line, goes to independent
+  review. Cumulative 68.03 GPU-hours.
+  [First contrast](investigations/2026-10-glm53-completion/README.md#instrument-validation-k-and-the-force-history-hook-amendment-21).
+
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough
   qualification. They also said the D7 path "cannot run" where the basis is a reconstruction. These are reworded in the

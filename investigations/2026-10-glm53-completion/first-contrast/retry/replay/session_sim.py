@@ -9,6 +9,11 @@ fixtures' forced histories; CV schedules poison/oracle/reject:2 as defined); for
 forced ids, so every decode-written block carries the real tokens and hash. Step durations follow a linear model
 fitted to run-fc1's scheduler log (used for arrival interleaving and costing only; the cache outcome depends on
 order, not on seconds).
+[R-11, 22f s.3] Acceptance stress modes (scenario key "acceptance"; default "measured" is the distribution above and
+leaves every earlier scenario unchanged): "single" = single-token advance throughout (poison-like), "max" = maximum
+accepted advance throughout (oracle-like), "unequal" = the fixtures in "fast" at "max" and every other at "single".
+They apply to every natural (non-CV) decode step, primary and LP batches alike; CV keeps its defined schedules. They
+are stress scenarios, not predictions of D2.
 
 Per scenario it records
   * every lookup: restored length vs the F1 expectation (hit / partial / miss), restored block provenance (owner
@@ -94,6 +99,7 @@ class Sim:
         self.t = 0.0
         self.meta = {}            # rid -> dict(phase, fixture, form, P, forced ids, mode, expected, ...)
         self.out_pos = collections.Counter()
+        self.adv_steps, self.adv_tok = collections.Counter(), collections.Counter()   # [R-11] speculative decode steps
         self.finish_t = {}
         self.first_dec = {}
         self.pending_lookups = {}  # rid -> (request object for hashes, expected c, build label)
@@ -145,6 +151,21 @@ class Sim:
         req = E.make_request(rid, prompt, r["max_tokens"], geo.salt(r["salt"]), self.hbs)
         return req
 
+    def _natural_acc(self, fixture, nspec):
+        """[R-11, 22f s.3] accepted drafts of a natural (non-CV) decode step. 'measured' (default, unchanged): drawn
+        from run-fc1 C1's per-fixture distribution. Stress modes (not predictions of D2): 'single' = single-token advance
+        throughout (poison-like, 0 accepted), 'max' = maximum accepted advance throughout (oracle-like, every scheduled
+        draft accepted), 'unequal' = fixtures in sc['fast'] at 'max', every other fixture at 'single'."""
+        mode = self.sc.get("acceptance", "measured")
+        if mode == "unequal":
+            mode = "max" if fixture in self.sc.get("fast", ()) else "single"
+        if mode == "single":
+            return 0
+        if mode == "max":
+            return nspec
+        dist = self.M["acc"].get(fixture) or [2]
+        return min(nspec, self.rng.choice(dist))
+
     def _commit(self, q, so, n):
         if self.prefill_at.get((n, q), True):
             return []
@@ -163,9 +184,11 @@ class Sim:
             elif mode == "reject:2":
                 acc = min(1, nspec)
             else:
-                dist = self.M["acc"].get(m["fixture"]) or [2]
-                acc = min(nspec, self.rng.choice(dist))
+                acc = self._natural_acc(m["fixture"], nspec)
             k = 1 + acc
+        if m is not None and nspec:
+            self.adv_steps[q] += 1
+            self.adv_tok[q] += k
         fo = (m or {}).get("forced")
         p = self.out_pos[q]
         toks = list(fo[p:p + k]) if fo else []
@@ -294,6 +317,15 @@ class Sim:
                 self.finish_t[q] = self.t
                 self.pending_lookups.pop(q, None)
 
+    def _advance(self, rids):
+        """[R-11] committed tokens per speculative decode step over the phase's requests: mean and per fixture."""
+        st = sum(self.adv_steps[q] for q in rids)
+        if not st:
+            return None
+        return dict(mean=round(sum(self.adv_tok[q] for q in rids) / st, 3), steps=st,
+                    by_fixture={self.meta[q]["fixture"]: round(self.adv_tok[q] / self.adv_steps[q], 3)
+                                for q in rids if self.adv_steps[q] and q in self.meta})
+
     # ---- client
     def _rid(self, ph, r):
         if r["form"] == "CV":
@@ -405,7 +437,8 @@ class Sim:
             self.t += geo.GAP_S
             res.append(dict(phase=ph["tag"], kind=ph["kind"], form=ph.get("form"), t0=round(t0, 1),
                             secs=round(self.t - t0, 1), steps=self.eng.step_no - step0,
-                            lead=self.lead.get(ph["tag"]), order=[r["fixture"] for r in reqs], requests=rows))
+                            lead=self.lead.get(ph["tag"]), order=[r["fixture"] for r in reqs], requests=rows,
+                            advance=self._advance([rid for rid, _, _ in objs])))
         return res
 
 

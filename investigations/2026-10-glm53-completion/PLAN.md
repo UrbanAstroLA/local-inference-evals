@@ -2173,3 +2173,106 @@ hook and the served configuration are unchanged (image ac05230b…, hook 15e93e2
   - the long-context gates have never seen an in-session decode null;
   - the replay's decode acceptance comes from C1 alone;
   - GATE-1R idles the GPUs about 270 s.
+
+**Amendment 22f (2026-10-15; adopts the independent review "retry review: recommended disposition", relayed by the
+operator; before any retry data).**
+
+1. **Deliverable substantially complete.** Eviction is described as "avoided in the replayed scenarios, with measured
+   survival margins"; the actual-session gates remain authoritative. The corrected account of M3 is accepted.
+2. **Sentinel analysis correction before launch.** The SSM and convolution components are evaluated separately, each
+   with its own PS-a/PS-b numerical baseline, and each PS-c comparison must meet its own criterion. Only the intended
+   committed state and relevant convolution entries are compared. Negative controls cover convolution-only corruption,
+   SSM-only corruption, and a non-identical baseline followed by excessive convolution change. This is an analysis
+   change only: no hook change and no GPU revalidation.
+3. **Acceptance stress scenarios (CPU):** single-token advance throughout, maximum accepted advance throughout, and
+   strongly unequal acceptance between fixtures. Each checks cache survival and that all eight enter decode before the
+   lead-in ends, with any material runtime effect in the cost. These are stress scenarios, not predictions of D2.
+4. **F6 accepted** (prefill-only page and early-layer nulls). A page whose null makes its threshold non-discriminating is
+   reported as such and not called independently verified. A pass means compatibility with measured long-context
+   variation.
+5. **KDA sentinel accepted** after correction 2. Stated limits: MLA/index-K shared-block identity is directly checked;
+   KDA restoration and captured-state consistency are checked; physical KDA block identity and the complete unsampled
+   state are not established.
+6. **LP restore depth.** The primary contrast is unaffected, but LP attribution is limited. Added: a descriptive
+   same-depth comparison (LC1 against LD1, LC2 against LD2), with LC3 against LD3 reported separately as depth-mismatched.
+   The three-repeat rule is not applied to the two matched pairs. If the LP conclusion depends on the mismatched pair, it
+   is reported as unresolved construction sensitivity.
+7. **Recommended GPU scope:** variant B, ceiling 4.18 occupied GPU-hours, single attempt, existing early-stop gates, no
+   automatic retry. It proceeds after the CPU corrections, stress scenarios and an updated freeze pass, subject to
+   operator authorization.
+8. **Interpretation stays bounded.** A valid session can establish whether decode-window D2 exposure changes selected
+   keys and close propensity on these histories, not that D2 explains the completion gap. C1 stays outside the primary
+   comparison.
+
+**Amendment 22g (2026-10-15; operator authorization "go with variant b", before any retry data).** The first-contrast
+retry is authorized as variant B, ceiling 4.18 occupied GPU-hours, single attempt, existing early-stop gates, no
+automatic retry. It is conditional on the 22f CPU corrections and stress scenarios passing, and on the coordinator
+verifying the re-frozen package. If the stress scenarios show the ceiling does not hold, it returns to the operator
+before launch.
+
+**Amendment 22h (2026-10-15; operator decision "both", before any retry data).**
+
+The 22f stress scenarios (R-11) showed the 4.18 ceiling does not cover a complete session under single-token or
+strongly unequal draft acceptance:
+
+| Acceptance | Central / pessimistic GPU-hours |
+|---|---|
+| Single-token | 4.33 / 6.08 |
+| Strongly unequal | 4.40 / 6.18 |
+
+Under 4.18, the session would stop before C3 at central rates, or be killed partway through D1 at pessimistic rates.
+Cache safety and all-eight concurrency held in all 10 scenarios.
+
+The operator chose both remedies:
+1. **The ceiling is raised to 6.2 occupied GPU-hours** for the single retry attempt (variant B, no automatic retry).
+2. **A batch guard is added to the runner and client:** a batch starts only if its projected completion fits in the
+   remaining budget and wall time, using the decode rate measured in the session's earlier batches with a conservative
+   margin. A batch is never cut mid-way. A stop by the guard is recorded as an incomplete contrast.
+
+The guard is a runner and client change only. The design, order, gates and analysis reviewed in 22f are unchanged, and
+the hook, image and served configuration are unchanged. The package is re-frozen and coordinator-verified before
+launch.
+
+**Amendment 22i (2026-10-15; frozen retry package, verified by the coordinator, before any retry data).**
+- **Package:** first-contrast/retry/SHA256SUMS (381 files) has sha256 fca158ca…; the attempt-1 imports verify.
+- **Changes:** R-16 (ceiling 6.2 occupied GPU-hours, wall cap 11,160 s) and R-17 (batch guard). The guard projects
+  each batch at 1.25 × (uncached prefill ÷ the slowest measured prefill rate + max_tokens ÷ the slowest measured decode
+  rate) + 30 s. Before the first batch of a form it uses a prior of 2,410 tok/s prefill and 11.0 tok/s decode. A
+  primary batch that does not fit stops the session (rc 17, "incomplete contrast (batch guard)"). LP batches keep the
+  later primary phases in reserve and are otherwise skipped. The wall-cap watchdog is the only mid-batch cut.
+- **Stress replay under 6.2 with the guard:** the primary contrast completes in every scenario, with no mid-batch cut
+  and no guard stop. The LP control is incomplete only under pessimistic single-token or unequal acceptance, where LD
+  batches are skipped. Normal acceptance: 3.00 GPU-hours central, 4.18 pessimistic, both complete.
+- **Tests:** units 39/39, runner refusals 27/27, synthetic dry runs 33/33, tampered plans 19/19.
+- **DRY_RUN:** variant B, policy single, approved 6.2: passes. The runner is invoked through bash, because the frozen
+  file is not executable.
+- **Launch:** under amendments 22g and 22h.
+
+**Amendment 22j (2026-10-16; first-contrast retry result, recorded by the coordinator after the session).**
+- **Session `run-fcr1`:** variant B, single attempt, 2026-10-16 00:54-02:22 UTC, **2.9317 occupied GPU-hours** of the
+  6.2 approved. Every planned phase ran (224 requests); no batch-guard stop, no LP batch skipped, no wall-cap cut.
+- **Passed:** GATE-1R (in session, before any injected batch, and recomputed); all 12 runs valid; injection checks
+  H5a-fc and H5g-fc; R-cache-safe (224 requests), R-cache-balance (no non-hit fixture-run in any arm); sentinel
+  coverage, block identity and bytes (7,480 MLA and index-K pages, 0 mismatches); C3 residue.
+- **Failed:** H5f-fc (ledger vs bytes), R-PS-state-ssm and R-PS-state-conv (sentinel boundary state).
+- **Frozen verdict: NO READING.** The results below are instrument findings only. No statement about D2 and
+  reasoning close propensity is drawn from this session.
+- **Descriptive numbers, not a reading:** Y_C −11.610, −11.710, −11.675; Y_D −11.561, −11.549, −11.569; Δ 0.106 nats,
+  within-arm null N 0.100, beyond-null threshold 0.200: the beyond-null screen is not met; the three D runs lie on one
+  side of the three C runs. Selection: injected pools were selected (exposure met); selection divergence did not exceed
+  the within-arm null. LP same-depth pairs (descriptive): −0.003 and −0.009 nats; depth-mismatched pair −0.020. The
+  analysis prints a direction line in every outcome; under NO READING it is not a finding.
+- **Post-hoc diagnostics (written after the data; they do not change the verdict)**, in `retry/diagnosis-fcr1/`:
+  - *H5f-fc.* Only 7-11 window pools per layer are clean-labelled in each D run (77-121 per run, against about
+    4,000 corrupt-labelled). Every clean-labelled gross pool is fixture M4, window pool 3 (once pool 5), at layers 23, 27
+    and 43, in all three D runs. The same pools are gross in the uninjected C2 and C3. M4 is the fixture already
+    reported as having non-discriminating F6 pages (22f s.4). The limit (1.51 %, a pooled rate over all window pools)
+    was applied to a small, non-random subset that includes those pools.
+  - *Sentinel state.* The gate's failing list is capped at 10; the full counts are 3 of 544 SSM rows and 13 of 544
+    convolution rows. In the 48 rows per component where PS-a and PS-b are bitwise equal, PS-c is bitwise equal too.
+    In the other 496, the median ratio of the PS-a/PS-c to the PS-a/PS-b difference is 0.98 (SSM) and 0.93 (conv). The
+    failures sit where PS-a and PS-b happened to be unusually close. The mirror comparison under the same 2× rule (PS-b
+    farther from PS-a than 2× PS-c) fires 2 times (SSM) and 22 times (conv), on two phases that both ran before the
+    injected batch. A limit set from one baseline pair per row does not separate PS-c from the baselines' own spread.
+- **Not established:** whether either gate would pass under a redesign; no redesign is adopted here. Any further
+  session needs a new dated amendment before data, as before.

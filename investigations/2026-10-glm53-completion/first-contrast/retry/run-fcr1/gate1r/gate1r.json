@@ -1,0 +1,4007 @@
+{
+ "gate": "GATE-1R",
+ "verdict": "PASS",
+ "reading": "PASS: compatible with measured long-context numerical variation under these bounds; the cache and concurrency properties the contrast needs hold; injected batches may run",
+ "stop_classes": [],
+ "rows": [
+  {
+   "id": "G1-V0",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "V0: unkeyed probes bitwise equal to B1's record (hook on, WMAX 8448)",
+   "detail": [
+    [
+     "q0",
+     true
+    ],
+    [
+     "q1",
+     true
+    ],
+    [
+     "q2",
+     true
+    ],
+    [
+     "q3",
+     true
+    ]
+   ],
+   "label": "A22"
+  },
+  {
+   "id": "G1-coverage",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "every planned request present, returned without error, with its hook record on disk",
+   "detail": {
+    "missing": [],
+    "errors": [],
+    "no_hook_record": [],
+    "expected": 56
+   },
+   "label": "A22"
+  },
+  {
+   "id": "G1-cache-orig",
+   "kind": "reported",
+   "status": "REPORTED",
+   "name": "ORIGINAL attempt-1 row kept beside (exact equality with the F1 expected values; superseded by R-cache-*): exact cache accounting: every reference, run, CV and sentinel request's cached_tokens equals its planned value (0 cold; c0 / c0_L on a cached prefix); warms 0 when cold, a block multiple <= the hit value on re-warm",
+   "detail": {
+    "violations": [],
+    "warm_violations": [],
+    "warms": {
+     "cold": 16
+    }
+   },
+   "label": "A22"
+  },
+  {
+   "id": "G1-wmax",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "WMAX = 8448 on both ranks; every keyed request's hook record holds its full planned forced list (no truncation)",
+   "detail": {
+    "init": [
+     [
+      0,
+      8448
+     ],
+     [
+      1,
+      8448
+     ]
+    ],
+    "violations": []
+   },
+   "label": "A22"
+  },
+  {
+   "id": "G1-abspos",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "absolute positions on cached prefixes: hook prompt length = planned P (both ranks); dumps carry their tag, P and planned range; snapshots: frontier = P + F - 2 and committed tokens equal the history",
+   "detail": [],
+   "label": "A22"
+  },
+  {
+   "id": "G1-forcing",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "forced ids committed exactly (ids_equal) and every output index measured exactly once; every reference row measured once",
+   "detail": [],
+   "label": "A22"
+  },
+  {
+   "id": "G1-errors",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "no fw_error / guard_error",
+   "detail": [],
+   "label": "A22"
+  },
+  {
+   "id": "G1-attrib",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "exact request attribution: every designated position (o >= 1) has records in every tracked layer whose step is its measurement step, in flattened and in padded (FULL-graph padding) steps alike; selection records likewise",
+   "detail": {
+    "flattened_n": 13793,
+    "sel_n": 1344,
+    "padded_n": 4667,
+    "examples": [],
+    "padded_exercised": true
+   },
+   "label": "A22"
+  },
+  {
+   "id": "G1-inflight",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "all 8 requests of every run decoding before output index 512 of every request (fixed batch composition)",
+   "detail": [],
+   "label": "A22"
+  },
+  {
+   "id": "R-cache-safe",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "cache safety (exact) for every stage-A request: S1 block-aligned, S2 never beyond the prefill coverage of its stream under its salt, S3 no decode-written history restored, S4 scheduler-attributed (num_computed == cached; restored ids written by an earlier prefill of the same fixture and salt)",
+   "detail": {
+    "n": 112,
+    "unsafe": [],
+    "unmapped": []
+   },
+   "label": "R-2 / F2"
+  },
+  {
+   "id": "R-cache-model",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "the F7 replay's prediction holds on stage A: every lookup is a full hit (every build cold); injected traffic relies on the same model (the D2 share across the gate, the touch passes, the split builds)",
+   "detail": {
+    "non_hits": []
+   },
+   "label": "R-1 / R-3"
+  },
+  {
+   "id": "R-cache-class",
+   "kind": "reported",
+   "status": "REPORTED",
+   "name": "hit / partial / miss / cold per request and per phase (construction accounting)",
+   "detail": {
+    "LW1": {
+     "n": 8,
+     "classes": {
+      "cold": 8
+     },
+     "unsafe": []
+    },
+    "LW2": {
+     "n": 8,
+     "classes": {
+      "cold": 8
+     },
+     "unsafe": []
+    },
+    "warm-s1-a": {
+     "n": 4,
+     "classes": {
+      "cold": 4
+     },
+     "unsafe": []
+    },
+    "T-s1-a": {
+     "n": 4,
+     "classes": {
+      "hit": 4
+     },
+     "unsafe": []
+    },
+    "warm-s1-b": {
+     "n": 4,
+     "classes": {
+      "cold": 4
+     },
+     "unsafe": []
+    },
+    "T-s1": {
+     "n": 8,
+     "classes": {
+      "hit": 8
+     },
+     "unsafe": []
+    },
+    "LC1": {
+     "n": 8,
+     "classes": {
+      "hit": 8
+     },
+     "unsafe": []
+    },
+    "LC2": {
+     "n": 8,
+     "classes": {
+      "hit": 8
+     },
+     "unsafe": []
+    },
+    "C1": {
+     "n": 8,
+     "classes": {
+      "hit": 8
+     },
+     "unsafe": []
+    },
+    "CV": {
+     "n": 8,
+     "classes": {
+      "hit": 8
+     },
+     "unsafe": []
+    },
+    "warm-s2-a": {
+     "n": 4,
+     "classes": {
+      "cold": 4
+     },
+     "unsafe": []
+    },
+    "T-s2-a": {
+     "n": 4,
+     "classes": {
+      "hit": 4
+     },
+     "unsafe": []
+    },
+    "warm-s2-b": {
+     "n": 4,
+     "classes": {
+      "cold": 4
+     },
+     "unsafe": []
+    },
+    "T-s2": {
+     "n": 8,
+     "classes": {
+      "hit": 8
+     },
+     "unsafe": []
+    },
+    "C2": {
+     "n": 8,
+     "classes": {
+      "hit": 8
+     },
+     "unsafe": []
+    },
+    "PS-a": {
+     "n": 8,
+     "classes": {
+      "hit": 8
+     },
+     "unsafe": []
+    },
+    "PS-b": {
+     "n": 8,
+     "classes": {
+      "hit": 8
+     },
+     "unsafe": []
+    }
+   },
+   "label": "R-2"
+  },
+  {
+   "id": "R-cache-identity",
+   "kind": "reported",
+   "status": "REPORTED",
+   "name": "users of one build restore identical physical MLA / index-K blocks (scheduler block ids, common length)",
+   "detail": {
+    "LC1+LC2+C1+CV:A8": {
+     "identical": true,
+     "blocks": 24
+    },
+    "LC1+LC2+C1+CV:L1": {
+     "identical": true,
+     "blocks": 20
+    },
+    "LC1+LC2+C1+CV:L3": {
+     "identical": true,
+     "blocks": 19
+    },
+    "LC1+LC2+C1+CV:L4": {
+     "identical": true,
+     "blocks": 15
+    },
+    "LC1+LC2+C1+CV:L5": {
+     "identical": true,
+     "blocks": 24
+    },
+    "LC1+LC2+C1+CV:L8": {
+     "identical": true,
+     "blocks": 24
+    },
+    "LC1+LC2+C1+CV:M3": {
+     "identical": true,
+     "blocks": 13
+    },
+    "LC1+LC2+C1+CV:M4": {
+     "identical": true,
+     "blocks": 18
+    },
+    "C2+PS-a+PS-b:A8": {
+     "identical": true,
+     "blocks": 24
+    },
+    "C2+PS-a+PS-b:L1": {
+     "identical": true,
+     "blocks": 20
+    },
+    "C2+PS-a+PS-b:L3": {
+     "identical": true,
+     "blocks": 19
+    },
+    "C2+PS-a+PS-b:L4": {
+     "identical": true,
+     "blocks": 15
+    },
+    "C2+PS-a+PS-b:L5": {
+     "identical": true,
+     "blocks": 24
+    },
+    "C2+PS-a+PS-b:L8": {
+     "identical": true,
+     "blocks": 24
+    },
+    "C2+PS-a+PS-b:M3": {
+     "identical": true,
+     "blocks": 13
+    },
+    "C2+PS-a+PS-b:M4": {
+     "identical": true,
+     "blocks": 18
+    }
+   },
+   "label": "R-2"
+  },
+  {
+   "id": "G1-clean",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "clean runs: d2_injected_tokens = 0; shadow ledger clean on every processed window pool; n_win_corrupt = n_sel_win_corrupt = 0 at every designated position",
+   "detail": [],
+   "label": "A22"
+  },
+  {
+   "id": "G1-align",
+   "kind": "numerical",
+   "status": "PASS",
+   "name": "long-context alignment: forced decode vs prefill reference on output indices >= 512: pooled top-1 >= 0.95 and |dlp| quantiles within max(2 x carried null, floors); per request aligned top-1 >= 0.90 and top-1 at +-1 <= 0.20",
+   "detail": {
+    "pairs": [
+     [
+      "C1",
+      "LW1"
+     ],
+     [
+      "C2",
+      "LW2"
+     ]
+    ],
+    "n": 114688,
+    "top1": 0.9848109654017857,
+    "lp": {
+     "0.5": 0.000240325927734375,
+     "0.9": 0.09001121520996097,
+     "0.99": 0.36979490280151395
+    },
+    "tol": {
+     "0.5": 0.01,
+     "0.9": 0.3,
+     "0.99": 1.5
+    },
+    "failing": [],
+    "per_request": {
+     "C1/LW1-L1": {
+      "n": 6656,
+      "top1": 0.9887319711538461,
+      "shifted": 0.005108940646130729,
+      "lp": {
+       "0.5": 3.4332275390625e-05,
+       "0.9": 0.06411552429199219,
+       "0.99": 0.34344472885131816
+      }
+     },
+     "C1/LW1-L4": {
+      "n": 6656,
+      "top1": 0.9711538461538461,
+      "shifted": 0.016979714500375657,
+      "lp": {
+       "0.5": 0.01004791259765625,
+       "0.9": 0.14154529571533203,
+       "0.99": 0.4394256591796875
+      }
+     },
+     "C1/LW1-M3": {
+      "n": 6656,
+      "top1": 0.9809194711538461,
+      "shifted": 0.009015777610818933,
+      "lp": {
+       "0.5": 0.005364418029785156,
+       "0.9": 0.11783027648925781,
+       "0.99": 0.35545129776000955
+      }
+     },
+     "C1/LW1-M4": {
+      "n": 6656,
+      "top1": 0.9971454326923077,
+      "shifted": 0.009765625,
+      "lp": {
+       "0.5": 3.814697265625e-06,
+       "0.9": 0.0036134719848632812,
+       "0.99": 0.18512105941772455
+      }
+     },
+     "C1/LW1-L3": {
+      "n": 6656,
+      "top1": 0.9917367788461539,
+      "shifted": 0.003906836964688205,
+      "lp": {
+       "0.5": 3.24249267578125e-05,
+       "0.9": 0.04039764404296875,
+       "0.99": 0.3140259742736815
+      }
+     },
+     "C1/LW1-L5": {
+      "n": 6656,
+      "top1": 0.978515625,
+      "shifted": 0.005108940646130729,
+      "lp": {
+       "0.5": 0.0016508102416992188,
+       "0.9": 0.11991310119628906,
+       "0.99": 0.4291807174682604
+      }
+     },
+     "C1/LW1-A8": {
+      "n": 6656,
+      "top1": 0.9885817307692307,
+      "shifted": 0.0025544703230653645,
+      "lp": {
+       "0.5": 0.00026607513427734375,
+       "0.9": 0.06170177459716797,
+       "0.99": 0.2873193740844725
+      }
+     },
+     "C1/LW1-L8": {
+      "n": 6656,
+      "top1": 0.9830228365384616,
+      "shifted": 0.002704326923076923,
+      "lp": {
+       "0.5": 0.0003032684326171875,
+       "0.9": 0.10461902618408203,
+       "0.99": 0.48383512496948156
+      }
+     },
+     "C2/LW2-L1": {
+      "n": 7680,
+      "top1": 0.98828125,
+      "shifted": 0.004427083333333333,
+      "lp": {
+       "0.5": 3.4332275390625e-05,
+       "0.9": 0.06801738739013677,
+       "0.99": 0.3344858741760255
+      }
+     },
+     "C2/LW2-L4": {
+      "n": 7680,
+      "top1": 0.9723958333333333,
+      "shifted": 0.017447916666666667,
+      "lp": {
+       "0.5": 0.010288238525390625,
+       "0.9": 0.13779182434082038,
+       "0.99": 0.4572533416748047
+      }
+     },
+     "C2/LW2-M3": {
+      "n": 7680,
+      "top1": 0.9798177083333334,
+      "shifted": 0.008854166666666666,
+      "lp": {
+       "0.5": 0.0047054290771484375,
+       "0.9": 0.11725425720214844,
+       "0.99": 0.3305797576904297
+      }
+     },
+     "C2/LW2-M4": {
+      "n": 7680,
+      "top1": 0.996875,
+      "shifted": 0.009765625,
+      "lp": {
+       "0.5": 3.814697265625e-06,
+       "0.9": 0.00446777343750001,
+       "0.99": 0.17423334121704104
+      }
+     },
+     "C2/LW2-L3": {
+      "n": 7680,
+      "top1": 0.990625,
+      "shifted": 0.0035160828232842817,
+      "lp": {
+       "0.5": 3.24249267578125e-05,
+       "0.9": 0.04586639404296876,
+       "0.99": 0.33223382949829106
+      }
+     },
+     "C2/LW2-L5": {
+      "n": 7680,
+      "top1": 0.977734375,
+      "shifted": 0.005209011590050788,
+      "lp": {
+       "0.5": 0.0014886856079101562,
+       "0.9": 0.11752452850341798,
+       "0.99": 0.4806982612609865
+      }
+     },
+     "C2/LW2-A8": {
+      "n": 7680,
+      "top1": 0.9890625,
+      "shifted": 0.002604505795025394,
+      "lp": {
+       "0.5": 0.00028324127197265625,
+       "0.9": 0.06540889739990235,
+       "0.99": 0.28923004150390635
+      }
+     },
+     "C2/LW2-L8": {
+      "n": 7680,
+      "top1": 0.9825520833333333,
+      "shifted": 0.0036463081130355514,
+      "lp": {
+       "0.5": 0.00031757354736328125,
+       "0.9": 0.10096511840820313,
+       "0.99": 0.5219052696228028
+      }
+     }
+    }
+   },
+   "label": "21g-3 rule; A22-4"
+  },
+  {
+   "id": "G1-cross",
+   "kind": "numerical",
+   "status": "PASS",
+   "name": "both block crossings of every window: in +-128 output indices around each crossing, aligned top-1 >= 0.90 and top-1 at +-1 <= 0.20 against a prefill reference; every crossing covered",
+   "detail": {
+    "uncovered": [],
+    "failing": [],
+    "windows": {
+     "C1/LW1-L1-x1": {
+      "n": 256,
+      "top1": 0.98828125,
+      "shifted": 0.00390625,
+      "lp": {
+       "0.5": 3.337860107421875e-05,
+       "0.9": 0.07724285125732422,
+       "0.99": 0.39535493850707926
+      }
+     },
+     "C1/LW1-L1-x2": {
+      "n": 256,
+      "top1": 1.0,
+      "shifted": 0.015625,
+      "lp": {
+       "0.5": 1.811981201171875e-05,
+       "0.9": 0.0457611083984375,
+       "0.99": 0.2838229179382324
+      }
+     },
+     "C1/LW1-L4-x1": {
+      "n": 256,
+      "top1": 0.96484375,
+      "shifted": 0.015625,
+      "lp": {
+       "0.5": 0.016469955444335938,
+       "0.9": 0.1515827178955078,
+       "0.99": 0.8239825248718201
+      }
+     },
+     "C1/LW1-L4-x2": {
+      "n": 256,
+      "top1": 0.96484375,
+      "shifted": 0.03515625,
+      "lp": {
+       "0.5": 0.0071582794189453125,
+       "0.9": 0.19149208068847656,
+       "0.99": 0.5456216812133777
+      }
+     },
+     "C1/LW1-M3-x1": {
+      "n": 256,
+      "top1": 0.98046875,
+      "shifted": 0.015625,
+      "lp": {
+       "0.5": 0.003787994384765625,
+       "0.9": 0.11149883270263672,
+       "0.99": 0.23324203491210932
+      }
+     },
+     "C1/LW1-M3-x2": {
+      "n": 256,
+      "top1": 0.98828125,
+      "shifted": 0.0,
+      "lp": {
+       "0.5": 0.0023221969604492188,
+       "0.9": 0.0796823501586914,
+       "0.99": 0.2597314834594723
+      }
+     },
+     "C1/LW1-M4-x1": {
+      "n": 256,
+      "top1": 1.0,
+      "shifted": 0.015625,
+      "lp": {
+       "0.5": 3.814697265625e-06,
+       "0.9": 0.0013074874877929688,
+       "0.99": 0.0634190559387206
+      }
+     },
+     "C1/LW1-L3-x1": {
+      "n": 256,
+      "top1": 0.9765625,
+      "shifted": 0.0078125,
+      "lp": {
+       "0.5": 0.00029850006103515625,
+       "0.9": 0.10903358459472656,
+       "0.99": 0.5595234870910633
+      }
+     },
+     "C1/LW1-L3-x2": {
+      "n": 256,
+      "top1": 0.98828125,
+      "shifted": 0.00390625,
+      "lp": {
+       "0.5": 1.52587890625e-05,
+       "0.9": 0.024843215942382812,
+       "0.99": 0.35550050735473626
+      }
+     },
+     "C1/LW1-L5-x1": {
+      "n": 256,
+      "top1": 0.98046875,
+      "shifted": 0.00390625,
+      "lp": {
+       "0.5": 0.0010232925415039062,
+       "0.9": 0.09668827056884766,
+       "0.99": 0.44887142181396444
+      }
+     },
+     "C1/LW1-L5-x2": {
+      "n": 256,
+      "top1": 0.98046875,
+      "shifted": 0.0,
+      "lp": {
+       "0.5": 0.0010709762573242188,
+       "0.9": 0.12353134155273438,
+       "0.99": 0.3849481582641593
+      }
+     },
+     "C1/LW1-A8-x1": {
+      "n": 256,
+      "top1": 0.98828125,
+      "shifted": 0.00390625,
+      "lp": {
+       "0.5": 0.00014209747314453125,
+       "0.9": 0.018182754516601562,
+       "0.99": 0.3055903434753415
+      }
+     },
+     "C1/LW1-A8-x2": {
+      "n": 256,
+      "top1": 0.984375,
+      "shifted": 0.00390625,
+      "lp": {
+       "0.5": 0.00031948089599609375,
+       "0.9": 0.054251670837402344,
+       "0.99": 0.2598273277282714
+      }
+     },
+     "C1/LW1-L8-x1": {
+      "n": 256,
+      "top1": 0.98828125,
+      "shifted": 0.0078125,
+      "lp": {
+       "0.5": 0.0009613037109375,
+       "0.9": 0.08060264587402344,
+       "0.99": 0.5770851135253898
+      }
+     },
+     "C1/LW1-L8-x2": {
+      "n": 256,
+      "top1": 0.98046875,
+      "shifted": 0.00390625,
+      "lp": {
+       "0.5": 0.000331878662109375,
+       "0.9": 0.11839008331298828,
+       "0.99": 0.45308599472045863
+      }
+     },
+     "C2/LW2-L1-x1": {
+      "n": 256,
+      "top1": 0.98828125,
+      "shifted": 0.00390625,
+      "lp": {
+       "0.5": 5.340576171875e-05,
+       "0.9": 0.07549095153808594,
+       "0.99": 0.31110839843749977
+      }
+     },
+     "C2/LW2-L1-x2": {
+      "n": 256,
+      "top1": 0.99609375,
+      "shifted": 0.015625,
+      "lp": {
+       "0.5": 1.9073486328125e-05,
+       "0.9": 0.0784444808959961,
+       "0.99": 0.3305281639099116
+      }
+     },
+     "C2/LW2-L4-x1": {
+      "n": 256,
+      "top1": 0.9765625,
+      "shifted": 0.015625,
+      "lp": {
+       "0.5": 0.01595783233642578,
+       "0.9": 0.16329002380371094,
+       "0.99": 0.6934148788452107
+      }
+     },
+     "C2/LW2-L4-x2": {
+      "n": 256,
+      "top1": 0.96875,
+      "shifted": 0.03125,
+      "lp": {
+       "0.5": 0.007203102111816406,
+       "0.9": 0.1539316177368164,
+       "0.99": 0.5492400169372552
+      }
+     },
+     "C2/LW2-M3-x1": {
+      "n": 256,
+      "top1": 0.96875,
+      "shifted": 0.015625,
+      "lp": {
+       "0.5": 0.004558563232421875,
+       "0.9": 0.13401031494140625,
+       "0.99": 0.3191756248474121
+      }
+     },
+     "C2/LW2-M3-x2": {
+      "n": 256,
+      "top1": 0.98046875,
+      "shifted": 0.0,
+      "lp": {
+       "0.5": 0.0026826858520507812,
+       "0.9": 0.08918952941894531,
+       "0.99": 0.3286848068237304
+      }
+     },
+     "C2/LW2-M4-x1": {
+      "n": 256,
+      "top1": 1.0,
+      "shifted": 0.015625,
+      "lp": {
+       "0.5": 3.814697265625e-06,
+       "0.9": 0.0017862319946289062,
+       "0.99": 0.09494628906249983
+      }
+     },
+     "C2/LW2-M4-x2": {
+      "n": 256,
+      "top1": 0.98828125,
+      "shifted": 0.01953125,
+      "lp": {
+       "0.5": 3.814697265625e-06,
+       "0.9": 0.027709007263183594,
+       "0.99": 0.3513852119445793
+      }
+     },
+     "C2/LW2-L3-x1": {
+      "n": 256,
+      "top1": 0.97265625,
+      "shifted": 0.0078125,
+      "lp": {
+       "0.5": 0.0006475448608398438,
+       "0.9": 0.10349082946777344,
+       "0.99": 0.543650245666503
+      }
+     },
+     "C2/LW2-L3-x2": {
+      "n": 256,
+      "top1": 0.9921875,
+      "shifted": 0.00390625,
+      "lp": {
+       "0.5": 1.71661376953125e-05,
+       "0.9": 0.03619861602783203,
+       "0.99": 0.22503957748413075
+      }
+     },
+     "C2/LW2-L5-x1": {
+      "n": 256,
+      "top1": 0.96484375,
+      "shifted": 0.00390625,
+      "lp": {
+       "0.5": 0.0009813308715820312,
+       "0.9": 0.14926624298095703,
+       "0.99": 0.5917653083801259
+      }
+     },
+     "C2/LW2-L5-x2": {
+      "n": 256,
+      "top1": 0.98828125,
+      "shifted": 0.0,
+      "lp": {
+       "0.5": 0.00206756591796875,
+       "0.9": 0.12451457977294922,
+       "0.99": 0.48135299682616994
+      }
+     },
+     "C2/LW2-A8-x1": {
+      "n": 256,
+      "top1": 0.9921875,
+      "shifted": 0.00390625,
+      "lp": {
+       "0.5": 7.62939453125e-05,
+       "0.9": 0.024227142333984375,
+       "0.99": 0.17952356338500935
+      }
+     },
+     "C2/LW2-A8-x2": {
+      "n": 256,
+      "top1": 1.0,
+      "shifted": 0.00390625,
+      "lp": {
+       "0.5": 0.0002498626708984375,
+       "0.9": 0.06861495971679688,
+       "0.99": 0.22120542526245018
+      }
+     },
+     "C2/LW2-L8-x1": {
+      "n": 256,
+      "top1": 0.9765625,
+      "shifted": 0.0078125,
+      "lp": {
+       "0.5": 0.0007171630859375,
+       "0.9": 0.1080617904663086,
+       "0.99": 0.32952833175659096
+      }
+     },
+     "C2/LW2-L8-x2": {
+      "n": 256,
+      "top1": 0.9765625,
+      "shifted": 0.00390625,
+      "lp": {
+       "0.5": 0.0006990432739257812,
+       "0.9": 0.0967550277709961,
+       "0.99": 0.5759343147277822
+      }
+     }
+    }
+   },
+   "label": "A22"
+  },
+  {
+   "id": "G1-regime",
+   "kind": "numerical",
+   "status": "PASS",
+   "name": "M3's 65,536 selection-regime crossing: +-256 output indices aligned with the prefill reference (top-1 >= 0.90, +-1 <= 0.20) and every recorded final selection in the window holds 511 distinct causal pool ids",
+   "detail": {
+    "fixtures": [
+     "M3"
+    ],
+    "windows": {
+     "C1/LW1-M3": {
+      "n": 512,
+      "top1": 0.978515625,
+      "shifted": 0.0078125,
+      "lp": {
+       "0.5": 0.0025129318237304688,
+       "0.9": 0.10461158752441409,
+       "0.99": 0.29872106552124017
+      }
+     },
+     "C2/LW2-M3": {
+      "n": 512,
+      "top1": 0.982421875,
+      "shifted": 0.0078125,
+      "lp": {
+       "0.5": 0.0030307769775390625,
+       "0.9": 0.11365604400634773,
+       "0.99": 0.268313293457031
+      }
+     }
+    },
+    "selection_rows": 36,
+    "selection_violations": []
+   },
+   "label": "A22"
+  },
+  {
+   "id": "G1-content",
+   "kind": "numerical",
+   "status": "PASS",
+   "name": "index-K content vs the prefill reference LW1: gross <= max(2 x max(N_dd, N_pp), 0.1 %) with N_dd = C1 vs C2, N_pp = LW1 vs LW2 (different build length), matched by fixture x rank x layer x shared causal pool; pooled over units; coverage >= 99 % and every fixture",
+   "detail": {
+    "C1": {
+     "tested": 157696,
+     "evaluated": 157696,
+     "coverage": 1.0,
+     "fixtures": [
+      "A8",
+      "L1",
+      "L3",
+      "L4",
+      "L5",
+      "L8",
+      "M3",
+      "M4"
+     ],
+     "fixtures_without_null": [],
+     "gross": 0.00826273336038961,
+     "gross_n": 1303,
+     "N_dd": 0.007057883522727273,
+     "N_pp": 0.007552506087662338,
+     "N_dd_n": 1113,
+     "N_pp_n": 1191,
+     "limit": 0.015105012175324676,
+     "orig_pass": false,
+     "cover_ok": true
+    },
+    "C2": {
+     "tested": 157696,
+     "evaluated": 157696,
+     "coverage": 1.0,
+     "fixtures": [
+      "A8",
+      "L1",
+      "L3",
+      "L4",
+      "L5",
+      "L8",
+      "M3",
+      "M4"
+     ],
+     "fixtures_without_null": [],
+     "gross": 0.007672991071428571,
+     "gross_n": 1210,
+     "N_dd": 0.007057883522727273,
+     "N_pp": 0.007552506087662338,
+     "N_dd_n": 1113,
+     "N_pp_n": 1191,
+     "limit": 0.015105012175324676,
+     "orig_pass": false,
+     "cover_ok": true
+    }
+   },
+   "label": "21g-1; A22-3"
+  },
+  {
+   "id": "G1-content-orig",
+   "kind": "reported",
+   "status": "REPORTED",
+   "name": "ORIGINAL attempt-1 criterion beside: gross <= 0.1 %",
+   "detail": {
+    "C1": {
+     "gross": 0.00826273336038961,
+     "passes": false
+    },
+    "C2": {
+     "gross": 0.007672991071428571,
+     "passes": false
+    }
+   },
+   "label": "attempt-1 frozen"
+  },
+  {
+   "id": "G1-content-ref2",
+   "kind": "reported",
+   "status": "REPORTED",
+   "name": "the same rule against the second reference LW2",
+   "detail": {
+    "C1": {
+     "tested": 157696,
+     "evaluated": 157696,
+     "coverage": 1.0,
+     "fixtures": [
+      "A8",
+      "L1",
+      "L3",
+      "L4",
+      "L5",
+      "L8",
+      "M3",
+      "M4"
+     ],
+     "fixtures_without_null": [],
+     "gross": 0.006962763798701299,
+     "gross_n": 1098,
+     "N_dd": 0.007057883522727273,
+     "N_pp": 0.007552506087662338,
+     "N_dd_n": 1113,
+     "N_pp_n": 1191,
+     "limit": 0.015105012175324676,
+     "orig_pass": false,
+     "cover_ok": true
+    },
+    "C2": {
+     "tested": 157696,
+     "evaluated": 157696,
+     "coverage": 1.0,
+     "fixtures": [
+      "A8",
+      "L1",
+      "L3",
+      "L4",
+      "L5",
+      "L8",
+      "M3",
+      "M4"
+     ],
+     "fixtures_without_null": [],
+     "gross": 0.007241781655844156,
+     "gross_n": 1142,
+     "N_dd": 0.007057883522727273,
+     "N_pp": 0.007552506087662338,
+     "N_dd_n": 1113,
+     "N_pp_n": 1191,
+     "limit": 0.015105012175324676,
+     "orig_pass": false,
+     "cover_ok": true
+    }
+   },
+   "label": "A22"
+  },
+  {
+   "id": "G1-content-table",
+   "kind": "reported",
+   "status": "REPORTED",
+   "name": "gross counts per fixture x layer and per fixture, with both matched nulls (21g-1 reporting)",
+   "detail": {
+    "C1": {
+     "pooled": {
+      "n": 157696,
+      "gross_n": 1303,
+      "gross": 0.00826273336038961,
+      "N_dd_n": 1113,
+      "N_pp_n": 1191
+     },
+     "per_fixture": {
+      "A8": {
+       "n": 19712,
+       "gross_n": 109,
+       "gross": 0.005529626623376623,
+       "N_dd_n": 70,
+       "N_pp_n": 92
+      },
+      "L1": {
+       "n": 19712,
+       "gross_n": 47,
+       "gross": 0.0023843344155844155,
+       "N_dd_n": 51,
+       "N_pp_n": 51
+      },
+      "L3": {
+       "n": 19712,
+       "gross_n": 208,
+       "gross": 0.010551948051948052,
+       "N_dd_n": 211,
+       "N_pp_n": 185
+      },
+      "L4": {
+       "n": 19712,
+       "gross_n": 13,
+       "gross": 0.0006594967532467532,
+       "N_dd_n": 14,
+       "N_pp_n": 18
+      },
+      "L5": {
+       "n": 19712,
+       "gross_n": 16,
+       "gross": 0.0008116883116883117,
+       "N_dd_n": 8,
+       "N_pp_n": 14
+      },
+      "L8": {
+       "n": 19712,
+       "gross_n": 109,
+       "gross": 0.005529626623376623,
+       "N_dd_n": 84,
+       "N_pp_n": 92
+      },
+      "M3": {
+       "n": 19712,
+       "gross_n": 47,
+       "gross": 0.0023843344155844155,
+       "N_dd_n": 33,
+       "N_pp_n": 31
+      },
+      "M4": {
+       "n": 19712,
+       "gross_n": 754,
+       "gross": 0.03825081168831169,
+       "N_dd_n": 642,
+       "N_pp_n": 708
+      }
+     },
+     "per_fixture_layer": {
+      "A8|L3": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "A8|L7": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "A8|L11": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "A8|L15": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "A8|L19": {
+       "n": 1792,
+       "gross_n": 14,
+       "gross": 0.0078125,
+       "N_dd_n": 7,
+       "N_pp_n": 8
+      },
+      "A8|L23": {
+       "n": 1792,
+       "gross_n": 17,
+       "gross": 0.009486607142857142,
+       "N_dd_n": 10,
+       "N_pp_n": 17
+      },
+      "A8|L27": {
+       "n": 1792,
+       "gross_n": 20,
+       "gross": 0.011160714285714286,
+       "N_dd_n": 10,
+       "N_pp_n": 19
+      },
+      "A8|L31": {
+       "n": 1792,
+       "gross_n": 7,
+       "gross": 0.00390625,
+       "N_dd_n": 6,
+       "N_pp_n": 7
+      },
+      "A8|L35": {
+       "n": 1792,
+       "gross_n": 16,
+       "gross": 0.008928571428571428,
+       "N_dd_n": 13,
+       "N_pp_n": 18
+      },
+      "A8|L39": {
+       "n": 1792,
+       "gross_n": 25,
+       "gross": 0.013950892857142858,
+       "N_dd_n": 19,
+       "N_pp_n": 16
+      },
+      "A8|L43": {
+       "n": 1792,
+       "gross_n": 10,
+       "gross": 0.005580357142857143,
+       "N_dd_n": 5,
+       "N_pp_n": 7
+      },
+      "L1|L3": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L1|L7": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L1|L11": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L1|L15": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L1|L19": {
+       "n": 1792,
+       "gross_n": 8,
+       "gross": 0.004464285714285714,
+       "N_dd_n": 11,
+       "N_pp_n": 6
+      },
+      "L1|L23": {
+       "n": 1792,
+       "gross_n": 5,
+       "gross": 0.0027901785714285715,
+       "N_dd_n": 4,
+       "N_pp_n": 7
+      },
+      "L1|L27": {
+       "n": 1792,
+       "gross_n": 15,
+       "gross": 0.008370535714285714,
+       "N_dd_n": 11,
+       "N_pp_n": 13
+      },
+      "L1|L31": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 2,
+       "N_pp_n": 3
+      },
+      "L1|L35": {
+       "n": 1792,
+       "gross_n": 9,
+       "gross": 0.005022321428571429,
+       "N_dd_n": 10,
+       "N_pp_n": 10
+      },
+      "L1|L39": {
+       "n": 1792,
+       "gross_n": 9,
+       "gross": 0.005022321428571429,
+       "N_dd_n": 10,
+       "N_pp_n": 10
+      },
+      "L1|L43": {
+       "n": 1792,
+       "gross_n": 1,
+       "gross": 0.0005580357142857143,
+       "N_dd_n": 3,
+       "N_pp_n": 2
+      },
+      "L3|L3": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L3|L7": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L3|L11": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L3|L15": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L3|L19": {
+       "n": 1792,
+       "gross_n": 12,
+       "gross": 0.006696428571428571,
+       "N_dd_n": 19,
+       "N_pp_n": 21
+      },
+      "L3|L23": {
+       "n": 1792,
+       "gross_n": 22,
+       "gross": 0.012276785714285714,
+       "N_dd_n": 25,
+       "N_pp_n": 19
+      },
+      "L3|L27": {
+       "n": 1792,
+       "gross_n": 41,
+       "gross": 0.022879464285714284,
+       "N_dd_n": 40,
+       "N_pp_n": 31
+      },
+      "L3|L31": {
+       "n": 1792,
+       "gross_n": 18,
+       "gross": 0.010044642857142858,
+       "N_dd_n": 17,
+       "N_pp_n": 18
+      },
+      "L3|L35": {
+       "n": 1792,
+       "gross_n": 28,
+       "gross": 0.015625,
+       "N_dd_n": 26,
+       "N_pp_n": 21
+      },
+      "L3|L39": {
+       "n": 1792,
+       "gross_n": 43,
+       "gross": 0.023995535714285716,
+       "N_dd_n": 41,
+       "N_pp_n": 36
+      },
+      "L3|L43": {
+       "n": 1792,
+       "gross_n": 44,
+       "gross": 0.024553571428571428,
+       "N_dd_n": 43,
+       "N_pp_n": 39
+      },
+      "L4|L3": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L4|L7": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L4|L11": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L4|L15": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L4|L19": {
+       "n": 1792,
+       "gross_n": 1,
+       "gross": 0.0005580357142857143,
+       "N_dd_n": 1,
+       "N_pp_n": 2
+      },
+      "L4|L23": {
+       "n": 1792,
+       "gross_n": 5,
+       "gross": 0.0027901785714285715,
+       "N_dd_n": 5,
+       "N_pp_n": 6
+      },
+      "L4|L27": {
+       "n": 1792,
+       "gross_n": 2,
+       "gross": 0.0011160714285714285,
+       "N_dd_n": 2,
+       "N_pp_n": 3
+      },
+      "L4|L31": {
+       "n": 1792,
+       "gross_n": 1,
+       "gross": 0.0005580357142857143,
+       "N_dd_n": 0,
+       "N_pp_n": 1
+      },
+      "L4|L35": {
+       "n": 1792,
+       "gross_n": 1,
+       "gross": 0.0005580357142857143,
+       "N_dd_n": 1,
+       "N_pp_n": 3
+      },
+      "L4|L39": {
+       "n": 1792,
+       "gross_n": 2,
+       "gross": 0.0011160714285714285,
+       "N_dd_n": 4,
+       "N_pp_n": 2
+      },
+      "L4|L43": {
+       "n": 1792,
+       "gross_n": 1,
+       "gross": 0.0005580357142857143,
+       "N_dd_n": 1,
+       "N_pp_n": 1
+      },
+      "L5|L3": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L5|L7": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L5|L11": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L5|L15": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L5|L19": {
+       "n": 1792,
+       "gross_n": 6,
+       "gross": 0.0033482142857142855,
+       "N_dd_n": 3,
+       "N_pp_n": 10
+      },
+      "L5|L23": {
+       "n": 1792,
+       "gross_n": 4,
+       "gross": 0.002232142857142857,
+       "N_dd_n": 1,
+       "N_pp_n": 1
+      },
+      "L5|L27": {
+       "n": 1792,
+       "gross_n": 4,
+       "gross": 0.002232142857142857,
+       "N_dd_n": 2,
+       "N_pp_n": 2
+      },
+      "L5|L31": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L5|L35": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 1,
+       "N_pp_n": 0
+      },
+      "L5|L39": {
+       "n": 1792,
+       "gross_n": 2,
+       "gross": 0.0011160714285714285,
+       "N_dd_n": 1,
+       "N_pp_n": 1
+      },
+      "L5|L43": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L8|L3": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L8|L7": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L8|L11": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L8|L15": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L8|L19": {
+       "n": 1792,
+       "gross_n": 15,
+       "gross": 0.008370535714285714,
+       "N_dd_n": 11,
+       "N_pp_n": 10
+      },
+      "L8|L23": {
+       "n": 1792,
+       "gross_n": 12,
+       "gross": 0.006696428571428571,
+       "N_dd_n": 8,
+       "N_pp_n": 11
+      },
+      "L8|L27": {
+       "n": 1792,
+       "gross_n": 17,
+       "gross": 0.009486607142857142,
+       "N_dd_n": 13,
+       "N_pp_n": 18
+      },
+      "L8|L31": {
+       "n": 1792,
+       "gross_n": 10,
+       "gross": 0.005580357142857143,
+       "N_dd_n": 8,
+       "N_pp_n": 10
+      },
+      "L8|L35": {
+       "n": 1792,
+       "gross_n": 13,
+       "gross": 0.007254464285714286,
+       "N_dd_n": 9,
+       "N_pp_n": 11
+      },
+      "L8|L39": {
+       "n": 1792,
+       "gross_n": 22,
+       "gross": 0.012276785714285714,
+       "N_dd_n": 18,
+       "N_pp_n": 14
+      },
+      "L8|L43": {
+       "n": 1792,
+       "gross_n": 20,
+       "gross": 0.011160714285714286,
+       "N_dd_n": 17,
+       "N_pp_n": 18
+      },
+      "M3|L3": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "M3|L7": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "M3|L11": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "M3|L15": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "M3|L19": {
+       "n": 1792,
+       "gross_n": 7,
+       "gross": 0.00390625,
+       "N_dd_n": 5,
+       "N_pp_n": 0
+      },
+      "M3|L23": {
+       "n": 1792,
+       "gross_n": 8,
+       "gross": 0.004464285714285714,
+       "N_dd_n": 7,
+       "N_pp_n": 8
+      },
+      "M3|L27": {
+       "n": 1792,
+       "gross_n": 9,
+       "gross": 0.005022321428571429,
+       "N_dd_n": 5,
+       "N_pp_n": 7
+      },
+      "M3|L31": {
+       "n": 1792,
+       "gross_n": 1,
+       "gross": 0.0005580357142857143,
+       "N_dd_n": 1,
+       "N_pp_n": 0
+      },
+      "M3|L35": {
+       "n": 1792,
+       "gross_n": 8,
+       "gross": 0.004464285714285714,
+       "N_dd_n": 7,
+       "N_pp_n": 8
+      },
+      "M3|L39": {
+       "n": 1792,
+       "gross_n": 9,
+       "gross": 0.005022321428571429,
+       "N_dd_n": 4,
+       "N_pp_n": 6
+      },
+      "M3|L43": {
+       "n": 1792,
+       "gross_n": 5,
+       "gross": 0.0027901785714285715,
+       "N_dd_n": 4,
+       "N_pp_n": 2
+      },
+      "M4|L3": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "M4|L7": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "M4|L11": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "M4|L15": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "M4|L19": {
+       "n": 1792,
+       "gross_n": 69,
+       "gross": 0.03850446428571429,
+       "N_dd_n": 40,
+       "N_pp_n": 49
+      },
+      "M4|L23": {
+       "n": 1792,
+       "gross_n": 114,
+       "gross": 0.06361607142857142,
+       "N_dd_n": 93,
+       "N_pp_n": 103
+      },
+      "M4|L27": {
+       "n": 1792,
+       "gross_n": 185,
+       "gross": 0.10323660714285714,
+       "N_dd_n": 165,
+       "N_pp_n": 178
+      },
+      "M4|L31": {
+       "n": 1792,
+       "gross_n": 61,
+       "gross": 0.03404017857142857,
+       "N_dd_n": 49,
+       "N_pp_n": 59
+      },
+      "M4|L35": {
+       "n": 1792,
+       "gross_n": 68,
+       "gross": 0.03794642857142857,
+       "N_dd_n": 53,
+       "N_pp_n": 71
+      },
+      "M4|L39": {
+       "n": 1792,
+       "gross_n": 114,
+       "gross": 0.06361607142857142,
+       "N_dd_n": 109,
+       "N_pp_n": 110
+      },
+      "M4|L43": {
+       "n": 1792,
+       "gross_n": 143,
+       "gross": 0.07979910714285714,
+       "N_dd_n": 133,
+       "N_pp_n": 138
+      }
+     }
+    },
+    "C2": {
+     "pooled": {
+      "n": 157696,
+      "gross_n": 1210,
+      "gross": 0.007672991071428571,
+      "N_dd_n": 1113,
+      "N_pp_n": 1191
+     },
+     "per_fixture": {
+      "A8": {
+       "n": 19712,
+       "gross_n": 89,
+       "gross": 0.004515016233766234,
+       "N_dd_n": 70,
+       "N_pp_n": 92
+      },
+      "L1": {
+       "n": 19712,
+       "gross_n": 44,
+       "gross": 0.002232142857142857,
+       "N_dd_n": 51,
+       "N_pp_n": 51
+      },
+      "L3": {
+       "n": 19712,
+       "gross_n": 178,
+       "gross": 0.009030032467532468,
+       "N_dd_n": 211,
+       "N_pp_n": 185
+      },
+      "L4": {
+       "n": 19712,
+       "gross_n": 20,
+       "gross": 0.0010146103896103895,
+       "N_dd_n": 14,
+       "N_pp_n": 18
+      },
+      "L5": {
+       "n": 19712,
+       "gross_n": 11,
+       "gross": 0.0005580357142857143,
+       "N_dd_n": 8,
+       "N_pp_n": 14
+      },
+      "L8": {
+       "n": 19712,
+       "gross_n": 100,
+       "gross": 0.005073051948051948,
+       "N_dd_n": 84,
+       "N_pp_n": 92
+      },
+      "M3": {
+       "n": 19712,
+       "gross_n": 33,
+       "gross": 0.0016741071428571428,
+       "N_dd_n": 33,
+       "N_pp_n": 31
+      },
+      "M4": {
+       "n": 19712,
+       "gross_n": 735,
+       "gross": 0.037286931818181816,
+       "N_dd_n": 642,
+       "N_pp_n": 708
+      }
+     },
+     "per_fixture_layer": {
+      "A8|L3": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "A8|L7": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "A8|L11": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "A8|L15": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "A8|L19": {
+       "n": 1792,
+       "gross_n": 10,
+       "gross": 0.005580357142857143,
+       "N_dd_n": 7,
+       "N_pp_n": 8
+      },
+      "A8|L23": {
+       "n": 1792,
+       "gross_n": 13,
+       "gross": 0.007254464285714286,
+       "N_dd_n": 10,
+       "N_pp_n": 17
+      },
+      "A8|L27": {
+       "n": 1792,
+       "gross_n": 15,
+       "gross": 0.008370535714285714,
+       "N_dd_n": 10,
+       "N_pp_n": 19
+      },
+      "A8|L31": {
+       "n": 1792,
+       "gross_n": 3,
+       "gross": 0.0016741071428571428,
+       "N_dd_n": 6,
+       "N_pp_n": 7
+      },
+      "A8|L35": {
+       "n": 1792,
+       "gross_n": 15,
+       "gross": 0.008370535714285714,
+       "N_dd_n": 13,
+       "N_pp_n": 18
+      },
+      "A8|L39": {
+       "n": 1792,
+       "gross_n": 20,
+       "gross": 0.011160714285714286,
+       "N_dd_n": 19,
+       "N_pp_n": 16
+      },
+      "A8|L43": {
+       "n": 1792,
+       "gross_n": 13,
+       "gross": 0.007254464285714286,
+       "N_dd_n": 5,
+       "N_pp_n": 7
+      },
+      "L1|L3": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L1|L7": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L1|L11": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L1|L15": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L1|L19": {
+       "n": 1792,
+       "gross_n": 7,
+       "gross": 0.00390625,
+       "N_dd_n": 11,
+       "N_pp_n": 6
+      },
+      "L1|L23": {
+       "n": 1792,
+       "gross_n": 7,
+       "gross": 0.00390625,
+       "N_dd_n": 4,
+       "N_pp_n": 7
+      },
+      "L1|L27": {
+       "n": 1792,
+       "gross_n": 11,
+       "gross": 0.006138392857142857,
+       "N_dd_n": 11,
+       "N_pp_n": 13
+      },
+      "L1|L31": {
+       "n": 1792,
+       "gross_n": 2,
+       "gross": 0.0011160714285714285,
+       "N_dd_n": 2,
+       "N_pp_n": 3
+      },
+      "L1|L35": {
+       "n": 1792,
+       "gross_n": 8,
+       "gross": 0.004464285714285714,
+       "N_dd_n": 10,
+       "N_pp_n": 10
+      },
+      "L1|L39": {
+       "n": 1792,
+       "gross_n": 6,
+       "gross": 0.0033482142857142855,
+       "N_dd_n": 10,
+       "N_pp_n": 10
+      },
+      "L1|L43": {
+       "n": 1792,
+       "gross_n": 3,
+       "gross": 0.0016741071428571428,
+       "N_dd_n": 3,
+       "N_pp_n": 2
+      },
+      "L3|L3": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L3|L7": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L3|L11": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L3|L15": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L3|L19": {
+       "n": 1792,
+       "gross_n": 17,
+       "gross": 0.009486607142857142,
+       "N_dd_n": 19,
+       "N_pp_n": 21
+      },
+      "L3|L23": {
+       "n": 1792,
+       "gross_n": 21,
+       "gross": 0.01171875,
+       "N_dd_n": 25,
+       "N_pp_n": 19
+      },
+      "L3|L27": {
+       "n": 1792,
+       "gross_n": 26,
+       "gross": 0.014508928571428572,
+       "N_dd_n": 40,
+       "N_pp_n": 31
+      },
+      "L3|L31": {
+       "n": 1792,
+       "gross_n": 16,
+       "gross": 0.008928571428571428,
+       "N_dd_n": 17,
+       "N_pp_n": 18
+      },
+      "L3|L35": {
+       "n": 1792,
+       "gross_n": 23,
+       "gross": 0.012834821428571428,
+       "N_dd_n": 26,
+       "N_pp_n": 21
+      },
+      "L3|L39": {
+       "n": 1792,
+       "gross_n": 34,
+       "gross": 0.018973214285714284,
+       "N_dd_n": 41,
+       "N_pp_n": 36
+      },
+      "L3|L43": {
+       "n": 1792,
+       "gross_n": 41,
+       "gross": 0.022879464285714284,
+       "N_dd_n": 43,
+       "N_pp_n": 39
+      },
+      "L4|L3": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L4|L7": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L4|L11": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L4|L15": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L4|L19": {
+       "n": 1792,
+       "gross_n": 2,
+       "gross": 0.0011160714285714285,
+       "N_dd_n": 1,
+       "N_pp_n": 2
+      },
+      "L4|L23": {
+       "n": 1792,
+       "gross_n": 3,
+       "gross": 0.0016741071428571428,
+       "N_dd_n": 5,
+       "N_pp_n": 6
+      },
+      "L4|L27": {
+       "n": 1792,
+       "gross_n": 3,
+       "gross": 0.0016741071428571428,
+       "N_dd_n": 2,
+       "N_pp_n": 3
+      },
+      "L4|L31": {
+       "n": 1792,
+       "gross_n": 1,
+       "gross": 0.0005580357142857143,
+       "N_dd_n": 0,
+       "N_pp_n": 1
+      },
+      "L4|L35": {
+       "n": 1792,
+       "gross_n": 4,
+       "gross": 0.002232142857142857,
+       "N_dd_n": 1,
+       "N_pp_n": 3
+      },
+      "L4|L39": {
+       "n": 1792,
+       "gross_n": 5,
+       "gross": 0.0027901785714285715,
+       "N_dd_n": 4,
+       "N_pp_n": 2
+      },
+      "L4|L43": {
+       "n": 1792,
+       "gross_n": 2,
+       "gross": 0.0011160714285714285,
+       "N_dd_n": 1,
+       "N_pp_n": 1
+      },
+      "L5|L3": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L5|L7": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L5|L11": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L5|L15": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L5|L19": {
+       "n": 1792,
+       "gross_n": 5,
+       "gross": 0.0027901785714285715,
+       "N_dd_n": 3,
+       "N_pp_n": 10
+      },
+      "L5|L23": {
+       "n": 1792,
+       "gross_n": 2,
+       "gross": 0.0011160714285714285,
+       "N_dd_n": 1,
+       "N_pp_n": 1
+      },
+      "L5|L27": {
+       "n": 1792,
+       "gross_n": 3,
+       "gross": 0.0016741071428571428,
+       "N_dd_n": 2,
+       "N_pp_n": 2
+      },
+      "L5|L31": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L5|L35": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 1,
+       "N_pp_n": 0
+      },
+      "L5|L39": {
+       "n": 1792,
+       "gross_n": 1,
+       "gross": 0.0005580357142857143,
+       "N_dd_n": 1,
+       "N_pp_n": 1
+      },
+      "L5|L43": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L8|L3": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L8|L7": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L8|L11": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L8|L15": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "L8|L19": {
+       "n": 1792,
+       "gross_n": 6,
+       "gross": 0.0033482142857142855,
+       "N_dd_n": 11,
+       "N_pp_n": 10
+      },
+      "L8|L23": {
+       "n": 1792,
+       "gross_n": 10,
+       "gross": 0.005580357142857143,
+       "N_dd_n": 8,
+       "N_pp_n": 11
+      },
+      "L8|L27": {
+       "n": 1792,
+       "gross_n": 17,
+       "gross": 0.009486607142857142,
+       "N_dd_n": 13,
+       "N_pp_n": 18
+      },
+      "L8|L31": {
+       "n": 1792,
+       "gross_n": 10,
+       "gross": 0.005580357142857143,
+       "N_dd_n": 8,
+       "N_pp_n": 10
+      },
+      "L8|L35": {
+       "n": 1792,
+       "gross_n": 15,
+       "gross": 0.008370535714285714,
+       "N_dd_n": 9,
+       "N_pp_n": 11
+      },
+      "L8|L39": {
+       "n": 1792,
+       "gross_n": 24,
+       "gross": 0.013392857142857142,
+       "N_dd_n": 18,
+       "N_pp_n": 14
+      },
+      "L8|L43": {
+       "n": 1792,
+       "gross_n": 18,
+       "gross": 0.010044642857142858,
+       "N_dd_n": 17,
+       "N_pp_n": 18
+      },
+      "M3|L3": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "M3|L7": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "M3|L11": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "M3|L15": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "M3|L19": {
+       "n": 1792,
+       "gross_n": 1,
+       "gross": 0.0005580357142857143,
+       "N_dd_n": 5,
+       "N_pp_n": 0
+      },
+      "M3|L23": {
+       "n": 1792,
+       "gross_n": 8,
+       "gross": 0.004464285714285714,
+       "N_dd_n": 7,
+       "N_pp_n": 8
+      },
+      "M3|L27": {
+       "n": 1792,
+       "gross_n": 10,
+       "gross": 0.005580357142857143,
+       "N_dd_n": 5,
+       "N_pp_n": 7
+      },
+      "M3|L31": {
+       "n": 1792,
+       "gross_n": 1,
+       "gross": 0.0005580357142857143,
+       "N_dd_n": 1,
+       "N_pp_n": 0
+      },
+      "M3|L35": {
+       "n": 1792,
+       "gross_n": 6,
+       "gross": 0.0033482142857142855,
+       "N_dd_n": 7,
+       "N_pp_n": 8
+      },
+      "M3|L39": {
+       "n": 1792,
+       "gross_n": 6,
+       "gross": 0.0033482142857142855,
+       "N_dd_n": 4,
+       "N_pp_n": 6
+      },
+      "M3|L43": {
+       "n": 1792,
+       "gross_n": 1,
+       "gross": 0.0005580357142857143,
+       "N_dd_n": 4,
+       "N_pp_n": 2
+      },
+      "M4|L3": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "M4|L7": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "M4|L11": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "M4|L15": {
+       "n": 1792,
+       "gross_n": 0,
+       "gross": 0.0,
+       "N_dd_n": 0,
+       "N_pp_n": 0
+      },
+      "M4|L19": {
+       "n": 1792,
+       "gross_n": 53,
+       "gross": 0.029575892857142856,
+       "N_dd_n": 40,
+       "N_pp_n": 49
+      },
+      "M4|L23": {
+       "n": 1792,
+       "gross_n": 108,
+       "gross": 0.060267857142857144,
+       "N_dd_n": 93,
+       "N_pp_n": 103
+      },
+      "M4|L27": {
+       "n": 1792,
+       "gross_n": 190,
+       "gross": 0.10602678571428571,
+       "N_dd_n": 165,
+       "N_pp_n": 178
+      },
+      "M4|L31": {
+       "n": 1792,
+       "gross_n": 62,
+       "gross": 0.03459821428571429,
+       "N_dd_n": 49,
+       "N_pp_n": 59
+      },
+      "M4|L35": {
+       "n": 1792,
+       "gross_n": 62,
+       "gross": 0.03459821428571429,
+       "N_dd_n": 53,
+       "N_pp_n": 71
+      },
+      "M4|L39": {
+       "n": 1792,
+       "gross_n": 120,
+       "gross": 0.06696428571428571,
+       "N_dd_n": 109,
+       "N_pp_n": 110
+      },
+      "M4|L43": {
+       "n": 1792,
+       "gross_n": 140,
+       "gross": 0.078125,
+       "N_dd_n": 133,
+       "N_pp_n": 138
+      }
+     }
+    }
+   },
+   "label": "A22"
+  },
+  {
+   "id": "G1-flags",
+   "kind": "reported",
+   "status": "REPORTED",
+   "name": "R3/R5 fixture flags (layer-units AND positions); a flagged fixture stays in the aggregate, carries no mechanism claim and is dropped in the R2 sensitivity",
+   "detail": {
+    "C1": [],
+    "C2": [],
+    "arm_asymmetry": []
+   },
+   "label": "R1-R5"
+  },
+  {
+   "id": "G1-content-crossings",
+   "kind": "reported",
+   "status": "REPORTED",
+   "name": "content in +-128 positions of each block crossing (own matched limit; small samples, not gated; M4's second crossing lies beyond P_L: no matched N_pp)",
+   "detail": {
+    "C1-L1-x1": {
+     "n": 704,
+     "gross_n": 3,
+     "limit": 0.008522727272727272,
+     "N_dd": 0.004261363636363636,
+     "N_pp": 0.0014204545454545455
+    },
+    "C1-L1-x2": {
+     "n": 704,
+     "gross_n": 0,
+     "limit": 0.002840909090909091,
+     "N_dd": 0.0014204545454545455,
+     "N_pp": 0.0
+    },
+    "C1-L4-x1": {
+     "n": 704,
+     "gross_n": 0,
+     "limit": 0.001,
+     "N_dd": 0.0,
+     "N_pp": 0.0
+    },
+    "C1-L4-x2": {
+     "n": 704,
+     "gross_n": 0,
+     "limit": 0.005681818181818182,
+     "N_dd": 0.0014204545454545455,
+     "N_pp": 0.002840909090909091
+    },
+    "C1-M3-x1": {
+     "n": 704,
+     "gross_n": 7,
+     "limit": 0.017045454545454544,
+     "N_dd": 0.007102272727272727,
+     "N_pp": 0.008522727272727272
+    },
+    "C1-M3-x2": {
+     "n": 704,
+     "gross_n": 0,
+     "limit": 0.001,
+     "N_dd": 0.0,
+     "N_pp": 0.0
+    },
+    "C1-M4-x1": {
+     "n": 704,
+     "gross_n": 9,
+     "limit": 0.03977272727272727,
+     "N_dd": 0.019886363636363636,
+     "N_pp": 0.011363636363636364
+    },
+    "C1-L3-x1": {
+     "n": 704,
+     "gross_n": 4,
+     "limit": 0.014204545454545454,
+     "N_dd": 0.007102272727272727,
+     "N_pp": 0.002840909090909091
+    },
+    "C1-L3-x2": {
+     "n": 704,
+     "gross_n": 13,
+     "limit": 0.036931818181818184,
+     "N_dd": 0.002840909090909091,
+     "N_pp": 0.018465909090909092
+    },
+    "C1-L5-x1": {
+     "n": 704,
+     "gross_n": 0,
+     "limit": 0.001,
+     "N_dd": 0.0,
+     "N_pp": 0.0
+    },
+    "C1-L5-x2": {
+     "n": 704,
+     "gross_n": 1,
+     "limit": 0.002840909090909091,
+     "N_dd": 0.0,
+     "N_pp": 0.0014204545454545455
+    },
+    "C1-A8-x1": {
+     "n": 704,
+     "gross_n": 1,
+     "limit": 0.011363636363636364,
+     "N_dd": 0.004261363636363636,
+     "N_pp": 0.005681818181818182
+    },
+    "C1-A8-x2": {
+     "n": 704,
+     "gross_n": 5,
+     "limit": 0.019886363636363636,
+     "N_dd": 0.009943181818181818,
+     "N_pp": 0.007102272727272727
+    },
+    "C1-L8-x1": {
+     "n": 704,
+     "gross_n": 0,
+     "limit": 0.002840909090909091,
+     "N_dd": 0.0,
+     "N_pp": 0.0014204545454545455
+    },
+    "C1-L8-x2": {
+     "n": 704,
+     "gross_n": 2,
+     "limit": 0.002840909090909091,
+     "N_dd": 0.0,
+     "N_pp": 0.0014204545454545455
+    },
+    "C2-L1-x1": {
+     "n": 704,
+     "gross_n": 0,
+     "limit": 0.008522727272727272,
+     "N_dd": 0.004261363636363636,
+     "N_pp": 0.0014204545454545455
+    },
+    "C2-L1-x2": {
+     "n": 704,
+     "gross_n": 1,
+     "limit": 0.002840909090909091,
+     "N_dd": 0.0014204545454545455,
+     "N_pp": 0.0
+    },
+    "C2-L4-x1": {
+     "n": 704,
+     "gross_n": 0,
+     "limit": 0.001,
+     "N_dd": 0.0,
+     "N_pp": 0.0
+    },
+    "C2-L4-x2": {
+     "n": 704,
+     "gross_n": 2,
+     "limit": 0.005681818181818182,
+     "N_dd": 0.0014204545454545455,
+     "N_pp": 0.002840909090909091
+    },
+    "C2-M3-x1": {
+     "n": 704,
+     "gross_n": 6,
+     "limit": 0.017045454545454544,
+     "N_dd": 0.007102272727272727,
+     "N_pp": 0.008522727272727272
+    },
+    "C2-M3-x2": {
+     "n": 704,
+     "gross_n": 1,
+     "limit": 0.001,
+     "N_dd": 0.0,
+     "N_pp": 0.0
+    },
+    "C2-M4-x1": {
+     "n": 704,
+     "gross_n": 9,
+     "limit": 0.03977272727272727,
+     "N_dd": 0.019886363636363636,
+     "N_pp": 0.011363636363636364
+    },
+    "C2-L3-x1": {
+     "n": 704,
+     "gross_n": 0,
+     "limit": 0.014204545454545454,
+     "N_dd": 0.007102272727272727,
+     "N_pp": 0.002840909090909091
+    },
+    "C2-L3-x2": {
+     "n": 704,
+     "gross_n": 9,
+     "limit": 0.036931818181818184,
+     "N_dd": 0.002840909090909091,
+     "N_pp": 0.018465909090909092
+    },
+    "C2-L5-x1": {
+     "n": 704,
+     "gross_n": 0,
+     "limit": 0.001,
+     "N_dd": 0.0,
+     "N_pp": 0.0
+    },
+    "C2-L5-x2": {
+     "n": 704,
+     "gross_n": 1,
+     "limit": 0.002840909090909091,
+     "N_dd": 0.0,
+     "N_pp": 0.0014204545454545455
+    },
+    "C2-A8-x1": {
+     "n": 704,
+     "gross_n": 1,
+     "limit": 0.011363636363636364,
+     "N_dd": 0.004261363636363636,
+     "N_pp": 0.005681818181818182
+    },
+    "C2-A8-x2": {
+     "n": 704,
+     "gross_n": 3,
+     "limit": 0.019886363636363636,
+     "N_dd": 0.009943181818181818,
+     "N_pp": 0.007102272727272727
+    },
+    "C2-L8-x1": {
+     "n": 704,
+     "gross_n": 0,
+     "limit": 0.002840909090909091,
+     "N_dd": 0.0,
+     "N_pp": 0.0014204545454545455
+    },
+    "C2-L8-x2": {
+     "n": 704,
+     "gross_n": 0,
+     "limit": 0.002840909090909091,
+     "N_dd": 0.0,
+     "N_pp": 0.0014204545454545455
+    }
+   },
+   "label": "A22"
+  },
+  {
+   "id": "G1-idx-struct-orig",
+   "kind": "reported",
+   "status": "REPORTED",
+   "name": "ORIGINAL attempt-1 row kept beside (page <= 25 % and zero early-layer gross; failed on the prefill null itself at long context (diagnosis-fc1 s.5)): index-K structure (exact): every dump attributed to its request; every comparison >= 99 % of its expected units; no judged page > 25 % gross; zero gross pools in DSA layers 3-15",
+   "detail": {
+    "attrib": [],
+    "population": {
+     "dd": [
+      157696,
+      157696
+     ],
+     "pp": [
+      157696,
+      157696
+     ],
+     "t_C1": [
+      157696,
+      157696
+     ],
+     "t_C2": [
+      157696,
+      157696
+     ],
+     "x_C1": [
+      157696,
+      157696
+     ],
+     "x_C2": [
+      157696,
+      157696
+     ]
+    },
+    "failing_population": [],
+    "pages": {
+     "pages_judged": 4972,
+     "page_max": 0.515625,
+     "over": 17,
+     "worst": [
+      [
+       0.5156,
+       64,
+       [
+        "C2-M4",
+        "1",
+        "27",
+        "336"
+       ]
+      ],
+      [
+       0.5156,
+       64,
+       [
+        "C1-M4",
+        "1",
+        "43",
+        "336"
+       ]
+      ],
+      [
+       0.4844,
+       64,
+       [
+        "C2-M4",
+        "1",
+        "43",
+        "336"
+       ]
+      ]
+     ]
+    },
+    "early": [
+     0,
+     114688
+    ]
+   },
+   "label": "21g-1 structural"
+  },
+  {
+   "id": "R-idx-struct",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "index-K structure (exact): every dump attributed to its request and token position; every comparison >= 99 % of its expected units",
+   "detail": {
+    "attrib": [],
+    "failing_population": []
+   },
+   "label": "R-6 / F6"
+  },
+  {
+   "id": "R-idx-pages",
+   "kind": "numerical",
+   "status": "PASS",
+   "name": "every judged page (fixture x rank x layer x 64 pools): gross fraction <= max(2 x N_pp page, 0.25), the prefill null on the same page (N_dd contains the tested run: reported, not used); non-discriminating pages (R-idx-pages-nd) are reported as not independently verified by the numerical check",
+   "detail": {
+    "C1": {
+     "pages_judged": 2486,
+     "failing": [],
+     "n_failing": 0,
+     "null_coverage": 1.0,
+     "non_discriminating": {
+      "n": 12,
+      "n_undetectable": 1,
+      "bound": 0.5,
+      "wording": "not independently verified by the numerical check",
+      "by_fixture": {
+       "M4": 12
+      },
+      "pages": [
+       {
+        "fixture": "M4",
+        "rank": 1,
+        "layer": 43,
+        "page": 336,
+        "frac": 0.5156,
+        "limit": 1.0938,
+        "undetectable": true
+       },
+       {
+        "fixture": "M4",
+        "rank": 1,
+        "layer": 27,
+        "page": 334,
+        "frac": 0.4062,
+        "limit": 0.8438,
+        "undetectable": false
+       },
+       {
+        "fixture": "M4",
+        "rank": 1,
+        "layer": 27,
+        "page": 336,
+        "frac": 0.4688,
+        "limit": 0.8125,
+        "undetectable": false
+       },
+       {
+        "fixture": "M4",
+        "rank": 1,
+        "layer": 39,
+        "page": 336,
+        "frac": 0.4062,
+        "limit": 0.7188,
+        "undetectable": false
+       },
+       {
+        "fixture": "M4",
+        "rank": 1,
+        "layer": 31,
+        "page": 336,
+        "frac": 0.3125,
+        "limit": 0.625,
+        "undetectable": false
+       },
+       {
+        "fixture": "M4",
+        "rank": 1,
+        "layer": 43,
+        "page": 334,
+        "frac": 0.375,
+        "limit": 0.625,
+        "undetectable": false
+       },
+       {
+        "fixture": "M4",
+        "rank": 1,
+        "layer": 43,
+        "page": 337,
+        "frac": 0.25,
+        "limit": 0.625,
+        "undetectable": false
+       },
+       {
+        "fixture": "M4",
+        "rank": 1,
+        "layer": 39,
+        "page": 334,
+        "frac": 0.2969,
+        "limit": 0.5938,
+        "undetectable": false
+       },
+       {
+        "fixture": "M4",
+        "rank": 1,
+        "layer": 27,
+        "page": 337,
+        "frac": 0.2344,
+        "limit": 0.5625,
+        "undetectable": false
+       },
+       {
+        "fixture": "M4",
+        "rank": 1,
+        "layer": 35,
+        "page": 336,
+        "frac": 0.2812,
+        "limit": 0.5625,
+        "undetectable": false
+       },
+       {
+        "fixture": "M4",
+        "rank": 0,
+        "layer": 23,
+        "page": 336,
+        "frac": 0.2656,
+        "limit": 0.5,
+        "undetectable": false
+       },
+       {
+        "fixture": "M4",
+        "rank": 1,
+        "layer": 39,
+        "page": 337,
+        "frac": 0.1875,
+        "limit": 0.5,
+        "undetectable": false
+       }
+      ],
+      "rule": "limit >= 0.50 (own prefill null >= 0.250): a fault on <= half the page's pools is indistinguishable from the null; limit >= 1.0: no fault can fail the page"
+     },
+     "ok": true
+    },
+    "C2": {
+     "pages_judged": 2486,
+     "failing": [],
+     "n_failing": 0,
+     "null_coverage": 1.0,
+     "non_discriminating": {
+      "n": 12,
+      "n_undetectable": 1,
+      "bound": 0.5,
+      "wording": "not independently verified by the numerical check",
+      "by_fixture": {
+       "M4": 12
+      },
+      "pages": [
+       {
+        "fixture": "M4",
+        "rank": 1,
+        "layer": 43,
+        "page": 336,
+        "frac": 0.4844,
+        "limit": 1.0938,
+        "undetectable": true
+       },
+       {
+        "fixture": "M4",
+        "rank": 1,
+        "layer": 27,
+        "page": 334,
+        "frac": 0.4062,
+        "limit": 0.8438,
+        "undetectable": false
+       },
+       {
+        "fixture": "M4",
+        "rank": 1,
+        "layer": 27,
+        "page": 336,
+        "frac": 0.5156,
+        "limit": 0.8125,
+        "undetectable": false
+       },
+       {
+        "fixture": "M4",
+        "rank": 1,
+        "layer": 39,
+        "page": 336,
+        "frac": 0.3906,
+        "limit": 0.7188,
+        "undetectable": false
+       },
+       {
+        "fixture": "M4",
+        "rank": 1,
+        "layer": 31,
+        "page": 336,
+        "frac": 0.3125,
+        "limit": 0.625,
+        "undetectable": false
+       },
+       {
+        "fixture": "M4",
+        "rank": 1,
+        "layer": 43,
+        "page": 334,
+        "frac": 0.375,
+        "limit": 0.625,
+        "undetectable": false
+       },
+       {
+        "fixture": "M4",
+        "rank": 1,
+        "layer": 43,
+        "page": 337,
+        "frac": 0.2344,
+        "limit": 0.625,
+        "undetectable": false
+       },
+       {
+        "fixture": "M4",
+        "rank": 1,
+        "layer": 39,
+        "page": 334,
+        "frac": 0.2031,
+        "limit": 0.5938,
+        "undetectable": false
+       },
+       {
+        "fixture": "M4",
+        "rank": 1,
+        "layer": 27,
+        "page": 337,
+        "frac": 0.2344,
+        "limit": 0.5625,
+        "undetectable": false
+       },
+       {
+        "fixture": "M4",
+        "rank": 1,
+        "layer": 35,
+        "page": 336,
+        "frac": 0.25,
+        "limit": 0.5625,
+        "undetectable": false
+       },
+       {
+        "fixture": "M4",
+        "rank": 0,
+        "layer": 23,
+        "page": 336,
+        "frac": 0.2812,
+        "limit": 0.5,
+        "undetectable": false
+       },
+       {
+        "fixture": "M4",
+        "rank": 1,
+        "layer": 39,
+        "page": 337,
+        "frac": 0.2812,
+        "limit": 0.5,
+        "undetectable": false
+       }
+      ],
+      "rule": "limit >= 0.50 (own prefill null >= 0.250): a fault on <= half the page's pools is indistinguishable from the null; limit >= 1.0: no fault can fail the page"
+     },
+     "ok": true
+    }
+   },
+   "label": "R-6 / F6"
+  },
+  {
+   "id": "R-idx-early",
+   "kind": "numerical",
+   "status": "PASS",
+   "name": "DSA layers 3-15 as one stratum: gross <= max(2 x N_pp, 0.1 %) on matched units (N_dd reported)",
+   "detail": {
+    "C1": {
+     "n": 57344,
+     "gross": 0.0,
+     "gross_n": 0,
+     "N_dd": 0.0,
+     "N_pp": 0.0,
+     "limit": 0.001,
+     "ok": true
+    },
+    "C2": {
+     "n": 57344,
+     "gross": 0.0,
+     "gross_n": 0,
+     "N_dd": 0.0,
+     "N_pp": 0.0,
+     "limit": 0.001,
+     "ok": true
+    }
+   },
+   "label": "R-6 / F6"
+  },
+  {
+   "id": "R-idx-pages-nd",
+   "kind": "reported",
+   "status": "REPORTED",
+   "name": "pages whose matched prefill null makes the page limit non-discriminating (limit >= 0.50): not independently verified by the numerical check",
+   "detail": {
+    "C1": {
+     "n": 12,
+     "of_judged": 2486,
+     "n_limit_ge_1": 1,
+     "by_fixture": {
+      "M4": 12
+     },
+     "pages": [
+      {
+       "fixture": "M4",
+       "rank": 1,
+       "layer": 43,
+       "page": 336,
+       "frac": 0.5156,
+       "limit": 1.0938,
+       "undetectable": true
+      },
+      {
+       "fixture": "M4",
+       "rank": 1,
+       "layer": 27,
+       "page": 334,
+       "frac": 0.4062,
+       "limit": 0.8438,
+       "undetectable": false
+      },
+      {
+       "fixture": "M4",
+       "rank": 1,
+       "layer": 27,
+       "page": 336,
+       "frac": 0.4688,
+       "limit": 0.8125,
+       "undetectable": false
+      },
+      {
+       "fixture": "M4",
+       "rank": 1,
+       "layer": 39,
+       "page": 336,
+       "frac": 0.4062,
+       "limit": 0.7188,
+       "undetectable": false
+      },
+      {
+       "fixture": "M4",
+       "rank": 1,
+       "layer": 31,
+       "page": 336,
+       "frac": 0.3125,
+       "limit": 0.625,
+       "undetectable": false
+      },
+      {
+       "fixture": "M4",
+       "rank": 1,
+       "layer": 43,
+       "page": 334,
+       "frac": 0.375,
+       "limit": 0.625,
+       "undetectable": false
+      },
+      {
+       "fixture": "M4",
+       "rank": 1,
+       "layer": 43,
+       "page": 337,
+       "frac": 0.25,
+       "limit": 0.625,
+       "undetectable": false
+      },
+      {
+       "fixture": "M4",
+       "rank": 1,
+       "layer": 39,
+       "page": 334,
+       "frac": 0.2969,
+       "limit": 0.5938,
+       "undetectable": false
+      },
+      {
+       "fixture": "M4",
+       "rank": 1,
+       "layer": 27,
+       "page": 337,
+       "frac": 0.2344,
+       "limit": 0.5625,
+       "undetectable": false
+      },
+      {
+       "fixture": "M4",
+       "rank": 1,
+       "layer": 35,
+       "page": 336,
+       "frac": 0.2812,
+       "limit": 0.5625,
+       "undetectable": false
+      },
+      {
+       "fixture": "M4",
+       "rank": 0,
+       "layer": 23,
+       "page": 336,
+       "frac": 0.2656,
+       "limit": 0.5,
+       "undetectable": false
+      },
+      {
+       "fixture": "M4",
+       "rank": 1,
+       "layer": 39,
+       "page": 337,
+       "frac": 0.1875,
+       "limit": 0.5,
+       "undetectable": false
+      }
+     ]
+    },
+    "C2": {
+     "n": 12,
+     "of_judged": 2486,
+     "n_limit_ge_1": 1,
+     "by_fixture": {
+      "M4": 12
+     },
+     "pages": [
+      {
+       "fixture": "M4",
+       "rank": 1,
+       "layer": 43,
+       "page": 336,
+       "frac": 0.4844,
+       "limit": 1.0938,
+       "undetectable": true
+      },
+      {
+       "fixture": "M4",
+       "rank": 1,
+       "layer": 27,
+       "page": 334,
+       "frac": 0.4062,
+       "limit": 0.8438,
+       "undetectable": false
+      },
+      {
+       "fixture": "M4",
+       "rank": 1,
+       "layer": 27,
+       "page": 336,
+       "frac": 0.5156,
+       "limit": 0.8125,
+       "undetectable": false
+      },
+      {
+       "fixture": "M4",
+       "rank": 1,
+       "layer": 39,
+       "page": 336,
+       "frac": 0.3906,
+       "limit": 0.7188,
+       "undetectable": false
+      },
+      {
+       "fixture": "M4",
+       "rank": 1,
+       "layer": 31,
+       "page": 336,
+       "frac": 0.3125,
+       "limit": 0.625,
+       "undetectable": false
+      },
+      {
+       "fixture": "M4",
+       "rank": 1,
+       "layer": 43,
+       "page": 334,
+       "frac": 0.375,
+       "limit": 0.625,
+       "undetectable": false
+      },
+      {
+       "fixture": "M4",
+       "rank": 1,
+       "layer": 43,
+       "page": 337,
+       "frac": 0.2344,
+       "limit": 0.625,
+       "undetectable": false
+      },
+      {
+       "fixture": "M4",
+       "rank": 1,
+       "layer": 39,
+       "page": 334,
+       "frac": 0.2031,
+       "limit": 0.5938,
+       "undetectable": false
+      },
+      {
+       "fixture": "M4",
+       "rank": 1,
+       "layer": 27,
+       "page": 337,
+       "frac": 0.2344,
+       "limit": 0.5625,
+       "undetectable": false
+      },
+      {
+       "fixture": "M4",
+       "rank": 1,
+       "layer": 35,
+       "page": 336,
+       "frac": 0.25,
+       "limit": 0.5625,
+       "undetectable": false
+      },
+      {
+       "fixture": "M4",
+       "rank": 0,
+       "layer": 23,
+       "page": 336,
+       "frac": 0.2812,
+       "limit": 0.5,
+       "undetectable": false
+      },
+      {
+       "fixture": "M4",
+       "rank": 1,
+       "layer": 39,
+       "page": 337,
+       "frac": 0.2812,
+       "limit": 0.5,
+       "undetectable": false
+      }
+     ]
+    }
+   },
+   "label": "R-12 / 22f s.4"
+  },
+  {
+   "id": "R-idx-tables",
+   "kind": "reported",
+   "status": "REPORTED",
+   "name": "F6 by fixture, by fixture x layer, flags (R3), originals beside",
+   "detail": {
+    "C1": {
+     "by_fixture": {
+      "L1": {
+       "n": 19712,
+       "gross": 0.0023843344155844155,
+       "gross_n": 47,
+       "N_dd": 0.0025872564935064935,
+       "N_pp": 0.0025872564935064935,
+       "limit": 0.005174512987012987,
+       "ok": true
+      },
+      "L4": {
+       "n": 19712,
+       "gross": 0.0006594967532467532,
+       "gross_n": 13,
+       "N_dd": 0.0007102272727272727,
+       "N_pp": 0.0009131493506493506,
+       "limit": 0.0018262987012987013,
+       "ok": true
+      },
+      "M3": {
+       "n": 19712,
+       "gross": 0.0023843344155844155,
+       "gross_n": 47,
+       "N_dd": 0.0016741071428571428,
+       "N_pp": 0.001572646103896104,
+       "limit": 0.0033482142857142855,
+       "ok": true
+      },
+      "M4": {
+       "n": 19712,
+       "gross": 0.03825081168831169,
+       "gross_n": 754,
+       "N_dd": 0.032568993506493504,
+       "N_pp": 0.03591720779220779,
+       "limit": 0.07183441558441558,
+       "ok": true
+      },
+      "L3": {
+       "n": 19712,
+       "gross": 0.010551948051948052,
+       "gross_n": 208,
+       "N_dd": 0.01070413961038961,
+       "N_pp": 0.009385146103896104,
+       "limit": 0.02140827922077922,
+       "ok": true
+      },
+      "L5": {
+       "n": 19712,
+       "gross": 0.0008116883116883117,
+       "gross_n": 16,
+       "N_dd": 0.00040584415584415587,
+       "N_pp": 0.0007102272727272727,
+       "limit": 0.0014204545454545455,
+       "ok": true
+      },
+      "A8": {
+       "n": 19712,
+       "gross": 0.005529626623376623,
+       "gross_n": 109,
+       "N_dd": 0.0035511363636363635,
+       "N_pp": 0.004667207792207792,
+       "limit": 0.009334415584415584,
+       "ok": true
+      },
+      "L8": {
+       "n": 19712,
+       "gross": 0.005529626623376623,
+       "gross_n": 109,
+       "N_dd": 0.004261363636363636,
+       "N_pp": 0.004667207792207792,
+       "limit": 0.009334415584415584,
+       "ok": true
+      }
+     },
+     "flags": [],
+     "original": {
+      "page_over_25": 9,
+      "page_max": 0.515625,
+      "early_gross": 0,
+      "early_units": 57344,
+      "orig_pass": false
+     }
+    },
+    "C2": {
+     "by_fixture": {
+      "L1": {
+       "n": 19712,
+       "gross": 0.002232142857142857,
+       "gross_n": 44,
+       "N_dd": 0.0025872564935064935,
+       "N_pp": 0.0025872564935064935,
+       "limit": 0.005174512987012987,
+       "ok": true
+      },
+      "L4": {
+       "n": 19712,
+       "gross": 0.0010146103896103895,
+       "gross_n": 20,
+       "N_dd": 0.0007102272727272727,
+       "N_pp": 0.0009131493506493506,
+       "limit": 0.0018262987012987013,
+       "ok": true
+      },
+      "M3": {
+       "n": 19712,
+       "gross": 0.0016741071428571428,
+       "gross_n": 33,
+       "N_dd": 0.0016741071428571428,
+       "N_pp": 0.001572646103896104,
+       "limit": 0.0033482142857142855,
+       "ok": true
+      },
+      "M4": {
+       "n": 19712,
+       "gross": 0.037286931818181816,
+       "gross_n": 735,
+       "N_dd": 0.032568993506493504,
+       "N_pp": 0.03591720779220779,
+       "limit": 0.07183441558441558,
+       "ok": true
+      },
+      "L3": {
+       "n": 19712,
+       "gross": 0.009030032467532468,
+       "gross_n": 178,
+       "N_dd": 0.01070413961038961,
+       "N_pp": 0.009385146103896104,
+       "limit": 0.02140827922077922,
+       "ok": true
+      },
+      "L5": {
+       "n": 19712,
+       "gross": 0.0005580357142857143,
+       "gross_n": 11,
+       "N_dd": 0.00040584415584415587,
+       "N_pp": 0.0007102272727272727,
+       "limit": 0.0014204545454545455,
+       "ok": true
+      },
+      "A8": {
+       "n": 19712,
+       "gross": 0.004515016233766234,
+       "gross_n": 89,
+       "N_dd": 0.0035511363636363635,
+       "N_pp": 0.004667207792207792,
+       "limit": 0.009334415584415584,
+       "ok": true
+      },
+      "L8": {
+       "n": 19712,
+       "gross": 0.005073051948051948,
+       "gross_n": 100,
+       "N_dd": 0.004261363636363636,
+       "N_pp": 0.004667207792207792,
+       "limit": 0.009334415584415584,
+       "ok": true
+      }
+     },
+     "flags": [],
+     "original": {
+      "page_over_25": 8,
+      "page_max": 0.515625,
+      "early_gross": 0,
+      "early_units": 57344,
+      "orig_pass": false
+     }
+    }
+   },
+   "label": "R-6"
+  },
+  {
+   "id": "G1-CV-slot",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "actual conv-state slot: every KDA layer's speculative slots = the running column's block-id run of one mamba group (conv row = slots[0] = the engine's conv_state_indices)",
+   "detail": {
+    "violations": [],
+    "missing": []
+   },
+   "label": "A22"
+  },
+  {
+   "id": "G1-CV-book",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "bookkeeping (exact): num_accepted = hook accepted count at the snapshot step + 1; poison / oracle / reject:2 snapshots exactly at their targets (shared F with the reference)",
+   "detail": [],
+   "label": "A22"
+  },
+  {
+   "id": "G1-CV-cross",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "the block crossing is exercised: every CV request has snapshots in the old and the new align-mode column",
+   "detail": [],
+   "label": "A22"
+  },
+  {
+   "id": "G1-CV-persist",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "migration (exact): conv rows of shared committed positions are bitwise identical between consecutive snapshots of a request, including a pair straddling the column change (poison, oracle, reject:2)",
+   "detail": {
+    "total": {
+     "rows": 3944,
+     "identical": 3944,
+     "straddling": 16
+    },
+    "mismatching": [],
+    "no_straddle": []
+   },
+   "label": "A22"
+  },
+  {
+   "id": "G1-CV-conv",
+   "kind": "numerical",
+   "status": "PASS",
+   "name": "conv rows vs the matched decode reference (poison, single-token advance) at shared committed positions: nearest-row identification 100 % in layers 0-17, >= 99 % deeper; layers 0-2 rel <= 0.02 with margin >= 10 (21g-2 screen)",
+   "detail": {
+    "n": 16116,
+    "ident_0_17": 1.0,
+    "ident_18_plus": 0.9987341772151899,
+    "early_rel_max": 0.005848468281328678,
+    "early_margin_min": 119.00356845699945,
+    "disagreements": 12,
+    "disagreement_examples": [
+     {
+      "layer": 33,
+      "pos": 95741,
+      "rel": 0.8918744325637817,
+      "nearest": 95742,
+      "ident": false,
+      "margin": 0.9914293562126207,
+      "fixture": "L1",
+      "mode": "natural",
+      "rank": 1,
+      "F": 63,
+      "F_ref": 63
+     },
+     {
+      "layer": 33,
+      "pos": 95741,
+      "rel": 0.8918744325637817,
+      "nearest": 95742,
+      "ident": false,
+      "margin": 0.9914293562126207,
+      "fixture": "L1",
+      "mode": "natural",
+      "rank": 1,
+      "F": 63,
+      "F_ref": 64
+     },
+     {
+      "layer": 33,
+      "pos": 95741,
+      "rel": 0.8918744325637817,
+      "nearest": 95742,
+      "ident": false,
+      "margin": 0.9914293562126207,
+      "fixture": "L1",
+      "mode": "natural",
+      "rank": 1,
+      "F": 65,
+      "F_ref": 63
+     },
+     {
+      "layer": 33,
+      "pos": 95741,
+      "rel": 0.8918744325637817,
+      "nearest": 95742,
+      "ident": false,
+      "margin": 0.9914293562126207,
+      "fixture": "L1",
+      "mode": "natural",
+      "rank": 1,
+      "F": 65,
+      "F_ref": 64
+     },
+     {
+      "layer": 33,
+      "pos": 95741,
+      "rel": 0.9095274209976196,
+      "nearest": 95742,
+      "ident": false,
+      "margin": 0.9754585028524828,
+      "fixture": "L1",
+      "mode": "reject:2",
+      "rank": 0,
+      "F": 63,
+      "F_ref": 63
+     }
+    ],
+    "rel_q50": 0.02713784109801054,
+    "rel_max": 1.2333793640136719
+   },
+   "label": "21g-2; A22-5"
+  },
+  {
+   "id": "G1-CV-ssm",
+   "kind": "numerical",
+   "status": "PASS",
+   "name": "KDA recurrent state vs the matched decode reference at the same committed count F (oracle, reject:2, natural vs poison): committed-slot identification, same screen",
+   "detail": {
+    "n": 1632,
+    "ident_0_17": 1.0,
+    "ident_18_plus": 1.0,
+    "early_rel_max": 0.004239385481923819,
+    "early_margin_min": 32.972056438007236,
+    "disagreements": 0,
+    "disagreement_examples": [],
+    "rel_q50": 0.022305657155811787,
+    "rel_max": 0.1363573968410492
+   },
+   "label": "21g-2; A22-5"
+  },
+  {
+   "id": "R-PS-coverage",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "sentinel coverage: every sentinel request restored exactly c, dumped exactly the shared block [c - 4352, c) on both ranks and took its boundary-state snapshot (a missing measurement is incomplete coverage, not a successful sentinel)",
+   "detail": {
+    "phases": [
+     "PS-a",
+     "PS-b"
+    ],
+    "violations": []
+   },
+   "label": "R-5 / 22d F5"
+  },
+  {
+   "id": "R-PS-identity",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "block identity: the physical group-0 block at index c / 4352 - 1 is the same in every sentinel request, in C2 / D2 and in each dump's block table",
+   "detail": [],
+   "label": "R-5"
+  },
+  {
+   "id": "R-PS-bytes",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "bytes: every MLA and index-K page of the shared block identical across the sentinel requests (both ranks)",
+   "detail": {
+    "pages": 7480,
+    "mismatches": []
+   },
+   "label": "R-5"
+  },
+  {
+   "id": "R-PS-state-ssm",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "boundary state, SSM: the intended committed state only: KDA state rebuilt from the cached state at c, per fixture x rank x layer; PS-c bitwise equal to PS-a where this component's PS-a = PS-b bitwise, else within 2 x this component's own PS-a / PS-b difference",
+   "detail": {
+    "rows": 544,
+    "bitwise_ab": 48,
+    "compared_c": 0,
+    "failing": []
+   },
+   "label": "R-10 / 22f s.2"
+  },
+  {
+   "id": "R-PS-state-conv",
+   "kind": "structural",
+   "status": "PASS",
+   "name": "boundary state, convolution: the relevant committed entries only (positions P - 3 .. P - 1): KDA state rebuilt from the cached state at c, per fixture x rank x layer; PS-c bitwise equal to PS-a where this component's PS-a = PS-b bitwise, else within 2 x this component's own PS-a / PS-b difference",
+   "detail": {
+    "rows": 544,
+    "bitwise_ab": 48,
+    "compared_c": 0,
+    "failing": []
+   },
+   "label": "R-10 / 22f s.2"
+  },
+  {
+   "id": "R-PS-limits",
+   "kind": "reported",
+   "status": "REPORTED",
+   "name": "sentinel limits (22f s.5): MLA / index-K shared-block identity is directly checked; KDA restoration and captured-state consistency are checked; physical KDA block identity and the complete unsampled state are not established",
+   "detail": {
+    "limits": "MLA / index-K shared-block identity is directly checked; KDA restoration and captured-state consistency are checked; physical KDA block identity and the complete unsampled state are not established"
+   },
+   "label": "R-13 / 22f s.5"
+  },
+  {
+   "id": "G1-refref",
+   "kind": "reported",
+   "status": "REPORTED",
+   "name": "prefill vs prefill (LW1 vs LW2) on shared rows: the reference-side alignment null",
+   "detail": {
+    "L1": {
+     "n": 7168,
+     "top1": 0.9880022321428571,
+     "shifted": 0.005440848214285714,
+     "lp": {
+      "0.5": 4.1961669921875e-05,
+      "0.9": 0.06815681457519535,
+      "0.99": 0.3467696189880371
+     }
+    },
+    "L4": {
+     "n": 7168,
+     "top1": 0.96875,
+     "shifted": 0.017022464071438537,
+     "lp": {
+      "0.5": 0.010222434997558594,
+      "0.9": 0.14976387023925786,
+      "0.99": 0.42392927169799804
+     }
+    },
+    "M3": {
+     "n": 7168,
+     "top1": 0.9794921875,
+     "shifted": 0.0082321752476629,
+     "lp": {
+      "0.5": 0.005637168884277344,
+      "0.9": 0.12126350402832033,
+      "0.99": 0.3684418487548827
+     }
+    },
+    "M4": {
+     "n": 7168,
+     "top1": 0.9970703125,
+     "shifted": 0.009486607142857142,
+     "lp": {
+      "0.5": 5.7220458984375e-06,
+      "0.9": 0.004520416259765632,
+      "0.99": 0.19337882995605463
+     }
+    },
+    "L3": {
+     "n": 7168,
+     "top1": 0.9916294642857143,
+     "shifted": 0.003627738244732803,
+     "lp": {
+      "0.5": 3.4332275390625e-05,
+      "0.9": 0.04427738189697266,
+      "0.99": 0.3220383071899411
+     }
+    },
+    "L5": {
+     "n": 7168,
+     "top1": 0.9750279017857143,
+     "shifted": 0.004883493790986466,
+     "lp": {
+      "0.5": 0.0015048980712890625,
+      "0.9": 0.12223625183105472,
+      "0.99": 0.4523307991027831
+     }
+    },
+    "A8": {
+     "n": 7168,
+     "top1": 0.9891183035714286,
+     "shifted": 0.0029296875,
+     "lp": {
+      "0.5": 0.00027561187744140625,
+      "0.9": 0.06573371887207033,
+      "0.99": 0.28805646896362275
+     }
+    },
+    "L8": {
+     "n": 7168,
+     "top1": 0.9821428571428571,
+     "shifted": 0.0034877232142857145,
+     "lp": {
+      "0.5": 0.00033092498779296875,
+      "0.9": 0.10740318298339845,
+      "0.99": 0.49952455520629874
+     }
+    }
+   },
+   "label": "A22"
+  }
+ ],
+ "not_independently_verified": {
+  "wording": "not independently verified by the numerical check",
+  "pages": {
+   "C1": {
+    "n": 12,
+    "of_judged": 2486,
+    "n_limit_ge_1": 1,
+    "by_fixture": {
+     "M4": 12
+    },
+    "pages": [
+     {
+      "fixture": "M4",
+      "rank": 1,
+      "layer": 43,
+      "page": 336,
+      "frac": 0.5156,
+      "limit": 1.0938,
+      "undetectable": true
+     },
+     {
+      "fixture": "M4",
+      "rank": 1,
+      "layer": 27,
+      "page": 334,
+      "frac": 0.4062,
+      "limit": 0.8438,
+      "undetectable": false
+     },
+     {
+      "fixture": "M4",
+      "rank": 1,
+      "layer": 27,
+      "page": 336,
+      "frac": 0.4688,
+      "limit": 0.8125,
+      "undetectable": false
+     },
+     {
+      "fixture": "M4",
+      "rank": 1,
+      "layer": 39,
+      "page": 336,
+      "frac": 0.4062,
+      "limit": 0.7188,
+      "undetectable": false
+     },
+     {
+      "fixture": "M4",
+      "rank": 1,
+      "layer": 31,
+      "page": 336,
+      "frac": 0.3125,
+      "limit": 0.625,
+      "undetectable": false
+     },
+     {
+      "fixture": "M4",
+      "rank": 1,
+      "layer": 43,
+      "page": 334,
+      "frac": 0.375,
+      "limit": 0.625,
+      "undetectable": false
+     },
+     {
+      "fixture": "M4",
+      "rank": 1,
+      "layer": 43,
+      "page": 337,
+      "frac": 0.25,
+      "limit": 0.625,
+      "undetectable": false
+     },
+     {
+      "fixture": "M4",
+      "rank": 1,
+      "layer": 39,
+      "page": 334,
+      "frac": 0.2969,
+      "limit": 0.5938,
+      "undetectable": false
+     },
+     {
+      "fixture": "M4",
+      "rank": 1,
+      "layer": 27,
+      "page": 337,
+      "frac": 0.2344,
+      "limit": 0.5625,
+      "undetectable": false
+     },
+     {
+      "fixture": "M4",
+      "rank": 1,
+      "layer": 35,
+      "page": 336,
+      "frac": 0.2812,
+      "limit": 0.5625,
+      "undetectable": false
+     },
+     {
+      "fixture": "M4",
+      "rank": 0,
+      "layer": 23,
+      "page": 336,
+      "frac": 0.2656,
+      "limit": 0.5,
+      "undetectable": false
+     },
+     {
+      "fixture": "M4",
+      "rank": 1,
+      "layer": 39,
+      "page": 337,
+      "frac": 0.1875,
+      "limit": 0.5,
+      "undetectable": false
+     }
+    ]
+   },
+   "C2": {
+    "n": 12,
+    "of_judged": 2486,
+    "n_limit_ge_1": 1,
+    "by_fixture": {
+     "M4": 12
+    },
+    "pages": [
+     {
+      "fixture": "M4",
+      "rank": 1,
+      "layer": 43,
+      "page": 336,
+      "frac": 0.4844,
+      "limit": 1.0938,
+      "undetectable": true
+     },
+     {
+      "fixture": "M4",
+      "rank": 1,
+      "layer": 27,
+      "page": 334,
+      "frac": 0.4062,
+      "limit": 0.8438,
+      "undetectable": false
+     },
+     {
+      "fixture": "M4",
+      "rank": 1,
+      "layer": 27,
+      "page": 336,
+      "frac": 0.5156,
+      "limit": 0.8125,
+      "undetectable": false
+     },
+     {
+      "fixture": "M4",
+      "rank": 1,
+      "layer": 39,
+      "page": 336,
+      "frac": 0.3906,
+      "limit": 0.7188,
+      "undetectable": false
+     },
+     {
+      "fixture": "M4",
+      "rank": 1,
+      "layer": 31,
+      "page": 336,
+      "frac": 0.3125,
+      "limit": 0.625,
+      "undetectable": false
+     },
+     {
+      "fixture": "M4",
+      "rank": 1,
+      "layer": 43,
+      "page": 334,
+      "frac": 0.375,
+      "limit": 0.625,
+      "undetectable": false
+     },
+     {
+      "fixture": "M4",
+      "rank": 1,
+      "layer": 43,
+      "page": 337,
+      "frac": 0.2344,
+      "limit": 0.625,
+      "undetectable": false
+     },
+     {
+      "fixture": "M4",
+      "rank": 1,
+      "layer": 39,
+      "page": 334,
+      "frac": 0.2031,
+      "limit": 0.5938,
+      "undetectable": false
+     },
+     {
+      "fixture": "M4",
+      "rank": 1,
+      "layer": 27,
+      "page": 337,
+      "frac": 0.2344,
+      "limit": 0.5625,
+      "undetectable": false
+     },
+     {
+      "fixture": "M4",
+      "rank": 1,
+      "layer": 35,
+      "page": 336,
+      "frac": 0.25,
+      "limit": 0.5625,
+      "undetectable": false
+     },
+     {
+      "fixture": "M4",
+      "rank": 0,
+      "layer": 23,
+      "page": 336,
+      "frac": 0.2812,
+      "limit": 0.5,
+      "undetectable": false
+     },
+     {
+      "fixture": "M4",
+      "rank": 1,
+      "layer": 39,
+      "page": 337,
+      "frac": 0.2812,
+      "limit": 0.5,
+      "undetectable": false
+     }
+    ]
+   }
+  }
+ },
+ "sentinel_limits": "MLA / index-K shared-block identity is directly checked; KDA restoration and captured-state consistency are checked; physical KDA block identity and the complete unsampled state are not established",
+ "numerical_wording": "compatible with measured long-context numerical variation",
+ "failing": {
+  "structural": [],
+  "numerical": []
+ },
+ "flagged_fixtures": []
+}

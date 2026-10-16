@@ -19,8 +19,11 @@ beside it as REPORTED.
   numerical [R-6/F6] G1-content (21g-1 pooled, unchanged) ; R-idx-struct (exact attribution and population) ;
                      R-idx-pages, R-idx-early (null-relative, matched) ; tables, flags, G1-idx-struct-orig reported
   conv state         G1-CV-* (unchanged)
-  sentinel [R-5/F5]  R-PS-coverage, R-PS-identity, R-PS-bytes, R-PS-state on PS-a / PS-b (the PS-c comparison is
-                     post-session)
+  sentinel [R-5/F5]  R-PS-coverage, R-PS-identity, R-PS-bytes, R-PS-state-ssm, R-PS-state-conv on PS-a / PS-b (the
+                     PS-c comparison is post-session; SSM and conv separately, each its own baseline [R-10]);
+                     R-PS-limits reported (22f s.5) [R-13]
+  [R-12] R-idx-pages-nd reported: pages whose null makes the page limit non-discriminating, "not independently
+                     verified by the numerical check" (22f s.4)
 Early-stop class of a failure (22d s.9): unsafe restoration | insufficient concurrent decoding | long-context alignment
 failure | uninterpretable numerical content | missing boundary or shared-prefix coverage | structural.
 Pre-stated reading: a failing numerical row means the long-context instrument is unvalidated under these bounds; B1 is
@@ -121,10 +124,17 @@ def gate1r(run, G, rd, variant):
     ev = {t: f6.evaluate(f6.rows_for(run, G, t, "LW1"), DD, PP) for t in ("C1", "C2")}
     R.add("R-idx-pages", "numerical", "PASS" if all(e["pages"]["ok"] for e in ev.values()) else "FAIL",
           "every judged page (fixture x rank x layer x 64 pools): gross fraction <= max(2 x N_pp page, 0.25), the "
-          "prefill null on the same page (N_dd contains the tested run: reported, not used)", {t: e["pages"] for t, e in ev.items()}, "R-6 / F6")
+          "prefill null on the same page (N_dd contains the tested run: reported, not used); non-discriminating pages "
+          "(R-idx-pages-nd) are reported as %s" % f6.ND_WORDING, {t: e["pages"] for t, e in ev.items()}, "R-6 / F6")
     R.add("R-idx-early", "numerical", "PASS" if all(e["early"]["ok"] for e in ev.values()) else "FAIL",
           "DSA layers 3-15 as one stratum: gross <= max(2 x N_pp, 0.1 %) on matched units (N_dd reported)",
           {t: e["early"] for t, e in ev.items()}, "R-6 / F6")
+    R.add("R-idx-pages-nd", "reported", "REPORTED", "pages whose matched prefill null makes the page limit "
+          "non-discriminating (limit >= %.2f): %s" % (f6.ND_BOUND, f6.ND_WORDING),
+          {t: dict(n=e["pages"]["non_discriminating"]["n"], of_judged=e["pages"]["pages_judged"],
+                   n_limit_ge_1=e["pages"]["non_discriminating"]["n_undetectable"],
+                   by_fixture=e["pages"]["non_discriminating"]["by_fixture"],
+                   pages=e["pages"]["non_discriminating"]["pages"]) for t, e in ev.items()}, "R-12 / 22f s.4")
     R.add("R-idx-tables", "reported", "REPORTED", "F6 by fixture, by fixture x layer, flags (R3), originals beside",
           {t: dict(by_fixture=e["by_fixture"], flags=e["flags"], original=e["original"]) for t, e in ev.items()}, "R-6")
     # ---- conv state, sentinel
@@ -161,12 +171,20 @@ def main():
     except Exception as exc:  # noqa: BLE001
         R, v, reading, classes = gt.Rows(), "FAIL", "gate raised: %r" % exc, ["structural"]
         R.add("G1R-raised", "structural", "FAIL", "gate code raised", repr(exc)[:500])
+    nd = next((r["detail"] for r in R.rows if r["id"] == "R-idx-pages-nd"), None)
     out = dict(gate="GATE-1R", verdict=v, reading=reading, stop_classes=classes, rows=R.rows,
+               not_independently_verified=dict(wording=f6.ND_WORDING, pages=nd),
+               sentinel_limits=ps.LIMITS, numerical_wording=f6.WORDING,
                failing=dict(structural=R.failing("structural"), numerical=R.failing("numerical")),
                flagged_fixtures=R.data.get("flagged", []))
     json.dump(out, open(os.path.join(rd, "gate1r.json"), "w"), indent=1, default=str)
     lines = ["GATE-1R %s  %s" % (v, reading)] + ["%-8s %-22s %-10s %s  [%s]" % (
         r["status"], r["id"], r["kind"], r["name"][:110], json.dumps(r["detail"], default=str)[:220]) for r in R.rows]
+    if nd:
+        lines.append("F6 pages %s (non-discriminating null, limit >= %.2f): %s" % (
+            f6.ND_WORDING, f6.ND_BOUND, "; ".join("%s %d of %d judged pages (%d with limit >= 1.0)" % (
+                t, x["n"], x["of_judged"], x["n_limit_ge_1"]) for t, x in nd.items())))
+    lines.append("SENTINEL LIMITS: " + ps.LIMITS)
     open(os.path.join(rd, "gate1r.txt"), "w").write("\n".join(lines) + "\n")
     print("\n".join(lines))
     sys.exit(0 if v == "PASS" else 1)

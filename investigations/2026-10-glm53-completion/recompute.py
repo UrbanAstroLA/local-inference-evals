@@ -390,7 +390,11 @@ check("amendment 21j: hook validation attempt 2 0.795 (2 x 1,431 s); hook item 2
 fc = st("First long-context contrast attempt 1")
 check("amendment 22b: first contrast attempt 1 1.0861 (2 x 1,955 s), structural stop, no reading; cumulative 65.10 GPU-hours",
       len(fc) == 1 and arms_ok(fc[0]) and fc[0]["gpu_hours"] == 1.0861
-      and f"{sum(c['gpu_hours'] for c in allcost):.2f}" == "65.10")
+      and f"{sum(c['gpu_hours'] for c in allcost[:before('First long-context contrast retry')]):.2f}" == "65.10")
+fr = st("First long-context contrast retry")
+check("amendment 22j: first contrast retry 2.9317 (2 x 5,277 s) of 6.2, complete session, no reading; cumulative 68.03 GPU-hours",
+      len(fr) == 1 and arms_ok(fr[0]) and fr[0]["gpu_hours"] == 2.9317
+      and f"{sum(c['gpu_hours'] for c in allcost):.2f}" == "68.03")
 
 print("\n## Checks (checks.jsonl)")
 for line in (HERE / "checks.jsonl").read_text().splitlines():

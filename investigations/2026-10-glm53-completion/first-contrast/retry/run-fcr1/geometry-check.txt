@@ -1,0 +1,2 @@
+num_blocks 1275 groups 10
+geometry check: 0 failures

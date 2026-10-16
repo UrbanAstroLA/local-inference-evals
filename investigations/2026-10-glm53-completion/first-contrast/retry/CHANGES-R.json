@@ -1,14 +1,559 @@
 {
- "scope": "first-contrast retry package (PLAN.md amendment 22d); attempt-1 files unchanged and imported read-only",
+ "scope": "first-contrast retry package (PLAN.md amendment 22d); attempt-1 files unchanged and imported read-only; corrected under PLAN.md amendment 22f (R-10 to R-15, before any retry data); changed under PLAN.md amendment 22h (R-16 to R-18: ceiling 6.2 and the batch guard)",
  "labels": {
-  "R-1": {"fix": "F7", "what": "CPU replay of the serving image's own AsyncScheduler / KVCacheManager / HybridKVCacheCoordinator / single-type managers / BlockPool (replay/)", "files": ["replay/engine_replay.py", "replay/trace_replay.py", "replay/reproduce_fc1.py", "replay/neg_controls.py", "replay/historical.py", "replay/session_sim.py", "replay/run_scenarios.sh", "replay/schedule_report.py", "replay/fc1_counterfactual.py", "replay/run_cpu.sh", "runner/geometry_check_fcr.py"]},
-  "R-2": {"fix": "F1 + F2", "what": "scoped cache rule (prefill coverage of the stream under its salt) with engine-driven tests; per-request safety gates S1-S4, hit/partial/miss accounting, balance by treatment, block identity", "files": ["analysis/fcr_geometry.py", "analysis/cache_gate.py", "replay/cache_rule_tests.py"]},
-  "R-3": {"fix": "F3", "what": "feasible schedule under strategy (a): split builds (4 longest / touch / 4 shortest / touch all), LP runs on the primary builds before any primary decode, C2/D2 and D3/C3 sharing builds, no 4-request batches", "files": ["analysis/fcr_geometry.py", "replay/out/F3_schedule.json"]},
-  "R-4": {"fix": "F4", "what": "fixed staggered submission; runs, touch and sentinel passes in oldest-last-freed-first order; actual submission and admission recorded; gates on properties", "files": ["runner/client_fcr.py", "replay/fc1_counterfactual.py"]},
-  "R-5": {"fix": "F5", "what": "sentinel from the actual restored boundary c on the shared physical block [c - 4352, c): coverage, block identity (scheduler + dump block tables), bytes, boundary state", "files": ["analysis/sentinel.py"]},
-  "R-6": {"fix": "F6", "what": "null-relative page and early-layer index-K criteria matched by fixture x rank x layer x page; originals kept beside; calibration and planted-fault sensitivity on run-fc1's real C1 / LW1 / LW2", "files": ["analysis/f6_criteria.py", "calibration/f6_calibration.json"]},
-  "R-7": {"fix": "22d s.9", "what": "integrated GATE-1R and in-session early stops (unsafe restoration, replay-model deviation, insufficient concurrent decoding, alignment, numerical content, sentinel / boundary coverage)", "files": ["analysis/gate_fcr.py", "runner/gate_step_fcr.sh", "runner/client_fcr.py"]},
-  "R-8": {"fix": "F8 + runner", "what": "gate-asrun regression fixture and C1 post-inspection checks; runner / client / plan check / analysis with refusal, tampered-plan, synthetic and real-data tests; DRY_RUN; attempt policy options", "files": ["tests/", "runner/run_fcr.sh", "runner/plan_check_fcr.py", "analysis/analyze_fcr.py"]},
-  "R-9": {"fix": "costing", "what": "measured-rate costing with replay step counts, misses, cold work, early-stop costs, ceilings", "files": ["cost/cost_fcr.py", "cost/cost_fcr.json"]}
+  "R-1": {
+   "fix": "F7",
+   "what": "CPU replay of the serving image's own AsyncScheduler / KVCacheManager / HybridKVCacheCoordinator / single-type managers / BlockPool (replay/)",
+   "files": [
+    "replay/engine_replay.py",
+    "replay/trace_replay.py",
+    "replay/reproduce_fc1.py",
+    "replay/neg_controls.py",
+    "replay/historical.py",
+    "replay/session_sim.py",
+    "replay/run_scenarios.sh",
+    "replay/schedule_report.py",
+    "replay/fc1_counterfactual.py",
+    "replay/run_cpu.sh",
+    "runner/geometry_check_fcr.py"
+   ]
+  },
+  "R-2": {
+   "fix": "F1 + F2",
+   "what": "scoped cache rule (prefill coverage of the stream under its salt) with engine-driven tests; per-request safety gates S1-S4, hit/partial/miss accounting, balance by treatment, block identity",
+   "files": [
+    "analysis/fcr_geometry.py",
+    "analysis/cache_gate.py",
+    "replay/cache_rule_tests.py"
+   ]
+  },
+  "R-3": {
+   "fix": "F3",
+   "what": "feasible schedule under strategy (a): split builds (4 longest / touch / 4 shortest / touch all), LP runs on the primary builds before any primary decode, C2/D2 and D3/C3 sharing builds, no 4-request batches",
+   "files": [
+    "analysis/fcr_geometry.py",
+    "replay/out/F3_schedule.json"
+   ]
+  },
+  "R-4": {
+   "fix": "F4",
+   "what": "fixed staggered submission; runs, touch and sentinel passes in oldest-last-freed-first order; actual submission and admission recorded; gates on properties",
+   "files": [
+    "runner/client_fcr.py",
+    "replay/fc1_counterfactual.py"
+   ]
+  },
+  "R-5": {
+   "fix": "F5",
+   "what": "sentinel from the actual restored boundary c on the shared physical block [c - 4352, c): coverage, block identity (scheduler + dump block tables), bytes, boundary state",
+   "files": [
+    "analysis/sentinel.py"
+   ]
+  },
+  "R-6": {
+   "fix": "F6",
+   "what": "null-relative page and early-layer index-K criteria matched by fixture x rank x layer x page; originals kept beside; calibration and planted-fault sensitivity on run-fc1's real C1 / LW1 / LW2",
+   "files": [
+    "analysis/f6_criteria.py",
+    "calibration/f6_calibration.json"
+   ]
+  },
+  "R-7": {
+   "fix": "22d s.9",
+   "what": "integrated GATE-1R and in-session early stops (unsafe restoration, replay-model deviation, insufficient concurrent decoding, alignment, numerical content, sentinel / boundary coverage)",
+   "files": [
+    "analysis/gate_fcr.py",
+    "runner/gate_step_fcr.sh",
+    "runner/client_fcr.py"
+   ]
+  },
+  "R-8": {
+   "fix": "F8 + runner",
+   "what": "gate-asrun regression fixture and C1 post-inspection checks; runner / client / plan check / analysis with refusal, tampered-plan, synthetic and real-data tests; DRY_RUN; attempt policy options",
+   "files": [
+    "tests/",
+    "runner/run_fcr.sh",
+    "runner/plan_check_fcr.py",
+    "analysis/analyze_fcr.py"
+   ]
+  },
+  "R-9": {
+   "fix": "costing",
+   "what": "measured-rate costing with replay step counts, misses, cold work, early-stop costs, ceilings",
+   "files": [
+    "cost/cost_fcr.py",
+    "cost/cost_fcr.json"
+   ]
+  },
+  "R-10": {
+   "fix": "22f s.2",
+   "what": "sentinel boundary state: SSM and convolution components evaluated separately, each against its own PS-a / PS-b baseline; only the intended committed SSM state and the relevant conv entries (positions P-3..P-1, layout-normalised) compared; rows R-PS-state-ssm / R-PS-state-conv replace R-PS-state; analysis change only (hook 15e93e23... unchanged); negative controls and synthetic plants",
+   "files": {
+    "analysis/sentinel.py": {
+     "before": "6b8fcec4098824837f2e8aa73b8d757773b49e2b0a62e985eae954b10450da01",
+     "after": "f0ed4a4bd19efcc5c6521ab11f507953124dfdfbff73e5fbe6d8c3c7d0e52b6d",
+     "pre22f_copy": "analysis/sentinel.py.pre22f"
+    },
+    "analysis/gate_fcr.py": {
+     "before": "86f78254225e19288764a4722d3f548226c81da01522f51f2c01b90db53666ca",
+     "after": "43f0159709184a96dab8b6082994ba49a4d07b8d63785470cc93daf1fef27906",
+     "pre22f_copy": "analysis/gate_fcr.py.pre22f"
+    },
+    "tests/test_sentinel_fcr.py": {
+     "before": "new (not in the pre-22f package)",
+     "after": "d87cba63d31e750c5c8303b82c1fa2aa4b6eae3b8ae46a4907076b9d3475e78d",
+     "pre22f_copy": null
+    },
+    "tests/run_sentinel_fcr.sh": {
+     "before": "new (not in the pre-22f package)",
+     "after": "7744c759c9fb2b8b21e29e4f0e266ea31c88827fdb9990d131d3565377f9a2c5",
+     "pre22f_copy": null
+    },
+    "tests/make_synth_fcr.py": {
+     "before": "4c7b2cfc778b32bccfdfcefdead72a6133dd825885cb9c880fd98e9cc5aa4481",
+     "after": "fa259c9bc4af8e9738c59cb0989b05aefee245c88d7b67a86645d8571faf26ed",
+     "pre22f_copy": "tests/make_synth_fcr.py.pre22f"
+    },
+    "tests/check_synth_fcr.py": {
+     "before": "4ac854b2b2dedc3f908debf71ab2d499ec0880cdddee2c9ca247f81e7997edb5",
+     "after": "60f008bf1c195ab5a5eb3fd9be7e30401fd07f447b18a846db346cc20dd4fa19",
+     "pre22f_copy": "tests/check_synth_fcr.py.pre22f"
+    },
+    "tests/run_all_synth_fcr.sh": {
+     "before": "a2e7cb50613492f1b7df8bac418db49fd4f09f8c1df7d319e72f2606747c43e6",
+     "after": "e1744357f6c4ac21ab673422906bb2532613f99271831fd79a1bc4e3c6e12d9c",
+     "pre22f_copy": "tests/run_all_synth_fcr.sh.pre22f"
+    },
+    "tests/out/sentinel-tests.log": {
+     "before": "new (not in the pre-22f package)",
+     "after": "4aae06f5d15e5a5b0ca352f314907f2839f2e0d035c39aae500d1fd3cf0a43a9",
+     "pre22f_copy": null
+    },
+    "tests/out/sentinel_tests.json": {
+     "before": "new (not in the pre-22f package)",
+     "after": "2b46d0f9c7ea028d2d653c36501137516ac254f3dd0f94f5dcbf630366f490a9",
+     "pre22f_copy": null
+    }
+   }
+  },
+  "R-11": {
+   "fix": "22f s.3",
+   "what": "acceptance stress scenarios (single-token, maximum, strongly unequal advance; primary and LP batches; 1,275 and 1,150 blocks; reverse admission) through the image's scheduler; cache survival margins and all-8 lead; runtime and cost incl. the client's time rules under the B wall cap; the 4.18 ceiling reported against, not changed",
+   "files": {
+    "replay/session_sim.py": {
+     "before": "776c5fecd12046a8f9cae7f084740840ab54341e3a1b6587d2d2eced0c177c40",
+     "after": "6f80bd02a8f44b73b93f60743927a0f245b2c2127140ed1ca63f817e56f89197",
+     "pre22f_copy": "replay/session_sim.py.pre22f"
+    },
+    "replay/run_stress.sh": {
+     "before": "new (not in the pre-22f package)",
+     "after": "67b88a540f32daed24eacfe4cc82477d2b9b15ad14fb70e2845e453d1b308c61",
+     "pre22f_copy": null
+    },
+    "replay/stress_report.py": {
+     "before": "new (not in the pre-22f package)",
+     "after": "238218ad67ff4199d0795acf175e144bc7cde6f9559a8b032071d5c4eb8e3370",
+     "pre22f_copy": null
+    },
+    "replay/schedule_report.py": {
+     "before": "6c5ecd2cd2de6fcbcec9287a19aeda29df7a4fa6f2492022e906a494b5d9d87d",
+     "after": "f2860e79a6fb7f5dc7941fbfa3ca8df8d64f03b67f253a65e24e8a76a043f8ec",
+     "pre22f_copy": "replay/schedule_report.py.pre22f"
+    },
+    "cost/cost_fcr.py": {
+     "before": "9059185634bb5ed78874527e728abb1c00f22b690b4f6a2790ce40d4eac20ca7",
+     "after": "2718bd99a56a55758d0f02f388e1a5eca163bf2d33d4a462925a0dfdd361efa2",
+     "pre22f_copy": "cost/cost_fcr.py.pre22f"
+    },
+    "cost/cost_fcr.json": {
+     "before": "96a5e1d0dab90ec81c12bcb8e3ec58c1d3c9f14ae7532781dae096d5eb76036a",
+     "after": "513ab8d025f82a7f6bbe65483756d9adf4dbcaca75f8ec29f9646f1d0968ccd7",
+     "pre22f_copy": "cost/cost_fcr.json.pre22f"
+    },
+    "cost/cost_fcr.out": {
+     "before": "f7e99706205810f0d7dd0fcd5d6f9a9da3d8d2c768c5c8636d7651e92a6126b2",
+     "after": "8ef83f3d017160c8d64fba7d5602cc1000fd616db4628b66e63c62b5c37b5dc4",
+     "pre22f_copy": "cost/cost_fcr.out.pre22f"
+    },
+    "replay/out/F3_stress.json": {
+     "before": "new (not in the pre-22f package)",
+     "after": "e3a15a607d6be46ea6d06c9c8738cea9b33d2a37e180b05a684cea769f65896d",
+     "pre22f_copy": null
+    },
+    "replay/out/F3_stress.out": {
+     "before": "new (not in the pre-22f package)",
+     "after": "9d6d0ccee30626bc46e9a2845941aaa361760bff7659db5b71b133c1bd7eae59",
+     "pre22f_copy": null
+    },
+    "replay/out/stress_console.txt": {
+     "before": "new (not in the pre-22f package)",
+     "after": "74f3de52109d9536e2218c76e5fb0f2cc3f8623ef276333d768602ddd0b019d7",
+     "pre22f_copy": null
+    },
+    "replay/out/stress_run.log": {
+     "before": "new (not in the pre-22f package)",
+     "after": "6b4e7c47666225b19b17f0cc5bdcf77bc7ae5ad320d21dee32c70646b458be8f",
+     "pre22f_copy": null
+    },
+    "replay/out/sim_stress_max.json": {
+     "before": "new (not in the pre-22f package)",
+     "after": "7c9557ea4776c1badbee39bffca83cfa7b96f59466ab99a162e59734b1d0986d",
+     "pre22f_copy": null
+    },
+    "replay/out/sim_stress_max_blocks1150.json": {
+     "before": "new (not in the pre-22f package)",
+     "after": "a20411148ec4a4248f8a5f79a8fb80dc8652db16efd2811121469861f797eaf9",
+     "pre22f_copy": null
+    },
+    "replay/out/sim_stress_measured_recheck.json": {
+     "before": "new (not in the pre-22f package)",
+     "after": "66889ae14e57cf5acaebde06e22f818a250897d304b488ba5b4a649c6071b309",
+     "pre22f_copy": null
+    },
+    "replay/out/sim_stress_single.json": {
+     "before": "new (not in the pre-22f package)",
+     "after": "4fca8c093b1eb941d0dc765703723b66648555f6aa6afe39ae2f28037ba93861",
+     "pre22f_copy": null
+    },
+    "replay/out/sim_stress_single_blocks1150.json": {
+     "before": "new (not in the pre-22f package)",
+     "after": "912a6b15cdd63539381482a050fa1e43fa35f54e105b3b331bb55a52000a0eae",
+     "pre22f_copy": null
+    },
+    "replay/out/sim_stress_unequal_a.json": {
+     "before": "new (not in the pre-22f package)",
+     "after": "0eb351fe4026c90faac0164995c381e1201aa7b1926b54475c4d4bd7cbb0d598",
+     "pre22f_copy": null
+    },
+    "replay/out/sim_stress_unequal_a_blocks1150.json": {
+     "before": "new (not in the pre-22f package)",
+     "after": "90d155cbbaf99116a32bb74e796db764ad78893330cb40b6f4ad404a966c18ee",
+     "pre22f_copy": null
+    },
+    "replay/out/sim_stress_unequal_a_reverse.json": {
+     "before": "new (not in the pre-22f package)",
+     "after": "46ccb7751a35030c087b45b9ec18d8ea9be5569c857a298a3cdbf0df7be2da4f",
+     "pre22f_copy": null
+    },
+    "replay/out/sim_stress_unequal_b.json": {
+     "before": "new (not in the pre-22f package)",
+     "after": "d76478d8cd880b3c6eeddc90ed4ad9cfe978cfd3f1826b43c1315f4b54358014",
+     "pre22f_copy": null
+    },
+    "replay/out/sim_stress_unequal_b_blocks1150.json": {
+     "before": "new (not in the pre-22f package)",
+     "after": "6d6ecd2d05fc1b51b8bcc558fca4f7b99a2d1e40783e14be05f260fb3e3e9d8c",
+     "pre22f_copy": null
+    },
+    "replay/out/sim_stress_unequal_b_reverse.json": {
+     "before": "new (not in the pre-22f package)",
+     "after": "acc2d40f28fbcf5175a8ee7e33b58f73f1941997686e8770b28f332a6888f707",
+     "pre22f_copy": null
+    }
+   }
+  },
+  "R-12": {
+   "fix": "22f s.4",
+   "what": "F6 non-discriminating pages (page limit >= 0.5, defined before data; >= 1.0 flagged undetectable) reported as 'not independently verified by the numerical check' in GATE-1R (R-idx-pages-nd, gate1r.json / .txt) and the final analysis (GATE-1R C1 / C2, C3); judgement unchanged; calibration re-run",
+   "files": {
+    "analysis/f6_criteria.py": {
+     "before": "5c3a98af09a2457f6f7201f9575479f424cb21d674986c9b8300ddb8810d38f0",
+     "after": "33036b2b654030080205ce4dca1200e1231b2663fae825c88a14bbe8f5005edb",
+     "pre22f_copy": "analysis/f6_criteria.py.pre22f"
+    },
+    "analysis/gate_fcr.py": {
+     "before": "86f78254225e19288764a4722d3f548226c81da01522f51f2c01b90db53666ca",
+     "after": "43f0159709184a96dab8b6082994ba49a4d07b8d63785470cc93daf1fef27906",
+     "pre22f_copy": "analysis/gate_fcr.py.pre22f"
+    },
+    "analysis/analyze_fcr.py": {
+     "before": "2c0b10a19d6a5f8cbd9c0141d21df35ed46454c6e57d5752f154bf3f025bda38",
+     "after": "9de0be492fb492eb9619226e7568ee988799a66b9b25718746187f5bb621eb0f",
+     "pre22f_copy": "analysis/analyze_fcr.py.pre22f"
+    },
+    "calibration/f6_calibration.json": {
+     "before": "d61df586bccc472e3713ac84aa3cbf19aabab4f4608ae7c09534b7ca0ae3ebb3",
+     "after": "d08f7b3c93758e3e5c5516cbd401f4f4c6a3ed1a3b219e893676500ff9884160",
+     "pre22f_copy": "calibration/f6_calibration.json.pre22f"
+    },
+    "calibration/f6_calibration.out": {
+     "before": "e1dc37588c737d2442a0940d6cdb20d6df3e6add1bc895607cb5d4a90c12a642",
+     "after": "8e6710858234f4750a2ade50b7cec4f02f2a0cf6de455e55bc14d32ee5eee7e2",
+     "pre22f_copy": "calibration/f6_calibration.out.pre22f"
+    },
+    "tests/test_units_fcr.py": {
+     "before": "0e0cc6c0ba925c50f3add041e82b09bee1d548f829564d17068a19716918551a",
+     "after": "ba66b82ca8b613eaa7434e7dd61e57a5094aef48e93d5b31eb84d051e512c922",
+     "pre22f_copy": "tests/test_units_fcr.py.pre22f"
+    }
+   }
+  },
+  "R-13": {
+   "fix": "22f s.5",
+   "what": "sentinel limits stated in outputs (R-PS-limits row, gate1r.json / .txt, fcr_result.json / .txt) and docs",
+   "files": {
+    "analysis/sentinel.py": {
+     "before": "6b8fcec4098824837f2e8aa73b8d757773b49e2b0a62e985eae954b10450da01",
+     "after": "f0ed4a4bd19efcc5c6521ab11f507953124dfdfbff73e5fbe6d8c3c7d0e52b6d",
+     "pre22f_copy": "analysis/sentinel.py.pre22f"
+    },
+    "analysis/gate_fcr.py": {
+     "before": "86f78254225e19288764a4722d3f548226c81da01522f51f2c01b90db53666ca",
+     "after": "43f0159709184a96dab8b6082994ba49a4d07b8d63785470cc93daf1fef27906",
+     "pre22f_copy": "analysis/gate_fcr.py.pre22f"
+    },
+    "analysis/analyze_fcr.py": {
+     "before": "2c0b10a19d6a5f8cbd9c0141d21df35ed46454c6e57d5752f154bf3f025bda38",
+     "after": "9de0be492fb492eb9619226e7568ee988799a66b9b25718746187f5bb621eb0f",
+     "pre22f_copy": "analysis/analyze_fcr.py.pre22f"
+    },
+    "RETRY-PROPOSAL.md": {
+     "before": "4c35a6f6ddd09798584dc5af2948f66399927374f54a349fe98bc20922d7d51a",
+     "after": "2c553d6ccb5501e34b79d0da430db7a65d5a06005a11dc638400a5c5cf40db3b",
+     "pre22f_copy": "RETRY-PROPOSAL.md.pre22f"
+    },
+    "RETRY-FREEZE.md": {
+     "before": "b8d5afc8fcba52b4f5547952d1546ce5976b435b1554d3ff4c90fd133f98b787",
+     "after": "a8ffe909ad0308a8ddf750583771b416448d6c990d4d9498a0c952d08825edfe",
+     "pre22f_copy": "RETRY-FREEZE.md.pre22f"
+    }
+   }
+  },
+  "R-14": {
+   "fix": "22f s.6",
+   "what": "LP: descriptive same-depth comparison LC1/LD1 (c) and LC2/LD2 (c_L); LC3/LD3 reported as depth-mismatched; no three-repeat rule on the matched pairs; 'unresolved construction sensitivity' when the LP conclusion (LD - LC and the interaction, frozen thresholds) changes beyond-null status or sign with the matched mean",
+   "files": {
+    "analysis/analyze_fcr.py": {
+     "before": "2c0b10a19d6a5f8cbd9c0141d21df35ed46454c6e57d5752f154bf3f025bda38",
+     "after": "9de0be492fb492eb9619226e7568ee988799a66b9b25718746187f5bb621eb0f",
+     "pre22f_copy": "analysis/analyze_fcr.py.pre22f"
+    },
+    "tests/test_units_fcr.py": {
+     "before": "0e0cc6c0ba925c50f3add041e82b09bee1d548f829564d17068a19716918551a",
+     "after": "ba66b82ca8b613eaa7434e7dd61e57a5094aef48e93d5b31eb84d051e512c922",
+     "pre22f_copy": "tests/test_units_fcr.py.pre22f"
+    }
+   }
+  },
+  "R-15": {
+   "fix": "22f s.1",
+   "what": "wording: eviction avoided in the replayed scenarios, with measured survival margins; the actual-session gates are authoritative",
+   "files": {
+    "RETRY-PROPOSAL.md": {
+     "before": "4c35a6f6ddd09798584dc5af2948f66399927374f54a349fe98bc20922d7d51a",
+     "after": "2c553d6ccb5501e34b79d0da430db7a65d5a06005a11dc638400a5c5cf40db3b",
+     "pre22f_copy": "RETRY-PROPOSAL.md.pre22f"
+    },
+    "RETRY-FREEZE.md": {
+     "before": "b8d5afc8fcba52b4f5547952d1546ce5976b435b1554d3ff4c90fd133f98b787",
+     "after": "a8ffe909ad0308a8ddf750583771b416448d6c990d4d9498a0c952d08825edfe",
+     "pre22f_copy": "RETRY-FREEZE.md.pre22f"
+    },
+    "analysis/analyze_fcr.py": {
+     "before": "2c0b10a19d6a5f8cbd9c0141d21df35ed46454c6e57d5752f154bf3f025bda38",
+     "after": "9de0be492fb492eb9619226e7568ee988799a66b9b25718746187f5bb621eb0f",
+     "pre22f_copy": "analysis/analyze_fcr.py.pre22f"
+    },
+    "replay/stress_report.py": {
+     "before": "new (not in the pre-22f package)",
+     "after": "238218ad67ff4199d0795acf175e144bc7cde6f9559a8b032071d5c4eb8e3370",
+     "pre22f_copy": null
+    }
+   }
+  },
+  "R-16": {
+   "fix": "22h s.1",
+   "what": "variant-B ceiling 6.2 occupied GPU-hours (APPROVED_GPU_H <= 6.2, wall cap 11,160 s on 2 GPUs); superseded 4.18 / 7,523 s recorded in the runner and the cost model; single attempt, no automatic retry; A0 unchanged; refusal tests for the new budget",
+   "superseded": {
+    "ceiling_gh": 4.18,
+    "wall_cap_s": 7523
+   },
+   "files": {
+    "runner/run_fcr.sh": {
+     "before": "7d79fd89e78b0d71c33b67698138d1722b899c64c801f46f7bbfe22b2baec712",
+     "after": "7da6ee6093cc812c31fd2376d2e5f033d79427814d19e760940e65d5bca5b223",
+     "pre22h_copy": "runner/run_fcr.sh.pre22h"
+    },
+    "cost/cost_fcr.py": {
+     "before": "2718bd99a56a55758d0f02f388e1a5eca163bf2d33d4a462925a0dfdd361efa2",
+     "after": "8fe46e4faa0f2bd9f4bca621429dbf99b4a152680cc8d64157f0e29ef6a82000",
+     "pre22h_copy": "cost/cost_fcr.py.pre22h"
+    },
+    "cost/cost_fcr.json": {
+     "before": "513ab8d025f82a7f6bbe65483756d9adf4dbcaca75f8ec29f9646f1d0968ccd7",
+     "after": "3221f355063009789574ce190faaecf394d33e574190636ef6a09de774af8a21",
+     "pre22h_copy": "cost/cost_fcr.json.pre22h"
+    },
+    "cost/cost_fcr.out": {
+     "before": "8ef83f3d017160c8d64fba7d5602cc1000fd616db4628b66e63c62b5c37b5dc4",
+     "after": "a441093796916980fbb707e533d597ca4dd8ce568d267a4a042ce9e41dc1ada4",
+     "pre22h_copy": "cost/cost_fcr.out.pre22h"
+    },
+    "tests/test_runner_fcr.sh": {
+     "before": "04e40c799b614b6ccf392cb23c018a2454c6acd8d6f629af5597b70b4f6e69c7",
+     "after": "726824f9a9594360cd4c08b44e5d2ba94e4865411a232cbd546109e45e17d7f8",
+     "pre22h_copy": "tests/test_runner_fcr.sh.pre22h"
+    },
+    "tests/out/runner-tests.log": {
+     "before": "003c8240d2e9b1156f221113868de9d7e8de327d80198b046e03ab7dfe83aecd",
+     "after": "b6d8dd5398f157c4a42ec44768b5cd31b133b96da286da7f6573ca80a2e447e1",
+     "pre22h_copy": null
+    },
+    "RETRY-PROPOSAL.md": {
+     "before": "2c553d6ccb5501e34b79d0da430db7a65d5a06005a11dc638400a5c5cf40db3b",
+     "after": "df24d5ade83a6e55403cd02c05e61d93b37f600256241af78a3ec951ba3457c0",
+     "pre22h_copy": "RETRY-PROPOSAL.md.pre22h"
+    },
+    "RETRY-FREEZE.md": {
+     "before": "a8ffe909ad0308a8ddf750583771b416448d6c990d4d9498a0c952d08825edfe",
+     "after": "992d17854c83ae84ff3d3f3bb6e0ecf807ebef0b4e082ef0d4107ee9c47fea32",
+     "pre22h_copy": "RETRY-FREEZE.md.pre22h"
+    }
+   }
+  },
+  "R-17": {
+   "fix": "22h s.2",
+   "what": "batch guard: every build / touch / sentinel pass / run batch starts only if its completion projected from this session's measured rates (priors 2,410 tok/s prefill and 11.0 tok/s per request decode before the first of each kind; margin 1.25; +30 s) fits before T0 + min(wall cap, remaining budget) - reserve; LP skipped first; a primary stop is rc 17 'incomplete contrast (batch guard)'; replaces the 25 tok/s never-truncate rule (rc 11 superseded); client timeout = the watchdog; analysis labels a guard stop and NOT RUN phases",
+   "files": {
+    "runner/batch_guard_fcr.py": {
+     "before": "new (not in the pre-22h package)",
+     "after": "1718738c47549cc2d14d2f3acc6faa00656d15468cbc207bd1ccd95d538cf96a",
+     "pre22h_copy": null
+    },
+    "runner/client_fcr.py": {
+     "before": "0cceebd6c986a7d80e36a1679f1f5bb99f87e8182a53d79ed0c7e0a8aacc2592",
+     "after": "0bb7c5062e9754f2a08a8d2862f63e63a9910c2d1b0319089882ea9ecb0c248f",
+     "pre22h_copy": "runner/client_fcr.py.pre22h"
+    },
+    "runner/run_fcr.sh": {
+     "before": "7d79fd89e78b0d71c33b67698138d1722b899c64c801f46f7bbfe22b2baec712",
+     "after": "7da6ee6093cc812c31fd2376d2e5f033d79427814d19e760940e65d5bca5b223",
+     "pre22h_copy": "runner/run_fcr.sh.pre22h"
+    },
+    "analysis/analyze_fcr.py": {
+     "before": "9de0be492fb492eb9619226e7568ee988799a66b9b25718746187f5bb621eb0f",
+     "after": "18bdf8c84a58a41030501b34dfe5182b575f4f5a77790c93ea5921f0fdaf0850",
+     "pre22h_copy": "analysis/analyze_fcr.py.pre22h"
+    },
+    "tests/test_units_fcr.py": {
+     "before": "ba66b82ca8b613eaa7434e7dd61e57a5094aef48e93d5b31eb84d051e512c922",
+     "after": "83202ac25ff1672e5c9dbd70d9395743ec53c4eb3139013757c50e76fd074aa7",
+     "pre22h_copy": "tests/test_units_fcr.py.pre22h"
+    },
+    "tests/make_synth_fcr.py": {
+     "before": "fa259c9bc4af8e9738c59cb0989b05aefee245c88d7b67a86645d8571faf26ed",
+     "after": "5ec86110e8a62dbaa33ae8788525a8e9e3d6cd9c5a1f97c6ca916f4e11336080",
+     "pre22h_copy": "tests/make_synth_fcr.py.pre22h"
+    },
+    "tests/check_synth_fcr.py": {
+     "before": "60f008bf1c195ab5a5eb3fd9be7e30401fd07f447b18a846db346cc20dd4fa19",
+     "after": "f7d9bf147bb2f4db52cf46dd4acb79897e684800472cedd85ee0569808642ef4",
+     "pre22h_copy": "tests/check_synth_fcr.py.pre22h"
+    },
+    "tests/run_all_synth_fcr.sh": {
+     "before": "e1744357f6c4ac21ab673422906bb2532613f99271831fd79a1bc4e3c6e12d9c",
+     "after": "8c4558dca3891dc1253c1d424c30de3043ce4f48cf68e871dfa6c37b2be155ba",
+     "pre22h_copy": "tests/run_all_synth_fcr.sh.pre22h"
+    }
+   }
+  },
+  "R-18": {
+   "fix": "22h s.3",
+   "what": "the batch guard (its own code) replayed under 6.2 on the base and all 10 stress timelines, central and pessimistic: completion, guard stops / skips, never mid-phase, spend",
+   "files": {
+    "cost/cost_fcr.py": {
+     "before": "2718bd99a56a55758d0f02f388e1a5eca163bf2d33d4a462925a0dfdd361efa2",
+     "after": "8fe46e4faa0f2bd9f4bca621429dbf99b4a152680cc8d64157f0e29ef6a82000",
+     "pre22h_copy": "cost/cost_fcr.py.pre22h"
+    },
+    "cost/cost_fcr.json": {
+     "before": "513ab8d025f82a7f6bbe65483756d9adf4dbcaca75f8ec29f9646f1d0968ccd7",
+     "after": "3221f355063009789574ce190faaecf394d33e574190636ef6a09de774af8a21",
+     "pre22h_copy": "cost/cost_fcr.json.pre22h"
+    },
+    "cost/cost_fcr.out": {
+     "before": "8ef83f3d017160c8d64fba7d5602cc1000fd616db4628b66e63c62b5c37b5dc4",
+     "after": "a441093796916980fbb707e533d597ca4dd8ce568d267a4a042ce9e41dc1ada4",
+     "pre22h_copy": "cost/cost_fcr.out.pre22h"
+    }
+   }
+  }
+ },
+ "hashes_22f": "R-10 onward: sha256 before = the file's entry in the pre-22f SHA256SUMS (kept as SHA256SUMS.pre22f, sha256 c7374d75d7f2745e705f2a436a1e4fe0dd7cd6018029f32bb2725a066444e900, 287 files), after = the file as frozen now; every changed file has a *.pre22f copy. A file changed by several labels carries the same after hash under each.",
+ "rerun_22f": {
+  "what": "suites re-run after R-10..R-15; regenerated logs (before = pre-22f package entry)",
+  "files": {
+   "tests/out/units.log": {
+    "before": "448de07af1fde930f34718a64e1902308f7c0a4a5c3929fd0c4c238b5a34e67e",
+    "after": "63d4f03b568df58861b9685d361753d1a4bb0b42a9c816899484576dac1baf33",
+    "pre22f_copy": null
+   },
+   "tests/out/plan-check.log": {
+    "before": "3ff17d13bb20a309fb5832edbf61572d616ef79a916c8904912ce1b511cb8064",
+    "after": "3ff17d13bb20a309fb5832edbf61572d616ef79a916c8904912ce1b511cb8064",
+    "pre22f_copy": null
+   },
+   "tests/out/plan-tamper-tests.log": {
+    "before": "1368a8df9386147ecc97e26902123a7500538b2c521bb8fa287927ac8424f016",
+    "after": "1368a8df9386147ecc97e26902123a7500538b2c521bb8fa287927ac8424f016",
+    "pre22f_copy": null
+   },
+   "tests/out/runner-tests.log": {
+    "before": "c454b6d5d22eb1e67f2bb17c5f0029f69e98dfd5b28a64d74a6e0ceeae74517e",
+    "after": "003c8240d2e9b1156f221113868de9d7e8de327d80198b046e03ab7dfe83aecd",
+    "pre22f_copy": null
+   },
+   "tests/out/synth-check.log": {
+    "before": "8d30e55c51b3ce7077a22c9ae0b0106fdbbaea9fc73f0aff211187dab514bbe4",
+    "after": "740882532a6fc885349cbf9aadabaca29179a2e446b1dbad181118cda68d4807",
+    "pre22f_copy": null
+   },
+   "calibration/f8_regression.json": {
+    "before": "58d788ed3982cd43d054ce208b36d4a548f9deb2a638dc48b2fb498be22fe655",
+    "after": "58d788ed3982cd43d054ce208b36d4a548f9deb2a638dc48b2fb498be22fe655",
+    "pre22f_copy": null
+   },
+   "calibration/f8_regression.out": {
+    "before": "e40b5795a39d91a3c0c9ceb8d16d3c6b5e0f25472fafa3c548c5cae0547c385f",
+    "after": "e40b5795a39d91a3c0c9ceb8d16d3c6b5e0f25472fafa3c548c5cae0547c385f",
+    "pre22f_copy": null
+   }
+  }
+ },
+ "hashes_22h": "R-16 onward: sha256 before = the file's entry in the 22f SHA256SUMS (kept as SHA256SUMS.pre22h, sha256 0b1c7927b53bc3db0b675afe74d5216fb0f6ba253b1e3b1b6f9dfcf047a6bc1c, 358 files), after = the file as frozen now; every changed file has a *.pre22h copy",
+ "rerun_22h": {
+  "what": "suites re-run after R-16..R-18 (before = 22f package entry)",
+  "files": {
+   "tests/out/units.log": {
+    "before": "63d4f03b568df58861b9685d361753d1a4bb0b42a9c816899484576dac1baf33",
+    "after": "71ef14697c0bf4b04023007e7877b35de92cdc99d1f5a1889934017d8be4e109",
+    "pre22h_copy": null
+   },
+   "tests/out/plan-check.log": {
+    "before": "3ff17d13bb20a309fb5832edbf61572d616ef79a916c8904912ce1b511cb8064",
+    "after": "3ff17d13bb20a309fb5832edbf61572d616ef79a916c8904912ce1b511cb8064",
+    "pre22h_copy": null
+   },
+   "tests/out/plan-tamper-tests.log": {
+    "before": "1368a8df9386147ecc97e26902123a7500538b2c521bb8fa287927ac8424f016",
+    "after": "1368a8df9386147ecc97e26902123a7500538b2c521bb8fa287927ac8424f016",
+    "pre22h_copy": null
+   },
+   "tests/out/runner-tests.log": {
+    "before": "003c8240d2e9b1156f221113868de9d7e8de327d80198b046e03ab7dfe83aecd",
+    "after": "b6d8dd5398f157c4a42ec44768b5cd31b133b96da286da7f6573ca80a2e447e1",
+    "pre22h_copy": null
+   },
+   "tests/out/synth-check.log": {
+    "before": "740882532a6fc885349cbf9aadabaca29179a2e446b1dbad181118cda68d4807",
+    "after": "16a6514a7e4b126292820247b210d1b411ebede378ec60407483b6ba23142040",
+    "pre22h_copy": null
+   },
+   "tests/out/sentinel-tests.log": {
+    "before": "4aae06f5d15e5a5b0ca352f314907f2839f2e0d035c39aae500d1fd3cf0a43a9",
+    "after": "4aae06f5d15e5a5b0ca352f314907f2839f2e0d035c39aae500d1fd3cf0a43a9",
+    "pre22h_copy": null
+   }
+  }
  }
 }

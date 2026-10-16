@@ -1,0 +1,1 @@
+{"item":"fcr1","start":"2026-10-16T00:54:58Z","end":"2026-10-16T02:22:55Z","seconds":5277,"gpus":2,"gpu_hours":2.9317,"attempt":1,"image":"sha256:ac05230bd94b3114cb6fb202b06402f9e2d45a61b20f041f314e045f967e97ee","rc":0,"wall_cap":11160,"variant":"B","policy":"single","purpose":"first long-context contrast retry under PLAN.md amendment 22d"}

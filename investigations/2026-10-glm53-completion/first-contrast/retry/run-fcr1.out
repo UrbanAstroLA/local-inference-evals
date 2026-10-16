@@ -1,0 +1,109 @@
+budget: variant B policy single attempt 1; spent 0.0 + this attempt's cap 6.2 (wall 11160s) <= approved 6.2 GPU-h; disk ok (>= 200 GB)
+== preflight 2026-10-16T00:54:58Z
+index, memory.used [MiB], utilization.gpu [%]
+0, 20 MiB, 0 %
+1, 2275 MiB, 1 %
+NOTE: desktop graphics clients on the GPUs (tolerated within the memory limits; close them for a quiet GPU 1):
+|    0   N/A  N/A           89543      G   /usr/bin/gnome-shell                      8MiB |
+|    1   N/A  N/A           89543      G   /usr/bin/gnome-shell                    705MiB |
+|    1   N/A  N/A           89997      G   /usr/bin/Xwayland                        14MiB |
+|    1   N/A  N/A           90086      G   ...exec/xdg-desktop-portal-gnome         13MiB |
+|    1   N/A  N/A           91069      G   .../8969/usr/lib/firefox/firefox        578MiB |
+|    1   N/A  N/A           97151      G   ...nap-store/1419/bin/snap-store        368MiB |
+|    1   N/A  N/A           99539    C+G   ...88185955192 --disable-logging        372MiB |
+== start 2026-10-16T00:54:58Z image=local/glm53-v0.9.1-b1-forcehook-mg2:local (sha256:ac05230bd94b3114cb6fb202b06402f9e2d45a61b20f041f314e045f967e97ee) variant B cap 11160s
+Validated 18 checkpoint shards
+Validated DFlash2 K3 draft checkpoint
+6d32ca2d4a9dbea07b5b8020c3ac582ac3bf5ab5c34c97c186bfed0de5b8025b
+Started glm53-flash-exl3-b12x-vllm on http://127.0.0.1:127.0.0.1:8001/v1. Initial B12x/CuTe compilation can take several minutes.
+Target: k325 profile, wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1@0490d2f708b12145f6516555ab066aaeb401cd21
+Profile: fp8, KV cache: fp8_ds_mla, max length: 1048576, max sequences: 16, GPU memory utilization: 0.95
+MoE topology: TP2, EP1
+Speculation: DFlash2 K3, bfloat16 draft KV, from incoai/GLM-5.3-Flash-DFlash2@bf582e4eacc1810f76656d1811693ff6c6737d2a
+State rollback: baseline full-state rollback
+Vision: disabled (language-model-only mode)
+Follow startup: docker logs -f glm53-flash-exl3-b12x-vllm
+== readiness gate (cap 1080s)
+ready after 723s
+47:(EngineCore pid=274) INFO 10-16 00:55:31 [core.py:122] Initializing a V1 LLM engine (v0.1.dev20051+g487ecf187) with config: model='/model-repo/snapshots/0490d2f708b12145f6516555ab066aaeb401cd21', speculative_config=SpeculativeConfig(method='dflash', model='/draft-repo/snapshots/bf582e4eacc1810f76656d1811693ff6c6737d2a', num_spec_tokens=3), tokenizer='/model-repo/snapshots/0490d2f708b12145f65165
+61:(Worker pid=370) INFO 10-16 00:55:54 [gpu_worker.py:386] Using V2 Model Runner
+241:(EngineCore pid=274) INFO 10-16 00:59:23 [kv_cache_utils.py:2284] glm53-placement kv-capacity {"num_blocks": 1275, "tensor_bytes": 18677260800, "groups": [{"spec": "MLAAttentionSpec", "layers": 12, "block_size": 4352, "page_bytes": 143616, "blocks_per_max_request": 241}, {"spec": "KpoolTailSpec", "layers": 6, "block_size": 8, "page_bytes": 143616, "blocks_per_max_request": 1}, {"spec": "MambaS
+242:(EngineCore pid=274) INFO 10-16 00:59:23 [kv_cache_utils.py:2299] GPU KV cache size: 4,707,515 tokens, Maximum concurrency for 1,048,576 tokens per request: 4.49x
+400:(Worker_TP0 pid=370) INFO 10-16 01:05:24 [model_runner.py:1044] Graph capturing finished in 160 secs, took 0.80 GiB
+402:(Worker_TP1 pid=404) INFO 10-16 01:05:24 [model_runner.py:1044] Graph capturing finished in 160 secs, took 0.76 GiB
+forcewin registered on 2 rank files; guard init on 2
+hook sha256 15e93e236067567ffb9db7116986e8b732ef679e672c5b12b9d78f5884899d83; hook init wmax [8448]
+num_blocks 1275 groups 10
+geometry check: 0 failures
+== client (deadline in 10197s)
+18:07:14 phase V0 done in 6s
+18:12:23 phase LW1 done in 303s
+18:17:34 phase LW2 done in 305s
+18:20:20 phase warm-s1-a done in 159s
+18:20:39 phase T-s1-a done in 13s
+18:22:40 phase warm-s1-b done in 115s
+18:23:10 phase T-s1 done in 24s
+18:24:37 phase LC1 done in 81s
+18:25:36 phase LC2 done in 53s
+18:30:23 phase C1 done in 280s
+18:31:14 phase CV done in 45s
+18:33:59 phase warm-s2-a done in 159s
+18:34:18 phase T-s2-a done in 13s
+18:36:19 phase warm-s2-b done in 115s
+18:36:50 phase T-s2 done in 24s
+18:41:35 phase C2 done in 279s
+18:42:09 phase PS-a done in 28s
+18:42:43 phase PS-b done in 28s
+18:51:33 phase D2 done in 278s
+18:52:07 phase PS-c done in 28s
+18:54:53 phase warm-s4-a done in 159s
+18:55:12 phase T-s4-a done in 13s
+18:57:13 phase warm-s4-b done in 115s
+18:57:43 phase T-s4 done in 24s
+18:59:11 phase LD1 done in 81s
+19:00:10 phase LD2 done in 53s
+19:04:58 phase D1 done in 281s
+19:07:43 phase warm-s3-a done in 159s
+19:08:02 phase T-s3-a done in 13s
+19:10:03 phase warm-s3-b done in 115s
+19:10:34 phase T-s3 done in 24s
+19:12:02 phase LD3 done in 81s
+19:13:02 phase LC3 done in 54s
+19:17:49 phase D3 done in 281s
+19:22:34 phase C3 done in 278s
+client rc=0 (0 complete; 9 structural; 10 GATE-1R not PASS: no injected batch ran; 12 unsafe restoration; 13 insufficient concurrent decoding; 14 missing sentinel coverage; 17 incomplete contrast (batch guard): stopped before a phase whose projected end did not fit; 124 killed by the wall-cap watchdog)
+== cleanup 2026-10-16T02:22:41Z
+Stopped glm53-flash-exl3-b12x-vllm (container retained; start.sh replaces it on the next launch).
+stop rc=0
+no glm53* container running
+occupied 5277s x 2 GPU = 2.9317 GPU-h
+docker cp forcewin rc=0
+docker cp mapguard rc=0
+153G	<runs>/first-contrast/retry/run-fcr1
+READING: NO READING: a gate failed (['H5f-fc', 'R-PS-state-ssm', 'R-PS-state-conv']); results are instrument findings only
+DIRECTION: D2 INCREASED close propensity: consistent with more corrupted old-engine computation helping termination
+LIMITS: close propensity on this counterfactual fixture panel (re-tokenized histories, prespecified positions, pre-top_p); not a finishing hazard and not a GPQA completion probability; 3 runs per arm in one session with a fixed order; screens are operational, no significance or equivalence is claimed
+GATE-1R in-session PASS, recomputed PASS
+PASS     GATE-1R          {"in_session": "PASS", "recomputed": "PASS", "reading": "PASS: compatible with measured long-context numerical variation under these bounds; the cache and concurrency properties the contrast needs hol
+PASS     H5a-fc           []
+PASS     H5g-fc           {"0": {"owned_layers": 6, "deltas": {"tail_w_stash.mism": 1861824, "tail_w_stash.null": 1861824, "idx_w_dec.mism": 0, "tail_w_seed.mism": 0, "idx_w_pf.s_mism": 0, "idx_w_pf.d7_fallback": 0, "pos.pos_c
+FAIL     H5f-fc           {"D1": {"clean_n": 77, "clean_gross": 0.03896103896103896, "corrupt_n": 4004, "corrupt_gross": 0.711038961038961, "all_gross": 0.6983582455280568}, "D2": {"clean_n": 121, "clean_gross": 0.033057851239
+REPORTED H5d-fc           {"D1": 0.6983582455280568, "D2": 0.7257491112239716, "D3": 0.706694451680125}
+PASS     R-cache-safe     {"n": 224, "unsafe": []}
+PASS     R-cache-balance  {"per_arm": {"C": {"non_hits": 0, "list": []}, "D": {"non_hits": 0, "list": []}, "LC": {"non_hits": 0, "list": []}, "LD": {"non_hits": 0, "list": []}}, "balanced": true, "mismatch_fixtures": []}
+PASS     R-PS-coverage    {"phases": ["PS-a", "PS-b", "PS-c"], "violations": []}
+PASS     R-PS-identity    []
+PASS     R-PS-bytes       {"pages": 7480, "mismatches": []}
+FAIL     R-PS-state-ssm   {"rows": 544, "bitwise_ab": 48, "compared_c": 544, "failing": [{"eq_ab": false, "rel_ab": 0.004111641086637974, "ok": false, "eq_ac": false, "rel_ac": 0.009164766408503056, "limit": 0.0082232821732759
+FAIL     R-PS-state-conv  {"rows": 544, "bitwise_ab": 48, "compared_c": 544, "failing": [{"eq_ab": false, "rel_ab": 0.019706271588802338, "ok": false, "eq_ac": false, "rel_ac": 0.03998040780425072, "limit": 0.03941254317760467
+REPORTED R-PS-limits      {"limits": "MLA / index-K shared-block identity is directly checked; KDA restoration and captured-state consistency are checked; physical KDA block identity and the complete unsampled state are not es
+PASS     C3-residue       {"failing": [], "valid": true}
+valid runs: {'C1': True, 'C2': True, 'C3': True, 'LC1': True, 'LC2': True, 'LC3': True, 'D1': True, 'D2': True, 'D3': True, 'LD1': True, 'LD2': True, 'LD3': True}
+pairs: {"C1/D1": {"design": "separate builds (s1 / s4)", "identical_restored_blocks_verified": false, "wording": "separate prefix builds of the same tokens; NOT an identical prefix"}, "C2/D2": {"design": "one build (s2), C2 before the gate, D2 after it", "identical_restored_blocks_verified": true, "wording": "restored the identical physical prefix blocks (verified)"}, "C3/D3": {"design": "one build (s3), D3 then C3", "identical_restored_blocks_verified": true, "wording": "restored the identical physical prefix blocks (verified)"}}
+primary: Y_C [-11.6099, -11.71, -11.6745] Y_D [-11.5608, -11.5487, -11.5685] Delta 0.1055 paired [0.0491, 0.1613, 0.106] N 0.1001 threshold 0.2002 beyond False separation True
+selection: {"exposure_ok": true, "within_arm_jaccard": [0.1341102802243598, 0.13371634040042538, 0.13608811073104873, 0.33332117384404064, 0.319896178681585, 0.3313487306947289], "across_arm_jaccard": [0.34840905315308357, 0.34327684745956283, 0.3453323936992819, 0.34866236535516726, 0.30935958815453635, 0.34676615139383754, 0.3485557442877814, 0.3429713247913662, 0.3147029697955002], "divergence_ok": false, "keys_change": false}
+LP same-depth (descriptive; three-repeat rule not applied): LC1/LD1 d -0.003166331327197014, LC2/LD2 d -0.009318950470317944, matched mean -0.006242640898757479; depth-mismatched LC3/LD3 d -0.020068833828533528; LP conclusion: the LP conclusion does not depend on the depth-mismatched pair
+F6 pages not independently verified by the numerical check (non-discriminating null, limit >= 0.50): GATE-1R C1 12 of 2486; GATE-1R C2 12 of 2486; C3 12 of 2486
+SENTINEL LIMITS: MLA / index-K shared-block identity is directly checked; KDA restoration and captured-state consistency are checked; physical KDA block identity and the complete unsampled state are not established
+CACHE: eviction avoided in the replayed scenarios, with measured survival margins; the actual-session gates are authoritative
+BATCH GUARD: no guard stop; LP skipped []; not run []

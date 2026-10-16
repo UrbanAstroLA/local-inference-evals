@@ -2,7 +2,7 @@
 # First-contrast RETRY GPU session (PLAN.md amendment 22d; retry/RETRY-PROPOSAL.md, RETRY-FREEZE.md).
 # PREPARED ON CPU; NOT RUN. Launch only after the operator authorizes the item "fcr1" with a GPU-hour total, a variant
 # and an attempt policy:
-#   APPROVED_GPU_H=4.18 VARIANT=B APPROVED_POLICY=single run_fcr.sh      (DRY_RUN=1: every pre-launch check, no GPU)
+#   APPROVED_GPU_H=6.2 VARIANT=B APPROVED_POLICY=single run_fcr.sh       (DRY_RUN=1: every pre-launch check, no GPU)
 # Derived from ../../runner/run_fc.sh (attempt 1, unchanged): image-id pin, frozen SHA256SUMS, pre-flight, readiness
 # gate, hook and guard registered on both ranks, in-container hook sha and WMAX 8448 before traffic, watchdog at the
 # wall cap, EXIT/INT/TERM trap, one cost line at GPU release, docker cp after release, frozen CPU analysis in a CPU
@@ -20,6 +20,14 @@
 #        (VLLM_PREFIX_CACHE_RETENTION_INTERVAL unset), mamba_cache_mode align, max_num_batched_tokens 2048,
 #        max_num_seqs 16, DFlash K = 3
 #   R-7  client_fcr.py (integrated GATE-1R via gate_step_fcr.sh; in-session early stops), analyze_fcr.py at the end
+#   R-16 [PLAN.md amendment 22h s.1] variant B ceiling 6.2 occupied GPU-hours (APPROVED_GPU_H <= 6.2; wall cap
+#        6.2 x 3600 / 2 = 11,160 s). SUPERSEDED, kept for the record: B 4.18 GPU-h / wall cap 7,523 s (22e-22g, the
+#        cost model's max(1.3 x central, pessimistic)). A0 unchanged (3.72 / 6,696 s). Single attempt, no automatic
+#        retry (APPROVED_POLICY as before).
+#   R-17 [22h s.2] batch guard in the client (runner/batch_guard_fcr.py) against DEADLINE = T0 + WALL_CAP - RESERVE,
+#        where WALL_CAP = min(variant wall cap, remaining approved budget): no phase starts unless its projected end
+#        fits; a guard stop is rc 17. The client's own timeout now coincides with the hard wall-cap watchdog (the last
+#        resort, which may cut mid-phase) instead of firing at the deadline + 15 s.
 ATTEMPT=${1:-1}
 HERE=$(cd "$(dirname "$0")" && pwd)
 RETRY=$(cd "$HERE/.." && pwd)
@@ -36,7 +44,7 @@ IMG_CPU=sha256:799d3cf8e5d14a615b89c734a6a38b4be5729bb44bb6b56effc7cf7df747b88a 
 HOOK_SHA=15e93e236067567ffb9db7116986e8b732ef679e672c5b12b9d78f5884899d83
 GPUS=2
 case "$VARIANT" in
-  B)  CEILING=4.18; WALL_MAX=7523; MIN_WALL=${MIN_WALL:-4942} ;;
+  B)  CEILING=6.2; WALL_MAX=11160; MIN_WALL=${MIN_WALL:-4942} ;;   # R-16 (22h); superseded: CEILING=4.18 WALL_MAX=7523
   A0) CEILING=3.72; WALL_MAX=6696; MIN_WALL=${MIN_WALL:-4945} ;;
   *)  echo "REFUSED: VARIANT must be B or A0 (got '$VARIANT')"; exit 2 ;;
 esac
@@ -201,7 +209,8 @@ python3 "$HERE/geometry_check_fcr.py" "$OUT/server-start.log" "$OUT/container-en
 if [ "${PIPESTATUS[0]}" != 0 ]; then echo "INVALID: served cache geometry differs from the replayed one (no traffic sent)"; RC_MAIN=16; exit 16; fi
 DEADLINE=$((T0 + WALL_CAP - RESERVE))
 echo "== client (deadline in $((DEADLINE - $(date +%s)))s)"
-timeout $((DEADLINE - $(date +%s) + 15)) python3 "$HERE/client_fcr.py" "$OUT" "$DEADLINE" --variant "$VARIANT" 2>&1 | tee -a "$OUT/client.log"
+# [R-17] the batch guard plans against DEADLINE; the client is only killed together with the hard watchdog (last resort)
+timeout $((T0 + (WALL_CAP > 300 ? WALL_CAP - 75 : WALL_CAP) - $(date +%s))) python3 "$HERE/client_fcr.py" "$OUT" "$DEADLINE" --variant "$VARIANT" 2>&1 | tee -a "$OUT/client.log"
 RC_MAIN=${PIPESTATUS[0]}
-echo "client rc=$RC_MAIN (0 complete; 9 structural; 10 GATE-1R not PASS: no injected batch ran; 11 phase did not fit; 12 unsafe restoration; 13 insufficient concurrent decoding; 14 missing sentinel coverage)"
+echo "client rc=$RC_MAIN (0 complete; 9 structural; 10 GATE-1R not PASS: no injected batch ran; 12 unsafe restoration; 13 insufficient concurrent decoding; 14 missing sentinel coverage; 17 incomplete contrast (batch guard): stopped before a phase whose projected end did not fit; 124 killed by the wall-cap watchdog)"
 exit 0

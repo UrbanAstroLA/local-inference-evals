@@ -18,6 +18,20 @@ VARIANT: every attempt-1 variant (good, null, uninformative, noisy, g-*, a-*) pl
   r-ps-ident      PS-b-L1 restored a different physical shared block     -> R-PS-identity
   r-f6-page       two index-K pages of C1-L3 swapped (rank 0, all layers)-> R-idx-pages, R-idx-early
   r-balance       D1-A8 cached 0 after the gate (miss only in D)         -> GATE-1R PASS; R-cache-balance -> NO READING
+[R-10..R-12, PLAN.md amendment 22f] (the sentinel's PS-c comparison is post-session, so GATE-1R passes for the R-10
+plants and the analysis reads NO READING)
+  r-ps-conv       PS-c-L4 rank 1, one KDA layer: one relevant conv entry changed (identical baseline)  -> R-PS-state-conv
+  r-ps-ssm        PS-c-L4 rank 0, one KDA layer: the committed SSM state changed (identical baseline) -> R-PS-state-ssm
+  r-ps-nonid      PS-b-L1 differs from PS-a in the SSM state only (rel 1e-3, every KDA layer), then PS-c-L1 changes its
+                  conv entries by rel 5e-2 in one layer (the pre-22f rule passed this)              -> R-PS-state-conv
+  r-ps-nonid-ok   PS-b-L1 differs in both components (rel 1e-3); PS-c-L1 SSM at 1.5 x, conv = PS-b's -> as good (clean)
+  r-f6-nd         two index-K pages of LW2-L1 swapped (rank 0, one layer): the prefill null of those pages is 1.0, so
+                  their limit is non-discriminating -> as good; the pages are reported "not independently verified by
+                  the numerical check" (GATE-1R C1 / C2 and C3)
+[R-17, PLAN.md amendment 22h]
+  r-guard-stop    the client's batch guard stopped the session BEFORE C3 (rc 17): C3 has no record, no dump and no
+                  scheduler entry; the client log carries the guard decisions, the stop, the coverage and the end -> GATE-1R
+                  PASS; reading "incomplete contrast (batch guard)"; C3-residue NOT RUN, never a failure
 """
 import json
 import os
@@ -153,4 +167,129 @@ if V == "r-f6-page":
         if a in pg and b in pg:
             pg[a], pg[b] = pg[b], pg[a]
     torch.save(rec, p)
+# [R-10] sentinel boundary-state plants (PS-a / PS-b / PS-c non-speculative prefill snapshots, F1)
+if V in ("r-ps-conv", "r-ps-ssm", "r-ps-nonid", "r-ps-nonid-ok"):
+    gen = torch.Generator().manual_seed(7)
+
+    def snap_path(tag, rank):
+        return os.path.join(OUT, "forcewin", "snap_%s_F1_r%d.pt" % (tag, rank))
+
+    def kda_names(rec):
+        return sorted(n for n, L in rec["layers"].items() if L.get("kind") == "kda")
+
+    def noisy(t, rel):
+        x = t.float()
+        nz = torch.randn(x.shape, generator=gen)
+        return (x + nz * (rel * float(x.norm()) / max(float(nz.norm()), 1e-12))).to(t.dtype)
+
+    def edit(tag, ranks, fn, layers=None):
+        for rank in ranks:
+            pth = snap_path(tag, rank)
+            rec = torch.load(pth, weights_only=False)
+            names = kda_names(rec)
+            for nm in (layers(names) if layers else names):
+                fn(rec["layers"][nm])
+            torch.save(rec, pth)
+
+    def conv_entry(L):
+        c = L["conv"].clone()
+        c[1, 5] = c[1, 5] + 0.5
+        L["conv"] = c
+
+    def ssm_entry(L):
+        x = L["ssm_sketch"].clone()
+        x[0, 9] = x[0, 9] * 1.5 + 0.25
+        L["ssm_sketch"] = x
+
+    def ssm_rel(rel):
+        def f(L):
+            x = L["ssm_sketch"].clone()
+            x[0] = noisy(x[0], rel)
+            L["ssm_sketch"] = x
+        return f
+
+    def conv_rel(rel):
+        def f(L):
+            c = L["conv"].clone()
+            c[:3] = noisy(c[:3], rel)
+            L["conv"] = c
+        return f
+    mid = lambda names: [names[len(names) // 2]]  # noqa: E731
+    if V == "r-ps-conv":
+        edit("PS-c-L4", (1,), conv_entry, mid)
+    elif V == "r-ps-ssm":
+        edit("PS-c-L4", (0,), ssm_entry, mid)
+    elif V == "r-ps-nonid":
+        edit("PS-b-L1", (0, 1), ssm_rel(1e-3))
+        edit("PS-c-L1", (0, 1), ssm_rel(1e-3))
+        edit("PS-c-L1", (0,), conv_rel(5e-2), mid)
+    elif V == "r-ps-nonid-ok":
+        # PS-b differs in both components; PS-c: SSM 1.5 x the baseline's difference (fp32: the ratio is exact), conv
+        # equal to PS-b's (bf16 rounding of fresh noise on the synthetic 3-row conv makes a fresh-noise ratio random)
+        edit("PS-b-L1", (0, 1), ssm_rel(1e-3))
+        edit("PS-b-L1", (0, 1), conv_rel(1e-3))
+        edit("PS-c-L1", (0, 1), ssm_rel(1.5e-3))
+        for rank in (0, 1):
+            rb = torch.load(snap_path("PS-b-L1", rank), weights_only=False)
+            pc = snap_path("PS-c-L1", rank)
+            rc_ = torch.load(pc, weights_only=False)
+            for nm in kda_names(rc_):
+                rc_["layers"][nm]["conv"] = rb["layers"][nm]["conv"].clone()
+            torch.save(rc_, pc)
+# [R-12] r-f6-nd: two index-K pages of LW2-L1 swapped (rank 0, the first index-K layer): a non-discriminating null
+if V == "r-f6-nd":
+    sys.path.insert(0, os.path.join(FC, "analysis"))
+    import glob
+    import fc_common as fc
+    import fc_geometry as geo
+    G = geo.load(FC)
+    lo = G["fx"]["L1"]["ref_pools"][0]
+    p = sorted(glob.glob(os.path.join(OUT, "forcewin", "snap_LW2-L1_F*win_r0.pt")))[0]
+    rec = torch.load(p, weights_only=False)
+    blk = fc.attn_blocks(rec)
+    nm = sorted(fc.idx_layers(rec), key=fc.layer_no)[0]
+    L = rec["layers"][nm]
+    a, b = [blk((4 * q + 3) // 4352) * 17 + (q % 1088) // 64 for q in (lo + 640, lo + 704)]
+    pg = L["pages"]
+    assert a in pg and b in pg, "r-f6-nd: pages not in the dump"
+    pg[a], pg[b] = pg[b], pg[a]
+    torch.save(rec, p)
+# [R-17] r-guard-stop: the batch guard stopped the session before C3 (nothing of C3 exists; the records end with the
+# guard's decision, its stop (rc 17), the coverage and the end, as client_fcr.py writes them)
+if V == "r-guard-stop":
+    sys.path.insert(0, os.path.join(FC, "retry", "runner"))
+    import glob
+    import batch_guard_fcr as bg
+    CL2 = [json.loads(x) for x in open(os.path.join(OUT, "client.jsonl"))]
+    keep, phases_ran = [], []
+    for r in CL2:
+        if r.get("kind") in ("end", "coverage", "stop"):
+            continue
+        if r.get("kind") == "request" and r.get("phase") == "C3":
+            continue
+        if r.get("kind") == "phase" and r.get("tag") == "C3":
+            continue
+        if r.get("kind") == "phase":
+            phases_ran.append(r["tag"])
+        keep.append(r)
+    t_end = max((r.get("t1") or r.get("t") or 0) for r in keep if isinstance(r.get("t1") or r.get("t"), (int, float)))
+    g = dict(kind="guard", phase="C3", action="stop", projected=812.4, reserve=0.0, left=640.0,
+             why="batch guard: projected completion of C3 (812 s) does not fit the 640 s left before the deadline")
+    keep.append(g)
+    keep.append(dict(kind="stop", why="%s: %s" % (bg.READING, g["why"]), rc=bg.GUARD_RC, phases=phases_ran,
+                     t=t_end + 1))
+    start = next(r for r in keep if r.get("kind") == "start")
+    req = start.get("phases") or phases_ran + ["C3"]
+    keep.append(dict(kind="coverage", required=req, ran=[p_ for p_ in req if p_ in phases_ran],
+                     not_run=[p_ for p_ in req if p_ not in phases_ran], order=phases_ran, left=640.0))
+    keep.append(dict(kind="end", t=t_end + 2, rc=bg.GUARD_RC))
+    with open(os.path.join(OUT, "client.jsonl"), "w") as fh:
+        for r in keep:
+            fh.write(json.dumps(r) + "\n")
+    for f_ in glob.glob(os.path.join(OUT, "forcewin", "*C3-*")):
+        os.remove(f_)
+    msp = os.path.join(OUT, "mapguard", "ms_p1.jsonl")
+    c3ids = {r["resp_id"] + "-0-s" for r in reqs if r["phase"] == "C3"}
+    lines_ = [x for x in open(msp) if not any(e in x for e in c3ids)]
+    open(msp, "w").writelines(lines_)
 print("retry additions: scheduler log with %d records, plant %s" % (seq, V))

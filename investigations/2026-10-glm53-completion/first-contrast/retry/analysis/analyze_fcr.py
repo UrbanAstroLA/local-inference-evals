@@ -17,6 +17,26 @@ selection rule and the LP comparison are attempt 1's frozen definitions, called 
   R-5  the sentinel PS-a / PS-b / PS-c on the shared block [c - 4352, c) (sentinel.py)
   R-6  C3 residue: alignment and the pooled content rule as GATE-1R, plus the F6 page and early-layer rules
 Reading of the numerical gates when they pass: "compatible with measured long-context numerical variation".
+PLAN.md amendment 22f (before any retry data):
+  R-10 the sentinel's boundary state: SSM and convolution components separately, each against its own PS-a / PS-b
+       baseline (sentinel.py)
+  R-12 F6 pages whose null makes the page limit non-discriminating are reported as "not independently verified by the
+       numerical check" (GATE-1R's C1 / C2 and C3's residue)
+  R-13 the sentinel's limits are stated in every output (sentinel.LIMITS)
+  R-14 LP restore depth: a DESCRIPTIVE same-depth comparison, LC1 vs LD1 (both restore c) and LC2 vs LD2 (both c_L),
+       with LC3 (c_L) vs LD3 (c) reported separately as depth-mismatched. The three-repeat rule is not applied to the
+       two matched pairs (no beyond-null or repeatability verdict is drawn from them). Dependence rule, fixed here: the
+       LP conclusion (the short-context injection contrast LD - LC and the interaction (D - C) - (LD - LC), each by its
+       frozen threshold) DEPENDS ON THE MISMATCHED PAIR when recomputing it with the matched pairs' mean difference
+       in place of the three-run difference changes its beyond-null status, or its sign while beyond the null; it is
+       then reported as "unresolved construction sensitivity".
+  R-15 cache wording: eviction is avoided in the replayed scenarios, with measured survival margins; the actual-
+       session gates (R-cache-safe, R-cache-model, R-cache-balance) are authoritative.
+PLAN.md amendment 22h:
+  R-17 a batch-guard stop (client rc 17: the session stopped BEFORE a phase whose projected completion did not fit)
+       reads "incomplete contrast (batch guard)" when the gates pass and an arm lacks 3 runs; phases the guard did not
+       start are reported NOT RUN (C3's residue row included), never as failures; LP batches the guard skipped are
+       listed. Every other rule is unchanged.
 """
 import itertools
 import json
@@ -38,10 +58,66 @@ import fcr_geometry as geo  # noqa: E402
 import gate_fc as gt  # noqa: E402
 import gate_fcr as g1r  # noqa: E402
 import sentinel as ps  # noqa: E402
+sys.path.insert(0, os.path.join(RETRY, "runner"))
+import batch_guard_fcr as bg  # noqa: E402
 
 C_RUNS, D_RUNS, LC_RUNS, LD_RUNS = af.C_RUNS, af.D_RUNS, af.LC_RUNS, af.LD_RUNS
 PAIR_BUILD = {"1": "separate builds (s1 / s4)", "2": "one build (s2), C2 before the gate, D2 after it",
               "3": "one build (s3), D3 then C3"}
+
+
+LP_DEPTH = {"LC1": "c", "LC2": "c_L", "LC3": "c_L", "LD1": "c", "LD2": "c_L", "LD3": "c"}
+LP_UNRESOLVED = "unresolved construction sensitivity"
+CACHE_WORDING = ("eviction avoided in the replayed scenarios, with measured survival margins; the actual-session gates "
+                 "are authoritative")
+
+
+def _sgn(x):
+    return 1 if x > 0 else (-1 if x < 0 else 0)
+
+
+def lp_same_depth(Yshort, valid, inj_long, inj_short, interaction):
+    """[R-14, 22f s.6] descriptive same-depth LP comparison and the dependence of the LP conclusion on the
+    depth-mismatched pair. Yshort: {LP run: aggregate Y}; valid: {run: bool}; inj_*: attempt-1 contrast dicts."""
+    pairs = {}
+    for a, b in (("LC1", "LD1"), ("LC2", "LD2"), ("LC3", "LD3")):
+        ya, yb = Yshort.get(a), Yshort.get(b)
+        ok = valid.get(a) and valid.get(b) and ya is not None and yb is not None and np.isfinite(ya) and np.isfinite(yb)
+        pairs[f"{a}/{b}"] = dict(depth=dict(LC=LP_DEPTH[a], LD=LP_DEPTH[b]), matched=LP_DEPTH[a] == LP_DEPTH[b],
+                                 Y_LC=ya, Y_LD=yb, d_LD_minus_LC=float(yb - ya) if ok else None)
+    md = [pairs[k]["d_LD_minus_LC"] for k in ("LC1/LD1", "LC2/LD2")]
+    have_m = all(x is not None for x in md)
+    out = dict(
+        name="descriptive same-depth comparison (22f s.6): no beyond-null or repeatability verdict is drawn from the "
+             "two matched pairs (the three-repeat rule is not applied to them)",
+        matched_pairs={k: pairs[k] for k in ("LC1/LD1", "LC2/LD2")},
+        depth_mismatched_pair=dict(pairs["LC3/LD3"], note="depth-mismatched: LC3 restores c_L, LD3 restores c; "
+                                                          "reported separately"),
+        matched_mean_d=float(np.mean(md)) if have_m else None,
+        matched_same_sign=(all(x > 0 for x in md) or all(x < 0 for x in md)) if have_m else None,
+        three_repeat_rule_applied_to_matched_pairs=False)
+    checks = {}
+    if have_m and inj_short.get("complete"):
+        thr = inj_short["threshold"]
+        full_b, m_b = bool(inj_short["beyond_null"]), abs(out["matched_mean_d"]) > thr
+        dep = full_b != m_b or (full_b and _sgn(inj_short["delta"]) != _sgn(out["matched_mean_d"]))
+        checks["injection_short"] = dict(full_delta=inj_short["delta"], matched_delta=out["matched_mean_d"],
+                                         threshold=thr, full_beyond=full_b, matched_beyond=bool(m_b), depends=bool(dep))
+        if inj_long.get("complete") and interaction:
+            thr_i = 2 * 2 * max(interaction["N"], af.N_FLOOR)
+            im = inj_long["delta"] - out["matched_mean_d"]
+            full_b, m_b = bool(interaction["beyond_null"]), abs(im) > thr_i
+            dep = full_b != m_b or (full_b and _sgn(interaction["delta"]) != _sgn(im))
+            checks["interaction"] = dict(full_delta=interaction["delta"], matched_delta=im, threshold=thr_i,
+                                         full_beyond=full_b, matched_beyond=bool(m_b), depends=bool(dep))
+    out["dependence_checks"] = checks
+    if not checks:
+        out["conclusion_status"] = "not evaluated (a matched pair or the LP contrast is incomplete)"
+    elif any(c["depends"] for c in checks.values()):
+        out["conclusion_status"] = LP_UNRESOLVED
+    else:
+        out["conclusion_status"] = "the LP conclusion does not depend on the depth-mismatched pair"
+    return out
 
 
 def run_valid_r(run, G, ph, clean, cache_rows):
@@ -140,9 +216,24 @@ def main():
     R3.add("C3-f6", "numerical", "PASS" if e3["ok"] else "FAIL", "F6 page and early-layer rules on C3",
            dict(pages=e3["pages"], early=e3["early"]), "R-6")
     c3ok = not R3.failing() and valid.get("C3")
-    R.add("C3-residue", "structural", "PASS" if c3ok else "FAIL", "C3 (after injected traffic, on s3's build): valid and "
-          "clean, aligned with the prefill references, within the GATE-1R content rule and the F6 rules",
-          dict(failing=R3.failing(), valid=valid.get("C3")), "R-6")
+    # [R-17] batch guard: phases the client's guard did not start are NOT RUN, not failures
+    stops = [r_ for r_ in run.CL if r_.get("kind") == "stop"]
+    gstop = next((r_ for r_ in stops if r_.get("rc") == bg.GUARD_RC), None)
+    cov = next((r_ for r_ in run.CL if r_.get("kind") == "coverage"), {}) or {}
+    not_run = set(cov.get("not_run") or [])
+    gskip = [r_["phase"] for r_ in run.CL if r_.get("kind") == "skip"]
+    first_nr = next((q["tag"] for q in geo.phases(G, variant) if q["tag"] in not_run and q["tag"] not in gskip), None)
+    res["batch_guard"] = dict(stop=gstop, stopped_before=first_nr if gstop else None,
+        not_run=sorted(not_run), skipped=gskip,
+        decisions=[r_ for r_ in run.CL if r_.get("kind") == "guard"][:80],
+        rates=[r_ for r_ in run.CL if r_.get("kind") == "rate"])
+    if gstop and "C3" in not_run and "C3" not in run.by_tag:
+        R.add("C3-residue", "reported", "NOT RUN", "C3 not started: the batch guard stopped the session before it "
+              "(rc 17)", dict(stop=gstop.get("why")), "R-17")
+    else:
+        R.add("C3-residue", "structural", "PASS" if c3ok else "FAIL", "C3 (after injected traffic, on s3's build): valid "
+              "and clean, aligned with the prefill references, within the GATE-1R content rule and the F6 rules",
+              dict(failing=R3.failing(), valid=valid.get("C3")), "R-6")
     res["c3_rows"] = R3.rows
     # ---------------- 2-4. statistics (attempt-1 functions, unchanged)
     vC = [p for p in C_RUNS if valid.get(p)]
@@ -223,6 +314,9 @@ def main():
             Nint = max(lp["injection_long"]["N"], lp["injection_short"]["N"])
             lp["interaction"] = dict(delta=inter, N=Nint, beyond_null=abs(inter) > 2 * 2 * max(Nint, af.N_FLOOR),
                                      rule="|(D - C) - (LD - LC)| > 2 x (2 x max(N, 0.05))")
+        lp["same_depth"] = lp_same_depth(Yshort, valid, lp["injection_long"], lp["injection_short"],
+                                         lp.get("interaction"))
+        lp["conclusion_status"] = lp["same_depth"]["conclusion_status"]
         lp["valid_runs"] = {p: valid.get(p) for p in LC_RUNS + LD_RUNS}
         lp["name"] = ("history-construction and accumulated-decode-state comparison at fixed total context (NOT an "
                       "output-length experiment)")
@@ -230,12 +324,17 @@ def main():
                                    "runs (restore depth c for the first LP user of a build, c_L = rule(P_L) for the "
                                    "second, from the first LP run's prefill); LC: 1 x c + 2 x c_L, LD: 2 x c + 1 x c_L; "
                                    "both depths are prefill construction and the LC-LC / LD-LD nulls each contain one "
-                                   "c vs c_L pair")
+                                   "c vs c_L pair; [R-14] same-depth pairs LC1 / LD1 (c) and LC2 / LD2 (c_L) are "
+                                   "compared descriptively in same_depth, LC3 (c_L) / LD3 (c) is depth-mismatched")
     res["lp_control"] = lp
     # ---------------- readings (attempt-1 rule)
     gates_ok = not R.failing() and res["gate1r"]["recomputed"] == "PASS"
     if not gates_ok:
         reading = "NO READING: a gate failed (%s); results are instrument findings only" % R.failing()
+    elif not complete and gstop:
+        reading = "%s: the session stopped before %s (projected completion did not fit the remaining budget / wall " \
+            "cap); fewer than 3 valid runs in an arm (C %s, D %s); the rule is never applied to 2 runs" % (
+                bg.READING, res["batch_guard"]["stopped_before"], vC, vD)
     elif not complete:
         reading = "INCOMPLETE: fewer than 3 valid runs in an arm (C %s, D %s); the rule is never applied to 2 runs" % (
             vC, vD)
@@ -253,10 +352,22 @@ def main():
     res["direction_statement"] = direction
     res["flagged_fixtures"] = flagged
     res["numerical_wording"] = f6.WORDING
+    ndg = next((r_["detail"] for r_ in Rg.rows if r_["id"] == "R-idx-pages-nd"), {}) or {}
+    nd3 = e3["pages"]["non_discriminating"]
+    res["f6_not_independently_verified"] = dict(
+        wording=f6.ND_WORDING, bound=f6.ND_BOUND,
+        gate1r={t: dict(n=x["n"], of_judged=x["of_judged"], n_limit_ge_1=x["n_limit_ge_1"], pages=x["pages"])
+                for t, x in ndg.items()},
+        C3=dict(n=nd3["n"], of_judged=e3["pages"]["pages_judged"], n_limit_ge_1=nd3["n_undetectable"],
+                pages=nd3["pages"]))
+    res["sentinel_limits"] = ps.LIMITS
+    res["cache_wording"] = CACHE_WORDING
     res["notes"] = ["flagged fixtures carry no mechanism claim (R1); every reading is repeated in the R2 sensitivity",
                     "C1 of run-fc1 is not pooled or paired with any run of this session (amendment 22d s.10)",
                     "a null result excludes only decode-window D2 exposure on these 8 fixtures below 131,072; not "
-                    "full-history accumulation, D6, or longer ranges"]
+                    "full-history accumulation, D6, or longer ranges",
+                    "cache: " + CACHE_WORDING + " (R-15)",
+                    "sentinel limits: " + ps.LIMITS + " (R-13)"]
     res["gate_rows"] = R.rows
     json.dump(res, open(os.path.join(rd, "fcr_result.json"), "w"), indent=1, default=str)
     lines = ["READING: %s" % reading, "DIRECTION: %s" % direction, "LIMITS: %s" % af.LIMITS,
@@ -269,6 +380,22 @@ def main():
             [round(v, 4) for v in pr["Y_C"]], [round(v, 4) for v in pr["Y_D"]], pr["delta"],
             [round(v, 4) for v in pr["paired_d"]], pr["N"], pr["threshold"], pr["beyond_null"], pr["separation"]))
     lines.append("selection: %s" % json.dumps(res["selection"]))
+    if lp.get("same_depth"):
+        sd = lp["same_depth"]
+        lines.append("LP same-depth (descriptive; three-repeat rule not applied): LC1/LD1 d %s, LC2/LD2 d %s, matched "
+                     "mean %s; depth-mismatched LC3/LD3 d %s; LP conclusion: %s" % (
+                         sd["matched_pairs"]["LC1/LD1"]["d_LD_minus_LC"], sd["matched_pairs"]["LC2/LD2"]["d_LD_minus_LC"],
+                         sd["matched_mean_d"], sd["depth_mismatched_pair"]["d_LD_minus_LC"], sd["conclusion_status"]))
+    fn = res["f6_not_independently_verified"]
+    lines.append("F6 pages %s (non-discriminating null, limit >= %.2f): %s; C3 %d of %d" % (
+        f6.ND_WORDING, f6.ND_BOUND, "; ".join("GATE-1R %s %d of %d" % (t, x["n"], x["of_judged"])
+                                             for t, x in fn["gate1r"].items()), fn["C3"]["n"], fn["C3"]["of_judged"]))
+    lines.append("SENTINEL LIMITS: " + ps.LIMITS)
+    lines.append("CACHE: " + CACHE_WORDING)
+    bgr = res["batch_guard"]
+    lines.append("BATCH GUARD: %s; LP skipped %s; not run %s" % (
+        ("%s, stopped before %s" % (bg.READING, bgr["stopped_before"])) if bgr["stop"] else "no guard stop",
+        bgr["skipped"], bgr["not_run"]))
     open(os.path.join(rd, "fcr_result.txt"), "w").write("\n".join(lines) + "\n")
     print("\n".join(lines))
 

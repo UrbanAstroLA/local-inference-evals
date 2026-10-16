@@ -1,0 +1,1 @@
+budget: variant B policy single attempt 1; spent 0.0 + this attempt's cap 6.2 (wall 11160s) <= approved 6.2 GPU-h; disk ok (>= 200 GB)

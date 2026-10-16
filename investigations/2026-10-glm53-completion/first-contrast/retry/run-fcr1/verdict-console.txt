@@ -1,0 +1,27 @@
+READING: NO READING: a gate failed (['H5f-fc', 'R-PS-state-ssm', 'R-PS-state-conv']); results are instrument findings only
+DIRECTION: D2 INCREASED close propensity: consistent with more corrupted old-engine computation helping termination
+LIMITS: close propensity on this counterfactual fixture panel (re-tokenized histories, prespecified positions, pre-top_p); not a finishing hazard and not a GPQA completion probability; 3 runs per arm in one session with a fixed order; screens are operational, no significance or equivalence is claimed
+GATE-1R in-session PASS, recomputed PASS
+PASS     GATE-1R          {"in_session": "PASS", "recomputed": "PASS", "reading": "PASS: compatible with measured long-context numerical variation under these bounds; the cache and concurrency properties the contrast needs hol
+PASS     H5a-fc           []
+PASS     H5g-fc           {"0": {"owned_layers": 6, "deltas": {"tail_w_stash.mism": 1861824, "tail_w_stash.null": 1861824, "idx_w_dec.mism": 0, "tail_w_seed.mism": 0, "idx_w_pf.s_mism": 0, "idx_w_pf.d7_fallback": 0, "pos.pos_c
+FAIL     H5f-fc           {"D1": {"clean_n": 77, "clean_gross": 0.03896103896103896, "corrupt_n": 4004, "corrupt_gross": 0.711038961038961, "all_gross": 0.6983582455280568}, "D2": {"clean_n": 121, "clean_gross": 0.033057851239
+REPORTED H5d-fc           {"D1": 0.6983582455280568, "D2": 0.7257491112239716, "D3": 0.706694451680125}
+PASS     R-cache-safe     {"n": 224, "unsafe": []}
+PASS     R-cache-balance  {"per_arm": {"C": {"non_hits": 0, "list": []}, "D": {"non_hits": 0, "list": []}, "LC": {"non_hits": 0, "list": []}, "LD": {"non_hits": 0, "list": []}}, "balanced": true, "mismatch_fixtures": []}
+PASS     R-PS-coverage    {"phases": ["PS-a", "PS-b", "PS-c"], "violations": []}
+PASS     R-PS-identity    []
+PASS     R-PS-bytes       {"pages": 7480, "mismatches": []}
+FAIL     R-PS-state-ssm   {"rows": 544, "bitwise_ab": 48, "compared_c": 544, "failing": [{"eq_ab": false, "rel_ab": 0.004111641086637974, "ok": false, "eq_ac": false, "rel_ac": 0.009164766408503056, "limit": 0.0082232821732759
+FAIL     R-PS-state-conv  {"rows": 544, "bitwise_ab": 48, "compared_c": 544, "failing": [{"eq_ab": false, "rel_ab": 0.019706271588802338, "ok": false, "eq_ac": false, "rel_ac": 0.03998040780425072, "limit": 0.03941254317760467
+REPORTED R-PS-limits      {"limits": "MLA / index-K shared-block identity is directly checked; KDA restoration and captured-state consistency are checked; physical KDA block identity and the complete unsampled state are not es
+PASS     C3-residue       {"failing": [], "valid": true}
+valid runs: {'C1': True, 'C2': True, 'C3': True, 'LC1': True, 'LC2': True, 'LC3': True, 'D1': True, 'D2': True, 'D3': True, 'LD1': True, 'LD2': True, 'LD3': True}
+pairs: {"C1/D1": {"design": "separate builds (s1 / s4)", "identical_restored_blocks_verified": false, "wording": "separate prefix builds of the same tokens; NOT an identical prefix"}, "C2/D2": {"design": "one build (s2), C2 before the gate, D2 after it", "identical_restored_blocks_verified": true, "wording": "restored the identical physical prefix blocks (verified)"}, "C3/D3": {"design": "one build (s3), D3 then C3", "identical_restored_blocks_verified": true, "wording": "restored the identical physical prefix blocks (verified)"}}
+primary: Y_C [-11.6099, -11.71, -11.6745] Y_D [-11.5608, -11.5487, -11.5685] Delta 0.1055 paired [0.0491, 0.1613, 0.106] N 0.1001 threshold 0.2002 beyond False separation True
+selection: {"exposure_ok": true, "within_arm_jaccard": [0.1341102802243598, 0.13371634040042538, 0.13608811073104873, 0.33332117384404064, 0.319896178681585, 0.3313487306947289], "across_arm_jaccard": [0.34840905315308357, 0.34327684745956283, 0.3453323936992819, 0.34866236535516726, 0.30935958815453635, 0.34676615139383754, 0.3485557442877814, 0.3429713247913662, 0.3147029697955002], "divergence_ok": false, "keys_change": false}
+LP same-depth (descriptive; three-repeat rule not applied): LC1/LD1 d -0.003166331327197014, LC2/LD2 d -0.009318950470317944, matched mean -0.006242640898757479; depth-mismatched LC3/LD3 d -0.020068833828533528; LP conclusion: the LP conclusion does not depend on the depth-mismatched pair
+F6 pages not independently verified by the numerical check (non-discriminating null, limit >= 0.50): GATE-1R C1 12 of 2486; GATE-1R C2 12 of 2486; C3 12 of 2486
+SENTINEL LIMITS: MLA / index-K shared-block identity is directly checked; KDA restoration and captured-state consistency are checked; physical KDA block identity and the complete unsampled state are not established
+CACHE: eviction avoided in the replayed scenarios, with measured survival margins; the actual-session gates are authoritative
+BATCH GUARD: no guard stop; LP skipped []; not run []

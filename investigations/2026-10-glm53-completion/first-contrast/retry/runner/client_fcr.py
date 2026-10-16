@@ -20,7 +20,15 @@ Changes (R-n = RETRY-PROPOSAL.md s.0):
   R-5  sentinel PS-a / PS-b / PS-c on s2: dump the shared block [c - 4352, c) of the restored boundary c
   R-7  in-session early stops (rc): 9 structural (error / ids), 12 unsafe restoration, 13 insufficient concurrent
        decoding (lead >= 512 in a run batch), 14 missing sentinel coverage after injected traffic, 10 GATE-1R not PASS,
-       11 a required phase does not fit
+       11 a required phase does not fit (SUPERSEDED by rc 17, R-17)
+  R-17 [PLAN.md amendment 22h] batch guard (runner/batch_guard_fcr.py): before every build, touch pass, sentinel pass
+       and run batch, its completion is projected from the prefill and decode rates measured in this session's
+       earlier phases (a conservative prior before the first of each kind) with a 1.25 margin; it starts only if the
+       projection fits before the deadline (T0 + min(wall cap, remaining approved budget) - the cleanup reserve). LP
+       batches keep the later primary phases in reserve and are skipped first; a primary phase that does not fit
+       stops the session BEFORE it: rc 17, reading "incomplete contrast (batch guard)". Every decision is recorded
+       (kind "guard"). No phase is cut mid-way by the client; the runner's wall-cap watchdog is the last resort.
+       Replaces the attempt-1 "never truncate" rule and its fixed 25 tok/s assumption.
 """
 import gzip
 import hashlib
@@ -40,6 +48,8 @@ FCR = os.path.dirname(RETRY)
 sys.path.insert(0, os.path.join(RETRY, "analysis"))
 import cache_gate as cg  # noqa: E402
 import fcr_geometry as geo  # noqa: E402
+sys.path.insert(0, HERE)
+import batch_guard_fcr as bg  # noqa: E402
 
 ROOT = "<runs>"
 GPQA = os.environ.get("GPQA", f"{ROOT}/bundle/gate/gpqa_fixture.LOCAL.json")
@@ -55,7 +65,7 @@ ORDER = G["order"]
 MAN = json.load(open(os.path.join(FCR, "fixtures", "ids_manifest.json")))
 PLANNED, PHASES, DONE = [], [], {}
 LAST = {}                    # (salt_name, fixture) -> t1 of the most recent completed request
-PF_RATE, DEC_RATE, DUMP_S = 2410.0, 25.0, 6.3      # the cost model's pessimistic rates (never-truncate rule)
+RATES = bg.Rates()          # [R-17] rates measured in this session (batch guard)
 LP_OFF = [False]             # once an LP batch is skipped, every later LP batch is skipped (pairs stay coherent)
 
 
@@ -219,26 +229,8 @@ def left():
     return DEADLINE - time.time() if not PLAN else 1e9
 
 
-def need_s(ph):
-    """Pessimistic seconds for a phase (never-truncate rule)."""
-    rs = ph["requests"]
-    if ph["kind"] == "build":
-        return sum(r["P"] for r in rs) / PF_RATE + 8 * DUMP_S + 30
-    if ph["kind"] in ("touch", "ps"):
-        return sum(r["P"] - r["cached_expected"] for r in rs) / PF_RATE + 8 * 2.0 + 30
-    if ph["kind"] == "run":
-        return sum(r["P"] - r["cached_expected"] for r in rs) / PF_RATE + max(r["max_tokens"] for r in rs) / DEC_RATE + \
-            8 * DUMP_S + 30
-    return 60.0
-
-
 def is_lp(ph):
-    return ph.get("form") in ("LC", "LD")
-
-
-def reserve_after(i):
-    """seconds kept for the PRIMARY phases after plan index i (LP batches are skipped first when time is short)."""
-    return sum(need_s(p) for p in PLAN_PHASES[i + 1:] if p["kind"] != "gate" and p["tag"] != "V0" and not is_lp(p))
+    return bg.is_lp(ph)
 
 
 def ordered(ph):
@@ -423,6 +415,9 @@ def main():
         MODEL = requests.get(f"{BASE}/v1/models", timeout=30).json()["data"][0]["id"]
     rec(dict(kind="start", t=round(time.time(), 3), plan=PLAN, deadline=DEADLINE, scope="first-contrast retry fcr1",
              variant=VARIANT, order=ORDER, wmax=geo.WMAX, phases=PHASE_LIST,
+             batch_guard=dict(prior_prefill_tok_s=bg.PRIOR_PF, prior_decode_tok_s=bg.PRIOR_DEC, margin=bg.MARGIN,
+                              gate_reserve_s=bg.GATE_S, rc=bg.GUARD_RC,
+                              deadline_basis="T0 + min(wall cap, remaining approved budget) - cleanup reserve"),
              salts={s: geo.salt(s) for s in sorted({p.get("salt") for p in PLAN_PHASES if p.get("salt")})}))
     dump("start")
     for i, ph in enumerate(PLAN_PHASES):
@@ -433,19 +428,23 @@ def main():
             if not gate():
                 stop("GATE-1R not PASS: no injected batch is run", 10)
             continue
-        need = need_s(ph)
-        res = reserve_after(i) if is_lp(ph) else 0.0
-        if is_lp(ph) and LP_OFF[0]:
-            rec(dict(kind="skip", phase=ph["tag"], why="an earlier LP batch was skipped"))
-            continue
-        if left() < need + res:
-            rec(dict(kind="skip", phase=ph["tag"], left=round(left(), 1), need=round(need, 1), reserve=round(res, 1)))
-            if is_lp(ph):
+        # [R-17] batch guard: start only if the projected completion fits; never cut a phase mid-way
+        g = bg.decide(RATES, PLAN_PHASES, i, left(), LP_OFF[0])
+        rec(dict(kind="guard", **g))
+        if g["action"] == "skip":
+            rec(dict(kind="skip", phase=ph["tag"], why=g["why"], left=g.get("left"), projected=g["projected"],
+                     reserve=g.get("reserve")))
+            if not LP_OFF[0]:
                 LP_OFF[0] = True
-                log(f"SKIP {ph['tag']} and every later LP batch (primary phases reserved)")
-                continue
-            stop("%s does not fit" % ph["tag"], 11)
+                log(f"SKIP {ph['tag']} and every later LP batch (batch guard; primary phases reserved)")
+            continue
+        if g["action"] == "stop":
+            stop("%s: %s" % (bg.READING, g["why"]), bg.GUARD_RC)
         out = run_phase(ph)
+        if not PLAN:
+            ob = RATES.observe(ph, DONE.get(ph["tag"]))
+            if ob:
+                rec(dict(kind="rate", phase=ph["tag"], **ob))
         rc = quick_check(ph, out)
         if rc:
             stop("in-session stop after %s (rc %d)" % (ph["tag"], rc), rc)
