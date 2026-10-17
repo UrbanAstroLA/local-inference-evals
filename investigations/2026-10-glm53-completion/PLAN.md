@@ -2417,3 +2417,39 @@ the operator; package changes before any GPU use).**
   - chain seed 6/6;
   - dry runs D1 O1, D2 O2, D3 O2 valid, and N1-N8 invalid (including a wrong task hash and a target mismatch);
   - DRY_RUN of F at 36.5 passes and creates nothing.
+
+**Amendment 22o (2026-10-16; operator authorization "yes, launch, use the gpu", before any replication data).**
+Variant F (request seeds 70701 / 70702 / 70703), up to 36.5 occupied GPU-hours, single attempt, no retry, package
+rep070/refreeze/ SHA256SUMS 131e72ea… as frozen in 22n.
+
+**Amendment 22p (2026-10-17; stock 0.7.0 replication result, recorded by the coordinator after the run).**
+- **Run:** variant F, two sessions as frozen (2026-10-16 06:16-18:14 local), **23.926 occupied GPU-hours** of 36.5
+  (session 1 6.693, session 2 17.233). No watchdog stop, all 594 requests HTTP 200 with the variant's seeds, warm-up
+  and configuration identity with the old 0.7.0 record's passes 2-3 server log confirmed, no preemption, no illegal
+  memory access or NaN warning lines, compile cache unchanged apart from one file in session 1. Every frozen validity
+  check passes: **valid**.
+- **Reading: O3 (inconclusive)** under the frozen rules.
+  - Empty replies 10 of 594 (2 / 4 / 4 by pass): old 0.7.0 record 4, 0.9.1 record 16.
+  - C1 (fewer than the 0.9.1 record): one-sided exact sign-flip p = 0.122; reduction +1.01 points (95% question
+    bootstrap −0.34 to +2.53).
+  - C2 (more than the old 0.7.0 record): one-sided p = 0.108; increase +1.01 points (95% −0.17 to +2.36).
+  - Both tests assume historical-comparator and question-level exchangeability; "exact" refers to the calculation.
+- **Descriptive:** raw (flexible) accuracy 87.2% (518 / 594) against 86.9% (0.9.1 record) and 88.2% (old 0.7.0
+  record); the stated figure waits for the hand read. No identical answered reply with the old record in any pass;
+  one question-pass empty in both.
+- **Secondary (descriptive, never the reading):** P(finish | still generating at 100,000 tokens) 19 / 29 (18
+  questions; 0.66) against 10 / 25 (0.40) for the 0.9.1 record and 10 / 14 (0.71) for the old 0.7.0 record's passes
+  2-3. Differences: −0.06 (95% −0.35 to +0.27) vs old 0.7.0, +0.26 (+0.01 to +0.53) vs 0.9.1. About 10-19 events
+  per record; reaching 100k selects different trajectories on each engine, so this is not a causal engine effect.
+- **Prespecified next step (O3):** report the uncertainty and make a new budget decision; no automatic extra passes.
+
+**Amendment 22q (2026-10-17; stated figure final; operator decision after O3).**
+- **Hand read** (protocol): all 13 replication rows where the stated answer differed from flexible-extract were read.
+  3 commit to no single option (passes 1 and 3 of one question, pass 2 of another) and are scored incorrect as stated.
+  Final stated accuracy 87.9% (522 / 594), against 87.9% for the 0.9.1 record and 89.4% for the old 0.7.0 record
+  (`rep070/run-F/result-rep070-F-final.*`). The reading is unchanged: O3.
+- **Operator decision:** the historical-gap line (4 versus 16 empty) closes as inconclusive. The replication is reported;
+  the verified correctness fixes keep their value; upstream reporting stays the operator's decision.
+- **New question, taken up separately:** what drives completion of long replies (P(finish | still generating at
+  100,000 tokens)), the measure on which 0.7.0 still looks different descriptively. Discovery comes first, zero GPU;
+  any experiment is proposed, reviewed and authorized before data.

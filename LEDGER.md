@@ -588,6 +588,19 @@ What was asked, run, found, corrected and withdrawn, in date order.
 - **Status:** independent review done; awaiting GPU authorization. No GPU-hours added (cumulative 68.03).
   [Replication](investigations/2026-10-glm53-completion/rep070/refreeze/PROPOSAL-v2.md).
 
+**2026-10-17. Stock 0.7.0 replication: valid, inconclusive (O3); the historical-gap line closes (amendments 22p-22q).**
+- **Run:** stock 0.7.0, three passes of GPQA Diamond at fresh request seeds, configuration-identical to its record.
+  Valid on every frozen check; 23.93 GPU-hours.
+- **Result:** **10 of 594 replies empty**, against 4 in its own record and 16 in the 0.9.1 record. It separates from
+  neither (one-sided p 0.122 against 0.9.1, 0.108 against old 0.7.0), so the reading is O3. The original 4-versus-16
+  contrast looks partly like a favourable draw; whether a smaller real gap remains is not resolved.
+- **Accuracy:** stated 87.9%, the same as the 0.9.1 record's; the old 0.7.0 record had 89.4%.
+- **Descriptive:** of replies still generating at 100k tokens, 19 of 29 finished (0.66), against 0.40 (0.9.1) and
+  0.71 (old 0.7.0). This is not a causal effect and too few events to adjudicate a mechanism.
+- **Next:** the 4-versus-16 line closes. Long-reply completion becomes its own question, starting with zero-GPU
+  discovery. Cumulative 91.95 GPU-hours.
+  [Result](investigations/2026-10-glm53-completion/rep070/RESULT.md).
+
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough
   qualification. They also said the D7 path "cannot run" where the basis is a reconstruction. These are reworded in the

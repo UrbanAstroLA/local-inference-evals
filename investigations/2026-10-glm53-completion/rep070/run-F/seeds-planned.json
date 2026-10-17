@@ -1,0 +1,37 @@
+{
+ "variant": "F",
+ "task": "gpqa_diamond_thinking",
+ "task_hash": "87e807b3b27c86618285efdab99466609ad12f022ae453146595fc8306b053b0",
+ "passes": [
+  {
+   "pass": 1,
+   "session": 1,
+   "request_seed": 70701,
+   "lm_eval_process_seed": 1235,
+   "max_gen_toks": 327680,
+   "temperature": 1.0,
+   "top_p": 0.95,
+   "num_concurrent": 8
+  },
+  {
+   "pass": 2,
+   "session": 2,
+   "request_seed": 70702,
+   "lm_eval_process_seed": 1236,
+   "max_gen_toks": 327680,
+   "temperature": 1.0,
+   "top_p": 0.95,
+   "num_concurrent": 8
+  },
+  {
+   "pass": 3,
+   "session": 2,
+   "request_seed": 70703,
+   "lm_eval_process_seed": 1237,
+   "max_gen_toks": 327680,
+   "temperature": 1.0,
+   "top_p": 0.95,
+   "num_concurrent": 8
+  }
+ ]
+}

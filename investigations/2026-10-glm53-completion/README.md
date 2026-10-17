@@ -1313,7 +1313,14 @@ the real decode path and records termination-token probabilities. 1.2117 of 2.4 
     different seeds), which is why fresh seeds were chosen.
   - **Budget:** watchdog at 36.5 occupied GPU-hours, single attempt, no retry; expected about 23 (about 31 if 0.7.0
     behaves like 0.9.1). A watchdog stop is reported as incomplete, never classified.
-  - **Status:** awaiting the operator's GPU authorization. Nothing has run.
+  - **Result** (amendments 22p-22q; [`rep070/RESULT.md`](rep070/RESULT.md)): valid; **10 of 594 empty**, against 4
+    (old 0.7.0 record) and 16 (0.9.1 record). **Reading O3, inconclusive:** C1 p = 0.122, 1.01 points fewer than 0.9.1
+    (95% −0.34 to +2.53); C2 p = 0.108, 1.01 points more than old 0.7.0 (95% −0.17 to +2.36). Stated accuracy 87.9%
+    (0.9.1 record 87.9%, old 0.7.0 record 89.4%). 23.93 GPU-hours of 36.5.
+  - **Descriptive secondary:** P(finish | still generating at 100,000 tokens) 19 / 29 (0.66), against 0.40 (0.9.1) and
+    0.71 (old 0.7.0, passes 2-3). This is not a causal engine effect, and too few events to adjudicate a mechanism.
+  - **Disposition:** the historical-gap line closes as inconclusive. Long-reply completion is taken up as its own
+    question, discovery first.
 
 ### Observations recorded separately
 

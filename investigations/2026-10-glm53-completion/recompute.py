@@ -394,7 +394,11 @@ check("amendment 22b: first contrast attempt 1 1.0861 (2 x 1,955 s), structural 
 fr = st("First long-context contrast retry")
 check("amendment 22j: first contrast retry 2.9317 (2 x 5,277 s) of 6.2, complete session, no reading; cumulative 68.03 GPU-hours",
       len(fr) == 1 and arms_ok(fr[0]) and fr[0]["gpu_hours"] == 2.9317
-      and f"{sum(c['gpu_hours'] for c in allcost):.2f}" == "68.03")
+      and f"{sum(c['gpu_hours'] for c in allcost[:before('Stock 0.7.0 replication')]):.2f}" == "68.03")
+rp = st("Stock 0.7.0 replication")
+check("amendment 22p: stock 0.7.0 replication 23.9261 (2 x 12,047 s + 2 x 31,020 s) of 36.5, valid, O3; cumulative 91.95 GPU-hours",
+      len(rp) == 1 and arms_ok(rp[0]) and rp[0]["gpu_hours"] == 23.9261
+      and f"{sum(c['gpu_hours'] for c in allcost):.2f}" == "91.95")
 
 print("\n## Checks (checks.jsonl)")
 for line in (HERE / "checks.jsonl").read_text().splitlines():

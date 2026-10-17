@@ -1,0 +1,21 @@
+2026-10-16T06:16:09-07:00 rep070 variant F start; seeds 70701 70702 70703; tag +rep070-F; approved 36.5 GPU-h (65700 s wall)
+cache inventory: 2884 files, 896 unreadable, sha256 963d50f54765ab75
+recording http://127.0.0.1:8001 on 127.0.0.1:8002 -> <gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+rep070-F.s1.requests.jsonl
+2026-10-16T06:16:11-07:00 session 1: passes up to 1, seeds 70701 70702 70703, requests -> <gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+rep070-F.s1.requests.jsonl
+2026-10-16T09:36:54-07:00 session 1: chain rc=0
+2026-10-16T09:36:56-07:00 session 1: docker stop rc=0
+  inspect: image OK; published on ['127.0.0.1'] (loopback only)
+cache inventory: 2884 files, 896 unreadable, sha256 d24f171bc4ab6abd
+cache diff cache-s0.json -> cache-s1.json: 0 added, 0 removed, 1 changed
+  warm-up lines: 9; preemption lines: 0
+recording http://127.0.0.1:8001 on 127.0.0.1:8002 -> <gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+rep070-F.s2.requests.jsonl
+2026-10-16T09:36:58-07:00 session 2: passes up to 3, seeds 70701 70702 70703, requests -> <gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+rep070-F.s2.requests.jsonl
+2026-10-16T18:13:54-07:00 session 2: chain rc=0
+2026-10-16T18:13:56-07:00 session 2: docker stop rc=0
+  inspect: image OK; published on ['127.0.0.1'] (loopback only)
+cache inventory: 2884 files, 896 unreadable, sha256 d24f171bc4ab6abd
+cache diff cache-s1.json -> cache-s2.json: 0 added, 0 removed, 0 changed
+  warm-up lines: 9; preemption lines: 0
+2026-10-16T18:14:10-07:00 COMPLETE run: frozen analysis rc=0 (3 = invalid run; stated figure provisional until the hand read)
+2026-10-16T18:14:10-07:00 REP070 DONE; total wall 43081s, 23.926 GPU-h (ledger <runs>/rep070/run-F/costs.jsonl)
+no GLM container running

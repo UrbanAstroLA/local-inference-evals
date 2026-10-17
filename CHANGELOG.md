@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-10-17 (completion investigation, amendments 22o-22q): stock 0.7.0 replication result
+
+One investigation run is added (not a protocol run in `runs/`). No published row changes.
+
+- **`PLAN.md`**: amendments 22o (authorization), 22p (result: valid, O3) and 22q (stated figure final; the
+  historical-gap line closes; long-reply completion taken up separately).
+- **`rep070/`**: `RESULT.md`, the runner log and `run-F/`: frozen results (provisional and final after the hand read),
+  cost ledger, compile-cache inventories and diffs, GPU and watchdog logs. Server logs and `docker inspect` output are
+  withheld by hash; raw request and response bodies stay local. Substitutions are in `PUBLIC-COPIES-22q.txt`.
+- **`costs.jsonl`** (23.9261) and **`recompute.py`**: cumulative 91.95.
+- **Investigation `README.md`** and **`LEDGER.md`**.
+
 ## 2026-10-16 (completion investigation, amendments 22m-22n): stock 0.7.0 replication frozen before data
 
 Contents unchanged. No run is added.
