@@ -1,0 +1,12 @@
+PASS stand-in replies >= 50k are exactly discovery's pass-1 replies >= 50k (15 replies)
+PASS per-reply trajectory rows identical to discovery's for the same ids
+PASS per-window rows identical to discovery's for the same ids (444 windows)
+PASS post hoc periods rows identical to discovery's for the same ids
+PASS prefix selection ran (B+ rule); selected ids listed ({"pool": 6, "eligible": 6, "selected": 6, "by_stratum": {"capped": 2, "finished": 4}, "distinct_questions": 6})
+selected: [('P01', 'q79p1', 'capped'), ('P02', 'q88p1', 'capped'), ('P03', 'q147p1', 'finished'), ('P04', 'q69p1', 'finished'), ('P05', 'q71p1', 'finished'), ('P06', 'q186p1', 'finished')]
+PASS prefix hashes of replies B+ also selected equal B+'s manifest (common ids ['q147p1', 'q186p1', 'q71p1', 'q88p1'])
+PASS build checks all pass (44/44)
+PASS verify in the v091 image: all checks pass (0.9.1 template render identical) (86/86)
+PASS verify in the b1 image: all checks pass (0.9.1 template render identical) (86/86)
+stand-in pipeline checks: ALL PASS
+standin checks rc=0

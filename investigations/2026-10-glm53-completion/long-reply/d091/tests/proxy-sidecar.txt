@@ -1,0 +1,19 @@
+PASS 1 completed request: main-log row equals the original proxy's (timing fields excepted)
+PASS 1 same keys in the same order (t_start,secs,http_status,messages_sha256,seed,max_tokens,temperature,top_p,finish_reason,prompt_tokens,completion_tokens,reasoning_tokens,content_chars,reasoning_chars,content_sha256)
+PASS 1 sidecar: one start event (seed 1, max_tokens 327680), nothing else
+PASS 2 upstream killed mid-request: sidecar start + one interrupted event with the error type (RemoteDisconnected)
+PASS 2 no main-log row for the interrupted request
+PASS 2 client received 502 and the proxy is still up ([502])
+PASS 3 client gone: main-log row written for the completed request
+PASS 3 sidecar client_gone recorded (['start', 'client_gone'])
+PASS 3 proxy still up and serves the next request
+PASS 4 SIGTERM with a request in flight: sidecar interrupted, error proxy_terminated
+PASS 4 no main-log row; proxy exited
+PASS 5 raw file mode is 0600 (0o600)
+PASS 5 every main-log row has its raw exchange record, and no other exchange is recorded (3 exchanges, 3 main rows)
+PASS 5 every interrupted event has its raw interrupted record (upstream kill, SIGTERM) (2)
+PASS 5 raw record holds the request body and the full response body (message, finish reason, usage)
+PASS 5 broken-pipe exchange: raw body complete (8,000,000-char content)
+PASS 5 fixed clock: the copy's main log is byte-identical to the original proxy's (445 bytes)
+proxy sidecar tests: 17 passed, 0 failed
+rc=0

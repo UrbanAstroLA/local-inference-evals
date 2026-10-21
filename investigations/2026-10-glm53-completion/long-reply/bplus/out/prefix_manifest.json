@@ -1,0 +1,977 @@
+{
+ "what": "B+ prefix manifest (hashes, lengths, checks, covariates; no text, no reasoning ids)",
+ "engine_built_with": "v070",
+ "libraries": {
+  "transformers": "5.15.1",
+  "tokenizers": "0.22.2",
+  "numpy": "2.2.6"
+ },
+ "template": "/repo/snapshots/701cd7456c13d87bf0147ad946f828a999afb59c/chat_template.jinja",
+ "template_sha256": "34d5ee66b12fa6446cdae131c352b8f68cd85369e0e6fda115583805fada3891",
+ "snapshot": "701cd7456c13d87bf0147ad946f828a999afb59c",
+ "hash_convention": "sha256 of ','.join(str(id)) over the id list",
+ "prefixes": [
+  {
+   "prefix_id": "P01",
+   "id": "q79p2",
+   "doc": 79,
+   "stratum": "capped",
+   "messages_sha256_equals_raw_and_log": true,
+   "chat_template_kwargs": {
+    "enable_thinking": true
+   },
+   "prompt_len": 91,
+   "prompt_tokens_server_raw": 91,
+   "prompt_tokens_request_log": 91,
+   "prompt_ids_sha256": "da6e0fa5df26654e86479920fe9dbcde44f9679d0397374b3ba7df7e9e6019f6",
+   "prompt_ids_d7_sha256": "a7e74e28f814ba7c94561b000df5c423a3eac10cc0410a411bdbbab8f6c6df86",
+   "prompt_rendered_sha256": "db4cced9d0926b9312b1fd5bcdc75459b6e3309a922b9e8417059bdf44e6431f",
+   "prompt_hf_equals_tokenizers": true,
+   "prompt_ends_assistant_think": true,
+   "reasoning_tokens_full": 327678,
+   "reasoning_hf_equals_tokenizers": true,
+   "reasoning_full_ids_sha256": "14466144097e13685be4dadaf3dede3ffd0ef80a526fc173c0c0278e622834fa",
+   "reasoning_text_sha256": "6f658f4cdfb65fed2102c1baa0755577edd9c4988f99065165a30f7044b0c0a1",
+   "discovery_N_reasoning": 327678,
+   "cut": 100000,
+   "cut_ids_sha256": "50e31cf744f76addecc9f2bd65bf7580e60a9d834f357ac3a75cd6c031afb1cb",
+   "cut_char_offset": 225531,
+   "prefix_len": 100091,
+   "prefix_ids_sha256": "c7ade2776edc89c7fd720183bcde5b0d990ee95e4a8637b4bd5fd8bb6264f1d2",
+   "prompt_stop_ids": 1,
+   "reasoning_cut_stop_ids": 0,
+   "reasoning_cut_think_close": 0,
+   "reasoning_cut_added_ids_ge_154820": 0,
+   "covariates_100k": {
+    "chars_per_token": 2.2553,
+    "digit_share": 0.1632,
+    "interjection_per1k": 9.33,
+    "verify_per1k": 0.38,
+    "R50_backward_at_cut": 0.0027,
+    "R50_max_in_prefix": 0.0085,
+    "episodes_in_prefix": 0,
+    "terminal_onset_in_prefix": null
+   },
+   "d7_reference_prompt_tokens": 91,
+   "prompt_equals_d7_independent_tokenizer": true
+  },
+  {
+   "prefix_id": "P02",
+   "id": "q88p1",
+   "doc": 88,
+   "stratum": "capped",
+   "messages_sha256_equals_raw_and_log": true,
+   "chat_template_kwargs": {
+    "enable_thinking": true
+   },
+   "prompt_len": 229,
+   "prompt_tokens_server_raw": 229,
+   "prompt_tokens_request_log": 229,
+   "prompt_ids_sha256": "316a3f00e23a81cc8c127a78414456f5d8dac6865f4af0d100a5b0b76dfb70c8",
+   "prompt_ids_d7_sha256": "c72392f2f38463863dc169efb4040fbb4affbebc595543d7807dc2991260caaf",
+   "prompt_rendered_sha256": "6947c92e35f873736971bca1ffc1a1a5dd5695a62af2307c5418288b0bc7a1bc",
+   "prompt_hf_equals_tokenizers": true,
+   "prompt_ends_assistant_think": true,
+   "reasoning_tokens_full": 327680,
+   "reasoning_hf_equals_tokenizers": true,
+   "reasoning_full_ids_sha256": "a331693ab7712d54634250f7049af85a83fab8648dcbeb7f81547bd15b649059",
+   "reasoning_text_sha256": "ec160d73258c784bac6bac4772880a49541fca3a7fef4619e93c2da03a33536a",
+   "discovery_N_reasoning": 327680,
+   "cut": 100000,
+   "cut_ids_sha256": "bd7fa273ad5c8d1adc000e0f9971c98ab8ee2e81ec4c75aa84299cf88f817535",
+   "cut_char_offset": 275927,
+   "prefix_len": 100229,
+   "prefix_ids_sha256": "92ed266a1e4f1f4ee6db0d19fea89264276b38f7b059c35d6bac32c4b211a45c",
+   "prompt_stop_ids": 1,
+   "reasoning_cut_stop_ids": 0,
+   "reasoning_cut_think_close": 0,
+   "reasoning_cut_added_ids_ge_154820": 0,
+   "covariates_100k": {
+    "chars_per_token": 2.7593,
+    "digit_share": 0.0574,
+    "interjection_per1k": 25.22,
+    "verify_per1k": 1.18,
+    "R50_backward_at_cut": 0.0,
+    "R50_max_in_prefix": 0.0125,
+    "episodes_in_prefix": 0,
+    "terminal_onset_in_prefix": null
+   },
+   "d7_reference_prompt_tokens": 229,
+   "prompt_equals_d7_independent_tokenizer": true
+  },
+  {
+   "prefix_id": "P03",
+   "id": "q69p2",
+   "doc": 69,
+   "stratum": "capped",
+   "messages_sha256_equals_raw_and_log": true,
+   "chat_template_kwargs": {
+    "enable_thinking": true
+   },
+   "prompt_len": 148,
+   "prompt_tokens_server_raw": 148,
+   "prompt_tokens_request_log": 148,
+   "prompt_ids_sha256": "0a78dcebfbb3ca09f3b5344ab058dfb19100eb51c04baafa88654acb03d89098",
+   "prompt_ids_d7_sha256": "5123e2ef0814d0572cd442a0d503ccd4961c48cb669e2d17367075203bd18665",
+   "prompt_rendered_sha256": "00e3c346001ee86da3f92e58238d1dd71e4226cf158af74049a5c8dac1be9de6",
+   "prompt_hf_equals_tokenizers": true,
+   "prompt_ends_assistant_think": true,
+   "reasoning_tokens_full": 327679,
+   "reasoning_hf_equals_tokenizers": true,
+   "reasoning_full_ids_sha256": "1eaf7e086a7eaa71b6125d5024f83de370c2368de47157f72805d70a2c7e9662",
+   "reasoning_text_sha256": "b6fb6b6764d81f67603d0a7e563ada60eb2ae018176553df521952c6d28155c4",
+   "discovery_N_reasoning": 327679,
+   "cut": 100000,
+   "cut_ids_sha256": "9d2728dd3a29e9040b0e64a69ae8b3c3ca4a83b8f037d970d59cc27039bf1a7f",
+   "cut_char_offset": 231218,
+   "prefix_len": 100148,
+   "prefix_ids_sha256": "6ea0c2f4040cd6fb6f79886a4340c35522df03fe20f3711ea48e16c27b508d1c",
+   "prompt_stop_ids": 1,
+   "reasoning_cut_stop_ids": 0,
+   "reasoning_cut_think_close": 0,
+   "reasoning_cut_added_ids_ge_154820": 0,
+   "covariates_100k": {
+    "chars_per_token": 2.3122,
+    "digit_share": 0.0653,
+    "interjection_per1k": 48.95,
+    "verify_per1k": 0.79,
+    "R50_backward_at_cut": 0.0,
+    "R50_max_in_prefix": 0.0125,
+    "episodes_in_prefix": 0,
+    "terminal_onset_in_prefix": null
+   },
+   "d7_reference_prompt_tokens": 148,
+   "prompt_equals_d7_independent_tokenizer": true
+  },
+  {
+   "prefix_id": "P04",
+   "id": "q120p3",
+   "doc": 120,
+   "stratum": "capped",
+   "messages_sha256_equals_raw_and_log": true,
+   "chat_template_kwargs": {
+    "enable_thinking": true
+   },
+   "prompt_len": 276,
+   "prompt_tokens_server_raw": 276,
+   "prompt_tokens_request_log": 276,
+   "prompt_ids_sha256": "9f965917240ef32207fa3fcb08b7e4c9bc5446ea27e25c658bd829a2c901c33b",
+   "prompt_ids_d7_sha256": "fa2d8322c7d9d6c31cf776548cc3baaaad785f593b03c8ea389ddc668fbcdfff",
+   "prompt_rendered_sha256": "27dad4d3b11169772905d4d33deaf2a11dd224b9d04480cd8cb42fa471003496",
+   "prompt_hf_equals_tokenizers": true,
+   "prompt_ends_assistant_think": true,
+   "reasoning_tokens_full": 327679,
+   "reasoning_hf_equals_tokenizers": true,
+   "reasoning_full_ids_sha256": "c53febbdb7d629ca458d0da7d3e392ae39da4d80bbc1024594876a19f12275cb",
+   "reasoning_text_sha256": "799cea69dfe3e73b986bbace14454c090023079a919ea6b129cf8c19d9c5ac6e",
+   "discovery_N_reasoning": 327679,
+   "cut": 100000,
+   "cut_ids_sha256": "3bbcf92a2725d80bdb803e8e2462efae65ad0f233b602eb5635452f635a4950a",
+   "cut_char_offset": 263524,
+   "prefix_len": 100276,
+   "prefix_ids_sha256": "2fa27f96ecfcf853daa40bcafb589f16b60b2459a64474bd968d4726abe44414",
+   "prompt_stop_ids": 1,
+   "reasoning_cut_stop_ids": 0,
+   "reasoning_cut_think_close": 0,
+   "reasoning_cut_added_ids_ge_154820": 0,
+   "covariates_100k": {
+    "chars_per_token": 2.6352,
+    "digit_share": 0.0816,
+    "interjection_per1k": 6.14,
+    "verify_per1k": 2.17,
+    "R50_backward_at_cut": 0.0012,
+    "R50_max_in_prefix": 0.0308,
+    "episodes_in_prefix": 0,
+    "terminal_onset_in_prefix": null
+   },
+   "d7_reference_prompt_tokens": 276,
+   "prompt_equals_d7_independent_tokenizer": true
+  },
+  {
+   "prefix_id": "P05",
+   "id": "q8p2",
+   "doc": 8,
+   "stratum": "capped",
+   "messages_sha256_equals_raw_and_log": true,
+   "chat_template_kwargs": {
+    "enable_thinking": true
+   },
+   "prompt_len": 238,
+   "prompt_tokens_server_raw": 238,
+   "prompt_tokens_request_log": 238,
+   "prompt_ids_sha256": "48b1911fd5fdcb709bbbf3ee696f7d03347ddd00bf3d73e06e89cd9001a5d9fa",
+   "prompt_ids_d7_sha256": "e8318f6e7cea9723cc567ae5b773254e8412c5d294d70f4a1b20a1c1df7dbfcf",
+   "prompt_rendered_sha256": "0e0a0e903f6104e83edb62daa9527a80f9a5bf0834f7a5d058c61403e8589f2b",
+   "prompt_hf_equals_tokenizers": true,
+   "prompt_ends_assistant_think": true,
+   "reasoning_tokens_full": 327679,
+   "reasoning_hf_equals_tokenizers": true,
+   "reasoning_full_ids_sha256": "bd766e0f67895352a6b9b0ba705da6a3404728f41cb51df693d0324756b8e3c1",
+   "reasoning_text_sha256": "194c4d596796574925a66f04e6d04d7a720309ea3bf9fd56dd8ef70b25e97146",
+   "discovery_N_reasoning": 327679,
+   "cut": 100000,
+   "cut_ids_sha256": "29775f83283c5711d9bee97d68ca294cc5b389d66b722287efc1095974403ddf",
+   "cut_char_offset": 281368,
+   "prefix_len": 100238,
+   "prefix_ids_sha256": "8bcdf999e240ba8316036f7ebb728ab59805fcdf940080a8bfb53c2f7401310f",
+   "prompt_stop_ids": 1,
+   "reasoning_cut_stop_ids": 0,
+   "reasoning_cut_think_close": 0,
+   "reasoning_cut_added_ids_ge_154820": 0,
+   "covariates_100k": {
+    "chars_per_token": 2.8137,
+    "digit_share": 0.0749,
+    "interjection_per1k": 8.57,
+    "verify_per1k": 1.12,
+    "R50_backward_at_cut": 0.0,
+    "R50_max_in_prefix": 0.0039,
+    "episodes_in_prefix": 0,
+    "terminal_onset_in_prefix": null
+   },
+   "d7_reference_prompt_tokens": 238,
+   "prompt_equals_d7_independent_tokenizer": true
+  },
+  {
+   "prefix_id": "P06",
+   "id": "q158p3",
+   "doc": 158,
+   "stratum": "capped",
+   "messages_sha256_equals_raw_and_log": true,
+   "chat_template_kwargs": {
+    "enable_thinking": true
+   },
+   "prompt_len": 195,
+   "prompt_tokens_server_raw": 195,
+   "prompt_tokens_request_log": 195,
+   "prompt_ids_sha256": "332190ce9b76d49f74ddaed26ea801f00437c767c853a279f8789c0fe174867e",
+   "prompt_ids_d7_sha256": "2bd1eab4962b9d0e919e7f47c2aff79022d136003f1f67197d90741da654cff7",
+   "prompt_rendered_sha256": "00e991994665363572994872dff477873bcd7cfb3abcedaa586f942757852e4b",
+   "prompt_hf_equals_tokenizers": true,
+   "prompt_ends_assistant_think": true,
+   "reasoning_tokens_full": 327679,
+   "reasoning_hf_equals_tokenizers": true,
+   "reasoning_full_ids_sha256": "1449ecb8ac79a6e72b27775e1972ce4b340ac9814713ee4b7d8629a3ca4ea686",
+   "reasoning_text_sha256": "0660e7203fbcf217a4edd7684126f0478c9b9644280c33908e37afcd198c2255",
+   "discovery_N_reasoning": 327679,
+   "cut": 100000,
+   "cut_ids_sha256": "1ea76d45f20d952af9daadecdcdb9b7836d40b16a3fe02b722820d66ae4f27e4",
+   "cut_char_offset": 169722,
+   "prefix_len": 100195,
+   "prefix_ids_sha256": "61bf8d323ce7a8fedc299d5f73f5181a19bc86fd88918dc9722267102160319b",
+   "prompt_stop_ids": 1,
+   "reasoning_cut_stop_ids": 0,
+   "reasoning_cut_think_close": 0,
+   "reasoning_cut_added_ids_ge_154820": 0,
+   "covariates_100k": {
+    "chars_per_token": 1.6972,
+    "digit_share": 0.4269,
+    "interjection_per1k": 3.57,
+    "verify_per1k": 1.09,
+    "R50_backward_at_cut": 0.0339,
+    "R50_max_in_prefix": 0.0718,
+    "episodes_in_prefix": 0,
+    "terminal_onset_in_prefix": null
+   },
+   "d7_reference_prompt_tokens": 195,
+   "prompt_equals_d7_independent_tokenizer": true
+  },
+  {
+   "prefix_id": "P07",
+   "id": "q127p2",
+   "doc": 127,
+   "stratum": "finished",
+   "messages_sha256_equals_raw_and_log": true,
+   "chat_template_kwargs": {
+    "enable_thinking": true
+   },
+   "prompt_len": 2795,
+   "prompt_tokens_server_raw": 2795,
+   "prompt_tokens_request_log": 2795,
+   "prompt_ids_sha256": "15c636e1f4b0b899c085fb7530e4372a35a6f33abf089a58eef1c4f192f56cd7",
+   "prompt_ids_d7_sha256": "b3f3b2206f303f2fa50279b36f38ce787a60620730fb0855d989ae3489404ea8",
+   "prompt_rendered_sha256": "678a3e89f0b5a28863f092aa1adeb3bd362e5e8c9e3d0ff886471564821006ac",
+   "prompt_hf_equals_tokenizers": true,
+   "prompt_ends_assistant_think": true,
+   "reasoning_tokens_full": 206107,
+   "reasoning_hf_equals_tokenizers": true,
+   "reasoning_full_ids_sha256": "54e020499111e3a4ee2a7fe47fd38b2fa39554b5a90cda0b1311e06c6983cc4c",
+   "reasoning_text_sha256": "1e625e6c2325e99d280c03cc664c7a78ff2aa83e5bb3ef11e8f84d5490121728",
+   "discovery_N_reasoning": 206107,
+   "cut": 100000,
+   "cut_ids_sha256": "d1194d3547442bc9530e5a59d2c7cf5853ceef555dd15492a41a5c63b4803da1",
+   "cut_char_offset": 213884,
+   "prefix_len": 102795,
+   "prefix_ids_sha256": "0d950ff4191ea4a9ae8861777cdbc21240734e7dd147b2fa33c53734235ede18",
+   "prompt_stop_ids": 1,
+   "reasoning_cut_stop_ids": 0,
+   "reasoning_cut_think_close": 0,
+   "reasoning_cut_added_ids_ge_154820": 0,
+   "covariates_100k": {
+    "chars_per_token": 2.1388,
+    "digit_share": 0.0773,
+    "interjection_per1k": 4.2,
+    "verify_per1k": 0.67,
+    "R50_backward_at_cut": 0.0115,
+    "R50_max_in_prefix": 0.6865,
+    "episodes_in_prefix": 0,
+    "terminal_onset_in_prefix": null
+   },
+   "d7_reference_prompt_tokens": 2795,
+   "prompt_equals_d7_independent_tokenizer": true
+  },
+  {
+   "prefix_id": "P08",
+   "id": "q147p1",
+   "doc": 147,
+   "stratum": "finished",
+   "messages_sha256_equals_raw_and_log": true,
+   "chat_template_kwargs": {
+    "enable_thinking": true
+   },
+   "prompt_len": 191,
+   "prompt_tokens_server_raw": 191,
+   "prompt_tokens_request_log": 191,
+   "prompt_ids_sha256": "4bc4d539df3a526984fc35bececeee07bc0b5c77a213ca7ec3fb290655ae2708",
+   "prompt_ids_d7_sha256": "3cc605fc66521fdca15627689bfd307a92e5282687b0e63723ecab7cd584709a",
+   "prompt_rendered_sha256": "d654a745cc7153b4bee8fdca101073bcf576e8dc934c1da0970e267ec60d4802",
+   "prompt_hf_equals_tokenizers": true,
+   "prompt_ends_assistant_think": true,
+   "reasoning_tokens_full": 150210,
+   "reasoning_hf_equals_tokenizers": true,
+   "reasoning_full_ids_sha256": "95b43738ae69881793862d81b227669d9961aeb2bf7480bf50b7f412766a3d66",
+   "reasoning_text_sha256": "202a11af313bb80481276088875b7bfe3192a5811f3b4a9a4fcd29c739bcbdf0",
+   "discovery_N_reasoning": 150210,
+   "cut": 100000,
+   "cut_ids_sha256": "317678a1e0a7d69b64126dd9d86b4077f7fa6d8bab1313eb562f58d0f8ed7c50",
+   "cut_char_offset": 259551,
+   "prefix_len": 100191,
+   "prefix_ids_sha256": "ac44215a8eea7fab9301f10b848aac1ebbb735b95f4dc4ec7bc2e2a9d264117b",
+   "prompt_stop_ids": 1,
+   "reasoning_cut_stop_ids": 0,
+   "reasoning_cut_think_close": 0,
+   "reasoning_cut_added_ids_ge_154820": 0,
+   "covariates_100k": {
+    "chars_per_token": 2.5955,
+    "digit_share": 0.097,
+    "interjection_per1k": 11.0,
+    "verify_per1k": 3.62,
+    "R50_backward_at_cut": 0.0344,
+    "R50_max_in_prefix": 0.0569,
+    "episodes_in_prefix": 0,
+    "terminal_onset_in_prefix": null
+   },
+   "d7_reference_prompt_tokens": 191,
+   "prompt_equals_d7_independent_tokenizer": true
+  },
+  {
+   "prefix_id": "P09",
+   "id": "q81p2",
+   "doc": 81,
+   "stratum": "finished",
+   "messages_sha256_equals_raw_and_log": true,
+   "chat_template_kwargs": {
+    "enable_thinking": true
+   },
+   "prompt_len": 766,
+   "prompt_tokens_server_raw": 766,
+   "prompt_tokens_request_log": 766,
+   "prompt_ids_sha256": "c20d1410b23c28e26631ef48c6e73f2448d894de677425be9981199c0824994b",
+   "prompt_ids_d7_sha256": "4e8af75bcbdb0b02a96d1559fcb0d3774958fb15fd486ff3c9a27b0a4dce5b62",
+   "prompt_rendered_sha256": "907d0c1d13018f96d2205934f3892ae8eebbac1a74b1b6e53f73751673699419",
+   "prompt_hf_equals_tokenizers": true,
+   "prompt_ends_assistant_think": true,
+   "reasoning_tokens_full": 126018,
+   "reasoning_hf_equals_tokenizers": true,
+   "reasoning_full_ids_sha256": "b106ae92c80a02ce5f3ed2e6c166159c60b14b0d4ef5e22843641518e5ed823f",
+   "reasoning_text_sha256": "5a534f681e608811e8479d35d83ee6acd355f4813e879bca34ce6cf1311f8462",
+   "discovery_N_reasoning": 126018,
+   "cut": 100000,
+   "cut_ids_sha256": "44965a46627c9e38adeee46060f734dc33e4895677a6f69cce55824c9de4769d",
+   "cut_char_offset": 322444,
+   "prefix_len": 100766,
+   "prefix_ids_sha256": "7a4fd30b9b7f96ac27b4bf6dd7e4b8194eb5baa84ea1ce916a9a4decc452d05e",
+   "prompt_stop_ids": 1,
+   "reasoning_cut_stop_ids": 0,
+   "reasoning_cut_think_close": 0,
+   "reasoning_cut_added_ids_ge_154820": 0,
+   "covariates_100k": {
+    "chars_per_token": 3.2244,
+    "digit_share": 0.0358,
+    "interjection_per1k": 2.55,
+    "verify_per1k": 0.18,
+    "R50_backward_at_cut": 0.0034,
+    "R50_max_in_prefix": 0.0078,
+    "episodes_in_prefix": 0,
+    "terminal_onset_in_prefix": null
+   },
+   "d7_reference_prompt_tokens": 766,
+   "prompt_equals_d7_independent_tokenizer": true
+  },
+  {
+   "prefix_id": "P10",
+   "id": "q71p1",
+   "doc": 71,
+   "stratum": "finished",
+   "messages_sha256_equals_raw_and_log": true,
+   "chat_template_kwargs": {
+    "enable_thinking": true
+   },
+   "prompt_len": 178,
+   "prompt_tokens_server_raw": 178,
+   "prompt_tokens_request_log": 178,
+   "prompt_ids_sha256": "8177f1bffc424a1bd0e536eda1f1043b33f9b7eeb91b58600492392f228bf6e6",
+   "prompt_ids_d7_sha256": "ebe59e3c675476b797c602f7f4f2cfa2a397989d9f3e53dda1f7590f6d03a314",
+   "prompt_rendered_sha256": "809b2030e0bc83747008fb1529d9a883fd9061cffcf6d838ebd1d06c2f0a9a32",
+   "prompt_hf_equals_tokenizers": true,
+   "prompt_ends_assistant_think": true,
+   "reasoning_tokens_full": 124510,
+   "reasoning_hf_equals_tokenizers": true,
+   "reasoning_full_ids_sha256": "73f56b1c6f0d38b06672c0023057fc58b3082b1728deb6fb56de0e8e39e5673c",
+   "reasoning_text_sha256": "fdc4be31017f1b17ce503d7923d8fcbd0f5d9c64ae9bc3cac6e549548756c76a",
+   "discovery_N_reasoning": 124510,
+   "cut": 100000,
+   "cut_ids_sha256": "dab0b68abbc6ef3cccc924063f84c1d8142dfb95bf1d206e601b2c54f47cc60b",
+   "cut_char_offset": 315342,
+   "prefix_len": 100178,
+   "prefix_ids_sha256": "2c1382082d01d211a644c671d77251958876451ef1861709ed2ea267f6e39063",
+   "prompt_stop_ids": 1,
+   "reasoning_cut_stop_ids": 0,
+   "reasoning_cut_think_close": 0,
+   "reasoning_cut_added_ids_ge_154820": 0,
+   "covariates_100k": {
+    "chars_per_token": 3.1534,
+    "digit_share": 0.0355,
+    "interjection_per1k": 3.83,
+    "verify_per1k": 0.57,
+    "R50_backward_at_cut": 0.0,
+    "R50_max_in_prefix": 0.0,
+    "episodes_in_prefix": 0,
+    "terminal_onset_in_prefix": null
+   },
+   "d7_reference_prompt_tokens": 178,
+   "prompt_equals_d7_independent_tokenizer": true
+  },
+  {
+   "prefix_id": "P11",
+   "id": "q186p1",
+   "doc": 186,
+   "stratum": "finished",
+   "messages_sha256_equals_raw_and_log": true,
+   "chat_template_kwargs": {
+    "enable_thinking": true
+   },
+   "prompt_len": 308,
+   "prompt_tokens_server_raw": 308,
+   "prompt_tokens_request_log": 308,
+   "prompt_ids_sha256": "409970ca7e064c5ca026cddc90a36a401fcf336b19463d9d3b60f412be31e4e4",
+   "prompt_ids_d7_sha256": "4a2f689ad14e207f34a41f26ed8d33425c81f63270d56bef6fb7a7f7b6294041",
+   "prompt_rendered_sha256": "66760102c176365273e3d091d002fab7192ba71195a34a8b851e6e5940663331",
+   "prompt_hf_equals_tokenizers": true,
+   "prompt_ends_assistant_think": true,
+   "reasoning_tokens_full": 124020,
+   "reasoning_hf_equals_tokenizers": true,
+   "reasoning_full_ids_sha256": "dd5002f10d1484950d88cc0032c4022db11c29e35e392f3055ad964c65e0d69f",
+   "reasoning_text_sha256": "1867bfa84e2af80edf59b3b77c6c6ef2aab77022d306e18d9547ae8592a95c62",
+   "discovery_N_reasoning": 124020,
+   "cut": 100000,
+   "cut_ids_sha256": "d913c52c542f2a8f4c872a1e1a241ea220b933cd83ade77398292bf5edb6ca56",
+   "cut_char_offset": 283783,
+   "prefix_len": 100308,
+   "prefix_ids_sha256": "82578d0bb0c3ce15e988fba7003cee5882f85fbea95f40683fec863a65a20d39",
+   "prompt_stop_ids": 1,
+   "reasoning_cut_stop_ids": 0,
+   "reasoning_cut_think_close": 0,
+   "reasoning_cut_added_ids_ge_154820": 0,
+   "covariates_100k": {
+    "chars_per_token": 2.8378,
+    "digit_share": 0.0895,
+    "interjection_per1k": 10.39,
+    "verify_per1k": 0.76,
+    "R50_backward_at_cut": 0.0,
+    "R50_max_in_prefix": 0.0,
+    "episodes_in_prefix": 0,
+    "terminal_onset_in_prefix": null
+   },
+   "d7_reference_prompt_tokens": 308,
+   "prompt_equals_d7_independent_tokenizer": true
+  },
+  {
+   "prefix_id": "P12",
+   "id": "q145p2",
+   "doc": 145,
+   "stratum": "finished",
+   "messages_sha256_equals_raw_and_log": true,
+   "chat_template_kwargs": {
+    "enable_thinking": true
+   },
+   "prompt_len": 285,
+   "prompt_tokens_server_raw": 285,
+   "prompt_tokens_request_log": 285,
+   "prompt_ids_sha256": "eaa40aae74d38562b41ed4ab77098efb72c416057eddb91b1ed2b03df6ea263e",
+   "prompt_ids_d7_sha256": "2688493538d99c8a80248e7951faf498677a4ecc1db9a7a04e61cd1ebf5095c1",
+   "prompt_rendered_sha256": "8a10495151401ed7ee4d011297481e111b42842dcf690d6e8f6d73e809200a62",
+   "prompt_hf_equals_tokenizers": true,
+   "prompt_ends_assistant_think": true,
+   "reasoning_tokens_full": 141894,
+   "reasoning_hf_equals_tokenizers": true,
+   "reasoning_full_ids_sha256": "a18896032223e64f363ea3c0bc1b2b97ef5aa6edabc8b7e87556415505cf41c8",
+   "reasoning_text_sha256": "e1bfa65e4973cf6b3249fd1ccc1b5c84337c03e9ba35c0dec6165be7b2e77c40",
+   "discovery_N_reasoning": 141894,
+   "cut": 100000,
+   "cut_ids_sha256": "104bedec39c5466819c8cbdbf09af12260562b76870e8c2d6a18c7e1ffe63dcd",
+   "cut_char_offset": 326785,
+   "prefix_len": 100285,
+   "prefix_ids_sha256": "1e01607ee9932d4f8460bc9e585eec039df489cec0af36b6a89296d5fc356d5e",
+   "prompt_stop_ids": 1,
+   "reasoning_cut_stop_ids": 0,
+   "reasoning_cut_think_close": 0,
+   "reasoning_cut_added_ids_ge_154820": 0,
+   "covariates_100k": {
+    "chars_per_token": 3.2679,
+    "digit_share": 0.0283,
+    "interjection_per1k": 2.2,
+    "verify_per1k": 0.74,
+    "R50_backward_at_cut": 0.0095,
+    "R50_max_in_prefix": 0.0095,
+    "episodes_in_prefix": 0,
+    "terminal_onset_in_prefix": null
+   },
+   "d7_reference_prompt_tokens": 285,
+   "prompt_equals_d7_independent_tokenizer": true
+  }
+ ],
+ "private_file_sha256": "4abffaf1645a1b1f30cc17ac00621aeb57646d2b95a0284902401997980defdd",
+ "private_prompts_sha256": "0ba672740ab780d61c4fdf508ab18795088d77e19f1c38c89e3a1ebdf8966bdf",
+ "checks": [
+  {
+   "check": "v070: served chat template sha256 34d5ee66b12f",
+   "ok": true,
+   "detail": "34d5ee66b12fa644"
+  },
+  {
+   "check": "v070: tokenizer.json sha256 19e773648cb4",
+   "ok": true,
+   "detail": "19e773648cb4e65d"
+  },
+  {
+   "check": "v070 P01: messages hash equals the raw record and the rep070-F request log",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P01: rendered prompt length equals the server's prompt_tokens (raw response and request log)",
+   "ok": true,
+   "detail": "91 / 91 / 91"
+  },
+  {
+   "check": "v070 P01: prompt ids equal d7's independent pure-Python tokenization",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P01: transformers and tokenizers give identical prompt and reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P01: reasoning re-tokenization length equals discovery's N_reasoning",
+   "ok": true,
+   "detail": "327678 vs 327678"
+  },
+  {
+   "check": "v070 P01: prompt ends <|assistant|><think>; no stop id and no </think> in the reasoning part of the prefix",
+   "ok": true,
+   "detail": "prompt carries 1 stop-class id(s) (the template's <|user|> turn marker; stop ids act on generated tokens only)"
+  },
+  {
+   "check": "v070 P01: prefix length = prompt + 100000",
+   "ok": true,
+   "detail": 100091
+  },
+  {
+   "check": "v070 P02: messages hash equals the raw record and the rep070-F request log",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P02: rendered prompt length equals the server's prompt_tokens (raw response and request log)",
+   "ok": true,
+   "detail": "229 / 229 / 229"
+  },
+  {
+   "check": "v070 P02: prompt ids equal d7's independent pure-Python tokenization",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P02: transformers and tokenizers give identical prompt and reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P02: reasoning re-tokenization length equals discovery's N_reasoning",
+   "ok": true,
+   "detail": "327680 vs 327680"
+  },
+  {
+   "check": "v070 P02: prompt ends <|assistant|><think>; no stop id and no </think> in the reasoning part of the prefix",
+   "ok": true,
+   "detail": "prompt carries 1 stop-class id(s) (the template's <|user|> turn marker; stop ids act on generated tokens only)"
+  },
+  {
+   "check": "v070 P02: prefix length = prompt + 100000",
+   "ok": true,
+   "detail": 100229
+  },
+  {
+   "check": "v070 P03: messages hash equals the raw record and the rep070-F request log",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P03: rendered prompt length equals the server's prompt_tokens (raw response and request log)",
+   "ok": true,
+   "detail": "148 / 148 / 148"
+  },
+  {
+   "check": "v070 P03: prompt ids equal d7's independent pure-Python tokenization",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P03: transformers and tokenizers give identical prompt and reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P03: reasoning re-tokenization length equals discovery's N_reasoning",
+   "ok": true,
+   "detail": "327679 vs 327679"
+  },
+  {
+   "check": "v070 P03: prompt ends <|assistant|><think>; no stop id and no </think> in the reasoning part of the prefix",
+   "ok": true,
+   "detail": "prompt carries 1 stop-class id(s) (the template's <|user|> turn marker; stop ids act on generated tokens only)"
+  },
+  {
+   "check": "v070 P03: prefix length = prompt + 100000",
+   "ok": true,
+   "detail": 100148
+  },
+  {
+   "check": "v070 P04: messages hash equals the raw record and the rep070-F request log",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P04: rendered prompt length equals the server's prompt_tokens (raw response and request log)",
+   "ok": true,
+   "detail": "276 / 276 / 276"
+  },
+  {
+   "check": "v070 P04: prompt ids equal d7's independent pure-Python tokenization",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P04: transformers and tokenizers give identical prompt and reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P04: reasoning re-tokenization length equals discovery's N_reasoning",
+   "ok": true,
+   "detail": "327679 vs 327679"
+  },
+  {
+   "check": "v070 P04: prompt ends <|assistant|><think>; no stop id and no </think> in the reasoning part of the prefix",
+   "ok": true,
+   "detail": "prompt carries 1 stop-class id(s) (the template's <|user|> turn marker; stop ids act on generated tokens only)"
+  },
+  {
+   "check": "v070 P04: prefix length = prompt + 100000",
+   "ok": true,
+   "detail": 100276
+  },
+  {
+   "check": "v070 P05: messages hash equals the raw record and the rep070-F request log",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P05: rendered prompt length equals the server's prompt_tokens (raw response and request log)",
+   "ok": true,
+   "detail": "238 / 238 / 238"
+  },
+  {
+   "check": "v070 P05: prompt ids equal d7's independent pure-Python tokenization",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P05: transformers and tokenizers give identical prompt and reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P05: reasoning re-tokenization length equals discovery's N_reasoning",
+   "ok": true,
+   "detail": "327679 vs 327679"
+  },
+  {
+   "check": "v070 P05: prompt ends <|assistant|><think>; no stop id and no </think> in the reasoning part of the prefix",
+   "ok": true,
+   "detail": "prompt carries 1 stop-class id(s) (the template's <|user|> turn marker; stop ids act on generated tokens only)"
+  },
+  {
+   "check": "v070 P05: prefix length = prompt + 100000",
+   "ok": true,
+   "detail": 100238
+  },
+  {
+   "check": "v070 P06: messages hash equals the raw record and the rep070-F request log",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P06: rendered prompt length equals the server's prompt_tokens (raw response and request log)",
+   "ok": true,
+   "detail": "195 / 195 / 195"
+  },
+  {
+   "check": "v070 P06: prompt ids equal d7's independent pure-Python tokenization",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P06: transformers and tokenizers give identical prompt and reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P06: reasoning re-tokenization length equals discovery's N_reasoning",
+   "ok": true,
+   "detail": "327679 vs 327679"
+  },
+  {
+   "check": "v070 P06: prompt ends <|assistant|><think>; no stop id and no </think> in the reasoning part of the prefix",
+   "ok": true,
+   "detail": "prompt carries 1 stop-class id(s) (the template's <|user|> turn marker; stop ids act on generated tokens only)"
+  },
+  {
+   "check": "v070 P06: prefix length = prompt + 100000",
+   "ok": true,
+   "detail": 100195
+  },
+  {
+   "check": "v070 P07: messages hash equals the raw record and the rep070-F request log",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P07: rendered prompt length equals the server's prompt_tokens (raw response and request log)",
+   "ok": true,
+   "detail": "2795 / 2795 / 2795"
+  },
+  {
+   "check": "v070 P07: prompt ids equal d7's independent pure-Python tokenization",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P07: transformers and tokenizers give identical prompt and reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P07: reasoning re-tokenization length equals discovery's N_reasoning",
+   "ok": true,
+   "detail": "206107 vs 206107"
+  },
+  {
+   "check": "v070 P07: prompt ends <|assistant|><think>; no stop id and no </think> in the reasoning part of the prefix",
+   "ok": true,
+   "detail": "prompt carries 1 stop-class id(s) (the template's <|user|> turn marker; stop ids act on generated tokens only)"
+  },
+  {
+   "check": "v070 P07: prefix length = prompt + 100000",
+   "ok": true,
+   "detail": 102795
+  },
+  {
+   "check": "v070 P08: messages hash equals the raw record and the rep070-F request log",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P08: rendered prompt length equals the server's prompt_tokens (raw response and request log)",
+   "ok": true,
+   "detail": "191 / 191 / 191"
+  },
+  {
+   "check": "v070 P08: prompt ids equal d7's independent pure-Python tokenization",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P08: transformers and tokenizers give identical prompt and reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P08: reasoning re-tokenization length equals discovery's N_reasoning",
+   "ok": true,
+   "detail": "150210 vs 150210"
+  },
+  {
+   "check": "v070 P08: prompt ends <|assistant|><think>; no stop id and no </think> in the reasoning part of the prefix",
+   "ok": true,
+   "detail": "prompt carries 1 stop-class id(s) (the template's <|user|> turn marker; stop ids act on generated tokens only)"
+  },
+  {
+   "check": "v070 P08: prefix length = prompt + 100000",
+   "ok": true,
+   "detail": 100191
+  },
+  {
+   "check": "v070 P09: messages hash equals the raw record and the rep070-F request log",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P09: rendered prompt length equals the server's prompt_tokens (raw response and request log)",
+   "ok": true,
+   "detail": "766 / 766 / 766"
+  },
+  {
+   "check": "v070 P09: prompt ids equal d7's independent pure-Python tokenization",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P09: transformers and tokenizers give identical prompt and reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P09: reasoning re-tokenization length equals discovery's N_reasoning",
+   "ok": true,
+   "detail": "126018 vs 126018"
+  },
+  {
+   "check": "v070 P09: prompt ends <|assistant|><think>; no stop id and no </think> in the reasoning part of the prefix",
+   "ok": true,
+   "detail": "prompt carries 1 stop-class id(s) (the template's <|user|> turn marker; stop ids act on generated tokens only)"
+  },
+  {
+   "check": "v070 P09: prefix length = prompt + 100000",
+   "ok": true,
+   "detail": 100766
+  },
+  {
+   "check": "v070 P10: messages hash equals the raw record and the rep070-F request log",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P10: rendered prompt length equals the server's prompt_tokens (raw response and request log)",
+   "ok": true,
+   "detail": "178 / 178 / 178"
+  },
+  {
+   "check": "v070 P10: prompt ids equal d7's independent pure-Python tokenization",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P10: transformers and tokenizers give identical prompt and reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P10: reasoning re-tokenization length equals discovery's N_reasoning",
+   "ok": true,
+   "detail": "124510 vs 124510"
+  },
+  {
+   "check": "v070 P10: prompt ends <|assistant|><think>; no stop id and no </think> in the reasoning part of the prefix",
+   "ok": true,
+   "detail": "prompt carries 1 stop-class id(s) (the template's <|user|> turn marker; stop ids act on generated tokens only)"
+  },
+  {
+   "check": "v070 P10: prefix length = prompt + 100000",
+   "ok": true,
+   "detail": 100178
+  },
+  {
+   "check": "v070 P11: messages hash equals the raw record and the rep070-F request log",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P11: rendered prompt length equals the server's prompt_tokens (raw response and request log)",
+   "ok": true,
+   "detail": "308 / 308 / 308"
+  },
+  {
+   "check": "v070 P11: prompt ids equal d7's independent pure-Python tokenization",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P11: transformers and tokenizers give identical prompt and reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P11: reasoning re-tokenization length equals discovery's N_reasoning",
+   "ok": true,
+   "detail": "124020 vs 124020"
+  },
+  {
+   "check": "v070 P11: prompt ends <|assistant|><think>; no stop id and no </think> in the reasoning part of the prefix",
+   "ok": true,
+   "detail": "prompt carries 1 stop-class id(s) (the template's <|user|> turn marker; stop ids act on generated tokens only)"
+  },
+  {
+   "check": "v070 P11: prefix length = prompt + 100000",
+   "ok": true,
+   "detail": 100308
+  },
+  {
+   "check": "v070 P12: messages hash equals the raw record and the rep070-F request log",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P12: rendered prompt length equals the server's prompt_tokens (raw response and request log)",
+   "ok": true,
+   "detail": "285 / 285 / 285"
+  },
+  {
+   "check": "v070 P12: prompt ids equal d7's independent pure-Python tokenization",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P12: transformers and tokenizers give identical prompt and reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070 P12: reasoning re-tokenization length equals discovery's N_reasoning",
+   "ok": true,
+   "detail": "141894 vs 141894"
+  },
+  {
+   "check": "v070 P12: prompt ends <|assistant|><think>; no stop id and no </think> in the reasoning part of the prefix",
+   "ok": true,
+   "detail": "prompt carries 1 stop-class id(s) (the template's <|user|> turn marker; stop ids act on generated tokens only)"
+  },
+  {
+   "check": "v070 P12: prefix length = prompt + 100000",
+   "ok": true,
+   "detail": 100285
+  }
+ ]
+}

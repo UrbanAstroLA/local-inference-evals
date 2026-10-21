@@ -1,0 +1,13 @@
+P01 q79p2 capped R50@100k 0.0 | capped stratum, question rank 1 of 6 (panel long count 14); 3 eligible replies in the question (q79p2, q79p3, q79p1), lowest reply hash
+P02 q88p1 capped R50@100k 0.0 | capped stratum, question rank 2 of 6 (panel long count 9); 1 eligible reply in the question (q88p1), lowest reply hash
+P03 q69p2 capped R50@100k 0.002 | capped stratum, question rank 3 of 6 (panel long count 7); 1 eligible reply in the question (q69p2), lowest reply hash
+P04 q120p3 capped R50@100k 0.0188 | capped stratum, question rank 4 of 6 (panel long count 5); 1 eligible reply in the question (q120p3), lowest reply hash
+P05 q8p2 capped R50@100k 0.0 | capped stratum, question rank 5 of 6 (panel long count 4); 1 eligible reply in the question (q8p2), lowest reply hash
+P06 q158p3 capped R50@100k 0.0349 | capped stratum, question rank 6 of 6 (panel long count 1); 1 eligible reply in the question (q158p3), lowest reply hash
+P07 q127p2 finished R50@100k 0.0037 | finished stratum, question rank 1 of 11 (panel long count 13); 1 eligible reply in the question (q127p2), lowest reply hash
+P08 q147p1 finished R50@100k 0.0068 | finished stratum, question rank 2 of 11 (panel long count 10); 1 eligible reply in the question (q147p1), lowest reply hash
+P09 q81p2 finished R50@100k 0.0 | finished stratum, question rank 3 of 11 (panel long count 8); 2 eligible replies in the question (q81p2, q81p3), lowest reply hash
+P10 q71p1 finished R50@100k 0.0 | finished stratum, question rank 4 of 11 (panel long count 7); 3 eligible replies in the question (q71p1, q71p2, q71p3), lowest reply hash
+P11 q186p1 finished R50@100k 0.0 | finished stratum, question rank 5 of 11 (panel long count 5); 1 eligible reply in the question (q186p1), lowest reply hash
+P12 q145p2 finished R50@100k 0.0 | finished stratum, question rank 6 of 11 (panel long count 5); 1 eligible reply in the question (q145p2), lowest reply hash
+{"pool": 29, "eligible": 25, "selected": 12, "by_stratum": {"capped": 6, "finished": 6}, "distinct_questions": 12}

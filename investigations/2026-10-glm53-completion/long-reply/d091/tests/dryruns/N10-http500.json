@@ -1,0 +1,842 @@
+{
+ "checks": [
+  [
+   "proxy request log present",
+   true,
+   "requests.jsonl"
+  ],
+  [
+   "server log present",
+   true,
+   "glm53-flash-exl3-k3.25@tpurtell+v0.9.1.server.log"
+  ],
+  [
+   "stock 0.9.1 d091 (seed 70704) pass 1: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "stock 0.9.1 d091 (seed 70704) pass 1: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "stock 0.9.1 d091 (seed 70704) pass 1: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "stock 0.9.1 d091 (seed 70704) pass 1: every request HTTP 200, seed 70704, max_tokens 327680, temperature 1.0, top_p 0.95",
+   false,
+   ""
+  ],
+  [
+   "stock 0.9.1 d091 (seed 70704) pass 1: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "stock 0.9.1 d091 (seed 70704): 198 question rows, every one with its proxy row (finish reason and token counts)",
+   true,
+   "198 rows, 198 logged"
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 1: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 1: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 1: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 1: every request HTTP 200, seed 1234, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 1: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 2: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 2: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 2: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 2: every request HTTP 200, seed 1235, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 2: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 3: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 3: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 3: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 3: every request HTTP 200, seed 1236, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 3: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record): rows derived here reproduce the published rows (594 rows; empty, raw, strict, stated, hashes, finish reason, tokens)",
+   true,
+   "0 field mismatches"
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 1: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 1: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 1: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 1: every request HTTP 200, seed 70701, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 1: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 2: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 2: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 2: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 2: every request HTTP 200, seed 70702, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 2: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 3: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 3: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 3: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 3: every request HTTP 200, seed 70703, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 3: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "request seed 70704 is fresh: in none of the frozen inventory's GPQA or request seeds (checks/seed-inventory.json)",
+   true,
+   "19 used seeds"
+  ],
+  [
+   "request log: every request carries seed 70704 (198 requests, nothing else)",
+   true,
+   "{\"70704\": 198}"
+  ],
+  [
+   "lm-eval: model_args seed 70704 (sent in every request) and process seed 1235 (the records' pass-1 process seed)",
+   true,
+   "model_args seed 70704, process seed 1235; record pass 1 process seed 1235"
+  ],
+  [
+   "lm-eval client configuration equals the 0.9.1 record's pass 1 (model_args without seed: model, base_url, num_concurrent 8, tokenized_requests, timeout 10800, max_retries 3; gen_kwargs max_gen_toks 327680)",
+   true,
+   "{'model': 'wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1', 'base_url': 'http://127.0.0.1:8002/v1/chat/completions', 'num_concurrent': 8, 'tokenized_requests': False, 'timeout': 10800, 'max_retries': 3} / {'max_gen_toks': 327680}"
+  ],
+  [
+   "lm-eval task hash 87e807b3b27c8661 (same task, rendering and answer ordering as the records)",
+   true,
+   "87e807b3b27c8661"
+  ],
+  [
+   "0.9.1 record pass 1 and rep070-F pass 1 carry the same task hash",
+   true,
+   ""
+  ],
+  [
+   "d091 vs 0.9.1 record pass 1: all 198 questions present on both sides",
+   true,
+   ""
+  ],
+  [
+   "d091 vs 0.9.1 record pass 1: prompt_hash equal on every question",
+   true,
+   "0 mismatches"
+  ],
+  [
+   "d091 vs 0.9.1 record pass 1: doc_hash equal on every question",
+   true,
+   "0 mismatches"
+  ],
+  [
+   "d091 vs 0.9.1 record pass 1: target_hash equal on every question",
+   true,
+   "0 mismatches"
+  ],
+  [
+   "d091 vs 0.9.1 record pass 1: messages_sha256 equal on every question",
+   true,
+   "0 mismatches"
+  ],
+  [
+   "d091 vs 0.9.1 record pass 1: server-rendered prompt token counts equal",
+   true,
+   "198 compared, 0 differ"
+  ],
+  [
+   "d091 vs rep070-F pass 1: all 198 questions present on both sides",
+   true,
+   ""
+  ],
+  [
+   "d091 vs rep070-F pass 1: prompt_hash equal on every question",
+   true,
+   "0 mismatches"
+  ],
+  [
+   "d091 vs rep070-F pass 1: doc_hash equal on every question",
+   true,
+   "0 mismatches"
+  ],
+  [
+   "d091 vs rep070-F pass 1: target_hash equal on every question",
+   true,
+   "0 mismatches"
+  ],
+  [
+   "d091 vs rep070-F pass 1: messages_sha256 equal on every question",
+   true,
+   "0 mismatches"
+  ],
+  [
+   "d091 vs rep070-F pass 1: server-rendered prompt token counts equal",
+   true,
+   "198 compared, 0 differ"
+  ],
+  [
+   "d091 session warm-up: exactly one engine start in the server log",
+   true,
+   1
+  ],
+  [
+   "d091 session warm-up: 9 release warm-up lines (record's count), ending with the ready line",
+   true,
+   "9 warm-up lines, 1 ready lines"
+  ],
+  [
+   "d091 session warm-up: no GPQA chat-completion request logged before the ready line",
+   true,
+   "0 before"
+  ],
+  [
+   "d091 session warm-up: first GPQA request after the last timestamped line before the ready line",
+   true,
+   "first request 1791506343.238, last line before ready 1791506314.0"
+  ],
+  [
+   "d091 session: non_default_args_sha256 is a value the 0.9.1 record's own server sessions produced",
+   true,
+   "7025a96888a67642741db00a in ['7025a96888a6']"
+  ],
+  [
+   "d091 session: vllm_version is a value the 0.9.1 record's own server sessions produced",
+   true,
+   "['0.1.dev20051+g487ecf18 in [\"['0.1.dev200\"]"
+  ],
+  [
+   "d091 session: model_snapshots is a value the 0.9.1 record's own server sessions produced",
+   true,
+   "['0490d2f708b12145f65165 in [\"['0490d2f708\"]"
+  ],
+  [
+   "d091 session: env_names_logged_sha256 is a value the 0.9.1 record's own server sessions produced",
+   true,
+   "f85d9d360488c02bc9ba2bbb in ['f85d9d360488']"
+  ],
+  [
+   "d091 session: cudagraph_mode is a value the 0.9.1 record's own server sessions produced",
+   true,
+   "['FULL_AND_PIECEWISE'] in [\"['FULL_AND_P\"]"
+  ],
+  [
+   "d091 session: release warm-up count is one the record's sessions logged",
+   true,
+   "9 in [9]"
+  ],
+  [
+   "d091 session: KV pool >= functional floor 2,646,016 tokens (8 x cap + longest record prompt, whole blocks; not an identity gate)",
+   true,
+   "[4707515] vs floor 2646016"
+  ],
+  [
+   "d091 session: no illegal-memory-access and no NaN warning lines during the requests (the record's sessions: 0 and 0)",
+   true,
+   {
+    "illegal_memory_access_lines": 0,
+    "nan_warning_lines": 0,
+    "preemption_lines": 0
+   }
+  ],
+  [
+   "stated adjudicator source unchanged since freeze (informative)",
+   true,
+   "731f27d4a436805baae367096db8b039ae2d723f7944dda52f81fd2a96d017f6"
+  ]
+ ],
+ "context": {
+  "d091_vs_range": {
+   "empty": "inside the record's per-pass range",
+   "raw_pct": "inside the record's per-pass range",
+   "stated_pct_provisional": "inside the record's per-pass range"
+  },
+  "rep070F_per_pass": {
+   "empty_per_pass": {
+    "pass1": 2,
+    "pass2": 4,
+    "pass3": 4
+   },
+   "final_result_sha256": "a764806dbb8ff6e5ef013199bcd2a40f9347189058f63a766b210f1b1025188c",
+   "final_result_sha256_frozen": "a764806dbb8ff6e5ef013199bcd2a40f9347189058f63a766b210f1b1025188c",
+   "raw_pct_per_pass": {
+    "pass1": 85.85858585858585,
+    "pass2": 89.39393939393939,
+    "pass3": 86.36363636363636
+   },
+   "stated_final_pct_per_pass": {
+    "pass1": 87.37373737373737,
+    "pass2": 89.39393939393939,
+    "pass3": 86.86868686868686
+   }
+  },
+  "status": "descriptive context: one pass at a new seed beside the 0.9.1 record's per-pass range; no test; the stated figure is provisional until the coordinator's hand read of every row where stated differs from flexible-extract",
+  "v091_record_per_pass": {
+   "pass1": {
+    "capped_at_327680": 4,
+    "empty": 5,
+    "raw_correct_flexible": 169,
+    "raw_pct": 85.35,
+    "stated_correct": 170,
+    "stated_pct": 85.86
+   },
+   "pass2": {
+    "capped_at_327680": 5,
+    "empty": 5,
+    "raw_correct_flexible": 176,
+    "raw_pct": 88.89,
+    "stated_correct": 178,
+    "stated_pct": 89.9
+   },
+   "pass3": {
+    "capped_at_327680": 6,
+    "empty": 6,
+    "raw_correct_flexible": 171,
+    "raw_pct": 86.36,
+    "stated_correct": 174,
+    "stated_pct": 87.88
+   }
+  },
+  "v091_record_range": {
+   "capped": [
+    4,
+    6
+   ],
+   "empty": [
+    5,
+    6
+   ],
+   "raw_pct": [
+    85.35,
+    88.89
+   ],
+   "stated_pct": [
+    85.86,
+    89.9
+   ]
+  }
+ },
+ "dry_run": "N10-http500 one request HTTP 500; expect INVALID",
+ "inputs": {
+  "d091": {
+   "reqlogs": {
+    "requests.jsonl": "cc3479f2b802fe36de3154b3c796fa21f7060811573ed6e063674e0e513ccdc9"
+   },
+   "samples": {
+    "dir": "pass1",
+    "lm_eval": {
+     "gen_kwargs": {
+      "max_gen_toks": 327680
+     },
+     "max_retries": 3,
+     "num_concurrent": 8,
+     "random_seed": 1235,
+     "seed_arg": 70704,
+     "timeout": 10800
+    },
+    "sha256": "be5c567defff894ac898e7e90ea2149e4fd5ff64486216a6c26f736efb447fc1"
+   }
+  },
+  "rep070F": {
+   "reqlogs": {
+    "glm53-flash-exl3-k3.25@tpurtell+rep070-F.s1.requests.jsonl": "8b4519a6cc1c2e5fd13d858423e8b33bc66d2c74321c59f8886ffed998f32783",
+    "glm53-flash-exl3-k3.25@tpurtell+rep070-F.s2.requests.jsonl": "1c06d1425f6482a291eec1d717faf18c9f994a582ba00e5b35ace6ec1cc0c0ef"
+   },
+   "samples": {
+    "pass1": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+rep070-F__pass1",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1235,
+      "seed_arg": 70701,
+      "timeout": 10800
+     },
+     "sha256": "413a62c67fe4c4444c7749cda2a10ca48390d78e2af311c8b02828cbfd7634b1"
+    },
+    "pass2": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+rep070-F__pass2",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1236,
+      "seed_arg": 70702,
+      "timeout": 10800
+     },
+     "sha256": "2c2b9ce8d974d4509b874094a4b554719ae03f763de3e439fdd117ee6d105e91"
+    },
+    "pass3": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+rep070-F__pass3",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1237,
+      "seed_arg": 70703,
+      "timeout": 10800
+     },
+     "sha256": "4721ba0bcdef0ab6d56248151e32b58e4e55818dc4e655bd03eb5e5b4c5f749d"
+    }
+   }
+  },
+  "v091_record": {
+   "published": {
+    "file": "results.jsonl",
+    "sha256": "9d2f57c9c4c1c5fe0833f5d534a290bfc61793101ca0f5cf1cf6bb04cbc970b2"
+   },
+   "reqlogs": {
+    "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps.requests.jsonl": "dbe4520b3ea49c21a40985511da3b0b71770ac781e9d9a1bbdd72cfd423c8f5f",
+    "glm53-flash-exl3-k3.25@tpurtell+v0.9.1.requests.jsonl": "ecba3773ba0fc520957f640f3e45e20e450ad831da474306d668a26b46cd8493"
+   },
+   "samples": {
+    "pass1": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps__pass1",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1235,
+      "seed_arg": null,
+      "timeout": 10800
+     },
+     "sha256": "be5c567defff894ac898e7e90ea2149e4fd5ff64486216a6c26f736efb447fc1"
+    },
+    "pass2": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps__pass2",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1236,
+      "seed_arg": 1235,
+      "timeout": 10800
+     },
+     "sha256": "c9105163deefe174f6b903caaa6344650ac8cd589d58f1a3b9a03d7199546920"
+    },
+    "pass3": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps__pass3",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1237,
+      "seed_arg": 1236,
+      "timeout": 10800
+     },
+     "sha256": "bcaa1e011ce13b202205e12f37f399f57bdf39ad4b83ee8bdd885c8715d728b7"
+    }
+   }
+  }
+ },
+ "long_reply_finishing": {
+  "definition": "at risk at L = completion_tokens >= L (proxy log); finished = finish_reason not 'length'; P(finish | at risk at 100,000) = finished / at risk (rep070 secondary / tail-audit definitions, functions of analysis_rep070.py unchanged)",
+  "differences_at_100000": {
+   "d091_minus_rep070F": {
+    "B": 2000,
+    "ci95": [
+     -0.7391,
+     0.2353
+    ],
+    "estimate": -0.2266,
+    "seed": 20261025,
+    "undefined_replicates": 4,
+    "unit": "question (all its requests on both sides)"
+   },
+   "d091_minus_v091_record": {
+    "B": 2000,
+    "ci95": [
+     -0.4,
+     0.4167
+    ],
+    "estimate": 0.0286,
+    "seed": 20261024,
+    "undefined_replicates": 0,
+    "unit": "question (all its requests on both sides)"
+   }
+  },
+  "groups": {
+   "d091": {
+    "100000": {
+     "P_finish_given_at_risk": 0.42857142857142855,
+     "at_risk": 7,
+     "at_risk_per_pass": 7.0,
+     "censored_at_cap": 4,
+     "finished": 3,
+     "finished_nonempty": 3,
+     "questions_at_risk": 7
+    },
+    "200000": {
+     "P_finish_given_at_risk": 0.2,
+     "at_risk": 5,
+     "at_risk_per_pass": 5.0,
+     "censored_at_cap": 4,
+     "finished": 1,
+     "questions_at_risk": 5
+    },
+    "label": "d091, pass 1 (seed 70704)",
+    "logged_rows": 198,
+    "passes": [
+     1
+    ]
+   },
+   "rep070F": {
+    "100000": {
+     "P_finish_given_at_risk": 0.6551724137931034,
+     "at_risk": 29,
+     "at_risk_per_pass": 9.67,
+     "censored_at_cap": 10,
+     "finished": 19,
+     "finished_nonempty": 19,
+     "questions_at_risk": 18
+    },
+    "200000": {
+     "P_finish_given_at_risk": 0.09090909090909091,
+     "at_risk": 11,
+     "at_risk_per_pass": 3.67,
+     "censored_at_cap": 10,
+     "finished": 1,
+     "questions_at_risk": 7
+    },
+    "label": "stock 0.7.0 rep070-F, passes 1-3",
+    "logged_rows": 594,
+    "passes": [
+     1,
+     2,
+     3
+    ]
+   },
+   "v091_record": {
+    "100000": {
+     "P_finish_given_at_risk": 0.4,
+     "at_risk": 25,
+     "at_risk_per_pass": 8.33,
+     "censored_at_cap": 15,
+     "finished": 10,
+     "finished_nonempty": 10,
+     "questions_at_risk": 15
+    },
+    "200000": {
+     "P_finish_given_at_risk": 0.11764705882352941,
+     "at_risk": 17,
+     "at_risk_per_pass": 5.67,
+     "censored_at_cap": 15,
+     "finished": 2,
+     "questions_at_risk": 11
+    },
+    "label": "0.9.1 record, passes 1-3",
+    "logged_rows": 594,
+    "passes": [
+     1,
+     2,
+     3
+    ]
+   },
+   "v091_record_pass1": {
+    "100000": {
+     "P_finish_given_at_risk": 0.42857142857142855,
+     "at_risk": 7,
+     "at_risk_per_pass": 7.0,
+     "censored_at_cap": 4,
+     "finished": 3,
+     "finished_nonempty": 3,
+     "questions_at_risk": 7
+    },
+    "200000": {
+     "P_finish_given_at_risk": 0.2,
+     "at_risk": 5,
+     "at_risk_per_pass": 5.0,
+     "censored_at_cap": 4,
+     "finished": 1,
+     "questions_at_risk": 5
+    },
+    "label": "0.9.1 record, pass 1 only",
+    "logged_rows": 198,
+    "passes": [
+     1
+    ]
+   }
+  },
+  "intervals_95_question_bootstrap": {
+   "d091": {
+    "B": 2000,
+    "ci95": [
+     0.0,
+     0.8333
+    ],
+    "estimate": 0.4286,
+    "seed": 20261021,
+    "undefined_replicates": 1
+   },
+   "rep070F": {
+    "B": 2000,
+    "ci95": [
+     0.4444,
+     0.8571
+    ],
+    "estimate": 0.6552,
+    "seed": 20261023,
+    "undefined_replicates": 0
+   },
+   "v091_record": {
+    "B": 2000,
+    "ci95": [
+     0.2143,
+     0.6111
+    ],
+    "estimate": 0.4,
+    "seed": 20261022,
+    "undefined_replicates": 0
+   }
+  },
+  "status": "DESCRIPTIVE: one pass, about 8 replies at risk expected, different seeds from every comparator; no test",
+  "unit_note": "d091 has one reply per question, so its question bootstrap is a reply bootstrap; the records' intervals cluster passes by question"
+ },
+ "pass": {
+  "answered_but_length_finish": 0,
+  "capped_at_327680": 4,
+  "completion_tokens_all": {
+   "max": 327680,
+   "n": 198,
+   "p10": 835,
+   "p25": 1337,
+   "p50": 3668,
+   "p75": 13235,
+   "p90": 40808,
+   "p99": 327680
+  },
+  "completion_tokens_answered": {
+   "max": 203164,
+   "n": 193,
+   "p10": 844,
+   "p25": 1337,
+   "p50": 3620,
+   "p75": 12575,
+   "p90": 35394,
+   "p99": 136344
+  },
+  "completion_tokens_total": 3810906,
+  "empties_by_end": {
+   "cap_exhaustion": 4,
+   "not_logged": 0,
+   "other_finish": 0,
+   "premature_stop": 1
+  },
+  "empty": 5,
+  "finish_reasons": {
+   "length": 4,
+   "stop": 194
+  },
+  "hedged_by_hand": 0,
+  "questions": 198,
+  "raw_correct_flexible": 169,
+  "raw_pct": 85.35,
+  "replies_ge": {
+   "100000": 7,
+   "200000": 5,
+   "50000": 16
+  },
+  "stated_correct": 170,
+  "stated_differs_from_flexible_ids": [
+   "q10p1"
+  ],
+  "stated_pct": 85.86,
+  "strict_correct": 4
+ },
+ "pins": {
+  "analysis_rep070.py": "54c7fa4f850a4802178931911a3ad665dd3438f6e3ab7c3c65f9d0aec2940410",
+  "checks/seed-inventory.json": "1f58e7b3747b769133e112bfbe64c45890a1812742e1526d682bcefcda931c8e",
+  "frozen/analysis_col511.py": "b5b13ce2155085ca46fb24877f12b7cd0a5cdd16eb4cf19012958e7b86ae0033"
+ },
+ "process_seed": 1235,
+ "published_on": null,
+ "script_sha256": "5317be99b6f65e99c61f78a3984a910ba7f27932226052df4bc8a14b368907e5",
+ "seed": 70704,
+ "server": {
+  "cited_block": 0,
+  "cudagraph_mode": [
+   "FULL_AND_PIECEWISE"
+  ],
+  "env_names_logged_sha256": "f85d9d360488c02bc9ba2bbb33b86319201cfad14cd4c6a9ccb312539ec1313e",
+  "in_window": {
+   "illegal_memory_access_lines": 0,
+   "nan_warning_lines": 0,
+   "preemption_lines": 0
+  },
+  "kv_pool_tokens": [
+   4707515
+  ],
+  "log": "glm53-flash-exl3-k3.25@tpurtell+v0.9.1.server.log",
+  "model_snapshots": [
+   "0490d2f708b12145f6516555ab066aaeb401cd21",
+   "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+  ],
+  "non_default_args_sha256": "7025a96888a67642741db00aaecb9cbf786c2ba67cc4ded7d67c1cf4e909dcc5",
+  "release_warmups_logged": 9,
+  "server_starts": 1,
+  "sha256": "0ef6aaff01c06204755a2647c9dadadff65b46b2e4086d0de6b8fd09d7ef8b61",
+  "status": {
+   "lines": 853,
+   "lines_waiting": 0,
+   "max_running": 8,
+   "mean_gen_tok_s_8plus_running": 459.4,
+   "peak_kv_usage_pct": 39.6,
+   "share_lines_running_1to4": 0.0492,
+   "share_lines_running_5plus": 0.9496
+  },
+  "vllm_version": [
+   "0.1.dev20051+g487ecf187"
+  ]
+ },
+ "server_config": {
+  "kv_floor": 2646016,
+  "kv_margin_tokens": 2061499,
+  "kv_pool_equals_a_record_size": true,
+  "kv_pool_tokens": [
+   4707515
+  ],
+  "record_kv_pool_sizes": [
+   [
+    4707515
+   ]
+  ]
+ },
+ "timing": {
+  "aggregate_tok_s": 447.2,
+  "completion_tokens": 3810906,
+  "gpu_hours_ledger": null,
+  "inflight_profile": {
+   "busy_h": 2.3673,
+   "max_inflight": 8,
+   "share_busy_inflight_1to4": 0.0503,
+   "share_busy_inflight_5plus": 0.9497
+  },
+  "occupied": null,
+  "window_h": 2.3673
+ },
+ "valid": false,
+ "what": "option D (amendment 22x): one stock 0.9.1 GPQA Diamond pass at request seed 70704; DESCRIPTIVE"
+}

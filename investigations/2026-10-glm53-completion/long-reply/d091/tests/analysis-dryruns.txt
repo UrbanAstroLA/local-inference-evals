@@ -1,0 +1,36 @@
+# analysis dry runs 2026-10-21T08:53:13-07:00 (CPU only; zero GPU); stand-in = 0.9.1 record pass 1 relabelled to seed 70704
+D1-standin rc=0 valid True empty 5 raw 169 failed []
+D2-kv-other-size rc=0 valid True empty 5 raw 169 failed []
+N1-wrongseed rc=3 valid False empty 5 raw 169 failed ['stock 0.9.1 d091 (seed 70704): 198 question rows, every one with its proxy row (finish reason and token counts', 'request log: every request carries seed 70704 (198 requests, nothing else)', "lm-eval: model_args seed 70704 (sent in every request) and process seed 1235 (the records' pass-1 process seed", 'd091 vs 0.9.1 record pass 1: server-rendered prompt token counts equal']
+N2-missingq rc=3 valid False empty None raw None failed ['stock 0.9.1 d091 (seed 70704) pass 1: 198 questions, ids 0-197, both filters', 'stock 0.9.1 d091 (seed 70704): 198 question rows, every one with its proxy row (finish reason and token counts', 'd091 vs 0.9.1 record pass 1: all 198 questions present on both sides', 'd091 vs rep070-F pass 1: all 198 questions present on both sides']
+N3-taskhash rc=3 valid False empty 5 raw 169 failed ['lm-eval task hash 87e807b3b27c8661 (same task, rendering and answer ordering as the records)']
+N4-noready rc=3 valid False empty 5 raw 169 failed ["d091 session warm-up: 9 release warm-up lines (record's count), ending with the ready line", "d091 session: release warm-up count is one the record's sessions logged"]
+N5-other-engine rc=3 valid False empty 5 raw 169 failed ['d091 session warm-up: exactly one engine start in the server log', "d091 session warm-up: 9 release warm-up lines (record's count), ending with the ready line", "d091 session: non_default_args_sha256 is a value the 0.9.1 record's own server sessions produced", "d091 session: vllm_version is a value the 0.9.1 record's own server sessions produced"]
+N6-resend rc=3 valid False empty 5 raw 169 failed ['stock 0.9.1 d091 (seed 70704) pass 1: request log has 198 requests, no re-sent request', 'request log: every request carries seed 70704 (198 requests, nothing else)']
+N7-target rc=3 valid False empty 5 raw 169 failed ['d091 vs 0.9.1 record pass 1: target_hash equal on every question', 'd091 vs rep070-F pass 1: target_hash equal on every question']
+N8-kv-below-floor rc=3 valid False empty 5 raw 169 failed ['d091 session: KV pool >= functional floor 2,646,016 tokens (8 x cap + longest record prompt, whole blocks; not']
+N9-procseed rc=3 valid False empty 5 raw 169 failed ["lm-eval: model_args seed 70704 (sent in every request) and process seed 1235 (the records' pass-1 process seed"]
+N10-http500 rc=3 valid False empty 5 raw 169 failed ['stock 0.9.1 d091 (seed 70704) pass 1: every request HTTP 200, seed 70704, max_tokens 327680, temperature 1.0, ']
+N11-nondefault rc=3 valid False empty 5 raw 169 failed ["d091 session: non_default_args_sha256 is a value the 0.9.1 record's own server sessions produced"]
+N12-noargseed rc=3 valid False empty 5 raw 169 failed ["lm-eval: model_args seed 70704 (sent in every request) and process seed 1235 (the records' pass-1 process seed"]
+N13-rep070F-serverlog rc=3 valid False empty 5 raw 169 failed ['d091 session warm-up: first GPQA request after the last timestamped line before the ready line', "d091 session: non_default_args_sha256 is a value the 0.9.1 record's own server sessions produced", "d091 session: model_snapshots is a value the 0.9.1 record's own server sessions produced", "d091 session: env_names_logged_sha256 is a value the 0.9.1 record's own server sessions produced"]
+N14-no-reqlog rc=3 valid False empty 5 raw 169 failed ['proxy request log present', 'stock 0.9.1 d091 (seed 70704): 198 question rows, every one with its proxy row (finish reason and token counts', 'request log: every request carries seed 70704 (198 requests, nothing else)', 'd091 vs 0.9.1 record pass 1: server-rendered prompt token counts equal']
+N15-no-serverlog rc=3 valid False empty 5 raw 169 failed ['server log present']
+PASS D1-standin
+PASS D2-kv-other-size
+PASS N1-wrongseed
+PASS N2-missingq
+PASS N3-taskhash
+PASS N4-noready
+PASS N5-other-engine
+PASS N6-resend
+PASS N7-target
+PASS N8-kv-below-floor
+PASS N9-procseed
+PASS N10-http500
+PASS N11-nondefault
+PASS N12-noargseed
+PASS N13-rep070F-serverlog
+PASS N14-no-reqlog
+PASS N15-no-serverlog
+analysis dry runs: 17 of 17 as expected

@@ -1,0 +1,31 @@
+0.7.0 rep-F running 1 min ctx>= 100000 n 136 per-req tok/s median 144.1 p10 110.5
+0.7.0 rep-F running 2 min ctx>= 100000 n 34 per-req tok/s median 94.3 p10 89.0
+0.7.0 rep-F running 3 min ctx>= 100000 n 1 per-req tok/s median 96.6 p10 96.6
+0.7.0 rep-F running>=7 mean ctx>=60k n 1781 median per-req 37.4
+0.9.1 running 1 min ctx>= 100000 n 54 per-req tok/s median 215.6 p10 143.4
+0.9.1 running 2 min ctx>= 100000 n 122 per-req tok/s median 173.2 p10 143.8
+0.9.1 running 3 min ctx>= 100000 n 26 per-req tok/s median 120.9 p10 120.8
+0.9.1 running>=7 mean ctx>=60k n 1098 median per-req 58.7
+B1 running 1 min ctx>= 100000 n 24 per-req tok/s median 219.6 p10 218.4
+B1 running 2 min ctx>= 100000 n 39 per-req tok/s median 185.2 p10 139.0
+B1 running 3 min ctx>= 100000 n 56 per-req tok/s median 98.4 p10 97.0
+B1 running>=7 mean ctx>=60k n 551 median per-req 60.4
+== binned by total context across >=7 running requests
+0.7.0 total ctx (k tokens over running reqs) 0 200 n 569 per-req median 32.7
+0.7.0 total ctx (k tokens over running reqs) 200 400 n 719 per-req median 33.6
+0.7.0 total ctx (k tokens over running reqs) 400 600 n 1024 per-req median 34.8
+0.7.0 total ctx (k tokens over running reqs) 600 800 n 544 per-req median 38.0
+0.7.0 total ctx (k tokens over running reqs) 800 1000 n 283 per-req median 40.1
+0.7.0 total ctx (k tokens over running reqs) 1000 1400 n 221 per-req median 44.4
+0.9.1 total ctx (k tokens over running reqs) 0 200 n 370 per-req median 52.9
+0.9.1 total ctx (k tokens over running reqs) 200 400 n 298 per-req median 53.8
+0.9.1 total ctx (k tokens over running reqs) 400 600 n 372 per-req median 55.3
+0.9.1 total ctx (k tokens over running reqs) 600 800 n 393 per-req median 57.6
+0.9.1 total ctx (k tokens over running reqs) 800 1000 n 321 per-req median 60.3
+0.9.1 total ctx (k tokens over running reqs) 1000 1400 n 138 per-req median 61.2
+B1 total ctx (k tokens over running reqs) 0 200 n 78 per-req median 52.3
+B1 total ctx (k tokens over running reqs) 200 400 n 95 per-req median 55.1
+B1 total ctx (k tokens over running reqs) 400 600 n 76 per-req median 56.5
+B1 total ctx (k tokens over running reqs) 600 800 n 105 per-req median 59.4
+B1 total ctx (k tokens over running reqs) 800 1000 n 217 per-req median 60.2
+B1 total ctx (k tokens over running reqs) 1000 1400 n 186 per-req median 62.8

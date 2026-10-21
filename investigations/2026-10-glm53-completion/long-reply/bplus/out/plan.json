@@ -1,0 +1,660 @@
+{
+ "what": "B+ request plan (ids, seeds, hashes; no text)",
+ "model": "wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1",
+ "params": {
+  "max_tokens": 65536,
+  "temperature": 1.0,
+  "top_p": 0.95,
+  "stop": [
+   "</s>"
+  ],
+  "return_token_ids": true,
+  "stream": false
+ },
+ "params_sha256": "c53443e3e815a9ecce209fcf01b6606d926a558d4686e032b2e3abcdd2495b22",
+ "seed_base": 8160000,
+ "order_seed": 20261016,
+ "engines": [
+  {
+   "engine": "v070",
+   "index": 1,
+   "label": "stock 0.7.0"
+  },
+  {
+   "engine": "v091",
+   "index": 2,
+   "label": "stock 0.9.1"
+  },
+  {
+   "engine": "b1",
+   "index": 3,
+   "label": "B1 = 0.9.1 + D1-D4 + D7"
+  }
+ ],
+ "order": [
+  {
+   "k": 1,
+   "prefix_id": "P02",
+   "j": 1,
+   "stratum": "capped",
+   "prefix_len": 100229,
+   "prefix_ids_sha256": "92ed266a1e4f1f4ee6db0d19fea89264276b38f7b059c35d6bac32c4b211a45c",
+   "seeds": {
+    "v070": 8170201,
+    "v091": 8180201,
+    "b1": 8190201
+   }
+  },
+  {
+   "k": 2,
+   "prefix_id": "P08",
+   "j": 1,
+   "stratum": "finished",
+   "prefix_len": 100191,
+   "prefix_ids_sha256": "ac44215a8eea7fab9301f10b848aac1ebbb735b95f4dc4ec7bc2e2a9d264117b",
+   "seeds": {
+    "v070": 8170801,
+    "v091": 8180801,
+    "b1": 8190801
+   }
+  },
+  {
+   "k": 3,
+   "prefix_id": "P06",
+   "j": 1,
+   "stratum": "capped",
+   "prefix_len": 100195,
+   "prefix_ids_sha256": "61bf8d323ce7a8fedc299d5f73f5181a19bc86fd88918dc9722267102160319b",
+   "seeds": {
+    "v070": 8170601,
+    "v091": 8180601,
+    "b1": 8190601
+   }
+  },
+  {
+   "k": 4,
+   "prefix_id": "P07",
+   "j": 1,
+   "stratum": "finished",
+   "prefix_len": 102795,
+   "prefix_ids_sha256": "0d950ff4191ea4a9ae8861777cdbc21240734e7dd147b2fa33c53734235ede18",
+   "seeds": {
+    "v070": 8170701,
+    "v091": 8180701,
+    "b1": 8190701
+   }
+  },
+  {
+   "k": 5,
+   "prefix_id": "P05",
+   "j": 1,
+   "stratum": "capped",
+   "prefix_len": 100238,
+   "prefix_ids_sha256": "8bcdf999e240ba8316036f7ebb728ab59805fcdf940080a8bfb53c2f7401310f",
+   "seeds": {
+    "v070": 8170501,
+    "v091": 8180501,
+    "b1": 8190501
+   }
+  },
+  {
+   "k": 6,
+   "prefix_id": "P12",
+   "j": 1,
+   "stratum": "finished",
+   "prefix_len": 100285,
+   "prefix_ids_sha256": "1e01607ee9932d4f8460bc9e585eec039df489cec0af36b6a89296d5fc356d5e",
+   "seeds": {
+    "v070": 8171201,
+    "v091": 8181201,
+    "b1": 8191201
+   }
+  },
+  {
+   "k": 7,
+   "prefix_id": "P04",
+   "j": 1,
+   "stratum": "capped",
+   "prefix_len": 100276,
+   "prefix_ids_sha256": "2fa27f96ecfcf853daa40bcafb589f16b60b2459a64474bd968d4726abe44414",
+   "seeds": {
+    "v070": 8170401,
+    "v091": 8180401,
+    "b1": 8190401
+   }
+  },
+  {
+   "k": 8,
+   "prefix_id": "P09",
+   "j": 1,
+   "stratum": "finished",
+   "prefix_len": 100766,
+   "prefix_ids_sha256": "7a4fd30b9b7f96ac27b4bf6dd7e4b8194eb5baa84ea1ce916a9a4decc452d05e",
+   "seeds": {
+    "v070": 8170901,
+    "v091": 8180901,
+    "b1": 8190901
+   }
+  },
+  {
+   "k": 9,
+   "prefix_id": "P01",
+   "j": 1,
+   "stratum": "capped",
+   "prefix_len": 100091,
+   "prefix_ids_sha256": "c7ade2776edc89c7fd720183bcde5b0d990ee95e4a8637b4bd5fd8bb6264f1d2",
+   "seeds": {
+    "v070": 8170101,
+    "v091": 8180101,
+    "b1": 8190101
+   }
+  },
+  {
+   "k": 10,
+   "prefix_id": "P11",
+   "j": 1,
+   "stratum": "finished",
+   "prefix_len": 100308,
+   "prefix_ids_sha256": "82578d0bb0c3ce15e988fba7003cee5882f85fbea95f40683fec863a65a20d39",
+   "seeds": {
+    "v070": 8171101,
+    "v091": 8181101,
+    "b1": 8191101
+   }
+  },
+  {
+   "k": 11,
+   "prefix_id": "P03",
+   "j": 1,
+   "stratum": "capped",
+   "prefix_len": 100148,
+   "prefix_ids_sha256": "6ea0c2f4040cd6fb6f79886a4340c35522df03fe20f3711ea48e16c27b508d1c",
+   "seeds": {
+    "v070": 8170301,
+    "v091": 8180301,
+    "b1": 8190301
+   }
+  },
+  {
+   "k": 12,
+   "prefix_id": "P10",
+   "j": 1,
+   "stratum": "finished",
+   "prefix_len": 100178,
+   "prefix_ids_sha256": "2c1382082d01d211a644c671d77251958876451ef1861709ed2ea267f6e39063",
+   "seeds": {
+    "v070": 8171001,
+    "v091": 8181001,
+    "b1": 8191001
+   }
+  },
+  {
+   "k": 13,
+   "prefix_id": "P10",
+   "j": 2,
+   "stratum": "finished",
+   "prefix_len": 100178,
+   "prefix_ids_sha256": "2c1382082d01d211a644c671d77251958876451ef1861709ed2ea267f6e39063",
+   "seeds": {
+    "v070": 8171002,
+    "v091": 8181002,
+    "b1": 8191002
+   }
+  },
+  {
+   "k": 14,
+   "prefix_id": "P05",
+   "j": 2,
+   "stratum": "capped",
+   "prefix_len": 100238,
+   "prefix_ids_sha256": "8bcdf999e240ba8316036f7ebb728ab59805fcdf940080a8bfb53c2f7401310f",
+   "seeds": {
+    "v070": 8170502,
+    "v091": 8180502,
+    "b1": 8190502
+   }
+  },
+  {
+   "k": 15,
+   "prefix_id": "P11",
+   "j": 2,
+   "stratum": "finished",
+   "prefix_len": 100308,
+   "prefix_ids_sha256": "82578d0bb0c3ce15e988fba7003cee5882f85fbea95f40683fec863a65a20d39",
+   "seeds": {
+    "v070": 8171102,
+    "v091": 8181102,
+    "b1": 8191102
+   }
+  },
+  {
+   "k": 16,
+   "prefix_id": "P04",
+   "j": 2,
+   "stratum": "capped",
+   "prefix_len": 100276,
+   "prefix_ids_sha256": "2fa27f96ecfcf853daa40bcafb589f16b60b2459a64474bd968d4726abe44414",
+   "seeds": {
+    "v070": 8170402,
+    "v091": 8180402,
+    "b1": 8190402
+   }
+  },
+  {
+   "k": 17,
+   "prefix_id": "P12",
+   "j": 2,
+   "stratum": "finished",
+   "prefix_len": 100285,
+   "prefix_ids_sha256": "1e01607ee9932d4f8460bc9e585eec039df489cec0af36b6a89296d5fc356d5e",
+   "seeds": {
+    "v070": 8171202,
+    "v091": 8181202,
+    "b1": 8191202
+   }
+  },
+  {
+   "k": 18,
+   "prefix_id": "P06",
+   "j": 2,
+   "stratum": "capped",
+   "prefix_len": 100195,
+   "prefix_ids_sha256": "61bf8d323ce7a8fedc299d5f73f5181a19bc86fd88918dc9722267102160319b",
+   "seeds": {
+    "v070": 8170602,
+    "v091": 8180602,
+    "b1": 8190602
+   }
+  },
+  {
+   "k": 19,
+   "prefix_id": "P09",
+   "j": 2,
+   "stratum": "finished",
+   "prefix_len": 100766,
+   "prefix_ids_sha256": "7a4fd30b9b7f96ac27b4bf6dd7e4b8194eb5baa84ea1ce916a9a4decc452d05e",
+   "seeds": {
+    "v070": 8170902,
+    "v091": 8180902,
+    "b1": 8190902
+   }
+  },
+  {
+   "k": 20,
+   "prefix_id": "P01",
+   "j": 2,
+   "stratum": "capped",
+   "prefix_len": 100091,
+   "prefix_ids_sha256": "c7ade2776edc89c7fd720183bcde5b0d990ee95e4a8637b4bd5fd8bb6264f1d2",
+   "seeds": {
+    "v070": 8170102,
+    "v091": 8180102,
+    "b1": 8190102
+   }
+  },
+  {
+   "k": 21,
+   "prefix_id": "P07",
+   "j": 2,
+   "stratum": "finished",
+   "prefix_len": 102795,
+   "prefix_ids_sha256": "0d950ff4191ea4a9ae8861777cdbc21240734e7dd147b2fa33c53734235ede18",
+   "seeds": {
+    "v070": 8170702,
+    "v091": 8180702,
+    "b1": 8190702
+   }
+  },
+  {
+   "k": 22,
+   "prefix_id": "P03",
+   "j": 2,
+   "stratum": "capped",
+   "prefix_len": 100148,
+   "prefix_ids_sha256": "6ea0c2f4040cd6fb6f79886a4340c35522df03fe20f3711ea48e16c27b508d1c",
+   "seeds": {
+    "v070": 8170302,
+    "v091": 8180302,
+    "b1": 8190302
+   }
+  },
+  {
+   "k": 23,
+   "prefix_id": "P08",
+   "j": 2,
+   "stratum": "finished",
+   "prefix_len": 100191,
+   "prefix_ids_sha256": "ac44215a8eea7fab9301f10b848aac1ebbb735b95f4dc4ec7bc2e2a9d264117b",
+   "seeds": {
+    "v070": 8170802,
+    "v091": 8180802,
+    "b1": 8190802
+   }
+  },
+  {
+   "k": 24,
+   "prefix_id": "P02",
+   "j": 2,
+   "stratum": "capped",
+   "prefix_len": 100229,
+   "prefix_ids_sha256": "92ed266a1e4f1f4ee6db0d19fea89264276b38f7b059c35d6bac32c4b211a45c",
+   "seeds": {
+    "v070": 8170202,
+    "v091": 8180202,
+    "b1": 8190202
+   }
+  },
+  {
+   "k": 25,
+   "prefix_id": "P06",
+   "j": 3,
+   "stratum": "capped",
+   "prefix_len": 100195,
+   "prefix_ids_sha256": "61bf8d323ce7a8fedc299d5f73f5181a19bc86fd88918dc9722267102160319b",
+   "seeds": {
+    "v070": 8170603,
+    "v091": 8180603,
+    "b1": 8190603
+   }
+  },
+  {
+   "k": 26,
+   "prefix_id": "P08",
+   "j": 3,
+   "stratum": "finished",
+   "prefix_len": 100191,
+   "prefix_ids_sha256": "ac44215a8eea7fab9301f10b848aac1ebbb735b95f4dc4ec7bc2e2a9d264117b",
+   "seeds": {
+    "v070": 8170803,
+    "v091": 8180803,
+    "b1": 8190803
+   }
+  },
+  {
+   "k": 27,
+   "prefix_id": "P02",
+   "j": 3,
+   "stratum": "capped",
+   "prefix_len": 100229,
+   "prefix_ids_sha256": "92ed266a1e4f1f4ee6db0d19fea89264276b38f7b059c35d6bac32c4b211a45c",
+   "seeds": {
+    "v070": 8170203,
+    "v091": 8180203,
+    "b1": 8190203
+   }
+  },
+  {
+   "k": 28,
+   "prefix_id": "P07",
+   "j": 3,
+   "stratum": "finished",
+   "prefix_len": 102795,
+   "prefix_ids_sha256": "0d950ff4191ea4a9ae8861777cdbc21240734e7dd147b2fa33c53734235ede18",
+   "seeds": {
+    "v070": 8170703,
+    "v091": 8180703,
+    "b1": 8190703
+   }
+  },
+  {
+   "k": 29,
+   "prefix_id": "P04",
+   "j": 3,
+   "stratum": "capped",
+   "prefix_len": 100276,
+   "prefix_ids_sha256": "2fa27f96ecfcf853daa40bcafb589f16b60b2459a64474bd968d4726abe44414",
+   "seeds": {
+    "v070": 8170403,
+    "v091": 8180403,
+    "b1": 8190403
+   }
+  },
+  {
+   "k": 30,
+   "prefix_id": "P10",
+   "j": 3,
+   "stratum": "finished",
+   "prefix_len": 100178,
+   "prefix_ids_sha256": "2c1382082d01d211a644c671d77251958876451ef1861709ed2ea267f6e39063",
+   "seeds": {
+    "v070": 8171003,
+    "v091": 8181003,
+    "b1": 8191003
+   }
+  },
+  {
+   "k": 31,
+   "prefix_id": "P01",
+   "j": 3,
+   "stratum": "capped",
+   "prefix_len": 100091,
+   "prefix_ids_sha256": "c7ade2776edc89c7fd720183bcde5b0d990ee95e4a8637b4bd5fd8bb6264f1d2",
+   "seeds": {
+    "v070": 8170103,
+    "v091": 8180103,
+    "b1": 8190103
+   }
+  },
+  {
+   "k": 32,
+   "prefix_id": "P12",
+   "j": 3,
+   "stratum": "finished",
+   "prefix_len": 100285,
+   "prefix_ids_sha256": "1e01607ee9932d4f8460bc9e585eec039df489cec0af36b6a89296d5fc356d5e",
+   "seeds": {
+    "v070": 8171203,
+    "v091": 8181203,
+    "b1": 8191203
+   }
+  },
+  {
+   "k": 33,
+   "prefix_id": "P03",
+   "j": 3,
+   "stratum": "capped",
+   "prefix_len": 100148,
+   "prefix_ids_sha256": "6ea0c2f4040cd6fb6f79886a4340c35522df03fe20f3711ea48e16c27b508d1c",
+   "seeds": {
+    "v070": 8170303,
+    "v091": 8180303,
+    "b1": 8190303
+   }
+  },
+  {
+   "k": 34,
+   "prefix_id": "P09",
+   "j": 3,
+   "stratum": "finished",
+   "prefix_len": 100766,
+   "prefix_ids_sha256": "7a4fd30b9b7f96ac27b4bf6dd7e4b8194eb5baa84ea1ce916a9a4decc452d05e",
+   "seeds": {
+    "v070": 8170903,
+    "v091": 8180903,
+    "b1": 8190903
+   }
+  },
+  {
+   "k": 35,
+   "prefix_id": "P05",
+   "j": 3,
+   "stratum": "capped",
+   "prefix_len": 100238,
+   "prefix_ids_sha256": "8bcdf999e240ba8316036f7ebb728ab59805fcdf940080a8bfb53c2f7401310f",
+   "seeds": {
+    "v070": 8170503,
+    "v091": 8180503,
+    "b1": 8190503
+   }
+  },
+  {
+   "k": 36,
+   "prefix_id": "P11",
+   "j": 3,
+   "stratum": "finished",
+   "prefix_len": 100308,
+   "prefix_ids_sha256": "82578d0bb0c3ce15e988fba7003cee5882f85fbea95f40683fec863a65a20d39",
+   "seeds": {
+    "v070": 8171103,
+    "v091": 8181103,
+    "b1": 8191103
+   }
+  },
+  {
+   "k": 37,
+   "prefix_id": "P08",
+   "j": 4,
+   "stratum": "finished",
+   "prefix_len": 100191,
+   "prefix_ids_sha256": "ac44215a8eea7fab9301f10b848aac1ebbb735b95f4dc4ec7bc2e2a9d264117b",
+   "seeds": {
+    "v070": 8170804,
+    "v091": 8180804,
+    "b1": 8190804
+   }
+  },
+  {
+   "k": 38,
+   "prefix_id": "P05",
+   "j": 4,
+   "stratum": "capped",
+   "prefix_len": 100238,
+   "prefix_ids_sha256": "8bcdf999e240ba8316036f7ebb728ab59805fcdf940080a8bfb53c2f7401310f",
+   "seeds": {
+    "v070": 8170504,
+    "v091": 8180504,
+    "b1": 8190504
+   }
+  },
+  {
+   "k": 39,
+   "prefix_id": "P09",
+   "j": 4,
+   "stratum": "finished",
+   "prefix_len": 100766,
+   "prefix_ids_sha256": "7a4fd30b9b7f96ac27b4bf6dd7e4b8194eb5baa84ea1ce916a9a4decc452d05e",
+   "seeds": {
+    "v070": 8170904,
+    "v091": 8180904,
+    "b1": 8190904
+   }
+  },
+  {
+   "k": 40,
+   "prefix_id": "P01",
+   "j": 4,
+   "stratum": "capped",
+   "prefix_len": 100091,
+   "prefix_ids_sha256": "c7ade2776edc89c7fd720183bcde5b0d990ee95e4a8637b4bd5fd8bb6264f1d2",
+   "seeds": {
+    "v070": 8170104,
+    "v091": 8180104,
+    "b1": 8190104
+   }
+  },
+  {
+   "k": 41,
+   "prefix_id": "P11",
+   "j": 4,
+   "stratum": "finished",
+   "prefix_len": 100308,
+   "prefix_ids_sha256": "82578d0bb0c3ce15e988fba7003cee5882f85fbea95f40683fec863a65a20d39",
+   "seeds": {
+    "v070": 8171104,
+    "v091": 8181104,
+    "b1": 8191104
+   }
+  },
+  {
+   "k": 42,
+   "prefix_id": "P06",
+   "j": 4,
+   "stratum": "capped",
+   "prefix_len": 100195,
+   "prefix_ids_sha256": "61bf8d323ce7a8fedc299d5f73f5181a19bc86fd88918dc9722267102160319b",
+   "seeds": {
+    "v070": 8170604,
+    "v091": 8180604,
+    "b1": 8190604
+   }
+  },
+  {
+   "k": 43,
+   "prefix_id": "P07",
+   "j": 4,
+   "stratum": "finished",
+   "prefix_len": 102795,
+   "prefix_ids_sha256": "0d950ff4191ea4a9ae8861777cdbc21240734e7dd147b2fa33c53734235ede18",
+   "seeds": {
+    "v070": 8170704,
+    "v091": 8180704,
+    "b1": 8190704
+   }
+  },
+  {
+   "k": 44,
+   "prefix_id": "P02",
+   "j": 4,
+   "stratum": "capped",
+   "prefix_len": 100229,
+   "prefix_ids_sha256": "92ed266a1e4f1f4ee6db0d19fea89264276b38f7b059c35d6bac32c4b211a45c",
+   "seeds": {
+    "v070": 8170204,
+    "v091": 8180204,
+    "b1": 8190204
+   }
+  },
+  {
+   "k": 45,
+   "prefix_id": "P10",
+   "j": 4,
+   "stratum": "finished",
+   "prefix_len": 100178,
+   "prefix_ids_sha256": "2c1382082d01d211a644c671d77251958876451ef1861709ed2ea267f6e39063",
+   "seeds": {
+    "v070": 8171004,
+    "v091": 8181004,
+    "b1": 8191004
+   }
+  },
+  {
+   "k": 46,
+   "prefix_id": "P03",
+   "j": 4,
+   "stratum": "capped",
+   "prefix_len": 100148,
+   "prefix_ids_sha256": "6ea0c2f4040cd6fb6f79886a4340c35522df03fe20f3711ea48e16c27b508d1c",
+   "seeds": {
+    "v070": 8170304,
+    "v091": 8180304,
+    "b1": 8190304
+   }
+  },
+  {
+   "k": 47,
+   "prefix_id": "P12",
+   "j": 4,
+   "stratum": "finished",
+   "prefix_len": 100285,
+   "prefix_ids_sha256": "1e01607ee9932d4f8460bc9e585eec039df489cec0af36b6a89296d5fc356d5e",
+   "seeds": {
+    "v070": 8171204,
+    "v091": 8181204,
+    "b1": 8191204
+   }
+  },
+  {
+   "k": 48,
+   "prefix_id": "P04",
+   "j": 4,
+   "stratum": "capped",
+   "prefix_len": 100276,
+   "prefix_ids_sha256": "2fa27f96ecfcf853daa40bcafb589f16b60b2459a64474bd968d4726abe44414",
+   "seeds": {
+    "v070": 8170404,
+    "v091": 8180404,
+    "b1": 8190404
+   }
+  }
+ ]
+}

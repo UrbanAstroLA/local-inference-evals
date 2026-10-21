@@ -1,0 +1,6 @@
+v070 {'central_gpu_h': 6.15, 'pessimistic_gpu_h': 12.74, 'ceiling_gpu_h': 14.16, 'uncertainty_p95_gpu_h': 9.18, 'P_session_exceeds_its_ceiling': 0.0} central parts {'startup_s': 540.0, 'prefill_s': 600.3, 'decode_makespan_s': 9625.4}
+v091 {'central_gpu_h': 4.72, 'pessimistic_gpu_h': 7.72, 'ceiling_gpu_h': 8.58, 'uncertainty_p95_gpu_h': 6.65, 'P_session_exceeds_its_ceiling': 0.002} central parts {'startup_s': 760.0, 'prefill_s': 501.5, 'decode_makespan_s': 7057.3}
+b1 {'central_gpu_h': 4.76, 'pessimistic_gpu_h': 7.78, 'ceiling_gpu_h': 8.66, 'uncertainty_p95_gpu_h': 6.69, 'P_session_exceeds_its_ceiling': 0.0013} central parts {'startup_s': 760.0, 'prefill_s': 501.5, 'decode_makespan_s': 7138.2}
+total {'central_gpu_h': 15.83, 'pessimistic_gpu_h': 28.44, 'ceiling_gpu_h': 31.6, 'ceiling_wall_s': 56880, 'P_run_exceeds_ceiling': 0.0, 'uncertainty_p50_gpu_h': 16.72, 'uncertainty_p95_gpu_h': 20.28, 'session_min_wall_s': {'v070': 25485, 'v091': 15449, 'b1': 15581}, 'earlier_estimate_discovery_T14': {'central': 7.8, 'pessimistic': 10.3, 'basis': 'concurrency 16, 3 waves, lifetime decode 41 / 67 / 74 tok/s'}}
+concurrency-16 sensitivity (central, rate x0.8): 11.77
+prefill tokens {'v070': {'with_cache_hits': 1446672, 'no_hits': 4822800}, 'v091': {'with_cache_hits': 1389072, 'no_hits': 4822800}, 'b1': {'with_cache_hits': 1389072, 'no_hits': 4822800}}

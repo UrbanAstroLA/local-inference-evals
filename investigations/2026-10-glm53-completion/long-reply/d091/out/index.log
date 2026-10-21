@@ -1,0 +1,7 @@
+PASS messages hash -> doc id is one-to-one across all samples files | 23 files, 198 hashes, 0 conflicts
+PASS glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091.s1.requests.jsonl seed 70704: 198 requests, all joined, 198 distinct docs | 198 rows
+PASS raw file: 198 requests, lengths and finish reasons equal the request logs | 198
+PASS raw file: request seeds are exactly the given seeds | [70704]
+PASS raw file: one record per (seed, doc) | 
+at risk >=100k: 10 finished 4 capped 6 questions 10
+comparison 50-100k: 7

@@ -601,6 +601,21 @@ What was asked, run, found, corrected and withdrawn, in date order.
   discovery. Cumulative 91.95 GPU-hours.
   [Result](investigations/2026-10-glm53-completion/rep070/RESULT.md).
 
+**2026-10-21. Long-reply completion: discovery, a fixed-prefix continuation (B+) and a text-logged 0.9.1 pass (amendments 22r-22ab).**
+- **Discovery** (zero GPU): stock 0.7.0's capped long replies mostly end in exact short-period loops that begin well
+  after 100k tokens; finished ones stay novel. On matched questions, 0.7.0 finished more long replies (23 / 36 against
+  18 / 58).
+- **B+** (13.06 GPU-hours): 12 identical 0.7.0-built 100k prefixes, 4 seeds, +64k on three engines.
+  - The frozen analysis was INVALID on an over-strict KV-pool gate. It was amended before outcomes were read, and is
+    reported as read after a disclosed amendment.
+  - Reading: R-I, inconclusive. Stock 0.7.0 and 0.9.1 finished identically (0.417; difference 0.000, 95% ±0.083); B1
+    0.521; the prefix explains 67% of the variance.
+- **Option D** (5.88 GPU-hours, descriptive): one stock 0.9.1 pass with full text. 4 / 10 long replies finished;
+  capped replies are the same loops as 0.7.0's, with different early signatures.
+- **So far:** this points to the difference arising before 100k rather than in continuation. That is not established.
+- **Next:** option E, 0.9.1-built prefixes on both engines. Cumulative 110.90 GPU-hours.
+  [Long-reply](investigations/2026-10-glm53-completion/long-reply/README.md).
+
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough
   qualification. They also said the D7 path "cannot run" where the basis is a reconstruction. These are reworded in the

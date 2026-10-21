@@ -1,0 +1,13 @@
+SAME T1 group medians: comparison 50-100k (finished)
+SAME T1 group medians: finished >=100k: all windows
+SAME T1 group medians: finished >=100k: windows before 100k
+SAME T1 group medians: capped: windows before 100k
+SAME T1 group medians: capped: pre-onset windows
+SAME T1 group medians: capped: post-onset windows
+SAME T3 capped and terminal-onset rows (prespecified class, post hoc class, onsets, episodes)
+SAME T4 episode counts
+SAME T12 first-100k separation (medians, AUC)
+SAME T13 rep070-F capped chars/token proxy values and >= 3.0 count (request-log chars in discovery, raw-index chars here)
+SAME drift and hash verification
+reproduction: ALL SAME
+rc=0

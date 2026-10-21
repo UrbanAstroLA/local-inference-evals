@@ -1,0 +1,54 @@
+q32p1 55708 stop N 55535 drift 2 onset None no terminal loop verifyfail 0
+q48p1 71110 stop N 70878 drift 2 onset None no terminal loop verifyfail 0
+q64p1 74081 stop N 73623 drift 2 onset None no terminal loop verifyfail 0
+q81p1 59283 stop N 58641 drift 2 onset None no terminal loop verifyfail 0
+q94p1 62059 stop N 61289 drift 2 onset None no terminal loop verifyfail 0
+q71p1 124709 stop N 124510 drift 4 onset None no terminal loop verifyfail 0
+q69p1 144012 stop N 143400 drift 1 onset None no terminal loop verifyfail 0
+q108p1 64762 stop N 64098 drift 2 onset None no terminal loop verifyfail 0
+q109p1 89706 stop N 89140 drift 2 onset None no terminal loop verifyfail 0
+q127p1 54226 stop N 53909 drift 5 onset None no terminal loop verifyfail 0
+q130p1 67501 stop N 67142 drift 3 onset None no terminal loop verifyfail 0
+q79p1 327680 length N 327676 drift 4 onset 288394 fragmentary recycling verifyfail 0
+q88p1 327680 length N 327680 drift 0 onset 143158 short-period exact loop verifyfail 0
+q147p1 150616 stop N 150210 drift 3 onset None no terminal loop verifyfail 0
+q186p1 124517 stop N 124020 drift 5 onset None no terminal loop verifyfail 0
+q13p2 53316 stop N 52921 drift 2 onset None no terminal loop verifyfail 0
+q48p2 73985 stop N 73805 drift 3 onset None no terminal loop verifyfail 0
+q71p2 134402 stop N 134208 drift 0 onset None no terminal loop verifyfail 0
+q81p2 126276 stop N 126018 drift 0 onset None no terminal loop verifyfail 0
+q8p2 327680 length N 327679 drift 1 onset 236765 short-period exact loop verifyfail 0
+q69p2 327680 length N 327679 drift 1 onset 181125 fragmentary recycling verifyfail 0
+q88p2 327680 length N 327680 drift 0 onset 54812 fragmentary recycling verifyfail 0
+q79p2 327680 length N 327678 drift 2 onset None no terminal loop verifyfail 0
+q94p2 163343 stop N 162785 drift 2 onset 149160 fragmentary recycling verifyfail 0
+q121p2 91900 stop N 91397 drift 3 onset None no terminal loop verifyfail 0
+q130p2 98320 stop N 98011 drift 2 onset None no terminal loop verifyfail 0
+q147p2 92123 stop N 91826 drift 3 onset None no terminal loop verifyfail 0
+q166p2 82701 stop N 81925 drift 2 onset None no terminal loop verifyfail 0
+q179p2 63692 stop N 63012 drift 2 onset None no terminal loop verifyfail 0
+q127p2 206688 stop N 206107 drift 3 onset None no terminal loop verifyfail 0
+q145p2 142105 stop N 141894 drift 3 onset None no terminal loop verifyfail 0
+q165p2 150052 stop N 149264 drift 8 onset 138657 short-period exact loop verifyfail 0
+q15p3 56964 stop N 56325 drift 2 onset None no terminal loop verifyfail 0
+q7p3 100217 stop N 99548 drift 2 onset None no terminal loop verifyfail 0
+q8p3 80636 stop N 80443 drift 2 onset None no terminal loop verifyfail 0
+q13p3 149478 stop N 148970 drift 2 onset None no terminal loop verifyfail 0
+q64p3 70310 stop N 69452 drift 2 onset None no terminal loop verifyfail 0
+q76p3 72968 stop N 72001 drift 1 onset None no terminal loop verifyfail 0
+q69p3 108084 stop N 107432 drift 5 onset None no terminal loop verifyfail 0
+q81p3 124863 stop N 124110 drift 2 onset None no terminal loop verifyfail 0
+q90p3 50944 stop N 50617 drift 3 onset None no terminal loop verifyfail 0
+q48p3 157835 stop N 157326 drift 2 onset None no terminal loop verifyfail 0
+q94p3 50485 stop N 50179 drift 2 onset None no terminal loop verifyfail 0
+q71p3 148563 stop N 148334 drift 2 onset None no terminal loop verifyfail 0
+q109p3 97985 stop N 97137 drift 2 onset None no terminal loop verifyfail 0
+q79p3 327680 length N 327680 drift 0 onset None no terminal loop verifyfail 0
+q88p3 173347 stop N 173024 drift 0 onset None no terminal loop verifyfail 0
+q115p3 197631 stop N 196909 drift 2 onset None no terminal loop verifyfail 0
+q145p3 50817 stop N 50630 drift 3 onset None no terminal loop verifyfail 0
+q127p3 327680 length N 327680 drift 0 onset 5376 short-period exact loop verifyfail 0
+q147p3 103977 stop N 103590 drift 3 onset None no terminal loop verifyfail 0
+q120p3 327680 length N 327679 drift 1 onset 185274 short-period exact loop verifyfail 0
+q158p3 327680 length N 327679 drift 1 onset 280750 short-period exact loop verifyfail 0
+exit 0

@@ -1,0 +1,24 @@
+{
+ "what": "B+ result (ids, counts, rates, positions; no text)",
+ "state": "INCOMPLETE",
+ "sessions": {
+  "v070": "complete",
+  "v091": "47 of 48 request records",
+  "b1": "complete"
+ },
+ "rules": {
+  "DELTA_E": 0.15,
+  "ALPHA": 0.05,
+  "SMALL_MAX": 0.1,
+  "EQ_BOUND": 0.2,
+  "ETA_MIN": 0.3,
+  "B_BOOT": 20000,
+  "BOOT_SEED": 20261016
+ },
+ "completed_requests": {
+  "v070": 48,
+  "v091": 47,
+  "b1": 48
+ },
+ "reading": null
+}

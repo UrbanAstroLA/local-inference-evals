@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-10-21 (completion investigation, amendments 22r-22ab): long-reply completion
+
+Contents unchanged. Two investigation runs are added (not protocol runs in `runs/`).
+
+- **`PLAN.md`**: amendments 22r-22ab (discovery; B+ package, authorization, INVALID verdict, disclosed gate amendment,
+  result; option D package, authorization, result; the decision to run option E).
+- **New `long-reply/`**: `README.md`, `discovery/`, `bplus/` and `d091/`. Withheld: prefixes, prompts, token ids, raw
+  bodies, server logs, docker inspect output, the seed-scan file inventory and the local eval-chain copy (by hash).
+  Substitutions are in `PUBLIC-COPIES-22ab.txt`.
+- **`costs.jsonl`** (13.0639 and 5.8844) and **`recompute.py`**: cumulative 110.90.
+- **Investigation `README.md`** and **`LEDGER.md`**.
+
 ## 2026-10-17 (completion investigation, amendments 22o-22q): stock 0.7.0 replication result
 
 One investigation run is added (not a protocol run in `runs/`). No published row changes.

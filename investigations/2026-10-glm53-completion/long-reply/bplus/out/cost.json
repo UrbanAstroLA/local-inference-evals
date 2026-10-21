@@ -1,0 +1,145 @@
+{
+ "what": "B+ cost model (occupied GPU-hours = 2 x wall)",
+ "inputs": {
+  "v070": {
+   "dec_c": 32.7,
+   "dec_p": 22.4,
+   "pre_c": 2410.0,
+   "pre_p": 1200.0,
+   "start_c": 540.0,
+   "start_p": 810.0,
+   "p_c": 0.55
+  },
+  "v091": {
+   "dec_c": 52.9,
+   "dec_p": 37.8,
+   "pre_c": 2770.0,
+   "pre_p": 2410.0,
+   "start_c": 760.0,
+   "start_p": 1140.0,
+   "p_c": 0.26
+  },
+  "b1": {
+   "dec_c": 52.3,
+   "dec_p": 37.5,
+   "pre_c": 2770.0,
+   "pre_p": 2410.0,
+   "start_c": 760.0,
+   "start_p": 1140.0,
+   "p_c": 0.26
+  }
+ },
+ "p_pess": 0.26,
+ "sources": [
+  "rep070/run-F/server-s{1,2}.log + rep070-F request logs; gpqa +v0.9.1(.ps).server.log + request logs; b1-screen/run-s1236/server-s1.log + B1 request log (status-line join, scratch script, numbers quoted)",
+  "long-reply/discovery/out/lengths_all.jsonl (T / secs of finished >= 100k replies)",
+  "first-contrast/retry/run-fcr1/client.jsonl (C/D runs: 8 in flight, ~92k contexts, B1 forcehook-mg2)",
+  "first-contrast/retry/cost/cost_fcr.py (prefill 2,770 / 2,410; start-up 732 s)"
+ ],
+ "prefill_tokens": {
+  "v070": {
+   "with_cache_hits": 1446672,
+   "no_hits": 4822800
+  },
+  "v091": {
+   "with_cache_hits": 1389072,
+   "no_hits": 4822800
+  },
+  "b1": {
+   "with_cache_hits": 1389072,
+   "no_hits": 4822800
+  }
+ },
+ "engines": {
+  "v070": {
+   "central_wall_s": 11073,
+   "central_gpu_h": 6.15,
+   "central_parts": {
+    "startup_s": 540.0,
+    "prefill_s": 600.3,
+    "decode_makespan_s": 9625.4
+   },
+   "pessimistic_wall_s": 22926,
+   "pessimistic_gpu_h": 12.74,
+   "ceiling_wall_s": 25485,
+   "ceiling_gpu_h": 14.16,
+   "ceiling_parts": {
+    "startup_s": 810.0,
+    "prefill_s": 4019.0,
+    "decode_makespan_s": 17554.3
+   },
+   "uncertainty_p50_gpu_h": 6.36,
+   "uncertainty_p95_gpu_h": 9.18,
+   "P_session_exceeds_its_ceiling": 0.0
+  },
+  "v091": {
+   "central_wall_s": 8492,
+   "central_gpu_h": 4.72,
+   "central_parts": {
+    "startup_s": 760.0,
+    "prefill_s": 501.5,
+    "decode_makespan_s": 7057.3
+   },
+   "pessimistic_wall_s": 13889,
+   "pessimistic_gpu_h": 7.72,
+   "ceiling_wall_s": 15449,
+   "ceiling_gpu_h": 8.58,
+   "ceiling_parts": {
+    "startup_s": 1140.0,
+    "prefill_s": 2001.2,
+    "decode_makespan_s": 10402.5
+   },
+   "uncertainty_p50_gpu_h": 4.95,
+   "uncertainty_p95_gpu_h": 6.65,
+   "P_session_exceeds_its_ceiling": 0.002
+  },
+  "b1": {
+   "central_wall_s": 8570,
+   "central_gpu_h": 4.76,
+   "central_parts": {
+    "startup_s": 760.0,
+    "prefill_s": 501.5,
+    "decode_makespan_s": 7138.2
+   },
+   "pessimistic_wall_s": 14010,
+   "pessimistic_gpu_h": 7.78,
+   "ceiling_wall_s": 15581,
+   "ceiling_gpu_h": 8.66,
+   "ceiling_parts": {
+    "startup_s": 1140.0,
+    "prefill_s": 2001.2,
+    "decode_makespan_s": 10485.8
+   },
+   "uncertainty_p50_gpu_h": 4.99,
+   "uncertainty_p95_gpu_h": 6.69,
+   "P_session_exceeds_its_ceiling": 0.0013
+  }
+ },
+ "total": {
+  "central_gpu_h": 15.83,
+  "pessimistic_gpu_h": 28.44,
+  "ceiling_gpu_h": 31.6,
+  "ceiling_wall_s": 56880,
+  "P_run_exceeds_ceiling": 0.0,
+  "uncertainty_p50_gpu_h": 16.72,
+  "uncertainty_p95_gpu_h": 20.28,
+  "session_min_wall_s": {
+   "v070": 25485,
+   "v091": 15449,
+   "b1": 15581
+  },
+  "earlier_estimate_discovery_T14": {
+   "central": 7.8,
+   "pessimistic": 10.3,
+   "basis": "concurrency 16, 3 waves, lifetime decode 41 / 67 / 74 tok/s"
+  }
+ },
+ "sensitivity_concurrency_16_central_gpu_h": 11.77,
+ "disk": {
+  "raw_bytes_per_generated_token_upper": 12,
+  "requests": 144,
+  "max_generated_tokens": 9437184,
+  "raw_upper_bound_MB_uncompressed": 113.2,
+  "note": "upper bound: ~4 chars of text + ~7 bytes of JSON id per token; gzip typically 3-5x smaller; server logs ~1-2 MB per session; prompt ids are not stored again (hash only)"
+ }
+}

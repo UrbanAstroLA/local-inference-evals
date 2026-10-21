@@ -1,0 +1,10 @@
+4a5,6
+> # rep070 copy of <stacks>/glm53-flash-v0.8.0/eval-chain.sh (sha256 c4dbb500...), two changes: GPQA_SEED_LIST
+> # (per-pass request seeds) and the lm-eval log named after the run tag (${RT}.log) so the record's ${R}.log is not appended to.
+85a88,89
+>     # rep070 copy, change 1 of 2: GPQA_SEED_LIST="s1 s2 s3" sends seed s_pass (variant R: 1234 1235 1236 = the line above)
+>     [ -n "${GPQA_SEED_LIST:-}" ] && SEEDARG=",seed=$(echo "$GPQA_SEED_LIST" | cut -d' ' -f"$pass")"
+88c92
+<       --tasks gpqa_diamond_thinking --apply_chat_template --seed $((1234+pass)) --output_path "$d" --log_samples >>"<gpqa-runs>/${R}.log" 2>&1
+---
+>       --tasks gpqa_diamond_thinking --apply_chat_template --seed $((1234+pass)) --output_path "$d" --log_samples >>"<gpqa-runs>/${RT}.log" 2>&1

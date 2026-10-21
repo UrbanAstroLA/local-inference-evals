@@ -1,0 +1,6 @@
+(Worker_TP0 pid=332) INFO 10-21 07:52:47 [default_loader.py:430] Loading weights took 108.54 seconds
+(Worker_TP0 pid=332) INFO 10-21 07:53:38 [default_loader.py:430] Loading weights took 0.94 seconds
+(Worker_TP1 pid=366) INFO 10-21 07:53:40 [interface.py:926] Setting attention block size to 4352 tokens to ensure that attention page size is >= mamba page size.
+(Worker_TP0 pid=332) INFO 10-21 07:53:42 [interface.py:926] Setting attention block size to 4352 tokens to ensure that attention page size is >= mamba page size.
+(Worker_TP0 pid=332) INFO 10-21 07:54:07 [gpu_worker.py:565] Available KV cache memory: 17.4 GiB
+(EngineCore pid=244) INFO 10-21 07:54:18 [kv_cache_utils.py:2299] GPU KV cache size: 4,707,515 tokens, Maximum concurrency for 1,048,576 tokens per request: 4.49x

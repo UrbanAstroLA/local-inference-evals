@@ -1,0 +1,14 @@
+2026-10-21T10:14:12-07:00 d091 start; seed 70704; tag +d091; approved 10.0 GPU-h (18000 s wall)
+cache inventory: 2081 files, 678 unreadable, sha256 a014960101a49d7a
+recording http://127.0.0.1:8001 on 127.0.0.1:8002 -> <gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091.s1.requests.jsonl
+2026-10-21T10:14:14-07:00 session 1: pass 1, seed 70704, requests -> <gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091.s1.requests.jsonl
+2026-10-21T13:10:39-07:00 session 1: chain rc=0
+2026-10-21T13:10:44-07:00 session 1: docker stop rc=0
+  inspect: image OK; published on ['127.0.0.1'] (loopback only)
+cache inventory: 2081 files, 678 unreadable, sha256 a014960101a49d7a
+cache diff cache-s0.json -> cache-s1.json: 0 added, 0 removed, 0 changed
+  warm-up lines: 9; preemption lines: 0
+2026-10-21T13:10:48-07:00 COMPLETE run: frozen analysis rc=0 (0 valid; 3 INVALID; any other = analysis error; only 0 is read; stated figure provisional until the hand read)
+2026-10-21T13:27:24-07:00 long-reply pipeline (CPU only) rc=0 (see <runs>/long-reply/d091/out/pipeline.log)
+2026-10-21T13:27:24-07:00 D091 DONE; total wall 11592s, 5.884 GPU-h (ledger <runs>/long-reply/d091/run/costs.jsonl)
+no GLM container running

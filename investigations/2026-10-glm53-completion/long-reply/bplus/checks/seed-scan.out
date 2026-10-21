@@ -1,0 +1,1045 @@
+{
+ "gpqa_seeds_used": [
+  1234,
+  1235,
+  1236,
+  4242,
+  5001,
+  5002,
+  5003,
+  5004,
+  5005,
+  5006,
+  5007,
+  5008,
+  5009,
+  5010,
+  5011,
+  5012,
+  70701,
+  70702,
+  70703
+ ],
+ "request_seeds_any_prompt": [
+  1234,
+  1235,
+  1236,
+  4242,
+  70701,
+  70702,
+  70703
+ ],
+ "non_integer_request_seeds": [],
+ "text_scan_distinct_values": 1194,
+ "candidates_all_eligible": true
+}
+{
+ "8170101": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170102": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170103": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170104": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170201": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170202": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170203": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170204": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170301": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170302": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170303": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170304": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170401": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170402": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170403": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170404": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170501": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170502": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170503": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170504": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170601": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170602": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170603": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170604": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170701": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170702": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170703": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170704": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170801": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170802": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170803": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170804": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170901": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170902": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170903": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8170904": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8171001": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8171002": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8171003": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8171004": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8171101": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8171102": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8171103": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8171104": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8171201": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8171202": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8171203": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8171204": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180101": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180102": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180103": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180104": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180201": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180202": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180203": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180204": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180301": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180302": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180303": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180304": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180401": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180402": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180403": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180404": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180501": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180502": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180503": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180504": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180601": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180602": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180603": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180604": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180701": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180702": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180703": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180704": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180801": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180802": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180803": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180804": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180901": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180902": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180903": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8180904": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8181001": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8181002": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8181003": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8181004": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8181101": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8181102": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8181103": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8181104": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8181201": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8181202": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8181203": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8181204": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190101": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190102": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190103": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190104": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190201": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190202": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190203": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190204": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190301": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190302": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190303": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190304": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190401": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190402": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190403": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190404": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190501": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190502": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190503": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190504": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190601": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190602": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190603": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190604": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190701": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190702": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190703": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190704": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190801": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190802": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190803": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190804": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190901": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190902": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190903": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8190904": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8191001": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8191002": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8191003": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8191004": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8191101": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8191102": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8191103": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8191104": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8191201": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8191202": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8191203": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "8191204": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ }
+}

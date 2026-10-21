@@ -1,0 +1,12 @@
+# Written after SHA256SUMS (not covered by it). 2026-10-16T21:12:27-07:00
+SHA256SUMS sha256: a71aa14159090520d7de4f2d8f8e27feb441ce2332226287efaac3bbb5301a63
+SHA256SUMS entries: 85
+sha256sum -c: all OK
+--- DRY_RUN=1 APPROVED_GPU_H=31.6 runner/run_bplus.sh (real machine, read-only):
+2026-10-16T21:12:26-07:00 B+ runner start; engines v070 v091 b1; approved 31.6 GPU-h (56880 s wall); DRY_RUN=1
+DRY_RUN: all refusal checks passed. A real run would now: create <runs>/long-reply/bplus/run (raw/ mode 0700); start the GPU logger (60 s)
+  and the watchdog (56880 s from script start); then for each engine in order v070 v091 b1: GPU pre-flight; budget rule
+  (start only if >= the session's ceiling wall remains: v070 25485 s, v091 15449 s, b1 15581 s);
+  fresh server by digest via the stack launcher (127.0.0.1:8001); ready-file + API gate; client_bplus.py (48 requests,
+  8 in flight, fixed order, seeds from out/plan.json); save server log and docker inspect; stop; GPU release; cost line;
+  compile-cache inventory. Then the frozen analysis in a CPU-only container. Nothing was created or started.

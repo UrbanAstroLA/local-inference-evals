@@ -1,0 +1,15 @@
+# analysis dry runs 2026-10-16T21:07:19-07:00 (synthetic run folders; CPU-only container; frozen analysis_bplus.py)
+PASS all-finish: rc 0, COMPLETE R-I
+PASS none-finish: rc 0, COMPLETE R-I
+PASS engine-effect: rc 0, COMPLETE R-E
+PASS state-dominated: rc 0, COMPLETE R-S
+PASS null: rc 0, COMPLETE R-I
+PASS c1-only: rc 5, C1-ONLY R-E
+PASS neg-wrong-seed: rc 3, INVALID None
+PASS neg-prompt-hash: rc 3, INVALID None
+PASS neg-raw-mismatch: rc 3, INVALID None
+PASS neg-image: rc 3, INVALID None
+PASS neg-no-ready: rc 3, INVALID None
+PASS neg-missing-request: rc 4, INCOMPLETE None
+PASS neg-watchdog: rc 4, INCOMPLETE None
+dry runs: 13 pass, 0 fail

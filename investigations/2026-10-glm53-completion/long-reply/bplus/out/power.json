@@ -1,0 +1,486 @@
+{
+ "what": "B+ power simulation of the frozen screens",
+ "frozen": {
+  "DELTA_E": 0.15,
+  "ALPHA": 0.05,
+  "SMALL_MAX": 0.1,
+  "EQ_BOUND": 0.2,
+  "ETA_MIN": 0.3
+ },
+ "inputs": {
+  "p070": 0.55,
+  "p091_full_gap": 0.258,
+  "gap": 0.292
+ },
+ "bootstrap_draws_in_simulation": 2000,
+ "main": [
+  {
+   "p070": 0.55,
+   "p091": 0.258,
+   "pb1": 0.258,
+   "sigma": 0.0,
+   "nsim": 2000,
+   "reading_share": {
+    "R-E": 0.7045,
+    "R-E-": 0.0,
+    "R-S": 0.0,
+    "R-I": 0.2955
+   },
+   "C2_share": {
+    "EFFECT": 0.011,
+    "REVERSE": 0.009,
+    "SMALL": 0.4815,
+    "unresolved": 0.4985
+   },
+   "eta2_median": 0.066,
+   "eta2_p95": 0.122,
+   "scenario": "full gap"
+  },
+  {
+   "p070": 0.55,
+   "p091": 0.404,
+   "pb1": 0.404,
+   "sigma": 0.0,
+   "nsim": 2000,
+   "reading_share": {
+    "R-E": 0.181,
+    "R-E-": 0.0,
+    "R-S": 0.0,
+    "R-I": 0.819
+   },
+   "C2_share": {
+    "EFFECT": 0.0105,
+    "REVERSE": 0.0135,
+    "SMALL": 0.3375,
+    "unresolved": 0.6385
+   },
+   "eta2_median": 0.072,
+   "eta2_p95": 0.133,
+   "scenario": "half gap"
+  },
+  {
+   "p070": 0.55,
+   "p091": 0.55,
+   "pb1": 0.55,
+   "sigma": 0.0,
+   "nsim": 2000,
+   "reading_share": {
+    "R-E": 0.0105,
+    "R-E-": 0.013,
+    "R-S": 0.0,
+    "R-I": 0.9765
+   },
+   "C2_share": {
+    "EFFECT": 0.0125,
+    "REVERSE": 0.015,
+    "SMALL": 0.303,
+    "unresolved": 0.6695
+   },
+   "eta2_median": 0.073,
+   "eta2_p95": 0.133,
+   "scenario": "no gap"
+  },
+  {
+   "p070": 0.55,
+   "p091": 0.258,
+   "pb1": 0.258,
+   "sigma": 1.0,
+   "nsim": 2000,
+   "reading_share": {
+    "R-E": 0.774,
+    "R-E-": 0.0,
+    "R-S": 0.0,
+    "R-I": 0.226
+   },
+   "C2_share": {
+    "EFFECT": 0.011,
+    "REVERSE": 0.0085,
+    "SMALL": 0.567,
+    "unresolved": 0.4135
+   },
+   "eta2_median": 0.186,
+   "eta2_p95": 0.317,
+   "scenario": "full gap"
+  },
+  {
+   "p070": 0.55,
+   "p091": 0.404,
+   "pb1": 0.404,
+   "sigma": 1.0,
+   "nsim": 2000,
+   "reading_share": {
+    "R-E": 0.2115,
+    "R-E-": 0.0,
+    "R-S": 0.0095,
+    "R-I": 0.779
+   },
+   "C2_share": {
+    "EFFECT": 0.011,
+    "REVERSE": 0.01,
+    "SMALL": 0.4445,
+    "unresolved": 0.5345
+   },
+   "eta2_median": 0.211,
+   "eta2_p95": 0.352,
+   "scenario": "half gap"
+  },
+  {
+   "p070": 0.55,
+   "p091": 0.55,
+   "pb1": 0.55,
+   "sigma": 1.0,
+   "nsim": 2000,
+   "reading_share": {
+    "R-E": 0.011,
+    "R-E-": 0.016,
+    "R-S": 0.042,
+    "R-I": 0.931
+   },
+   "C2_share": {
+    "EFFECT": 0.01,
+    "REVERSE": 0.013,
+    "SMALL": 0.4305,
+    "unresolved": 0.5465
+   },
+   "eta2_median": 0.222,
+   "eta2_p95": 0.356,
+   "scenario": "no gap"
+  },
+  {
+   "p070": 0.55,
+   "p091": 0.258,
+   "pb1": 0.258,
+   "sigma": 2.5,
+   "nsim": 2000,
+   "reading_share": {
+    "R-E": 0.8055,
+    "R-E-": 0.0,
+    "R-S": 0.002,
+    "R-I": 0.1925
+   },
+   "C2_share": {
+    "EFFECT": 0.002,
+    "REVERSE": 0.003,
+    "SMALL": 0.7725,
+    "unresolved": 0.2225
+   },
+   "eta2_median": 0.404,
+   "eta2_p95": 0.59,
+   "scenario": "full gap"
+  },
+  {
+   "p070": 0.55,
+   "p091": 0.404,
+   "pb1": 0.404,
+   "sigma": 2.5,
+   "nsim": 2000,
+   "reading_share": {
+    "R-E": 0.239,
+    "R-E-": 0.0,
+    "R-S": 0.082,
+    "R-I": 0.679
+   },
+   "C2_share": {
+    "EFFECT": 0.008,
+    "REVERSE": 0.006,
+    "SMALL": 0.691,
+    "unresolved": 0.295
+   },
+   "eta2_median": 0.473,
+   "eta2_p95": 0.671,
+   "scenario": "half gap"
+  },
+  {
+   "p070": 0.55,
+   "p091": 0.55,
+   "pb1": 0.55,
+   "sigma": 2.5,
+   "nsim": 2000,
+   "reading_share": {
+    "R-E": 0.0075,
+    "R-E-": 0.006,
+    "R-S": 0.396,
+    "R-I": 0.5905
+   },
+   "C2_share": {
+    "EFFECT": 0.0055,
+    "REVERSE": 0.0055,
+    "SMALL": 0.6705,
+    "unresolved": 0.3185
+   },
+   "eta2_median": 0.495,
+   "eta2_p95": 0.689,
+   "scenario": "no gap"
+  }
+ ],
+ "sensitivity": [
+  {
+   "p070": 0.55,
+   "p091": 0.258,
+   "pb1": 0.55,
+   "sigma": 1.0,
+   "nsim": 2000,
+   "reading_share": {
+    "R-E": 0.752,
+    "R-E-": 0.0,
+    "R-S": 0.0,
+    "R-I": 0.248
+   },
+   "C2_share": {
+    "EFFECT": 0.743,
+    "REVERSE": 0.0,
+    "SMALL": 0.0065,
+    "unresolved": 0.2505
+   },
+   "eta2_median": 0.196,
+   "eta2_p95": 0.32,
+   "scenario": "full gap, B1 = 0.7.0 (fixes close it)"
+  },
+  {
+   "p070": 0.42,
+   "p091": 0.12799999999999995,
+   "pb1": 0.12799999999999995,
+   "sigma": 1.0,
+   "nsim": 2000,
+   "reading_share": {
+    "R-E": 0.819,
+    "R-E-": 0.0,
+    "R-S": 0.0,
+    "R-I": 0.181
+   },
+   "C2_share": {
+    "EFFECT": 0.003,
+    "REVERSE": 0.003,
+    "SMALL": 0.804,
+    "unresolved": 0.19
+   },
+   "eta2_median": 0.154,
+   "eta2_p95": 0.28,
+   "scenario": "full gap, base 0.42"
+  },
+  {
+   "p070": 0.42,
+   "p091": 0.42,
+   "pb1": 0.42,
+   "sigma": 1.0,
+   "nsim": 2000,
+   "reading_share": {
+    "R-E": 0.008,
+    "R-E-": 0.012,
+    "R-S": 0.043,
+    "R-I": 0.937
+   },
+   "C2_share": {
+    "EFFECT": 0.011,
+    "REVERSE": 0.014,
+    "SMALL": 0.443,
+    "unresolved": 0.532
+   },
+   "eta2_median": 0.217,
+   "eta2_p95": 0.359,
+   "scenario": "no gap, base 0.42"
+  },
+  {
+   "p070": 0.42,
+   "p091": 0.12799999999999995,
+   "pb1": 0.12799999999999995,
+   "sigma": 2.5,
+   "nsim": 2000,
+   "reading_share": {
+    "R-E": 0.8035,
+    "R-E-": 0.0,
+    "R-S": 0.0015,
+    "R-I": 0.195
+   },
+   "C2_share": {
+    "EFFECT": 0.0005,
+    "REVERSE": 0.002,
+    "SMALL": 0.8815,
+    "unresolved": 0.116
+   },
+   "eta2_median": 0.333,
+   "eta2_p95": 0.561,
+   "scenario": "full gap, base 0.42"
+  },
+  {
+   "p070": 0.42,
+   "p091": 0.42,
+   "pb1": 0.42,
+   "sigma": 2.5,
+   "nsim": 2000,
+   "reading_share": {
+    "R-E": 0.005,
+    "R-E-": 0.0045,
+    "R-S": 0.429,
+    "R-I": 0.5615
+   },
+   "C2_share": {
+    "EFFECT": 0.005,
+    "REVERSE": 0.004,
+    "SMALL": 0.695,
+    "unresolved": 0.296
+   },
+   "eta2_median": 0.497,
+   "eta2_p95": 0.687,
+   "scenario": "no gap, base 0.42"
+  }
+ ],
+ "threshold_choice": [
+  {
+   "DELTA_E": 0.1,
+   "scenario": "full gap",
+   "sigma": 1.0,
+   "P(R-E)": 0.748
+  },
+  {
+   "DELTA_E": 0.1,
+   "scenario": "half gap",
+   "sigma": 1.0,
+   "P(R-E)": 0.23
+  },
+  {
+   "DELTA_E": 0.1,
+   "scenario": "no gap",
+   "sigma": 1.0,
+   "P(R-E)": 0.018
+  },
+  {
+   "DELTA_E": 0.1,
+   "scenario": "no gap",
+   "sigma": 0.0,
+   "P(R-E)": 0.006
+  },
+  {
+   "DELTA_E": 0.15,
+   "scenario": "full gap",
+   "sigma": 1.0,
+   "P(R-E)": 0.782
+  },
+  {
+   "DELTA_E": 0.15,
+   "scenario": "half gap",
+   "sigma": 1.0,
+   "P(R-E)": 0.19
+  },
+  {
+   "DELTA_E": 0.15,
+   "scenario": "no gap",
+   "sigma": 1.0,
+   "P(R-E)": 0.01
+  },
+  {
+   "DELTA_E": 0.15,
+   "scenario": "no gap",
+   "sigma": 0.0,
+   "P(R-E)": 0.008
+  },
+  {
+   "DELTA_E": 0.2,
+   "scenario": "full gap",
+   "sigma": 1.0,
+   "P(R-E)": 0.74
+  },
+  {
+   "DELTA_E": 0.2,
+   "scenario": "half gap",
+   "sigma": 1.0,
+   "P(R-E)": 0.186
+  },
+  {
+   "DELTA_E": 0.2,
+   "scenario": "no gap",
+   "sigma": 1.0,
+   "P(R-E)": 0.002
+  },
+  {
+   "DELTA_E": 0.2,
+   "scenario": "no gap",
+   "sigma": 0.0,
+   "P(R-E)": 0.014
+  },
+  {
+   "ETA_MIN": 0.2,
+   "scenario": "no gap",
+   "sigma": 2.5,
+   "P(R-S)": 0.43,
+   "eta2_median": 0.495
+  },
+  {
+   "ETA_MIN": 0.2,
+   "scenario": "no gap",
+   "sigma": 1.0,
+   "P(R-S)": 0.128,
+   "eta2_median": 0.22
+  },
+  {
+   "ETA_MIN": 0.2,
+   "scenario": "no gap",
+   "sigma": 0.0,
+   "P(R-S)": 0.0,
+   "eta2_median": 0.072
+  },
+  {
+   "ETA_MIN": 0.2,
+   "scenario": "full gap",
+   "sigma": 2.5,
+   "P(R-S)": 0.0,
+   "eta2_median": 0.405
+  },
+  {
+   "ETA_MIN": 0.3,
+   "scenario": "no gap",
+   "sigma": 2.5,
+   "P(R-S)": 0.5,
+   "eta2_median": 0.495
+  },
+  {
+   "ETA_MIN": 0.3,
+   "scenario": "no gap",
+   "sigma": 1.0,
+   "P(R-S)": 0.032,
+   "eta2_median": 0.217
+  },
+  {
+   "ETA_MIN": 0.3,
+   "scenario": "no gap",
+   "sigma": 0.0,
+   "P(R-S)": 0.0,
+   "eta2_median": 0.072
+  },
+  {
+   "ETA_MIN": 0.3,
+   "scenario": "full gap",
+   "sigma": 2.5,
+   "P(R-S)": 0.0,
+   "eta2_median": 0.412
+  },
+  {
+   "ETA_MIN": 0.4,
+   "scenario": "no gap",
+   "sigma": 2.5,
+   "P(R-S)": 0.398,
+   "eta2_median": 0.502
+  },
+  {
+   "ETA_MIN": 0.4,
+   "scenario": "no gap",
+   "sigma": 1.0,
+   "P(R-S)": 0.012,
+   "eta2_median": 0.224
+  },
+  {
+   "ETA_MIN": 0.4,
+   "scenario": "no gap",
+   "sigma": 0.0,
+   "P(R-S)": 0.0,
+   "eta2_median": 0.076
+  },
+  {
+   "ETA_MIN": 0.4,
+   "scenario": "full gap",
+   "sigma": 2.5,
+   "P(R-S)": 0.002,
+   "eta2_median": 0.396
+  }
+ ]
+}

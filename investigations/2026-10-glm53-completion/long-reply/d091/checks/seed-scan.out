@@ -1,0 +1,58 @@
+{
+ "gpqa_seeds_used": [
+  1234,
+  1235,
+  1236,
+  4242,
+  5001,
+  5002,
+  5003,
+  5004,
+  5005,
+  5006,
+  5007,
+  5008,
+  5009,
+  5010,
+  5011,
+  5012,
+  70701,
+  70702,
+  70703
+ ],
+ "request_seeds_any_prompt": [
+  1234,
+  1235,
+  1236,
+  4242,
+  70701,
+  70702,
+  70703
+ ],
+ "non_integer_request_seeds": [],
+ "text_scan_distinct_values": 1340,
+ "candidates_all_eligible": true
+}
+{
+ "70704": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "70705": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ },
+ "70706": {
+  "in_gpqa_request_logs": false,
+  "in_gpqa_pass_configs": false,
+  "in_any_request_log": false,
+  "in_text_scan": false,
+  "eligible": true
+ }
+}

@@ -1,0 +1,1 @@
+privacy scan: 26 files outside PRIVATE/ searched; 982 prompt windows (198 questions), 2155 reply windows (594 raw records), 94 token-id runs; text hits 0, id-run hits 0; PRIVATE/ mode 0700; files not 0600 or group/other-accessible dirs: none

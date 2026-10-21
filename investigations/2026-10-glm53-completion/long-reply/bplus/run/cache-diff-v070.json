@@ -1,0 +1,18 @@
+{
+ "before": "cache-v070-before.json",
+ "after": "cache-v070-after.json",
+ "added": [
+  "b12x/compile/b6/b69ffbd368e5ccb3329b014112a335ebdfe558b302245ee588a402b75fce5ef1.json",
+  "b12x/compile/b6/b69ffbd368e5ccb3329b014112a335ebdfe558b302245ee588a402b75fce5ef1.lock",
+  "b12x/compile/b6/b69ffbd368e5ccb3329b014112a335ebdfe558b302245ee588a402b75fce5ef1.o",
+  "b12x/compile/e5/e5b7e332178ca6fbc5facd2223710829060dd4b163da64b29c9b914f04bb2bf0.json",
+  "b12x/compile/e5/e5b7e332178ca6fbc5facd2223710829060dd4b163da64b29c9b914f04bb2bf0.lock",
+  "b12x/compile/e5/e5b7e332178ca6fbc5facd2223710829060dd4b163da64b29c9b914f04bb2bf0.o"
+ ],
+ "removed": [],
+ "changed": [],
+ "added_bytes": 285914,
+ "by_top_directory": {
+  "b12x/compile": 6
+ }
+}

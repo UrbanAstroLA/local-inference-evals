@@ -1,0 +1,18 @@
+q8p4 {'len': 46, 'start_a': 16610, 'start_b': 50795, 'offset': 34185} None None
+q15p4 {'len': 197, 'start_a': 56955, 'start_b': 74708, 'offset': 17753} None None
+q27p4 {'len': 46, 'start_a': 55820, 'start_b': 79398, 'offset': 23578} None None
+q69p4 {'len': 106, 'start_a': 42852, 'start_b': 66503, 'offset': 23651} None None
+q90p4 {'len': 40, 'start_a': 2700, 'start_b': 31547, 'offset': 28847} None None
+q13p4 {'len': 174564, 'start_a': 153071, 'start_b': 153117, 'offset': 46} {'len': 174564, 'start_a': 153071, 'start_b': 153117, 'offset': 46} {'top_lags': [[46, 0.9768], [1932, 0.9735], [1380, 0.9732], [1886, 0.9731], [2898, 0.973]], 'exact_period_m08': 46}
+q130p4 {'len': 42, 'start_a': 35821, 'start_b': 48894, 'offset': 13073} None None
+q121p4 {'len': 181, 'start_a': 93477, 'start_b': 96658, 'offset': 3181} None None
+q127p4 {'len': 1720, 'start_a': 81212, 'start_b': 99598, 'offset': 18386} {'len': 436, 'start_a': 142184, 'start_b': 142969, 'offset': 785} {'top_lags': [[20, 0.1601], [12, 0.1419], [40, 0.1401], [8, 0.1315], [28, 0.1267]], 'exact_period_m08': None}
+q147p4 {'len': 120, 'start_a': 2074, 'start_b': 27556, 'offset': 25482} None None
+q79p4 {'len': 81438, 'start_a': 245942, 'start_b': 246242, 'offset': 300} {'len': 81438, 'start_a': 245942, 'start_b': 246242, 'offset': 300} {'top_lags': [[300, 0.9315], [600, 0.9275], [900, 0.924], [1200, 0.9204], [1500, 0.9166]], 'exact_period_m08': 300}
+q81p4 {'len': 147453, 'start_a': 180225, 'start_b': 180227, 'offset': 2} {'len': 147453, 'start_a': 180225, 'start_b': 180227, 'offset': 2} {'top_lags': [[1970, 0.9881], [1976, 0.9881], [1916, 0.9881], [1978, 0.9881], [2038, 0.9881]], 'exact_period_m08': 1916}
+q145p4 {'len': 45, 'start_a': 3976, 'start_b': 11284, 'offset': 7308} None None
+q109p4 {'len': 192515, 'start_a': 135161, 'start_b': 135163, 'offset': 2} {'len': 192515, 'start_a': 135161, 'start_b': 135163, 'offset': 2} {'top_lags': [[8, 0.9901], [10, 0.99], [4, 0.99], [6, 0.99], [2, 0.99]], 'exact_period_m08': 2}
+q165p4 {'len': 126, 'start_a': 61804, 'start_b': 86774, 'offset': 24970} None None
+q149p4 {'len': 249503, 'start_a': 78176, 'start_b': 78178, 'offset': 2} {'len': 249503, 'start_a': 78176, 'start_b': 78178, 'offset': 2} {'top_lags': [[2, 0.9923], [4, 0.9923], [6, 0.9922], [8, 0.9922], [14, 0.9921]], 'exact_period_m08': 2}
+q170p4 {'len': 176927, 'start_a': 127047, 'start_b': 127049, 'offset': 2} {'len': 176927, 'start_a': 127047, 'start_b': 127049, 'offset': 2} {'top_lags': [[2, 0.9829], [4, 0.9828], [6, 0.9826], [8, 0.9825], [10, 0.9824]], 'exact_period_m08': 2}
+exit 0

@@ -1,0 +1,92 @@
+[
+ {
+  "check": "messages hash -> doc id is one-to-one across all samples files",
+  "ok": true,
+  "detail": "22 files, 198 hashes, 0 conflicts"
+ },
+ {
+  "check": "stock 0.7.0 (orig) seed 1235: 198 requests, all joined, 198 distinct docs",
+  "ok": true,
+  "detail": "198 rows"
+ },
+ {
+  "check": "stock 0.7.0 (orig) seed 1236: 198 requests, all joined, 198 distinct docs",
+  "ok": true,
+  "detail": "198 rows"
+ },
+ {
+  "check": "stock 0.7.0 rep070-F seed 70701: 198 requests, all joined, 198 distinct docs",
+  "ok": true,
+  "detail": "198 rows"
+ },
+ {
+  "check": "stock 0.7.0 rep070-F seed 70702: 198 requests, all joined, 198 distinct docs",
+  "ok": true,
+  "detail": "198 rows"
+ },
+ {
+  "check": "stock 0.7.0 rep070-F seed 70703: 198 requests, all joined, 198 distinct docs",
+  "ok": true,
+  "detail": "198 rows"
+ },
+ {
+  "check": "stock 0.9.1 seed 1234: 198 requests, all joined, 198 distinct docs",
+  "ok": true,
+  "detail": "198 rows"
+ },
+ {
+  "check": "stock 0.9.1 seed 1235: 198 requests, all joined, 198 distinct docs",
+  "ok": true,
+  "detail": "198 rows"
+ },
+ {
+  "check": "stock 0.9.1 seed 1236: 198 requests, all joined, 198 distinct docs",
+  "ok": true,
+  "detail": "198 rows"
+ },
+ {
+  "check": "col511 arm seed 1234: 198 requests, all joined, 198 distinct docs",
+  "ok": true,
+  "detail": "198 rows"
+ },
+ {
+  "check": "col511 arm seed 1235: 198 requests, all joined, 198 distinct docs",
+  "ok": true,
+  "detail": "198 rows"
+ },
+ {
+  "check": "col511 arm seed 1236: 198 requests, all joined, 198 distinct docs",
+  "ok": true,
+  "detail": "198 rows"
+ },
+ {
+  "check": "B0 seed 1234: 198 requests, all joined, 198 distinct docs",
+  "ok": true,
+  "detail": "198 rows"
+ },
+ {
+  "check": "B0 seed 1235: 198 requests, all joined, 198 distinct docs",
+  "ok": true,
+  "detail": "198 rows"
+ },
+ {
+  "check": "B0 seed 1236: 198 requests, all joined, 198 distinct docs",
+  "ok": true,
+  "detail": "198 rows"
+ },
+ {
+  "check": "B1 seed 1236: 198 requests, all joined, 198 distinct docs",
+  "ok": true,
+  "detail": "198 rows"
+ },
+ {
+  "check": "lengths equal tail-audit records where both exist",
+  "ok": true,
+  "detail": "2178 compared, 0 differ"
+ },
+ {
+  "check": "rep070-F raw file: 594 requests, lengths and finish reasons equal the request logs",
+  "ok": true,
+  "detail": 594
+ }
+]

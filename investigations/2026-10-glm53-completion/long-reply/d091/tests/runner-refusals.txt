@@ -1,0 +1,23 @@
+PASS [budget unset] rc=1: ABORT: APPROVED_GPU_H is not set (the operator's approved occupied GPU-hours)
+PASS [budget above the ceiling (10.01)] rc=1: ABORT: APPROVED_GPU_H=10.01 must be a number in (0, 10.0] (the plan's ceiling)
+PASS [budget not a number] rc=1: ABORT: APPROVED_GPU_H=abc must be a number in (0, 10.0] (the plan's ceiling)
+PASS [budget zero] rc=1: ABORT: APPROVED_GPU_H=0 must be a number in (0, 10.0] (the plan's ceiling)
+PASS [IMAGE override] rc=1: ABORT: override variables set in the environment (not the shipped configuration): IMAGE
+PASS [PORT override] rc=1: ABORT: override variables set in the environment (not the shipped configuration): PORT
+PASS [GPU_MEMORY_UTILIZATION override] rc=1: ABORT: override variables set in the environment (not the shipped configuration): GPU_MEMORY_UTILIZATION
+PASS [seed list override] rc=1: ABORT: override variables set in the environment (not the shipped configuration): GPQA_SEED_LIST
+PASS [launcher variable override (MAX_NUM_SEQS)] rc=1: ABORT: override variables set in the environment (not the shipped configuration): MAX_NUM_SEQS
+PASS [GLM container running (stub)] rc=1: ABORT: a GLM container is running:
+PASS [wrong image digest (stub)] rc=1: ABORT: image ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 has Id 'sha256:00
+PASS [compute process on the GPUs (stub)] rc=1: ABORT: compute process 999999 on the GPUs
+PASS [lm_eval process running (dummy process)] rc=1: ABORT: an lm_eval process is running (pids 148488)
+PASS [a process merely mentioning lm_eval does not block (dummy)] rc=0: DRY_RUN: all refusal checks passed. A real run would now: create <runs>/long-reply/d091/run and <data-runs>
+PASS [port 8002 in use (dummy listener)] rc=1: ABORT: port 8001 or 8002 is in use:
+PASS [run directory exists (earlier attempt)] rc=1: ABORT: <runs>/long-reply/d091/run exists (an earlier attempt; no automatic retry)
+PASS [out/ not empty (earlier pipeline run)] rc=1: ABORT: <runs>/long-reply/d091/out is not empty (an earlier pipeline run)
+PASS [PRIVATE/ not mode 0700] rc=1: ABORT: <runs>/long-reply/d091/PRIVATE must exist with mode 0700
+PASS [package SHA256SUMS does not verify] rc=1: ABORT: <runs>/long-reply/d091/SHA256SUMS does not verify:
+PASS [real machine, budget at the ceiling (10.0) accepted] rc=0: DRY_RUN: all refusal checks passed. A real run would now: create <runs>/long-reply/d091/run and <data-runs>
+PASS [real machine, budget 8] rc=0: DRY_RUN: all refusal checks passed. A real run would now: create <runs>/long-reply/d091/run and <data-runs>
+PASS [no files created by DRY_RUN]
+runner refusal tests: 22 passed, 0 failed

@@ -1,0 +1,11 @@
+2026-10-21T13:10:48-07:00 pipeline start; WORK <runs>/long-reply/d091; raw <runs>/long-reply/d091/PRIVATE/raw; request log glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091.s1.requests.jsonl; seed 70704
+2026-10-21T13:10:49-07:00 step index rc=0
+2026-10-21T13:26:31-07:00 step trajectory rc=0
+2026-10-21T13:26:35-07:00 step periods rc=0
+2026-10-21T13:26:35-07:00 step compare rc=0
+2026-10-21T13:26:35-07:00 step select rc=0
+2026-10-21T13:26:52-07:00 step build rc=0
+2026-10-21T13:27:07-07:00 step verify-v091 rc=0
+2026-10-21T13:27:23-07:00 step verify-b1 rc=0
+2026-10-21T13:27:24-07:00 step privacy rc=0
+2026-10-21T13:27:24-07:00 pipeline done

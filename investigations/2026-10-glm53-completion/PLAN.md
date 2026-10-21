@@ -2453,3 +2453,151 @@ rep070/refreeze/ SHA256SUMS 131e72ea… as frozen in 22n.
 - **New question, taken up separately:** what drives completion of long replies (P(finish | still generating at
   100,000 tokens)), the measure on which 0.7.0 still looks different descriptively. Discovery comes first, zero GPU;
   any experiment is proposed, reviewed and authorized before data.
+
+**Amendment 22r (2026-10-17; long-reply completion: discovery result and operator choice, before any GPU use).**
+- **Discovery** (zero GPU; `long-reply/discovery/`, definitions hashed before any metric was computed): on the
+  replication's 29 replies past 100,000 tokens:
+  - 8 of 10 capped replies end in an exact loop (period 2-1,001 tokens); 2 do not loop. Only 2 were already repeating
+    at 100k; the rest began 43k-188k tokens later. No capped reply recovered from a terminal loop.
+  - 15 of 19 finished replies produce new text to the end of their reasoning.
+  - Capped replies show lower characters per token in their first 100k tokens (2.31 against 3.15), before any
+    repetition.
+  - Onset positions show no clustering on the attention block, prefill chunk or powers of two.
+  - On the 14 questions long in both engine families, the 0.7.0 family finished 23 / 36 long replies against 18 / 58
+    for the 0.9.1 family: the finishing gap is not explained by which questions go long. All descriptive.
+- **Open:** is the outcome set by the state a trajectory has reached at 100k, or by how the engine continues from it?
+- **Operator choice:** option B+. 12 identical 0.7.0 prefixes cut at 100k generated tokens, 4 seeds each, continued
+  +64k tokens on stock 0.7.0, stock 0.9.1 and B1 (about 8-10 GPU-hours, upper bound). The design, analysis and costing
+  are frozen in a package, reviewed independently and authorized before any data.
+
+**Amendment 22s (2026-10-17; B+ fixed-prefix continuation package frozen for review, before any GPU use).**
+- **Package:** `long-reply/bplus/` (SHA256SUMS sha256 a71aa141…, 85 files); 16 / 16 CPU checks.
+- **Prefixes:** the 29 replication replies past 100k, kept if R50 at 100k is below 0.05; one reply per question;
+  questions ranked by panel long count; ties broken by salted sha256.
+  - originally capped: q79p2, q88p1, q69p2, q120p3, q8p2, q158p3;
+  - originally finished: q127p2, q147p1, q81p2, q71p1, q186p1, q145p2.
+  Each is cut at exactly 100,000 reasoning tokens and re-tokenized from text, because the original ids were not kept.
+  Every engine receives the same token ids through `/v1/completions`, gated by hash.
+- **Continuation:** 4 distinct seeds per prefix per engine, +65,536 tokens, temperature 1.0, top_p 0.95, 8 in flight.
+  Fresh server per engine, in the order stock 0.7.0, stock 0.9.1, B1. Prefix caching as shipped. Serving and sampling
+  source is byte-identical across the three images; stop ids 154820 / 154827 / 154829; `</think>` does not stop.
+- **Known asymmetries (part of "engine", not controlled):**
+  - prefix KV is rebuilt by prefill on every engine;
+  - D7 in the prefix prefill: 0.7.0 mean 0.14% of a prefix's index-K pools; 0.9.1 0.08% in 32 of 48 continuations;
+    B1 repaired;
+  - layout: 0.7.0 DCP2 / EP2 / DFlash ×5; 0.9.1 and B1 DCP1 / ×3.
+- **Primary:** P(finish within +64k) per engine, prefix as the unit.
+  - *Engine effect supported:* 0.7.0 − 0.9.1 ≥ 0.15, 95% interval excluding 0, and sign-flip p ≤ 0.05. Power 0.70-0.81
+    at the full discovery gap, about 0.2 at half the gap; false positive ≤ 0.016 with no gap.
+  - *State-dominated:* all three contrasts within ±0.20 (90% interval) and the prefix explaining ≥ 30% of outcome
+    variance.
+- **Cost:** central 15.8, pessimistic 28.4, ceiling 31.6 GPU-hours; P(ceiling) < 0.1%. The discovery estimate (7.8)
+  assumed 16 in flight; 16 in flight would be about 11.8 central. A frozen fallback reads the primary contrast within
+  about 23.
+- **Open, not verified on CPU:** actual prefix-cache hits; 0.7.0's long-prompt prefill rate; decode rates at 8 ×
+  100-165k contexts.
+
+**Amendment 22t (2026-10-20; operator authorization "full send with the 31.6 ceiling", before any B+ data).**
+The B+ package of 22s (SHA256SUMS a71aa141…, verified at launch, DRY_RUN passed) is authorized at up to 31.6 occupied
+GPU-hours, single attempt, no retry. By the operator's decision it launches without a separate independent review of the
+package; the frozen design, thresholds and analysis are unchanged from 22s.
+
+**Amendment 22u (2026-10-21; B+ run completed; frozen verdict INVALID on one configuration gate; recorded before any
+outcome was read).**
+- **Run:** all three sessions complete, 144 / 144 requests HTTP 200, no preemption, 9 warm-ups per session, loopback
+  publish. **13.064 occupied GPU-hours** of 31.6 (v070 5.531, v091 3.879, b1 3.654). The server renderings of all 12
+  prefixes equal the frozen token ids, and the first record was checked against the plan (prompt hash, seed, parameters).
+- **Frozen verdict: INVALID, no reading.** The only failed check is that the v070 server log's KV pool must equal the
+  reference record's:
+  - this run reported 2,768,240 tokens against 2,758,919;
+  - "Available KV cache memory" was 15.78 GiB in both;
+  - 2,768,240 is exactly the old 0.7.0 record's own pass-1 session value (2026-09-29). The rep070 comparator audit
+    listed this difference as an existing run-to-run variation, "not gating";
+  - peak KV use at 8 × about 165k tokens stays far below either pool.
+- **No outcome has been read.** Whether to amend this gate goes to the operator, decided blind to outcomes.
+
+**Amendment 22v (2026-10-21; operator decision "first option": KV pool gate amended, decided before any outcome was
+read).**
+- **The change:** the v070 KV pool gate accepts either size the old 0.7.0 record itself produced: 2,758,919
+  (2026-10-10 and the rep070-F replication) or 2,768,240 (2026-09-29). Every other check, threshold, screen and
+  analysis step is unchanged.
+- **Implementation:** `scripts/analysis_bplus_22v.py` (sha256 ed915a07…), a copy of the frozen `analysis_bplus.py`
+  (613019d9…) differing only in this gate. The frozen file and its INVALID result (`run/result.md`) are kept. The
+  amended analysis writes `run/result-22v.*`.
+- **Labelling:** any reading is reported as read after a disclosed gate amendment.
+
+**Amendment 22w (2026-10-21; B+ result under the 22v gate amendment).**
+- **Valid** under 22v; every other check unchanged and passing. **Reading: R-I, inconclusive** under the prespecified
+  rules.
+- **Primary, P(finish within +64k), prefix as the unit:** stock 0.7.0 0.417 (20 / 48), stock 0.9.1 0.417 (20 / 48),
+  B1 0.521 (25 / 48).
+  - C1 (0.7.0 − 0.9.1): +0.000 (95% −0.083 to +0.083; sign-flip p 1.00), screen SMALL.
+  - C2 (B1 − 0.9.1): +0.104 (95% +0.000 to +0.208; p 0.19).
+  - C3 (0.7.0 − B1): −0.104 (95% −0.208 to −0.021; p 0.13).
+  - Prefix share of outcome variance η² 0.67 (PREFIX_HIGH).
+- **Why not R-S:** C2 and C3 miss the SMALL rule (|mean| ≤ 0.10) by 0.004. Their 90% intervals lie inside ±0.20.
+- **Descriptive:**
+  - originally capped prefixes finish 0.13 / 0.17 / 0.29, originally finished prefixes 0.71 / 0.67 / 0.75 (0.7.0 /
+    0.9.1 / B1);
+  - loop onsets in the continuation: 5 / 6 / 12 of 48;
+  - within-prefix ICC 0.62 / 0.57 / 0.71;
+  - decode 34.7 / 48.4 / 48.1 tok/s.
+- **Caveats:** one 0.7.0-built state per question; prefixes rebuilt by prefill (decode-built state absent); re-tokenized
+  ids; "engine" bundles decode path, D2 / D7 exposure, layout and speculation depth.
+- **Cost:** 13.064 GPU-hours (v070 5.531, v091 3.879, b1 3.654).
+
+**Amendment 22x (2026-10-21; operator choice after B+: option D, before any GPU use).**
+- **Design:** one stock 0.9.1 GPQA Diamond pass on the standard protocol (198 questions, 8 in flight, cap 327,680,
+  temperature 1.0, top_p 0.95, task hash 87e807b3…) at a fresh request seed. Full request and response bodies are kept
+  locally, as in the rep070 replication.
+- **Analysis:** the replies are run through the discovery pipeline unchanged (definitions hashed in
+  `long-reply/discovery/PRESPEC.md`).
+- **Question:** do 0.9.1's long replies reach the states that 0.7.0's capped replies showed before 100k (lower
+  characters per token, more interjections), and are 0.9.1's capped replies the same exact loops?
+- **Also:** the pass supplies 0.9.1-built prefixes for a possible prefix-source × engine cross-continuation.
+- **Descriptive only.** Package, costing and checks are frozen before authorization.
+
+**Amendment 22y (2026-10-21; option-D package frozen, before any GPU use).**
+- **Package:** `long-reply/d091/` (SHA256SUMS sha256 b558b584…, 147 files).
+- **Run:** stock 0.9.1 (image a9e985c0…), one pass, request seed 70704 (checked unused across request logs, results,
+  published rows, a text scan and the raw-body files), lm-eval process seed 1235, standard protocol.
+- **Gates:** identity gates accept only values the 0.9.1 record's own two sessions produced; calibrated by running the
+  gate code on those sessions and on B+'s 0.9.1 session (12 / 12 pass on all three). The KV pool is reported, not
+  identity-gated, with a floor of 2,646,016 tokens (8 requests at the cap).
+- **Analysis:** discovery's `trajectory.py`, `periods.py` and B+'s `build_prefixes.py` run byte-unchanged. Their
+  rep070-specific input stages run through adapters proven to reproduce the originals' outputs byte for byte.
+- **Cost:** central 5.15, pessimistic 7.9, ceiling 10.0 GPU-hours; P(ceiling) 0.004% central, 6% at twice 0.9.1's cap
+  rate.
+- **Checks:** analysis dry runs 17 / 17; discovery pipeline on rep070-F 12 / 12 outputs byte-identical; runner refusals
+  22 / 22; proxy 17 / 17; session simulation 67 / 67; privacy scan clean; DRY_RUN passes.
+
+**Amendment 22z (2026-10-21; operator authorization "Authorized", before any option-D data).** One stock 0.9.1 pass, up to
+10.0 occupied GPU-hours, single attempt, no retry; package long-reply/d091/ SHA256SUMS b558b584… verified at launch, DRY_RUN
+passed.
+
+**Amendment 22aa (2026-10-21; option-D result, descriptive).**
+- **Run:** valid on every frozen check. One stock 0.9.1 pass at seed 70704, 5.884 GPU-hours of 10.0, no preemption,
+  KV pool 4,707,515 (the record's size).
+- **The pass:**
+  - empty 6 of 198, all cap exhaustion, inside the record's per-pass range (5-6);
+  - raw 86.4%; stated 88.4% (final after the hand read of 6 rows, 1 committing to no single option);
+  - 10 replies past 100k.
+- **P(finish | still generating at 100k):** 4 / 10 (0.40), the same as the 0.9.1 record's 10 / 25. rep070-F (0.7.0)
+  had 19 / 29 (0.66); difference −0.26 (95% −0.63 to +0.11).
+- **Capped replies:** all 6 end in short-period exact loops (four of period 2), the same kind as 0.7.0's. Onsets fall
+  at 76k-238k, and 1 was already repeating at 100k.
+- **First 100k tokens:**
+  - characters per token: capped 2.97 against finished 3.27 (AUC 0.42). 0.7.0 showed 2.31 against 3.15 (AUC 0.12).
+    The digit-heavy early signature seen on 0.7.0 is weak here;
+  - interjection rate: capped 9.4 against finished 2.7 per 1k tokens (0.7.0: 9.0 against 6.0).
+- **Prefixes:** 8 0.9.1-built prefixes exported under B+'s rule (ids and hashes only outside PRIVATE).
+- **Limits:** descriptive only. One pass, 10 replies at risk, seeds different from every comparator, and reaching 100k
+  selects different trajectories on each engine.
+
+**Amendment 22ab (2026-10-21; operator decision "publish, let's do E", before any E data).**
+- **Published:** discovery, B+ and option D (`long-reply/`), with prefixes, prompts, token ids and raw bodies withheld.
+- **Option E, the prefix-source × engine cross:** the 8 0.9.1-built prefixes from option D, 4 seeds each, continued
+  +65,536 tokens on stock 0.7.0 and stock 0.9.1 under B+'s design and analysis (22v gate).
+  - Primary: E1 = 0.7.0 − 0.9.1 on 0.9.1-built prefixes, with B+'s screens.
+  - Descriptive cross table: prefix source × engine, with question-matched rows.
+  - The package is frozen and costed before authorization.

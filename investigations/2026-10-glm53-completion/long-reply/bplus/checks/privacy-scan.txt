@@ -1,0 +1,1 @@
+privacy scan: 81 files outside PRIVATE/ and run/; 95 prompt 40-char windows and 96 12-id reasoning runs searched; text hits 0, id-run hits 0

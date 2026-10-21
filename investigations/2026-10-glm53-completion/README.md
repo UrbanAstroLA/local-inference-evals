@@ -1321,6 +1321,19 @@ the real decode path and records termination-token probabilities. 1.2117 of 2.4 
     0.71 (old 0.7.0, passes 2-3). This is not a causal engine effect, and too few events to adjudicate a mechanism.
   - **Disposition:** the historical-gap line closes as inconclusive. Long-reply completion is taken up as its own
     question, discovery first.
+- **Long-reply completion** (amendments 22r-22ab; [`long-reply/README.md`](long-reply/README.md)):
+  - **Discovery** (zero GPU, on the replication's reasoning text):
+    - capped 0.7.0 replies mostly end in exact short-period loops that start well after 100k;
+    - finished ones stay novel;
+    - on matched questions, the 0.7.0 family finished 23 / 36 long replies against 18 / 58.
+  - **B+** (13.06 GPU-hours; R-I after a disclosed gate amendment): from 12 identical 0.7.0-built 100k prefixes,
+    stock 0.7.0 and stock 0.9.1 finished alike (0.417 each; difference 0.000, 95% ±0.083); B1 0.521. The prefix
+    explains 67% of outcome variance.
+  - **Option D** (5.88 GPU-hours; descriptive): one stock 0.9.1 pass with full text.
+    - 4 / 10 replies past 100k finished, as in the 0.9.1 record;
+    - its capped replies are the same exact loops as 0.7.0's;
+    - the early chars-per-token signature is weak on 0.9.1, while the interjection signature holds.
+  - **Next:** option E continues 0.9.1-built prefixes on both engines.
 
 ### Observations recorded separately
 

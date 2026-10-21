@@ -1,0 +1,17 @@
+{
+ "preflight_ok": true,
+ "preflight_msg": "ok",
+ "gpu_state_before": "0, 20 MiB, 0 %, 79, 112.30 W;1, 2052 MiB, 0 %, 78, 96.90 W;",
+ "started": true,
+ "budget_stop": false,
+ "t_start": 1792575984,
+ "ready": true,
+ "ready_after_s": 709,
+ "launcher_rc": 0,
+ "gpu_state_after": "0, 20 MiB, 0 %, 80, 115.43 W;1, 2052 MiB, 0 %, 79, 106.99 W;",
+ "watchdog": false,
+ "gpu_hours": 3.654,
+ "wall_s": 6577,
+ "completed": true,
+ "client_rc": 0
+}

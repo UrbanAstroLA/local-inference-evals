@@ -1,0 +1,18 @@
+q8p4 56305 stop N 56062 drift 2 onset None no terminal loop verifyfail 0
+q15p4 96653 stop N 96087 drift 4 onset None no terminal loop verifyfail 0
+q27p4 114599 stop N 114144 drift 4 onset None no terminal loop verifyfail 0
+q69p4 78943 stop N 78473 drift 2 onset None no terminal loop verifyfail 0
+q90p4 52649 stop N 52380 drift 4 onset None no terminal loop verifyfail 0
+q13p4 327680 length N 327681 drift -1 onset 148004 short-period exact loop verifyfail 0
+q130p4 71765 stop N 71429 drift 3 onset None no terminal loop verifyfail 0
+q121p4 106839 stop N 106241 drift 0 onset None no terminal loop verifyfail 0
+q127p4 145775 stop N 145368 drift 7 onset 136746 fragmentary recycling verifyfail 0
+q147p4 67677 stop N 67256 drift 2 onset None no terminal loop verifyfail 0
+q79p4 327680 length N 327680 drift 0 onset 238331 short-period exact loop verifyfail 0
+q81p4 327680 length N 327680 drift 0 onset 178177 short-period exact loop verifyfail 0
+q145p4 120630 stop N 120427 drift 2 onset None no terminal loop verifyfail 0
+q109p4 327680 length N 327678 drift 2 onset 132921 short-period exact loop verifyfail 0
+q165p4 88707 stop N 87964 drift 2 onset None no terminal loop verifyfail 0
+q149p4 327680 length N 327681 drift -1 onset 75929 short-period exact loop verifyfail 0
+q170p4 327680 length N 327680 drift 0 onset 124796 short-period exact loop verifyfail 0
+exit 0

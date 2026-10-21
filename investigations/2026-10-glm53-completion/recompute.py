@@ -398,7 +398,15 @@ check("amendment 22j: first contrast retry 2.9317 (2 x 5,277 s) of 6.2, complete
 rp = st("Stock 0.7.0 replication")
 check("amendment 22p: stock 0.7.0 replication 23.9261 (2 x 12,047 s + 2 x 31,020 s) of 36.5, valid, O3; cumulative 91.95 GPU-hours",
       len(rp) == 1 and arms_ok(rp[0]) and rp[0]["gpu_hours"] == 23.9261
-      and f"{sum(c['gpu_hours'] for c in allcost):.2f}" == "91.95")
+      and f"{sum(c['gpu_hours'] for c in allcost[:before('Long-reply B+')]):.2f}" == "91.95")
+bp = st("Long-reply B+")
+check("amendments 22u-22w: B+ continuation 13.0639 (2 x 9,956 s + 2 x 6,982 s + 2 x 6,577 s) of 31.6; cumulative 105.02 GPU-hours",
+      len(bp) == 1 and arms_ok(bp[0]) and bp[0]["gpu_hours"] == 13.0639
+      and f"{sum(c['gpu_hours'] for c in allcost[:before('Long-reply option D')]):.2f}" == "105.02")
+od = st("Long-reply option D")
+check("amendments 22z-22aa: option D 5.8844 (2 x 10,592 s) of 10.0; cumulative 110.90 GPU-hours",
+      len(od) == 1 and arms_ok(od[0]) and od[0]["gpu_hours"] == 5.8844
+      and f"{sum(c['gpu_hours'] for c in allcost):.2f}" == "110.90")
 
 print("\n## Checks (checks.jsonl)")
 for line in (HERE / "checks.jsonl").read_text().splitlines():
