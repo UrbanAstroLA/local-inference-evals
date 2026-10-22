@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-22, final (completion investigation): status sections brought up to date
+
+Contents unchanged.
+
+- **Investigation `README.md`:** the Status paragraph, which had stopped at amendment 20, is replaced with the status at
+  close. The Answer table gains rows for the stock 0.7.0 replication and the long-reply line. Next steps now state that
+  nothing is scheduled and list the open questions.
+- **Repo `README.md`:** the completion row and summary run through the replication and the close-out.
+
 ## 2026-10-22, close-out (completion investigation, amendment 22al): long-reply line closed
 
 Contents unchanged. No run is added.

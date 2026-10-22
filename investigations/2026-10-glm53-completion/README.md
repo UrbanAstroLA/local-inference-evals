@@ -4,49 +4,28 @@ With the same 3.25bpw weights, tpurtell 0.7.0 (DFlash2 ×5) left 4 of 594 GPQA a
 (DFlash2 ×3) left 16. This investigation asks why, and whether a small, correct change to 0.9.1 recovers the
 difference. Quantization is held fixed.
 
-**Status:** Phase 0 done (existing data only). Phase 1 steps 1-6 done (decode vs prefill, 10.55 GPU-hours); a trace audit
-then showed their long-context measure covers continuation after the model had already stopped. Completion pilot and
-fresh-seed replication done (3.55 GPU-hours). Kernel and DCP source audit done (CPU only). Two localized defects found and verified on GPU, each
-with a fix that removes the localized problem (amendments 10-10f). The column-511 correction passed a gate in the shipped
-graph configuration, and a three-pass GPQA arm with that correction only has finished against the existing 0.9.1 record,
-analysed with the script frozen beforehand (amendments 11-11b): 15 vs 16 empty replies of 594, so the correction stands
-but is not supported as the dominant completion explanation ([completion arm](#completion-arm)); the 12 stated-answer
-rows were read by hand and the stated figure is final. [Stage A verification](#stage-a-verification-d3-d4-d5) is complete
-(amendments 13-14): the router's bf16 logits (D3) change top-8 expert membership on 3.15% of token × layer rows and the
-fp32-output correction is verified; the routed SwiGLU limit omission (D4) is confirmed, its effect not measured; workspace
-locking (D5) is not exercised in this workload. A bundle of four corrections (D1-D4) on 0.9.1
-[passed its gate](#bundle-gate-d1d2d3d4-on-091) (D4 reachable in served kernels), with two criteria revised after the
-gate data were inspected, and [one GPQA pass](#one-pass-gpqa-screen) with it left 3
-of 198 replies empty, all at the cap: similar, no clear separation under rules frozen before generation (amendments
-14-14e). A [second pass at seed 1235](#second-pass-seed-1235) (amendments 15-15c) also left 3 of 198 empty, all at the
-cap, against 5 in the matching stock pass: modest improvement, no clear separation, with no accuracy concern on the
-frozen family standard. An exploratory combination of both passes gives 6 vs 10 empty of 396 (one-sided p = 0.11).
-The corrected build was then frozen as checkpoint B0 and three targeted invariants were tested on it, model-free
-([amendment 16](#checkpoint-b0-and-targeted-invariants-amendment-16)): the two-GPU all-reduce transport is bit-exact
-(2,040,800 calls, 0 mismatches), the KV record writer and query projection agree with 0.7.0's within expected rounding
-(criteria errata recorded before GPU data), and cache writes and reads stay in their own pages at high offsets for the
-kernels driven (after fixture faults found in the data were fixed); E1 is expected numerical variation; 0.1161
-GPU-hours. A live check of the slot mappings B0's kernels consume under real scheduling
-([amendment 17](#live-slot-mappings-on-b0-amendment-17)) then found one new defect, D7: the index-K prefill writer
-assumes prefill chunks start on a 4-token pool boundary, so after an unaligned chunk start one pool is left unwritten or
-filled from the previous request's tokens (217 events in 50 requests of a long-prefix workload; every other mapping
-clean over the frozen coverage; its effect on completion untested); 0.9933 GPU-hours, including an invalid attempt
-caused by the investigation's own runner. D7's writer is identical in 0.7.0, 0.8.0 and 0.9.1 and in upstream vLLM main;
-in the GPQA records its exposure is narrow and runs opposite to the gap (reconstructed: none in the 0.9.1 family, one
-question in 0.7.0, which finished). A writer-side correction ([amendment 18](#d7-correction-and-verification-amendment-18))
-was verified in serving as **B1 = B0 + D7**: CLEAN at 219 unaligned chunk starts, every straddling pool byte-identical
-to an independent recompute; 0.6244 GPU-hours. Cumulative 55.85 GPU-hours, including B1's GPQA pass (6.33);
-occupied GPU-hours of the three K3.25 records are
-[reconstructed from start-to-stop timings](#occupied-gpu-hours-of-the-three-k325-records). A replication of stock
-0.7.0's record stays deferred, not authorized (amendments 12, 14). B1 is the correctness checkpoint; D7's behavioural
-investigation is closed for now. A GPQA pass of B1 at seed 1236 ([amendment 19](#b1-checkpoint-pass-and-the-long-context-tail-amendment-19))
-left 9 of 198 replies empty, all at the cap, against 6 for stock 0.9.1 at that seed, with raw and stated accuracy
-unchanged. Under rules frozen before generation that reads unfavourable, which triggers review; it does not
-invalidate the verified corrections; it is one pass, and a B0 pass at the same seed (the review step) is running. A
-post-hoc look at the logged passes suggests a direction to examine, not a localisation (exploratory, small counts,
-pooled configurations): replies reach 100k tokens at similar rates, but fewer of 0.9.1's long replies finish before
-the cap than 0.7.0's. An audit with stock releases reported separately and a fixed-history probe are planned
-(amendment 20).
+**Status (2026-10-22): closed. Nothing is scheduled.**
+
+- **The historical gap.** A fresh-seed replication of stock 0.7.0 left 10 of 594 replies empty, between its own record (4)
+  and the 0.9.1 record (16), and separated from neither. The reading is O3, inconclusive
+  ([`rep070/RESULT.md`](rep070/RESULT.md), amendments 22m-22q). The 4-versus-16 line is closed as inconclusive.
+- **Defects found and corrected.** Seven localized defects were found (D1-D7); D1-D4 and D7 were corrected and verified
+  ([defect matrix](#defect-matrix-d1-d7)). B1 = 0.9.1 + D1-D4 + D7 is the correctness checkpoint. None of the
+  corrections, alone or bundled, is supported as an explanation of the gap. They stand as correctness fixes.
+- **The long-context contrast and mechanism ranking.** A first contrast with injected decode-path corruption ended with
+  no reading twice; that line was closed unresolved (amendments 22-22k). A zero-GPU ranking found no economical
+  experiment on the remaining 0.7.0-specific mechanisms (22l).
+- **Long-reply completion.** This line is closed as unresolved, with positive findings
+  ([`long-reply/CLOSEOUT.md`](long-reply/CLOSEOUT.md), amendments 22r-22al):
+  - both stock engines end capped long replies in the same exact loops;
+  - prefix identity strongly predicts continuation outcomes;
+  - on prefill-reconstructed token prefixes, the stock engines stopped alike on 0.7.0-generated prefixes (B+). On
+    0.9.1-generated ones, 0.7.0 stopped more often (E; +13.5 points, below the frozen criterion);
+  - extra stops were not comparably more correct answers.
+- **Upstream.** Contributions (the defect reproductions and patches) are prepared as drafts and held. Reporting them is
+  the operator's decision.
+- **Spend:** 128.31 occupied GPU-hours in all ([`costs.jsonl`](costs.jsonl), [recompute](#recompute)).
+
 Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#dated-amendments).
 **Fast path:** [answer](#answer) · [evidence](#evidence) · [configuration diff](#what-differs-between-the-two-servers) ·
 [Phase 1](#phase-1) · [completion pilot](#completion-pilot-and-replication) ·
@@ -79,6 +58,8 @@ Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#d
 | Correctness bundle (amendments 14-15c): D1+D2+D3+D4 on 0.9.1 passed its gate (two criteria revised after the gate data were inspected; the original criteria failed as specified). Two GPQA passes, each read by rules frozen before its generation: seed 1234, 3 of 198 empty against 5 in the matching stock 0.9.1 pass (category similar / no clear separation, amendment 14c); seed 1235, 3 of 198 against 5 (category modest improvement, no clear separation, amendment 15b; no accuracy concern on the family standard). All six empties at the cap. Column-511 arm 4 and 5; 0.7.0 (context) 0 and 3. Exploratory combination (follow-up chosen after the first pass; historical controls; seeds reused): 6 vs 10 empty of 396, reduction 1.01 points (95% 0.00 to 2.27), one-sided p = 0.11; raw −0.76 points (−3.79 to +2.27). | **Descriptive** (two passes, historical controls; combination exploratory) |
 | Targeted invariants on checkpoint B0, the corrected build (amendment 16; model-free fixtures with exact or pre-stated references): the two-GPU all-reduce transport B0 dispatches under its CUDA graphs returned the exact bf16 sum on both GPUs in all 2,040,800 calls; B0's KV record writer and query projection agree with 0.7.0's within expected rounding (with criteria errata recorded before GPU data); B0's cache writers and readers stay in their own pages and address correctly above 2³¹ bytes for every kernel driven. No defect found; these do not cover the full-layer metadata paths or numerics elsewhere. | **Supported** (within the tested coverage) |
 | Recorded separately: the served router's weights depend on batch size (E1, since classified as expected numerical variation of the upstream kernel); greedy decoding of the stock 0.9.1 release is not repeatable at long context (short prompts are); NaN-byte index rows are absent with the bundle, against thousands in the 2026-10-11 gate. | **Descriptive** ([observations](#observations-recorded-separately)) |
+| Stock 0.7.0 replication at fresh seeds (amendments 22m-22q): 10 of 594 empty against 4 (its record) and 16 (0.9.1 record); one-sided p 0.108 and 0.122; stated accuracy 87.9%. Reading O3: the record's low count did not clearly reproduce, and no remaining advantage is established or excluded. | **Inconclusive** |
+| Long-reply completion (amendments 22r-22al): capped long replies end in the same exact short-period loops on both stock engines; prefix identity strongly predicts continuation outcomes in the selected samples; on prefill-reconstructed token prefixes the stock engines stopped alike on 0.7.0-generated prefixes and 0.7.0 stopped more often on 0.9.1-generated ones (+13.5 points, below the frozen criterion); extra stops were not comparably more correct answers (23.1% against 19.2% over all attempts). | **Descriptive**; frozen readings R-I |
 | What produces the completion gap, and whether the tail-ring fix, router precision or the SwiGLU clamp changes completion on its own. | **Open** |
 
 Splitting the score by completion is not a causal comparison. It says where the difference sits, not what produces it.
@@ -1396,48 +1377,26 @@ Stated with their evidence so far.
 
 ## Next steps
 
-D7 is corrected and verified in serving (amendment 18). B1 = B0 + D7 is the correctness checkpoint.
+**None scheduled.** The investigation is closed (amendments 22q and 22al).
 
-**B1 checkpoint pass (amendments 19-19c):** 9 of 198 empty against 6 for stock 0.9.1 at seed 1236. Frozen reading
-unfavourable, which triggers review.
+- **Checkpoint:** B1 = 0.9.1 + D1-D4 + D7 is the correctness checkpoint.
+- **Reopening:** any further experiment would need a new proposal, independent review and authorization. For an
+  interaction study on long replies, the requirements recorded in [`long-reply/CLOSEOUT.md`](long-reply/CLOSEOUT.md)
+  apply.
+- **Upstream:** minimal reproductions and patches are prepared and held; offering them upstream is a separate decision.
 
-**In progress (amendments 19d-19e):** a B0 pass at seed 1236, the review step, with readings frozen before generation.
+Open, with their evidence above and in the [open questions](#open-questions):
 
-**Next proposal (amendments 19f-20d; awaiting review):** a long-context termination probe
-([`probe-proposal/PROPOSAL.md`](probe-proposal/PROPOSAL.md)), after zero-GPU discovery
-([`tail-audit/`](tail-audit/AUDIT.md), [`fixture-inventory/`](fixture-inventory/INVENTORY.md),
-[`source-review-lc/`](source-review-lc/SOURCE-REVIEW.md)).
-- **Discovery first, zero GPU:** what differs between 0.7.0 and 0.9.1 in ways that scale with context length (sparse
-  index-K selection as the pool count grows, DCP2 against DCP1 top-k merging, ×5 against ×3 drafting, block size, the
-  tail ring).
-- **Then, if justified, teacher-forced scoring on GPU:** the same long reasoning traces scored on both engines,
-  comparing the end-of-reasoning probability and token agreement at positions from 64k to 300k.
-- Each step needs a costed proposal and independent review.
-
-Upstream contributions are prepared as drafts and held until the investigation concludes.
-
-Earlier positions stand:
-
-- The first screen's frozen category (amendment 14c) stands.
-- For the second pass, amendment 15 prescribes reporting direction and uncertainty, with no automatic further pass.
-- Confirmation, if pursued, would prefer a contemporaneous stock control on new prespecified seeds (amendment 15).
-- The stock 0.7.0 replication stays deferred and is not authorized (amendments 12, 14).
-- The mixed-quant MoE fidelity fixture follows clean mapping coverage (amendment 17) and is not scheduled.
-
-Open, with their evidence above:
-
-- what produces the completion gap;
-- whether D7 affects selection or completion (corrected in B1; behavioural investigation closed for now);
-- why long replies stop terminating on the 0.9.1 family (amendment 19f);
-- whether the bundle's lower count of empty replies holds beyond two seeds;
-- whether 0.7.0's rate of empty replies reproduces;
+- what produced the original 4-versus-16 gap (the replication was inconclusive);
+- whether stock-engine stopping on long replies depends on the source of the history, and why;
+- whether any stopping difference translates into more correct answers per GPU-hour;
+- whether original decode-built state differs from prefill reconstruction in a way that matters;
 - whether the tail-ring fix, router precision or the SwiGLU clamp change completion or accuracy individually;
 - whether the column-511 correction costs accuracy;
+- whether D7 affects selection or completion;
 - why long-context greedy decoding is not repeatable;
 - whether E1 affects outputs;
 - the classes the targeted checks did not reach.
-
-Minimal reproductions and patches are prepared; offering them upstream is a separate decision.
 
 ## Recompute
 

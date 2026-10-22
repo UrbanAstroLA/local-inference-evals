@@ -17,7 +17,7 @@ evaluating the runtimes and quants, and the confounds that can move accuracy or 
 | [Confounds](https://urbanastrola.github.io/local-inference-evals/confounds.html) | What else can move a result, and how the runs control for it | [`CONFOUNDS.md`](CONFOUNDS.md) |
 | [Ledger](https://urbanastrola.github.io/local-inference-evals/ledger.html) | What was run, found, corrected and withdrawn, and when | [`LEDGER.md`](LEDGER.md) |
 | [Investigation](https://urbanastrola.github.io/local-inference-evals/looping.html) | Why some hard questions do not finish | [`investigations/2026-10-glm53-looping`](investigations/2026-10-glm53-looping) |
-| [Completion investigation](investigations/2026-10-glm53-completion/README.md) | Why 0.7.0 left fewer GPQA answers empty than 0.9.1: decode vs prefill, a completion pilot, a kernel and DCP source audit, localized defects with fixes prepared, a three-pass GPQA arm with one correction (no measurable change in completion), verification of router precision and the SwiGLU clamp, two GPQA passes with four corrections together (3 and 3 empty of 198 vs 5 and 5 in the matching stock passes; no clear separation), and model-free checks of the corrected build that found no further defect | [`investigations/2026-10-glm53-completion`](investigations/2026-10-glm53-completion) |
+| [Completion investigation](investigations/2026-10-glm53-completion/README.md) | Why 0.7.0 left fewer GPQA answers empty than 0.9.1: decode vs prefill, a completion pilot, a kernel and DCP source audit, localized defects with fixes prepared, a three-pass GPQA arm with one correction (no measurable change in completion), verification of router precision and the SwiGLU clamp, two GPQA passes with four corrections together (3 and 3 empty of 198 vs 5 and 5 in the matching stock passes; no clear separation), model-free checks of the corrected build, a seventh defect found and corrected (D7), a fresh-seed replication of stock 0.7.0 (10 of 594 empty; inconclusive), and long-reply completion experiments (closed as unresolved). **Closed 2026-10-22** | [`investigations/2026-10-glm53-completion`](investigations/2026-10-glm53-completion) |
 | [Method](https://urbanastrola.github.io/local-inference-evals/method.html) | Grades, scoring, intervals, receipts, glossary | [`protocols/`](protocols), [`DATASHEET.md`](DATASHEET.md) |
 
 **The DCP1 tail issue and its fix** (tpurtell PR #6, released in tpurtell 0.9.1):
@@ -33,6 +33,10 @@ no further defect in the two-GPU all-reduce transport, the KV record writer and 
 above 2³¹ bytes (items 4g-4i). A live check of its slot mappings under real scheduling found one more: the indexer's
 prefill key writer mishandles prefill chunk starts not aligned to 4 tokens (item 4j), in every release and in upstream
 vLLM; a correction was verified in serving (item 4k). Its GPQA exposure is narrow; effect on completion untested.
+A fresh-seed replication of stock 0.7.0 left 10 of 594 replies empty, between the two records (4 and 16), and separated
+from neither; the original gap is unresolved. Long-reply experiments found the same terminal loops on both engines and
+no frozen engine effect; the investigation closed on 2026-10-22
+([close-out](investigations/2026-10-glm53-completion/long-reply/CLOSEOUT.md)).
 
 ## Labels
 
