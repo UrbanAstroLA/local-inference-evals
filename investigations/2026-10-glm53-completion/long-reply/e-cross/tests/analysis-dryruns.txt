@@ -1,0 +1,26 @@
+PASS all-finish: rc 0, COMPLETE R-I; screen=SMALL,prefix_high=False,cross=True
+PASS none-finish: rc 0, COMPLETE R-I; screen=SMALL,prefix_high=False,cross=True
+PASS engine-effect: rc 0, COMPLETE R-E; screen=EFFECT,prefix_high=False,cross=True
+PASS reverse: rc 0, COMPLETE R-E-; screen=REVERSE,prefix_high=False,cross=True
+PASS state-dominated: rc 0, COMPLETE R-I; screen=SMALL,prefix_high=True,cross=True
+PASS null: rc 0, COMPLETE R-I; screen=unresolved,prefix_high=False,cross=True
+PASS kv-2749599: rc 0, COMPLETE R-E; screen=EFFECT,prefix_high=False,cross=True
+PASS kv-bplus-log: rc 0, COMPLETE R-E; screen=EFFECT,prefix_high=False,cross=True
+PASS kv-unseen-above-floor: rc 0, COMPLETE R-E; screen=EFFECT,prefix_high=False,cross=True
+PASS kv-unseen-v091: rc 0, COMPLETE R-E; screen=EFFECT,prefix_high=False,cross=True
+PASS neg-kv-below-floor: rc 3, INVALID None; screen=None,prefix_high=None,cross=False; failed: ['v070: server log KV pool >= functional floor 2,666,496 tokens (8 requests at the 327,680 c']
+PASS neg-kv-v091-below-floor: rc 3, INVALID None; screen=None,prefix_high=None,cross=False; failed: ['v091: server log KV pool >= functional floor 2,646,016 tokens (8 requests at the 327,680 c']
+PASS neg-wrong-seed: rc 3, INVALID None; screen=None,prefix_high=None,cross=False; failed: ['v091: seed as planned for this engine', 'seeds distinct across every request of the run']
+PASS neg-seed-reused: rc 3, INVALID None; screen=None,prefix_high=None,cross=False; failed: ['v091: seed as planned for this engine', 'seeds distinct across every request of the run']
+PASS neg-prompt-hash: rc 3, INVALID None; screen=None,prefix_high=None,cross=False; failed: ['v070: server-echoed prompt ids hash equals the frozen prefix (byte-identical prompt receiv']
+PASS neg-raw-mismatch: rc 3, INVALID None; screen=None,prefix_high=None,cross=False; failed: ['v091: raw file holds exactly one record per request whose ids and text hash to the request']
+PASS neg-image: rc 3, INVALID None; screen=None,prefix_high=None,cross=False; failed: ['v091: container image id equals the pinned image']
+PASS neg-no-ready: rc 3, INVALID None; screen=None,prefix_high=None,cross=False; failed: ['v091: 9 release warm-up lines ending with the ready line']
+PASS neg-missing-request: rc 4, INCOMPLETE None; screen=None,prefix_high=None,cross=False
+PASS neg-watchdog: rc 4, INCOMPLETE None; screen=None,prefix_high=None,cross=False
+PASS neg-v091-budget-stop: rc 4, INCOMPLETE None; screen=None,prefix_high=None,cross=False
+dry runs: 21 pass, 0 fail
+
+real	15m1.487s
+user	2m36.370s
+sys	0m4.410s

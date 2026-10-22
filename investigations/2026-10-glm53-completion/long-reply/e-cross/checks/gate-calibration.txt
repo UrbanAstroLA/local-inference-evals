@@ -1,0 +1,60 @@
+E gate calibration: unchanged analysis_bplus_22v.gates() with E's accepted sets, on every reference session
+
+[v070] accepted sets: {"nd": "74f26837e0e20391", "vllm": ["0.1.dev20051+g487ecf187"], "snaps": ["701cd7456c13d87bf0147ad946f828a999afb59c", "bf582e4eacc1810f76656d1811693ff6c6737d2a"], "env": "014d31a48bdd11c1", "cg": ["FULL_AND_PIECEWISE"], "warm": 9, "warm_compl": 8, "image": "sha256:48e254d94", "kv": "floor 2,666,496"}
+  rep070-F session 1 (2026-10-16; B+'s reference): nd 74f26837e0e2 env 014d31a48bdd kv [2758919] block [3584] warm 9 starts 1 -> 13 pass, 0 fail, 0 n/a
+  rep070-F session 2 (2026-10-16/17; B+'s reference): nd 74f26837e0e2 env 014d31a48bdd kv [2758919] block [3584] warm 9 starts 1 -> 13 pass, 0 fail, 0 n/a
+  0.7.0 record passes 2-3 (2026-10-10, +ps): nd 74f26837e0e2 env 014d31a48bdd kv [2758919] block [3584] warm 9 starts 1 -> 11 pass, 0 fail, 1 n/a
+  B+ stock 0.7.0 session (2026-10-20): nd 74f26837e0e2 env 014d31a48bdd kv [2768240] block [3584] warm 9 starts 1 -> 13 pass, 0 fail, 0 n/a
+  markers only: 2026-09-29-glm53-flash-exl3-k3.25@tpurtell start 09-29 13:57:16 UTC: KV pool 2,768,240 -> E floor passes (margin +101,744); 22v set accepted
+  markers only: 2026-09-30-glm53-flash-exl3-k3.25@tpurtell start 10-01 03:25:29 UTC: KV pool 2,749,599 -> E floor passes (margin +83,103); 22v set rejected
+  markers only: 2026-09-30-glm53-flash-exl3-k3.25@tpurtell start 09-30 07:25:45 UTC: KV pool 2,749,599 -> E floor passes (margin +83,103); 22v set rejected
+  markers only: 2026-10-05-glm53-flash-exl3-k3.25@tpurtell start 10-05 11:43:45 UTC: KV pool 2,768,240 -> E floor passes (margin +101,744); 22v set accepted
+  markers only: 2026-10-10-glm53-flash-exl3-k3.25@tpurtell+ps start 10-10 08:04:16 UTC: KV pool 2,758,919 -> E floor passes (margin +92,423); 22v set accepted
+  markers only: 2026-10-16-glm53-flash-exl3-k3.25@tpurtell+rep070-F start 10-16 16:41:47 UTC: KV pool 2,758,919 -> E floor passes (margin +92,423); 22v set accepted
+  markers only: 2026-10-16-glm53-flash-exl3-k3.25@tpurtell+rep070-F start 10-16 13:21:25 UTC: KV pool 2,758,919 -> E floor passes (margin +92,423); 22v set accepted
+
+[v091] accepted sets: {"nd": "7025a96888a67642", "vllm": ["0.1.dev20051+g487ecf187"], "snaps": ["0490d2f708b12145f6516555ab066aaeb401cd21", "bf582e4eacc1810f76656d1811693ff6c6737d2a"], "env": "f85d9d360488c02b", "cg": ["FULL_AND_PIECEWISE"], "warm": 9, "warm_compl": 8, "image": "sha256:a9e985c09", "kv": "floor 2,646,016"}
+  0.9.1 record session 1 (2026-10-08, pass 1): nd 7025a96888a6 env f85d9d360488 kv [4707515] block [4352] warm 9 starts 1 -> 11 pass, 0 fail, 1 n/a
+  0.9.1 record session 2 (2026-10-09, passes 2-3): nd 7025a96888a6 env f85d9d360488 kv [4707515] block [4352] warm 9 starts 1 -> 11 pass, 0 fail, 1 n/a
+  B+ stock 0.9.1 session (2026-10-21): nd 7025a96888a6 env f85d9d360488 kv [4707515] block [4352] warm 9 starts 1 -> 13 pass, 0 fail, 0 n/a
+  d091 stock 0.9.1 session (2026-10-21; the prefix source): nd 7025a96888a6 env f85d9d360488 kv [4707515] block [4352] warm 9 starts 1 -> 13 pass, 0 fail, 0 n/a
+  d091b (D2) stock 0.9.1 session (2026-10-21; the second prefix source): nd 7025a96888a6 env f85d9d360488 kv [4707515] block [4352] warm 9 starts 1 -> 13 pass, 0 fail, 0 n/a
+  markers only: 2026-10-08-glm53-flash-exl3-k3.25@tpurtell+v0.9.1 start 10-09 00:31:31 UTC: KV pool 4,707,515 -> E floor passes (margin +2,061,499); 22v set accepted
+  markers only: 2026-10-09-glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps start 10-09 19:23:14 UTC: KV pool 4,707,515 -> E floor passes (margin +2,061,499); 22v set accepted
+  markers only: 2026-10-21-glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091 start 10-21 17:19:08 UTC: KV pool 4,707,515 -> E floor passes (margin +2,061,499); 22v set accepted
+  markers only: 2026-10-21-glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091b start 10-22 01:11:07 UTC: KV pool 4,707,515 -> E floor passes (margin +2,061,499); 22v set accepted
+
+Per gate (all reference sessions with a server log):
+  OK   v070: 9 release warm-up lines ending with the ready line: 4 evaluated, 0 n/a
+  OK   v070: container image id equals the pinned image: 3 evaluated, 0 n/a
+  OK   v070: container ports published on 127.0.0.1 only: 3 evaluated, 0 n/a
+  OK   v070: docker inspect record readable: 0 evaluated, 1 n/a
+  OK   v070: exactly one engine start in the server log: 4 evaluated, 0 n/a
+  OK   v070: exactly the release warm-up's own 8 /v1/completions requests before the ready line: 4 evaluated, 0 n/a
+  OK   v070: first request sent after the last timestamped line before the ready line: 4 evaluated, 0 n/a
+  OK   v070: no illegal-memory-access or NaN warning lines during the requests: 4 evaluated, 0 n/a
+  OK   v070: server log KV pool >= functional floor 2,666,496 tokens (8 requests at the 327,680 cap + longest record prompt, whole 3,584-token blocks; reported, not identity-gated; amendments 22ad / 22ah): 4 evaluated, 0 n/a
+  OK   v070: server log cudagraph_mode equals the reference record's: 4 evaluated, 0 n/a
+  OK   v070: server log env_names_logged_sha256 equals the reference record's: 4 evaluated, 0 n/a
+  OK   v070: server log model_snapshots equals the reference record's: 4 evaluated, 0 n/a
+  OK   v070: server log non_default_args_sha256 equals the reference record's: 4 evaluated, 0 n/a
+  OK   v070: server log vllm_version equals the reference record's: 4 evaluated, 0 n/a
+  OK   v091: 9 release warm-up lines ending with the ready line: 5 evaluated, 0 n/a
+  OK   v091: container image id equals the pinned image: 3 evaluated, 0 n/a
+  OK   v091: container ports published on 127.0.0.1 only: 3 evaluated, 0 n/a
+  OK   v091: docker inspect record readable: 0 evaluated, 2 n/a
+  OK   v091: exactly one engine start in the server log: 5 evaluated, 0 n/a
+  OK   v091: exactly the release warm-up's own 8 /v1/completions requests before the ready line: 5 evaluated, 0 n/a
+  OK   v091: first request sent after the last timestamped line before the ready line: 5 evaluated, 0 n/a
+  OK   v091: no illegal-memory-access or NaN warning lines during the requests: 5 evaluated, 0 n/a
+  OK   v091: server log KV pool >= functional floor 2,646,016 tokens (8 requests at the 327,680 cap + longest record prompt, whole 4,352-token blocks; reported, not identity-gated; amendments 22ad / 22ah): 5 evaluated, 0 n/a
+  OK   v091: server log cudagraph_mode equals the reference record's: 5 evaluated, 0 n/a
+  OK   v091: server log env_names_logged_sha256 equals the reference record's: 5 evaluated, 0 n/a
+  OK   v091: server log model_snapshots equals the reference record's: 5 evaluated, 0 n/a
+  OK   v091: server log non_default_args_sha256 equals the reference record's: 5 evaluated, 0 n/a
+  OK   v091: server log vllm_version equals the reference record's: 5 evaluated, 0 n/a
+
+B+ 22v sets on the same sessions, failures: ['v070: 2026-09-30-glm53-flash-exl3-k3.25@tpurtell start 10-01 03:25:29: KV pool 2,749,599 not in the 22v set', 'v070: 2026-09-30-glm53-flash-exl3-k3.25@tpurtell start 09-30 07:25:45: KV pool 2,749,599 not in the 22v set']
+KV floor inputs: {'cap': 327680, 'longest_record_prompt_used': 2795, 'attention_block': {'v070': 3584, 'v091': 4352}, 'longest_record_prompt_measured': 2795}; floors {'v070': 2666496, 'v091': 2646016}; attention blocks match: True; longest record prompt matches: True
+ALL CONFIGURATION GATES PASS ON EVERY REFERENCE SESSION: True
+exit 0

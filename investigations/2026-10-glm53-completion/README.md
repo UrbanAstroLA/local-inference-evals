@@ -1333,7 +1333,10 @@ the real decode path and records termination-token probabilities. 1.2117 of 2.4 
     - 4 / 10 replies past 100k finished, as in the 0.9.1 record;
     - its capped replies are the same exact loops as 0.7.0's;
     - the early chars-per-token signature is weak on 0.9.1, while the interjection signature holds.
-  - **Next:** option E continues 0.9.1-built prefixes on both engines.
+  - **Option D2** (7.16 GPU-hours; descriptive): a second stock 0.9.1 pass. 8 of 198 empty; 4 / 12 replies past 100k
+    finished. The digit-heavy early signature of capped replies appears here, unlike in D. It adds 5 prefixes.
+  - **Option E, frozen and not run** (amendment 22ah): 13 0.9.1-built prefixes, 4 seeds each, +64k on stock 0.7.0 and
+    stock 0.9.1. Power 0.75-0.88 at the full discovery gap; cost central 10.2, ceiling 19.9 GPU-hours.
 
 ### Observations recorded separately
 

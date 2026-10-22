@@ -1,0 +1,51 @@
+# byte-identical copies
+IDENTICAL scripts/trajectory.py = long-reply/bplus/scripts/trajectory.py (c24267b1a9641fc2)
+IDENTICAL scripts/analysis_col511.py = long-reply/bplus/scripts/analysis_col511.py (b5b13ce2155085ca)
+IDENTICAL scripts/bplus_stats.py = long-reply/bplus/scripts/bplus_stats.py (68e4bc45bc8196fd)
+IDENTICAL scripts/analysis_bplus_22v.py = long-reply/bplus/scripts/analysis_bplus_22v.py (ed915a071e0faa9c)
+IDENTICAL scripts/build_prefixes.py = long-reply/bplus/scripts/build_prefixes.py (1ebbec2ef0cdea40)
+IDENTICAL scripts/client_bplus.py = long-reply/bplus/scripts/client_bplus.py (85e8af05a66f05d4)
+IDENTICAL scripts/d7_prefill_exposure.py = long-reply/bplus/scripts/d7_prefill_exposure.py (0991cdc05534dea8)
+IDENTICAL tests/fake_server.py = long-reply/bplus/tests/fake_server.py (d7948c0bad989f0d)
+IDENTICAL checks/snapshot-0490d2f7.txt = long-reply/bplus/checks/snapshot-0490d2f7.txt (3d98161043779a43)
+IDENTICAL ref/bplus-result-22v.json = long-reply/bplus/run/result-22v.json (513f0bfc43cbf0fa)
+IDENTICAL ref/bplus-prefix_manifest.json = long-reply/bplus/out/prefix_manifest.json (26f747ffd2eeeeec)
+IDENTICAL ref/bplus-plan.json = long-reply/bplus/out/plan.json (49723e530e921644)
+IDENTICAL ref/bplus-power.json = long-reply/bplus/out/power.json (32a2e430a73a2156)
+IDENTICAL scripts/prefix_build_d091.py = long-reply/d091/scripts/prefix_build_d091.py (7abf9bcc17fe26f9)
+IDENTICAL ref/d091-selection.json = long-reply/d091/out/selection.json (1869e2c6283247f0)
+IDENTICAL ref/d091-prefix_manifest.json = long-reply/d091/out/prefix_manifest.json (5961c780e630c476)
+IDENTICAL PRIVATE/src-d091/prefixes.json = long-reply/d091/PRIVATE/prefixes.json (d15434d3777a4f76)
+IDENTICAL PRIVATE/src-d091/prompts.json = long-reply/d091/PRIVATE/prompts.json (3642dcf6a4b19991)
+IDENTICAL checks/prefix-verify-v091.json = long-reply/d091/checks/prefix-verify-v091.json (9a4aa1800daa0a51)
+IDENTICAL ref/d091b-selection.json = long-reply/d091b/out/selection.json (ec38d892169ee0a1)
+IDENTICAL ref/d091b-prefix_manifest.json = long-reply/d091b/out/prefix_manifest.json (2ebb5223fdcae266)
+IDENTICAL PRIVATE/src-d091b/prefixes.json = long-reply/d091b/PRIVATE/prefixes.json (d24d660cd516b139)
+IDENTICAL PRIVATE/src-d091b/prompts.json = long-reply/d091b/PRIVATE/prompts.json (a89e562670df3a96)
+IDENTICAL checks/prefix-verify-d2-v091.json = long-reply/d091b/checks/prefix-verify-v091.json (644e64720587a517)
+# modified copies (diff files regenerated; every hunk is listed in PROPOSAL.md section 9)
+MODIFIED scripts/plan.py <- long-reply/bplus/scripts/plan.py: 31 changed lines (checks/plan.diff, sha256 e8418384834e0749)
+MODIFIED scripts/run_cpu.sh <- long-reply/bplus/scripts/run_cpu.sh: 15 changed lines (checks/run_cpu.diff, sha256 73cdbc40a842ab5a)
+MODIFIED runner/run_e.sh <- long-reply/bplus/runner/run_bplus.sh: 55 changed lines (checks/runner.diff, sha256 206c9871ec2a91a7)
+MODIFIED scripts/source_check.sh <- long-reply/bplus/scripts/source_check.sh: 7 changed lines (checks/source_check.diff, sha256 c259e3aa3f6119bf)
+MODIFIED tests/make_synthetic_run_e.py <- long-reply/bplus/tests/make_synthetic_run.py: 57 changed lines (checks/make_synthetic_run.diff, sha256 a7a40caedc7b2637)
+MODIFIED tests/run_analysis_dryruns.sh <- long-reply/bplus/tests/run_analysis_dryruns.sh: 77 changed lines (checks/run_analysis_dryruns.diff, sha256 79fb5b28f1eb5868)
+MODIFIED tests/test_runner_refusals.sh <- long-reply/bplus/tests/test_runner_refusals.sh: 107 changed lines (checks/test_runner_refusals.diff, sha256 aa3ec12bf0207309)
+MODIFIED tests/session_sim.sh <- long-reply/bplus/tests/session_sim.sh: 142 changed lines (checks/session_sim.diff, sha256 07658377bc642151)
+MODIFIED make_sums.sh <- long-reply/bplus/make_sums.sh: 6 changed lines (checks/make_sums.diff, sha256 f9493e62a73422ff)
+MODIFIED checks/seed_scan_e.py <- rep070/refreeze/checks/seed_scan.py: 5 changed lines (checks/seed_scan_e.diff, sha256 dfcbb1ea0ce341a7)
+MODIFIED checks/raw_seed_scan_e.py <- long-reply/d091/checks/raw_seed_scan.py: 5 changed lines (checks/raw_seed_scan_e.diff, sha256 0863f666183b2d6e)
+MODIFIED checks/privacy_scan_e.py <- long-reply/d091/checks/privacy_scan.py: 33 changed lines (checks/privacy_scan.diff, sha256 29d20d8155ebcd9f)
+# request definition: out/plan.json vs B+'s out/plan.json
+IDENTICAL plan.model: wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1
+IDENTICAL plan.params: {'max_tokens': 65536, 'temperature': 1.0, 'top_p': 0.95, 'stop': ['</s>'], 'retu
+IDENTICAL plan.params_sha256: c53443e3e815a9ecce209fcf01b6606d926a558d4686e032b2e3abcdd2495b22
+IDENTICAL plan.order_seed: 20261016
+SWAPPED plan.seed_base: 8160000 -> 8260000; engines ['v070', 'v091', 'b1'] -> ['v070', 'v091']; requests per engine 48 -> 52; prefixes 12 -> 13
+# B+'s source reading of the two images, rerun: checks/source-check.txt blocks vs bplus/checks/source-check.txt
+IDENTICAL source-check block v070
+IDENTICAL source-check block v091
+IDENTICAL source-check block generation_config.json
+IDENTICAL source-check block launcher
+IDENTICAL source-check block snapshot
+identity: 26 pass, 0 fail

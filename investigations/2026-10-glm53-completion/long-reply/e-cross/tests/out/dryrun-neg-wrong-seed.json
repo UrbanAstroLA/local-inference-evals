@@ -1,0 +1,463 @@
+{
+ "what": "E result (ids, counts, rates, positions; no text)",
+ "state": "INVALID",
+ "sessions": {
+  "v070": "complete",
+  "v091": "complete"
+ },
+ "config_overrides_on_bplus_22v": {
+  "ENGINES": [
+   "v070",
+   "v091"
+  ],
+  "KV_ACCEPT_22V": {
+   "v070": "floor 2,666,496",
+   "v091": "floor 2,646,016"
+  }
+ },
+ "rules": {
+  "DELTA_E": 0.15,
+  "ALPHA": 0.05,
+  "SMALL_MAX": 0.1,
+  "EQ_BOUND": 0.2,
+  "ETA_MIN": 0.3,
+  "B_BOOT": 20000,
+  "BOOT_SEED": 20261016
+ },
+ "checks": [
+  {
+   "check": "v070: every planned request has exactly one record, and no other record exists",
+   "ok": true,
+   "detail": "52 records, 52 distinct k"
+  },
+  {
+   "check": "v070: HTTP 200 without error for all requests",
+   "ok": true,
+   "detail": "52 / 52"
+  },
+  {
+   "check": "v070: prefix id and seed index as planned",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070: seed as planned for this engine",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "check": "v070: every seed was eligible in the pre-run seed inventory (never used before)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070: sent prompt ids hash and length equal the frozen prefix",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070: server-echoed prompt ids hash equals the frozen prefix (byte-identical prompt received)",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "check": "v070: server prompt_tokens equal the prefix length",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070: sampling parameters hash equals the plan's (max_tokens 65,536, temperature 1.0, top_p 0.95, stop </s>, return_token_ids)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070: finish_reason is stop or length; completion tokens <= 65,536; length only at 65,536",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070: generated ids returned and their count equals completion_tokens",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070: raw file holds exactly one record per request whose ids and text hash to the request log",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070: server log non_default_args_sha256 equals the reference record's",
+   "ok": true,
+   "detail": "74f26837e0e20391bbc8e39c037bb7a44a59fcab vs 74f26837e0e20391bbc8e39c037bb7a44a59fcab"
+  },
+  {
+   "check": "v070: server log vllm_version equals the reference record's",
+   "ok": true,
+   "detail": "['0.1.dev20051+g487ecf187'] vs ['0.1.dev20051+g487ecf187']"
+  },
+  {
+   "check": "v070: server log model_snapshots equals the reference record's",
+   "ok": true,
+   "detail": "['701cd7456c13d87bf0147ad946f828a999afb5 vs ['701cd7456c13d87bf0147ad946f828a999afb5"
+  },
+  {
+   "check": "v070: server log env_names_logged_sha256 equals the reference record's",
+   "ok": true,
+   "detail": "014d31a48bdd11c1a48236e5c2e4ddcba69d037d vs 014d31a48bdd11c1a48236e5c2e4ddcba69d037d"
+  },
+  {
+   "check": "v070: server log KV pool >= functional floor 2,666,496 tokens (8 requests at the 327,680 cap + longest record prompt, whole 3,584-token blocks; reported, not identity-gated; amendments 22ad / 22ah)",
+   "ok": true,
+   "detail": "[2758919] in floor 2,666,496"
+  },
+  {
+   "check": "v070: server log cudagraph_mode equals the reference record's",
+   "ok": true,
+   "detail": "['FULL_AND_PIECEWISE'] vs ['FULL_AND_PIECEWISE']"
+  },
+  {
+   "check": "v070: exactly one engine start in the server log",
+   "ok": true,
+   "detail": "1"
+  },
+  {
+   "check": "v070: 9 release warm-up lines ending with the ready line",
+   "ok": true,
+   "detail": "9 warm-up lines, 1 ready lines"
+  },
+  {
+   "check": "v070: exactly the release warm-up's own 8 /v1/completions requests before the ready line",
+   "ok": true,
+   "detail": "8"
+  },
+  {
+   "check": "v070: first request sent after the last timestamped line before the ready line",
+   "ok": true,
+   "detail": "first 1792157141.0, last before ready 1792157081.0"
+  },
+  {
+   "check": "v070: no illegal-memory-access or NaN warning lines during the requests",
+   "ok": true,
+   "detail": "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+  },
+  {
+   "check": "v070: container image id equals the pinned image",
+   "ok": true,
+   "detail": "sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629"
+  },
+  {
+   "check": "v070: container ports published on 127.0.0.1 only",
+   "ok": true,
+   "detail": "['127.0.0.1']"
+  },
+  {
+   "check": "v070: requests submitted in the plan order",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v070: at most 8 requests in flight",
+   "ok": true,
+   "detail": "8"
+  },
+  {
+   "check": "v070: GPU pre-flight passed before the session (runner)",
+   "ok": true,
+   "detail": "True"
+  },
+  {
+   "check": "v070: server became ready through the release gate (runner)",
+   "ok": true,
+   "detail": "True"
+  },
+  {
+   "check": "v091: every planned request has exactly one record, and no other record exists",
+   "ok": true,
+   "detail": "52 records, 52 distinct k"
+  },
+  {
+   "check": "v091: HTTP 200 without error for all requests",
+   "ok": true,
+   "detail": "52 / 52"
+  },
+  {
+   "check": "v091: prefix id and seed index as planned",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v091: seed as planned for this engine",
+   "ok": false,
+   "detail": "[7]"
+  },
+  {
+   "check": "v091: every seed was eligible in the pre-run seed inventory (never used before)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v091: sent prompt ids hash and length equal the frozen prefix",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v091: server-echoed prompt ids hash equals the frozen prefix (byte-identical prompt received)",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "check": "v091: server prompt_tokens equal the prefix length",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v091: sampling parameters hash equals the plan's (max_tokens 65,536, temperature 1.0, top_p 0.95, stop </s>, return_token_ids)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v091: finish_reason is stop or length; completion tokens <= 65,536; length only at 65,536",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v091: generated ids returned and their count equals completion_tokens",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v091: raw file holds exactly one record per request whose ids and text hash to the request log",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v091: server log non_default_args_sha256 equals the reference record's",
+   "ok": true,
+   "detail": "7025a96888a67642741db00aaecb9cbf786c2ba6 vs 7025a96888a67642741db00aaecb9cbf786c2ba6"
+  },
+  {
+   "check": "v091: server log vllm_version equals the reference record's",
+   "ok": true,
+   "detail": "['0.1.dev20051+g487ecf187'] vs ['0.1.dev20051+g487ecf187']"
+  },
+  {
+   "check": "v091: server log model_snapshots equals the reference record's",
+   "ok": true,
+   "detail": "['0490d2f708b12145f6516555ab066aaeb401cd vs ['0490d2f708b12145f6516555ab066aaeb401cd"
+  },
+  {
+   "check": "v091: server log env_names_logged_sha256 equals the reference record's",
+   "ok": true,
+   "detail": "f85d9d360488c02bc9ba2bbb33b86319201cfad1 vs f85d9d360488c02bc9ba2bbb33b86319201cfad1"
+  },
+  {
+   "check": "v091: server log KV pool >= functional floor 2,646,016 tokens (8 requests at the 327,680 cap + longest record prompt, whole 4,352-token blocks; reported, not identity-gated; amendments 22ad / 22ah)",
+   "ok": true,
+   "detail": "[4707515] in floor 2,646,016"
+  },
+  {
+   "check": "v091: server log cudagraph_mode equals the reference record's",
+   "ok": true,
+   "detail": "['FULL_AND_PIECEWISE'] vs ['FULL_AND_PIECEWISE']"
+  },
+  {
+   "check": "v091: exactly one engine start in the server log",
+   "ok": true,
+   "detail": "1"
+  },
+  {
+   "check": "v091: 9 release warm-up lines ending with the ready line",
+   "ok": true,
+   "detail": "9 warm-up lines, 1 ready lines"
+  },
+  {
+   "check": "v091: exactly the release warm-up's own 8 /v1/completions requests before the ready line",
+   "ok": true,
+   "detail": "8"
+  },
+  {
+   "check": "v091: first request sent after the last timestamped line before the ready line",
+   "ok": true,
+   "detail": "first 1791506374.0, last before ready 1791506314.0"
+  },
+  {
+   "check": "v091: no illegal-memory-access or NaN warning lines during the requests",
+   "ok": true,
+   "detail": "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+  },
+  {
+   "check": "v091: container image id equals the pinned image",
+   "ok": true,
+   "detail": "sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07"
+  },
+  {
+   "check": "v091: container ports published on 127.0.0.1 only",
+   "ok": true,
+   "detail": "['127.0.0.1']"
+  },
+  {
+   "check": "v091: requests submitted in the plan order",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "v091: at most 8 requests in flight",
+   "ok": true,
+   "detail": "8"
+  },
+  {
+   "check": "v091: GPU pre-flight passed before the session (runner)",
+   "ok": true,
+   "detail": "True"
+  },
+  {
+   "check": "v091: server became ready through the release gate (runner)",
+   "ok": true,
+   "detail": "True"
+  },
+  {
+   "check": "seeds distinct across every request of the run",
+   "ok": false,
+   "detail": "104 seeds, 103 distinct"
+  }
+ ],
+ "session_extras": {
+  "v070": {
+   "preemption_lines_in_window": 0,
+   "max_in_flight": 8,
+   "server_render_check": {
+    "prefixes": 0,
+    "equal": 0,
+    "errors": 0
+   },
+   "prefix_cache_hit_rate_lines_max": 0.0,
+   "cached_tokens": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "kv_pool_tokens_reported": [
+    2758919
+   ],
+   "kv_floor": 2666496
+  },
+  "v091": {
+   "preemption_lines_in_window": 0,
+   "max_in_flight": 8,
+   "server_render_check": {
+    "prefixes": 0,
+    "equal": 0,
+    "errors": 0
+   },
+   "prefix_cache_hit_rate_lines_max": 0.0,
+   "cached_tokens": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "kv_pool_tokens_reported": [
+    4707515
+   ],
+   "kv_floor": 2646016
+  }
+ },
+ "reading": null
+}

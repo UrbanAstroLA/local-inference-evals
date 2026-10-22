@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-10-22 (completion investigation, amendments 22ac-22ah): second 0.9.1 text pass; E frozen
+
+Contents unchanged. One investigation run is added.
+
+- **`PLAN.md`**: amendments 22ac-22ah (E's first freeze and its power; the decision to add prefixes; D2 package,
+  authorization and result; E re-frozen on 13 prefixes).
+- **`long-reply/`**: `d091b/` (D2) and `e-cross/` (the frozen E package), with the README updated. Withheld as before,
+  plus E's superseded `.pre22ah` copies. Substitutions are in `PUBLIC-COPIES-22ah.txt`; a catch-all substitution for
+  local paths was added.
+- **`costs.jsonl`** (7.1633) and **`recompute.py`**: cumulative 118.07. The option-D check now names its step exactly
+  (its prefix had also matched D2).
+- **Investigation `README.md`** and **`LEDGER.md`**.
+
 ## 2026-10-21 (completion investigation, amendments 22r-22ab): long-reply completion
 
 Contents unchanged. Two investigation runs are added (not protocol runs in `runs/`).

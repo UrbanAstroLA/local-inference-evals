@@ -1,0 +1,25 @@
+PASS [approval unset] rc=1: ABORT: APPROVED_GPU_H is not set (the operator's approved occupied GPU-hours)
+PASS [approval zero] rc=1: ABORT: APPROVED_GPU_H=0 must be a number in (0, 19.9] (the plan's ceiling)
+PASS [approval above the ceiling] rc=1: ABORT: APPROVED_GPU_H=20.0 must be a number in (0, 19.9] (the plan's ceiling)
+PASS [approval at B+'s ceiling] rc=1: ABORT: APPROVED_GPU_H=31.6 must be a number in (0, 19.9] (the plan's ceiling)
+PASS [approval not a number] rc=1: ABORT: APPROVED_GPU_H=abc must be a number in (0, 19.9] (the plan's ceiling)
+PASS [launcher override MAX_NUM_SEQS] rc=1: ABORT: override variables set in the environment (not the shipped configuration): MAX_NUM_SEQS
+PASS [launcher override IMAGE] rc=1: ABORT: override variables set in the environment (not the shipped configuration): IMAGE
+PASS [launcher override PORT] rc=1: ABORT: override variables set in the environment (not the shipped configuration): PORT
+PASS [launcher override ENABLE_PREFIX_CACHING] rc=1: ABORT: override variables set in the environment (not the shipped configuration): ENABLE_PREFIX_CACHING
+PASS [GLM container running] rc=1: ABORT: a GLM container is running:
+PASS [image digest mismatch (every image)] rc=1: ABORT: v070 image ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629 has Id 'sha256:0000000
+PASS [image digest mismatch (0.9.1 only)] rc=1: ABORT: v091 image ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 has Id 'sha256:1111111
+PASS [compute process on the GPUs] rc=1: ABORT: GPU pre-flight: compute process 999999 on the GPUs
+PASS [GPU memory in use] rc=1: ABORT: GPU pre-flight: GPU0 busy mem=30000MiB util=0%
+PASS [port 8001 in use] rc=1: ABORT: port 8001 is in use:
+PASS [client process running] rc=1: ABORT: a B+ client process is running
+PASS [package file changed after freezing] rc=1: ABORT: <runs>/long-reply/e-cross/PRIVATE/scratch-refusals/pkg-sums/SHA256SUMS does not verify:
+PASS [package not frozen] rc=1: ABORT: <runs>/long-reply/e-cross/PRIVATE/scratch-refusals/pkg-nosums/SHA256SUMS missing (package not frozen)
+PASS [PRIVATE prefixes differ from the manifest] rc=1: ABORT: PRIVATE/prefixes.json or prompts.json does not match the frozen manifest
+PASS [PRIVATE folder mode] rc=1: ABORT: PRIVATE/ must be mode 0700 and its files 0600
+PASS [pinned launcher hash differs] rc=1: ABORT: pinned file changed: <stacks>/glm53-flash-v0.9.0/start.sh
+PASS [snapshot listing differs] rc=1: ABORT: snapshot listing differs from the frozen one: <models>/models--wrldsuksgo2mars--GLM-5.3-Flash-EXL3-K3.25-v1/snapshots/0490d2f708b12145f6516555ab0
+PASS [run folder exists (no automatic retry)] rc=1: ABORT: <runs>/long-reply/e-cross/PRIVATE/scratch-refusals/pkg-rundir/run exists (an earlier attempt; no automatic re
+PASS [real configuration: every check passes] rc=0: DRY_RUN: all refusal checks passed. A real run would now: create <runs>/long-reply/e-cross/run (raw/ mode 0700); sta
+refusal tests: 24 passed, 0 failed

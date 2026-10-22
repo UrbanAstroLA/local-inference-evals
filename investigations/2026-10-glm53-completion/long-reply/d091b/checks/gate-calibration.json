@@ -1,0 +1,958 @@
+{
+ "accepted_sets_from_the_record": {
+  "non_default_args_sha256": [
+   "7025a96888a67642741db00aaecb9cbf786c2ba67cc4ded7d67c1cf4e909dcc5"
+  ],
+  "vllm_version": [
+   [
+    "0.1.dev20051+g487ecf187"
+   ]
+  ],
+  "model_snapshots": [
+   [
+    "0490d2f708b12145f6516555ab066aaeb401cd21",
+    "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+   ]
+  ],
+  "env_names_logged_sha256": [
+   "f85d9d360488c02bc9ba2bbb33b86319201cfad14cd4c6a9ccb312539ec1313e"
+  ],
+  "cudagraph_mode": [
+   [
+    "FULL_AND_PIECEWISE"
+   ]
+  ],
+  "release_warmups_logged": [
+   9
+  ],
+  "kv_pool_tokens": [
+   [
+    4707515
+   ]
+  ]
+ },
+ "kv_floor": 2646016,
+ "sessions": [
+  {
+   "session": "0.9.1 record session 1 (2026-10-08, pass 1)",
+   "log_sha256": "0ef6aaff01c06204755a2647c9dadadff65b46b2e4086d0de6b8fd09d7ef8b61",
+   "values": {
+    "non_default_args_sha256": "7025a96888a67642741db00aaecb9cbf786c2ba67cc4ded7d67c1cf4e909dcc5",
+    "vllm_version": [
+     "0.1.dev20051+g487ecf187"
+    ],
+    "model_snapshots": [
+     "0490d2f708b12145f6516555ab066aaeb401cd21",
+     "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+    ],
+    "env_names_logged_sha256": "f85d9d360488c02bc9ba2bbb33b86319201cfad14cd4c6a9ccb312539ec1313e",
+    "cudagraph_mode": [
+     "FULL_AND_PIECEWISE"
+    ],
+    "release_warmups_logged": 9,
+    "kv_pool_tokens": [
+     4707515
+    ]
+   },
+   "in_window": {
+    "preemption_lines": 0,
+    "illegal_memory_access_lines": 0,
+    "nan_warning_lines": 0
+   },
+   "checks": [
+    [
+     "session: non_default_args_sha256 is a value the 0.9.1 record's own server sessions produced",
+     true,
+     "7025a96888a67642741db00a in ['7025a96888a6']"
+    ],
+    [
+     "session: vllm_version is a value the 0.9.1 record's own server sessions produced",
+     true,
+     "['0.1.dev20051+g487ecf18 in [\"['0.1.dev200\"]"
+    ],
+    [
+     "session: model_snapshots is a value the 0.9.1 record's own server sessions produced",
+     true,
+     "['0490d2f708b12145f65165 in [\"['0490d2f708\"]"
+    ],
+    [
+     "session: env_names_logged_sha256 is a value the 0.9.1 record's own server sessions produced",
+     true,
+     "f85d9d360488c02bc9ba2bbb in ['f85d9d360488']"
+    ],
+    [
+     "session: cudagraph_mode is a value the 0.9.1 record's own server sessions produced",
+     true,
+     "['FULL_AND_PIECEWISE'] in [\"['FULL_AND_P\"]"
+    ],
+    [
+     "session: release warm-up count is one the record's sessions logged",
+     true,
+     "9 in [9]"
+    ],
+    [
+     "session: KV pool >= functional floor 2,646,016 tokens (8 x cap + longest record prompt, whole blocks; not an identity gate)",
+     true,
+     "[4707515] vs floor 2646016"
+    ],
+    [
+     "session warm-up: exactly one engine start in the server log",
+     true,
+     "1"
+    ],
+    [
+     "session warm-up: 9 release warm-up lines (record's count), ending with the ready line",
+     true,
+     "9 warm-up lines, 1 ready lines"
+    ],
+    [
+     "session warm-up: no GPQA chat-completion request logged before the ready line",
+     true,
+     "0 before"
+    ],
+    [
+     "session warm-up: first GPQA request after the last timestamped line before the ready line",
+     true,
+     "first request 1791506343.238, last line before ready 1791506314.0"
+    ],
+    [
+     "session: no illegal-memory-access and no NaN warning lines during the requests (the record's sessions: 0 and 0)",
+     true,
+     "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+    ]
+   ],
+   "kv": {
+    "kv_pool_tokens": [
+     4707515
+    ],
+    "kv_pool_equals_a_record_size": true,
+    "record_kv_pool_sizes": [
+     [
+      4707515
+     ]
+    ],
+    "kv_floor": 2646016,
+    "kv_margin_tokens": 2061499
+   }
+  },
+  {
+   "session": "0.9.1 record session 2 (2026-10-09, passes 2-3)",
+   "log_sha256": "0e05caefa4ab0538957cbf2d90acf296a11bf5e5204e6f0d9fb2b373d35b622e",
+   "values": {
+    "non_default_args_sha256": "7025a96888a67642741db00aaecb9cbf786c2ba67cc4ded7d67c1cf4e909dcc5",
+    "vllm_version": [
+     "0.1.dev20051+g487ecf187"
+    ],
+    "model_snapshots": [
+     "0490d2f708b12145f6516555ab066aaeb401cd21",
+     "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+    ],
+    "env_names_logged_sha256": "f85d9d360488c02bc9ba2bbb33b86319201cfad14cd4c6a9ccb312539ec1313e",
+    "cudagraph_mode": [
+     "FULL_AND_PIECEWISE"
+    ],
+    "release_warmups_logged": 9,
+    "kv_pool_tokens": [
+     4707515
+    ]
+   },
+   "in_window": {
+    "preemption_lines": 0,
+    "illegal_memory_access_lines": 0,
+    "nan_warning_lines": 0
+   },
+   "checks": [
+    [
+     "session: non_default_args_sha256 is a value the 0.9.1 record's own server sessions produced",
+     true,
+     "7025a96888a67642741db00a in ['7025a96888a6']"
+    ],
+    [
+     "session: vllm_version is a value the 0.9.1 record's own server sessions produced",
+     true,
+     "['0.1.dev20051+g487ecf18 in [\"['0.1.dev200\"]"
+    ],
+    [
+     "session: model_snapshots is a value the 0.9.1 record's own server sessions produced",
+     true,
+     "['0490d2f708b12145f65165 in [\"['0490d2f708\"]"
+    ],
+    [
+     "session: env_names_logged_sha256 is a value the 0.9.1 record's own server sessions produced",
+     true,
+     "f85d9d360488c02bc9ba2bbb in ['f85d9d360488']"
+    ],
+    [
+     "session: cudagraph_mode is a value the 0.9.1 record's own server sessions produced",
+     true,
+     "['FULL_AND_PIECEWISE'] in [\"['FULL_AND_P\"]"
+    ],
+    [
+     "session: release warm-up count is one the record's sessions logged",
+     true,
+     "9 in [9]"
+    ],
+    [
+     "session: KV pool >= functional floor 2,646,016 tokens (8 x cap + longest record prompt, whole blocks; not an identity gate)",
+     true,
+     "[4707515] vs floor 2646016"
+    ],
+    [
+     "session warm-up: exactly one engine start in the server log",
+     true,
+     "1"
+    ],
+    [
+     "session warm-up: 9 release warm-up lines (record's count), ending with the ready line",
+     true,
+     "9 warm-up lines, 1 ready lines"
+    ],
+    [
+     "session warm-up: no GPQA chat-completion request logged before the ready line",
+     true,
+     "0 before"
+    ],
+    [
+     "session warm-up: first GPQA request after the last timestamped line before the ready line",
+     true,
+     "first request 1791574231.417, last line before ready 1791574215.0"
+    ],
+    [
+     "session: no illegal-memory-access and no NaN warning lines during the requests (the record's sessions: 0 and 0)",
+     true,
+     "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+    ]
+   ],
+   "kv": {
+    "kv_pool_tokens": [
+     4707515
+    ],
+    "kv_pool_equals_a_record_size": true,
+    "record_kv_pool_sizes": [
+     [
+      4707515
+     ]
+    ],
+    "kv_floor": 2646016,
+    "kv_margin_tokens": 2061499
+   }
+  },
+  {
+   "session": "B+ stock 0.9.1 session (2026-10-21; extra evidence)",
+   "log_sha256": "005b16ae820014a235f02da34f7a33a0b7f12130984f85b3da6e9509b5d1524d",
+   "values": {
+    "non_default_args_sha256": "7025a96888a67642741db00aaecb9cbf786c2ba67cc4ded7d67c1cf4e909dcc5",
+    "vllm_version": [
+     "0.1.dev20051+g487ecf187"
+    ],
+    "model_snapshots": [
+     "0490d2f708b12145f6516555ab066aaeb401cd21",
+     "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+    ],
+    "env_names_logged_sha256": "f85d9d360488c02bc9ba2bbb33b86319201cfad14cd4c6a9ccb312539ec1313e",
+    "cudagraph_mode": [
+     "FULL_AND_PIECEWISE"
+    ],
+    "release_warmups_logged": 9,
+    "kv_pool_tokens": [
+     4707515
+    ]
+   },
+   "in_window": {
+    "preemption_lines": 0,
+    "illegal_memory_access_lines": 0,
+    "nan_warning_lines": 0
+   },
+   "checks": [
+    [
+     "session: non_default_args_sha256 is a value the 0.9.1 record's own server sessions produced",
+     true,
+     "7025a96888a67642741db00a in ['7025a96888a6']"
+    ],
+    [
+     "session: vllm_version is a value the 0.9.1 record's own server sessions produced",
+     true,
+     "['0.1.dev20051+g487ecf18 in [\"['0.1.dev200\"]"
+    ],
+    [
+     "session: model_snapshots is a value the 0.9.1 record's own server sessions produced",
+     true,
+     "['0490d2f708b12145f65165 in [\"['0490d2f708\"]"
+    ],
+    [
+     "session: env_names_logged_sha256 is a value the 0.9.1 record's own server sessions produced",
+     true,
+     "f85d9d360488c02bc9ba2bbb in ['f85d9d360488']"
+    ],
+    [
+     "session: cudagraph_mode is a value the 0.9.1 record's own server sessions produced",
+     true,
+     "['FULL_AND_PIECEWISE'] in [\"['FULL_AND_P\"]"
+    ],
+    [
+     "session: release warm-up count is one the record's sessions logged",
+     true,
+     "9 in [9]"
+    ],
+    [
+     "session: KV pool >= functional floor 2,646,016 tokens (8 x cap + longest record prompt, whole blocks; not an identity gate)",
+     true,
+     "[4707515] vs floor 2646016"
+    ],
+    [
+     "session warm-up: exactly one engine start in the server log",
+     true,
+     "1"
+    ],
+    [
+     "session warm-up: 9 release warm-up lines (record's count), ending with the ready line",
+     true,
+     "9 warm-up lines, 1 ready lines"
+    ],
+    [
+     "session warm-up: no GPQA chat-completion request logged before the ready line",
+     true,
+     "0 before"
+    ],
+    [
+     "session warm-up: first GPQA request after the last timestamped line before the ready line",
+     true,
+     "first request 1792569683.047, last line before ready 1792569675.0"
+    ]
+   ],
+   "kv": {
+    "kv_pool_tokens": [
+     4707515
+    ],
+    "kv_pool_equals_a_record_size": true,
+    "record_kv_pool_sizes": [
+     [
+      4707515
+     ]
+    ],
+    "kv_floor": 2646016,
+    "kv_margin_tokens": 2061499
+   }
+  },
+  {
+   "session": "D d091 stock 0.9.1 GPQA session (2026-10-21, seed 70704; d091b addition)",
+   "log_sha256": "5e1ed9d06abafa55524f3e376283cf3782f32c75ea475cf97a69c92879c915bb",
+   "values": {
+    "non_default_args_sha256": "7025a96888a67642741db00aaecb9cbf786c2ba67cc4ded7d67c1cf4e909dcc5",
+    "vllm_version": [
+     "0.1.dev20051+g487ecf187"
+    ],
+    "model_snapshots": [
+     "0490d2f708b12145f6516555ab066aaeb401cd21",
+     "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+    ],
+    "env_names_logged_sha256": "f85d9d360488c02bc9ba2bbb33b86319201cfad14cd4c6a9ccb312539ec1313e",
+    "cudagraph_mode": [
+     "FULL_AND_PIECEWISE"
+    ],
+    "release_warmups_logged": 9,
+    "kv_pool_tokens": [
+     4707515
+    ]
+   },
+   "in_window": {
+    "preemption_lines": 0,
+    "illegal_memory_access_lines": 0,
+    "nan_warning_lines": 0
+   },
+   "checks": [
+    [
+     "session: non_default_args_sha256 is a value the 0.9.1 record's own server sessions produced",
+     true,
+     "7025a96888a67642741db00a in ['7025a96888a6']"
+    ],
+    [
+     "session: vllm_version is a value the 0.9.1 record's own server sessions produced",
+     true,
+     "['0.1.dev20051+g487ecf18 in [\"['0.1.dev200\"]"
+    ],
+    [
+     "session: model_snapshots is a value the 0.9.1 record's own server sessions produced",
+     true,
+     "['0490d2f708b12145f65165 in [\"['0490d2f708\"]"
+    ],
+    [
+     "session: env_names_logged_sha256 is a value the 0.9.1 record's own server sessions produced",
+     true,
+     "f85d9d360488c02bc9ba2bbb in ['f85d9d360488']"
+    ],
+    [
+     "session: cudagraph_mode is a value the 0.9.1 record's own server sessions produced",
+     true,
+     "['FULL_AND_PIECEWISE'] in [\"['FULL_AND_P\"]"
+    ],
+    [
+     "session: release warm-up count is one the record's sessions logged",
+     true,
+     "9 in [9]"
+    ],
+    [
+     "session: KV pool >= functional floor 2,646,016 tokens (8 x cap + longest record prompt, whole blocks; not an identity gate)",
+     true,
+     "[4707515] vs floor 2646016"
+    ],
+    [
+     "session warm-up: exactly one engine start in the server log",
+     true,
+     "1"
+    ],
+    [
+     "session warm-up: 9 release warm-up lines (record's count), ending with the ready line",
+     true,
+     "9 warm-up lines, 1 ready lines"
+    ],
+    [
+     "session warm-up: no GPQA chat-completion request logged before the ready line",
+     true,
+     "0 before"
+    ],
+    [
+     "session warm-up: first GPQA request after the last timestamped line before the ready line",
+     true,
+     "first request 1792603591.537, last line before ready 1792603565.0"
+    ],
+    [
+     "session: no illegal-memory-access and no NaN warning lines during the requests (the record's sessions: 0 and 0)",
+     true,
+     "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+    ]
+   ],
+   "kv": {
+    "kv_pool_tokens": [
+     4707515
+    ],
+    "kv_pool_equals_a_record_size": true,
+    "record_kv_pool_sizes": [
+     [
+      4707515
+     ]
+    ],
+    "kv_floor": 2646016,
+    "kv_margin_tokens": 2061499
+   }
+  }
+ ],
+ "gates": {
+  "non_default_args_sha256 is a value the 0.9.1 record's own server sessions produced": [
+   {
+    "session": "0.9.1 record session 1 (2026-10-08, pass 1)",
+    "pass": true,
+    "detail": "7025a96888a67642741db00a in ['7025a96888a6']"
+   },
+   {
+    "session": "0.9.1 record session 2 (2026-10-09, passes 2-3)",
+    "pass": true,
+    "detail": "7025a96888a67642741db00a in ['7025a96888a6']"
+   },
+   {
+    "session": "B+ stock 0.9.1 session (2026-10-21; extra evidence)",
+    "pass": true,
+    "detail": "7025a96888a67642741db00a in ['7025a96888a6']"
+   },
+   {
+    "session": "D d091 stock 0.9.1 GPQA session (2026-10-21, seed 70704; d091b addition)",
+    "pass": true,
+    "detail": "7025a96888a67642741db00a in ['7025a96888a6']"
+   }
+  ],
+  "vllm_version is a value the 0.9.1 record's own server sessions produced": [
+   {
+    "session": "0.9.1 record session 1 (2026-10-08, pass 1)",
+    "pass": true,
+    "detail": "['0.1.dev20051+g487ecf18 in [\"['0.1.dev200\"]"
+   },
+   {
+    "session": "0.9.1 record session 2 (2026-10-09, passes 2-3)",
+    "pass": true,
+    "detail": "['0.1.dev20051+g487ecf18 in [\"['0.1.dev200\"]"
+   },
+   {
+    "session": "B+ stock 0.9.1 session (2026-10-21; extra evidence)",
+    "pass": true,
+    "detail": "['0.1.dev20051+g487ecf18 in [\"['0.1.dev200\"]"
+   },
+   {
+    "session": "D d091 stock 0.9.1 GPQA session (2026-10-21, seed 70704; d091b addition)",
+    "pass": true,
+    "detail": "['0.1.dev20051+g487ecf18 in [\"['0.1.dev200\"]"
+   }
+  ],
+  "model_snapshots is a value the 0.9.1 record's own server sessions produced": [
+   {
+    "session": "0.9.1 record session 1 (2026-10-08, pass 1)",
+    "pass": true,
+    "detail": "['0490d2f708b12145f65165 in [\"['0490d2f708\"]"
+   },
+   {
+    "session": "0.9.1 record session 2 (2026-10-09, passes 2-3)",
+    "pass": true,
+    "detail": "['0490d2f708b12145f65165 in [\"['0490d2f708\"]"
+   },
+   {
+    "session": "B+ stock 0.9.1 session (2026-10-21; extra evidence)",
+    "pass": true,
+    "detail": "['0490d2f708b12145f65165 in [\"['0490d2f708\"]"
+   },
+   {
+    "session": "D d091 stock 0.9.1 GPQA session (2026-10-21, seed 70704; d091b addition)",
+    "pass": true,
+    "detail": "['0490d2f708b12145f65165 in [\"['0490d2f708\"]"
+   }
+  ],
+  "env_names_logged_sha256 is a value the 0.9.1 record's own server sessions produced": [
+   {
+    "session": "0.9.1 record session 1 (2026-10-08, pass 1)",
+    "pass": true,
+    "detail": "f85d9d360488c02bc9ba2bbb in ['f85d9d360488']"
+   },
+   {
+    "session": "0.9.1 record session 2 (2026-10-09, passes 2-3)",
+    "pass": true,
+    "detail": "f85d9d360488c02bc9ba2bbb in ['f85d9d360488']"
+   },
+   {
+    "session": "B+ stock 0.9.1 session (2026-10-21; extra evidence)",
+    "pass": true,
+    "detail": "f85d9d360488c02bc9ba2bbb in ['f85d9d360488']"
+   },
+   {
+    "session": "D d091 stock 0.9.1 GPQA session (2026-10-21, seed 70704; d091b addition)",
+    "pass": true,
+    "detail": "f85d9d360488c02bc9ba2bbb in ['f85d9d360488']"
+   }
+  ],
+  "cudagraph_mode is a value the 0.9.1 record's own server sessions produced": [
+   {
+    "session": "0.9.1 record session 1 (2026-10-08, pass 1)",
+    "pass": true,
+    "detail": "['FULL_AND_PIECEWISE'] in [\"['FULL_AND_P\"]"
+   },
+   {
+    "session": "0.9.1 record session 2 (2026-10-09, passes 2-3)",
+    "pass": true,
+    "detail": "['FULL_AND_PIECEWISE'] in [\"['FULL_AND_P\"]"
+   },
+   {
+    "session": "B+ stock 0.9.1 session (2026-10-21; extra evidence)",
+    "pass": true,
+    "detail": "['FULL_AND_PIECEWISE'] in [\"['FULL_AND_P\"]"
+   },
+   {
+    "session": "D d091 stock 0.9.1 GPQA session (2026-10-21, seed 70704; d091b addition)",
+    "pass": true,
+    "detail": "['FULL_AND_PIECEWISE'] in [\"['FULL_AND_P\"]"
+   }
+  ],
+  "release warm-up count is one the record's sessions logged": [
+   {
+    "session": "0.9.1 record session 1 (2026-10-08, pass 1)",
+    "pass": true,
+    "detail": "9 in [9]"
+   },
+   {
+    "session": "0.9.1 record session 2 (2026-10-09, passes 2-3)",
+    "pass": true,
+    "detail": "9 in [9]"
+   },
+   {
+    "session": "B+ stock 0.9.1 session (2026-10-21; extra evidence)",
+    "pass": true,
+    "detail": "9 in [9]"
+   },
+   {
+    "session": "D d091 stock 0.9.1 GPQA session (2026-10-21, seed 70704; d091b addition)",
+    "pass": true,
+    "detail": "9 in [9]"
+   }
+  ],
+  "KV pool >= functional floor 2,646,016 tokens (8 x cap + longest record prompt, whole blocks; not an identity gate)": [
+   {
+    "session": "0.9.1 record session 1 (2026-10-08, pass 1)",
+    "pass": true,
+    "detail": "[4707515] vs floor 2646016"
+   },
+   {
+    "session": "0.9.1 record session 2 (2026-10-09, passes 2-3)",
+    "pass": true,
+    "detail": "[4707515] vs floor 2646016"
+   },
+   {
+    "session": "B+ stock 0.9.1 session (2026-10-21; extra evidence)",
+    "pass": true,
+    "detail": "[4707515] vs floor 2646016"
+   },
+   {
+    "session": "D d091 stock 0.9.1 GPQA session (2026-10-21, seed 70704; d091b addition)",
+    "pass": true,
+    "detail": "[4707515] vs floor 2646016"
+   }
+  ],
+  "warm-up: exactly one engine start in the server log": [
+   {
+    "session": "0.9.1 record session 1 (2026-10-08, pass 1)",
+    "pass": true,
+    "detail": "1"
+   },
+   {
+    "session": "0.9.1 record session 2 (2026-10-09, passes 2-3)",
+    "pass": true,
+    "detail": "1"
+   },
+   {
+    "session": "B+ stock 0.9.1 session (2026-10-21; extra evidence)",
+    "pass": true,
+    "detail": "1"
+   },
+   {
+    "session": "D d091 stock 0.9.1 GPQA session (2026-10-21, seed 70704; d091b addition)",
+    "pass": true,
+    "detail": "1"
+   }
+  ],
+  "warm-up: 9 release warm-up lines (record's count), ending with the ready line": [
+   {
+    "session": "0.9.1 record session 1 (2026-10-08, pass 1)",
+    "pass": true,
+    "detail": "9 warm-up lines, 1 ready lines"
+   },
+   {
+    "session": "0.9.1 record session 2 (2026-10-09, passes 2-3)",
+    "pass": true,
+    "detail": "9 warm-up lines, 1 ready lines"
+   },
+   {
+    "session": "B+ stock 0.9.1 session (2026-10-21; extra evidence)",
+    "pass": true,
+    "detail": "9 warm-up lines, 1 ready lines"
+   },
+   {
+    "session": "D d091 stock 0.9.1 GPQA session (2026-10-21, seed 70704; d091b addition)",
+    "pass": true,
+    "detail": "9 warm-up lines, 1 ready lines"
+   }
+  ],
+  "warm-up: no GPQA chat-completion request logged before the ready line": [
+   {
+    "session": "0.9.1 record session 1 (2026-10-08, pass 1)",
+    "pass": true,
+    "detail": "0 before"
+   },
+   {
+    "session": "0.9.1 record session 2 (2026-10-09, passes 2-3)",
+    "pass": true,
+    "detail": "0 before"
+   },
+   {
+    "session": "B+ stock 0.9.1 session (2026-10-21; extra evidence)",
+    "pass": true,
+    "detail": "0 before"
+   },
+   {
+    "session": "D d091 stock 0.9.1 GPQA session (2026-10-21, seed 70704; d091b addition)",
+    "pass": true,
+    "detail": "0 before"
+   }
+  ],
+  "warm-up: first GPQA request after the last timestamped line before the ready line": [
+   {
+    "session": "0.9.1 record session 1 (2026-10-08, pass 1)",
+    "pass": true,
+    "detail": "first request 1791506343.238, last line before ready 1791506314.0"
+   },
+   {
+    "session": "0.9.1 record session 2 (2026-10-09, passes 2-3)",
+    "pass": true,
+    "detail": "first request 1791574231.417, last line before ready 1791574215.0"
+   },
+   {
+    "session": "B+ stock 0.9.1 session (2026-10-21; extra evidence)",
+    "pass": true,
+    "detail": "first request 1792569683.047, last line before ready 1792569675.0"
+   },
+   {
+    "session": "D d091 stock 0.9.1 GPQA session (2026-10-21, seed 70704; d091b addition)",
+    "pass": true,
+    "detail": "first request 1792603591.537, last line before ready 1792603565.0"
+   }
+  ],
+  "no illegal-memory-access and no NaN warning lines during the requests (the record's sessions: 0 and 0)": [
+   {
+    "session": "0.9.1 record session 1 (2026-10-08, pass 1)",
+    "pass": true,
+    "detail": "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+   },
+   {
+    "session": "0.9.1 record session 2 (2026-10-09, passes 2-3)",
+    "pass": true,
+    "detail": "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+   },
+   {
+    "session": "D d091 stock 0.9.1 GPQA session (2026-10-21, seed 70704; d091b addition)",
+    "pass": true,
+    "detail": "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+   }
+  ]
+ },
+ "client_config_across_record_passes": {
+  "model_args_without_seed_identical": true,
+  "gen_kwargs_identical": true,
+  "process_seeds": [
+   1235,
+   1236,
+   1237
+  ],
+  "model_args_seeds": [
+   null,
+   1235,
+   1236
+  ]
+ },
+ "per_question_fields_identical_across_record_passes": {
+  "prompt_hash": true,
+  "doc_hash": true,
+  "target_hash": true,
+  "messages_sha256": true,
+  "prompt_tokens": true
+ },
+ "record_loader_checks_all_pass": true,
+ "task_hash_all_record_passes": [
+  true,
+  true,
+  true
+ ],
+ "record_max_request_s_vs_lm_eval_timeout": [
+  4865.784,
+  5529.31
+ ],
+ "kv_pool_by_family_startup_markers": {
+  "other (0.6.x / 0.8.0 variants)": {
+   "sessions": [
+    [
+     "2026-09-05-glm53-flash-exl3-k3.25@tpurtell+bt8192",
+     1692094
+    ],
+    [
+     "2026-09-28-glm53-flash-exl3-k3.25@tpurtell+v0.8.0",
+     4707515
+    ],
+    [
+     "2026-09-30-glm53-flash-exl3-k3.25@tpurtell+v0.8.0",
+     4707515
+    ],
+    [
+     "2026-10-01-glm53-flash-exl3-k3.25@tpurtell+v0.8.0+k5+noshare",
+     3583662
+    ],
+    [
+     "2026-10-04-glm53-flash-exl3-k3.25@tpurtell+v0.8.0+k1",
+     4951608
+    ],
+    [
+     "2026-10-04-glm53-flash-exl3-k3.25@tpurtell+v0.8.0+kpoolring+k5",
+     4454688
+    ],
+    [
+     "2026-10-04-glm53-flash-exl3-k3.25@tpurtell+v0.8.0+kpoolring+nospec",
+     5644288
+    ],
+    [
+     "2026-10-04-glm53-flash-exl3-k3.25@tpurtell+v0.8.0+kpoolring",
+     4707515
+    ],
+    [
+     "2026-10-04-glm53-flash-exl3-k3.25@tpurtell+v0.8.0+nospec",
+     5644288
+    ],
+    [
+     "2026-10-04-glm53-flash-exl3-k3.25@tpurtell+v0.8.0",
+     4707515
+    ],
+    [
+     "2026-10-05-glm53-flash-exl3-k3.25@tpurtell+v0.8.0+kpoolring+k5",
+     4454688
+    ]
+   ],
+   "distinct_sizes": [
+    1692094,
+    3583662,
+    4454688,
+    4707515,
+    4951608,
+    5644288
+   ]
+  },
+  "0.7.0 (DCP2 / EP2 layout)": {
+   "sessions": [
+    [
+     "2026-09-05-glm53-flash-exl3-k3.25@tpurtell",
+     2749599
+    ],
+    [
+     "2026-09-29-glm53-flash-exl3-k3.25@tpurtell",
+     2768240
+    ],
+    [
+     "2026-09-30-glm53-flash-exl3-k3.25@tpurtell",
+     2749599
+    ],
+    [
+     "2026-10-05-glm53-flash-exl3-k3.25@tpurtell+kpoolring",
+     2749599
+    ],
+    [
+     "2026-10-05-glm53-flash-exl3-k3.25@tpurtell",
+     2768240
+    ],
+    [
+     "2026-10-10-glm53-flash-exl3-k3.25@tpurtell+ps",
+     2758919
+    ],
+    [
+     "2026-10-16-glm53-flash-exl3-k3.25@tpurtell+rep070-F",
+     2758919
+    ]
+   ],
+   "distinct_sizes": [
+    2749599,
+    2758919,
+    2768240
+   ]
+  },
+  "0.9.x EP2/DCP2 layout (+ep2dcp2)": {
+   "sessions": [
+    [
+     "2026-10-07-glm53-flash-exl3-k3.25@tpurtell+v0.9.0+ep2dcp2",
+     3165056
+    ],
+    [
+     "2026-10-08-glm53-flash-exl3-k3.25@tpurtell+v0.9.0+ep2dcp2",
+     3140895
+    ]
+   ],
+   "distinct_sizes": [
+    3140895,
+    3165056
+   ]
+  },
+  "0.9.x default DCP1 layout (the d091 configuration)": {
+   "sessions": [
+    [
+     "2026-10-07-glm53-flash-exl3-k3.25@tpurtell+v0.9.0+tailfix",
+     4707515
+    ],
+    [
+     "2026-10-07-glm53-flash-exl3-k3.25@tpurtell+v0.9.0",
+     4707515
+    ],
+    [
+     "2026-10-08-glm53-flash-exl3-k3.25@tpurtell+v0.9.0+tailfix",
+     4707515
+    ],
+    [
+     "2026-10-08-glm53-flash-exl3-k3.25@tpurtell+v0.9.0",
+     4707515
+    ],
+    [
+     "2026-10-08-glm53-flash-exl3-k3.25@tpurtell+v0.9.1",
+     4707515
+    ],
+    [
+     "2026-10-09-glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps",
+     4707515
+    ],
+    [
+     "2026-10-11-glm53-flash-exl3-k3.25@tpurtell+v0.9.1+col511fix",
+     4707515
+    ],
+    [
+     "2026-10-12-glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234",
+     4707515
+    ],
+    [
+     "2026-10-13-glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234+d7",
+     4707515
+    ],
+    [
+     "2026-10-13-glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234",
+     4707515
+    ],
+    [
+     "2026-10-21-glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091",
+     4707515
+    ]
+   ],
+   "distinct_sizes": [
+    4707515
+   ]
+  }
+ },
+ "verdict": {
+  "non_default_args_sha256 is a value the 0.9.1 record's own server sessions produced": {
+   "record_sessions_pass": true,
+   "bplus_v091_passes": true,
+   "d091_session_passes": true
+  },
+  "vllm_version is a value the 0.9.1 record's own server sessions produced": {
+   "record_sessions_pass": true,
+   "bplus_v091_passes": true,
+   "d091_session_passes": true
+  },
+  "model_snapshots is a value the 0.9.1 record's own server sessions produced": {
+   "record_sessions_pass": true,
+   "bplus_v091_passes": true,
+   "d091_session_passes": true
+  },
+  "env_names_logged_sha256 is a value the 0.9.1 record's own server sessions produced": {
+   "record_sessions_pass": true,
+   "bplus_v091_passes": true,
+   "d091_session_passes": true
+  },
+  "cudagraph_mode is a value the 0.9.1 record's own server sessions produced": {
+   "record_sessions_pass": true,
+   "bplus_v091_passes": true,
+   "d091_session_passes": true
+  },
+  "release warm-up count is one the record's sessions logged": {
+   "record_sessions_pass": true,
+   "bplus_v091_passes": true,
+   "d091_session_passes": true
+  },
+  "KV pool >= functional floor 2,646,016 tokens (8 x cap + longest record prompt, whole blocks; not an identity gate)": {
+   "record_sessions_pass": true,
+   "bplus_v091_passes": true,
+   "d091_session_passes": true
+  },
+  "warm-up: exactly one engine start in the server log": {
+   "record_sessions_pass": true,
+   "bplus_v091_passes": true,
+   "d091_session_passes": true
+  },
+  "warm-up: 9 release warm-up lines (record's count), ending with the ready line": {
+   "record_sessions_pass": true,
+   "bplus_v091_passes": true,
+   "d091_session_passes": true
+  },
+  "warm-up: no GPQA chat-completion request logged before the ready line": {
+   "record_sessions_pass": true,
+   "bplus_v091_passes": true,
+   "d091_session_passes": true
+  },
+  "warm-up: first GPQA request after the last timestamped line before the ready line": {
+   "record_sessions_pass": true,
+   "bplus_v091_passes": true,
+   "d091_session_passes": true
+  },
+  "no illegal-memory-access and no NaN warning lines during the requests (the record's sessions: 0 and 0)": {
+   "record_sessions_pass": true,
+   "bplus_v091_passes": true,
+   "d091_session_passes": true
+  }
+ },
+ "all_gates_pass_on_both_record_sessions": true,
+ "all_gates_pass_on_d091_session": true
+}

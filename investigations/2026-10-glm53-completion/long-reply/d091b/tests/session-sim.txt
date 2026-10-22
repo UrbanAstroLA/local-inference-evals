@@ -1,0 +1,81 @@
+== (a) normal end of the session (placeholder pass)
+  runner rc=0
+  ok    exactly 1 cost line(s), 2 GPUs each
+  ok    no refused docker call
+  ok    fake chain gone
+  ok    proxy gone (8002 free)
+  ok    no runner process left (GPU logger, watchdog)
+  ok    raw directory under PRIVATE/ is mode 0700; any raw file 0600
+  ok    long-reply pipeline not run (out/ empty)
+  ok    chain: tag +d091b, GPQA_PASSES=1, seed list 70705, concurrency 8, via the proxy
+  ok    server stopped once
+  ok    server log and docker inspect saved
+  ok    inspect check reports the digest and loopback-only publish
+  ok    cost line: chain_rc 0, watchdog_fired false, seed 70705
+  ok    finalize: placeholder pass probed INCOMPLETE, report written, never classified
+  ok    cache inventory before and after, with diff
+  ok    planned seeds: request 70705, lm-eval process 1235
+  ok    package verification saved
+== (b) SIGTERM to the runner during the session
+  runner rc=4
+  ok    exactly 1 cost line(s), 2 GPUs each
+  ok    no refused docker call
+  ok    fake chain gone
+  ok    proxy gone (8002 free)
+  ok    no runner process left (GPU logger, watchdog)
+  ok    raw directory under PRIVATE/ is mode 0700; any raw file 0600
+  ok    long-reply pipeline not run (out/ empty)
+  ok    runner exited 4 and reported the interrupted-session cleanup
+  ok    cost line has chain_rc null
+  ok    server stopped in the cleanup
+  ok    INCOMPLETE report with the interruption as a cause; never classified
+== (c) watchdog at APPROVED_GPU_H=0.04 (72 s wall; checked every 60 s)
+  runner rc=0
+  ok    exactly 1 cost line(s), 2 GPUs each
+  ok    no refused docker call
+  ok    fake chain gone
+  ok    proxy gone (8002 free)
+  ok    no runner process left (GPU logger, watchdog)
+  ok    raw directory under PRIVATE/ is mode 0700; any raw file 0600
+  ok    long-reply pipeline not run (out/ empty)
+  ok    watchdog fired, killed the chain and stopped the server
+  ok    cost line: watchdog_fired true
+  ok    INCOMPLETE report with the watchdog cause
+== (d) the session fails (chain rc 1, no pass)
+  runner rc=0
+  ok    exactly 1 cost line(s), 2 GPUs each
+  ok    no refused docker call
+  ok    fake chain gone
+  ok    proxy gone (8002 free)
+  ok    no runner process left (GPU logger, watchdog)
+  ok    raw directory under PRIVATE/ is mode 0700; any raw file 0600
+  ok    long-reply pipeline not run (out/ empty)
+  ok    stopped after the session, no retry
+  ok    cost line has chain_rc 1; INCOMPLETE report
+== (e) watchdog while a request is in flight through the proxy copy
+  runner rc=0
+  ok    exactly 1 cost line(s), 2 GPUs each
+  ok    no refused docker call
+  ok    fake chain gone
+  ok    proxy gone (8002 free)
+  ok    no runner process left (GPU logger, watchdog)
+  ok    raw directory under PRIVATE/ is mode 0700; any raw file 0600
+  ok    long-reply pipeline not run (out/ empty)
+  ok    watchdog fired; fake upstream stopped by the docker shim
+  ok    sidecar: start then interrupted for seed 70705
+  ok    no main-log row for the interrupted request
+  ok    raw file in PRIVATE/raw, mode 0600, holds the interrupted record
+  ok    INCOMPLETE report: watchdog cause; pass 1 interrupted 1, unstarted 197, no response logged, never counted empty
+== (f) complete pass directory without proxy rows: COMPLETE probe -> frozen analysis INVALID -> no pipeline
+  runner rc=0
+  ok    exactly 1 cost line(s), 2 GPUs each
+  ok    no refused docker call
+  ok    fake chain gone
+  ok    proxy gone (8002 free)
+  ok    no runner process left (GPU logger, watchdog)
+  ok    raw directory under PRIVATE/ is mode 0700; any raw file 0600
+  ok    long-reply pipeline not run (out/ empty)
+  ok    probe COMPLETE, frozen analysis ran and returned INVALID (rc 3: no proxy request log, no proxy rows)
+  ok    INVALID run: pipeline explicitly not run
+session simulation: 67 passed, 0 failed
+rc=0

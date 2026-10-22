@@ -1,0 +1,3999 @@
+{
+ "what": "D7 prefix-prefill exposure estimate [E] (ids, counts and positions only)",
+ "sim_d7_sha256": "c5662f1d61679f2d9299c48a36d18162173c5a367d32397ade22bfdd41577e21",
+ "engines": {
+  "v070": {
+   "K": 5,
+   "block": 3584,
+   "fixed_writer": false,
+   "cold_prefill_beside_D_decoding": {
+    "0": {
+     "events_12_prefixes": 364,
+     "affected_pool_fraction": 0.001117
+    },
+    "1": {
+     "events_12_prefixes": 0,
+     "affected_pool_fraction": 0.0
+    },
+    "2": {
+     "events_12_prefixes": 364,
+     "affected_pool_fraction": 0.001117
+    },
+    "3": {
+     "events_12_prefixes": 364,
+     "affected_pool_fraction": 0.001117
+    },
+    "4": {
+     "events_12_prefixes": 364,
+     "affected_pool_fraction": 0.001117
+    },
+    "5": {
+     "events_12_prefixes": 0,
+     "affected_pool_fraction": 0.0
+    },
+    "6": {
+     "events_12_prefixes": 364,
+     "affected_pool_fraction": 0.001117
+    },
+    "7": {
+     "events_12_prefixes": 364,
+     "affected_pool_fraction": 0.001117
+    }
+   },
+   "central_cache_hits": {
+    "requests": [
+     {
+      "k": 1,
+      "prefix_id": "P09",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       3
+      ]
+     },
+     {
+      "k": 2,
+      "prefix_id": "P06",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 77,
+      "unaligned_starts": 21,
+      "affected_pools_in_its_prefix_kv": 21,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 3,
+      "prefix_id": "P03",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 77,
+      "unaligned_starts": 46,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 4,
+      "prefix_id": "P08",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 78,
+      "unaligned_starts": 46,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 5,
+      "prefix_id": "P11",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 78,
+      "unaligned_starts": 44,
+      "affected_pools_in_its_prefix_kv": 44,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 6,
+      "prefix_id": "P12",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 78,
+      "unaligned_starts": 21,
+      "affected_pools_in_its_prefix_kv": 21,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 7,
+      "prefix_id": "P10",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 79,
+      "unaligned_starts": 45,
+      "affected_pools_in_its_prefix_kv": 45,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 8,
+      "prefix_id": "P07",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 79,
+      "unaligned_starts": 46,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 9,
+      "prefix_id": "P02",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 57,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 10,
+      "prefix_id": "P13",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 11,
+      "prefix_id": "P04",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 57,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 12,
+      "prefix_id": "P01",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 13,
+      "prefix_id": "P05",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 14,
+      "prefix_id": "P12",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 23,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 15,
+      "prefix_id": "P02",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 96768,
+      "chunks": 3,
+      "unaligned_starts": 1,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 16,
+      "prefix_id": "P06",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 23,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 17,
+      "prefix_id": "P10",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 45,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 18,
+      "prefix_id": "P07",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 19,
+      "prefix_id": "P05",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 20,
+      "prefix_id": "P08",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 21,
+      "prefix_id": "P09",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 22,
+      "prefix_id": "P13",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 23,
+      "prefix_id": "P11",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 44,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 24,
+      "prefix_id": "P01",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 25,
+      "prefix_id": "P03",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 26,
+      "prefix_id": "P04",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 96768,
+      "chunks": 3,
+      "unaligned_starts": 1,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 27,
+      "prefix_id": "P10",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 45,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 28,
+      "prefix_id": "P13",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 29,
+      "prefix_id": "P05",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 30,
+      "prefix_id": "P12",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 23,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 31,
+      "prefix_id": "P03",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 32,
+      "prefix_id": "P07",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 33,
+      "prefix_id": "P04",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 96768,
+      "chunks": 3,
+      "unaligned_starts": 1,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 34,
+      "prefix_id": "P06",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 23,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 35,
+      "prefix_id": "P02",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 96768,
+      "chunks": 3,
+      "unaligned_starts": 1,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 36,
+      "prefix_id": "P08",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 37,
+      "prefix_id": "P01",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 38,
+      "prefix_id": "P11",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 44,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 39,
+      "prefix_id": "P09",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 40,
+      "prefix_id": "P07",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 41,
+      "prefix_id": "P05",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 42,
+      "prefix_id": "P08",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 43,
+      "prefix_id": "P01",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 44,
+      "prefix_id": "P13",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 45,
+      "prefix_id": "P04",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 96768,
+      "chunks": 3,
+      "unaligned_starts": 1,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 46,
+      "prefix_id": "P06",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 23,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 47,
+      "prefix_id": "P02",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 96768,
+      "chunks": 3,
+      "unaligned_starts": 1,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 48,
+      "prefix_id": "P12",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 23,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 49,
+      "prefix_id": "P03",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 50,
+      "prefix_id": "P10",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 45,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 51,
+      "prefix_id": "P09",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 52,
+      "prefix_id": "P11",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 93184,
+      "chunks": 4,
+      "unaligned_starts": 2,
+      "affected_pools_in_its_prefix_kv": 44,
+      "start_residues_mod4": [
+       2
+      ]
+     }
+    ],
+    "events_total_48_requests": 509,
+    "affected_pool_fraction_mean": 0.00039,
+    "max_events_one_request": 46,
+    "requests_with_any_event": 52,
+    "pools_affected_if_unfixed": 509,
+    "per_continuation_affected_fraction": {
+     "mean": 0.00135,
+     "max": 0.001837,
+     "continuations_with_any": 52,
+     "max_pools": 46
+    },
+    "pools_affected_on_this_engine": 509
+   },
+   "no_cache_hits": {
+    "requests": [
+     {
+      "k": 1,
+      "prefix_id": "P09",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       3
+      ]
+     },
+     {
+      "k": 2,
+      "prefix_id": "P06",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 77,
+      "unaligned_starts": 21,
+      "affected_pools_in_its_prefix_kv": 21,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 3,
+      "prefix_id": "P03",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 77,
+      "unaligned_starts": 46,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 4,
+      "prefix_id": "P08",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 78,
+      "unaligned_starts": 46,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 5,
+      "prefix_id": "P11",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 78,
+      "unaligned_starts": 44,
+      "affected_pools_in_its_prefix_kv": 44,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 6,
+      "prefix_id": "P12",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 78,
+      "unaligned_starts": 21,
+      "affected_pools_in_its_prefix_kv": 21,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 7,
+      "prefix_id": "P10",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 79,
+      "unaligned_starts": 45,
+      "affected_pools_in_its_prefix_kv": 45,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 8,
+      "prefix_id": "P07",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 79,
+      "unaligned_starts": 46,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 9,
+      "prefix_id": "P02",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 57,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 10,
+      "prefix_id": "P13",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 11,
+      "prefix_id": "P04",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 57,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 12,
+      "prefix_id": "P01",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 13,
+      "prefix_id": "P05",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 14,
+      "prefix_id": "P12",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 15,
+      "prefix_id": "P02",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 57,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 16,
+      "prefix_id": "P06",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 17,
+      "prefix_id": "P10",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 18,
+      "prefix_id": "P07",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 19,
+      "prefix_id": "P05",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 20,
+      "prefix_id": "P08",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 21,
+      "prefix_id": "P09",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 22,
+      "prefix_id": "P13",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 23,
+      "prefix_id": "P11",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 24,
+      "prefix_id": "P01",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 25,
+      "prefix_id": "P03",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 26,
+      "prefix_id": "P04",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 57,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 27,
+      "prefix_id": "P10",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 28,
+      "prefix_id": "P13",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 29,
+      "prefix_id": "P05",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 30,
+      "prefix_id": "P12",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 31,
+      "prefix_id": "P03",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 32,
+      "prefix_id": "P07",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 33,
+      "prefix_id": "P04",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 57,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 34,
+      "prefix_id": "P06",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 35,
+      "prefix_id": "P02",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 57,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 36,
+      "prefix_id": "P08",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 37,
+      "prefix_id": "P01",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 38,
+      "prefix_id": "P11",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 39,
+      "prefix_id": "P09",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 40,
+      "prefix_id": "P07",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 41,
+      "prefix_id": "P05",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 42,
+      "prefix_id": "P08",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 43,
+      "prefix_id": "P01",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 44,
+      "prefix_id": "P13",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 45,
+      "prefix_id": "P04",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 57,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 46,
+      "prefix_id": "P06",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 47,
+      "prefix_id": "P02",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 57,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 48,
+      "prefix_id": "P12",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 49,
+      "prefix_id": "P03",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 50,
+      "prefix_id": "P10",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 51,
+      "prefix_id": "P09",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 52,
+      "prefix_id": "P11",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 56,
+      "unaligned_starts": 28,
+      "affected_pools_in_its_prefix_kv": 28,
+      "start_residues_mod4": [
+       2
+      ]
+     }
+    ],
+    "events_total_48_requests": 1529,
+    "affected_pool_fraction_mean": 0.001173,
+    "max_events_one_request": 46,
+    "requests_with_any_event": 52,
+    "pools_affected_if_unfixed": 1529,
+    "per_continuation_affected_fraction": {
+     "mean": 0.001173,
+     "max": 0.001837,
+     "continuations_with_any": 52,
+     "max_pools": 46
+    },
+    "pools_affected_on_this_engine": 1529
+   }
+  },
+  "v091": {
+   "K": 3,
+   "block": 4352,
+   "fixed_writer": false,
+   "cold_prefill_beside_D_decoding": {
+    "0": {
+     "events_12_prefixes": 598,
+     "affected_pool_fraction": 0.001835
+    },
+    "1": {
+     "events_12_prefixes": 299,
+     "affected_pool_fraction": 0.000917
+    },
+    "2": {
+     "events_12_prefixes": 598,
+     "affected_pool_fraction": 0.001835
+    },
+    "3": {
+     "events_12_prefixes": 0,
+     "affected_pool_fraction": 0.0
+    },
+    "4": {
+     "events_12_prefixes": 598,
+     "affected_pool_fraction": 0.001835
+    },
+    "5": {
+     "events_12_prefixes": 299,
+     "affected_pool_fraction": 0.000917
+    },
+    "6": {
+     "events_12_prefixes": 598,
+     "affected_pool_fraction": 0.001835
+    },
+    "7": {
+     "events_12_prefixes": 0,
+     "affected_pool_fraction": 0.0
+    }
+   },
+   "central_cache_hits": {
+    "requests": [
+     {
+      "k": 1,
+      "prefix_id": "P09",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 46,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": [
+       1,
+       2
+      ]
+     },
+     {
+      "k": 2,
+      "prefix_id": "P06",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 15,
+      "affected_pools_in_its_prefix_kv": 15,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 3,
+      "prefix_id": "P03",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 73,
+      "unaligned_starts": 48,
+      "affected_pools_in_its_prefix_kv": 48,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 4,
+      "prefix_id": "P08",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 73,
+      "unaligned_starts": 12,
+      "affected_pools_in_its_prefix_kv": 12,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 5,
+      "prefix_id": "P11",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 74,
+      "unaligned_starts": 48,
+      "affected_pools_in_its_prefix_kv": 48,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 6,
+      "prefix_id": "P12",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 73,
+      "unaligned_starts": 21,
+      "affected_pools_in_its_prefix_kv": 21,
+      "start_residues_mod4": [
+       2,
+       3
+      ]
+     },
+     {
+      "k": 7,
+      "prefix_id": "P10",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 75,
+      "unaligned_starts": 48,
+      "affected_pools_in_its_prefix_kv": 48,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 8,
+      "prefix_id": "P07",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 73,
+      "unaligned_starts": 9,
+      "affected_pools_in_its_prefix_kv": 9,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 9,
+      "prefix_id": "P02",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 10,
+      "prefix_id": "P13",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 11,
+      "prefix_id": "P04",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 12,
+      "prefix_id": "P01",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 69,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 13,
+      "prefix_id": "P05",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 14,
+      "prefix_id": "P12",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 20,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 15,
+      "prefix_id": "P02",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 16,
+      "prefix_id": "P06",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 14,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 17,
+      "prefix_id": "P10",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 18,
+      "prefix_id": "P07",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 9,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 19,
+      "prefix_id": "P05",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 20,
+      "prefix_id": "P08",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 12,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 21,
+      "prefix_id": "P09",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 44,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 22,
+      "prefix_id": "P13",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 23,
+      "prefix_id": "P11",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 24,
+      "prefix_id": "P01",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 91392,
+      "chunks": 6,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 25,
+      "prefix_id": "P03",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 26,
+      "prefix_id": "P04",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 27,
+      "prefix_id": "P10",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 28,
+      "prefix_id": "P13",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 29,
+      "prefix_id": "P05",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 30,
+      "prefix_id": "P12",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 20,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 31,
+      "prefix_id": "P03",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 32,
+      "prefix_id": "P07",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 9,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 33,
+      "prefix_id": "P04",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 34,
+      "prefix_id": "P06",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 14,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 35,
+      "prefix_id": "P02",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 36,
+      "prefix_id": "P08",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 12,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 37,
+      "prefix_id": "P01",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 91392,
+      "chunks": 6,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 38,
+      "prefix_id": "P11",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 39,
+      "prefix_id": "P09",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 44,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 40,
+      "prefix_id": "P07",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 9,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 41,
+      "prefix_id": "P05",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 42,
+      "prefix_id": "P08",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 12,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 43,
+      "prefix_id": "P01",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 91392,
+      "chunks": 6,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 44,
+      "prefix_id": "P13",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 45,
+      "prefix_id": "P04",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 46,
+      "prefix_id": "P06",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 14,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 47,
+      "prefix_id": "P02",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 48,
+      "prefix_id": "P12",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 20,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 49,
+      "prefix_id": "P03",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 50,
+      "prefix_id": "P10",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 51,
+      "prefix_id": "P09",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 44,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 52,
+      "prefix_id": "P11",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": []
+     }
+    ],
+    "events_total_48_requests": 247,
+    "affected_pool_fraction_mean": 0.000189,
+    "max_events_one_request": 48,
+    "requests_with_any_event": 8,
+    "pools_affected_if_unfixed": 247,
+    "per_continuation_affected_fraction": {
+     "mean": 0.000735,
+     "max": 0.001916,
+     "continuations_with_any": 32,
+     "max_pools": 48
+    },
+    "pools_affected_on_this_engine": 247
+   },
+   "no_cache_hits": {
+    "requests": [
+     {
+      "k": 1,
+      "prefix_id": "P09",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 46,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": [
+       1,
+       2
+      ]
+     },
+     {
+      "k": 2,
+      "prefix_id": "P06",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 15,
+      "affected_pools_in_its_prefix_kv": 15,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 3,
+      "prefix_id": "P03",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 73,
+      "unaligned_starts": 48,
+      "affected_pools_in_its_prefix_kv": 48,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 4,
+      "prefix_id": "P08",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 73,
+      "unaligned_starts": 12,
+      "affected_pools_in_its_prefix_kv": 12,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 5,
+      "prefix_id": "P11",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 74,
+      "unaligned_starts": 48,
+      "affected_pools_in_its_prefix_kv": 48,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 6,
+      "prefix_id": "P12",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 73,
+      "unaligned_starts": 21,
+      "affected_pools_in_its_prefix_kv": 21,
+      "start_residues_mod4": [
+       2,
+       3
+      ]
+     },
+     {
+      "k": 7,
+      "prefix_id": "P10",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 75,
+      "unaligned_starts": 48,
+      "affected_pools_in_its_prefix_kv": 48,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 8,
+      "prefix_id": "P07",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 73,
+      "unaligned_starts": 9,
+      "affected_pools_in_its_prefix_kv": 9,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 9,
+      "prefix_id": "P02",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 10,
+      "prefix_id": "P13",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 11,
+      "prefix_id": "P04",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 12,
+      "prefix_id": "P01",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 69,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 13,
+      "prefix_id": "P05",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 14,
+      "prefix_id": "P12",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 15,
+      "prefix_id": "P02",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 16,
+      "prefix_id": "P06",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 17,
+      "prefix_id": "P10",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 18,
+      "prefix_id": "P07",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 19,
+      "prefix_id": "P05",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 20,
+      "prefix_id": "P08",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 21,
+      "prefix_id": "P09",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 22,
+      "prefix_id": "P13",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 23,
+      "prefix_id": "P11",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 24,
+      "prefix_id": "P01",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 69,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 25,
+      "prefix_id": "P03",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 26,
+      "prefix_id": "P04",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 27,
+      "prefix_id": "P10",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 28,
+      "prefix_id": "P13",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 29,
+      "prefix_id": "P05",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 30,
+      "prefix_id": "P12",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 31,
+      "prefix_id": "P03",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 32,
+      "prefix_id": "P07",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 33,
+      "prefix_id": "P04",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 34,
+      "prefix_id": "P06",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 35,
+      "prefix_id": "P02",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 36,
+      "prefix_id": "P08",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 37,
+      "prefix_id": "P01",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 69,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 38,
+      "prefix_id": "P11",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 39,
+      "prefix_id": "P09",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 40,
+      "prefix_id": "P07",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 41,
+      "prefix_id": "P05",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 42,
+      "prefix_id": "P08",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 43,
+      "prefix_id": "P01",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 69,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 44,
+      "prefix_id": "P13",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 45,
+      "prefix_id": "P04",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 46,
+      "prefix_id": "P06",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 47,
+      "prefix_id": "P02",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 48,
+      "prefix_id": "P12",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 49,
+      "prefix_id": "P03",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 50,
+      "prefix_id": "P10",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 51,
+      "prefix_id": "P09",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 52,
+      "prefix_id": "P11",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     }
+    ],
+    "events_total_48_requests": 247,
+    "affected_pool_fraction_mean": 0.000189,
+    "max_events_one_request": 48,
+    "requests_with_any_event": 8,
+    "pools_affected_if_unfixed": 247,
+    "per_continuation_affected_fraction": {
+     "mean": 0.00019,
+     "max": 0.001916,
+     "continuations_with_any": 8,
+     "max_pools": 48
+    },
+    "pools_affected_on_this_engine": 247
+   }
+  },
+  "b1": {
+   "K": 3,
+   "block": 4352,
+   "fixed_writer": true,
+   "cold_prefill_beside_D_decoding": {
+    "0": {
+     "events_12_prefixes": 598,
+     "affected_pool_fraction": 0.001835
+    },
+    "1": {
+     "events_12_prefixes": 299,
+     "affected_pool_fraction": 0.000917
+    },
+    "2": {
+     "events_12_prefixes": 598,
+     "affected_pool_fraction": 0.001835
+    },
+    "3": {
+     "events_12_prefixes": 0,
+     "affected_pool_fraction": 0.0
+    },
+    "4": {
+     "events_12_prefixes": 598,
+     "affected_pool_fraction": 0.001835
+    },
+    "5": {
+     "events_12_prefixes": 299,
+     "affected_pool_fraction": 0.000917
+    },
+    "6": {
+     "events_12_prefixes": 598,
+     "affected_pool_fraction": 0.001835
+    },
+    "7": {
+     "events_12_prefixes": 0,
+     "affected_pool_fraction": 0.0
+    }
+   },
+   "central_cache_hits": {
+    "requests": [
+     {
+      "k": 1,
+      "prefix_id": "P09",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 46,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": [
+       1,
+       2
+      ]
+     },
+     {
+      "k": 2,
+      "prefix_id": "P06",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 15,
+      "affected_pools_in_its_prefix_kv": 15,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 3,
+      "prefix_id": "P03",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 73,
+      "unaligned_starts": 48,
+      "affected_pools_in_its_prefix_kv": 48,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 4,
+      "prefix_id": "P08",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 73,
+      "unaligned_starts": 12,
+      "affected_pools_in_its_prefix_kv": 12,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 5,
+      "prefix_id": "P11",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 74,
+      "unaligned_starts": 48,
+      "affected_pools_in_its_prefix_kv": 48,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 6,
+      "prefix_id": "P12",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 73,
+      "unaligned_starts": 21,
+      "affected_pools_in_its_prefix_kv": 21,
+      "start_residues_mod4": [
+       2,
+       3
+      ]
+     },
+     {
+      "k": 7,
+      "prefix_id": "P10",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 75,
+      "unaligned_starts": 48,
+      "affected_pools_in_its_prefix_kv": 48,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 8,
+      "prefix_id": "P07",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 73,
+      "unaligned_starts": 9,
+      "affected_pools_in_its_prefix_kv": 9,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 9,
+      "prefix_id": "P02",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 10,
+      "prefix_id": "P13",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 11,
+      "prefix_id": "P04",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 12,
+      "prefix_id": "P01",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 69,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 13,
+      "prefix_id": "P05",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 14,
+      "prefix_id": "P12",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 20,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 15,
+      "prefix_id": "P02",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 16,
+      "prefix_id": "P06",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 14,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 17,
+      "prefix_id": "P10",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 18,
+      "prefix_id": "P07",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 9,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 19,
+      "prefix_id": "P05",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 20,
+      "prefix_id": "P08",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 12,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 21,
+      "prefix_id": "P09",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 44,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 22,
+      "prefix_id": "P13",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 23,
+      "prefix_id": "P11",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 24,
+      "prefix_id": "P01",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 91392,
+      "chunks": 6,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 25,
+      "prefix_id": "P03",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 26,
+      "prefix_id": "P04",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 27,
+      "prefix_id": "P10",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 28,
+      "prefix_id": "P13",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 29,
+      "prefix_id": "P05",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 30,
+      "prefix_id": "P12",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 20,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 31,
+      "prefix_id": "P03",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 32,
+      "prefix_id": "P07",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 9,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 33,
+      "prefix_id": "P04",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 34,
+      "prefix_id": "P06",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 14,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 35,
+      "prefix_id": "P02",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 36,
+      "prefix_id": "P08",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 12,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 37,
+      "prefix_id": "P01",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 91392,
+      "chunks": 6,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 38,
+      "prefix_id": "P11",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 39,
+      "prefix_id": "P09",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 44,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 40,
+      "prefix_id": "P07",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 9,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 41,
+      "prefix_id": "P05",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 42,
+      "prefix_id": "P08",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 12,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 43,
+      "prefix_id": "P01",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 91392,
+      "chunks": 6,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 44,
+      "prefix_id": "P13",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 45,
+      "prefix_id": "P04",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 46,
+      "prefix_id": "P06",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 14,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 47,
+      "prefix_id": "P02",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 48,
+      "prefix_id": "P12",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 20,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 49,
+      "prefix_id": "P03",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 50,
+      "prefix_id": "P10",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 51,
+      "prefix_id": "P09",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 44,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 52,
+      "prefix_id": "P11",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 95744,
+      "chunks": 4,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": []
+     }
+    ],
+    "events_total_48_requests": 247,
+    "affected_pool_fraction_mean": 0.000189,
+    "max_events_one_request": 48,
+    "requests_with_any_event": 8,
+    "pools_affected_if_unfixed": 247,
+    "per_continuation_affected_fraction": {
+     "mean": 0.000735,
+     "max": 0.001916,
+     "continuations_with_any": 32,
+     "max_pools": 48
+    },
+    "pools_affected_on_this_engine": 0
+   },
+   "no_cache_hits": {
+    "requests": [
+     {
+      "k": 1,
+      "prefix_id": "P09",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 46,
+      "affected_pools_in_its_prefix_kv": 46,
+      "start_residues_mod4": [
+       1,
+       2
+      ]
+     },
+     {
+      "k": 2,
+      "prefix_id": "P06",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 15,
+      "affected_pools_in_its_prefix_kv": 15,
+      "start_residues_mod4": [
+       2
+      ]
+     },
+     {
+      "k": 3,
+      "prefix_id": "P03",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 73,
+      "unaligned_starts": 48,
+      "affected_pools_in_its_prefix_kv": 48,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 4,
+      "prefix_id": "P08",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 73,
+      "unaligned_starts": 12,
+      "affected_pools_in_its_prefix_kv": 12,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 5,
+      "prefix_id": "P11",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 74,
+      "unaligned_starts": 48,
+      "affected_pools_in_its_prefix_kv": 48,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 6,
+      "prefix_id": "P12",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 73,
+      "unaligned_starts": 21,
+      "affected_pools_in_its_prefix_kv": 21,
+      "start_residues_mod4": [
+       2,
+       3
+      ]
+     },
+     {
+      "k": 7,
+      "prefix_id": "P10",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 75,
+      "unaligned_starts": 48,
+      "affected_pools_in_its_prefix_kv": 48,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 8,
+      "prefix_id": "P07",
+      "j": 1,
+      "D_at_admission": "wave 1 (decode rows of earlier admissions)",
+      "hit": 0,
+      "chunks": 73,
+      "unaligned_starts": 9,
+      "affected_pools_in_its_prefix_kv": 9,
+      "start_residues_mod4": [
+       1,
+       2,
+       3
+      ]
+     },
+     {
+      "k": 9,
+      "prefix_id": "P02",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 10,
+      "prefix_id": "P13",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 11,
+      "prefix_id": "P04",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 12,
+      "prefix_id": "P01",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 69,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 13,
+      "prefix_id": "P05",
+      "j": 1,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 14,
+      "prefix_id": "P12",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 15,
+      "prefix_id": "P02",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 16,
+      "prefix_id": "P06",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 17,
+      "prefix_id": "P10",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 18,
+      "prefix_id": "P07",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 19,
+      "prefix_id": "P05",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 20,
+      "prefix_id": "P08",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 21,
+      "prefix_id": "P09",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 22,
+      "prefix_id": "P13",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 23,
+      "prefix_id": "P11",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 24,
+      "prefix_id": "P01",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 69,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 25,
+      "prefix_id": "P03",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 26,
+      "prefix_id": "P04",
+      "j": 2,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 27,
+      "prefix_id": "P10",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 28,
+      "prefix_id": "P13",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 29,
+      "prefix_id": "P05",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 30,
+      "prefix_id": "P12",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 31,
+      "prefix_id": "P03",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 32,
+      "prefix_id": "P07",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 33,
+      "prefix_id": "P04",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 34,
+      "prefix_id": "P06",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 35,
+      "prefix_id": "P02",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 36,
+      "prefix_id": "P08",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 37,
+      "prefix_id": "P01",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 69,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 38,
+      "prefix_id": "P11",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 39,
+      "prefix_id": "P09",
+      "j": 3,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 40,
+      "prefix_id": "P07",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 41,
+      "prefix_id": "P05",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 42,
+      "prefix_id": "P08",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 43,
+      "prefix_id": "P01",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 69,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 44,
+      "prefix_id": "P13",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 45,
+      "prefix_id": "P04",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 46,
+      "prefix_id": "P06",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 47,
+      "prefix_id": "P02",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 48,
+      "prefix_id": "P12",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 49,
+      "prefix_id": "P03",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 50,
+      "prefix_id": "P10",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 51,
+      "prefix_id": "P09",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     },
+     {
+      "k": 52,
+      "prefix_id": "P11",
+      "j": 4,
+      "D_at_admission": 7,
+      "hit": 0,
+      "chunks": 70,
+      "unaligned_starts": 0,
+      "affected_pools_in_its_prefix_kv": 0,
+      "start_residues_mod4": []
+     }
+    ],
+    "events_total_48_requests": 247,
+    "affected_pool_fraction_mean": 0.000189,
+    "max_events_one_request": 48,
+    "requests_with_any_event": 8,
+    "pools_affected_if_unfixed": 247,
+    "per_continuation_affected_fraction": {
+     "mean": 0.00019,
+     "max": 0.001916,
+     "continuations_with_any": 8,
+     "max_pools": 48
+    },
+    "pools_affected_on_this_engine": 0
+   }
+  }
+ }
+}

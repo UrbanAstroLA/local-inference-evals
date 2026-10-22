@@ -1,0 +1,14 @@
+# Written after SHA256SUMS (not covered by it). 2026-10-21T22:27:56-07:00; amendment 22ah re-freeze
+SHA256SUMS sha256: 60a10748e8a59750dccf2273619539a4150dbb3c7a3a6d90df420f7e907ec4dd
+SHA256SUMS entries: 242
+first freeze (22ac) SHA256SUMS sha256: 0be97e4c940f0bce43012f0a083b838f9c06538993f9defb260bebbb05fae47f
+sha256sum -c: all OK
+--- DRY_RUN=1 APPROVED_GPU_H=19.9 runner/run_e.sh (real machine, read-only):
+2026-10-21T22:27:56-07:00 E runner start; engines v070 v091; approved 19.9 GPU-h (35820 s wall); DRY_RUN=1
+DRY_RUN: all refusal checks passed. A real run would now: create <runs>/long-reply/e-cross/run (raw/ mode 0700); start the GPU logger (60 s)
+  and the watchdog (35820 s from script start); then for each engine in order v070 v091: GPU pre-flight; budget rule
+  (start only if >= the session's ceiling wall remains: v070 20700 s, v091 14941 s);
+  fresh server by digest via the stack launcher (127.0.0.1:8001); ready-file + API gate; client_bplus.py (52 requests,
+  8 in flight, fixed order, seeds from out/plan.json); save server log and docker inspect; stop; GPU release; cost line;
+  compile-cache inventory. Then the frozen analysis in a CPU-only container. Nothing was created or started.
+rc=0

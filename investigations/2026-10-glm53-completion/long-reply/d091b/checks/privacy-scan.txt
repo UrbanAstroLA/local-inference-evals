@@ -1,0 +1,6 @@
+# raw needles: option D's 2026-10-21 raw bodies (d091/PRIVATE/raw; 198 replies, the pass used as the dry-run stand-in)
+privacy scan: 151 files outside PRIVATE/ searched; 982 prompt windows (198 questions), 751 reply windows (198 raw records), 0 token-id runs; text hits 0, id-run hits 0; PRIVATE/ mode 0700; files not 0600 or group/other-accessible dirs: none
+rc=0
+# raw needles: rep070-F raw bodies (rep070/run-F/raw; 594 replies, as in d091's scan)
+privacy scan: 151 files outside PRIVATE/ searched; 982 prompt windows (198 questions), 2155 reply windows (594 raw records), 0 token-id runs; text hits 0, id-run hits 0; PRIVATE/ mode 0700; files not 0600 or group/other-accessible dirs: none
+rc=0

@@ -1,0 +1,22 @@
+q15p5 73818 stop N 73194 drift 4 onset None no terminal loop verifyfail 0
+q12p5 68524 stop N 68124 drift 3 onset None no terminal loop verifyfail 0
+q8p5 101139 stop N 100879 drift 5 onset None no terminal loop verifyfail 0
+q48p5 85684 stop N 85390 drift 2 onset None no terminal loop verifyfail 0
+q71p5 124363 stop N 124091 drift 5 onset None no terminal loop verifyfail 0
+q88p5 137924 stop N 137617 drift 6 onset None no terminal loop verifyfail 0
+q118p5 51799 stop N 51582 drift 1 onset None no terminal loop verifyfail 0
+q121p5 68495 stop N 68038 drift 1 onset None no terminal loop verifyfail 0
+q69p5 327680 length N 327679 drift 1 onset 166285 short-period exact loop verifyfail 0
+q79p5 327680 length N 327680 drift 0 onset None no terminal loop verifyfail 0
+q81p5 327680 length N 327679 drift 1 onset 210046 short-period exact loop verifyfail 0
+q127p5 157970 stop N 157721 drift 3 onset None no terminal loop verifyfail 0
+q130p5 90188 stop N 89913 drift 2 onset None no terminal loop verifyfail 0
+q145p5 71218 stop N 70967 drift 2 onset None no terminal loop verifyfail 0
+q147p5 71738 stop N 71384 drift 3 onset None no terminal loop verifyfail 0
+q109p5 327680 length N 327680 drift 0 onset 151581 short-period exact loop verifyfail 0
+q185p5 52957 stop N 52649 drift 3 onset None no terminal loop verifyfail 0
+q120p5 327680 length N 327678 drift 2 onset 241801 short-period exact loop verifyfail 0
+q161p5 327680 length N 327682 drift -2 onset 120980 short-period exact loop verifyfail 0
+q170p5 327680 length N 327681 drift -1 onset 123485 short-period exact loop verifyfail 0
+q186p5 327680 length N 327678 drift 2 onset 158143 short-period exact loop verifyfail 0
+exit 0

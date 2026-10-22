@@ -1,0 +1,1759 @@
+{
+ "what": "E gate calibration against the reference sessions' own run-to-run variation (values and verdicts only)",
+ "accepted_sets_E": {
+  "v070": {
+   "nd": "74f26837e0e20391bbc8e39c037bb7a44a59fcab1335032a65729cc9eb8d0b72",
+   "vllm": [
+    "0.1.dev20051+g487ecf187"
+   ],
+   "snaps": [
+    "701cd7456c13d87bf0147ad946f828a999afb59c",
+    "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+   ],
+   "env": "014d31a48bdd11c1a48236e5c2e4ddcba69d037d4f7ca7bc577290afe52b6a97",
+   "cg": [
+    "FULL_AND_PIECEWISE"
+   ],
+   "warm": 9,
+   "warm_compl": 8,
+   "image": "sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629",
+   "kv": "floor 2,666,496"
+  },
+  "v091": {
+   "nd": "7025a96888a67642741db00aaecb9cbf786c2ba67cc4ded7d67c1cf4e909dcc5",
+   "vllm": [
+    "0.1.dev20051+g487ecf187"
+   ],
+   "snaps": [
+    "0490d2f708b12145f6516555ab066aaeb401cd21",
+    "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+   ],
+   "env": "f85d9d360488c02bc9ba2bbb33b86319201cfad14cd4c6a9ccb312539ec1313e",
+   "cg": [
+    "FULL_AND_PIECEWISE"
+   ],
+   "warm": 9,
+   "warm_compl": 8,
+   "image": "sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07",
+   "kv": "floor 2,646,016"
+  }
+ },
+ "kv_floor_inputs": {
+  "cap": 327680,
+  "longest_record_prompt_used": 2795,
+  "attention_block": {
+   "v070": 3584,
+   "v091": 4352
+  },
+  "longest_record_prompt_measured": 2795
+ },
+ "sessions": [
+  {
+   "engine": "v070",
+   "session": "rep070-F session 1 (2026-10-16; B+'s reference)",
+   "server_log_sha256": "68fdd2d1607eefad73437000c242a59b45d9fc60a329d5b1f194622ca049eb13",
+   "values": {
+    "non_default_args_sha256": "74f26837e0e20391bbc8e39c037bb7a44a59fcab1335032a65729cc9eb8d0b72",
+    "vllm_version": [
+     "0.1.dev20051+g487ecf187"
+    ],
+    "model_snapshots": [
+     "701cd7456c13d87bf0147ad946f828a999afb59c",
+     "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+    ],
+    "env_names_logged_sha256": "014d31a48bdd11c1a48236e5c2e4ddcba69d037d4f7ca7bc577290afe52b6a97",
+    "kv_pool_tokens": [
+     2758919
+    ],
+    "cudagraph_mode": [
+     "FULL_AND_PIECEWISE"
+    ],
+    "release_warmups_logged": 9,
+    "server_starts": 1,
+    "attention_block_sizes": [
+     3584
+    ]
+   },
+   "window_utc_epoch": [
+    1792157110.4,
+    1792168613.8
+   ],
+   "gates_E": [
+    {
+     "gate": "server log non_default_args_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "74f26837e0e20391bbc8e39c037bb7a44a59fcab vs 74f26837e0e20391bbc8e39c037bb7a44a59fcab"
+    },
+    {
+     "gate": "server log vllm_version equals the reference record's",
+     "pass": true,
+     "detail": "['0.1.dev20051+g487ecf187'] vs ['0.1.dev20051+g487ecf187']"
+    },
+    {
+     "gate": "server log model_snapshots equals the reference record's",
+     "pass": true,
+     "detail": "['701cd7456c13d87bf0147ad946f828a999afb5 vs ['701cd7456c13d87bf0147ad946f828a999afb5"
+    },
+    {
+     "gate": "server log env_names_logged_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "014d31a48bdd11c1a48236e5c2e4ddcba69d037d vs 014d31a48bdd11c1a48236e5c2e4ddcba69d037d"
+    },
+    {
+     "gate": "server log KV pool >= functional floor 2,666,496 tokens (8 requests at the 327,680 cap + longest record prompt, whole 3,584-token blocks; reported, not identity-gated; amendments 22ad / 22ah)",
+     "pass": true,
+     "detail": "[2758919] in floor 2,666,496"
+    },
+    {
+     "gate": "server log cudagraph_mode equals the reference record's",
+     "pass": true,
+     "detail": "['FULL_AND_PIECEWISE'] vs ['FULL_AND_PIECEWISE']"
+    },
+    {
+     "gate": "exactly one engine start in the server log",
+     "pass": true,
+     "detail": "1"
+    },
+    {
+     "gate": "9 release warm-up lines ending with the ready line",
+     "pass": true,
+     "detail": "9 warm-up lines, 1 ready lines"
+    },
+    {
+     "gate": "exactly the release warm-up's own 8 /v1/completions requests before the ready line",
+     "pass": true,
+     "detail": "8"
+    },
+    {
+     "gate": "first request sent after the last timestamped line before the ready line",
+     "pass": true,
+     "detail": "first 1792157110.356, last before ready 1792157081.0"
+    },
+    {
+     "gate": "no illegal-memory-access or NaN warning lines during the requests",
+     "pass": true,
+     "detail": "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+    },
+    {
+     "gate": "container image id equals the pinned image",
+     "pass": true,
+     "detail": "sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629"
+    },
+    {
+     "gate": "container ports published on 127.0.0.1 only",
+     "pass": true,
+     "detail": "['127.0.0.1']"
+    }
+   ],
+   "gates_bplus_22v": [
+    {
+     "gate": "server log non_default_args_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "74f26837e0e20391bbc8e39c037bb7a44a59fcab vs 74f26837e0e20391bbc8e39c037bb7a44a59fcab"
+    },
+    {
+     "gate": "server log vllm_version equals the reference record's",
+     "pass": true,
+     "detail": "['0.1.dev20051+g487ecf187'] vs ['0.1.dev20051+g487ecf187']"
+    },
+    {
+     "gate": "server log model_snapshots equals the reference record's",
+     "pass": true,
+     "detail": "['701cd7456c13d87bf0147ad946f828a999afb5 vs ['701cd7456c13d87bf0147ad946f828a999afb5"
+    },
+    {
+     "gate": "server log env_names_logged_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "014d31a48bdd11c1a48236e5c2e4ddcba69d037d vs 014d31a48bdd11c1a48236e5c2e4ddcba69d037d"
+    },
+    {
+     "gate": "server log kv_pool_tokens is one the 0.7.0 record itself produced (amendment 22v: [[2758919], [2768240]])",
+     "pass": true,
+     "detail": "[2758919] in [[2758919], [2768240]]"
+    },
+    {
+     "gate": "server log cudagraph_mode equals the reference record's",
+     "pass": true,
+     "detail": "['FULL_AND_PIECEWISE'] vs ['FULL_AND_PIECEWISE']"
+    },
+    {
+     "gate": "exactly one engine start in the server log",
+     "pass": true,
+     "detail": "1"
+    },
+    {
+     "gate": "9 release warm-up lines ending with the ready line",
+     "pass": true,
+     "detail": "9 warm-up lines, 1 ready lines"
+    },
+    {
+     "gate": "exactly the release warm-up's own 8 /v1/completions requests before the ready line",
+     "pass": true,
+     "detail": "8"
+    },
+    {
+     "gate": "first request sent after the last timestamped line before the ready line",
+     "pass": true,
+     "detail": "first 1792157110.356, last before ready 1792157081.0"
+    },
+    {
+     "gate": "no illegal-memory-access or NaN warning lines during the requests",
+     "pass": true,
+     "detail": "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+    },
+    {
+     "gate": "container image id equals the pinned image",
+     "pass": true,
+     "detail": "sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629"
+    },
+    {
+     "gate": "container ports published on 127.0.0.1 only",
+     "pass": true,
+     "detail": "['127.0.0.1']"
+    }
+   ]
+  },
+  {
+   "engine": "v070",
+   "session": "rep070-F session 2 (2026-10-16/17; B+'s reference)",
+   "server_log_sha256": "146dc1179bb52fb1067d047a0fd008470b28af1f549d99de8a5c04b1549f0593",
+   "values": {
+    "non_default_args_sha256": "74f26837e0e20391bbc8e39c037bb7a44a59fcab1335032a65729cc9eb8d0b72",
+    "vllm_version": [
+     "0.1.dev20051+g487ecf187"
+    ],
+    "model_snapshots": [
+     "701cd7456c13d87bf0147ad946f828a999afb59c",
+     "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+    ],
+    "env_names_logged_sha256": "014d31a48bdd11c1a48236e5c2e4ddcba69d037d4f7ca7bc577290afe52b6a97",
+    "kv_pool_tokens": [
+     2758919
+    ],
+    "cudagraph_mode": [
+     "FULL_AND_PIECEWISE"
+    ],
+    "release_warmups_logged": 9,
+    "server_starts": 1,
+    "attention_block_sizes": [
+     3584
+    ]
+   },
+   "window_utc_epoch": [
+    1792169126.4,
+    1792199633.2
+   ],
+   "gates_E": [
+    {
+     "gate": "server log non_default_args_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "74f26837e0e20391bbc8e39c037bb7a44a59fcab vs 74f26837e0e20391bbc8e39c037bb7a44a59fcab"
+    },
+    {
+     "gate": "server log vllm_version equals the reference record's",
+     "pass": true,
+     "detail": "['0.1.dev20051+g487ecf187'] vs ['0.1.dev20051+g487ecf187']"
+    },
+    {
+     "gate": "server log model_snapshots equals the reference record's",
+     "pass": true,
+     "detail": "['701cd7456c13d87bf0147ad946f828a999afb5 vs ['701cd7456c13d87bf0147ad946f828a999afb5"
+    },
+    {
+     "gate": "server log env_names_logged_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "014d31a48bdd11c1a48236e5c2e4ddcba69d037d vs 014d31a48bdd11c1a48236e5c2e4ddcba69d037d"
+    },
+    {
+     "gate": "server log KV pool >= functional floor 2,666,496 tokens (8 requests at the 327,680 cap + longest record prompt, whole 3,584-token blocks; reported, not identity-gated; amendments 22ad / 22ah)",
+     "pass": true,
+     "detail": "[2758919] in floor 2,666,496"
+    },
+    {
+     "gate": "server log cudagraph_mode equals the reference record's",
+     "pass": true,
+     "detail": "['FULL_AND_PIECEWISE'] vs ['FULL_AND_PIECEWISE']"
+    },
+    {
+     "gate": "exactly one engine start in the server log",
+     "pass": true,
+     "detail": "1"
+    },
+    {
+     "gate": "9 release warm-up lines ending with the ready line",
+     "pass": true,
+     "detail": "9 warm-up lines, 1 ready lines"
+    },
+    {
+     "gate": "exactly the release warm-up's own 8 /v1/completions requests before the ready line",
+     "pass": true,
+     "detail": "8"
+    },
+    {
+     "gate": "first request sent after the last timestamped line before the ready line",
+     "pass": true,
+     "detail": "first 1792169126.411, last before ready 1792169106.0"
+    },
+    {
+     "gate": "no illegal-memory-access or NaN warning lines during the requests",
+     "pass": true,
+     "detail": "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+    },
+    {
+     "gate": "container image id equals the pinned image",
+     "pass": true,
+     "detail": "sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629"
+    },
+    {
+     "gate": "container ports published on 127.0.0.1 only",
+     "pass": true,
+     "detail": "['127.0.0.1']"
+    }
+   ],
+   "gates_bplus_22v": [
+    {
+     "gate": "server log non_default_args_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "74f26837e0e20391bbc8e39c037bb7a44a59fcab vs 74f26837e0e20391bbc8e39c037bb7a44a59fcab"
+    },
+    {
+     "gate": "server log vllm_version equals the reference record's",
+     "pass": true,
+     "detail": "['0.1.dev20051+g487ecf187'] vs ['0.1.dev20051+g487ecf187']"
+    },
+    {
+     "gate": "server log model_snapshots equals the reference record's",
+     "pass": true,
+     "detail": "['701cd7456c13d87bf0147ad946f828a999afb5 vs ['701cd7456c13d87bf0147ad946f828a999afb5"
+    },
+    {
+     "gate": "server log env_names_logged_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "014d31a48bdd11c1a48236e5c2e4ddcba69d037d vs 014d31a48bdd11c1a48236e5c2e4ddcba69d037d"
+    },
+    {
+     "gate": "server log kv_pool_tokens is one the 0.7.0 record itself produced (amendment 22v: [[2758919], [2768240]])",
+     "pass": true,
+     "detail": "[2758919] in [[2758919], [2768240]]"
+    },
+    {
+     "gate": "server log cudagraph_mode equals the reference record's",
+     "pass": true,
+     "detail": "['FULL_AND_PIECEWISE'] vs ['FULL_AND_PIECEWISE']"
+    },
+    {
+     "gate": "exactly one engine start in the server log",
+     "pass": true,
+     "detail": "1"
+    },
+    {
+     "gate": "9 release warm-up lines ending with the ready line",
+     "pass": true,
+     "detail": "9 warm-up lines, 1 ready lines"
+    },
+    {
+     "gate": "exactly the release warm-up's own 8 /v1/completions requests before the ready line",
+     "pass": true,
+     "detail": "8"
+    },
+    {
+     "gate": "first request sent after the last timestamped line before the ready line",
+     "pass": true,
+     "detail": "first 1792169126.411, last before ready 1792169106.0"
+    },
+    {
+     "gate": "no illegal-memory-access or NaN warning lines during the requests",
+     "pass": true,
+     "detail": "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+    },
+    {
+     "gate": "container image id equals the pinned image",
+     "pass": true,
+     "detail": "sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629"
+    },
+    {
+     "gate": "container ports published on 127.0.0.1 only",
+     "pass": true,
+     "detail": "['127.0.0.1']"
+    }
+   ]
+  },
+  {
+   "engine": "v070",
+   "session": "0.7.0 record passes 2-3 (2026-10-10, +ps)",
+   "server_log_sha256": "30e9e9da2a19b4c2d1c54433cccbdd78a11fdbaf89fbce39881946f2a75bcd6f",
+   "values": {
+    "non_default_args_sha256": "74f26837e0e20391bbc8e39c037bb7a44a59fcab1335032a65729cc9eb8d0b72",
+    "vllm_version": [
+     "0.1.dev20051+g487ecf187"
+    ],
+    "model_snapshots": [
+     "701cd7456c13d87bf0147ad946f828a999afb59c",
+     "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+    ],
+    "env_names_logged_sha256": "014d31a48bdd11c1a48236e5c2e4ddcba69d037d4f7ca7bc577290afe52b6a97",
+    "kv_pool_tokens": [
+     2758919
+    ],
+    "cudagraph_mode": [
+     "FULL_AND_PIECEWISE"
+    ],
+    "release_warmups_logged": 9,
+    "server_starts": 1,
+    "attention_block_sizes": [
+     3584
+    ]
+   },
+   "window_utc_epoch": [
+    1791619684.4,
+    1791647128.4
+   ],
+   "gates_E": [
+    {
+     "gate": "server log non_default_args_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "74f26837e0e20391bbc8e39c037bb7a44a59fcab vs 74f26837e0e20391bbc8e39c037bb7a44a59fcab"
+    },
+    {
+     "gate": "server log vllm_version equals the reference record's",
+     "pass": true,
+     "detail": "['0.1.dev20051+g487ecf187'] vs ['0.1.dev20051+g487ecf187']"
+    },
+    {
+     "gate": "server log model_snapshots equals the reference record's",
+     "pass": true,
+     "detail": "['701cd7456c13d87bf0147ad946f828a999afb5 vs ['701cd7456c13d87bf0147ad946f828a999afb5"
+    },
+    {
+     "gate": "server log env_names_logged_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "014d31a48bdd11c1a48236e5c2e4ddcba69d037d vs 014d31a48bdd11c1a48236e5c2e4ddcba69d037d"
+    },
+    {
+     "gate": "server log KV pool >= functional floor 2,666,496 tokens (8 requests at the 327,680 cap + longest record prompt, whole 3,584-token blocks; reported, not identity-gated; amendments 22ad / 22ah)",
+     "pass": true,
+     "detail": "[2758919] in floor 2,666,496"
+    },
+    {
+     "gate": "server log cudagraph_mode equals the reference record's",
+     "pass": true,
+     "detail": "['FULL_AND_PIECEWISE'] vs ['FULL_AND_PIECEWISE']"
+    },
+    {
+     "gate": "exactly one engine start in the server log",
+     "pass": true,
+     "detail": "1"
+    },
+    {
+     "gate": "9 release warm-up lines ending with the ready line",
+     "pass": true,
+     "detail": "9 warm-up lines, 1 ready lines"
+    },
+    {
+     "gate": "exactly the release warm-up's own 8 /v1/completions requests before the ready line",
+     "pass": true,
+     "detail": "8"
+    },
+    {
+     "gate": "first request sent after the last timestamped line before the ready line",
+     "pass": true,
+     "detail": "first 1791619684.386, last before ready 1791619656.0"
+    },
+    {
+     "gate": "no illegal-memory-access or NaN warning lines during the requests",
+     "pass": true,
+     "detail": "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+    },
+    {
+     "gate": "docker inspect record readable",
+     "pass": null,
+     "detail": "no docker inspect record kept for this session"
+    }
+   ],
+   "gates_bplus_22v": [
+    {
+     "gate": "server log non_default_args_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "74f26837e0e20391bbc8e39c037bb7a44a59fcab vs 74f26837e0e20391bbc8e39c037bb7a44a59fcab"
+    },
+    {
+     "gate": "server log vllm_version equals the reference record's",
+     "pass": true,
+     "detail": "['0.1.dev20051+g487ecf187'] vs ['0.1.dev20051+g487ecf187']"
+    },
+    {
+     "gate": "server log model_snapshots equals the reference record's",
+     "pass": true,
+     "detail": "['701cd7456c13d87bf0147ad946f828a999afb5 vs ['701cd7456c13d87bf0147ad946f828a999afb5"
+    },
+    {
+     "gate": "server log env_names_logged_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "014d31a48bdd11c1a48236e5c2e4ddcba69d037d vs 014d31a48bdd11c1a48236e5c2e4ddcba69d037d"
+    },
+    {
+     "gate": "server log kv_pool_tokens is one the 0.7.0 record itself produced (amendment 22v: [[2758919], [2768240]])",
+     "pass": true,
+     "detail": "[2758919] in [[2758919], [2768240]]"
+    },
+    {
+     "gate": "server log cudagraph_mode equals the reference record's",
+     "pass": true,
+     "detail": "['FULL_AND_PIECEWISE'] vs ['FULL_AND_PIECEWISE']"
+    },
+    {
+     "gate": "exactly one engine start in the server log",
+     "pass": true,
+     "detail": "1"
+    },
+    {
+     "gate": "9 release warm-up lines ending with the ready line",
+     "pass": true,
+     "detail": "9 warm-up lines, 1 ready lines"
+    },
+    {
+     "gate": "exactly the release warm-up's own 8 /v1/completions requests before the ready line",
+     "pass": true,
+     "detail": "8"
+    },
+    {
+     "gate": "first request sent after the last timestamped line before the ready line",
+     "pass": true,
+     "detail": "first 1791619684.386, last before ready 1791619656.0"
+    },
+    {
+     "gate": "no illegal-memory-access or NaN warning lines during the requests",
+     "pass": true,
+     "detail": "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+    },
+    {
+     "gate": "docker inspect record readable",
+     "pass": null,
+     "detail": "no docker inspect record kept for this session"
+    }
+   ]
+  },
+  {
+   "engine": "v070",
+   "session": "B+ stock 0.7.0 session (2026-10-20)",
+   "server_log_sha256": "0b182cb8dbbccd71b73bbc71522d44cb1f01d767195ad6aed70ca3d6b33d5696",
+   "values": {
+    "non_default_args_sha256": "74f26837e0e20391bbc8e39c037bb7a44a59fcab1335032a65729cc9eb8d0b72",
+    "vllm_version": [
+     "0.1.dev20051+g487ecf187"
+    ],
+    "model_snapshots": [
+     "701cd7456c13d87bf0147ad946f828a999afb59c",
+     "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+    ],
+    "env_names_logged_sha256": "014d31a48bdd11c1a48236e5c2e4ddcba69d037d4f7ca7bc577290afe52b6a97",
+    "kv_pool_tokens": [
+     2768240
+    ],
+    "cudagraph_mode": [
+     "FULL_AND_PIECEWISE"
+    ],
+    "release_warmups_logged": 9,
+    "server_starts": 1,
+    "attention_block_sizes": [
+     3584
+    ]
+   },
+   "window_utc_epoch": [
+    1792559513.3,
+    1792568988.2
+   ],
+   "gates_E": [
+    {
+     "gate": "server log non_default_args_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "74f26837e0e20391bbc8e39c037bb7a44a59fcab vs 74f26837e0e20391bbc8e39c037bb7a44a59fcab"
+    },
+    {
+     "gate": "server log vllm_version equals the reference record's",
+     "pass": true,
+     "detail": "['0.1.dev20051+g487ecf187'] vs ['0.1.dev20051+g487ecf187']"
+    },
+    {
+     "gate": "server log model_snapshots equals the reference record's",
+     "pass": true,
+     "detail": "['701cd7456c13d87bf0147ad946f828a999afb5 vs ['701cd7456c13d87bf0147ad946f828a999afb5"
+    },
+    {
+     "gate": "server log env_names_logged_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "014d31a48bdd11c1a48236e5c2e4ddcba69d037d vs 014d31a48bdd11c1a48236e5c2e4ddcba69d037d"
+    },
+    {
+     "gate": "server log KV pool >= functional floor 2,666,496 tokens (8 requests at the 327,680 cap + longest record prompt, whole 3,584-token blocks; reported, not identity-gated; amendments 22ad / 22ah)",
+     "pass": true,
+     "detail": "[2768240] in floor 2,666,496"
+    },
+    {
+     "gate": "server log cudagraph_mode equals the reference record's",
+     "pass": true,
+     "detail": "['FULL_AND_PIECEWISE'] vs ['FULL_AND_PIECEWISE']"
+    },
+    {
+     "gate": "exactly one engine start in the server log",
+     "pass": true,
+     "detail": "1"
+    },
+    {
+     "gate": "9 release warm-up lines ending with the ready line",
+     "pass": true,
+     "detail": "9 warm-up lines, 1 ready lines"
+    },
+    {
+     "gate": "exactly the release warm-up's own 8 /v1/completions requests before the ready line",
+     "pass": true,
+     "detail": "8"
+    },
+    {
+     "gate": "first request sent after the last timestamped line before the ready line",
+     "pass": true,
+     "detail": "first 1792559513.296, last before ready 1792559501.0"
+    },
+    {
+     "gate": "no illegal-memory-access or NaN warning lines during the requests",
+     "pass": true,
+     "detail": "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+    },
+    {
+     "gate": "container image id equals the pinned image",
+     "pass": true,
+     "detail": "sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629"
+    },
+    {
+     "gate": "container ports published on 127.0.0.1 only",
+     "pass": true,
+     "detail": "['127.0.0.1']"
+    }
+   ],
+   "gates_bplus_22v": [
+    {
+     "gate": "server log non_default_args_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "74f26837e0e20391bbc8e39c037bb7a44a59fcab vs 74f26837e0e20391bbc8e39c037bb7a44a59fcab"
+    },
+    {
+     "gate": "server log vllm_version equals the reference record's",
+     "pass": true,
+     "detail": "['0.1.dev20051+g487ecf187'] vs ['0.1.dev20051+g487ecf187']"
+    },
+    {
+     "gate": "server log model_snapshots equals the reference record's",
+     "pass": true,
+     "detail": "['701cd7456c13d87bf0147ad946f828a999afb5 vs ['701cd7456c13d87bf0147ad946f828a999afb5"
+    },
+    {
+     "gate": "server log env_names_logged_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "014d31a48bdd11c1a48236e5c2e4ddcba69d037d vs 014d31a48bdd11c1a48236e5c2e4ddcba69d037d"
+    },
+    {
+     "gate": "server log kv_pool_tokens is one the 0.7.0 record itself produced (amendment 22v: [[2758919], [2768240]])",
+     "pass": true,
+     "detail": "[2768240] in [[2758919], [2768240]]"
+    },
+    {
+     "gate": "server log cudagraph_mode equals the reference record's",
+     "pass": true,
+     "detail": "['FULL_AND_PIECEWISE'] vs ['FULL_AND_PIECEWISE']"
+    },
+    {
+     "gate": "exactly one engine start in the server log",
+     "pass": true,
+     "detail": "1"
+    },
+    {
+     "gate": "9 release warm-up lines ending with the ready line",
+     "pass": true,
+     "detail": "9 warm-up lines, 1 ready lines"
+    },
+    {
+     "gate": "exactly the release warm-up's own 8 /v1/completions requests before the ready line",
+     "pass": true,
+     "detail": "8"
+    },
+    {
+     "gate": "first request sent after the last timestamped line before the ready line",
+     "pass": true,
+     "detail": "first 1792559513.296, last before ready 1792559501.0"
+    },
+    {
+     "gate": "no illegal-memory-access or NaN warning lines during the requests",
+     "pass": true,
+     "detail": "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+    },
+    {
+     "gate": "container image id equals the pinned image",
+     "pass": true,
+     "detail": "sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629"
+    },
+    {
+     "gate": "container ports published on 127.0.0.1 only",
+     "pass": true,
+     "detail": "['127.0.0.1']"
+    }
+   ]
+  },
+  {
+   "engine": "v091",
+   "session": "0.9.1 record session 1 (2026-10-08, pass 1)",
+   "server_log_sha256": "0ef6aaff01c06204755a2647c9dadadff65b46b2e4086d0de6b8fd09d7ef8b61",
+   "values": {
+    "non_default_args_sha256": "7025a96888a67642741db00aaecb9cbf786c2ba67cc4ded7d67c1cf4e909dcc5",
+    "vllm_version": [
+     "0.1.dev20051+g487ecf187"
+    ],
+    "model_snapshots": [
+     "0490d2f708b12145f6516555ab066aaeb401cd21",
+     "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+    ],
+    "env_names_logged_sha256": "f85d9d360488c02bc9ba2bbb33b86319201cfad14cd4c6a9ccb312539ec1313e",
+    "kv_pool_tokens": [
+     4707515
+    ],
+    "cudagraph_mode": [
+     "FULL_AND_PIECEWISE"
+    ],
+    "release_warmups_logged": 9,
+    "server_starts": 1,
+    "attention_block_sizes": [
+     4352
+    ]
+   },
+   "window_utc_epoch": [
+    1791506343.2,
+    1791514865.4
+   ],
+   "gates_E": [
+    {
+     "gate": "server log non_default_args_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "7025a96888a67642741db00aaecb9cbf786c2ba6 vs 7025a96888a67642741db00aaecb9cbf786c2ba6"
+    },
+    {
+     "gate": "server log vllm_version equals the reference record's",
+     "pass": true,
+     "detail": "['0.1.dev20051+g487ecf187'] vs ['0.1.dev20051+g487ecf187']"
+    },
+    {
+     "gate": "server log model_snapshots equals the reference record's",
+     "pass": true,
+     "detail": "['0490d2f708b12145f6516555ab066aaeb401cd vs ['0490d2f708b12145f6516555ab066aaeb401cd"
+    },
+    {
+     "gate": "server log env_names_logged_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "f85d9d360488c02bc9ba2bbb33b86319201cfad1 vs f85d9d360488c02bc9ba2bbb33b86319201cfad1"
+    },
+    {
+     "gate": "server log KV pool >= functional floor 2,646,016 tokens (8 requests at the 327,680 cap + longest record prompt, whole 4,352-token blocks; reported, not identity-gated; amendments 22ad / 22ah)",
+     "pass": true,
+     "detail": "[4707515] in floor 2,646,016"
+    },
+    {
+     "gate": "server log cudagraph_mode equals the reference record's",
+     "pass": true,
+     "detail": "['FULL_AND_PIECEWISE'] vs ['FULL_AND_PIECEWISE']"
+    },
+    {
+     "gate": "exactly one engine start in the server log",
+     "pass": true,
+     "detail": "1"
+    },
+    {
+     "gate": "9 release warm-up lines ending with the ready line",
+     "pass": true,
+     "detail": "9 warm-up lines, 1 ready lines"
+    },
+    {
+     "gate": "exactly the release warm-up's own 8 /v1/completions requests before the ready line",
+     "pass": true,
+     "detail": "8"
+    },
+    {
+     "gate": "first request sent after the last timestamped line before the ready line",
+     "pass": true,
+     "detail": "first 1791506343.238, last before ready 1791506314.0"
+    },
+    {
+     "gate": "no illegal-memory-access or NaN warning lines during the requests",
+     "pass": true,
+     "detail": "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+    },
+    {
+     "gate": "docker inspect record readable",
+     "pass": null,
+     "detail": "no docker inspect record kept for this session"
+    }
+   ],
+   "gates_bplus_22v": [
+    {
+     "gate": "server log non_default_args_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "7025a96888a67642741db00aaecb9cbf786c2ba6 vs 7025a96888a67642741db00aaecb9cbf786c2ba6"
+    },
+    {
+     "gate": "server log vllm_version equals the reference record's",
+     "pass": true,
+     "detail": "['0.1.dev20051+g487ecf187'] vs ['0.1.dev20051+g487ecf187']"
+    },
+    {
+     "gate": "server log model_snapshots equals the reference record's",
+     "pass": true,
+     "detail": "['0490d2f708b12145f6516555ab066aaeb401cd vs ['0490d2f708b12145f6516555ab066aaeb401cd"
+    },
+    {
+     "gate": "server log env_names_logged_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "f85d9d360488c02bc9ba2bbb33b86319201cfad1 vs f85d9d360488c02bc9ba2bbb33b86319201cfad1"
+    },
+    {
+     "gate": "server log kv_pool_tokens equals the reference record's",
+     "pass": true,
+     "detail": "[4707515] vs [4707515]"
+    },
+    {
+     "gate": "server log cudagraph_mode equals the reference record's",
+     "pass": true,
+     "detail": "['FULL_AND_PIECEWISE'] vs ['FULL_AND_PIECEWISE']"
+    },
+    {
+     "gate": "exactly one engine start in the server log",
+     "pass": true,
+     "detail": "1"
+    },
+    {
+     "gate": "9 release warm-up lines ending with the ready line",
+     "pass": true,
+     "detail": "9 warm-up lines, 1 ready lines"
+    },
+    {
+     "gate": "exactly the release warm-up's own 8 /v1/completions requests before the ready line",
+     "pass": true,
+     "detail": "8"
+    },
+    {
+     "gate": "first request sent after the last timestamped line before the ready line",
+     "pass": true,
+     "detail": "first 1791506343.238, last before ready 1791506314.0"
+    },
+    {
+     "gate": "no illegal-memory-access or NaN warning lines during the requests",
+     "pass": true,
+     "detail": "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+    },
+    {
+     "gate": "docker inspect record readable",
+     "pass": null,
+     "detail": "no docker inspect record kept for this session"
+    }
+   ]
+  },
+  {
+   "engine": "v091",
+   "session": "0.9.1 record session 2 (2026-10-09, passes 2-3)",
+   "server_log_sha256": "0e05caefa4ab0538957cbf2d90acf296a11bf5e5204e6f0d9fb2b373d35b622e",
+   "values": {
+    "non_default_args_sha256": "7025a96888a67642741db00aaecb9cbf786c2ba67cc4ded7d67c1cf4e909dcc5",
+    "vllm_version": [
+     "0.1.dev20051+g487ecf187"
+    ],
+    "model_snapshots": [
+     "0490d2f708b12145f6516555ab066aaeb401cd21",
+     "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+    ],
+    "env_names_logged_sha256": "f85d9d360488c02bc9ba2bbb33b86319201cfad14cd4c6a9ccb312539ec1313e",
+    "kv_pool_tokens": [
+     4707515
+    ],
+    "cudagraph_mode": [
+     "FULL_AND_PIECEWISE"
+    ],
+    "release_warmups_logged": 9,
+    "server_starts": 1,
+    "attention_block_sizes": [
+     4352
+    ]
+   },
+   "window_utc_epoch": [
+    1791574231.4,
+    1791594119.6
+   ],
+   "gates_E": [
+    {
+     "gate": "server log non_default_args_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "7025a96888a67642741db00aaecb9cbf786c2ba6 vs 7025a96888a67642741db00aaecb9cbf786c2ba6"
+    },
+    {
+     "gate": "server log vllm_version equals the reference record's",
+     "pass": true,
+     "detail": "['0.1.dev20051+g487ecf187'] vs ['0.1.dev20051+g487ecf187']"
+    },
+    {
+     "gate": "server log model_snapshots equals the reference record's",
+     "pass": true,
+     "detail": "['0490d2f708b12145f6516555ab066aaeb401cd vs ['0490d2f708b12145f6516555ab066aaeb401cd"
+    },
+    {
+     "gate": "server log env_names_logged_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "f85d9d360488c02bc9ba2bbb33b86319201cfad1 vs f85d9d360488c02bc9ba2bbb33b86319201cfad1"
+    },
+    {
+     "gate": "server log KV pool >= functional floor 2,646,016 tokens (8 requests at the 327,680 cap + longest record prompt, whole 4,352-token blocks; reported, not identity-gated; amendments 22ad / 22ah)",
+     "pass": true,
+     "detail": "[4707515] in floor 2,646,016"
+    },
+    {
+     "gate": "server log cudagraph_mode equals the reference record's",
+     "pass": true,
+     "detail": "['FULL_AND_PIECEWISE'] vs ['FULL_AND_PIECEWISE']"
+    },
+    {
+     "gate": "exactly one engine start in the server log",
+     "pass": true,
+     "detail": "1"
+    },
+    {
+     "gate": "9 release warm-up lines ending with the ready line",
+     "pass": true,
+     "detail": "9 warm-up lines, 1 ready lines"
+    },
+    {
+     "gate": "exactly the release warm-up's own 8 /v1/completions requests before the ready line",
+     "pass": true,
+     "detail": "8"
+    },
+    {
+     "gate": "first request sent after the last timestamped line before the ready line",
+     "pass": true,
+     "detail": "first 1791574231.417, last before ready 1791574215.0"
+    },
+    {
+     "gate": "no illegal-memory-access or NaN warning lines during the requests",
+     "pass": true,
+     "detail": "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+    },
+    {
+     "gate": "docker inspect record readable",
+     "pass": null,
+     "detail": "no docker inspect record kept for this session"
+    }
+   ],
+   "gates_bplus_22v": [
+    {
+     "gate": "server log non_default_args_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "7025a96888a67642741db00aaecb9cbf786c2ba6 vs 7025a96888a67642741db00aaecb9cbf786c2ba6"
+    },
+    {
+     "gate": "server log vllm_version equals the reference record's",
+     "pass": true,
+     "detail": "['0.1.dev20051+g487ecf187'] vs ['0.1.dev20051+g487ecf187']"
+    },
+    {
+     "gate": "server log model_snapshots equals the reference record's",
+     "pass": true,
+     "detail": "['0490d2f708b12145f6516555ab066aaeb401cd vs ['0490d2f708b12145f6516555ab066aaeb401cd"
+    },
+    {
+     "gate": "server log env_names_logged_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "f85d9d360488c02bc9ba2bbb33b86319201cfad1 vs f85d9d360488c02bc9ba2bbb33b86319201cfad1"
+    },
+    {
+     "gate": "server log kv_pool_tokens equals the reference record's",
+     "pass": true,
+     "detail": "[4707515] vs [4707515]"
+    },
+    {
+     "gate": "server log cudagraph_mode equals the reference record's",
+     "pass": true,
+     "detail": "['FULL_AND_PIECEWISE'] vs ['FULL_AND_PIECEWISE']"
+    },
+    {
+     "gate": "exactly one engine start in the server log",
+     "pass": true,
+     "detail": "1"
+    },
+    {
+     "gate": "9 release warm-up lines ending with the ready line",
+     "pass": true,
+     "detail": "9 warm-up lines, 1 ready lines"
+    },
+    {
+     "gate": "exactly the release warm-up's own 8 /v1/completions requests before the ready line",
+     "pass": true,
+     "detail": "8"
+    },
+    {
+     "gate": "first request sent after the last timestamped line before the ready line",
+     "pass": true,
+     "detail": "first 1791574231.417, last before ready 1791574215.0"
+    },
+    {
+     "gate": "no illegal-memory-access or NaN warning lines during the requests",
+     "pass": true,
+     "detail": "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+    },
+    {
+     "gate": "docker inspect record readable",
+     "pass": null,
+     "detail": "no docker inspect record kept for this session"
+    }
+   ]
+  },
+  {
+   "engine": "v091",
+   "session": "B+ stock 0.9.1 session (2026-10-21)",
+   "server_log_sha256": "005b16ae820014a235f02da34f7a33a0b7f12130984f85b3da6e9509b5d1524d",
+   "values": {
+    "non_default_args_sha256": "7025a96888a67642741db00aaecb9cbf786c2ba67cc4ded7d67c1cf4e909dcc5",
+    "vllm_version": [
+     "0.1.dev20051+g487ecf187"
+    ],
+    "model_snapshots": [
+     "0490d2f708b12145f6516555ab066aaeb401cd21",
+     "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+    ],
+    "env_names_logged_sha256": "f85d9d360488c02bc9ba2bbb33b86319201cfad14cd4c6a9ccb312539ec1313e",
+    "kv_pool_tokens": [
+     4707515
+    ],
+    "cudagraph_mode": [
+     "FULL_AND_PIECEWISE"
+    ],
+    "release_warmups_logged": 9,
+    "server_starts": 1,
+    "attention_block_sizes": [
+     4352
+    ]
+   },
+   "window_utc_epoch": [
+    1792569683.0,
+    1792575977.6
+   ],
+   "gates_E": [
+    {
+     "gate": "server log non_default_args_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "7025a96888a67642741db00aaecb9cbf786c2ba6 vs 7025a96888a67642741db00aaecb9cbf786c2ba6"
+    },
+    {
+     "gate": "server log vllm_version equals the reference record's",
+     "pass": true,
+     "detail": "['0.1.dev20051+g487ecf187'] vs ['0.1.dev20051+g487ecf187']"
+    },
+    {
+     "gate": "server log model_snapshots equals the reference record's",
+     "pass": true,
+     "detail": "['0490d2f708b12145f6516555ab066aaeb401cd vs ['0490d2f708b12145f6516555ab066aaeb401cd"
+    },
+    {
+     "gate": "server log env_names_logged_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "f85d9d360488c02bc9ba2bbb33b86319201cfad1 vs f85d9d360488c02bc9ba2bbb33b86319201cfad1"
+    },
+    {
+     "gate": "server log KV pool >= functional floor 2,646,016 tokens (8 requests at the 327,680 cap + longest record prompt, whole 4,352-token blocks; reported, not identity-gated; amendments 22ad / 22ah)",
+     "pass": true,
+     "detail": "[4707515] in floor 2,646,016"
+    },
+    {
+     "gate": "server log cudagraph_mode equals the reference record's",
+     "pass": true,
+     "detail": "['FULL_AND_PIECEWISE'] vs ['FULL_AND_PIECEWISE']"
+    },
+    {
+     "gate": "exactly one engine start in the server log",
+     "pass": true,
+     "detail": "1"
+    },
+    {
+     "gate": "9 release warm-up lines ending with the ready line",
+     "pass": true,
+     "detail": "9 warm-up lines, 1 ready lines"
+    },
+    {
+     "gate": "exactly the release warm-up's own 8 /v1/completions requests before the ready line",
+     "pass": true,
+     "detail": "8"
+    },
+    {
+     "gate": "first request sent after the last timestamped line before the ready line",
+     "pass": true,
+     "detail": "first 1792569683.047, last before ready 1792569675.0"
+    },
+    {
+     "gate": "no illegal-memory-access or NaN warning lines during the requests",
+     "pass": true,
+     "detail": "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+    },
+    {
+     "gate": "container image id equals the pinned image",
+     "pass": true,
+     "detail": "sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07"
+    },
+    {
+     "gate": "container ports published on 127.0.0.1 only",
+     "pass": true,
+     "detail": "['127.0.0.1']"
+    }
+   ],
+   "gates_bplus_22v": [
+    {
+     "gate": "server log non_default_args_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "7025a96888a67642741db00aaecb9cbf786c2ba6 vs 7025a96888a67642741db00aaecb9cbf786c2ba6"
+    },
+    {
+     "gate": "server log vllm_version equals the reference record's",
+     "pass": true,
+     "detail": "['0.1.dev20051+g487ecf187'] vs ['0.1.dev20051+g487ecf187']"
+    },
+    {
+     "gate": "server log model_snapshots equals the reference record's",
+     "pass": true,
+     "detail": "['0490d2f708b12145f6516555ab066aaeb401cd vs ['0490d2f708b12145f6516555ab066aaeb401cd"
+    },
+    {
+     "gate": "server log env_names_logged_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "f85d9d360488c02bc9ba2bbb33b86319201cfad1 vs f85d9d360488c02bc9ba2bbb33b86319201cfad1"
+    },
+    {
+     "gate": "server log kv_pool_tokens equals the reference record's",
+     "pass": true,
+     "detail": "[4707515] vs [4707515]"
+    },
+    {
+     "gate": "server log cudagraph_mode equals the reference record's",
+     "pass": true,
+     "detail": "['FULL_AND_PIECEWISE'] vs ['FULL_AND_PIECEWISE']"
+    },
+    {
+     "gate": "exactly one engine start in the server log",
+     "pass": true,
+     "detail": "1"
+    },
+    {
+     "gate": "9 release warm-up lines ending with the ready line",
+     "pass": true,
+     "detail": "9 warm-up lines, 1 ready lines"
+    },
+    {
+     "gate": "exactly the release warm-up's own 8 /v1/completions requests before the ready line",
+     "pass": true,
+     "detail": "8"
+    },
+    {
+     "gate": "first request sent after the last timestamped line before the ready line",
+     "pass": true,
+     "detail": "first 1792569683.047, last before ready 1792569675.0"
+    },
+    {
+     "gate": "no illegal-memory-access or NaN warning lines during the requests",
+     "pass": true,
+     "detail": "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+    },
+    {
+     "gate": "container image id equals the pinned image",
+     "pass": true,
+     "detail": "sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07"
+    },
+    {
+     "gate": "container ports published on 127.0.0.1 only",
+     "pass": true,
+     "detail": "['127.0.0.1']"
+    }
+   ]
+  },
+  {
+   "engine": "v091",
+   "session": "d091 stock 0.9.1 session (2026-10-21; the prefix source)",
+   "server_log_sha256": "5e1ed9d06abafa55524f3e376283cf3782f32c75ea475cf97a69c92879c915bb",
+   "values": {
+    "non_default_args_sha256": "7025a96888a67642741db00aaecb9cbf786c2ba67cc4ded7d67c1cf4e909dcc5",
+    "vllm_version": [
+     "0.1.dev20051+g487ecf187"
+    ],
+    "model_snapshots": [
+     "0490d2f708b12145f6516555ab066aaeb401cd21",
+     "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+    ],
+    "env_names_logged_sha256": "f85d9d360488c02bc9ba2bbb33b86319201cfad14cd4c6a9ccb312539ec1313e",
+    "kv_pool_tokens": [
+     4707515
+    ],
+    "cudagraph_mode": [
+     "FULL_AND_PIECEWISE"
+    ],
+    "release_warmups_logged": 9,
+    "server_starts": 1,
+    "attention_block_sizes": [
+     4352
+    ]
+   },
+   "window_utc_epoch": [
+    1792603591.5,
+    1792613438.3
+   ],
+   "gates_E": [
+    {
+     "gate": "server log non_default_args_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "7025a96888a67642741db00aaecb9cbf786c2ba6 vs 7025a96888a67642741db00aaecb9cbf786c2ba6"
+    },
+    {
+     "gate": "server log vllm_version equals the reference record's",
+     "pass": true,
+     "detail": "['0.1.dev20051+g487ecf187'] vs ['0.1.dev20051+g487ecf187']"
+    },
+    {
+     "gate": "server log model_snapshots equals the reference record's",
+     "pass": true,
+     "detail": "['0490d2f708b12145f6516555ab066aaeb401cd vs ['0490d2f708b12145f6516555ab066aaeb401cd"
+    },
+    {
+     "gate": "server log env_names_logged_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "f85d9d360488c02bc9ba2bbb33b86319201cfad1 vs f85d9d360488c02bc9ba2bbb33b86319201cfad1"
+    },
+    {
+     "gate": "server log KV pool >= functional floor 2,646,016 tokens (8 requests at the 327,680 cap + longest record prompt, whole 4,352-token blocks; reported, not identity-gated; amendments 22ad / 22ah)",
+     "pass": true,
+     "detail": "[4707515] in floor 2,646,016"
+    },
+    {
+     "gate": "server log cudagraph_mode equals the reference record's",
+     "pass": true,
+     "detail": "['FULL_AND_PIECEWISE'] vs ['FULL_AND_PIECEWISE']"
+    },
+    {
+     "gate": "exactly one engine start in the server log",
+     "pass": true,
+     "detail": "1"
+    },
+    {
+     "gate": "9 release warm-up lines ending with the ready line",
+     "pass": true,
+     "detail": "9 warm-up lines, 1 ready lines"
+    },
+    {
+     "gate": "exactly the release warm-up's own 8 /v1/completions requests before the ready line",
+     "pass": true,
+     "detail": "8"
+    },
+    {
+     "gate": "first request sent after the last timestamped line before the ready line",
+     "pass": true,
+     "detail": "first 1792603591.537, last before ready 1792603565.0"
+    },
+    {
+     "gate": "no illegal-memory-access or NaN warning lines during the requests",
+     "pass": true,
+     "detail": "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+    },
+    {
+     "gate": "container image id equals the pinned image",
+     "pass": true,
+     "detail": "sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07"
+    },
+    {
+     "gate": "container ports published on 127.0.0.1 only",
+     "pass": true,
+     "detail": "['127.0.0.1']"
+    }
+   ],
+   "gates_bplus_22v": [
+    {
+     "gate": "server log non_default_args_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "7025a96888a67642741db00aaecb9cbf786c2ba6 vs 7025a96888a67642741db00aaecb9cbf786c2ba6"
+    },
+    {
+     "gate": "server log vllm_version equals the reference record's",
+     "pass": true,
+     "detail": "['0.1.dev20051+g487ecf187'] vs ['0.1.dev20051+g487ecf187']"
+    },
+    {
+     "gate": "server log model_snapshots equals the reference record's",
+     "pass": true,
+     "detail": "['0490d2f708b12145f6516555ab066aaeb401cd vs ['0490d2f708b12145f6516555ab066aaeb401cd"
+    },
+    {
+     "gate": "server log env_names_logged_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "f85d9d360488c02bc9ba2bbb33b86319201cfad1 vs f85d9d360488c02bc9ba2bbb33b86319201cfad1"
+    },
+    {
+     "gate": "server log kv_pool_tokens equals the reference record's",
+     "pass": true,
+     "detail": "[4707515] vs [4707515]"
+    },
+    {
+     "gate": "server log cudagraph_mode equals the reference record's",
+     "pass": true,
+     "detail": "['FULL_AND_PIECEWISE'] vs ['FULL_AND_PIECEWISE']"
+    },
+    {
+     "gate": "exactly one engine start in the server log",
+     "pass": true,
+     "detail": "1"
+    },
+    {
+     "gate": "9 release warm-up lines ending with the ready line",
+     "pass": true,
+     "detail": "9 warm-up lines, 1 ready lines"
+    },
+    {
+     "gate": "exactly the release warm-up's own 8 /v1/completions requests before the ready line",
+     "pass": true,
+     "detail": "8"
+    },
+    {
+     "gate": "first request sent after the last timestamped line before the ready line",
+     "pass": true,
+     "detail": "first 1792603591.537, last before ready 1792603565.0"
+    },
+    {
+     "gate": "no illegal-memory-access or NaN warning lines during the requests",
+     "pass": true,
+     "detail": "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+    },
+    {
+     "gate": "container image id equals the pinned image",
+     "pass": true,
+     "detail": "sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07"
+    },
+    {
+     "gate": "container ports published on 127.0.0.1 only",
+     "pass": true,
+     "detail": "['127.0.0.1']"
+    }
+   ]
+  },
+  {
+   "engine": "v091",
+   "session": "d091b (D2) stock 0.9.1 session (2026-10-21; the second prefix source)",
+   "server_log_sha256": "042eb1d107992b97126a4eb54844270987dba821544335ccec0c0768cc183e9e",
+   "values": {
+    "non_default_args_sha256": "7025a96888a67642741db00aaecb9cbf786c2ba67cc4ded7d67c1cf4e909dcc5",
+    "vllm_version": [
+     "0.1.dev20051+g487ecf187"
+    ],
+    "model_snapshots": [
+     "0490d2f708b12145f6516555ab066aaeb401cd21",
+     "bf582e4eacc1810f76656d1811693ff6c6737d2a"
+    ],
+    "env_names_logged_sha256": "f85d9d360488c02bc9ba2bbb33b86319201cfad14cd4c6a9ccb312539ec1313e",
+    "kv_pool_tokens": [
+     4707515
+    ],
+    "cudagraph_mode": [
+     "FULL_AND_PIECEWISE"
+    ],
+    "release_warmups_logged": 9,
+    "server_starts": 1,
+    "attention_block_sizes": [
+     4352
+    ]
+   },
+   "window_utc_epoch": [
+    1792631910.7,
+    1792643984.5
+   ],
+   "gates_E": [
+    {
+     "gate": "server log non_default_args_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "7025a96888a67642741db00aaecb9cbf786c2ba6 vs 7025a96888a67642741db00aaecb9cbf786c2ba6"
+    },
+    {
+     "gate": "server log vllm_version equals the reference record's",
+     "pass": true,
+     "detail": "['0.1.dev20051+g487ecf187'] vs ['0.1.dev20051+g487ecf187']"
+    },
+    {
+     "gate": "server log model_snapshots equals the reference record's",
+     "pass": true,
+     "detail": "['0490d2f708b12145f6516555ab066aaeb401cd vs ['0490d2f708b12145f6516555ab066aaeb401cd"
+    },
+    {
+     "gate": "server log env_names_logged_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "f85d9d360488c02bc9ba2bbb33b86319201cfad1 vs f85d9d360488c02bc9ba2bbb33b86319201cfad1"
+    },
+    {
+     "gate": "server log KV pool >= functional floor 2,646,016 tokens (8 requests at the 327,680 cap + longest record prompt, whole 4,352-token blocks; reported, not identity-gated; amendments 22ad / 22ah)",
+     "pass": true,
+     "detail": "[4707515] in floor 2,646,016"
+    },
+    {
+     "gate": "server log cudagraph_mode equals the reference record's",
+     "pass": true,
+     "detail": "['FULL_AND_PIECEWISE'] vs ['FULL_AND_PIECEWISE']"
+    },
+    {
+     "gate": "exactly one engine start in the server log",
+     "pass": true,
+     "detail": "1"
+    },
+    {
+     "gate": "9 release warm-up lines ending with the ready line",
+     "pass": true,
+     "detail": "9 warm-up lines, 1 ready lines"
+    },
+    {
+     "gate": "exactly the release warm-up's own 8 /v1/completions requests before the ready line",
+     "pass": true,
+     "detail": "8"
+    },
+    {
+     "gate": "first request sent after the last timestamped line before the ready line",
+     "pass": true,
+     "detail": "first 1792631910.664, last before ready 1792631883.0"
+    },
+    {
+     "gate": "no illegal-memory-access or NaN warning lines during the requests",
+     "pass": true,
+     "detail": "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+    },
+    {
+     "gate": "container image id equals the pinned image",
+     "pass": true,
+     "detail": "sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07"
+    },
+    {
+     "gate": "container ports published on 127.0.0.1 only",
+     "pass": true,
+     "detail": "['127.0.0.1']"
+    }
+   ],
+   "gates_bplus_22v": [
+    {
+     "gate": "server log non_default_args_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "7025a96888a67642741db00aaecb9cbf786c2ba6 vs 7025a96888a67642741db00aaecb9cbf786c2ba6"
+    },
+    {
+     "gate": "server log vllm_version equals the reference record's",
+     "pass": true,
+     "detail": "['0.1.dev20051+g487ecf187'] vs ['0.1.dev20051+g487ecf187']"
+    },
+    {
+     "gate": "server log model_snapshots equals the reference record's",
+     "pass": true,
+     "detail": "['0490d2f708b12145f6516555ab066aaeb401cd vs ['0490d2f708b12145f6516555ab066aaeb401cd"
+    },
+    {
+     "gate": "server log env_names_logged_sha256 equals the reference record's",
+     "pass": true,
+     "detail": "f85d9d360488c02bc9ba2bbb33b86319201cfad1 vs f85d9d360488c02bc9ba2bbb33b86319201cfad1"
+    },
+    {
+     "gate": "server log kv_pool_tokens equals the reference record's",
+     "pass": true,
+     "detail": "[4707515] vs [4707515]"
+    },
+    {
+     "gate": "server log cudagraph_mode equals the reference record's",
+     "pass": true,
+     "detail": "['FULL_AND_PIECEWISE'] vs ['FULL_AND_PIECEWISE']"
+    },
+    {
+     "gate": "exactly one engine start in the server log",
+     "pass": true,
+     "detail": "1"
+    },
+    {
+     "gate": "9 release warm-up lines ending with the ready line",
+     "pass": true,
+     "detail": "9 warm-up lines, 1 ready lines"
+    },
+    {
+     "gate": "exactly the release warm-up's own 8 /v1/completions requests before the ready line",
+     "pass": true,
+     "detail": "8"
+    },
+    {
+     "gate": "first request sent after the last timestamped line before the ready line",
+     "pass": true,
+     "detail": "first 1792631910.664, last before ready 1792631883.0"
+    },
+    {
+     "gate": "no illegal-memory-access or NaN warning lines during the requests",
+     "pass": true,
+     "detail": "{'preemption_lines': 0, 'illegal_memory_access_lines': 0, 'nan_warning_lines': 0}"
+    },
+    {
+     "gate": "container image id equals the pinned image",
+     "pass": true,
+     "detail": "sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07"
+    },
+    {
+     "gate": "container ports published on 127.0.0.1 only",
+     "pass": true,
+     "detail": "['127.0.0.1']"
+    }
+   ]
+  }
+ ],
+ "markers_only": [
+  {
+   "engine": "v070",
+   "session_dir": "2026-09-29-glm53-flash-exl3-k3.25@tpurtell",
+   "start_utc": "09-29 13:57:16",
+   "kv_pool_tokens": 2768240,
+   "accepted_E": true,
+   "margin_over_floor": 101744,
+   "accepted_22v": true
+  },
+  {
+   "engine": "v070",
+   "session_dir": "2026-09-30-glm53-flash-exl3-k3.25@tpurtell",
+   "start_utc": "10-01 03:25:29",
+   "kv_pool_tokens": 2749599,
+   "accepted_E": true,
+   "margin_over_floor": 83103,
+   "accepted_22v": false
+  },
+  {
+   "engine": "v070",
+   "session_dir": "2026-09-30-glm53-flash-exl3-k3.25@tpurtell",
+   "start_utc": "09-30 07:25:45",
+   "kv_pool_tokens": 2749599,
+   "accepted_E": true,
+   "margin_over_floor": 83103,
+   "accepted_22v": false
+  },
+  {
+   "engine": "v070",
+   "session_dir": "2026-10-05-glm53-flash-exl3-k3.25@tpurtell",
+   "start_utc": "10-05 11:43:45",
+   "kv_pool_tokens": 2768240,
+   "accepted_E": true,
+   "margin_over_floor": 101744,
+   "accepted_22v": true
+  },
+  {
+   "engine": "v091",
+   "session_dir": "2026-10-08-glm53-flash-exl3-k3.25@tpurtell+v0.9.1",
+   "start_utc": "10-09 00:31:31",
+   "kv_pool_tokens": 4707515,
+   "accepted_E": true,
+   "margin_over_floor": 2061499,
+   "accepted_22v": true
+  },
+  {
+   "engine": "v091",
+   "session_dir": "2026-10-09-glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps",
+   "start_utc": "10-09 19:23:14",
+   "kv_pool_tokens": 4707515,
+   "accepted_E": true,
+   "margin_over_floor": 2061499,
+   "accepted_22v": true
+  },
+  {
+   "engine": "v070",
+   "session_dir": "2026-10-10-glm53-flash-exl3-k3.25@tpurtell+ps",
+   "start_utc": "10-10 08:04:16",
+   "kv_pool_tokens": 2758919,
+   "accepted_E": true,
+   "margin_over_floor": 92423,
+   "accepted_22v": true
+  },
+  {
+   "engine": "v070",
+   "session_dir": "2026-10-16-glm53-flash-exl3-k3.25@tpurtell+rep070-F",
+   "start_utc": "10-16 16:41:47",
+   "kv_pool_tokens": 2758919,
+   "accepted_E": true,
+   "margin_over_floor": 92423,
+   "accepted_22v": true
+  },
+  {
+   "engine": "v070",
+   "session_dir": "2026-10-16-glm53-flash-exl3-k3.25@tpurtell+rep070-F",
+   "start_utc": "10-16 13:21:25",
+   "kv_pool_tokens": 2758919,
+   "accepted_E": true,
+   "margin_over_floor": 92423,
+   "accepted_22v": true
+  },
+  {
+   "engine": "v091",
+   "session_dir": "2026-10-21-glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091",
+   "start_utc": "10-21 17:19:08",
+   "kv_pool_tokens": 4707515,
+   "accepted_E": true,
+   "margin_over_floor": 2061499,
+   "accepted_22v": true
+  },
+  {
+   "engine": "v091",
+   "session_dir": "2026-10-21-glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091b",
+   "start_utc": "10-22 01:11:07",
+   "kv_pool_tokens": 4707515,
+   "accepted_E": true,
+   "margin_over_floor": 2061499,
+   "accepted_22v": true
+  }
+ ],
+ "verdict": {
+  "v070: 9 release warm-up lines ending with the ready line": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 4,
+   "not_applicable": 0
+  },
+  "v070: container image id equals the pinned image": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 3,
+   "not_applicable": 0
+  },
+  "v070: container ports published on 127.0.0.1 only": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 3,
+   "not_applicable": 0
+  },
+  "v070: docker inspect record readable": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 0,
+   "not_applicable": 1
+  },
+  "v070: exactly one engine start in the server log": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 4,
+   "not_applicable": 0
+  },
+  "v070: exactly the release warm-up's own 8 /v1/completions requests before the ready line": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 4,
+   "not_applicable": 0
+  },
+  "v070: first request sent after the last timestamped line before the ready line": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 4,
+   "not_applicable": 0
+  },
+  "v070: no illegal-memory-access or NaN warning lines during the requests": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 4,
+   "not_applicable": 0
+  },
+  "v070: server log KV pool >= functional floor 2,666,496 tokens (8 requests at the 327,680 cap + longest record prompt, whole 3,584-token blocks; reported, not identity-gated; amendments 22ad / 22ah)": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 4,
+   "not_applicable": 0
+  },
+  "v070: server log cudagraph_mode equals the reference record's": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 4,
+   "not_applicable": 0
+  },
+  "v070: server log env_names_logged_sha256 equals the reference record's": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 4,
+   "not_applicable": 0
+  },
+  "v070: server log model_snapshots equals the reference record's": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 4,
+   "not_applicable": 0
+  },
+  "v070: server log non_default_args_sha256 equals the reference record's": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 4,
+   "not_applicable": 0
+  },
+  "v070: server log vllm_version equals the reference record's": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 4,
+   "not_applicable": 0
+  },
+  "v091: 9 release warm-up lines ending with the ready line": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 5,
+   "not_applicable": 0
+  },
+  "v091: container image id equals the pinned image": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 3,
+   "not_applicable": 0
+  },
+  "v091: container ports published on 127.0.0.1 only": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 3,
+   "not_applicable": 0
+  },
+  "v091: docker inspect record readable": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 0,
+   "not_applicable": 2
+  },
+  "v091: exactly one engine start in the server log": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 5,
+   "not_applicable": 0
+  },
+  "v091: exactly the release warm-up's own 8 /v1/completions requests before the ready line": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 5,
+   "not_applicable": 0
+  },
+  "v091: first request sent after the last timestamped line before the ready line": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 5,
+   "not_applicable": 0
+  },
+  "v091: no illegal-memory-access or NaN warning lines during the requests": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 5,
+   "not_applicable": 0
+  },
+  "v091: server log KV pool >= functional floor 2,646,016 tokens (8 requests at the 327,680 cap + longest record prompt, whole 4,352-token blocks; reported, not identity-gated; amendments 22ad / 22ah)": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 5,
+   "not_applicable": 0
+  },
+  "v091: server log cudagraph_mode equals the reference record's": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 5,
+   "not_applicable": 0
+  },
+  "v091: server log env_names_logged_sha256 equals the reference record's": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 5,
+   "not_applicable": 0
+  },
+  "v091: server log model_snapshots equals the reference record's": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 5,
+   "not_applicable": 0
+  },
+  "v091: server log non_default_args_sha256 equals the reference record's": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 5,
+   "not_applicable": 0
+  },
+  "v091: server log vllm_version equals the reference record's": {
+   "all_reference_sessions_pass": true,
+   "sessions_evaluated": 5,
+   "not_applicable": 0
+  }
+ },
+ "markers_only_kv_all_accepted_E": true,
+ "markers_only_kv_all_accepted_22v": false,
+ "bplus_22v_failures_on_reference_sessions": [
+  "v070: 2026-09-30-glm53-flash-exl3-k3.25@tpurtell start 10-01 03:25:29: KV pool 2,749,599 not in the 22v set",
+  "v070: 2026-09-30-glm53-flash-exl3-k3.25@tpurtell start 09-30 07:25:45: KV pool 2,749,599 not in the 22v set"
+ ],
+ "attention_blocks_match_the_floor_inputs": true,
+ "longest_record_prompt_matches": true,
+ "ALL_CONFIGURATION_GATES_PASS_ON_EVERY_REFERENCE_SESSION": true
+}

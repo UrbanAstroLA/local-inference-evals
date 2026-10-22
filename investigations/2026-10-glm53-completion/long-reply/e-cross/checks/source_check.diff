@@ -1,0 +1,12 @@
+1a2,3
+> set -u
+> # [E copy of bplus/scripts/source_check.sh: set -u; the two E images only.]
+6,7c8
+<                [v091]=sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07
+<                [b1]=sha256:799d3cf8e5d14a615b89c734a6a38b4be5729bb44bb6b56effc7cf7df747b88a)
+---
+>                [v091]=sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07)
+14c15
+< for k in v070 v091 b1; do
+---
+> for k in v070 v091; do

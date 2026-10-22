@@ -1,0 +1,198 @@
+2,10c2,13
+< # Session-path simulation of runner/run_bplus.sh with NO GPU and NO model server (CPU only), after
+< # rep070/refreeze/tests/session_sim.sh. A copy of the package goes to WORK/pkg; in the runner copy only the per-session
+< # minimum walls are lowered (SESSION_MIN_S) and the copy's SHA256SUMS is regenerated, so every refusal still runs.
+< # docker and nvidia-smi are shims: read-only queries answer as on a healthy machine; the REAL stack launchers run
+< # unmodified and their 'docker run --detach' (with --gpus) is answered by starting tests/fake_server.py on 127.0.0.1:8001
+< # (no model); 'docker logs' returns the engine's real reference server log; 'docker stop' kills the fake server; the
+< # analysis' CPU-only container ('docker run --rm --network none', no --gpus) passes through to the real docker; any
+< # other docker call is refused (exit 99). Scenarios:
+< #   (a) normal completion of all three sessions -> analysis COMPLETE
+---
+> set -u
+> # [E copy of bplus/tests/session_sim.sh: set -u (shims too); scratch fixed inside e-cross/PRIVATE/ and guarded; package copy
+> #  by tar; two engines; the C1-ONLY scenario becomes a v091 budget stop (INCOMPLETE: E1 needs both sessions).
+> #  Amendment 22ah: 13 prefixes, 52 requests per session, seeds 8,270,101-8,281,304, approval 19.9.]
+> # Session-path simulation of runner/run_e.sh with NO GPU and NO model server (CPU only). A copy of the package goes to
+> # WORK/pkg; in the runner copy only the per-session minimum walls are lowered (SESSION_MIN_S) and the copy's SHA256SUMS is
+> # regenerated, so every refusal still runs. docker and nvidia-smi are shims: read-only queries answer as on a healthy
+> # machine; the REAL stack launchers run unmodified and their 'docker run --detach' (with --gpus) is answered by starting
+> # tests/fake_server.py on 127.0.0.1:8001 (no model); 'docker logs' returns the engine's real reference server log; 'docker
+> # stop' kills the fake server; the analysis' CPU-only container ('docker run --rm --network none', no --gpus) passes through
+> # to the real docker; any other docker call is refused (exit 99). Scenarios:
+> #   (a) normal completion of both sessions -> analysis COMPLETE with a reading
+13,17c16,21
+< #   (d) budget rule stops B1 (its minimum wall raised in this scenario) -> C1-ONLY
+< #   (e) session 1 launcher fails -> stop, later engines not started, INCOMPLETE
+< #   (f) one request answered HTTP 500 in session 2 -> client rc 3, stop, INCOMPLETE
+< # Refuses to run if port 8001 is in use or a GLM container runs. Not set -e.
+< WORK=${1:?usage: session_sim.sh WORK_DIR}
+---
+> #   (d) budget rule stops v091 (its minimum wall raised in this scenario) -> INCOMPLETE
+> #   (e) session 1 launcher fails -> stop, v091 not started, INCOMPLETE
+> #   (f) one request answered HTTP 500 in session 2 -> client rc 3, INCOMPLETE
+> # Refuses to run if port 8001 is in use, a GLM container runs, or a launcher's cache folder is missing (the launchers'
+> # only host write is 'mkdir -p' of that existing folder). Not set -e.
+> # usage: session_sim.sh > OUT
+18a23,26
+> EC=<runs>/long-reply/e-cross
+> case "$PKG0" in "$EC") ;; *) echo "REFUSED: unexpected package path $PKG0"; exit 2 ;; esac
+> WORK=$PKG0/PRIVATE/scratch-sim
+> case "$WORK" in "$EC"/PRIVATE/scratch-sim) ;; *) echo "REFUSED: scratch $WORK"; exit 2 ;; esac
+20a29
+> [ -d <cache>/vllm ] && [ -d <cache>/vllm-v090 ] || { echo "REFUSED: a launcher cache folder is missing"; exit 2; }
+22c31
+< rm -rf "$WORK"; mkdir -p "$WORK/shim" "$WORK/state" || exit 2
+---
+> rm -rf -- "$WORK"; mkdir -p "$WORK/shim" "$WORK/state" || exit 2; chmod 700 "$WORK"
+25a35
+> set -u
+26a37
+> case "\$ST" in "$EC"/PRIVATE/scratch-sim/state) ;; *) echo "shim: bad state path" >&2; exit 98 ;; esac
+28c39
+< idof() { case "\$1" in *48e254d9*) echo sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629 ;;
+---
+> idof() { case "\${1:-}" in *48e254d9*) echo sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629 ;;
+30d40
+<   *799d3cf8*|local/glm53-v0.9.1-b1-d7:local) echo sha256:799d3cf8e5d14a615b89c734a6a38b4be5729bb44bb6b56effc7cf7df747b88a ;;
+32c42
+< case "\$1" in
+---
+> case "\${1:-}" in
+34c44
+<   image) id=\$(idof "\$3") || exit 1; [[ "\$*" == *--format* ]] && echo "\$id"; exit 0 ;;
+---
+>   image) id=\$(idof "\${3:-}") || exit 1; [[ "\$*" == *--format* ]] && echo "\$id"; exit 0 ;;
+36c46
+<     if [ "\$2" = -f ] || [ "\$2" = --format ]; then [ -f "\$ST/running" ] && { echo true; exit 0; }; [ -f "\$ST/exists" ] && { echo false; exit 0; }; exit 1; fi
+---
+>     if [ "\${2:-}" = -f ] || [ "\${2:-}" = --format ]; then [ -f "\$ST/running" ] && { echo true; exit 0; }; [ -f "\$ST/exists" ] && { echo false; exit 0; }; exit 1; fi
+39c49
+<   rm) rm -f "\$ST/exists"; exit 0 ;;
+---
+>   rm) rm -f -- "\$ST/exists"; exit 0 ;;
+42c52
+<       [ -n "\$SIM_LAUNCH_FAIL" ] && { echo "sim: launcher docker run fails" >&2; exit 125; }
+---
+>       [ -n "\${SIM_LAUNCH_FAIL:-}" ] && { echo "sim: launcher docker run fails" >&2; exit 125; }
+60d69
+<           *799d3cf8*) cat <runs>/b1-screen/run-s1236/server-s1.log ;;
+62c71
+<   stop) [ -f "\$ST/pid" ] && kill "\$(cat "\$ST/pid")" 2>/dev/null; rm -f "\$ST/running" "\$ST/pid"; echo "\$2"; exit 0 ;;
+---
+>   stop) [ -f "\$ST/pid" ] && kill "\$(cat "\$ST/pid")" 2>/dev/null; rm -f -- "\$ST/running" "\$ST/pid"; echo "\${2:-}"; exit 0 ;;
+67a77
+> set -u
+78c88
+< chmod +x "$WORK/shim/"*
+---
+> chmod +x "$WORK/shim/docker" "$WORK/shim/nvidia-smi"
+81,85c91,98
+< setup() { # minimum walls v070 v091 b1
+<   local P=$WORK/pkg; rm -rf "$P" "$WORK/state"/*
+<   cp -a "$PKG0" "$P"; rm -rf "$P/run" "$P/tests/out"
+<   sed -i -E "s/^declare -A SESSION_MIN_S=.*/declare -A SESSION_MIN_S=([v070]=$1 [v091]=$2 [b1]=$3)   # SIM/" "$P/runner/run_bplus.sh"
+<   grep -q '# SIM' "$P/runner/run_bplus.sh" || { echo "setup: could not set SESSION_MIN_S"; exit 2; }
+---
+> setup() { # minimum walls v070 v091
+>   P=$WORK/pkg
+>   case "$P" in "$EC"/PRIVATE/scratch-sim/pkg) ;; *) echo "setup: bad path"; exit 2 ;; esac
+>   rm -rf -- "$P"; mkdir -p "$P" || exit 2
+>   find "$WORK/state" -mindepth 1 -maxdepth 1 -type f -exec rm -f -- {} +
+>   tar -C "$PKG0" --exclude='./run' --exclude='./PRIVATE/scratch-*' --exclude='./tests/out' -cf - . | tar -C "$P" -xf - || exit 2
+>   sed -i -E "s/^declare -A SESSION_MIN_S=.*/declare -A SESSION_MIN_S=([v070]=$1 [v091]=$2)   # SIM/" "$P/runner/run_e.sh"
+>   grep -q '# SIM' "$P/runner/run_e.sh" || { echo "setup: could not set SESSION_MIN_S"; exit 2; }
+87c100
+<   RUNNER=$P/runner/run_bplus.sh; R=$P/run
+---
+>   RUNNER=$P/runner/run_e.sh; R=$P/run
+93c106
+<   ok "every launcher docker run published on 127.0.0.1:8001 by the pinned image" "! grep -E 'docker run .*--detach' '$SHIMLOG' | grep -vqE -- '--publish 127.0.0.1:8001:8001 .*(48e254d9|a9e985c0|799d3cf8)'"
+---
+>   ok "every launcher docker run published on 127.0.0.1:8001 by the pinned image" "! grep -E 'docker run .*--detach' '$SHIMLOG' | grep -vqE -- '--publish 127.0.0.1:8001:8001 .*(48e254d9|a9e985c0)'"
+100,105c113,118
+< echo "== (a) normal completion of all three sessions"
+< setup 10 10 10; : > "$SHIMLOG"
+< FAKE_SECS=0.05 APPROVED_GPU_H=31.6 PATH="$WORK/shim:$PATH" bash "$RUNNER" > "$WORK/a.out" 2>&1; echo "  runner rc=$? result: $(state)"
+< common 3
+< ok "three sessions completed, 48 requests each, 8-in-flight cap held" "python3 -c \"import json,sys
+< for e in ('v070','v091','b1'):
+---
+> echo "== (a) normal completion of both sessions"
+> setup 10 10; : > "$SHIMLOG"
+> FAKE_SECS=0.05 APPROVED_GPU_H=19.9 PATH="$WORK/shim:$PATH" bash "$RUNNER" > "$WORK/a.out" 2>&1; echo "  runner rc=$? result: $(state)"
+> common 2
+> ok "two sessions completed, 52 requests each, 13 render checks equal" "python3 -c \"import json,sys
+> for e in ('v070','v091'):
+108,112c121,130
+<     assert sum(x['kind']=='request' for x in r)==48 and sum(x['kind']=='render_check' and x['equal'] for x in r)==12, e\""
+< ok "server stopped after each session (3 docker stop calls)" "[ \$(grep -c 'docker stop glm53-flash-exl3-b12x-vllm' '$SHIMLOG') = 3 ]"
+< ok "server log and docker inspect saved per session; inspect reports loopback only" "[ -s '$R/v070/server.log' ] && [ -s '$R/b1/inspect.json' ] && [ \$(grep -c '(loopback only)' '$WORK/a.out') = 3 ]"
+< ok "analysis: COMPLETE with a reading (all gates passed on the fake outputs)" "state | grep -qE '^COMPLETE R-'"
+< ok "cache inventory before and after each session" "[ -s '$R/cache-v070-before.json' ] && [ -s '$R/cache-diff-b1.json' ]"
+---
+>     assert sum(x['kind']=='request' for x in r)==52 and sum(x['kind']=='render_check' and x['equal'] for x in r)==13, e\""
+> ok "seeds sent are the plan's E seeds (8,270,101-8,281,304), none from B+" "python3 -c \"import json
+> p=json.load(open('$R/../out/plan.json'))
+> for e in ('v070','v091'):
+>     s=sorted(json.loads(l)['seed'] for l in open('$R/'+e+'/requests.jsonl') if json.loads(l)['kind']=='request')
+>     assert s==sorted(r['seeds'][e] for r in p['order']) and min(s)>=8270101 and max(s)<=8281304, e\""
+> ok "server stopped after each session (2 docker stop calls)" "[ \$(grep -c 'docker stop glm53-flash-exl3-b12x-vllm' '$SHIMLOG') = 2 ]"
+> ok "server log and docker inspect saved per session; inspect reports loopback only" "[ -s '$R/v070/server.log' ] && [ -s '$R/v091/inspect.json' ] && [ \$(grep -c '(loopback only)' '$WORK/a.out') = 2 ]"
+> ok "analysis: COMPLETE with a reading (all gates passed on the fake outputs) and a cross table" "state | grep -qE '^COMPLETE R-' && grep -q 'Cross (descriptive' '$R/result.md'"
+> ok "cache inventory before and after each session" "[ -s '$R/cache-v070-before.json' ] && [ -s '$R/cache-diff-v091.json' ]"
+115,116c133,134
+< setup 10 10 10; : > "$SHIMLOG"
+< ( FAKE_SECS=3 APPROVED_GPU_H=31.6 PATH="$WORK/shim:$PATH" bash "$RUNNER" > "$WORK/b.out" 2>&1; echo "$?" > "$WORK/b.rc" ) &
+---
+> setup 10 10; : > "$SHIMLOG"
+> ( FAKE_SECS=3 APPROVED_GPU_H=19.9 PATH="$WORK/shim:$PATH" bash "$RUNNER" > "$WORK/b.out" 2>&1; echo "$?" > "$WORK/b.rc" ) &
+122d139
+< ok "B1 never started" "! grep -q 'b1: starting' '$WORK/b.out'"
+124c141
+< setup 10 10 10; : > "$SHIMLOG"
+---
+> setup 10 10; : > "$SHIMLOG"
+129,135c146,153
+< ok "analysis INCOMPLETE, no reading; later engines not started" "state | grep -q '^INCOMPLETE None' && ! grep -q 'v091: starting' '$WORK/c.out'"
+< echo "== (d) budget rule: B1's minimum wall exceeds what is left -> B1 not started, C1-ONLY"
+< setup 10 10 999999; : > "$SHIMLOG"
+< FAKE_SECS=0.05 APPROVED_GPU_H=31.6 PATH="$WORK/shim:$PATH" bash "$RUNNER" > "$WORK/d.out" 2>&1; echo "  runner rc=$? result: $(state)"
+< common 2
+< ok "budget stop reported for b1; b1 session.json budget_stop true" "grep -q 'b1: .*not started (budget stop)' '$WORK/d.out' && grep -q '\"budget_stop\": true' '$R/b1/session.json'"
+< ok "analysis C1-ONLY with a C1 reading" "state | grep -qE '^C1-ONLY R-'"
+---
+> ok "requests were in flight when the watchdog fired (fewer than 52 request records)" "python3 -c \"import json,os,sys; p='$R/v070/requests.jsonl'; n=sum(json.loads(l).get('kind')=='request' for l in open(p)) if os.path.exists(p) else 0; sys.exit(0 if n < 52 else 1)\""
+> ok "analysis INCOMPLETE, no reading; v091 not started" "state | grep -q '^INCOMPLETE None' && ! grep -q 'v091: starting' '$WORK/c.out'"
+> echo "== (d) budget rule: v091's minimum wall exceeds what is left -> v091 not started, INCOMPLETE"
+> setup 10 999999; : > "$SHIMLOG"
+> FAKE_SECS=0.05 APPROVED_GPU_H=19.9 PATH="$WORK/shim:$PATH" bash "$RUNNER" > "$WORK/d.out" 2>&1; echo "  runner rc=$? result: $(state)"
+> common 1
+> ok "budget stop reported for v091; v091 session.json budget_stop true" "grep -q 'v091: .*not started (budget stop)' '$WORK/d.out' && grep -q '\"budget_stop\": true' '$R/v091/session.json'"
+> ok "analysis INCOMPLETE (E1 needs both sessions)" "state | grep -q '^INCOMPLETE None'"
+137,138c155,156
+< setup 10 10 10; : > "$SHIMLOG"
+< SIM_LAUNCH_FAIL=1 APPROVED_GPU_H=31.6 PATH="$WORK/shim:$PATH" bash "$RUNNER" > "$WORK/e.out" 2>&1; echo "  runner rc=$? result: $(state)"
+---
+> setup 10 10; : > "$SHIMLOG"
+> SIM_LAUNCH_FAIL=1 APPROVED_GPU_H=19.9 PATH="$WORK/shim:$PATH" bash "$RUNNER" > "$WORK/e.out" 2>&1; echo "  runner rc=$? result: $(state)"
+140c158
+< ok "stopped after session 1; v091 and b1 not started; no client ran" "grep -q 'v070: session did not complete' '$WORK/e.out' && ! grep -q 'v091: starting' '$WORK/e.out' && [ ! -e '$R/v070/requests.jsonl' ]"
+---
+> ok "stopped after session 1; v091 not started; no client ran" "grep -q 'v070: session did not complete' '$WORK/e.out' && ! grep -q 'v091: starting' '$WORK/e.out' && [ ! -e '$R/v070/requests.jsonl' ]"
+143,144c161,162
+< setup 10 10 10; : > "$SHIMLOG"
+< SIM_FAIL_K_a9e985c0=17 FAKE_SECS=0.05 APPROVED_GPU_H=31.6 PATH="$WORK/shim:$PATH" bash "$RUNNER" > "$WORK/f.out" 2>&1; echo "  runner rc=$? result: $(state)"
+---
+> setup 10 10; : > "$SHIMLOG"
+> SIM_FAIL_K_a9e985c0=17 FAKE_SECS=0.05 APPROVED_GPU_H=19.9 PATH="$WORK/shim:$PATH" bash "$RUNNER" > "$WORK/f.out" 2>&1; echo "  runner rc=$? result: $(state)"
+146,147c164,165
+< ok "client rc 3 in v091; run stopped; b1 not started" "grep -q 'v091: client rc=3' '$WORK/f.out' && ! grep -q 'b1: starting' '$WORK/f.out'"
+< ok "the failed request is logged with its HTTP status (no retry)" "[ \$(grep -c '\"http_status\": 500' '$R/v091/requests.jsonl') = 1 ] && [ \$(grep -c '\"kind\": \"request\"' '$R/v091/requests.jsonl') = 48 ]"
+---
+> ok "client rc 3 in v091; run stopped" "grep -q 'v091: client rc=3' '$WORK/f.out'"
+> ok "the failed request is logged with its HTTP status (no retry)" "[ \$(grep -c '\"http_status\": 500' '$R/v091/requests.jsonl') = 1 ] && [ \$(grep -c '\"kind\": \"request\"' '$R/v091/requests.jsonl') = 52 ]"
+150c168
+< [ "$FAIL" = 0 ] && rm -rf "$WORK"
+---
+> case "$WORK" in "$EC"/PRIVATE/scratch-sim) [ "$FAIL" = 0 ] && rm -rf -- "$WORK" ;; esac

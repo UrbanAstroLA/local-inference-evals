@@ -1,0 +1,655 @@
+{
+ "what": "E request plan (ids, seeds, hashes; no text)",
+ "model": "wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1",
+ "params": {
+  "max_tokens": 65536,
+  "temperature": 1.0,
+  "top_p": 0.95,
+  "stop": [
+   "</s>"
+  ],
+  "return_token_ids": true,
+  "stream": false
+ },
+ "params_sha256": "c53443e3e815a9ecce209fcf01b6606d926a558d4686e032b2e3abcdd2495b22",
+ "seed_base": 8260000,
+ "order_seed": 20261016,
+ "engines": [
+  {
+   "engine": "v070",
+   "index": 1,
+   "label": "stock 0.7.0"
+  },
+  {
+   "engine": "v091",
+   "index": 2,
+   "label": "stock 0.9.1"
+  }
+ ],
+ "order": [
+  {
+   "k": 1,
+   "prefix_id": "P09",
+   "j": 1,
+   "stratum": "capped",
+   "prefix_len": 100148,
+   "prefix_ids_sha256": "1b25420a6ae9a1a1e61c9507328de9ad9c6cbc331f9c7aeb161b243ef735455a",
+   "seeds": {
+    "v070": 8270901,
+    "v091": 8280901
+   }
+  },
+  {
+   "k": 2,
+   "prefix_id": "P06",
+   "j": 1,
+   "stratum": "finished",
+   "prefix_len": 100285,
+   "prefix_ids_sha256": "1b2f92c71ec9cd5ccea0556e73b66cf7d8831f9c4b76fd9639e3614ac2adaa9c",
+   "seeds": {
+    "v070": 8270601,
+    "v091": 8280601
+   }
+  },
+  {
+   "k": 3,
+   "prefix_id": "P03",
+   "j": 1,
+   "stratum": "capped",
+   "prefix_len": 100217,
+   "prefix_ids_sha256": "78709874fc4f9723475eff1a6de7bde6c247af8e7b2cf89a2da594ece806cf4c",
+   "seeds": {
+    "v070": 8270301,
+    "v091": 8280301
+   }
+  },
+  {
+   "k": 4,
+   "prefix_id": "P08",
+   "j": 1,
+   "stratum": "finished",
+   "prefix_len": 100308,
+   "prefix_ids_sha256": "0edde6326ad0be1e7505f3286747afe923a268de3bc556511079c500a25dac9f",
+   "seeds": {
+    "v070": 8270801,
+    "v091": 8280801
+   }
+  },
+  {
+   "k": 5,
+   "prefix_id": "P11",
+   "j": 1,
+   "stratum": "capped",
+   "prefix_len": 100308,
+   "prefix_ids_sha256": "5ef0afb00f1973f5abec2f8245418c09cbca46b4917c41f30b260a323e06194a",
+   "seeds": {
+    "v070": 8271101,
+    "v091": 8281101
+   }
+  },
+  {
+   "k": 6,
+   "prefix_id": "P12",
+   "j": 1,
+   "stratum": "finished",
+   "prefix_len": 100229,
+   "prefix_ids_sha256": "eed6e6e6c6be84b921da24973764247617c100d8fad795d3b0d05d0fb178b0f7",
+   "seeds": {
+    "v070": 8271201,
+    "v091": 8281201
+   }
+  },
+  {
+   "k": 7,
+   "prefix_id": "P10",
+   "j": 1,
+   "stratum": "capped",
+   "prefix_len": 100276,
+   "prefix_ids_sha256": "99072f96cbe6bcdfe3993bb46b328df59157dc2449361eb3559ee20455894251",
+   "seeds": {
+    "v070": 8271001,
+    "v091": 8281001
+   }
+  },
+  {
+   "k": 8,
+   "prefix_id": "P07",
+   "j": 1,
+   "stratum": "finished",
+   "prefix_len": 100190,
+   "prefix_ids_sha256": "9540bbf99a7fabf27a169d1beb803b01a11963da779d467cc239cb78d9db2bd8",
+   "seeds": {
+    "v070": 8270701,
+    "v091": 8280701
+   }
+  },
+  {
+   "k": 9,
+   "prefix_id": "P02",
+   "j": 1,
+   "stratum": "capped",
+   "prefix_len": 100766,
+   "prefix_ids_sha256": "04e436121fa3e8f9ef62a85943b8eea61f7a11d2efb0fa4de65d4520970e2e09",
+   "seeds": {
+    "v070": 8270201,
+    "v091": 8280201
+   }
+  },
+  {
+   "k": 10,
+   "prefix_id": "P13",
+   "j": 1,
+   "stratum": "finished",
+   "prefix_len": 100178,
+   "prefix_ids_sha256": "07d73045479c1257886044b980fe201b7d712d71ddc155fa2bfe540bf5c239c5",
+   "seeds": {
+    "v070": 8271301,
+    "v091": 8281301
+   }
+  },
+  {
+   "k": 11,
+   "prefix_id": "P04",
+   "j": 1,
+   "stratum": "capped",
+   "prefix_len": 100478,
+   "prefix_ids_sha256": "7c8d4660c334985d82121f3aebf851a7aa22931b643a53f555395966a57d5b68",
+   "seeds": {
+    "v070": 8270401,
+    "v091": 8280401
+   }
+  },
+  {
+   "k": 12,
+   "prefix_id": "P01",
+   "j": 1,
+   "stratum": "capped",
+   "prefix_len": 100091,
+   "prefix_ids_sha256": "a5c9d9297b04ecf0b48205c705a8788bf524c5677e87af0a81fbc64fe910d73e",
+   "seeds": {
+    "v070": 8270101,
+    "v091": 8280101
+   }
+  },
+  {
+   "k": 13,
+   "prefix_id": "P05",
+   "j": 1,
+   "stratum": "capped",
+   "prefix_len": 100131,
+   "prefix_ids_sha256": "277345e19c41af07b2779aa48d520e9dd4affb2f6e284d6c2bb3385a29ac424d",
+   "seeds": {
+    "v070": 8270501,
+    "v091": 8280501
+   }
+  },
+  {
+   "k": 14,
+   "prefix_id": "P12",
+   "j": 2,
+   "stratum": "finished",
+   "prefix_len": 100229,
+   "prefix_ids_sha256": "eed6e6e6c6be84b921da24973764247617c100d8fad795d3b0d05d0fb178b0f7",
+   "seeds": {
+    "v070": 8271202,
+    "v091": 8281202
+   }
+  },
+  {
+   "k": 15,
+   "prefix_id": "P02",
+   "j": 2,
+   "stratum": "capped",
+   "prefix_len": 100766,
+   "prefix_ids_sha256": "04e436121fa3e8f9ef62a85943b8eea61f7a11d2efb0fa4de65d4520970e2e09",
+   "seeds": {
+    "v070": 8270202,
+    "v091": 8280202
+   }
+  },
+  {
+   "k": 16,
+   "prefix_id": "P06",
+   "j": 2,
+   "stratum": "finished",
+   "prefix_len": 100285,
+   "prefix_ids_sha256": "1b2f92c71ec9cd5ccea0556e73b66cf7d8831f9c4b76fd9639e3614ac2adaa9c",
+   "seeds": {
+    "v070": 8270602,
+    "v091": 8280602
+   }
+  },
+  {
+   "k": 17,
+   "prefix_id": "P10",
+   "j": 2,
+   "stratum": "capped",
+   "prefix_len": 100276,
+   "prefix_ids_sha256": "99072f96cbe6bcdfe3993bb46b328df59157dc2449361eb3559ee20455894251",
+   "seeds": {
+    "v070": 8271002,
+    "v091": 8281002
+   }
+  },
+  {
+   "k": 18,
+   "prefix_id": "P07",
+   "j": 2,
+   "stratum": "finished",
+   "prefix_len": 100190,
+   "prefix_ids_sha256": "9540bbf99a7fabf27a169d1beb803b01a11963da779d467cc239cb78d9db2bd8",
+   "seeds": {
+    "v070": 8270702,
+    "v091": 8280702
+   }
+  },
+  {
+   "k": 19,
+   "prefix_id": "P05",
+   "j": 2,
+   "stratum": "capped",
+   "prefix_len": 100131,
+   "prefix_ids_sha256": "277345e19c41af07b2779aa48d520e9dd4affb2f6e284d6c2bb3385a29ac424d",
+   "seeds": {
+    "v070": 8270502,
+    "v091": 8280502
+   }
+  },
+  {
+   "k": 20,
+   "prefix_id": "P08",
+   "j": 2,
+   "stratum": "finished",
+   "prefix_len": 100308,
+   "prefix_ids_sha256": "0edde6326ad0be1e7505f3286747afe923a268de3bc556511079c500a25dac9f",
+   "seeds": {
+    "v070": 8270802,
+    "v091": 8280802
+   }
+  },
+  {
+   "k": 21,
+   "prefix_id": "P09",
+   "j": 2,
+   "stratum": "capped",
+   "prefix_len": 100148,
+   "prefix_ids_sha256": "1b25420a6ae9a1a1e61c9507328de9ad9c6cbc331f9c7aeb161b243ef735455a",
+   "seeds": {
+    "v070": 8270902,
+    "v091": 8280902
+   }
+  },
+  {
+   "k": 22,
+   "prefix_id": "P13",
+   "j": 2,
+   "stratum": "finished",
+   "prefix_len": 100178,
+   "prefix_ids_sha256": "07d73045479c1257886044b980fe201b7d712d71ddc155fa2bfe540bf5c239c5",
+   "seeds": {
+    "v070": 8271302,
+    "v091": 8281302
+   }
+  },
+  {
+   "k": 23,
+   "prefix_id": "P11",
+   "j": 2,
+   "stratum": "capped",
+   "prefix_len": 100308,
+   "prefix_ids_sha256": "5ef0afb00f1973f5abec2f8245418c09cbca46b4917c41f30b260a323e06194a",
+   "seeds": {
+    "v070": 8271102,
+    "v091": 8281102
+   }
+  },
+  {
+   "k": 24,
+   "prefix_id": "P01",
+   "j": 2,
+   "stratum": "capped",
+   "prefix_len": 100091,
+   "prefix_ids_sha256": "a5c9d9297b04ecf0b48205c705a8788bf524c5677e87af0a81fbc64fe910d73e",
+   "seeds": {
+    "v070": 8270102,
+    "v091": 8280102
+   }
+  },
+  {
+   "k": 25,
+   "prefix_id": "P03",
+   "j": 2,
+   "stratum": "capped",
+   "prefix_len": 100217,
+   "prefix_ids_sha256": "78709874fc4f9723475eff1a6de7bde6c247af8e7b2cf89a2da594ece806cf4c",
+   "seeds": {
+    "v070": 8270302,
+    "v091": 8280302
+   }
+  },
+  {
+   "k": 26,
+   "prefix_id": "P04",
+   "j": 2,
+   "stratum": "capped",
+   "prefix_len": 100478,
+   "prefix_ids_sha256": "7c8d4660c334985d82121f3aebf851a7aa22931b643a53f555395966a57d5b68",
+   "seeds": {
+    "v070": 8270402,
+    "v091": 8280402
+   }
+  },
+  {
+   "k": 27,
+   "prefix_id": "P10",
+   "j": 3,
+   "stratum": "capped",
+   "prefix_len": 100276,
+   "prefix_ids_sha256": "99072f96cbe6bcdfe3993bb46b328df59157dc2449361eb3559ee20455894251",
+   "seeds": {
+    "v070": 8271003,
+    "v091": 8281003
+   }
+  },
+  {
+   "k": 28,
+   "prefix_id": "P13",
+   "j": 3,
+   "stratum": "finished",
+   "prefix_len": 100178,
+   "prefix_ids_sha256": "07d73045479c1257886044b980fe201b7d712d71ddc155fa2bfe540bf5c239c5",
+   "seeds": {
+    "v070": 8271303,
+    "v091": 8281303
+   }
+  },
+  {
+   "k": 29,
+   "prefix_id": "P05",
+   "j": 3,
+   "stratum": "capped",
+   "prefix_len": 100131,
+   "prefix_ids_sha256": "277345e19c41af07b2779aa48d520e9dd4affb2f6e284d6c2bb3385a29ac424d",
+   "seeds": {
+    "v070": 8270503,
+    "v091": 8280503
+   }
+  },
+  {
+   "k": 30,
+   "prefix_id": "P12",
+   "j": 3,
+   "stratum": "finished",
+   "prefix_len": 100229,
+   "prefix_ids_sha256": "eed6e6e6c6be84b921da24973764247617c100d8fad795d3b0d05d0fb178b0f7",
+   "seeds": {
+    "v070": 8271203,
+    "v091": 8281203
+   }
+  },
+  {
+   "k": 31,
+   "prefix_id": "P03",
+   "j": 3,
+   "stratum": "capped",
+   "prefix_len": 100217,
+   "prefix_ids_sha256": "78709874fc4f9723475eff1a6de7bde6c247af8e7b2cf89a2da594ece806cf4c",
+   "seeds": {
+    "v070": 8270303,
+    "v091": 8280303
+   }
+  },
+  {
+   "k": 32,
+   "prefix_id": "P07",
+   "j": 3,
+   "stratum": "finished",
+   "prefix_len": 100190,
+   "prefix_ids_sha256": "9540bbf99a7fabf27a169d1beb803b01a11963da779d467cc239cb78d9db2bd8",
+   "seeds": {
+    "v070": 8270703,
+    "v091": 8280703
+   }
+  },
+  {
+   "k": 33,
+   "prefix_id": "P04",
+   "j": 3,
+   "stratum": "capped",
+   "prefix_len": 100478,
+   "prefix_ids_sha256": "7c8d4660c334985d82121f3aebf851a7aa22931b643a53f555395966a57d5b68",
+   "seeds": {
+    "v070": 8270403,
+    "v091": 8280403
+   }
+  },
+  {
+   "k": 34,
+   "prefix_id": "P06",
+   "j": 3,
+   "stratum": "finished",
+   "prefix_len": 100285,
+   "prefix_ids_sha256": "1b2f92c71ec9cd5ccea0556e73b66cf7d8831f9c4b76fd9639e3614ac2adaa9c",
+   "seeds": {
+    "v070": 8270603,
+    "v091": 8280603
+   }
+  },
+  {
+   "k": 35,
+   "prefix_id": "P02",
+   "j": 3,
+   "stratum": "capped",
+   "prefix_len": 100766,
+   "prefix_ids_sha256": "04e436121fa3e8f9ef62a85943b8eea61f7a11d2efb0fa4de65d4520970e2e09",
+   "seeds": {
+    "v070": 8270203,
+    "v091": 8280203
+   }
+  },
+  {
+   "k": 36,
+   "prefix_id": "P08",
+   "j": 3,
+   "stratum": "finished",
+   "prefix_len": 100308,
+   "prefix_ids_sha256": "0edde6326ad0be1e7505f3286747afe923a268de3bc556511079c500a25dac9f",
+   "seeds": {
+    "v070": 8270803,
+    "v091": 8280803
+   }
+  },
+  {
+   "k": 37,
+   "prefix_id": "P01",
+   "j": 3,
+   "stratum": "capped",
+   "prefix_len": 100091,
+   "prefix_ids_sha256": "a5c9d9297b04ecf0b48205c705a8788bf524c5677e87af0a81fbc64fe910d73e",
+   "seeds": {
+    "v070": 8270103,
+    "v091": 8280103
+   }
+  },
+  {
+   "k": 38,
+   "prefix_id": "P11",
+   "j": 3,
+   "stratum": "capped",
+   "prefix_len": 100308,
+   "prefix_ids_sha256": "5ef0afb00f1973f5abec2f8245418c09cbca46b4917c41f30b260a323e06194a",
+   "seeds": {
+    "v070": 8271103,
+    "v091": 8281103
+   }
+  },
+  {
+   "k": 39,
+   "prefix_id": "P09",
+   "j": 3,
+   "stratum": "capped",
+   "prefix_len": 100148,
+   "prefix_ids_sha256": "1b25420a6ae9a1a1e61c9507328de9ad9c6cbc331f9c7aeb161b243ef735455a",
+   "seeds": {
+    "v070": 8270903,
+    "v091": 8280903
+   }
+  },
+  {
+   "k": 40,
+   "prefix_id": "P07",
+   "j": 4,
+   "stratum": "finished",
+   "prefix_len": 100190,
+   "prefix_ids_sha256": "9540bbf99a7fabf27a169d1beb803b01a11963da779d467cc239cb78d9db2bd8",
+   "seeds": {
+    "v070": 8270704,
+    "v091": 8280704
+   }
+  },
+  {
+   "k": 41,
+   "prefix_id": "P05",
+   "j": 4,
+   "stratum": "capped",
+   "prefix_len": 100131,
+   "prefix_ids_sha256": "277345e19c41af07b2779aa48d520e9dd4affb2f6e284d6c2bb3385a29ac424d",
+   "seeds": {
+    "v070": 8270504,
+    "v091": 8280504
+   }
+  },
+  {
+   "k": 42,
+   "prefix_id": "P08",
+   "j": 4,
+   "stratum": "finished",
+   "prefix_len": 100308,
+   "prefix_ids_sha256": "0edde6326ad0be1e7505f3286747afe923a268de3bc556511079c500a25dac9f",
+   "seeds": {
+    "v070": 8270804,
+    "v091": 8280804
+   }
+  },
+  {
+   "k": 43,
+   "prefix_id": "P01",
+   "j": 4,
+   "stratum": "capped",
+   "prefix_len": 100091,
+   "prefix_ids_sha256": "a5c9d9297b04ecf0b48205c705a8788bf524c5677e87af0a81fbc64fe910d73e",
+   "seeds": {
+    "v070": 8270104,
+    "v091": 8280104
+   }
+  },
+  {
+   "k": 44,
+   "prefix_id": "P13",
+   "j": 4,
+   "stratum": "finished",
+   "prefix_len": 100178,
+   "prefix_ids_sha256": "07d73045479c1257886044b980fe201b7d712d71ddc155fa2bfe540bf5c239c5",
+   "seeds": {
+    "v070": 8271304,
+    "v091": 8281304
+   }
+  },
+  {
+   "k": 45,
+   "prefix_id": "P04",
+   "j": 4,
+   "stratum": "capped",
+   "prefix_len": 100478,
+   "prefix_ids_sha256": "7c8d4660c334985d82121f3aebf851a7aa22931b643a53f555395966a57d5b68",
+   "seeds": {
+    "v070": 8270404,
+    "v091": 8280404
+   }
+  },
+  {
+   "k": 46,
+   "prefix_id": "P06",
+   "j": 4,
+   "stratum": "finished",
+   "prefix_len": 100285,
+   "prefix_ids_sha256": "1b2f92c71ec9cd5ccea0556e73b66cf7d8831f9c4b76fd9639e3614ac2adaa9c",
+   "seeds": {
+    "v070": 8270604,
+    "v091": 8280604
+   }
+  },
+  {
+   "k": 47,
+   "prefix_id": "P02",
+   "j": 4,
+   "stratum": "capped",
+   "prefix_len": 100766,
+   "prefix_ids_sha256": "04e436121fa3e8f9ef62a85943b8eea61f7a11d2efb0fa4de65d4520970e2e09",
+   "seeds": {
+    "v070": 8270204,
+    "v091": 8280204
+   }
+  },
+  {
+   "k": 48,
+   "prefix_id": "P12",
+   "j": 4,
+   "stratum": "finished",
+   "prefix_len": 100229,
+   "prefix_ids_sha256": "eed6e6e6c6be84b921da24973764247617c100d8fad795d3b0d05d0fb178b0f7",
+   "seeds": {
+    "v070": 8271204,
+    "v091": 8281204
+   }
+  },
+  {
+   "k": 49,
+   "prefix_id": "P03",
+   "j": 4,
+   "stratum": "capped",
+   "prefix_len": 100217,
+   "prefix_ids_sha256": "78709874fc4f9723475eff1a6de7bde6c247af8e7b2cf89a2da594ece806cf4c",
+   "seeds": {
+    "v070": 8270304,
+    "v091": 8280304
+   }
+  },
+  {
+   "k": 50,
+   "prefix_id": "P10",
+   "j": 4,
+   "stratum": "capped",
+   "prefix_len": 100276,
+   "prefix_ids_sha256": "99072f96cbe6bcdfe3993bb46b328df59157dc2449361eb3559ee20455894251",
+   "seeds": {
+    "v070": 8271004,
+    "v091": 8281004
+   }
+  },
+  {
+   "k": 51,
+   "prefix_id": "P09",
+   "j": 4,
+   "stratum": "capped",
+   "prefix_len": 100148,
+   "prefix_ids_sha256": "1b25420a6ae9a1a1e61c9507328de9ad9c6cbc331f9c7aeb161b243ef735455a",
+   "seeds": {
+    "v070": 8270904,
+    "v091": 8280904
+   }
+  },
+  {
+   "k": 52,
+   "prefix_id": "P11",
+   "j": 4,
+   "stratum": "capped",
+   "prefix_len": 100308,
+   "prefix_ids_sha256": "5ef0afb00f1973f5abec2f8245418c09cbca46b4917c41f30b260a323e06194a",
+   "seeds": {
+    "v070": 8271104,
+    "v091": 8281104
+   }
+  }
+ ]
+}

@@ -1,0 +1,41 @@
+[
+ {
+  "check": "messages hash -> doc id is one-to-one across all samples files",
+  "ok": true,
+  "detail": "22 files, 198 hashes, 0 conflicts"
+ },
+ {
+  "check": "glm53-flash-exl3-k3.25@tpurtell+rep070-F.s1.requests.jsonl seed 70701: 198 requests, all joined, 198 distinct docs",
+  "ok": true,
+  "detail": "198 rows"
+ },
+ {
+  "check": "glm53-flash-exl3-k3.25@tpurtell+rep070-F.s2.requests.jsonl seed 70702: 198 requests, all joined, 198 distinct docs",
+  "ok": true,
+  "detail": "198 rows"
+ },
+ {
+  "check": "glm53-flash-exl3-k3.25@tpurtell+rep070-F.s2.requests.jsonl seed 70703: 198 requests, all joined, 198 distinct docs",
+  "ok": true,
+  "detail": "198 rows"
+ },
+ {
+  "check": "raw file: 594 requests, lengths and finish reasons equal the request logs",
+  "ok": true,
+  "detail": 594
+ },
+ {
+  "check": "raw file: request seeds are exactly the given seeds",
+  "ok": true,
+  "detail": [
+   70701,
+   70702,
+   70703
+  ]
+ },
+ {
+  "check": "raw file: one record per (seed, doc)",
+  "ok": true,
+  "detail": ""
+ }
+]

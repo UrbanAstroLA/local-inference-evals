@@ -1,0 +1,16 @@
+# Output paths of runner/run_d091.sh, the chain copy and scripts/run_pipeline.sh for D2 (+d091b), against D's (+d091).
+# Checked 2026-10-21 before freezing: each D2 path differs from D's, matches nothing that exists, and no D path matches a D2 glob.
+PASS lm-eval output (chain): <gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091b__pass1  (D: <gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091__pass1; D2 exists: no; D's existing: 1)
+PASS lm-eval log (chain): <gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091b.log  (D: <gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091.log; D2 exists: no; D's existing: 1)
+PASS proxy request log (runner): <gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091b.s1.requests.jsonl  (D: <gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091.s1.requests.jsonl; D2 exists: no; D's existing: 1)
+PASS proxy sidecar (runner): <gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091b.s1.requests.events.jsonl  (D: <gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091.s1.requests.events.jsonl; D2 exists: no; D's existing: 1)
+PASS chain log dir, any date (chain): <data-runs>/benchmarks/*-glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091b  (D: <data-runs>/benchmarks/*-glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091; D2 exists: no; D's existing: 1)
+PASS raw bodies (runner): <runs>/long-reply/d091b/PRIVATE/raw  (D: <runs>/long-reply/d091/PRIVATE/raw; D2 exists: no; D's existing: 1)
+PASS run outputs (runner): <runs>/long-reply/d091b/run  (D: <runs>/long-reply/d091/run; D2 exists: no; D's existing: 1)
+PASS pipeline outputs (pipeline): <runs>/long-reply/d091b/out/*  (D: <runs>/long-reply/d091/out/*; D2 exists: no; D's existing: 19)
+PASS prefix verify (pipeline): <runs>/long-reply/d091b/checks/prefix-verify-*.json  (D: <runs>/long-reply/d091/checks/prefix-verify-*.json; D2 exists: no; D's existing: 2)
+PASS prefixes / prompts (pipeline): <runs>/long-reply/d091b/PRIVATE/prefixes.json  (D: <runs>/long-reply/d091/PRIVATE/prefixes.json; D2 exists: no; D's existing: 1)
+PASS prompts (pipeline): <runs>/long-reply/d091b/PRIVATE/prompts.json  (D: <runs>/long-reply/d091/PRIVATE/prompts.json; D2 exists: no; D's existing: 1)
+PASS runner pre-flight glob for +d091b matches nothing: none
+INFO the same glob for D's tag +d091 matches D's 5 existing record paths, none of which the +d091b glob matches
+output paths: ALL DISTINCT FROM D AND ABSENT

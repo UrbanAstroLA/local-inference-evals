@@ -1,0 +1,19 @@
+# D prefix construction repro and rendering, 2026-10-21T21:58:30-07:00; CPU only
+input scripts/trajectory.py sha256 c24267b1a9641fc2 (d091 c24267b1a9641fc2) identical
+input scripts/build_prefixes.py sha256 1ebbec2ef0cdea40 (d091 1ebbec2ef0cdea40) identical
+input out/selection.json sha256 1869e2c6283247f0 (d091 1869e2c6283247f0) identical
+input scripts/prefix_build_d091.py sha256 7abf9bcc17fe26f9 (d091's wrapper, unchanged; seed and request log passed as arguments)
+build rc=0: build v070: 58/58 checks pass; libraries {'transformers': '5.15.1', 'tokenizers': '0.22.2', 'numpy': '2.2.6'}
+verify v070 rc=0: verify v070: 114/114 checks pass; libraries {'transformers': '5.15.1', 'tokenizers': '0.22.2', 'numpy': '2.2.6'}
+verify v091 rc=0: verify v091: 114/114 checks pass; libraries {'transformers': '5.15.1', 'tokenizers': '0.22.2', 'numpy': '2.2.6'}
+PASS rebuilt out/prefix_manifest.json byte-identical to d091's (5961c780e630c476)
+PASS rebuilt out/prefix_manifest.json byte-identical to ref/d091-prefix_manifest.json (5961c780e630c476)
+PASS rebuilt PRIVATE/prefixes.json = d091's = PRIVATE/src-d091/ (d15434d3777a4f76)
+PASS rebuilt PRIVATE/prompts.json = d091's = PRIVATE/src-d091/ (3642dcf6a4b19991)
+PASS PRIVATE/src-d091 = d091's private files (d15434d3777a4f76)
+PASS d091 manifest private_*_sha256 = rebuilt private files (d15434d3777a4f76)
+PASS build exit code (0)
+PASS verify exit code, 0.7.0 image (0)
+PASS verify exit code, 0.9.1 image (0)
+PASS verify 0.9.1 output byte-identical to d091's checks/prefix-verify-v091.json (9a4aa1800daa0a51)
+D prefix build repro and rendering: 10 pass, 0 fail

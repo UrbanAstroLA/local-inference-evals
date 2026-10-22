@@ -1,0 +1,93 @@
+{
+ "what": "E costing from B+'s measured sessions (GPU-hours = 2 x session wall)",
+ "inputs_sha256": {
+  "bplus/run/costs.jsonl": "debb37bf98621dcf470691808bfe915e9c08428d992cf7757c25307d8f08aa42",
+  "bplus/run/v070/session.json": "62adb21e8b72060c60c090e3d6ce832758fe3c47d35b0b1f24e4994e1229d21a",
+  "bplus/run/v091/session.json": "640c8bbd7eaf59f9f9815727e3b5a929202271bc4326a1ecabf2a7271c9cfe96",
+  "bplus/run/v070/requests.jsonl": "3142b51b00a3ef570a33a1df3b7759bb2a8521be0379409c661ca25ca9868478",
+  "bplus/run/v091/requests.jsonl": "9305fac2157461e0d2d2cf718975fb9cb63479073cf9230a8889ff713baf1de2"
+ },
+ "engines": {
+  "v070": {
+   "bplus_measured": {
+    "session_wall_s": 9956,
+    "gpu_hours": 5.531,
+    "ready_after_s": 467,
+    "client_wall_s": 9475.0,
+    "post_client_overhead_s": 14.0,
+    "requests": 48,
+    "full_horizon": 28,
+    "finished": 20,
+    "full_horizon_secs_min_median_max": [
+     645.1,
+     1822.6,
+     2441.9
+    ],
+    "slowest_full_horizon_tok_s": 26.8
+   },
+   "startup_s": {
+    "central": 467,
+    "pessimistic": 810
+   },
+   "central_scaled_gpu_h": 5.97,
+   "central_scaled_wall_s": 10746,
+   "simulated_median_gpu_h": 6.245,
+   "simulated_p95_gpu_h": 7.834,
+   "pessimistic_p95_gpu_h": 9.441,
+   "pessimistic_median_gpu_h": 7.602,
+   "ceiling_gpu_h": 11.5,
+   "ceiling_wall_s": 20700,
+   "slowest_observed_bound_gpu_h": 9.955,
+   "P_exceed_ceiling_central_model": 0.0,
+   "P_exceed_ceiling_pessimistic_model": 0.00065
+  },
+  "v091": {
+   "bplus_measured": {
+    "session_wall_s": 6982,
+    "gpu_hours": 3.879,
+    "ready_after_s": 680,
+    "client_wall_s": 6295.0,
+    "post_client_overhead_s": 7.0,
+    "requests": 48,
+    "full_horizon": 28,
+    "finished": 20,
+    "full_horizon_secs_min_median_max": [
+     753.5,
+     1231.6,
+     1647.8
+    ],
+    "slowest_full_horizon_tok_s": 39.8
+   },
+   "startup_s": {
+    "central": 680,
+    "pessimistic": 1140
+   },
+   "central_scaled_gpu_h": 4.17,
+   "central_scaled_wall_s": 7507,
+   "simulated_median_gpu_h": 4.326,
+   "simulated_p95_gpu_h": 5.411,
+   "pessimistic_p95_gpu_h": 6.779,
+   "pessimistic_median_gpu_h": 5.533,
+   "ceiling_gpu_h": 8.3,
+   "ceiling_wall_s": 14941,
+   "slowest_observed_bound_gpu_h": 7.046,
+   "P_exceed_ceiling_central_model": 0.0,
+   "P_exceed_ceiling_pessimistic_model": 0.00085
+  }
+ },
+ "run": {
+  "central_scaled_gpu_h": 10.17,
+  "simulated_median_gpu_h": 10.65,
+  "simulated_p95_gpu_h": 12.52,
+  "pessimistic_p95_gpu_h": 15.41,
+  "ceiling_gpu_h_PLAN_MAX": 19.9,
+  "watchdog_wall_s": 35820,
+  "P_exceed_run_ceiling_central_model": 0.0,
+  "P_exceed_run_ceiling_pessimistic_model": 0.0,
+  "session_min_s_budget_rule": {
+   "v070": 20700,
+   "v091": 14941
+  },
+  "minimum_approval_for_the_primary": "both sessions are needed for E1: an approval below the run ceiling can stop v091 by the budget rule, which reads INCOMPLETE"
+ }
+}

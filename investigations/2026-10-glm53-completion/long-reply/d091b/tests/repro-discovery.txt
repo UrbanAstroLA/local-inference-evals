@@ -1,0 +1,27 @@
+# discovery reproduction run 2026-10-21T08:16:59-07:00 (CPU only; zero GPU)
+## byte identity of the copies (this package's scripts/ vs discovery/scripts/ vs the run copies)
+SAME build_index.py 43b6c3118a7daf0be8279f729115ece47b328b8de81d689f0cef12317dafb7b2
+SAME trajectory.py c24267b1a9641fc2a3bf4b9bca23950d9530d787002d74286bef8b717f5ac4c6
+SAME periods.py 7f5b7e8042d4ce79183dae2e81e0bc0c0ff1c35c964f89b9b60f332e84c152a5
+SAME analyse.py 1e599f2f606a31fd55be125904739a3089c83367371ade9003531b31b594410a
+SAME PRESPEC.md 97040a5c6260b2447917dfaf48c87605c066ebc57de0199f42571ea01c96c4b7
+build_index rc=0
+trajectory capped rc=0
+trajectory all rc=0
+periods rc=0
+analyse rc=0
+## outputs vs discovery/out (byte for byte)
+SAME index_checks.json 25d2e0d02306ba5d
+SAME lengths_all.jsonl 372b363b9232b3cc
+SAME periods_all.json d67732dec0070552
+N/A prespec.sha256 (written once when PRESPEC.md was frozen; not an output of the scripts)
+SAME rep070F_index.json f15153d4de02e27f
+SAME replies_all.json e2cb8516650a4477
+SAME replies_capped.json 6b67887077e9ca77
+SAME run_all.log 24df9e04455be5a1
+SAME run_periods.log 2231dc1749c4f248
+SAME summary.json 021bcb013c5691f4
+SAME tables.md 2e549a004cf3e395
+SAME windows_all.jsonl be84a652020e6b7e
+SAME windows_capped.jsonl 1dff8205124818dd
+identical: 12 of 12 discovery output files

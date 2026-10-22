@@ -1,0 +1,10 @@
+1a2
+> set -u
+2a4,5
+> # [E copy of bplus/make_sums.sh: set -u; package-path guard; the transient test scratch folders PRIVATE/scratch-*/ and
+> #  FROZEN-VERIFY.txt (written after the freeze) excluded.]
+4c7,8
+< find . -type f ! -path './run/*' ! -name SHA256SUMS ! -name FROZEN-VERIFY.txt ! -path '*/__pycache__/*' ! -name '*.pyc' | LC_ALL=C sort | xargs -d '\n' sha256sum > SHA256SUMS
+---
+> case "$(pwd)" in <runs>/long-reply/e-cross|<runs>/long-reply/e-cross/*) ;; *) echo "ABORT: not inside e-cross"; exit 1 ;; esac
+> find . -type f ! -path './run/*' ! -path './PRIVATE/scratch-*' ! -name SHA256SUMS ! -name FROZEN-VERIFY.txt ! -path '*/__pycache__/*' ! -name '*.pyc' | LC_ALL=C sort | xargs -d '\n' sha256sum > SHA256SUMS

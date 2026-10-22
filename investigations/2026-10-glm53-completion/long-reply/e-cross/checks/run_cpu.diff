@@ -1,0 +1,25 @@
+2c2,5
+< # CPU-only container wrapper for the B+ package: --network none, CUDA_VISIBLE_DEVICES empty, no --gpus, read-only
+---
+> set -u
+> # [E copy of bplus/scripts/run_cpu.sh: set -u added; /raw and /disc point at d091's prefix source (its raw bodies and its
+> # index, as d091's run_pipeline.sh mounted them); the package folder must be e-cross or a copy inside it.]
+> # CPU-only container wrapper for the E package: --network none, CUDA_VISIBLE_DEVICES empty, no --gpus, read-only
+7c10,12
+< case "$1" in
+---
+> EC=$B/long-reply/e-cross
+> case "$W" in "$EC"|"$EC"/*) ;; *) echo "ABORT: package folder $W is not e-cross or inside it"; exit 2 ;; esac
+> case "${1:-}" in
+14c19
+< SCRIPT=$1; shift
+---
+> SCRIPT=${1:?usage: run_cpu.sh ENGINE SCRIPT [ARGS...]}; shift
+20c25
+<   -v "$B/rep070/run-F/raw":/raw:ro \
+---
+>   -v "$B/long-reply/d091/PRIVATE/raw":/raw:ro \
+24c29
+<   -v "$B/long-reply/discovery/out":/disc:ro \
+---
+>   -v "$B/long-reply/d091/out":/disc:ro \

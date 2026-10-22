@@ -1,0 +1,450 @@
+{
+ "engine": "b1",
+ "libraries": {
+  "transformers": "5.15.1",
+  "tokenizers": "0.22.2",
+  "numpy": "2.2.6"
+ },
+ "template": "/opt/glm53/templates/glm53-zai-a5b45eb.jinja",
+ "snapshot": "0490d2f708b12145f6516555ab066aaeb401cd21",
+ "checks": [
+  {
+   "check": "b1: served chat template sha256 0c4099f3382d",
+   "ok": true,
+   "detail": "0c4099f3382d6c92"
+  },
+  {
+   "check": "b1: tokenizer.json sha256 19e773648cb4",
+   "ok": true,
+   "detail": "19e773648cb4e65d"
+  },
+  {
+   "check": "b1 P01: messages hash equals the raw record and the rep070-F request log",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P01: rendered prompt length equals the server's prompt_tokens (raw response and request log)",
+   "ok": true,
+   "detail": "91 / 91 / 91"
+  },
+  {
+   "check": "b1 P01: prompt ids equal d7's independent pure-Python tokenization",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P01: transformers and tokenizers give identical prompt and reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P01: reasoning re-tokenization length equals discovery's N_reasoning",
+   "ok": true,
+   "detail": "327676 vs 327676"
+  },
+  {
+   "check": "b1 P01: prompt ends <|assistant|><think>; no stop id and no </think> in the reasoning part of the prefix",
+   "ok": true,
+   "detail": "prompt carries 1 stop-class id(s) (the template's <|user|> turn marker; stop ids act on generated tokens only)"
+  },
+  {
+   "check": "b1 P01: prefix length = prompt + 100000",
+   "ok": true,
+   "detail": 100091
+  },
+  {
+   "check": "b1 P02: messages hash equals the raw record and the rep070-F request log",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P02: rendered prompt length equals the server's prompt_tokens (raw response and request log)",
+   "ok": true,
+   "detail": "229 / 229 / 229"
+  },
+  {
+   "check": "b1 P02: prompt ids equal d7's independent pure-Python tokenization",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P02: transformers and tokenizers give identical prompt and reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P02: reasoning re-tokenization length equals discovery's N_reasoning",
+   "ok": true,
+   "detail": "327680 vs 327680"
+  },
+  {
+   "check": "b1 P02: prompt ends <|assistant|><think>; no stop id and no </think> in the reasoning part of the prefix",
+   "ok": true,
+   "detail": "prompt carries 1 stop-class id(s) (the template's <|user|> turn marker; stop ids act on generated tokens only)"
+  },
+  {
+   "check": "b1 P02: prefix length = prompt + 100000",
+   "ok": true,
+   "detail": 100229
+  },
+  {
+   "check": "b1 P03: messages hash equals the raw record and the rep070-F request log",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P03: rendered prompt length equals the server's prompt_tokens (raw response and request log)",
+   "ok": true,
+   "detail": "191 / 191 / 191"
+  },
+  {
+   "check": "b1 P03: prompt ids equal d7's independent pure-Python tokenization",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P03: transformers and tokenizers give identical prompt and reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P03: reasoning re-tokenization length equals discovery's N_reasoning",
+   "ok": true,
+   "detail": "150210 vs 150210"
+  },
+  {
+   "check": "b1 P03: prompt ends <|assistant|><think>; no stop id and no </think> in the reasoning part of the prefix",
+   "ok": true,
+   "detail": "prompt carries 1 stop-class id(s) (the template's <|user|> turn marker; stop ids act on generated tokens only)"
+  },
+  {
+   "check": "b1 P03: prefix length = prompt + 100000",
+   "ok": true,
+   "detail": 100191
+  },
+  {
+   "check": "b1 P04: messages hash equals the raw record and the rep070-F request log",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P04: rendered prompt length equals the server's prompt_tokens (raw response and request log)",
+   "ok": true,
+   "detail": "148 / 148 / 148"
+  },
+  {
+   "check": "b1 P04: prompt ids equal d7's independent pure-Python tokenization",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P04: transformers and tokenizers give identical prompt and reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P04: reasoning re-tokenization length equals discovery's N_reasoning",
+   "ok": true,
+   "detail": "143400 vs 143400"
+  },
+  {
+   "check": "b1 P04: prompt ends <|assistant|><think>; no stop id and no </think> in the reasoning part of the prefix",
+   "ok": true,
+   "detail": "prompt carries 1 stop-class id(s) (the template's <|user|> turn marker; stop ids act on generated tokens only)"
+  },
+  {
+   "check": "b1 P04: prefix length = prompt + 100000",
+   "ok": true,
+   "detail": 100148
+  },
+  {
+   "check": "b1 P05: messages hash equals the raw record and the rep070-F request log",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P05: rendered prompt length equals the server's prompt_tokens (raw response and request log)",
+   "ok": true,
+   "detail": "178 / 178 / 178"
+  },
+  {
+   "check": "b1 P05: prompt ids equal d7's independent pure-Python tokenization",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P05: transformers and tokenizers give identical prompt and reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P05: reasoning re-tokenization length equals discovery's N_reasoning",
+   "ok": true,
+   "detail": "124510 vs 124510"
+  },
+  {
+   "check": "b1 P05: prompt ends <|assistant|><think>; no stop id and no </think> in the reasoning part of the prefix",
+   "ok": true,
+   "detail": "prompt carries 1 stop-class id(s) (the template's <|user|> turn marker; stop ids act on generated tokens only)"
+  },
+  {
+   "check": "b1 P05: prefix length = prompt + 100000",
+   "ok": true,
+   "detail": 100178
+  },
+  {
+   "check": "b1 P06: messages hash equals the raw record and the rep070-F request log",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P06: rendered prompt length equals the server's prompt_tokens (raw response and request log)",
+   "ok": true,
+   "detail": "308 / 308 / 308"
+  },
+  {
+   "check": "b1 P06: prompt ids equal d7's independent pure-Python tokenization",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P06: transformers and tokenizers give identical prompt and reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P06: reasoning re-tokenization length equals discovery's N_reasoning",
+   "ok": true,
+   "detail": "124020 vs 124020"
+  },
+  {
+   "check": "b1 P06: prompt ends <|assistant|><think>; no stop id and no </think> in the reasoning part of the prefix",
+   "ok": true,
+   "detail": "prompt carries 1 stop-class id(s) (the template's <|user|> turn marker; stop ids act on generated tokens only)"
+  },
+  {
+   "check": "b1 P06: prefix length = prompt + 100000",
+   "ok": true,
+   "detail": 100308
+  },
+  {
+   "check": "b1 P01: prompt_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "da6e0fa5df26654e vs da6e0fa5df26654e"
+  },
+  {
+   "check": "b1 P01: reasoning_full_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "4ef7f4824f5fa4a1 vs 4ef7f4824f5fa4a1"
+  },
+  {
+   "check": "b1 P01: cut_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "caf0596adaec4e82 vs caf0596adaec4e82"
+  },
+  {
+   "check": "b1 P01: prefix_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "714445c8ec581bbe vs 714445c8ec581bbe"
+  },
+  {
+   "check": "b1 P01: prefix_len equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "100091 vs 100091"
+  },
+  {
+   "check": "b1 P01: rebuilt ids equal PRIVATE/prefixes.json",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P01: rendered prompt text identical to the 0.7.0 template's",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P02: prompt_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "316a3f00e23a81cc vs 316a3f00e23a81cc"
+  },
+  {
+   "check": "b1 P02: reasoning_full_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "a331693ab7712d54 vs a331693ab7712d54"
+  },
+  {
+   "check": "b1 P02: cut_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "bd7fa273ad5c8d1a vs bd7fa273ad5c8d1a"
+  },
+  {
+   "check": "b1 P02: prefix_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "92ed266a1e4f1f4e vs 92ed266a1e4f1f4e"
+  },
+  {
+   "check": "b1 P02: prefix_len equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "100229 vs 100229"
+  },
+  {
+   "check": "b1 P02: rebuilt ids equal PRIVATE/prefixes.json",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P02: rendered prompt text identical to the 0.7.0 template's",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P03: prompt_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "4bc4d539df3a5269 vs 4bc4d539df3a5269"
+  },
+  {
+   "check": "b1 P03: reasoning_full_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "95b43738ae698817 vs 95b43738ae698817"
+  },
+  {
+   "check": "b1 P03: cut_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "317678a1e0a7d69b vs 317678a1e0a7d69b"
+  },
+  {
+   "check": "b1 P03: prefix_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "ac44215a8eea7fab vs ac44215a8eea7fab"
+  },
+  {
+   "check": "b1 P03: prefix_len equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "100191 vs 100191"
+  },
+  {
+   "check": "b1 P03: rebuilt ids equal PRIVATE/prefixes.json",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P03: rendered prompt text identical to the 0.7.0 template's",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P04: prompt_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "0a78dcebfbb3ca09 vs 0a78dcebfbb3ca09"
+  },
+  {
+   "check": "b1 P04: reasoning_full_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "a23e24ba8f5a3d40 vs a23e24ba8f5a3d40"
+  },
+  {
+   "check": "b1 P04: cut_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "1521dbf5e3044af6 vs 1521dbf5e3044af6"
+  },
+  {
+   "check": "b1 P04: prefix_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "167aab328e7f0561 vs 167aab328e7f0561"
+  },
+  {
+   "check": "b1 P04: prefix_len equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "100148 vs 100148"
+  },
+  {
+   "check": "b1 P04: rebuilt ids equal PRIVATE/prefixes.json",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P04: rendered prompt text identical to the 0.7.0 template's",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P05: prompt_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "8177f1bffc424a1b vs 8177f1bffc424a1b"
+  },
+  {
+   "check": "b1 P05: reasoning_full_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "73f56b1c6f0d38b0 vs 73f56b1c6f0d38b0"
+  },
+  {
+   "check": "b1 P05: cut_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "dab0b68abbc6ef3c vs dab0b68abbc6ef3c"
+  },
+  {
+   "check": "b1 P05: prefix_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "2c1382082d01d211 vs 2c1382082d01d211"
+  },
+  {
+   "check": "b1 P05: prefix_len equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "100178 vs 100178"
+  },
+  {
+   "check": "b1 P05: rebuilt ids equal PRIVATE/prefixes.json",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P05: rendered prompt text identical to the 0.7.0 template's",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P06: prompt_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "409970ca7e064c5c vs 409970ca7e064c5c"
+  },
+  {
+   "check": "b1 P06: reasoning_full_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "dd5002f10d148495 vs dd5002f10d148495"
+  },
+  {
+   "check": "b1 P06: cut_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "d913c52c542f2a8f vs d913c52c542f2a8f"
+  },
+  {
+   "check": "b1 P06: prefix_ids_sha256 equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "82578d0bb0c3ce15 vs 82578d0bb0c3ce15"
+  },
+  {
+   "check": "b1 P06: prefix_len equals the frozen 0.7.0-built manifest",
+   "ok": true,
+   "detail": "100308 vs 100308"
+  },
+  {
+   "check": "b1 P06: rebuilt ids equal PRIVATE/prefixes.json",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "b1 P06: rendered prompt text identical to the 0.7.0 template's",
+   "ok": true,
+   "detail": ""
+  }
+ ],
+ "prefix_hashes": {
+  "P01": "714445c8ec581bbe49bbcfc91a110cfbba73dc8fe22f012afba39215b3bf5108",
+  "P02": "92ed266a1e4f1f4ee6db0d19fea89264276b38f7b059c35d6bac32c4b211a45c",
+  "P03": "ac44215a8eea7fab9301f10b848aac1ebbb735b95f4dc4ec7bc2e2a9d264117b",
+  "P04": "167aab328e7f05615c0080eb84740ae1a7192bff6cfaed89eb71a8ee551198a0",
+  "P05": "2c1382082d01d211a644c671d77251958876451ef1861709ed2ea267f6e39063",
+  "P06": "82578d0bb0c3ce15e988fba7003cee5882f85fbea95f40683fec863a65a20d39"
+ }
+}

@@ -1,0 +1,22 @@
+q15p5 {'len': 94, 'start_a': 38310, 'start_b': 68493, 'offset': 30183} None None
+q12p5 {'len': 40, 'start_a': 57904, 'start_b': 58023, 'offset': 119} None None
+q8p5 {'len': 49, 'start_a': 36800, 'start_b': 53916, 'offset': 17116} None None
+q48p5 {'len': 64, 'start_a': 14039, 'start_b': 50760, 'offset': 36721} None None
+q71p5 {'len': 41, 'start_a': 58033, 'start_b': 98138, 'offset': 40105} None None
+q88p5 {'len': 68, 'start_a': 53705, 'start_b': 61890, 'offset': 8185} None None
+q118p5 {'len': 58, 'start_a': 307, 'start_b': 26535, 'offset': 26228} None None
+q121p5 {'len': 65, 'start_a': 21750, 'start_b': 58976, 'offset': 37226} None None
+q69p5 {'len': 159157, 'start_a': 168520, 'start_b': 168522, 'offset': 2} {'len': 159157, 'start_a': 168520, 'start_b': 168522, 'offset': 2} {'top_lags': [[2, 0.9891], [1846, 0.989], [1854, 0.989], [1884, 0.989], [2162, 0.989]], 'exact_period_m08': 2}
+q79p5 {'len': 200, 'start_a': 150157, 'start_b': 187393, 'offset': 37236} None None
+q81p5 {'len': 115585, 'start_a': 212092, 'start_b': 212094, 'offset': 2} {'len': 115585, 'start_a': 212092, 'start_b': 212094, 'offset': 2} {'top_lags': [[1986, 0.9844], [1972, 0.9844], [1988, 0.9844], [1962, 0.9844], [1998, 0.9844]], 'exact_period_m08': 1592}
+q127p5 {'len': 1569, 'start_a': 127717, 'start_b': 147016, 'offset': 19299} None None
+q130p5 {'len': 164, 'start_a': 46350, 'start_b': 81414, 'offset': 35064} None None
+q145p5 {'len': 45, 'start_a': 2558, 'start_b': 2641, 'offset': 83} None None
+q147p5 {'len': 103, 'start_a': 28158, 'start_b': 45576, 'offset': 17418} None None
+q109p5 {'len': 174051, 'start_a': 153627, 'start_b': 153629, 'offset': 2} {'len': 174051, 'start_a': 153627, 'start_b': 153629, 'offset': 2} {'top_lags': [[10, 0.9889], [40, 0.9889], [26, 0.9888], [8, 0.9888], [16, 0.9888]], 'exact_period_m08': 2}
+q185p5 {'len': 41, 'start_a': 18410, 'start_b': 40762, 'offset': 22352} None None
+q120p5 {'len': 83619, 'start_a': 244057, 'start_b': 244059, 'offset': 2} {'len': 83619, 'start_a': 244057, 'start_b': 244059, 'offset': 2} {'top_lags': [[18, 0.9773], [6, 0.9773], [10, 0.9772], [990, 0.9771], [14, 0.977]], 'exact_period_m08': 6}
+q161p5 {'len': 204601, 'start_a': 123008, 'start_b': 123081, 'offset': 73} {'len': 204601, 'start_a': 123008, 'start_b': 123081, 'offset': 73} {'top_lags': [[1314, 0.9904], [511, 0.9904], [292, 0.9903], [73, 0.9903], [803, 0.9903]], 'exact_period_m08': 73}
+q170p5 {'len': 202148, 'start_a': 125531, 'start_b': 125533, 'offset': 2} {'len': 202148, 'start_a': 125531, 'start_b': 125533, 'offset': 2} {'top_lags': [[6, 0.9919], [2, 0.9917], [4, 0.9916], [8, 0.9916], [10, 0.9915]], 'exact_period_m08': 2}
+q186p5 {'len': 167421, 'start_a': 160255, 'start_b': 160257, 'offset': 2} {'len': 167421, 'start_a': 160255, 'start_b': 160257, 'offset': 2} {'top_lags': [[10, 0.9892], [2, 0.9891], [4, 0.9891], [8, 0.9891], [6, 0.9891]], 'exact_period_m08': 2}
+exit 0

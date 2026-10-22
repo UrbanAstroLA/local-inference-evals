@@ -1,0 +1,19 @@
+# D2 prefix construction repro and rendering, 2026-10-21T21:56:18-07:00; CPU only
+input scripts/trajectory.py sha256 c24267b1a9641fc2 (d091b c24267b1a9641fc2) identical
+input scripts/build_prefixes.py sha256 1ebbec2ef0cdea40 (d091b 1ebbec2ef0cdea40) identical
+input out/selection.json sha256 ec38d892169ee0a1 (d091b ec38d892169ee0a1) identical
+input scripts/prefix_build_d091.py sha256 7abf9bcc17fe26f9 (d091's wrapper, unchanged; seed and request log passed as arguments)
+build rc=0: build v070: 58/58 checks pass; libraries {'transformers': '5.15.1', 'tokenizers': '0.22.2', 'numpy': '2.2.6'}
+verify v070 rc=0: verify v070: 114/114 checks pass; libraries {'transformers': '5.15.1', 'tokenizers': '0.22.2', 'numpy': '2.2.6'}
+verify v091 rc=0: verify v091: 114/114 checks pass; libraries {'transformers': '5.15.1', 'tokenizers': '0.22.2', 'numpy': '2.2.6'}
+PASS rebuilt out/prefix_manifest.json byte-identical to d091b's (2ebb5223fdcae266)
+PASS rebuilt PRIVATE/prefixes.json = d091b's (d24d660cd516b139)
+PASS rebuilt PRIVATE/prompts.json = d091b's (a89e562670df3a96)
+PASS d091b manifest private_*_sha256 = rebuilt private files (d24d660cd516b139)
+PASS build exit code (0)
+PASS verify exit code, 0.7.0 image (0)
+PASS verify exit code, 0.9.1 image (0)
+PASS verify 0.9.1 output byte-identical to d091b's checks/prefix-verify-v091.json (644e64720587a517)
+v070: checks on the 5 new prompts 70 / 70; template /repo/snapshots/701cd7456c13d87bf0147ad946f828a999afb59c/chat_template.jinja; snapshot 701cd745
+v091: checks on the 5 new prompts 70 / 70; template /opt/glm53/templates/glm53-zai-a5b45eb.jinja; snapshot 0490d2f7
+D2 prefix build repro and rendering: 8 pass, 0 fail

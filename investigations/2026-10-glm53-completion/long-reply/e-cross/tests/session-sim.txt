@@ -1,0 +1,79 @@
+== (a) normal completion of both sessions
+  runner rc=0 result: COMPLETE R-I
+  ok    exactly 2 cost line(s), 2 GPUs each
+  ok    no refused docker call
+  ok    every launcher docker run published on 127.0.0.1:8001 by the pinned image
+  ok    fake server gone (8001 free), no client left
+  ok    no runner process left
+  ok    raw directory 0700, raw files 0600
+  ok    analysis ran and wrote result.json
+  ok    two sessions completed, 52 requests each, 13 render checks equal
+  ok    seeds sent are the plan's E seeds (8,270,101-8,281,304), none from B+
+  ok    server stopped after each session (2 docker stop calls)
+  ok    server log and docker inspect saved per session; inspect reports loopback only
+  ok    analysis: COMPLETE with a reading (all gates passed on the fake outputs) and a cross table
+  ok    cache inventory before and after each session
+  ok    GPU log and package verification written
+== (b) SIGTERM to the runner during session 2
+  runner rc=4 result: INCOMPLETE None
+  ok    exactly 2 cost line(s), 2 GPUs each
+  ok    no refused docker call
+  ok    every launcher docker run published on 127.0.0.1:8001 by the pinned image
+  ok    fake server gone (8001 free), no client left
+  ok    no runner process left
+  ok    raw directory 0700, raw files 0600
+  ok    analysis ran and wrote result.json
+  ok    runner exited 4 and reported the interrupted-session cleanup
+  ok    analysis INCOMPLETE, no reading
+== (c) watchdog at APPROVED_GPU_H=0.04 (72 s wall; checked every 60 s) with requests in flight
+  runner rc=0 result: INCOMPLETE None
+  ok    exactly 1 cost line(s), 2 GPUs each
+  ok    no refused docker call
+  ok    every launcher docker run published on 127.0.0.1:8001 by the pinned image
+  ok    fake server gone (8001 free), no client left
+  ok    no runner process left
+  ok    raw directory 0700, raw files 0600
+  ok    analysis ran and wrote result.json
+  ok    watchdog fired, killed the client and stopped the server
+  ok    cost line: watchdog_fired true
+  ok    requests were in flight when the watchdog fired (fewer than 52 request records)
+  ok    analysis INCOMPLETE, no reading; v091 not started
+== (d) budget rule: v091's minimum wall exceeds what is left -> v091 not started, INCOMPLETE
+  runner rc=0 result: INCOMPLETE None
+  ok    exactly 1 cost line(s), 2 GPUs each
+  ok    no refused docker call
+  ok    every launcher docker run published on 127.0.0.1:8001 by the pinned image
+  ok    fake server gone (8001 free), no client left
+  ok    no runner process left
+  ok    raw directory 0700, raw files 0600
+  ok    analysis ran and wrote result.json
+  ok    budget stop reported for v091; v091 session.json budget_stop true
+  ok    analysis INCOMPLETE (E1 needs both sessions)
+== (e) session 1 launcher fails
+  runner rc=0 result: INCOMPLETE None
+  ok    exactly 1 cost line(s), 2 GPUs each
+  ok    no refused docker call
+  ok    every launcher docker run published on 127.0.0.1:8001 by the pinned image
+  ok    fake server gone (8001 free), no client left
+  ok    no runner process left
+  ok    raw directory 0700, raw files 0600
+  ok    analysis ran and wrote result.json
+  ok    stopped after session 1; v091 not started; no client ran
+  ok    analysis INCOMPLETE
+== (f) one request answered HTTP 500 in session 2
+  runner rc=0 result: INCOMPLETE None
+  ok    exactly 2 cost line(s), 2 GPUs each
+  ok    no refused docker call
+  ok    every launcher docker run published on 127.0.0.1:8001 by the pinned image
+  ok    fake server gone (8001 free), no client left
+  ok    no runner process left
+  ok    raw directory 0700, raw files 0600
+  ok    analysis ran and wrote result.json
+  ok    client rc 3 in v091; run stopped
+  ok    the failed request is logged with its HTTP status (no retry)
+  ok    analysis INCOMPLETE
+session simulation: 62 passed, 0 failed
+
+real	4m22.278s
+user	0m45.006s
+sys	0m9.647s

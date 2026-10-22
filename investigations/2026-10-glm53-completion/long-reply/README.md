@@ -1,4 +1,4 @@
-# Long-reply completion (amendments 22q-22aa)
+# Long-reply completion (amendments 22q-22ah)
 
 The question: what drives completion of GPQA replies that run past 100,000 generated tokens?
 
@@ -55,14 +55,38 @@ Reasoning text from the stock 0.7.0 replication, with definitions hashed before 
 - **Prefixes:** 8 0.9.1-built prefixes exported for a cross-continuation (option E).
 - **Limits:** descriptive only. One pass, 10 replies at risk, seeds different from every comparator.
 
+## 4. Option D2: a second stock 0.9.1 pass with full text (`d091b/`; 7.16 GPU-hours)
+- **The pass:** valid. 8 of 198 empty (D: 6; record: 5-6 per pass); stated accuracy 85.4%.
+- **P(finish | 100k):** 4 / 12 (0.33).
+- **Capped replies:** 7 of 8 end in exact loops; none was repeating at 100k.
+- **First 100k tokens, capped against finished:**
+  - characters per token 2.68 against 3.37;
+  - digit share 0.072 against 0.030;
+  - interjections 11.6 against 2.3 per 1k.
+
+  The digit-heavy early signature appears here, unlike in D.
+- **Prefixes:** D2 adds 5 prefixes on new questions.
+
+## 5. Option E: 0.9.1-built prefixes on both engines (`e-cross/`; frozen, not run)
+- **Design:** 13 0.9.1-built prefixes (8 from D, 5 from D2; 8 originally capped, 5 finished), 4 seeds each, +64k
+  tokens on stock 0.7.0 and stock 0.9.1, under B+'s design and screens.
+- **KV pool:** reported with a floor, not gated.
+- **Power:** P(engine effect read) 0.75-0.88 at the full discovery gap, 0.21-0.27 at half; false positive ≤ 0.013 per
+  direction.
+- **Cost:** central 10.2, ceiling 19.9 GPU-hours.
+- **Matched questions:** eight questions overlap with B+'s prefixes, so the same question is seen with a 0.7.0-built
+  and a 0.9.1-built prefix.
+
 ## Reading so far
 - Once in trouble, both engines loop the same way.
 - From the same 0.7.0-built state, they continue alike.
-- The early signatures differ by engine.
+- The early signatures are not clearly engine-specific. The interjection signature appears on both engines. The
+  low characters-per-token, digit-heavy signature appears on 0.7.0 and in D2, but only weakly in D.
 
-This points to the difference arising in how trajectories evolve before 100k, not in continuation from a given state.
-It is not established: B+ used 0.7.0-built states only. Option E continues 0.9.1-built prefixes on both engines to
-complete the cross.
+This points to the difference arising before 100k (how often trajectories reach loop-prone states), not in
+continuation from a given state.
+It is not established: B+ used 0.7.0-built states only. Option E (frozen) continues 0.9.1-built prefixes on both
+engines to complete the cross.
 
 **Privacy.** Reply text, prefixes and token ids stay local (`PRIVATE/`, `raw/`) and are never published. The published
 files hold ids, hashes, counts and metrics only.

@@ -1,0 +1,271 @@
+################ v070 sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629
+vllm 0.1.dev20051+g487ecf187
+12d81fbacdf01f001f5542836fa0c42e7e154c049afed3e3dde8453a0fc0f490  entrypoints/openai/completion/protocol.py
+36760cc9ac14136621d4ea11e0dfa4e55a4e8bd8e7e5256fa3f400226cbeaec1  entrypoints/openai/completion/serving.py
+f16851e236517ddffbdccf40b7c5a6275320033130a8c080f1bf3904b5229453  entrypoints/openai/chat_completion/protocol.py
+16ec26bfd4b376ccd2e9f3672a23266cdd9beb91ca82f7423267beaee8ef8a6d  entrypoints/openai/chat_completion/serving.py
+d468edd32fd32a2d1e1c094695462f525028e097ca8c9a8e4e1c56f32c6a43a0  v1/engine/input_processor.py
+877c355ccc6993276a2f3090db16907f7b0e29808854c0a71092e3d402ab46a4  sampling_params.py
+3bd3bd70fc03cd435db4787d35220fc9f48ce65f3d2f98d92a636a52dc7d33c9  config/model.py
+315af950ef4c35fced53dc3a5df49a80af20b47e417e8f12bf315f535769bab2  v1/sample/sampler.py
+4bb87d7984d967be9c7e5b6a6b489c02571ef2f2913211cb3f1eea74b2e1f32f  v1/sample/rejection_sampler.py
+bc8c1d91ad624368d2bd87a53c0361e550d28b060bcd460462d2f86565c26426  v1/sample/ops/topk_topp_sampler.py
+a509e42c4b9b6ed388f1f5372a7b50d0aeab58f959113812f817f014febef103  v1/core/sched/scheduler.py
+6a5a27008cc6b5dd194cb91d9ba69a0a34cff1e2b6e2f25f23c8d4a1163470fd  v1/core/kv_cache_coordinator.py
+d7aa0cdded7e1e74cb4f26225fd6cffe618aeb80e082f140be7a6b31bfc3301a  v1/core/kv_cache_utils.py
+4eb4cd9e0a869bd8398d66e8e5acbfe3f683ccc9f1d634d92d74bbe4cb4d44e6  config/cache.py
+c1de8b073277b8edfb5c85c7c8d83ee511593d77d271c26a7ddf4d1e1c5abc8d  /usr/local/bin/glm53-entrypoint
+dd4e3bc041f267d288748552248a412773a2e308691145a70616977a39558146  /usr/local/bin/glm53-release-warmup.py
+--- [S1] /v1/completions prompt types (token-id lists accepted)
+50:    prompt: (
+51-        list[Annotated[int, Field(ge=0)]]
+52-        | list[list[Annotated[int, Field(ge=0)]]]
+53-        | str
+54-        | list[str]
+55-        | None
+56-    ) = None
+57-    echo: bool | None = False
+--- [S2] per-request seed, temperature, top_p, max_tokens, stop_token_ids passed into SamplingParams (completion)
+62:            temperature=temperature,
+63:            top_p=top_p,
+66:            seed=self.seed,
+67:            stop=self.stop,
+68:            stop_token_ids=stop_token_ids,
+71:            max_tokens=max_tokens if not echo_without_generation else 1,
+75:            skip_special_tokens=self.skip_special_tokens,
+88:            repetition_detection=self.repetition_detection,
+89:            thinking_token_budget=self.thinking_token_budget,
+--- [S3] completion fields whose default changes nothing (return_token_ids output-only; repetition_detection / thinking_token_budget default None)
+62:    n: int = 1
+75:    top_k: int | None = None
+76:    min_p: float | None = None
+77:    repetition_penalty: float | None = None
+79:    stop_token_ids: list[int] | None = []
+81:    ignore_eos: bool = False
+82:    min_tokens: int = 0
+83:    skip_special_tokens: bool = True
+168:    return_token_ids: bool | None = Field(
+227:    repetition_detection: RepetitionDetectionParams | None = Field(
+237:    thinking_token_budget: ThinkingTokenBudget = Field(
+168:    return_token_ids: bool | None = Field(
+169-        default=None,
+170-        description=(
+    to_sampling_params mentions return_token_ids: 0
+336:                    # Useful when request.return_token_ids is True
+344:                        if request.return_token_ids:
+373:                        if not has_echoed[i] and request.return_token_ids:
+421:                                    if request.return_token_ids
+534:                    if request.return_token_ids:
+593:                        prompt_token_ids if request.return_token_ids else None
+596:                        as_list(output.token_ids) if request.return_token_ids else None
+--- [S4] chat vs completion to_sampling_params: lines that differ (sampling-relevant only?)
+<         default_sampling_params: dict | None = None,
+>         default_sampling_params: dict,
+<         if default_sampling_params is None:
+<             default_sampling_params = {}
+< 
+<             prompt_logprobs = self.logprobs
+< 
+<         echo_without_generation = self.echo and self.max_tokens == 0
+>             prompt_logprobs = self.top_logprobs
+<             logprobs=None if self.logprob_token_ids else self.logprobs,
+<             ignore_eos=self.ignore_eos,
+<             max_tokens=max_tokens if not echo_without_generation else 1,
+<             min_tokens=self.min_tokens,
+>             logprobs=(
+>                 self.top_logprobs
+>                 if self.logprobs and not self.logprob_token_ids
+>                 else None
+>             ),
+>             ignore_eos=self.ignore_eos,
+>             max_tokens=max_tokens,
+>             min_tokens=self.min_tokens,
+<             output_kind=RequestOutputKind.DELTA
+<             if self.stream
+<             else RequestOutputKind.FINAL_ONLY,
+>             output_kind=(
+>                 RequestOutputKind.DELTA if self.stream else RequestOutputKind.FINAL_ONLY
+>             ),
+<             allowed_token_ids=self.allowed_token_ids,
+>             thinking_token_budget=self.thinking_token_budget,
+>             allowed_token_ids=self.allowed_token_ids,
+<             thinking_token_budget=self.thinking_token_budget,
+--- [S5] server defaults from generation_config, identical in both endpoints
+entrypoints/openai/completion/serving.py:80:        self.default_sampling_params = self.model_config.get_diff_sampling_param()
+entrypoints/openai/chat_completion/serving.py:163:        self.default_sampling_params = self.model_config.get_diff_sampling_param()
+--- [S6] stop tokens: engine input processor (shared by chat and completions) adds tokenizer EOS + generation_config eos_token_id
+326:            sampling_params.update_from_generation_config(
+331:                sampling_params.update_from_tokenizer(self.tokenizer)
+13:            self._all_stop_token_ids.add(eos_token_id)
+16:        if (eos_ids := generation_config.get("eos_token_id")) is not None:
+18:            eos_ids = {eos_ids} if isinstance(eos_ids, int) else set(eos_ids)
+21:                # stop_token_ids since it's handled separately for stopping
+23:                eos_ids.discard(eos_token_id)
+24:            if eos_ids:
+25:                self._all_stop_token_ids.update(eos_ids)
+27:                    assert self.stop_token_ids is not None
+28:                    eos_ids.update(self.stop_token_ids)
+29:                    self.stop_token_ids = list(eos_ids)
+--- [S7] reasoning parser references in the completion endpoint (expected 0)
+0
+--- [S8] per-request torch.Generator used by both samplers (seeded requests)
+449:            sampling_metadata.generators,
+611:    generators: dict[int, torch.Generator],
+619:    with uniform random values in the range [0, 1). If `generators` is provided,
+134:        generators: dict[int, torch.Generator],
+151:            random_sample(probs, generators, self.use_fp64_gumbel),
+--- [S9] prefix-cache EAGLE back-off and DFlash boundary lookup
+408-        last_cache_position = request.num_tokens - request.num_tokens % block_size
+409:        if self.use_eagle:
+410-            last_cache_position = max(last_cache_position - block_size, 0)
+411-
+412-        end = start + num_new_tokens
+################ v091 sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07
+vllm 0.1.dev20051+g487ecf187
+12d81fbacdf01f001f5542836fa0c42e7e154c049afed3e3dde8453a0fc0f490  entrypoints/openai/completion/protocol.py
+36760cc9ac14136621d4ea11e0dfa4e55a4e8bd8e7e5256fa3f400226cbeaec1  entrypoints/openai/completion/serving.py
+f16851e236517ddffbdccf40b7c5a6275320033130a8c080f1bf3904b5229453  entrypoints/openai/chat_completion/protocol.py
+16ec26bfd4b376ccd2e9f3672a23266cdd9beb91ca82f7423267beaee8ef8a6d  entrypoints/openai/chat_completion/serving.py
+d468edd32fd32a2d1e1c094695462f525028e097ca8c9a8e4e1c56f32c6a43a0  v1/engine/input_processor.py
+877c355ccc6993276a2f3090db16907f7b0e29808854c0a71092e3d402ab46a4  sampling_params.py
+3bd3bd70fc03cd435db4787d35220fc9f48ce65f3d2f98d92a636a52dc7d33c9  config/model.py
+315af950ef4c35fced53dc3a5df49a80af20b47e417e8f12bf315f535769bab2  v1/sample/sampler.py
+4bb87d7984d967be9c7e5b6a6b489c02571ef2f2913211cb3f1eea74b2e1f32f  v1/sample/rejection_sampler.py
+bc8c1d91ad624368d2bd87a53c0361e550d28b060bcd460462d2f86565c26426  v1/sample/ops/topk_topp_sampler.py
+e405e84eb3674b04bc6251b2736fe0dce8f66a907123c82dd31b4c2ebc73841f  v1/core/sched/scheduler.py
+f2d8b0d1f724a6e56d9882dfabeb5634c676d3036818539ed08330ab6122d8ed  v1/core/kv_cache_coordinator.py
+6c950a5854ef0c3141aa711016385ea7dd1c5bb8830eee0a8572367ab05be368  v1/core/kv_cache_utils.py
+a1f271701e2430a687f89b751835845ceddb00e9f4d26dbcee5354aeaa31f93a  config/cache.py
+c1de8b073277b8edfb5c85c7c8d83ee511593d77d271c26a7ddf4d1e1c5abc8d  /usr/local/bin/glm53-entrypoint
+dd4e3bc041f267d288748552248a412773a2e308691145a70616977a39558146  /usr/local/bin/glm53-release-warmup.py
+--- [S1] /v1/completions prompt types (token-id lists accepted)
+50:    prompt: (
+51-        list[Annotated[int, Field(ge=0)]]
+52-        | list[list[Annotated[int, Field(ge=0)]]]
+53-        | str
+54-        | list[str]
+55-        | None
+56-    ) = None
+57-    echo: bool | None = False
+--- [S2] per-request seed, temperature, top_p, max_tokens, stop_token_ids passed into SamplingParams (completion)
+62:            temperature=temperature,
+63:            top_p=top_p,
+66:            seed=self.seed,
+67:            stop=self.stop,
+68:            stop_token_ids=stop_token_ids,
+71:            max_tokens=max_tokens if not echo_without_generation else 1,
+75:            skip_special_tokens=self.skip_special_tokens,
+88:            repetition_detection=self.repetition_detection,
+89:            thinking_token_budget=self.thinking_token_budget,
+--- [S3] completion fields whose default changes nothing (return_token_ids output-only; repetition_detection / thinking_token_budget default None)
+62:    n: int = 1
+75:    top_k: int | None = None
+76:    min_p: float | None = None
+77:    repetition_penalty: float | None = None
+79:    stop_token_ids: list[int] | None = []
+81:    ignore_eos: bool = False
+82:    min_tokens: int = 0
+83:    skip_special_tokens: bool = True
+168:    return_token_ids: bool | None = Field(
+227:    repetition_detection: RepetitionDetectionParams | None = Field(
+237:    thinking_token_budget: ThinkingTokenBudget = Field(
+168:    return_token_ids: bool | None = Field(
+169-        default=None,
+170-        description=(
+    to_sampling_params mentions return_token_ids: 0
+336:                    # Useful when request.return_token_ids is True
+344:                        if request.return_token_ids:
+373:                        if not has_echoed[i] and request.return_token_ids:
+421:                                    if request.return_token_ids
+534:                    if request.return_token_ids:
+593:                        prompt_token_ids if request.return_token_ids else None
+596:                        as_list(output.token_ids) if request.return_token_ids else None
+--- [S4] chat vs completion to_sampling_params: lines that differ (sampling-relevant only?)
+<         default_sampling_params: dict | None = None,
+>         default_sampling_params: dict,
+<         if default_sampling_params is None:
+<             default_sampling_params = {}
+< 
+<             prompt_logprobs = self.logprobs
+< 
+<         echo_without_generation = self.echo and self.max_tokens == 0
+>             prompt_logprobs = self.top_logprobs
+<             logprobs=None if self.logprob_token_ids else self.logprobs,
+<             ignore_eos=self.ignore_eos,
+<             max_tokens=max_tokens if not echo_without_generation else 1,
+<             min_tokens=self.min_tokens,
+>             logprobs=(
+>                 self.top_logprobs
+>                 if self.logprobs and not self.logprob_token_ids
+>                 else None
+>             ),
+>             ignore_eos=self.ignore_eos,
+>             max_tokens=max_tokens,
+>             min_tokens=self.min_tokens,
+<             output_kind=RequestOutputKind.DELTA
+<             if self.stream
+<             else RequestOutputKind.FINAL_ONLY,
+>             output_kind=(
+>                 RequestOutputKind.DELTA if self.stream else RequestOutputKind.FINAL_ONLY
+>             ),
+<             allowed_token_ids=self.allowed_token_ids,
+>             thinking_token_budget=self.thinking_token_budget,
+>             allowed_token_ids=self.allowed_token_ids,
+<             thinking_token_budget=self.thinking_token_budget,
+--- [S5] server defaults from generation_config, identical in both endpoints
+entrypoints/openai/completion/serving.py:80:        self.default_sampling_params = self.model_config.get_diff_sampling_param()
+entrypoints/openai/chat_completion/serving.py:163:        self.default_sampling_params = self.model_config.get_diff_sampling_param()
+--- [S6] stop tokens: engine input processor (shared by chat and completions) adds tokenizer EOS + generation_config eos_token_id
+326:            sampling_params.update_from_generation_config(
+331:                sampling_params.update_from_tokenizer(self.tokenizer)
+13:            self._all_stop_token_ids.add(eos_token_id)
+16:        if (eos_ids := generation_config.get("eos_token_id")) is not None:
+18:            eos_ids = {eos_ids} if isinstance(eos_ids, int) else set(eos_ids)
+21:                # stop_token_ids since it's handled separately for stopping
+23:                eos_ids.discard(eos_token_id)
+24:            if eos_ids:
+25:                self._all_stop_token_ids.update(eos_ids)
+27:                    assert self.stop_token_ids is not None
+28:                    eos_ids.update(self.stop_token_ids)
+29:                    self.stop_token_ids = list(eos_ids)
+--- [S7] reasoning parser references in the completion endpoint (expected 0)
+0
+--- [S8] per-request torch.Generator used by both samplers (seeded requests)
+449:            sampling_metadata.generators,
+611:    generators: dict[int, torch.Generator],
+619:    with uniform random values in the range [0, 1). If `generators` is provided,
+134:        generators: dict[int, torch.Generator],
+151:            random_sample(probs, generators, self.use_fp64_gumbel),
+--- [S9] prefix-cache EAGLE back-off and DFlash boundary lookup
+408-        last_cache_position = request.num_tokens - request.num_tokens % block_size
+409:        # Back off only while some group still drops its last matching block.
+410-        if self.use_eagle and self.kv_cache_manager.coordinator.eagle_group_ids:
+411-            last_cache_position = max(last_cache_position - block_size, 0)
+412-
+135:        if use_eagle and os.environ.get("GLM53_DFLASH_BOUNDARY_LOOKUP") == "1":
+################ generation_config.json (K3.25, identical blob in snapshots 701cd745 and 0490d2f7)
+a07de3408f578c6a7ca8a1646aa91a41df55d539349fda15fb8b611eb007e9b7  <models>/models--wrldsuksgo2mars--GLM-5.3-Flash-EXL3-K3.25-v1/snapshots/701cd7456c13d87bf0147ad946f828a999afb59c/generation_config.json
+a07de3408f578c6a7ca8a1646aa91a41df55d539349fda15fb8b611eb007e9b7  <models>/models--wrldsuksgo2mars--GLM-5.3-Flash-EXL3-K3.25-v1/snapshots/0490d2f708b12145f6516555ab066aaeb401cd21/generation_config.json
+{'_from_model_config': True, 'do_sample': True, 'eos_token_id': [154820, 154827, 154829], 'pad_token_id': 154820, 'temperature': 1.0, 'top_p': 0.95, 'transformers_version': '5.16.1'}
+{154820: ('<|endoftext|>', 'special'), 154827: ('<|user|>', 'special'), 154828: ('<|assistant|>', 'special'), 154829: ('<|observation|>', 'special'), 154841: ('<think>', 'not special'), 154842: ('</think>', 'not special')}
+tokenizer_config eos_token: <|endoftext|>
+################ launcher defaults: prefix caching and boundary lookup (stack start.sh)
+<stacks>/glm53-flash-v0.7.0/start.sh:33:ENABLE_EXPERT_PARALLEL="${ENABLE_EXPERT_PARALLEL:-1}"
+<stacks>/glm53-flash-v0.7.0/start.sh:34:DECODE_CONTEXT_PARALLEL_SIZE="${DECODE_CONTEXT_PARALLEL_SIZE:-2}"
+<stacks>/glm53-flash-v0.7.0/start.sh:40:DFLASH_TOKENS="${DFLASH_TOKENS:-5}"
+<stacks>/glm53-flash-v0.7.0/start.sh:61:ENABLE_PREFIX_CACHING="${ENABLE_PREFIX_CACHING:-1}"
+<stacks>/glm53-flash-v0.9.0/start.sh:33:ENABLE_EXPERT_PARALLEL="${ENABLE_EXPERT_PARALLEL:-0}"
+<stacks>/glm53-flash-v0.9.0/start.sh:34:DECODE_CONTEXT_PARALLEL_SIZE="${DECODE_CONTEXT_PARALLEL_SIZE:-1}"
+<stacks>/glm53-flash-v0.9.0/start.sh:56:CHAT_TEMPLATE="${CHAT_TEMPLATE:-zai}"
+<stacks>/glm53-flash-v0.9.0/start.sh:61:DFLASH_TOKENS="${DFLASH_TOKENS:-3}"
+<stacks>/glm53-flash-v0.9.0/start.sh:67:GLM53_DFLASH_BOUNDARY_LOOKUP="${GLM53_DFLASH_BOUNDARY_LOOKUP:-0}"
+<stacks>/glm53-flash-v0.9.0/start.sh:85:ENABLE_PREFIX_CACHING="${ENABLE_PREFIX_CACHING:-1}"
+<stacks>/glm53-flash-v0.9.0/start.sh:559:  --enable-prompt-tokens-details \
+################ snapshot difference 701cd745 vs 0490d2f7 (files whose blob differs)
+2,3c2,3
+< ./README.md -> 5f8bde3c840faee835ac0770de7a93384de60f64
+< ./chat_template.jinja -> fb94d40d72a2eefa0c7140cb66d941656be16969
+---
+> ./README.md -> 0e80b0168efb739a85632613fa6dbc14296f1874
+> ./chat_template.jinja -> 06bd89e94b96652fd5d76d9f9e11cfa15e09f49d
+done

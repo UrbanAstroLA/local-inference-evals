@@ -1,0 +1,31 @@
+Accepted sets (values the 0.9.1 record's two sessions produced):
+  non_default_args_sha256: ['7025a96888a67642741db00a']
+  vllm_version: ["['0.1.dev20051+g487ecf18"]
+  model_snapshots: ["['0490d2f708b12145f65165"]
+  env_names_logged_sha256: ['f85d9d360488c02bc9ba2bbb']
+  cudagraph_mode: ["['FULL_AND_PIECEWISE']"]
+  release_warmups_logged: ['9']
+  kv_pool_tokens: ['[4707515]']
+KV floor 2,646,016 tokens (8 x 4352 x ceil((327,680 + longest record prompt 2795 + 16) / 4352))
+  OK   non_default_args_sha256 is a value the 0.9.1 record's own server sessions produced: record sessions pass True; B+ v091 True; D d091 True
+  OK   vllm_version is a value the 0.9.1 record's own server sessions produced: record sessions pass True; B+ v091 True; D d091 True
+  OK   model_snapshots is a value the 0.9.1 record's own server sessions produced: record sessions pass True; B+ v091 True; D d091 True
+  OK   env_names_logged_sha256 is a value the 0.9.1 record's own server sessions produced: record sessions pass True; B+ v091 True; D d091 True
+  OK   cudagraph_mode is a value the 0.9.1 record's own server sessions produced: record sessions pass True; B+ v091 True; D d091 True
+  OK   release warm-up count is one the record's sessions logged: record sessions pass True; B+ v091 True; D d091 True
+  OK   KV pool >= functional floor 2,646,016 tokens (8 x cap + longest record prompt, whole blocks; not an identity gate): record sessions pass True; B+ v091 True; D d091 True
+  OK   warm-up: exactly one engine start in the server log: record sessions pass True; B+ v091 True; D d091 True
+  OK   warm-up: 9 release warm-up lines (record's count), ending with the ready line: record sessions pass True; B+ v091 True; D d091 True
+  OK   warm-up: no GPQA chat-completion request logged before the ready line: record sessions pass True; B+ v091 True; D d091 True
+  OK   warm-up: first GPQA request after the last timestamped line before the ready line: record sessions pass True; B+ v091 True; D d091 True
+  OK   no illegal-memory-access and no NaN warning lines during the requests (the record's sessions: 0 and 0): record sessions pass True; B+ v091 True; D d091 True
+client config across record passes: {'model_args_without_seed_identical': True, 'gen_kwargs_identical': True, 'process_seeds': [1235, 1236, 1237], 'model_args_seeds': [None, 1235, 1236]}
+per-question fields identical across record passes: {'prompt_hash': True, 'doc_hash': True, 'target_hash': True, 'messages_sha256': True, 'prompt_tokens': True} ; record loader checks pass: True
+task hash in all record passes: [True, True, True] ; record max request s: [4865.784, 5529.31]
+KV pool sizes, other (0.6.x / 0.8.0 variants): 11 sessions, distinct [1692094, 3583662, 4454688, 4707515, 4951608, 5644288]
+KV pool sizes, 0.7.0 (DCP2 / EP2 layout): 7 sessions, distinct [2749599, 2758919, 2768240]
+KV pool sizes, 0.9.x EP2/DCP2 layout (+ep2dcp2): 2 sessions, distinct [3140895, 3165056]
+KV pool sizes, 0.9.x default DCP1 layout (the d091 configuration): 11 sessions, distinct [4707515]
+ALL GATES PASS ON BOTH RECORD SESSIONS: True
+ALL GATES PASS ON D's d091 SESSION: True
+rc=0

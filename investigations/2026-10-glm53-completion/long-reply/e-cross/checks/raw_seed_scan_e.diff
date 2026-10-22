@@ -1,0 +1,9 @@
+2c2,3
+< """Supplement to seed_scan_d091.py: request seeds inside every gzip raw-body file (*.raw.jsonl.gz) under <data-runs>.
+---
+> """[E copy of d091/checks/raw_seed_scan.py (sha256 a67d3e0a...); only SKIP differs]
+> Supplement to seed_scan_d091.py: request seeds inside every gzip raw-body file (*.raw.jsonl.gz) under <data-runs>.
+11c12
+< SKIP = "<runs>/long-reply/d091"
+---
+> SKIP = "<runs>/long-reply/e-cross"

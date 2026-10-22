@@ -1,0 +1,18 @@
+{
+ "task": "gpqa_diamond_thinking",
+ "task_hash": "87e807b3b27c86618285efdab99466609ad12f022ae453146595fc8306b053b0",
+ "passes": [
+  {
+   "pass": 1,
+   "session": 1,
+   "request_seed": 70705,
+   "lm_eval_process_seed": 1235,
+   "max_gen_toks": 327680,
+   "temperature": 1.0,
+   "top_p": 0.95,
+   "num_concurrent": 8,
+   "timeout": 10800,
+   "max_retries": 3
+  }
+ ]
+}

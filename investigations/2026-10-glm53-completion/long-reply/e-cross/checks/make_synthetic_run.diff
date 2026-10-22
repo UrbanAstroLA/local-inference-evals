@@ -1,0 +1,88 @@
+2c2,3
+< """Synthetic B+ run folders for analysis dry runs (CHECKS.md). Host, standard library. No GPU, no server.
+---
+> """[E copy of bplus/tests/make_synthetic_run.py (diff in checks/make_synthetic_run.diff): engines v070 v091; E scenarios.]
+> Synthetic E run folders for analysis dry runs (CHECKS.md). Host, standard library. No GPU, no server.
+7,10c8,14
+< usage: make_synthetic_run.py SCENARIO OUT_DIR
+<   scenarios: all-finish | none-finish | engine-effect | state-dominated | null
+<              neg-wrong-seed | neg-prompt-hash | neg-missing-request | neg-raw-mismatch | neg-image | neg-no-ready
+<              c1-only | neg-watchdog
+---
+> usage: make_synthetic_run_e.py SCENARIO OUT_DIR   (OUT_DIR must lie inside e-cross/PRIVATE/)
+>   scenarios: all-finish | none-finish | engine-effect | reverse | state-dominated | null
+>              kv-2749599 (v070 pool edited to the 2026-09-30 size) | kv-bplus-log (B+'s own v070 server log, 2,768,240)
+>              kv-unseen-above-floor (v070 pool 2,740,000, never produced, above the floor) | kv-unseen-v091 (v091 4,698,112)
+>              neg-kv-below-floor (v070 pool 2,600,000) | neg-kv-v091-below-floor (v091 pool 2,600,000)   [amendment 22ah]
+>              neg-wrong-seed | neg-seed-reused | neg-prompt-hash | neg-missing-request | neg-raw-mismatch | neg-image
+>              neg-no-ready | neg-watchdog | neg-v091-budget-stop
+24,25c28,32
+< REFLOG = {"v070": f"{B}/rep070/run-F/server-s1.log", "v091": "<gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1.server.log",
+<           "b1": f"{B}/b1-screen/run-s1236/server-s1.log"}
+---
+> REFLOG = {"v070": f"{B}/rep070/run-F/server-s1.log", "v091": "<gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1.server.log"}
+> BPLUS_V070_LOG = f"{B}/long-reply/bplus/run/v070/server.log"
+> EC = f"{B}/long-reply/e-cross"
+> KV_EDIT = {"kv-2749599": ("v070", "2,749,599"), "kv-unseen-above-floor": ("v070", "2,740,000"), "kv-unseen-v091": ("v091", "4,698,112"),
+>            "neg-kv-below-floor": ("v070", "2,600,000"), "neg-kv-v091-below-floor": ("v091", "2,600,000")}   # 22ah: floor, not identity
+27,28c34
+<          "v091": "sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07",
+<          "b1": "sha256:799d3cf8e5d14a615b89c734a6a38b4be5729bb44bb6b56effc7cf7df747b88a"}
+---
+>          "v091": "sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07"}
+43,44c49
+< def p_finish(scn, e, pid):
+<     n = int(pid[1:])
+---
+> def p_finish(scn, e, pid, stratum):
+50c55,57
+<         return 0.0 if n <= 6 else 1.0
+---
+>         return 0.0 if stratum == "capped" else 1.0
+>     if scn == "reverse":
+>         return {"v070": 0.2, "v091": 0.75}[e]
+53c60
+<     return {"v070": 0.75, "v091": 0.2, "b1": 0.2}[e]     # engine-effect and the negative cases
+---
+>     return {"v070": 0.75, "v091": 0.2}[e]     # engine-effect, the KV cases and the negative cases
+57c64,66
+<     scn, out = sys.argv[1], sys.argv[2]
+---
+>     scn, out = sys.argv[1], os.path.abspath(sys.argv[2])
+>     if not out.startswith(EC + "/PRIVATE/"):
+>         sys.exit(f"OUT_DIR {out} must lie inside e-cross/PRIVATE/")
+65c74
+<     for e in ("v070", "v091", "b1"):
+---
+>     for e in ("v070", "v091"):
+68c77
+<         if scn == "c1-only" and e == "b1":
+---
+>         if scn == "neg-v091-budget-stop" and e == "v091":
+71c80,84
+<         lines = open(REFLOG[e], errors="replace").read().splitlines()
+---
+>         lines = open(BPLUS_V070_LOG if (scn == "kv-bplus-log" and e == "v070") else REFLOG[e], errors="replace").read().splitlines()
+>         if scn in KV_EDIT and KV_EDIT[scn][0] == e:
+>             n0 = sum("GPU KV cache size: " in l for l in lines)
+>             lines = [re.sub(r"GPU KV cache size: [\d,]+ tokens", f"GPU KV cache size: {KV_EDIT[scn][1]} tokens", l) for l in lines]
+>             assert n0 >= 1
+77c90
+<         img = IMAGE[e] if not (scn == "neg-image" and e == "b1") else IMAGE["v091"]
+---
+>         img = IMAGE[e] if not (scn == "neg-image" and e == "v091") else IMAGE["v070"]
+81c94
+<                 "watchdog": scn == "neg-watchdog" and e == "b1", "budget_stop": False}
+---
+>                 "watchdog": scn == "neg-watchdog" and e == "v091", "budget_stop": False}
+88c101
+<             fin = rng.random() < p_finish(scn, e, p)
+---
+>             fin = rng.random() < p_finish(scn, e, p, r["stratum"])
+117a131,132
+>             if scn == "neg-seed-reused" and e == "v091" and r["k"] == 5:
+>                 rec["seed"] = r["seeds"]["v070"]
+122c137
+<             if scn == "neg-raw-mismatch" and e == "b1" and r["k"] == 11:
+---
+>             if scn == "neg-raw-mismatch" and e == "v091" and r["k"] == 11:

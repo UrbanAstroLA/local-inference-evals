@@ -1,0 +1,7 @@
+PASS copy, d091 list (runner): pass 1 sends seed 70705: [,seed=70705]
+PASS original, no seed variables = no seed argument (the 0.9.1 record's pass 1: default 1234): []
+PASS copy: lm-eval process seed is 1234+pass = 1235 for pass 1 (as the records' pass 1)
+PASS copy: cap 327,680, concurrency 8, timeout 10,800, max_retries 3 (protocol defaults)
+PASS chain copy differs from the original exactly by the frozen diff
+PASS chain copy byte-identical to rep070's copy
+chain seed tests: all passed

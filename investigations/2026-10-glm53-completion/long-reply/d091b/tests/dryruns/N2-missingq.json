@@ -1,0 +1,458 @@
+{
+ "checks": [
+  [
+   "proxy request log present",
+   true,
+   "requests.jsonl"
+  ],
+  [
+   "server log present",
+   true,
+   "server-s1.log"
+  ],
+  [
+   "stock 0.9.1 d091 (seed 70705) pass 1: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "stock 0.9.1 d091 (seed 70705) pass 1: 198 questions, ids 0-197, both filters",
+   false,
+   197
+  ],
+  [
+   "stock 0.9.1 d091 (seed 70705) pass 1: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "stock 0.9.1 d091 (seed 70705) pass 1: every request HTTP 200, seed 70705, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "stock 0.9.1 d091 (seed 70705) pass 1: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "stock 0.9.1 d091 (seed 70705): 198 question rows, every one with its proxy row (finish reason and token counts)",
+   false,
+   "197 rows, 197 logged"
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 1: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 1: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 1: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 1: every request HTTP 200, seed 1234, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 1: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 2: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 2: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 2: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 2: every request HTTP 200, seed 1235, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 2: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 3: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 3: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 3: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 3: every request HTTP 200, seed 1236, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record) pass 3: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "0.9.1 K3.25 DFlash2 x3 (historical 3-pass record): rows derived here reproduce the published rows (594 rows; empty, raw, strict, stated, hashes, finish reason, tokens)",
+   true,
+   "0 field mismatches"
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 1: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 1: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 1: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 1: every request HTTP 200, seed 70701, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 1: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 2: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 2: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 2: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 2: every request HTTP 200, seed 70702, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 2: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 3: exactly one samples file",
+   true,
+   1
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 3: 198 questions, ids 0-197, both filters",
+   true,
+   198
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 3: request log has 198 requests, no re-sent request",
+   true,
+   "198 requests, max per message 1"
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 3: every request HTTP 200, seed 70703, max_tokens 327680, temperature 1.0, top_p 0.95",
+   true,
+   ""
+  ],
+  [
+   "stock 0.7.0 rep070-F (2026-10-16) pass 3: no request or response parse error",
+   true,
+   ""
+  ],
+  [
+   "request seed 70705 is fresh: in none of the frozen inventory's GPQA or request seeds (checks/seed-inventory.json)",
+   true,
+   "20 used seeds"
+  ],
+  [
+   "request log: every request carries seed 70705 (198 requests, nothing else)",
+   true,
+   "{\"70705\": 198}"
+  ],
+  [
+   "lm-eval: model_args seed 70705 (sent in every request) and process seed 1235 (the records' pass-1 process seed)",
+   true,
+   "model_args seed 70705, process seed 1235; record pass 1 process seed 1235"
+  ],
+  [
+   "lm-eval client configuration equals the 0.9.1 record's pass 1 (model_args without seed: model, base_url, num_concurrent 8, tokenized_requests, timeout 10800, max_retries 3; gen_kwargs max_gen_toks 327680)",
+   true,
+   "{'model': 'wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1', 'base_url': 'http://127.0.0.1:8002/v1/chat/completions', 'num_concurrent': 8, 'tokenized_requests': False, 'timeout': 10800, 'max_retries': 3} / {'max_gen_toks': 327680}"
+  ],
+  [
+   "lm-eval task hash 87e807b3b27c8661 (same task, rendering and answer ordering as the records)",
+   true,
+   "87e807b3b27c8661"
+  ],
+  [
+   "0.9.1 record pass 1 and rep070-F pass 1 carry the same task hash",
+   true,
+   ""
+  ],
+  [
+   "d091 vs 0.9.1 record pass 1: all 198 questions present on both sides",
+   false,
+   ""
+  ],
+  [
+   "d091 vs rep070-F pass 1: all 198 questions present on both sides",
+   false,
+   ""
+  ],
+  [
+   "d091 session warm-up: exactly one engine start in the server log",
+   true,
+   1
+  ],
+  [
+   "d091 session warm-up: 9 release warm-up lines (record's count), ending with the ready line",
+   true,
+   "9 warm-up lines, 1 ready lines"
+  ],
+  [
+   "d091 session warm-up: no GPQA chat-completion request logged before the ready line",
+   true,
+   "0 before"
+  ],
+  [
+   "d091 session warm-up: first GPQA request after the last timestamped line before the ready line",
+   true,
+   "first request 1792603591.537, last line before ready 1792603565.0"
+  ],
+  [
+   "d091 session: non_default_args_sha256 is a value the 0.9.1 record's own server sessions produced",
+   true,
+   "7025a96888a67642741db00a in ['7025a96888a6']"
+  ],
+  [
+   "d091 session: vllm_version is a value the 0.9.1 record's own server sessions produced",
+   true,
+   "['0.1.dev20051+g487ecf18 in [\"['0.1.dev200\"]"
+  ],
+  [
+   "d091 session: model_snapshots is a value the 0.9.1 record's own server sessions produced",
+   true,
+   "['0490d2f708b12145f65165 in [\"['0490d2f708\"]"
+  ],
+  [
+   "d091 session: env_names_logged_sha256 is a value the 0.9.1 record's own server sessions produced",
+   true,
+   "f85d9d360488c02bc9ba2bbb in ['f85d9d360488']"
+  ],
+  [
+   "d091 session: cudagraph_mode is a value the 0.9.1 record's own server sessions produced",
+   true,
+   "['FULL_AND_PIECEWISE'] in [\"['FULL_AND_P\"]"
+  ],
+  [
+   "d091 session: release warm-up count is one the record's sessions logged",
+   true,
+   "9 in [9]"
+  ],
+  [
+   "d091 session: KV pool >= functional floor 2,646,016 tokens (8 x cap + longest record prompt, whole blocks; not an identity gate)",
+   true,
+   "[4707515] vs floor 2646016"
+  ],
+  [
+   "d091 session: no illegal-memory-access and no NaN warning lines during the requests (the record's sessions: 0 and 0)",
+   true,
+   {
+    "illegal_memory_access_lines": 0,
+    "nan_warning_lines": 0,
+    "preemption_lines": 0
+   }
+  ],
+  [
+   "stated adjudicator source unchanged since freeze (informative)",
+   true,
+   "731f27d4a436805baae367096db8b039ae2d723f7944dda52f81fd2a96d017f6"
+  ]
+ ],
+ "dry_run": "N2-missingq question 17 missing from the samples; expect INVALID",
+ "inputs": {
+  "d091": {
+   "reqlogs": {
+    "requests.jsonl": "c8ceb1e3452bbc7b00195478b149a6ef773024679d1cf52f8b2dbaf3b799170b"
+   },
+   "samples": {
+    "dir": "pass1",
+    "lm_eval": {
+     "gen_kwargs": {
+      "max_gen_toks": 327680
+     },
+     "max_retries": 3,
+     "num_concurrent": 8,
+     "random_seed": 1235,
+     "seed_arg": 70705,
+     "timeout": 10800
+    },
+    "sha256": "4ca1bb6dd32f9d743509bc0d319abf6e93cfd92415aff81f276476fe78dba81d"
+   }
+  },
+  "rep070F": {
+   "reqlogs": {
+    "glm53-flash-exl3-k3.25@tpurtell+rep070-F.s1.requests.jsonl": "8b4519a6cc1c2e5fd13d858423e8b33bc66d2c74321c59f8886ffed998f32783",
+    "glm53-flash-exl3-k3.25@tpurtell+rep070-F.s2.requests.jsonl": "1c06d1425f6482a291eec1d717faf18c9f994a582ba00e5b35ace6ec1cc0c0ef"
+   },
+   "samples": {
+    "pass1": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+rep070-F__pass1",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1235,
+      "seed_arg": 70701,
+      "timeout": 10800
+     },
+     "sha256": "413a62c67fe4c4444c7749cda2a10ca48390d78e2af311c8b02828cbfd7634b1"
+    },
+    "pass2": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+rep070-F__pass2",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1236,
+      "seed_arg": 70702,
+      "timeout": 10800
+     },
+     "sha256": "2c2b9ce8d974d4509b874094a4b554719ae03f763de3e439fdd117ee6d105e91"
+    },
+    "pass3": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+rep070-F__pass3",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1237,
+      "seed_arg": 70703,
+      "timeout": 10800
+     },
+     "sha256": "4721ba0bcdef0ab6d56248151e32b58e4e55818dc4e655bd03eb5e5b4c5f749d"
+    }
+   }
+  },
+  "v091_record": {
+   "published": {
+    "file": "results.jsonl",
+    "sha256": "9d2f57c9c4c1c5fe0833f5d534a290bfc61793101ca0f5cf1cf6bb04cbc970b2"
+   },
+   "reqlogs": {
+    "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps.requests.jsonl": "dbe4520b3ea49c21a40985511da3b0b71770ac781e9d9a1bbdd72cfd423c8f5f",
+    "glm53-flash-exl3-k3.25@tpurtell+v0.9.1.requests.jsonl": "ecba3773ba0fc520957f640f3e45e20e450ad831da474306d668a26b46cd8493"
+   },
+   "samples": {
+    "pass1": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps__pass1",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1235,
+      "seed_arg": null,
+      "timeout": 10800
+     },
+     "sha256": "be5c567defff894ac898e7e90ea2149e4fd5ff64486216a6c26f736efb447fc1"
+    },
+    "pass2": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps__pass2",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1236,
+      "seed_arg": 1235,
+      "timeout": 10800
+     },
+     "sha256": "c9105163deefe174f6b903caaa6344650ac8cd589d58f1a3b9a03d7199546920"
+    },
+    "pass3": {
+     "dir": "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps__pass3",
+     "lm_eval": {
+      "gen_kwargs": {
+       "max_gen_toks": 327680
+      },
+      "max_retries": 3,
+      "num_concurrent": 8,
+      "random_seed": 1237,
+      "seed_arg": 1236,
+      "timeout": 10800
+     },
+     "sha256": "bcaa1e011ce13b202205e12f37f399f57bdf39ad4b83ee8bdd885c8715d728b7"
+    }
+   }
+  }
+ },
+ "pins": {
+  "analysis_rep070.py": "54c7fa4f850a4802178931911a3ad665dd3438f6e3ab7c3c65f9d0aec2940410",
+  "checks/seed-inventory.json": "b961a93781acbc728d53095c75d995bbeeef49b161c8ec96380c1856f89e6cb6",
+  "frozen/analysis_col511.py": "b5b13ce2155085ca46fb24877f12b7cd0a5cdd16eb4cf19012958e7b86ae0033"
+ },
+ "process_seed": 1235,
+ "published_on": null,
+ "script_sha256": "57b76ce85ffe963e47e4b7c3988778da3ae291176b81c9eab61c92ea0de825ca",
+ "seed": 70705,
+ "server_config": {
+  "kv_floor": 2646016,
+  "kv_margin_tokens": 2061499,
+  "kv_pool_equals_a_record_size": true,
+  "kv_pool_tokens": [
+   4707515
+  ],
+  "record_kv_pool_sizes": [
+   [
+    4707515
+   ]
+  ]
+ },
+ "valid": false,
+ "what": "option D (amendment 22x): one stock 0.9.1 GPQA Diamond pass at request seed 70705; DESCRIPTIVE"
+}

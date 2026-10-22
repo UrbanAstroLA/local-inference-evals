@@ -1,0 +1,7 @@
+P01 q79p1 capped R50@100k 0.011 | capped stratum, question rank 1 of 2 (panel long count 14); 1 eligible reply in the question (q79p1), lowest reply hash
+P02 q88p1 capped R50@100k 0.0 | capped stratum, question rank 2 of 2 (panel long count 9); 1 eligible reply in the question (q88p1), lowest reply hash
+P03 q147p1 finished R50@100k 0.0068 | finished stratum, question rank 1 of 4 (panel long count 10); 1 eligible reply in the question (q147p1), lowest reply hash
+P04 q69p1 finished R50@100k 0.0 | finished stratum, question rank 2 of 4 (panel long count 7); 1 eligible reply in the question (q69p1), lowest reply hash
+P05 q71p1 finished R50@100k 0.0 | finished stratum, question rank 3 of 4 (panel long count 7); 1 eligible reply in the question (q71p1), lowest reply hash
+P06 q186p1 finished R50@100k 0.0 | finished stratum, question rank 4 of 4 (panel long count 5); 1 eligible reply in the question (q186p1), lowest reply hash
+{"pool": 6, "eligible": 6, "selected": 6, "by_stratum": {"capped": 2, "finished": 4}, "distinct_questions": 6}

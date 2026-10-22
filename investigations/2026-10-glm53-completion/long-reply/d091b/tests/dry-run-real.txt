@@ -1,0 +1,10 @@
+2026-10-21T17:20:25-07:00 d091 start; seed 70705; tag +d091b; approved 10.0 GPU-h (18000 s wall); DRY_RUN=1
+DRY_RUN: all refusal checks passed. A real run would now: create <runs>/long-reply/d091b/run and <runs>/long-reply/d091b/PRIVATE/raw (mode 0700); start the GPU logger
+  (300 s) and the watchdog (18000 s from script start); compile-cache inventory of <cache>/vllm-v090; one session: recording
+  proxy copy 127.0.0.1:8002 -> 8001 (<gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091b.s1.requests.jsonl, sidecar .events.jsonl, raw bodies <runs>/long-reply/d091b/PRIVATE/raw/s1.raw.jsonl.gz, 0600),
+  GPQA_TAG=+d091b GPQA_PASSES=1 GPQA_SEED_LIST='70705' GPQA_CONCURRENCY=8 GPQA_BASE=http://127.0.0.1:8002 <runs>/long-reply/d091b/runner/local-eval-chain-rep070.sh glm53-flash-exl3-k3.25@tpurtell+v0.9.1 gpqa
+  (fresh server by digest via <stacks>/glm53-flash-v0.9.0, ready-file + API gate; pass 1, request seed 70705, lm-eval --seed 1235); save server
+  log and docker inspect; stop the server, then the proxy; cost line; cache diff. Then the frozen analysis and, if valid,
+  the CPU-only long-reply pipeline. Nothing was created or started.
+rc=0
+after DRY_RUN: created files: none

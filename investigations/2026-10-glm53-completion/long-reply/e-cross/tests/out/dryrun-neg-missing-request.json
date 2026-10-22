@@ -1,0 +1,32 @@
+{
+ "what": "E result (ids, counts, rates, positions; no text)",
+ "state": "INCOMPLETE",
+ "sessions": {
+  "v070": "complete",
+  "v091": "51 of 52 request records"
+ },
+ "config_overrides_on_bplus_22v": {
+  "ENGINES": [
+   "v070",
+   "v091"
+  ],
+  "KV_ACCEPT_22V": {
+   "v070": "floor 2,666,496",
+   "v091": "floor 2,646,016"
+  }
+ },
+ "rules": {
+  "DELTA_E": 0.15,
+  "ALPHA": 0.05,
+  "SMALL_MAX": 0.1,
+  "EQ_BOUND": 0.2,
+  "ETA_MIN": 0.3,
+  "B_BOOT": 20000,
+  "BOOT_SEED": 20261016
+ },
+ "completed_requests": {
+  "v070": 52,
+  "v091": 51
+ },
+ "reading": null
+}

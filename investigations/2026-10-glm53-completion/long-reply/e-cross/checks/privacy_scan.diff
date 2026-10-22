@@ -1,0 +1,55 @@
+2c2,4
+< """Privacy scan (host, stdlib, read only): no GPQA question, answer or reply text and no GPQA-derived token-id run may
+---
+> """[E copy of d091/checks/privacy_scan.py (diff in checks/privacy_scan.diff): several raw folders (d091 replies, B+
+> continuations), raw records of either shape, 64 id runs per prefix, and an answer-field key scan added.]
+> Privacy scan (host, stdlib, read only): no GPQA question, answer or reply text and no GPQA-derived token-id run may
+9c11,13
+<   - token ids: 12-id runs of every prefix in WORK/PRIVATE/prefixes.json, if it exists (comma and comma-space joins).
+---
+>   - token ids: 12-id runs of every prefix in WORK/PRIVATE/prefixes.json, if it exists (comma and comma-space joins), 64 per
+>     prefix spread over its length;
+>   - answer fields: JSON keys "target", "answer", "gold", "correct_answer" in .json / .jsonl / .md / .txt files.
+11c15
+< usage: privacy_scan.py WORK RAW_DIR        exit 0 = no hit and modes correct
+---
+> usage: privacy_scan_e.py WORK RAW_DIR [RAW_DIR ...]        exit 0 = no hit and modes correct
+13c17,19
+< import glob, gzip, json, os, stat, sys
+---
+> import glob, gzip, json, os, re, stat, sys
+> 
+> KEY_RX = re.compile(r'"(target|answer|gold|correct_answer)"\s*:')
+27c33
+<     work, rawd = sys.argv[1], sys.argv[2]
+---
+>     work, rawds = sys.argv[1], sys.argv[2:]
+41c47
+<     for p in sorted(glob.glob(os.path.join(rawd, "*.raw.jsonl.gz"))):
+---
+>     for p in sorted(q for rawd in rawds for q in glob.glob(os.path.join(rawd, "*.raw.jsonl.gz"))):
+49a56,57
+>                 if "text" in d:
+>                     needles.update(x for x in windows(d.get("text") or "", 4) if len(set(x)) > 8)
+56c64
+<             for k in range(0, len(ids) - 12, max(1, (len(ids) - 12) // 8)):
+---
+>             for k in range(0, len(ids) - 12, max(1, (len(ids) - 12) // 64)):
+60c68
+<     files = hits_t = hits_i = 0
+---
+>     files = hits_t = hits_i = hits_k = 0
+86a95,99
+>             if p.endswith((".json", ".jsonl", ".md", ".txt")):
+>                 hk = len(KEY_RX.findall(t))
+>                 if hk:
+>                     hit_files.append(os.path.relpath(p, work) + " (answer key)")
+>                 hits_k += hk
+100c113
+<           f"{n_text - n_prompt} reply windows ({nrec} raw records), {len(idrun)} token-id runs; text hits {hits_t}, id-run hits {hits_i}; "
+---
+>           f"{n_text - n_prompt} reply windows ({nrec} raw records), {len(idrun)} token-id runs; text hits {hits_t}, id-run hits {hits_i}; answer-key hits {hits_k}; "
+104c117
+<     return 0 if not (hits_t or hits_i or bad_modes) and mode_ok else 1
+---
+>     return 0 if not (hits_t or hits_i or hits_k or bad_modes) and mode_ok else 1

@@ -1,0 +1,10 @@
+# Attribution of the text-scan hits of the candidate seeds (seed_scan_d091.py source 4: same roots, same regex, same skip).
+# One line per (seed, file): count of matches and the matched seed token only (no other text).
+candidate 70705: 10 text-scan matches in 6 files
+candidate 70706: 0 text-scan matches in 0 files
+70705 <this-repo>/investigations/2026-10-glm53-completion/long-reply/d091/tests/dryruns/N1-wrongseed.json 2 ['seed 70705']
+70705 <this-repo>/investigations/2026-10-glm53-completion/long-reply/d091/tests/dryruns/N1-wrongseed.md 2 ['seed 70705']
+70705 <this-repo>/investigations/2026-10-glm53-completion/long-reply/d091/tests/run_analysis_dryruns.sh 1 ['seed 70705']
+70705 <runs>/long-reply/d091/tests/dryruns/N1-wrongseed.json 2 ['seed 70705']
+70705 <runs>/long-reply/d091/tests/dryruns/N1-wrongseed.md 2 ['seed 70705']
+70705 <runs>/long-reply/d091/tests/run_analysis_dryruns.sh 1 ['seed 70705']

@@ -1,0 +1,585 @@
+--- d091/analysis_d091.py
++++ d091b/analysis_d091.py
+@@ -1,6 +1,6 @@
+ #!/usr/bin/env python3
+ """Frozen analysis of option D (PROPOSAL.md sections 4-6, amendment 22x): ONE stock tpurtell 0.9.1 GPQA Diamond pass on
+-the standard protocol at the fresh request seed 70704. Descriptive only: no outcome test against the records.
++the standard protocol at the fresh request seed 70705. Descriptive only: no outcome test against the records.
+ 
+ Reuse (byte-identical copies, hash-checked below):
+   analysis_rep070.py      (rep070/refreeze, sha256 54c7fa4f...): warm-up checks, task hash, long-reply secondary
+@@ -8,7 +8,7 @@
+   frozen/analysis_col511.py (sha256 b5b13ce2..., imported by analysis_rep070): the loader (rows, stated adjudicator,
+                           per-pass validity checks), parse_serverlogs, parse_chainlogs, inflight, quantiles.
+ The one pass is loaded exactly as rep070's variant-F loader loads each of its passes: the frozen module's SEED_BASE is set
+-to 70704 - 1 so that pass 1 is matched to request seed 70704, only pass 1's rows and checks are kept, and SEED_BASE is
++to 70705 - 1 so that pass 1 is matched to request seed 70705, only pass 1's rows and checks are kept, and SEED_BASE is
+ restored on every exit path.
+ 
+ Gates (any failure = INVALID, exit 3; never a reading of an invalid run). Configuration-identity gates accept exactly the
+@@ -28,7 +28,7 @@
+ HERE = os.path.dirname(os.path.abspath(__file__))
+ PINS = {"analysis_rep070.py": "54c7fa4f850a4802178931911a3ad665dd3438f6e3ab7c3c65f9d0aec2940410",
+         "frozen/analysis_col511.py": "b5b13ce2155085ca46fb24877f12b7cd0a5cdd16eb4cf19012958e7b86ae0033",
+-        "checks/seed-inventory.json": "1f58e7b3747b769133e112bfbe64c45890a1812742e1526d682bcefcda931c8e"}   # seed inventory frozen 2026-10-21
++        "checks/seed-inventory.json": "b961a93781acbc728d53095c75d995bbeeef49b161c8ec96380c1856f89e6cb6"}   # seed inventory frozen 2026-10-21 (d091b re-scan)
+ for _f, _s in PINS.items():
+     _h = hashlib.sha256(open(os.path.join(HERE, _f), "rb").read()).hexdigest()
+     if _h != _s:
+@@ -37,8 +37,8 @@
+ import analysis_rep070 as X  # noqa: E402  (asserts the frozen module's sha256 on import)
+ 
+ M = X.M
+-SEED, PASS, PROCESS_SEED = 70704, 1, 1235
+-TAG = "+d091"
++SEED, PASS, PROCESS_SEED = 70705, 1, 1235
++TAG = "+d091b"
+ G = "<gpqa-runs>"
+ REC = X.RECORDS["v091"]                       # the 0.9.1 three-pass record (pass dirs, request logs, server logs, published rows)
+ REC_PASS1_SERVERLOG = REC["serverlogs"][0]    # session of record pass 1 (2026-10-08)
+@@ -217,7 +217,7 @@
+     ap.add_argument("--dry-run-label", default=None)
+     ap.add_argument("--out", required=True)
+     a = ap.parse_args()
+-    label = "stock 0.9.1 d091 (seed 70704)"
++    label = "stock 0.9.1 d091 (seed 70705)"
+     checks = []
+     # ---- the pass, through the frozen loader
+     reqlogs = [a.reqlog] if os.path.isfile(a.reqlog) else []
+@@ -239,9 +239,9 @@
+     for r in rows_log:
+         cnt[r.get("seed")] = cnt.get(r.get("seed"), 0) + 1
+     used = used_seeds()
+-    checks.append(("request seed 70704 is fresh: in none of the frozen inventory's GPQA or request seeds (checks/seed-inventory.json)",
++    checks.append(("request seed 70705 is fresh: in none of the frozen inventory's GPQA or request seeds (checks/seed-inventory.json)",
+                    SEED not in used, f"{len(used)} used seeds"))
+-    checks.append(("request log: every request carries seed 70704 (198 requests, nothing else)", cnt == {SEED: M.N_Q},
++    checks.append(("request log: every request carries seed 70705 (198 requests, nothing else)", cnt == {SEED: M.N_Q},
+                    json.dumps({str(k): v for k, v in cnt.items()})))
+     cfg, rcfg = results_cfg(a.pass_dir), results_cfg(REC["passes"][0])
+     ok = cfg is not None and str(cfg["model_args"].get("seed")) == str(SEED) and cfg["random_seed"] == PROCESS_SEED
+@@ -295,7 +295,7 @@
+     adj = M.adjudicator_status()
+     checks.append(("stated adjudicator source unchanged since freeze (informative)", bool(adj["source_unchanged"]), adj["current_source_sha256"]))
+     valid = all(ok for n, ok, _ in checks if not n.startswith("stated adjudicator"))
+-    res = {"what": "option D (amendment 22x): one stock 0.9.1 GPQA Diamond pass at request seed 70704; DESCRIPTIVE",
++    res = {"what": "option D (amendment 22x): one stock 0.9.1 GPQA Diamond pass at request seed 70705; DESCRIPTIVE",
+            "dry_run": a.dry_run_label, "seed": SEED, "process_seed": PROCESS_SEED, "script_sha256": fsha(os.path.abspath(__file__)),
+            "pins": PINS, "inputs": {"d091": ia, "v091_record": iv, "rep070F": if_}, "checks": [list(c) for c in checks], "valid": valid,
+            "server_config": kvinfo, "published_on": hosts}
+@@ -321,7 +321,7 @@
+                               "stated_pct_provisional": where(d["stated_pct"], rng_("stated_pct"))},
+             "rep070F_per_pass": repf_ctx}
+         # long-reply secondary (rep070 definitions, unchanged functions): P(finish | still generating at 100k)
+-        sd, pd = X.tail_summary(A, (1,), "d091, pass 1 (seed 70704)")
++        sd, pd = X.tail_summary(A, (1,), "d091, pass 1 (seed 70705)")
+         sv, pv = X.tail_summary(V, (1, 2, 3), "0.9.1 record, passes 1-3")
+         sv1, pv1 = X.tail_summary(V, (1,), "0.9.1 record, pass 1 only")
+         sf, pf = X.tail_summary(F, (1, 2, 3), "stock 0.7.0 rep070-F, passes 1-3")
+--- d091/incomplete_d091.py
++++ d091b/incomplete_d091.py
+@@ -26,7 +26,7 @@
+ sys.path.insert(0, HERE)
+ import incomplete_rep070 as I  # noqa: E402  (imports analysis_rep070, which checks the frozen module's hash)
+ 
+-SEED = 70704
++SEED = 70705
+ 
+ 
+ def causes_of(a):
+@@ -88,7 +88,7 @@
+     if a.out:
+         json.dump(res, open(a.out, "w"), indent=1, sort_keys=True)
+     v = res["pass1"]
+-    Lm = ["# Option D (stock 0.9.1, seed 70704): INCOMPLETE", "", f"- causes: {'; '.join(res['causes'])}", f"- {res['rules']}",
++    Lm = ["# Option D (stock 0.9.1, seed 70705): INCOMPLETE", "", f"- causes: {'; '.join(res['causes'])}", f"- {res['rules']}",
+           f"- occupied GPU-hours (ledger): {res['gpu_hours_ledger']}", "",
+           f"- pass 1 ({v['state']}): responses logged {v['responses_logged']} (finish stop {v['completed_finish_stop']}, cap-reached "
+           f"{v['cap_reached_finish_length_at_327680']}, other {v['other_finish_or_http']}); started {v['started']}, interrupted "
+--- d091/make_sums.sh
++++ d091b/make_sums.sh
+@@ -4,7 +4,7 @@
+ # PRIVATE/ (local-only, never hashed into a shareable list), out/ and run/ (run-time outputs) and tests/sim-work/ (scratch).
+ # Not set -e.
+ cd "$(dirname "$0")" || exit 1
+-case "$PWD" in <runs>/long-reply/d091|<runs>/long-reply/d091/tests/sim-work/pkg) ;; *) echo "ABORT: unexpected folder $PWD"; exit 1 ;; esac
++case "$PWD" in <runs>/long-reply/d091b|<runs>/long-reply/d091b/tests/sim-work/pkg) ;; *) echo "ABORT: unexpected folder $PWD"; exit 1 ;; esac
+ find . -type f ! -name SHA256SUMS ! -path '*/__pycache__/*' ! -path './PRIVATE/*' ! -path './out/*' ! -path './run/*' ! -path './tests/sim-work/*' -printf '%P\n' \
+   | LC_ALL=C sort | xargs -d '\n' sha256sum > SHA256SUMS
+ echo "SHA256SUMS: $(wc -l < SHA256SUMS) files; sha256 $(sha256sum SHA256SUMS | cut -c1-64)"
+--- d091/runner/run_d091.sh
++++ d091b/runner/run_d091.sh
+@@ -1,14 +1,14 @@
+ #!/usr/bin/env bash
+ set -u
+ # Option D runner (PROPOSAL.md section 5): ONE stock tpurtell 0.9.1 GPQA Diamond pass on the standard protocol at request
+-# seed 70704, full request/response bodies kept locally. PREPARED, NOT RUN; needs the operator's GPU authorization and the
++# seed 70705, full request/response bodies kept locally. PREPARED, NOT RUN; needs the operator's GPU authorization and the
+ # frozen package (dated amendment with the SHA256SUMS hash).
+ #   APPROVED_GPU_H  occupied GPU-hours the operator approved (required; 0 < x <= PLAN_MAX_GPU_H); the watchdog stops
+ #                   everything at APPROVED_GPU_H / 2 GPUs of wall time from script start (the only early stop)
+ #   DRY_RUN=1       every refusal check, read-only (docker ps / docker image inspect / nvidia-smi / ss / df / git); then
+ #                   exits before creating anything or starting any process or container
+ # One session, as the 0.9.1 record's pass 1 (2026-10-08, <eval-tools>/diag/gpqa-k325-v091-pass1.sh): fresh server,
+-# release warm-up gate (ready file + /v1/models, inside the eval chain), pass 1 (lm-eval --seed 1235, request seed 70704 in
++# release warm-up gate (ready file + /v1/models, inside the eval chain), pass 1 (lm-eval --seed 1235, request seed 70705 in
+ # every request), stop. Launched by digest through the 0.9.0 stack's own launcher with the recipe's env.sh (IMAGE = the
+ # 0.9.1 digest reference, PORT = 127.0.0.1:8001), through the recording proxy copy (127.0.0.1:8002 -> 8001).
+ # Derived from rep070/refreeze/runner/run_rep070.sh (refusal set, desktop-graphics filter, escaped watchdog pattern,
+@@ -22,13 +22,13 @@
+ PLAN_MAX_GPU_H=10.0          # cost/cost.json ceiling (section 8); no invalid-run allowance
+ R="glm53-flash-exl3-k3.25@tpurtell+v0.9.1"; G=<gpqa-runs>; C=glm53-flash-exl3-b12x-vllm
+ H=$(cd "$(dirname "$0")" && pwd); PKG=$(dirname "$H")
+-case "$PKG" in <runs>/long-reply/d091) ;; *) echo "ABORT: unexpected package path '$PKG'"; exit 1 ;; esac
++case "$PKG" in <runs>/long-reply/d091b) ;; *) echo "ABORT: unexpected package path '$PKG'"; exit 1 ;; esac
+ CH="$H/local-eval-chain-rep070.sh"; PX="$H/record_proxy_rep070.py"; CI="$H/cache_inventory.py"
+ SD=<stacks>/glm53-flash-v0.9.0
+ CACHE=<cache>/vllm-v090
+ IMG_REF="ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07"
+ IMG_ID="sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07"
+-SEED=70704; TAG="+d091"; RT="$R$TAG"
++SEED=70705; TAG="+d091b"; RT="$R$TAG"
+ OUT="$PKG/run"; RAWD="$PKG/PRIVATE/raw"; LEDGER="$OUT/costs.jsonl"
+ declare -A PIN=(
+   ["<recipes>/$R/env.sh"]=6186bbb66ed982ac942d62ce1dda0a2b66cc63e7af015de717e66043f263414c
+--- d091/scripts/compare_d091.py
++++ d091b/scripts/compare_d091.py
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""Side-by-side long-reply tables, d091 (stock 0.9.1, one pass, seed 70704) against rep070-F (stock 0.7.0, three passes),
++"""Side-by-side long-reply tables, d091 (stock 0.9.1, one pass, seed 70705) against rep070-F (stock 0.7.0, three passes),
+ under the discovery's frozen definitions (host, stdlib only, zero GPU). DESCRIPTIVE ONLY: one pass, about 8 replies past
+ 100k expected, different seeds; no test, no threshold, no reading.
+ 
+@@ -198,7 +198,7 @@
+     ap.add_argument("--analysis", default=None)
+     ap.add_argument("--out-md")
+     ap.add_argument("--out-json")
+-    ap.add_argument("--label", default="stock 0.9.1 d091 (1 pass, seed 70704)")
++    ap.add_argument("--label", default="stock 0.9.1 d091 (1 pass, seed 70705)")
+     a = ap.parse_args()
+     if a.reproduce:
+         return reproduce()
+--- d091/scripts/index_d091.py
++++ d091b/scripts/index_d091.py
+@@ -2,7 +2,7 @@
+ """Raw-file index for the discovery pipeline (host, stdlib, zero GPU). The index part of discovery's build_index.py
+ (sha256 43b6c311...) with its two hard-wired inputs made arguments: the raw directory / files and the request logs.
+ Everything else is the same code: the doc join through the frozen messages_hash over every K3.25 samples file, the record
+-fields, the id convention ("q{doc}p{seed - 70700}", so the d091 pass at seed 70704 has ids q{doc}p4), and the
++fields, the id convention ("q{doc}p{seed - 70700}", so the d091b pass at seed 70705 has ids q{doc}p5), and the
+ lengths / finish-reason agreement check against the request logs.
+ 
+ The output file keeps discovery's name, out/rep070F_index.json, because trajectory.py and periods.py (byte-identical
+--- d091/scripts/prefix_build_d091.py
++++ d091b/scripts/prefix_build_d091.py
+@@ -4,7 +4,7 @@
+ NOTHING IS CONTINUED IN THIS PACKAGE.
+ 
+ build_prefixes.py reads its request logs from a module constant, REQLOGS = {seed: request-log file name under /gpqa}, fixed
+-to rep070-F's three seeds. That constant is the only thing set here (the d091 request log at seed 70704); every other
++to rep070-F's three seeds. That constant is the only thing set here (the d091 request log at seed 70705); every other
+ input reaches the unchanged code through the same mount points B+ used:
+   /work  this package (scripts/trajectory.py, out/selection.json; writes PRIVATE/prefixes.json, PRIVATE/prompts.json
+          (mode 0600, token ids and prompt messages), out/prefix_manifest.json and checks/prefix-verify-<engine>.json:
+@@ -20,8 +20,8 @@
+ 
+ HERE = os.path.dirname(os.path.abspath(__file__))
+ BP_SHA = "1ebbec2ef0cdea409692a72b9ce0e576018131bcbce4498e1e2f3d2abd3598c0"
+-SEED = 70704
+-REQLOG = "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091.s1.requests.jsonl"
++SEED = 70705
++REQLOG = "glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091b.s1.requests.jsonl"
+ 
+ 
+ def main():
+--- d091/scripts/run_pipeline.sh
++++ d091b/scripts/run_pipeline.sh
+@@ -13,10 +13,10 @@
+ # Not set -e: every step's exit code is recorded in WORK/out/pipeline.log; a failed step stops the steps that need it.
+ # usage: run_pipeline.sh [WORK RAW_DIR REQLOG_NAME SEED ANALYSIS_JSON]
+ #   defaults (the real run): WORK = this package, RAW_DIR = WORK/PRIVATE/raw, REQLOG_NAME = the d091 session-1 request log,
+-#   SEED = 70704, ANALYSIS_JSON = WORK/run/result-d091.json. Tests pass a scratch WORK under PRIVATE/ and a stand-in raw.
++#   SEED = 70705, ANALYSIS_JSON = WORK/run/result-d091.json. Tests pass a scratch WORK under PRIVATE/ and a stand-in raw.
+ H=$(cd "$(dirname "$0")" && pwd); PKG=$(dirname "$H")
+-case "$PKG" in <runs>/long-reply/d091) ;; *) echo "ABORT: unexpected package path $PKG"; exit 1 ;; esac
+-WORK=${1:-$PKG}; RAWD=${2:-$PKG/PRIVATE/raw}; REQ=${3:-glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091.s1.requests.jsonl}; SEED=${4:-70704}
++case "$PKG" in <runs>/long-reply/d091b) ;; *) echo "ABORT: unexpected package path $PKG"; exit 1 ;; esac
++WORK=${1:-$PKG}; RAWD=${2:-$PKG/PRIVATE/raw}; REQ=${3:-glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091b.s1.requests.jsonl}; SEED=${4:-70705}
+ AN=${5:-$PKG/run/result-d091.json}
+ case "$WORK" in "$PKG"|"$PKG"/PRIVATE/*) ;; *) echo "ABORT: WORK must be the package or a folder under its PRIVATE/"; exit 1 ;; esac
+ [ -n "$WORK" ] && [ -d "$WORK" ] && [ -d "$WORK/PRIVATE" ] && [ -d "$WORK/out" ] && [ -d "$WORK/checks" ] || { echo "ABORT: WORK needs PRIVATE/, out/ and checks/"; exit 1; }
+--- d091/checks/gate_calibration.py
++++ d091b/checks/gate_calibration.py
+@@ -6,6 +6,8 @@
+ 
+ Reference sessions: the 0.9.1 record's two sessions (2026-10-08 pass 1; 2026-10-09 passes 2-3), plus, as extra evidence
+ of the same image and configuration, B+'s stock 0.9.1 session (2026-10-21, loopback publish, /v1/completions client).
++d091b addition: option D's own stock 0.9.1 GPQA session (2026-10-21, d091/run/server-s1.log, request log +d091.s1, seed
++70704; the session this package copies), with its request window; every gate must also pass on it.
+ Precedent for the KV pool: the stock 0.7.0 family's sessions produced three different pool sizes at the same
+ configuration (startup markers of the K3.25 0.7.0 sessions), which is why the pool is reported, not identity-gated.
+ usage: gate_calibration.py OUT.json > OUT.txt
+@@ -20,6 +22,8 @@
+ M, X = D.M, D.X
+ G = "<gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1"
+ BP = "<runs>/long-reply/bplus/run/v091"
++D091 = "<runs>/long-reply/d091/run/server-s1.log"   # d091b addition
++D091_REQ = "<gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+d091.s1.requests.jsonl"
+ 
+ 
+ def first_t(reqlog, seeds):
+@@ -37,7 +41,9 @@
+              (first_t(f"{G}.requests.jsonl", {1234}), max(r["t_start"] + r["secs"] for r in M.load_reqlogs([f"{G}.requests.jsonl"])))),
+             ("0.9.1 record session 2 (2026-10-09, passes 2-3)", f"{G}+ps.server.log", first_t(f"{G}+ps.requests.jsonl", {1235, 1236}),
+              (first_t(f"{G}+ps.requests.jsonl", {1235, 1236}), max(r["t_start"] + r["secs"] for r in M.load_reqlogs([f"{G}+ps.requests.jsonl"])))),
+-            ("B+ stock 0.9.1 session (2026-10-21; extra evidence)", f"{BP}/server.log", first_t_bplus(), None)]
++            ("B+ stock 0.9.1 session (2026-10-21; extra evidence)", f"{BP}/server.log", first_t_bplus(), None),
++            ("D d091 stock 0.9.1 GPQA session (2026-10-21, seed 70704; d091b addition)", D091, first_t(D091_REQ, {70704}),
++             (first_t(D091_REQ, {70704}), max(r["t_start"] + r["secs"] for r in M.load_reqlogs([D091_REQ]))))]
+     rec_logs = D.REC["serverlogs"]
+     acc, info = D.reference_values(rec_logs)
+     floor = D.kv_floor(D.max_prompt_tokens(D.REC["reqlogs"]))
+@@ -76,23 +82,26 @@
+     verdict = {}
+     for g, rows in out["gates"].items():
+         rec_rows = [r for r in rows if r["session"].startswith("0.9.1 record")]
+-        verdict[g] = {"record_sessions_pass": all(r["pass"] for r in rec_rows), "bplus_v091_passes": all(r["pass"] for r in rows if r["session"].startswith("B+"))}
++        verdict[g] = {"record_sessions_pass": all(r["pass"] for r in rec_rows), "bplus_v091_passes": all(r["pass"] for r in rows if r["session"].startswith("B+")),
++                    "d091_session_passes": all(r["pass"] for r in rows if r["session"].startswith("D d091")) and any(r["session"].startswith("D d091") for r in rows)}
+     out["verdict"] = verdict
+     out["all_gates_pass_on_both_record_sessions"] = all(v["record_sessions_pass"] for v in verdict.values())
++    out["all_gates_pass_on_d091_session"] = all(v["d091_session_passes"] for v in verdict.values())   # d091b addition
+     json.dump(out, open(sys.argv[1], "w"), indent=1, default=str)
+     print("Accepted sets (values the 0.9.1 record's two sessions produced):")
+     for k, v in acc.items():
+         print(f"  {k}: {[str(x)[:24] for x in v]}")
+     print(f"KV floor {floor:,} tokens (8 x 4352 x ceil((327,680 + longest record prompt {D.max_prompt_tokens(D.REC['reqlogs'])} + 16) / 4352))")
+     for g, v in verdict.items():
+-        print(f"  {'OK  ' if v['record_sessions_pass'] else 'FAIL'} {g}: record sessions pass {v['record_sessions_pass']}; B+ v091 {v['bplus_v091_passes']}")
++        print(f"  {'OK  ' if v['record_sessions_pass'] else 'FAIL'} {g}: record sessions pass {v['record_sessions_pass']}; B+ v091 {v['bplus_v091_passes']}; D d091 {v['d091_session_passes']}")
+     print("client config across record passes:", out["client_config_across_record_passes"])
+     print("per-question fields identical across record passes:", same, "; record loader checks pass:", out["record_loader_checks_all_pass"])
+     print("task hash in all record passes:", out["task_hash_all_record_passes"], "; record max request s:", out["record_max_request_s_vs_lm_eval_timeout"])
+     for k, v in out["kv_pool_by_family_startup_markers"].items():
+         print(f"KV pool sizes, {k}: {len(v['sessions'])} sessions, distinct {v['distinct_sizes']}")
+     print("ALL GATES PASS ON BOTH RECORD SESSIONS:", out["all_gates_pass_on_both_record_sessions"])
+-    return 0 if out["all_gates_pass_on_both_record_sessions"] else 1
++    print("ALL GATES PASS ON D's d091 SESSION:", out["all_gates_pass_on_d091_session"])
++    return 0 if out["all_gates_pass_on_both_record_sessions"] and out["all_gates_pass_on_d091_session"] else 1
+ 
+ 
+ if __name__ == "__main__":
+--- d091/checks/raw_seed_scan.py
++++ d091b/checks/raw_seed_scan.py
+@@ -8,7 +8,7 @@
+ import glob, gzip, json, sys
+ from collections import Counter
+ 
+-SKIP = "<runs>/long-reply/d091"
++SKIP = "<runs>/long-reply/d091b"
+ 
+ 
+ def main():
+--- d091/checks/seed_scan_d091.py
++++ d091b/checks/seed_scan_d091.py
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""[d091 copy of rep070/refreeze/checks/seed_scan.py (sha256 3d8e80e4...); only SKIP_DIRS differs]
++"""[d091b copy of rep070/refreeze/checks/seed_scan.py (sha256 3d8e80e4...); only SKIP_DIRS differs]
+ Seed inventory for the re-freeze of the stock 0.7.0 replication (variant F needs three request seeds never used by any
+ GPQA pass on this machine). CPU only, standard library, read only. Writes ids, seeds and counts only: no question, answer
+ or reply text (the messages hash is used to recognise a GPQA prompt; no message content is read).
+@@ -24,7 +24,7 @@
+ 
+ ROOTS = ["<data-runs>", "<this-repo>"]
+ TEXT_ROOTS = ROOTS + ["<eval-tools>"]
+-SKIP_DIRS = ("<runs>/long-reply/d091",)  # d091 copy: this package only (its own seed
++SKIP_DIRS = ("<runs>/long-reply/d091b",)  # d091b copy: this package only (its own seed
+ # lists); the rep070 refreeze package is scanned like any other folder
+ TOKMAP = "<runs>/d7/exposure/gpqa_prompt_tokens.json"
+ TEXT_EXT = (".json", ".jsonl", ".log", ".txt", ".sh", ".py", ".md", ".out", ".csv", ".yaml", ".yml", ".toml", ".err")
+--- d091/tests/run_analysis_dryruns.sh
++++ d091b/tests/run_analysis_dryruns.sh
+@@ -1,30 +1,33 @@
+ #!/usr/bin/env bash
+ set -u
+-# Dry runs of analysis_d091.py on an existing record pass used as a stand-in (no new data, no GPU). The stand-in is the
+-# 0.9.1 record's pass 1 (seed 1234) relabelled to request seed 70704 (request log rows and lm-eval model_args). Synthetic
++# Dry runs of analysis_d091.py on an existing pass used as a stand-in (no new data, no GPU). d091b: the stand-in is option
++# D's real 2026-10-21 pass (stock 0.9.1, seed 70704; <gpqa-runs>/...+d091__pass1, its proxy request log +d091.s1 and
++# its own session log d091/run/server-s1.log) relabelled to request seed 70705 (request log rows and lm-eval model_args);
++# N1 sends D's own seed 70704 (a used seed). D's package used the 0.9.1 record's pass 1 relabelled to 70704. Synthetic
+ # inputs are built under PRIVATE/scratch-dryruns (umask 077, mode 0700; samples files are symlinked, and the two negative
+ # cases that need an altered samples file write it there) and removed on every exit path; only ids, hashes and numbers
+ # are written to tests/dryruns/. Not set -e: every exit code is recorded. Usage: tests/run_analysis_dryruns.sh
+ H=$(cd "$(dirname "$0")" && pwd); PKG=$(dirname "$H")
+-case "$PKG" in <runs>/long-reply/d091) ;; *) echo "ABORT: unexpected package path $PKG"; exit 1 ;; esac
++case "$PKG" in <runs>/long-reply/d091b) ;; *) echo "ABORT: unexpected package path $PKG"; exit 1 ;; esac
+ S="$PKG/PRIVATE/scratch-dryruns"; OUT="$H/dryruns"
+-[ -n "$S" ] && case "$S" in <runs>/long-reply/d091/PRIVATE/scratch-dryruns) ;; *) exit 1 ;; esac
++[ -n "$S" ] && case "$S" in <runs>/long-reply/d091b/PRIVATE/scratch-dryruns) ;; *) exit 1 ;; esac
+ [ -e "$S" ] && { echo "ABORT: $S exists"; exit 1; }
+ cleanup() {
+-  [ -n "$S" ] && [ -d "$S" ] && case "$S" in <runs>/long-reply/d091/PRIVATE/scratch-dryruns)
++  [ -n "$S" ] && [ -d "$S" ] && case "$S" in <runs>/long-reply/d091b/PRIVATE/scratch-dryruns)
+     find "$S" -type f -exec shred -u {} + 2>/dev/null; rm -rf -- "$S" ;; esac
+ }
+ trap cleanup EXIT
+ ( umask 077; mkdir -p "$S" ) || exit 1
+ mkdir -p "$OUT" || exit 1
+ V091=<gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1
++DP="$V091+d091__pass1"; DREQ="$V091+d091.s1.requests.jsonl"
++DSRV=<runs>/long-reply/d091/run/server-s1.log
+ F070=<gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+rep070-F
+ A="$PKG/analysis_d091.py"
+ mk() { # name reqseed argseed [mode]   modes: missingq | taskhash | target | resend | http | procseed | noargseed
+-  ( umask 077; python3 -B - "$S/$1" "$V091" "$2" "$3" "${4:-}" <<'EOF'
++  ( umask 077; python3 -B - "$S/$1" "$DP" "$2" "$3" "${4:-}" "$DREQ" <<'EOF'
+ import glob, json, os, sys
+-d, base, rs, as_, mode = sys.argv[1], sys.argv[2], int(sys.argv[3]), int(sys.argv[4]), sys.argv[5]
+-src = f"{base}+ps__pass1"
++d, src, rs, as_, mode, reqf = sys.argv[1], sys.argv[2], int(sys.argv[3]), int(sys.argv[4]), sys.argv[5], sys.argv[6]
+ pd = os.path.join(d, "pass1", "model"); os.makedirs(pd, exist_ok=True)
+ sf = glob.glob(src + "/**/samples_*.jsonl", recursive=True)[0]; rf = glob.glob(src + "/**/results_*.json", recursive=True)[0]
+ if mode in ("missingq", "target"):
+@@ -47,7 +50,7 @@
+ if mode == "procseed":
+     r["config"]["random_seed"] = 1236
+ json.dump(r, open(os.path.join(pd, os.path.basename(rf)), "w"))
+-rows = [json.loads(l) for l in open(f"{base}.requests.jsonl")]
++rows = [json.loads(l) for l in open(reqf)]
+ with open(os.path.join(d, "requests.jsonl"), "w") as f:
+     for i, x in enumerate(rows):
+         x["seed"] = rs
+@@ -60,7 +63,7 @@
+   )
+ }
+ srvlog() { # name mode: noready | nondefault | kvsmall | kvother
+-  ( umask 077; python3 -B - "$V091.server.log" "$S/$1.server.log" "$2" <<'EOF'
++  ( umask 077; python3 -B - "$DSRV" "$S/$1.server.log" "$2" <<'EOF'
+ import sys
+ src, dst, mode = sys.argv[1], sys.argv[2], sys.argv[3]
+ with open(dst, "w") as f:
+@@ -85,34 +88,34 @@
+     --out "$OUT/$tag.json" "$@" > "$OUT/$tag.md" 2> "$OUT/$tag.err"
+   summary "$tag" $?
+ }
+-mk relabel 70704 70704
+-mk wrongseed 70705 70705
+-mk noargseed 70704 0 noargseed
+-mk missingq 70704 70704 missingq
+-mk taskhash 70704 70704 taskhash
+-mk target 70704 70704 target
+-mk resend 70704 70704 resend
+-mk http 70704 70704 http
+-mk procseed 70704 70704 procseed
++mk relabel 70705 70705
++mk wrongseed 70704 70704
++mk noargseed 70705 0 noargseed
++mk missingq 70705 70705 missingq
++mk taskhash 70705 70705 taskhash
++mk target 70705 70705 target
++mk resend 70705 70705 resend
++mk http 70705 70705 http
++mk procseed 70705 70705 procseed
+ srvlog noready noready; srvlog nondefault nondefault; srvlog kvsmall kvsmall; srvlog kvother kvother
+ {
+-echo "# analysis dry runs $(date -Is) (CPU only; zero GPU); stand-in = 0.9.1 record pass 1 relabelled to seed 70704"
+-run D1-standin relabel "$V091.server.log" "0.9.1 record pass 1 relabelled to 70704 with its own session log; expect VALID" --rows-out "$OUT/D1-standin.rows.jsonl"
++echo "# analysis dry runs $(date -Is) (CPU only; zero GPU); stand-in = option D's 2026-10-21 pass (seed 70704) relabelled to seed 70705"
++run D1-standin relabel "$DSRV" "option D's 2026-10-21 pass relabelled to 70705 with its own session log; expect VALID" --rows-out "$OUT/D1-standin.rows.jsonl"
+ run D2-kv-other-size relabel "$S/kvother.server.log" "KV pool 4,698,112 (not a record size, above the floor); expect VALID (pool reported, not identity-gated)"
+-run N1-wrongseed wrongseed "$V091.server.log" "request seed 70705 instead of 70704; expect INVALID"
+-run N2-missingq missingq "$V091.server.log" "question 17 missing from the samples; expect INVALID"
+-run N3-taskhash taskhash "$V091.server.log" "different lm-eval task hash; expect INVALID"
++run N1-wrongseed wrongseed "$DSRV" "request seed 70704 (option D's, used) instead of 70705; expect INVALID"
++run N2-missingq missingq "$DSRV" "question 17 missing from the samples; expect INVALID"
++run N3-taskhash taskhash "$DSRV" "different lm-eval task hash; expect INVALID"
+ run N4-noready relabel "$S/noready.server.log" "server log without its ready line; expect INVALID"
+ run N5-other-engine relabel "$F070.s1.requests.jsonl" "a request log given as the server log (no engine start); expect INVALID"
+-run N6-resend resend "$V091.server.log" "one request re-sent; expect INVALID"
+-run N7-target target "$V091.server.log" "question 42's target hash altered; expect INVALID"
++run N6-resend resend "$DSRV" "one request re-sent; expect INVALID"
++run N7-target target "$DSRV" "question 42's target hash altered; expect INVALID"
+ run N8-kv-below-floor relabel "$S/kvsmall.server.log" "KV pool 2,000,000 below the 8 x cap floor; expect INVALID"
+-run N9-procseed procseed "$V091.server.log" "lm-eval process seed 1236 instead of 1235; expect INVALID"
+-run N10-http500 http "$V091.server.log" "one request HTTP 500; expect INVALID"
++run N9-procseed procseed "$DSRV" "lm-eval process seed 1236 instead of 1235; expect INVALID"
++run N10-http500 http "$DSRV" "one request HTTP 500; expect INVALID"
+ run N11-nondefault relabel "$S/nondefault.server.log" "non-default args differ (max_num_seqs); expect INVALID"
+-run N12-noargseed noargseed "$V091.server.log" "seed not in lm-eval model_args; expect INVALID"
++run N12-noargseed noargseed "$DSRV" "seed not in lm-eval model_args; expect INVALID"
+ run N13-rep070F-serverlog relabel "<runs>/rep070/run-F/server-s1.log" "the 0.7.0 replication's server log; expect INVALID"
+-python3 -B "$A" --pass-dir "$S/relabel/pass1" --reqlog "$S/relabel/absent.requests.jsonl" --serverlog "$V091.server.log" \
++python3 -B "$A" --pass-dir "$S/relabel/pass1" --reqlog "$S/relabel/absent.requests.jsonl" --serverlog "$DSRV" \
+   --dry-run-label "N14-no-reqlog proxy request log absent; expect INVALID" --out "$OUT/N14-no-reqlog.json" > "$OUT/N14-no-reqlog.md" 2> "$OUT/N14-no-reqlog.err"
+ summary N14-no-reqlog $?
+ python3 -B "$A" --pass-dir "$S/relabel/pass1" --reqlog "$S/relabel/requests.jsonl" --serverlog "$S/absent.server.log" \
+--- d091/tests/session_sim.sh
++++ d091b/tests/session_sim.sh
+@@ -16,9 +16,9 @@
+ # INVALID, and the long-reply pipeline is not run.
+ # Refuses to run if an lm_eval process exists or port 8001/8002 is in use. Not set -e.
+ H=$(cd "$(dirname "$0")" && pwd); PKG0=$(dirname "$H")
+-case "$PKG0" in <runs>/long-reply/d091) ;; *) echo "ABORT: unexpected package path"; exit 1 ;; esac
++case "$PKG0" in <runs>/long-reply/d091b) ;; *) echo "ABORT: unexpected package path"; exit 1 ;; esac
+ WORK="$PKG0/tests/sim-work"
+-[ -n "$WORK" ] && case "$WORK" in <runs>/long-reply/d091/tests/sim-work) ;; *) exit 1 ;; esac
++[ -n "$WORK" ] && case "$WORK" in <runs>/long-reply/d091b/tests/sim-work) ;; *) exit 1 ;; esac
+ R="glm53-flash-exl3-k3.25@tpurtell+v0.9.1"; IMG=sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07
+ V091=<gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1
+ pgrep -f -- 'bin/lm_eval --model' >/dev/null && { echo "REFUSED: an lm_eval process exists"; exit 2; }
+@@ -92,7 +92,7 @@
+   python3 "$WORK/fake_upstream_d091.py" 8001 &
+   for i in 1 2 3 4 5 6 7 8 9 10; do ss -ltnH '( sport = :8001 )' | grep -q . && break; sleep 0.5; done
+   curl -s -m 600 -o /dev/null -X POST http://127.0.0.1:8002/v1/chat/completions -H 'Content-Type: application/json' \
+-    -d '{"messages": [{"role": "user", "content": "synthetic session-sim request"}], "seed": 70704, "max_tokens": 327680}' &
++    -d '{"messages": [{"role": "user", "content": "synthetic session-sim request"}], "seed": 70705, "max_tokens": 327680}' &
+   echo "fake chain: one request in flight via the proxy" >> "$WORK/chain.log"
+   sleep 299; exit 0
+ fi
+@@ -104,11 +104,11 @@
+   diff <stacks>/glm53-flash-v0.8.0/eval-chain.sh "$P/runner/local-eval-chain-rep070.sh" > "$P/runner/local-eval-chain-rep070.diff"
+   local FH; FH=$(sha256sum "$P/runner/local-eval-chain-rep070.sh" | cut -c1-64)
+   sed -i -e "s#^R=\"glm53-flash-exl3-k3.25@tpurtell+v0.9.1\"; G=<gpqa-runs>; #R=\"glm53-flash-exl3-k3.25@tpurtell+v0.9.1\"; G=$GW; #" \
+-         -e "s#^case \"\$PKG\" in <runs>/long-reply/d091) #case \"\$PKG\" in $P) #" \
++         -e "s#^case \"\$PKG\" in <runs>/long-reply/d091b) #case \"\$PKG\" in $P) #" \
+          -e "s#^  \[\"\$CH\"\]=81ef338653a2f9cbffff62123113238953f232c268c8e3f02be9e66080d26b9e#  [\"\$CH\"]=$FH#" "$P/runner/run_d091.sh"
+   grep -q "G=$GW;" "$P/runner/run_d091.sh" && grep -q "in $P) ;;" "$P/runner/run_d091.sh" && grep -q "\[\"\$CH\"\]=$FH" "$P/runner/run_d091.sh" \
+     || { echo "setup: could not patch the runner copy"; exit 2; }
+-  sed -i -e "s#^case \"\$PKG\" in <runs>/long-reply/d091) #case \"\$PKG\" in $P) #" "$P/scripts/run_pipeline.sh"
++  sed -i -e "s#^case \"\$PKG\" in <runs>/long-reply/d091b) #case \"\$PKG\" in $P) #" "$P/scripts/run_pipeline.sh"
+   ( cd "$P" && bash ./make_sums.sh > /dev/null )
+   RUNNER=$P/runner/run_d091.sh
+ }
+@@ -126,19 +126,19 @@
+ setup ok; : > "$SHIMLOG"
+ FAKE_CHAIN_SECS=2 APPROVED_GPU_H=10 PATH="$WORK/shim:$PATH" bash "$RUNNER" > "$WORK/a.out" 2>&1; echo "  runner rc=$?"
+ common 1
+-ok "chain: tag +d091, GPQA_PASSES=1, seed list 70704, concurrency 8, via the proxy" "grep -q 'TAG=+d091 GPQA_PASSES=1 SEED_LIST=70704 CONC=8 BASE=http://127.0.0.1:8002' '$WORK/chain.log'"
++ok "chain: tag +d091b, GPQA_PASSES=1, seed list 70705, concurrency 8, via the proxy" "grep -q 'TAG=+d091b GPQA_PASSES=1 SEED_LIST=70705 CONC=8 BASE=http://127.0.0.1:8002' '$WORK/chain.log'"
+ ok "server stopped once" "[ \$(grep -c 'docker stop glm53-flash-exl3-b12x-vllm' '$SHIMLOG') = 1 ]"
+ ok "server log and docker inspect saved" "[ -s '$P/run/server-s1.log' ] && [ -s '$P/run/inspect-s1.json' ]"
+ ok "inspect check reports the digest and loopback-only publish" "grep -q 'image OK; published on .*(loopback only)' '$WORK/a.out'"
+-ok "cost line: chain_rc 0, watchdog_fired false, seed 70704" "grep -q '\"seed\": 70704.*\"chain_rc\": 0, \"watchdog_fired\": false' '$P/run/costs.jsonl'"
++ok "cost line: chain_rc 0, watchdog_fired false, seed 70705" "grep -q '\"seed\": 70705.*\"chain_rc\": 0, \"watchdog_fired\": false' '$P/run/costs.jsonl'"
+ ok "finalize: placeholder pass probed INCOMPLETE, report written, never classified" "grep -q 'INCOMPLETE run' '$WORK/a.out' && [ -s '$P/run/incomplete-d091.json' ] && [ ! -e '$P/run/result-d091.json' ]"
+ ok "cache inventory before and after, with diff" "[ -s '$P/run/cache-s0.json' ] && [ -s '$P/run/cache-s1.json' ] && [ -s '$P/run/cache-diff-s1.json' ]"
+-ok "planned seeds: request 70704, lm-eval process 1235" "python3 -c \"import json,sys;d=json.load(open('$P/run/seeds-planned.json'));sys.exit(0 if [(x['request_seed'],x['lm_eval_process_seed']) for x in d['passes']]==[(70704,1235)] else 1)\""
++ok "planned seeds: request 70705, lm-eval process 1235" "python3 -c \"import json,sys;d=json.load(open('$P/run/seeds-planned.json'));sys.exit(0 if [(x['request_seed'],x['lm_eval_process_seed']) for x in d['passes']]==[(70705,1235)] else 1)\""
+ ok "package verification saved" "grep -q ': OK' '$P/run/package-verify.txt'"
+ echo "== (b) SIGTERM to the runner during the session"
+ setup ok; : > "$SHIMLOG"
+ ( FAKE_CHAIN_SECS=20 APPROVED_GPU_H=10 PATH="$WORK/shim:$PATH" bash "$RUNNER" > "$WORK/b.out" 2>&1; echo "$?" > "$WORK/b.rc" ) &
+-for i in $(seq 1 60); do grep -q 'session 1: pass 1, seed 70704' "$WORK/b.out" 2>/dev/null && break; sleep 1; done
++for i in $(seq 1 60); do grep -q 'session 1: pass 1, seed 70705' "$WORK/b.out" 2>/dev/null && break; sleep 1; done
+ sleep 3; pkill -TERM -f "bash $RUNNER"; wait; echo "  runner rc=$(cat "$WORK/b.rc")"
+ common 1
+ ok "runner exited 4 and reported the interrupted-session cleanup" "[ \"\$(cat '$WORK/b.rc')\" = 4 ] && grep -q 'cleanup after an interrupted session' '$WORK/b.out'"
+@@ -156,15 +156,15 @@
+ setup fail; : > "$SHIMLOG"
+ APPROVED_GPU_H=10 PATH="$WORK/shim:$PATH" bash "$RUNNER" > "$WORK/d.out" 2>&1; echo "  runner rc=$?"
+ common 1
+-ok "stopped after the session, no retry" "grep -q 'did not produce pass 1' '$WORK/d.out' && [ \$(grep -c 'TAG=+d091' '$WORK/chain.log') = 1 ]"
++ok "stopped after the session, no retry" "grep -q 'did not produce pass 1' '$WORK/d.out' && [ \$(grep -c 'TAG=+d091b' '$WORK/chain.log') = 1 ]"
+ ok "cost line has chain_rc 1; INCOMPLETE report" "grep -q '\"chain_rc\": 1' '$P/run/costs.jsonl' && [ -s '$P/run/incomplete-d091.json' ]"
+ echo "== (e) watchdog while a request is in flight through the proxy copy"
+ setup inflight; : > "$SHIMLOG"
+ APPROVED_GPU_H=0.04 PATH="$WORK/shim:$PATH" bash "$RUNNER" > "$WORK/e.out" 2>&1; echo "  runner rc=$?"
+ common 1
+-EV="$GW/$R+d091.s1.requests.events.jsonl"; MAINF="$GW/$R+d091.s1.requests.jsonl"
++EV="$GW/$R+d091b.s1.requests.events.jsonl"; MAINF="$GW/$R+d091b.s1.requests.jsonl"
+ ok "watchdog fired; fake upstream stopped by the docker shim" "grep -q 'CEILING REACHED' '$P/run/watchdog.log' && ! pgrep -f fake_upstream_d091 >/dev/null"
+-ok "sidecar: start then interrupted for seed 70704" "python3 -c \"import json,sys;e=[json.loads(l) for l in open('$EV')];sys.exit(0 if [x['event'] for x in e]==['start','interrupted'] and e[1]['seed']==70704 else 1)\""
++ok "sidecar: start then interrupted for seed 70705" "python3 -c \"import json,sys;e=[json.loads(l) for l in open('$EV')];sys.exit(0 if [x['event'] for x in e]==['start','interrupted'] and e[1]['seed']==70705 else 1)\""
+ ok "no main-log row for the interrupted request" "[ ! -s '$MAINF' ]"
+ ok "raw file in PRIVATE/raw, mode 0600, holds the interrupted record" "[ \"\$(stat -c %a '$P/PRIVATE/raw/s1.raw.jsonl.gz')\" = 600 ] && python3 -c \"import gzip,json,sys;r=[json.loads(l) for l in gzip.open('$P/PRIVATE/raw/s1.raw.jsonl.gz','rt')];sys.exit(0 if len(r)==1 and r[0]['kind']=='interrupted' else 1)\""
+ ok "INCOMPLETE report: watchdog cause; pass 1 interrupted 1, unstarted 197, no response logged, never counted empty" "python3 -c \"import json,sys;d=json.load(open('$P/run/incomplete-d091.json'));p=d['pass1'];sys.exit(0 if any('watchdog' in c for c in d['causes']) and p['interrupted_started_no_response']==1 and p['unstarted']==197 and p['responses_logged']==0 else 1)\""
+--- d091/tests/test_chain_seed.sh
++++ d091b/tests/test_chain_seed.sh
+@@ -1,7 +1,7 @@
+ #!/usr/bin/env bash
+ set -u
+ # Evaluates the seed lines of the chain copy (and of the original chain) for d091's single pass. No process other than bash
+-# runs. The copy is rep070's (byte-identical, sha256 81ef3386...); the runner passes GPQA_SEED_LIST="70704", GPQA_PASSES=1.
++# runs. The copy is rep070's (byte-identical, sha256 81ef3386...); the runner passes GPQA_SEED_LIST="70705", GPQA_PASSES=1.
+ H=$(cd "$(dirname "$0")" && pwd); COPY="$H/../runner/local-eval-chain-rep070.sh"; ORIG=<stacks>/glm53-flash-v0.8.0/eval-chain.sh
+ REPC=<runs>/rep070/refreeze/runner/local-eval-chain-rep070.sh
+ LC=$(grep -E '^\s*(SEEDARG=""|\[ -n "\$\{GPQA_SEED_LIST)' "$COPY"); LO=$(grep -E '^\s*SEEDARG=""' "$ORIG")
+@@ -12,7 +12,7 @@
+   eval "$lines"; got="[$SEEDARG]"
+   [ "$got" = "[$exp]" ] && echo "PASS $lab: $got" || { echo "FAIL $lab: got $got expected [$exp]"; F=1; return 1; }
+ }
+-( unset GPQA_SEED_PER_PASS; GPQA_SEED_LIST="70704"; ev "copy, d091 list (runner): pass 1 sends seed 70704" "$LC" ",seed=70704" ) || F=1
++( unset GPQA_SEED_PER_PASS; GPQA_SEED_LIST="70705"; ev "copy, d091 list (runner): pass 1 sends seed 70705" "$LC" ",seed=70705" ) || F=1
+ ( unset GPQA_SEED_PER_PASS GPQA_SEED_LIST; ev "original, no seed variables = no seed argument (the 0.9.1 record's pass 1: default 1234)" "$LO" "" ) || F=1
+ LP=$(grep -E -- '--seed \$\(\(1234\+pass\)\)' "$COPY" | head -1)
+ [ -n "$LP" ] && echo "PASS copy: lm-eval process seed is 1234+pass = 1235 for pass 1 (as the records' pass 1)" || { echo "FAIL process seed line"; F=1; }
+--- d091/tests/test_runner_refusals.sh
++++ d091b/tests/test_runner_refusals.sh
+@@ -6,9 +6,9 @@
+ # state is read with nvidia-smi only. Run-state refusals use temporary marker files inside this package (removed at once).
+ # Usage: tests/test_runner_refusals.sh. Prints one line per test and a summary; exit 0 only if every test passed.
+ H=$(cd "$(dirname "$0")" && pwd); PKG=$(dirname "$H"); RUN="$PKG/runner/run_d091.sh"
+-case "$PKG" in <runs>/long-reply/d091) ;; *) echo "ABORT: unexpected package path"; exit 1 ;; esac
++case "$PKG" in <runs>/long-reply/d091b) ;; *) echo "ABORT: unexpected package path"; exit 1 ;; esac
+ S="$PKG/tests/stubs-tmp"
+-[ -n "$S" ] && case "$S" in <runs>/long-reply/d091/tests/stubs-tmp) ;; *) exit 1 ;; esac
++[ -n "$S" ] && case "$S" in <runs>/long-reply/d091b/tests/stubs-tmp) ;; *) exit 1 ;; esac
+ [ -e "$S" ] && { echo "ABORT: $S exists"; exit 1; }
+ [ -e "$PKG/run" ] && { echo "ABORT: $PKG/run exists before the tests"; exit 1; }
+ cleanup() {
+@@ -109,7 +109,7 @@
+ mv -f -- "$PKG/SHA256SUMS.refusal-test-backup" "$PKG/SHA256SUMS"
+ t "real machine, budget at the ceiling (10.0) accepted" "DRY_RUN: all refusal checks passed" APPROVED_GPU_H=10.0
+ t "real machine, budget 8" "DRY_RUN: all refusal checks passed" APPROVED_GPU_H=8
+-LEFT=$(ls -d <gpqa-runs>/*+d091* <data-runs>/benchmarks/*+d091* "$PKG/run" "$PKG/PRIVATE/raw" 2>/dev/null; ls -A "$PKG/out" 2>/dev/null)
++LEFT=$(ls -d <gpqa-runs>/*+d091b* <data-runs>/benchmarks/*+d091b* "$PKG/run" "$PKG/PRIVATE/raw" 2>/dev/null; ls -A "$PKG/out" 2>/dev/null)
+ if [ -z "$LEFT" ]; then PASS=$((PASS+1)); echo "PASS [no files created by DRY_RUN]"; else FAIL=$((FAIL+1)); echo "FAIL [files created]: $LEFT"; fi
+ echo "runner refusal tests: $PASS passed, $FAIL failed"
+ [ "$FAIL" = 0 ]
+--- d091/tests/standin_pipeline.sh
++++ d091b/tests/standin_pipeline.sh
+@@ -9,11 +9,11 @@
+ # code, same text); prefix hashes of any reply B+ also selected equal B+'s manifest. Work dir under PRIVATE/ (shredded on
+ # exit); ids, metrics, hashes and tables are copied to tests/standin/. CPU only; zero GPU.
+ H=$(cd "$(dirname "$0")" && pwd); PKG=$(dirname "$H")
+-case "$PKG" in <runs>/long-reply/d091) ;; *) echo "ABORT: unexpected package path"; exit 1 ;; esac
++case "$PKG" in <runs>/long-reply/d091b) ;; *) echo "ABORT: unexpected package path"; exit 1 ;; esac
+ B=<runs>
+ W="$PKG/PRIVATE/standin-work"; KEEP="$H/standin"
+-[ -n "$W" ] && case "$W" in <runs>/long-reply/d091/PRIVATE/standin-work) ;; *) exit 1 ;; esac
+-[ -n "$KEEP" ] && case "$KEEP" in <runs>/long-reply/d091/tests/standin) ;; *) exit 1 ;; esac
++[ -n "$W" ] && case "$W" in <runs>/long-reply/d091b/PRIVATE/standin-work) ;; *) exit 1 ;; esac
++[ -n "$KEEP" ] && case "$KEEP" in <runs>/long-reply/d091b/tests/standin) ;; *) exit 1 ;; esac
+ [ -e "$W" ] && { echo "ABORT: $W exists"; exit 1; }
+ [ -e "$KEEP" ] && { echo "ABORT: $KEEP exists"; exit 1; }
+ cleanup() { [ -n "$W" ] && [ -d "$W" ] && case "$W" in "$PKG"/PRIVATE/standin-work) find "$W" -type f -exec shred -u {} + 2>/dev/null; rm -rf -- "$W" ;; esac; }
+--- d091/tests/prefix_build_repro.sh
++++ d091b/tests/prefix_build_repro.sh
+@@ -7,11 +7,11 @@
+ # (--network none, CUDA_VISIBLE_DEVICES empty, no --gpus). The scratch work dir is under PRIVATE/ (token ids and prompt
+ # messages are written there, mode 0600) and is shredded on every exit path; only comparison lines are kept.
+ H=$(cd "$(dirname "$0")" && pwd); PKG=$(dirname "$H")
+-case "$PKG" in <runs>/long-reply/d091) ;; *) echo "ABORT: unexpected package path"; exit 1 ;; esac
++case "$PKG" in <runs>/long-reply/d091b) ;; *) echo "ABORT: unexpected package path"; exit 1 ;; esac
+ B=<runs>
+ BP="$B/long-reply/bplus"
+ W="$PKG/PRIVATE/repro-bplus-build"; REPORT="$H/prefix-build-repro.txt"
+-[ -n "$W" ] && case "$W" in <runs>/long-reply/d091/PRIVATE/repro-bplus-build) ;; *) exit 1 ;; esac
++[ -n "$W" ] && case "$W" in <runs>/long-reply/d091b/PRIVATE/repro-bplus-build) ;; *) exit 1 ;; esac
+ [ -e "$W" ] && { echo "ABORT: $W exists"; exit 1; }
+ cleanup() { [ -n "$W" ] && [ -d "$W" ] && case "$W" in "$PKG"/PRIVATE/repro-bplus-build) find "$W" -type f -exec shred -u {} + 2>/dev/null; rm -rf -- "$W" ;; esac; }
+ trap cleanup EXIT
+--- d091/tests/repro_discovery.sh
++++ d091b/tests/repro_discovery.sh
+@@ -7,7 +7,7 @@
+ # the host (stdlib). Writes ids, metrics and comparison lines only (discovery's outputs hold no text).
+ # Not set -e: every exit code is checked. Usage: tests/repro_discovery.sh   (about 20-25 min of CPU)
+ H=$(cd "$(dirname "$0")" && pwd); PKG=$(dirname "$H")
+-case "$PKG" in <runs>/long-reply/d091) ;; *) echo "ABORT: unexpected package path $PKG"; exit 1 ;; esac
++case "$PKG" in <runs>/long-reply/d091b) ;; *) echo "ABORT: unexpected package path $PKG"; exit 1 ;; esac
+ DISC=<runs>/long-reply/discovery
+ RAW=<runs>/rep070/run-F/raw
+ REPO=<models>/models--wrldsuksgo2mars--GLM-5.3-Flash-EXL3-K3.25-v1

@@ -1,0 +1,141 @@
+{
+ "definition": "occupied GPU-hours = 2 GPUs x (server start to server stop); start = eval-chain start (server launched), stop = container stopped (first logged event at or after the stop)",
+ "sessions": [
+  {
+   "record": "0.7.0 K3.25 DFlash2 x5",
+   "session": "2026-09-29",
+   "passes": "1",
+   "start": "2026-09-29T06:51:39-07:00",
+   "ready": "2026-09-29T07:00:54-07:00",
+   "first_request": "2026-09-29T07:01:03-07:00",
+   "last_request_end": "2026-09-29T10:34:37-07:00",
+   "stop": "2026-09-29T10:34:58-07:00",
+   "wall_s": 13399,
+   "wall_h": 3.7219,
+   "gpu_hours": 7.444,
+   "requests": 198,
+   "sources": [
+    "eval-chain log 2026-09-29 (chain start 06:51:39 started the server; a second chain attached at 06:59:53 with NO_RESTART=1, 'ready after 61s'; chain done 10:34:38)",
+    "lm-eval log (Running generate_until 07:01:03; progress bar 198/198 at 3:33:34; results saved 10:34:37; total_evaluation_time_seconds 12822)",
+    "next eval chain (4bpw, 0.8.0) started 10:34:58 and stops the container first (same container name)",
+    "server-log extract in the chain log (weights loaded 06:54:12, KV sized 06:57:16, memory report 06:59:12; times converted from UTC)"
+   ],
+   "note": "stop = the next chain's start, whose first action stops the container (the stop's own seconds not timed); no request log, so first/last request come from lm-eval"
+  },
+  {
+   "record": "0.7.0 K3.25 DFlash2 x5",
+   "session": "2026-10-10",
+   "passes": "2-3",
+   "start": "2026-10-10T00:59:36-07:00",
+   "ready": "2026-10-10T01:07:54-07:00",
+   "first_request": "2026-10-10T01:08:04-07:00",
+   "last_request_end": "2026-10-10T08:45:28-07:00",
+   "stop": "2026-10-10T08:45:31-07:00",
+   "wall_s": 27955,
+   "wall_h": 7.7653,
+   "gpu_hours": 15.531,
+   "requests": 396,
+   "sources": [
+    "eval-chain log 2026-10-10+ps (chain start 00:59:36, 'ready after 498s', chain done 08:45:29)",
+    "request proxy log (+ps)",
+    "re-run driver log 2026-10-09 (chain rc 08:45:29; server log saved and container stopped; 'CLEAN RERUNS DONE' 08:45:31)"
+   ],
+   "note": ""
+  },
+  {
+   "record": "0.9.1 K3.25 DFlash2 x3",
+   "session": "2026-10-08",
+   "passes": "1",
+   "start": "2026-10-08T17:26:47-07:00",
+   "ready": "2026-10-08T17:38:52-07:00",
+   "first_request": "2026-10-08T17:39:03-07:00",
+   "last_request_end": "2026-10-08T20:01:05-07:00",
+   "stop": "2026-10-08T20:01:12-07:00",
+   "wall_s": 9265,
+   "wall_h": 2.5736,
+   "gpu_hours": 5.147,
+   "requests": 198,
+   "sources": [
+    "eval-chain log 2026-10-08 (chain start 17:26:47, 'ready after 725s', chain done 20:01:06)",
+    "request proxy log",
+    "pass-1 runner log ('GPQA pass 1 rc=0' 20:01:06; 'DONE (server stopped)' 20:01:12)"
+   ],
+   "note": ""
+  },
+  {
+   "record": "0.9.1 K3.25 DFlash2 x3",
+   "session": "2026-10-09",
+   "passes": "2-3",
+   "start": "2026-10-09T12:18:31-07:00",
+   "ready": "2026-10-09T12:30:20-07:00",
+   "first_request": "2026-10-09T12:30:31-07:00",
+   "last_request_end": "2026-10-09T18:01:59-07:00",
+   "stop": "2026-10-09T18:02:53-07:00",
+   "wall_s": 20662,
+   "wall_h": 5.7394,
+   "gpu_hours": 11.479,
+   "requests": 396,
+   "sources": [
+    "eval-chain log 2026-10-09+ps (chain start 12:18:31, 'ready after 709s', chain done 18:02:00)",
+    "request proxy log (+ps)",
+    "re-run driver log 2026-10-09 (driver noticed the chain end 18:02:46 on its 60 s poll, saved the server log and stopped the container; next line 18:02:53)"
+   ],
+   "note": "stop is an upper bound by up to 7 s; the server idled up to 53 s after the chain finished"
+  },
+  {
+   "record": "0.9.1 K3.25 DFlash2 x3 + column-511 correction (arm)",
+   "session": "2026-10-11 s1",
+   "passes": "1",
+   "start": "2026-10-11T12:59:09-07:00",
+   "ready": "2026-10-11T13:10:45-07:00",
+   "first_request": "2026-10-11T13:10:56-07:00",
+   "last_request_end": "2026-10-11T15:51:14-07:00",
+   "stop": "2026-10-11T15:51:20-07:00",
+   "wall_s": 10331,
+   "wall_h": 2.8697,
+   "gpu_hours": 5.739,
+   "requests": 198,
+   "sources": [
+    "arm runner log and costs.jsonl (session clock from runner start 12:59:09, chain start 12:59:10, 'ready after 695s', chain rc 15:51:15, server log saved and container stopped before session 2 at 15:51:20)",
+    "request proxy log s1"
+   ],
+   "note": ""
+  },
+  {
+   "record": "0.9.1 K3.25 DFlash2 x3 + column-511 correction (arm)",
+   "session": "2026-10-11 s2",
+   "passes": "2-3",
+   "start": "2026-10-11T15:51:20-07:00",
+   "ready": "2026-10-11T16:03:40-07:00",
+   "first_request": "2026-10-11T16:03:51-07:00",
+   "last_request_end": "2026-10-11T21:32:16-07:00",
+   "stop": "2026-10-11T21:32:22-07:00",
+   "wall_s": 20462,
+   "wall_h": 5.6839,
+   "gpu_hours": 11.368,
+   "requests": 396,
+   "sources": [
+    "arm runner log and costs.jsonl (chain start 15:51:20, 'ready after 740s', chain rc 21:32:17, 'ARM DONE' 21:32:22 after the container stop)",
+    "request proxy log s2"
+   ],
+   "note": ""
+  }
+ ],
+ "totals": {
+  "0.7.0 K3.25 DFlash2 x5": {
+   "wall_s": 41354,
+   "gpu_hours": 22.974,
+   "sessions": 2
+  },
+  "0.9.1 K3.25 DFlash2 x3": {
+   "wall_s": 29927,
+   "gpu_hours": 16.626,
+   "sessions": 2
+  },
+  "0.9.1 K3.25 DFlash2 x3 + column-511 correction (arm)": {
+   "wall_s": 30793,
+   "gpu_hours": 17.107,
+   "sessions": 2
+  }
+ }
+}

@@ -616,6 +616,17 @@ What was asked, run, found, corrected and withdrawn, in date order.
 - **Next:** option E, 0.9.1-built prefixes on both engines. Cumulative 110.90 GPU-hours.
   [Long-reply](investigations/2026-10-glm53-completion/long-reply/README.md).
 
+**2026-10-22. Long-reply completion: a second text-logged 0.9.1 pass; the prefix cross frozen (amendments 22ac-22ah).**
+- **Option E as first frozen** (8 0.9.1-built prefixes) had power of only 0.37-0.42 at the full gap. The operator chose
+  to add prefixes first.
+- **D2** (7.16 GPU-hours, descriptive): a second stock 0.9.1 pass at a fresh seed. 8 of 198 empty; 4 / 12 replies past
+  100k finished. The digit-heavy early signature of capped replies appears here as well. It adds 5 prefixes on new
+  questions.
+- **E re-frozen** on 13 prefixes: power 0.75-0.88 at the full gap, cost central 10.2 GPU-hours. The KV pool is now
+  reported with a floor, not gated. Not yet run.
+- Cumulative 118.07 GPU-hours.
+  [Long-reply](investigations/2026-10-glm53-completion/long-reply/README.md).
+
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough
   qualification. They also said the D7 path "cannot run" where the basis is a reconstruction. These are reworded in the

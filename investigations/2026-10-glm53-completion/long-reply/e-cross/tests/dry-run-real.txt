@@ -1,0 +1,11 @@
+# real-machine DRY_RUN=1, 2026-10-21T22:27:04-07:00; SHA256SUMS sha256 543566ced75a0c5b3bce14fba5ac8e3c2811bb626a639cb25f0e6c68f20a467b
+--- DRY_RUN=1 APPROVED_GPU_H=19.9 runner/run_e.sh
+2026-10-21T22:27:04-07:00 E runner start; engines v070 v091; approved 19.9 GPU-h (35820 s wall); DRY_RUN=1
+DRY_RUN: all refusal checks passed. A real run would now: create <runs>/long-reply/e-cross/run (raw/ mode 0700); start the GPU logger (60 s)
+  and the watchdog (35820 s from script start); then for each engine in order v070 v091: GPU pre-flight; budget rule
+  (start only if >= the session's ceiling wall remains: v070 20700 s, v091 14941 s);
+  fresh server by digest via the stack launcher (127.0.0.1:8001); ready-file + API gate; client_bplus.py (52 requests,
+  8 in flight, fixed order, seeds from out/plan.json); save server log and docker inspect; stop; GPU release; cost line;
+  compile-cache inventory. Then the frozen analysis in a CPU-only container. Nothing was created or started.
+rc=0
+--- after: run/ exists? no; GLM containers: 0

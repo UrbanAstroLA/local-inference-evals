@@ -1,0 +1,39 @@
+# E seed cross-check; E range 8,270,101 - 8,281,304: seed = 8,260,000 + 10,000*engine + 100*prefix + j (engine 1 = v070, 2 = v091; prefix 1-13; j 1-4); 104 seeds, 104 distinct
+B+ out/plan.json: 146 seeds (min 8160000, max 20261016); intersection with E: []
+d091 run/seeds-planned.json: 2 seeds (min 1235, max 70704); intersection with E: []
+d091b (D2) run/seeds-planned.json: 2 seeds (min 1235, max 70705); intersection with E: []
+rep070-F run-F/seeds-planned.json: 6 seeds (min 1235, max 70703); intersection with E: []
+# 7-8 digit integers on seed lines in *.py / *.sh (site-packages and venvs excluded): 23 distinct
+   7,840,000  in 1 file(s), e.g. <runs>/verify13/client_v13.py
+   7,842,000  in 1 file(s), e.g. <runs>/verify13/client_v13.py
+   8,160,000  in 2 file(s), e.g. <this-repo>/investigations/2026-10-glm53-completion/long-reply/bplus/scripts/plan.py
+   9,100,000  in 3 file(s), e.g. <this-repo>/investigations/2026-10-glm53-completion/phase2-stage1/fixture.py
+   9,300,000  in 2 file(s), e.g. <this-repo>/investigations/2026-10-glm53-completion/bundle/gate/client_bundle.py
+   9,400,000  in 4 file(s), e.g. <this-repo>/investigations/2026-10-glm53-completion/b0-mapguard/run/client_mapguard.py
+   9,700,000  in 2 file(s), e.g. <this-repo>/investigations/2026-10-glm53-completion/d7/step2/run/client_mapguard.py
+   9,710,000  in 2 file(s), e.g. <this-repo>/investigations/2026-10-glm53-completion/d7/step2/run/client_mapguard.py
+   9,820,000  in 2 file(s), e.g. <this-repo>/investigations/2026-10-glm53-completion/hook-validation/runner/client_hookval.py
+   9,830,000  in 2 file(s), e.g. <this-repo>/investigations/2026-10-glm53-completion/first-contrast/runner/client_fc.py
+  12,341,235  in 2 file(s), e.g. <this-repo>/investigations/2026-10-glm53-completion/rep070/refreeze/tests/session_sim.sh
+  12,351,236  in 2 file(s), e.g. <this-repo>/investigations/2026-10-glm53-completion/rep070/refreeze/tests/session_sim.sh
+  12,361,237  in 2 file(s), e.g. <this-repo>/investigations/2026-10-glm53-completion/rep070/refreeze/tests/session_sim.sh
+  20,260,829  in 1 file(s), e.g. <data-runs>/benchmarks/quality/corpus/code-python-bench.py
+  20,260,929  in 2 file(s), e.g. <eval-tools>/kld/kld_score.py
+  20,261,011  in 22 file(s), e.g. <this-repo>/investigations/2026-10-glm53-completion/arm-col511-plan/analysis_col511.py
+  20,261,012  in 22 file(s), e.g. <this-repo>/investigations/2026-10-glm53-completion/b0-allreduce/fixture.py
+  20,261,013  in 12 file(s), e.g. <this-repo>/investigations/2026-10-glm53-completion/b0-screen-s1236/b0s1236_analysis.py
+  20,261,014  in 2 file(s), e.g. <this-repo>/investigations/2026-10-glm53-completion/hook-validation/followup-a2/f1_exchange.py
+  20,261,015  in 9 file(s), e.g. <this-repo>/investigations/2026-10-glm53-completion/first-contrast/retry/tests/test_sentinel_fcr.py
+  20,261,016  in 6 file(s), e.g. <this-repo>/investigations/2026-10-glm53-completion/long-reply/bplus/scripts/bplus_stats.py
+  20,261,017  in 2 file(s), e.g. <this-repo>/investigations/2026-10-glm53-completion/rep070/refreeze/budget_rep070.py
+  20,261,021  in 13 file(s), e.g. <this-repo>/investigations/2026-10-glm53-completion/long-reply/d091/analysis_d091.py
+values within 20,000 of the E range: []
+family warm-up 7,810,000 + i (i < 100): range 7,810,000 - 7,810,099; intersection with E: []
+family warm-up 8,810,000 + i (i < 100): range 8,810,000 - 8,810,099; intersection with E: []
+family GPQA fixture 9,400,000 + d (d < 198): range 9,400,000 - 9,400,197; intersection with E: []
+family phase fixtures 9,850,000 + 1000*phase + 10*fixture + extra (< 9,950,000): range 9,850,000 - 9,949,999; intersection with E: []
+family col511 fixture 8,000,000 + 10,000*ord(case) + 10*rows + d (case a-d, rows <= 64, d < 16): range 8,970,010 - 9,000,655; intersection with E: []
+family col511 fixture 9,100,000 + 100*ord(case) + rows: range 9,109,701 - 9,110,064; intersection with E: []
+family col511 seed_for 7,000,000 + 100,000*kind + 1,000*n_idx + 10*rows + d (kind, n_idx < 10): range 7,000,010 - 7,909,655; intersection with E: []
+family B+ 8,160,000 + 10,000*engine + 100*prefix + j: range 8,170,101 - 8,191,204; intersection with E: []
+VERDICT: E range unused by every source checked

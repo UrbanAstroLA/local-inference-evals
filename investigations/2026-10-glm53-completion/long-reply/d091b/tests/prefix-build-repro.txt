@@ -1,0 +1,12 @@
+# B+ prefix-construction reproduction 2026-10-21T08:34:01-07:00 (CPU-only containers; zero GPU)
+build_prefixes.py: package 1ebbec2ef0cdea40, B+ 1ebbec2ef0cdea40
+build (0.7.0 image) rc=0; build v070: 86/86 checks pass; libraries {'transformers': '5.15.1', 'tokenizers': '0.22.2', 'numpy': '2.2.6'}
+SAME out/prefix_manifest.json (byte-identical to bplus/out/prefix_manifest.json)
+SAME PRIVATE/prefixes.json (sha256 equal to B+'s; ids not shown)
+mode 0600 PRIVATE/prefixes.json
+verify (v070 image) rc=0; verify v070: 170/170 checks pass; libraries {'transformers': '5.15.1', 'tokenizers': '0.22.2', 'numpy': '2.2.6'}
+SAME checks/prefix-verify-v070.json (byte-identical to B+'s)
+verify (v091 image) rc=0; verify v091: 170/170 checks pass; libraries {'transformers': '5.15.1', 'tokenizers': '0.22.2', 'numpy': '2.2.6'}
+SAME checks/prefix-verify-v091.json (byte-identical to B+'s)
+verify (b1 image) rc=0; verify b1: 170/170 checks pass; libraries {'transformers': '5.15.1', 'tokenizers': '0.22.2', 'numpy': '2.2.6'}
+SAME checks/prefix-verify-b1.json (byte-identical to B+'s)

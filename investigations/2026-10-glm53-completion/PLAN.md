@@ -2601,3 +2601,79 @@ passed.
   - Primary: E1 = 0.7.0 − 0.9.1 on 0.9.1-built prefixes, with B+'s screens.
   - Descriptive cross table: prefix source × engine, with question-matched rows.
   - The package is frozen and costed before authorization.
+
+**Amendment 22ac (2026-10-21; option-E package frozen for review, before any GPU use).**
+- **Package:** `long-reply/e-cross/` (SHA256SUMS sha256 0be97e4c…, 135 files).
+- **Prefixes:** option D's 8 0.9.1-built prefixes, rebuilt byte-identically.
+  - originally capped: q79p4, q81p4, q170p4, q109p4, q13p4;
+  - originally finished: q145p4, q121p4, q27p4.
+  - q79, q81 and q145 also appear in B+ and form the question-matched rows.
+- **Run:** seeds 8,270,101-8,280,804, verified unused; stock 0.7.0 and stock 0.9.1, 4 seeds per prefix, +65,536 tokens.
+  Renderings 114 / 114 identical on both images.
+- **Gates:** calibrated on 8 reference sessions. The stock 0.7.0 image produced three KV pool sizes in nine starts
+  (2,749,599; 2,758,919; 2,768,240); 22v accepted two, E accepts all three.
+- **Reading:** E1 under B+'s two-engine rule (EFFECT / REVERSE / SMALL; R-S unavailable).
+- **Power:** P(R-E) 0.37-0.42 at the full discovery gap and 0.06-0.08 at half; ≤ 0.012 per direction with no gap. The
+  likely reading is R-I, which would not be evidence of no effect.
+- **Cost:** central 6.5, pessimistic 10.2, ceiling 13.2 GPU-hours.
+- **Checks:** identity 21 / 21, analysis dry runs 19 / 19, refusals 24 / 24, session simulation 62 / 62, privacy clean,
+  DRY_RUN passes.
+
+**Amendment 22ad (2026-10-21; operator decision "get more prefixes", before any new data).**
+- **D2:** a second text-logged stock 0.9.1 GPQA pass, identical to option D apart from a fresh request seed and run
+  tag. Package `long-reply/d091b/`, copied from `d091/` with only those changed. Same terms as D: up to 10.0 GPU-hours,
+  single attempt.
+- **E, revised before any E data:**
+  - **Prefix set:** the union of D's and D2's eligible 0.9.1-built replies under B+'s rule (R50 < 0.05 at 100k), one
+    per question across both passes, stratified by original outcome, ranked and tie-broken as in B+. D's 8 prefixes
+    keep their place, with D2 adding questions not already present.
+  - **KV pool:** reported with a floor (8 requests at the cap), not identity-gated, as in D.
+  - **Re-freeze:** power and cost are recomputed for the resulting number of prefixes, and E is re-frozen before its
+    run.
+
+**Amendment 22ae (2026-10-21; D2 package frozen, before any GPU use).**
+- **Package:** `long-reply/d091b/` (SHA256SUMS sha256 1b080fb5…, 150 files). It is a copy of `d091/` with the seed,
+  tag and self-paths changed; every changed file has before/after sha256 in its PROPOSAL §13. Its gate calibration adds
+  D's 2026-10-21 session (12 / 12 pass on all four).
+- **Request seed 70705:** absent from every request log, results file, published row and raw body. Its only 10 text hits
+  are option D's own negative dry run N1, which relabelled stand-in rows to 70705 without sending a request (listed in
+  `checks/seed-text-hits.txt`). 70706 is clean under the strict text rule as well.
+- **Checks:** analysis dry runs 17 / 17, refusals 22 / 22, session simulation 67 / 67, privacy clean, DRY_RUN at 10.0
+  passes.
+
+**Amendment 22af (2026-10-21; operator: "keep 70705, launch", before any D2 data).** D2 authorized at up to 10.0
+occupied GPU-hours, single attempt, seed 70705 kept with the disclosed text-scan exception; package SHA256SUMS 1b080fb5…
+verified at launch.
+
+**Amendment 22ag (2026-10-22; D2 result, descriptive; E prefix set fixed by the 22ad rule).**
+- **Run:** valid. Stock 0.9.1 at seed 70705, 7.163 GPU-hours of 10.0, no preemption, KV pool 4,707,515.
+- **The pass:**
+  - empty 8 of 198, all cap exhaustion. This is above the record's per-pass range (5-6); D had 6;
+  - raw 84.3%; stated 85.4% (final after the hand read of 2 rows, both committing to one option);
+  - 12 replies past 100k, of which 4 finished (0.33).
+- **Capped replies:** 7 of 8 end in exact loops; none was repeating at 100k.
+- **First 100k tokens, capped against finished:**
+  - characters per token 2.68 against 3.37 (AUC 0.25);
+  - digit share 0.072 against 0.030;
+  - interjections 11.6 against 2.3 per 1k (AUC 1.00).
+  - Here the digit-heavy signature that D showed only weakly is present.
+- **E prefix set under 22ad:** D's 8 plus D2's eligible replies on new questions: q69p5, q120p5 and q186p5 (capped),
+  q88p5 and q71p5 (finished). That makes 13 prefixes (8 capped, 5 finished). Eight of their questions (79, 81, 145,
+  69, 120, 186, 88, 71) also appear in B+, which gives the question-matched rows.
+- **Limits:** descriptive only, one pass.
+
+**Amendment 22ah (2026-10-22; E re-frozen on 13 prefixes, before any E data).**
+- **Package:** `long-reply/e-cross/` (SHA256SUMS sha256 60a10748…). `CHANGES-22ah.json` lists 85 changed, 27 new and
+  6 removed files; every changed or removed file keeps a `.pre22ah` copy.
+- **Prefixes:** P01-P08 from D, unchanged, plus P09-P13 from D2.
+  - D2's prefixes: q69p5, q120p5 and q186p5 (capped), q88p5 and q71p5 (finished).
+  - All are rebuilt byte-identically; renderings are identical on both images.
+  - D2's eligible q161p5 lies outside D2's own per-stratum cap and is excluded under 22ag.
+- **Seeds:** 8,270,101-8,281,304 (104), verified unused, including in D2's logs and raw bodies.
+- **Gates:** KV pool reported, gated only on the floor of 8 requests at the cap (v070 2,666,496; v091 2,646,016). All
+  other gates are unchanged and pass on 9 reference sessions, D and D2 included.
+- **Power (thresholds unchanged):** P(R-E) 0.75-0.88 at the full discovery gap and 0.21-0.27 at half; ≤ 0.013 per
+  direction with no gap.
+- **Cost:** central 10.2, pessimistic 15.4, ceiling 19.9 GPU-hours.
+- **Checks:** identity 26 / 26, dry runs 21 / 21 (a KV pool below the floor gives INVALID; an unseen size above it is
+  valid), refusals 24 / 24, session simulation 62 / 62, privacy clean, DRY_RUN passes.

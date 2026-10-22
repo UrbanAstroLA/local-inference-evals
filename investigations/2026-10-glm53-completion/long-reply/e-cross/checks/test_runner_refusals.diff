@@ -1,0 +1,144 @@
+2c2,6
+< # Refusal tests of runner/run_bplus.sh, all with DRY_RUN=1. Docker is touched read-only only (docker ps, docker image
+---
+> set -u
+> # [E copy of bplus/tests/test_runner_refusals.sh: set -u; scratch fixed inside e-cross/PRIVATE/ and guarded; package copies
+> #  by tar (the scratch lies inside the package); E's ceiling (19.9 under amendment 22ah); the B1-tag test replaced by a v091 digest test and an
+> #  approval at B+'s 31.6 ceiling; stubs written with set -u.]
+> # Refusal tests of runner/run_e.sh, all with DRY_RUN=1. Docker is touched read-only only (docker ps, docker image
+5,9c9,15
+< # Package-level refusals run on copies of the package in a scratch folder.
+< # Usage: test_runner_refusals.sh SCRATCH_DIR   (SCRATCH_DIR must be a new or disposable folder; it is deleted at the end)
+< H=$(cd "$(dirname "$0")" && pwd); PKG=$(dirname "$H"); RUN0="$PKG/runner/run_bplus.sh"
+< S=${1:?usage: test_runner_refusals.sh SCRATCH_DIR}
+< case "$S" in /tmp/*|<data-runs>/*) ;; *) echo "REFUSED: scratch dir must be under /tmp or <data-runs>"; exit 2 ;; esac
+---
+> # Package-level refusals run on copies of the package in a scratch folder under PRIVATE/ (deleted at the end).
+> # Usage: test_runner_refusals.sh > OUT   (needs a frozen package: SHA256SUMS must verify for the real-configuration test)
+> H=$(cd "$(dirname "$0")" && pwd); PKG=$(dirname "$H"); RUN0="$PKG/runner/run_e.sh"
+> EC=<runs>/long-reply/e-cross
+> case "$PKG" in "$EC") ;; *) echo "REFUSED: unexpected package path $PKG"; exit 2 ;; esac
+> S=$PKG/PRIVATE/scratch-refusals
+> case "$S" in "$EC"/PRIVATE/scratch-refusals) ;; *) echo "REFUSED: scratch $S"; exit 2 ;; esac
+11c17,19
+< rm -rf "$S"; mkdir -p "$S" || exit 1
+---
+> cleanup() { case "$S" in "$EC"/PRIVATE/scratch-refusals) rm -rf -- "$S" ;; esac; }
+> trap cleanup EXIT
+> cleanup; mkdir -p "$S" || exit 1; chmod 700 "$S"
+13,15c21,23
+< mkdir -p "$S/readonly" "$S/glm" "$S/digest" "$S/tag" "$S/gpu" "$S/gpumem" || exit 1
+< printf '%s\n' '#!/usr/bin/env bash' \
+<   "case \"\$1\" in ps) exec \"$REAL_DOCKER\" \"\$@\" ;; image) [ \"\$2\" = inspect ] && exec \"$REAL_DOCKER\" \"\$@\" ;; esac" \
+---
+> for d in readonly glm digest digest91 gpu gpumem; do mkdir -p "$S/$d" || exit 1; done
+> printf '%s\n' '#!/usr/bin/env bash' 'set -u' \
+>   "case \"\${1:-}\" in ps) exec \"$REAL_DOCKER\" \"\$@\" ;; image) [ \"\${2:-}\" = inspect ] && exec \"$REAL_DOCKER\" \"\$@\" ;; esac" \
+17,18c25,26
+< printf '%s\n' '#!/usr/bin/env bash' \
+<   "case \"\$1\" in ps) echo 'glm53-flash-exl3-b12x-vllm ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:a9e985c0'; exit 0 ;; image) [ \"\$2\" = inspect ] && exec \"$REAL_DOCKER\" \"\$@\" ;; esac" \
+---
+> printf '%s\n' '#!/usr/bin/env bash' 'set -u' \
+>   "case \"\${1:-}\" in ps) echo 'glm53-flash-exl3-b12x-vllm ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:a9e985c0'; exit 0 ;; image) [ \"\${2:-}\" = inspect ] && exec \"$REAL_DOCKER\" \"\$@\" ;; esac" \
+20,21c28,29
+< printf '%s\n' '#!/usr/bin/env bash' \
+<   "case \"\$1\" in ps) exec \"$REAL_DOCKER\" \"\$@\" ;; image) [ \"\$2\" = inspect ] && { echo sha256:0000000000000000000000000000000000000000000000000000000000000000; exit 0; } ;; esac" \
+---
+> printf '%s\n' '#!/usr/bin/env bash' 'set -u' \
+>   "case \"\${1:-}\" in ps) exec \"$REAL_DOCKER\" \"\$@\" ;; image) [ \"\${2:-}\" = inspect ] && { echo sha256:0000000000000000000000000000000000000000000000000000000000000000; exit 0; } ;; esac" \
+23,25c31,33
+< printf '%s\n' '#!/usr/bin/env bash' \
+<   "case \"\$1\" in ps) exec \"$REAL_DOCKER\" \"\$@\" ;; image) [ \"\$3\" = local/glm53-v0.9.1-b1-d7:local ] && { echo sha256:08d1cb902ddb888f679b972714168bb7c0d2333b4c1865f3ebf860baa2f46548; exit 0; }; [ \"\$2\" = inspect ] && exec \"$REAL_DOCKER\" \"\$@\" ;; esac" \
+<   'echo "STUB REFUSED: docker $*" >&2; exit 99' > "$S/tag/docker"
+---
+> printf '%s\n' '#!/usr/bin/env bash' 'set -u' \
+>   "case \"\${1:-}\" in ps) exec \"$REAL_DOCKER\" \"\$@\" ;; image) case \"\${3:-}\" in *a9e985c0*) echo sha256:1111111111111111111111111111111111111111111111111111111111111111; exit 0 ;; esac; [ \"\${2:-}\" = inspect ] && exec \"$REAL_DOCKER\" \"\$@\" ;; esac" \
+>   'echo "STUB REFUSED: docker $*" >&2; exit 99' > "$S/digest91/docker"
+27c35
+< printf '%s\n' '#!/usr/bin/env bash' \
+---
+> printf '%s\n' '#!/usr/bin/env bash' 'set -u' \
+29c37
+< printf '%s\n' '#!/usr/bin/env bash' \
+---
+> printf '%s\n' '#!/usr/bin/env bash' 'set -u' \
+31,32c39,47
+< chmod +x "$S/readonly/docker" "$S/glm/docker" "$S/digest/docker" "$S/tag/docker" "$S/gpu/docker" "$S/gpumem/docker" "$S/gpu/nvidia-smi" "$S/gpumem/nvidia-smi"
+< copy() { local d="$S/pkg-$1"; rm -rf "$d"; cp -a "$PKG" "$d" && rm -rf "$d/run" && echo "$d"; }
+---
+> for d in readonly glm digest digest91 gpu gpumem; do chmod +x "$S/$d/docker"; done
+> chmod +x "$S/gpu/nvidia-smi" "$S/gpumem/nvidia-smi"
+> copy() { # package copy without run/ and the scratch folders
+>   local d="$S/pkg-$1"
+>   case "$d" in "$EC"/PRIVATE/scratch-refusals/pkg-*) ;; *) return 1 ;; esac
+>   rm -rf -- "$d"; mkdir -p "$d" || return 1
+>   tar -C "$PKG" --exclude='./run' --exclude='./PRIVATE/scratch-*' -cf - . | tar -C "$d" -xf - || return 1
+>   echo "$d"
+> }
+42,53c57,69
+< t "approval zero" "must be a number in (0, 31.6]" readonly "$RUN0" APPROVED_GPU_H=0
+< t "approval above the ceiling" "must be a number in (0, 31.6]" readonly "$RUN0" APPROVED_GPU_H=40
+< t "approval not a number" "must be a number in (0, 31.6]" readonly "$RUN0" APPROVED_GPU_H=abc
+< t "launcher override MAX_NUM_SEQS" "override variables set in the environment" readonly "$RUN0" APPROVED_GPU_H=31.6 MAX_NUM_SEQS=8
+< t "launcher override IMAGE" "(not the shipped configuration): IMAGE" readonly "$RUN0" APPROVED_GPU_H=31.6 IMAGE=x
+< t "launcher override PORT" "(not the shipped configuration): PORT" readonly "$RUN0" APPROVED_GPU_H=31.6 PORT=0.0.0.0:8001
+< t "launcher override ENABLE_PREFIX_CACHING" "(not the shipped configuration): ENABLE_PREFIX_CACHING" readonly "$RUN0" APPROVED_GPU_H=31.6 ENABLE_PREFIX_CACHING=0
+< t "GLM container running" "ABORT: a GLM container is running" glm "$RUN0" APPROVED_GPU_H=31.6
+< t "image digest mismatch" "has Id 'sha256:0000" digest "$RUN0" APPROVED_GPU_H=31.6
+< t "B1 tag moved" "(tag moved)" tag "$RUN0" APPROVED_GPU_H=31.6
+< t "compute process on the GPUs" "ABORT: GPU pre-flight: compute process 999999" gpu "$RUN0" APPROVED_GPU_H=31.6
+< t "GPU memory in use" "ABORT: GPU pre-flight: GPU0 busy" gpumem "$RUN0" APPROVED_GPU_H=31.6
+---
+> t "approval zero" "must be a number in (0, 19.9]" readonly "$RUN0" APPROVED_GPU_H=0
+> t "approval above the ceiling" "must be a number in (0, 19.9]" readonly "$RUN0" APPROVED_GPU_H=20.0
+> t "approval at B+'s ceiling" "must be a number in (0, 19.9]" readonly "$RUN0" APPROVED_GPU_H=31.6
+> t "approval not a number" "must be a number in (0, 19.9]" readonly "$RUN0" APPROVED_GPU_H=abc
+> t "launcher override MAX_NUM_SEQS" "override variables set in the environment" readonly "$RUN0" APPROVED_GPU_H=19.9 MAX_NUM_SEQS=8
+> t "launcher override IMAGE" "(not the shipped configuration): IMAGE" readonly "$RUN0" APPROVED_GPU_H=19.9 IMAGE=x
+> t "launcher override PORT" "(not the shipped configuration): PORT" readonly "$RUN0" APPROVED_GPU_H=19.9 PORT=0.0.0.0:8001
+> t "launcher override ENABLE_PREFIX_CACHING" "(not the shipped configuration): ENABLE_PREFIX_CACHING" readonly "$RUN0" APPROVED_GPU_H=19.9 ENABLE_PREFIX_CACHING=0
+> t "GLM container running" "ABORT: a GLM container is running" glm "$RUN0" APPROVED_GPU_H=19.9
+> t "image digest mismatch (every image)" "has Id 'sha256:0000" digest "$RUN0" APPROVED_GPU_H=19.9
+> t "image digest mismatch (0.9.1 only)" "v091 image ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:a9e985c0" digest91 "$RUN0" APPROVED_GPU_H=19.9
+> t "compute process on the GPUs" "ABORT: GPU pre-flight: compute process 999999" gpu "$RUN0" APPROVED_GPU_H=19.9
+> t "GPU memory in use" "ABORT: GPU pre-flight: GPU0 busy" gpumem "$RUN0" APPROVED_GPU_H=19.9
+56c72
+< t "port 8001 in use" "ABORT: port 8001 is in use" readonly "$RUN0" APPROVED_GPU_H=31.6
+---
+> t "port 8001 in use" "ABORT: port 8001 is in use" readonly "$RUN0" APPROVED_GPU_H=19.9
+60c76
+< t "B+ client process running" "ABORT: a B+ client process is running" readonly "$RUN0" APPROVED_GPU_H=31.6
+---
+> t "client process running" "ABORT: a B+ client process is running" readonly "$RUN0" APPROVED_GPU_H=19.9
+63,65c79,81
+< t "package file changed after freezing" "SHA256SUMS does not verify" readonly "$P/runner/run_bplus.sh" APPROVED_GPU_H=31.6
+< P=$(copy nosums) || exit 1; rm -f "$P/SHA256SUMS"
+< t "package not frozen" "SHA256SUMS missing" readonly "$P/runner/run_bplus.sh" APPROVED_GPU_H=31.6
+---
+> t "package file changed after freezing" "SHA256SUMS does not verify" readonly "$P/runner/run_e.sh" APPROVED_GPU_H=19.9
+> P=$(copy nosums) || exit 1; rm -f -- "$P/SHA256SUMS"
+> t "package not frozen" "SHA256SUMS missing" readonly "$P/runner/run_e.sh" APPROVED_GPU_H=19.9
+67c83
+< t "PRIVATE prefixes differ from the manifest" "PRIVATE/prefixes.json or prompts.json does not match" readonly "$P/runner/run_bplus.sh" APPROVED_GPU_H=31.6
+---
+> t "PRIVATE prefixes differ from the manifest" "PRIVATE/prefixes.json or prompts.json does not match" readonly "$P/runner/run_e.sh" APPROVED_GPU_H=19.9
+69,71c85,87
+< t "PRIVATE folder mode" "PRIVATE/ must be mode 0700" readonly "$P/runner/run_bplus.sh" APPROVED_GPU_H=31.6
+< P=$(copy pin) || exit 1; sed -i 's/\]=e1196cbcd6b4744cb41fdebf3d12d8586dbea464e702af5de47617837efe0e5e/]=0000000000000000000000000000000000000000000000000000000000000000/' "$P/runner/run_bplus.sh"; ( cd "$P" && ./make_sums.sh > /dev/null )
+< t "pinned launcher hash differs" "ABORT: pinned file changed: <stacks>/glm53-flash-v0.9.0/start.sh" readonly "$P/runner/run_bplus.sh" APPROVED_GPU_H=31.6
+---
+> t "PRIVATE folder mode" "PRIVATE/ must be mode 0700" readonly "$P/runner/run_e.sh" APPROVED_GPU_H=19.9
+> P=$(copy pin) || exit 1; sed -i 's/\]=e1196cbcd6b4744cb41fdebf3d12d8586dbea464e702af5de47617837efe0e5e/]=0000000000000000000000000000000000000000000000000000000000000000/' "$P/runner/run_e.sh"; ( cd "$P" && ./make_sums.sh > /dev/null )
+> t "pinned launcher hash differs" "ABORT: pinned file changed: <stacks>/glm53-flash-v0.9.0/start.sh" readonly "$P/runner/run_e.sh" APPROVED_GPU_H=19.9
+73c89
+< t "snapshot listing differs" "ABORT: snapshot listing differs" readonly "$P/runner/run_bplus.sh" APPROVED_GPU_H=31.6
+---
+> t "snapshot listing differs" "ABORT: snapshot listing differs" readonly "$P/runner/run_e.sh" APPROVED_GPU_H=19.9
+75,76c91,92
+< t "run folder exists (no automatic retry)" "exists (an earlier attempt; no automatic retry)" readonly "$P/runner/run_bplus.sh" APPROVED_GPU_H=31.6
+< t "real configuration: every check passes" "DRY_RUN: all refusal checks passed" readonly "$RUN0" APPROVED_GPU_H=31.6
+---
+> t "run folder exists (no automatic retry)" "exists (an earlier attempt; no automatic retry)" readonly "$P/runner/run_e.sh" APPROVED_GPU_H=19.9
+> t "real configuration: every check passes" "DRY_RUN: all refusal checks passed" readonly "$RUN0" APPROVED_GPU_H=19.9
+78d93
+< rm -rf "$S"

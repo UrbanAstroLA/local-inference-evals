@@ -1,0 +1,84 @@
+2c2,6
+< # B+ fixed-prefix continuation runner (PROPOSAL.md section 7). PREPARED, NOT RUN; needs the operator's GPU authorization
+---
+> set -u
+> # [E copy of bplus/runner/run_bplus.sh (diff in checks/runner.diff): set -u; engines v070 v091; E's ceilings; the B1
+> #  entries, B1 pin and B1 tag check dropped with the engine; package-path guard; finalize runs scripts/analysis_e.py.
+> #  Amendment 22ah: 13 prefixes, 52 continuations per session; ceiling and budget walls from the recomputed out/cost.json.]
+> # E prefix-source x engine continuation runner (PROPOSAL.md section 7). PREPARED, NOT RUN; needs the operator's GPU authorization
+8,9c12,13
+< # One invocation, three sessions, one after another, each on a FRESH server started by digest through the engine's own
+< # stack launcher (loopback publish 127.0.0.1:8001): 1 stock 0.7.0, 2 stock 0.9.1, 3 B1. Per session: GPU pre-flight
+---
+> # One invocation, two sessions, one after another, each on a FRESH server started by digest through the engine's own
+> # stack launcher (loopback publish 127.0.0.1:8001): 1 stock 0.7.0, 2 stock 0.9.1. Per session: GPU pre-flight
+12c16
+< # (scripts/client_bplus.py: 48 continuations, 8 in flight, fixed order), server log + docker inspect, stop, GPU release,
+---
+> # (scripts/client_bplus.py: 52 continuations, 8 in flight, fixed order), server log + docker inspect, stop, GPU release,
+14c18
+< # started). At the end the frozen analysis runs in a CPU-only container: COMPLETE / C1-ONLY -> screens; anything else
+---
+> # started). At the end the frozen analysis runs in a CPU-only container: COMPLETE -> E1 screen and reading; anything else
+17,19c21,23
+< PLAN_MAX_GPU_H=31.6          # out/cost.json ceiling (99th percentile of the full-horizon session at pessimistic rates,
+<                              # all three engines, inter-session gaps); no invalid-run allowance
+< declare -A SESSION_MIN_S=([v070]=25485 [v091]=15449 [b1]=15581)   # per-session ceiling walls (out/cost.json)
+---
+> PLAN_MAX_GPU_H=19.9          # out/cost.json ceiling (sum of the per-session 99.9th percentiles of the full-horizon session at pessimistic rates,
+>                              # both engines, inter-session gaps); no invalid-run allowance
+> declare -A SESSION_MIN_S=([v070]=20700 [v091]=14941)   # per-session ceiling walls (out/cost.json)
+20a25,26
+> EC=<runs>/long-reply/e-cross
+> case "$PKG" in "$EC"|"$EC"/*) ;; *) echo "ABORT: package path $PKG is not e-cross or inside it"; exit 1 ;; esac
+21a28
+> case "$RUN" in "$EC"/run|"$EC"/*/run) ;; *) echo "ABORT: run folder $RUN is not inside e-cross"; exit 1 ;; esac
+23,26c30,32
+< ENGINES="v070 v091 b1"
+< declare -A RECIPE=([v070]="glm53-flash-exl3-k3.25@tpurtell" [v091]="glm53-flash-exl3-k3.25@tpurtell+v0.9.1"
+<                    [b1]="glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234+d7")
+< declare -A SD=([v070]=<stacks>/glm53-flash-v0.7.0 [v091]=<stacks>/glm53-flash-v0.9.0 [b1]=<stacks>/glm53-flash-v0.9.0)
+---
+> ENGINES="v070 v091"
+> declare -A RECIPE=([v070]="glm53-flash-exl3-k3.25@tpurtell" [v091]="glm53-flash-exl3-k3.25@tpurtell+v0.9.1")
+> declare -A SD=([v070]=<stacks>/glm53-flash-v0.7.0 [v091]=<stacks>/glm53-flash-v0.9.0)
+28,29c34
+<                     [v091]="ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07"
+<                     [b1]="sha256:799d3cf8e5d14a615b89c734a6a38b4be5729bb44bb6b56effc7cf7df747b88a")
+---
+>                     [v091]="ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07")
+31,34c36,37
+<                    [v091]="sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07"
+<                    [b1]="sha256:799d3cf8e5d14a615b89c734a6a38b4be5729bb44bb6b56effc7cf7df747b88a")
+< declare -A CACHE=([v070]=<cache>/vllm [v091]=<cache>/vllm-v090 [b1]=<cache>/vllm-v090)
+< B1_TAG=local/glm53-v0.9.1-b1-d7:local
+---
+>                    [v091]="sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07")
+> declare -A CACHE=([v070]=<cache>/vllm [v091]=<cache>/vllm-v090)
+41d43
+<   ["<recipes>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+bundle-d1234+d7/env.sh"]=49f1c57cce0e3c4f022a1ff846362cdd21e9e59d633ec021be8cacdb561d2bf7
+62c64
+< echo "$(date -Is) B+ runner start; engines $ENGINES; approved $APPROVED_GPU_H GPU-h (${CAP_S} s wall)${DRY_RUN:+; DRY_RUN=$DRY_RUN}"
+---
+> echo "$(date -Is) E runner start; engines $ENGINES; approved $APPROVED_GPU_H GPU-h (${CAP_S} s wall)${DRY_RUN:+; DRY_RUN=$DRY_RUN}"
+94,95d95
+< TAG_ID=$(docker image inspect "$B1_TAG" --format '{{.Id}}' 2>/dev/null)
+< [ "$TAG_ID" = "${IMG_ID[b1]}" ] || { echo "ABORT: tag $B1_TAG is '${TAG_ID:-missing}', not ${IMG_ID[b1]} (tag moved)"; exit 1; }
+127,128c127,128
+<   echo "  (start only if >= the session's ceiling wall remains: v070 ${SESSION_MIN_S[v070]} s, v091 ${SESSION_MIN_S[v091]} s, b1 ${SESSION_MIN_S[b1]} s);"
+<   echo "  fresh server by digest via the stack launcher (127.0.0.1:8001); ready-file + API gate; client_bplus.py (48 requests,"
+---
+>   echo "  (start only if >= the session's ceiling wall remains: v070 ${SESSION_MIN_S[v070]} s, v091 ${SESSION_MIN_S[v091]} s);"
+>   echo "  fresh server by digest via the stack launcher (127.0.0.1:8001); ready-file + API gate; client_bplus.py (52 requests,"
+176,177c176,177
+<   RUN_DIR="$RUN" bash "$PKG/scripts/run_cpu.sh" v070 scripts/analysis_bplus.py /work/run/result.json > "$RUN/result.md" 2> "$RUN/result.err"
+<   echo "$(date -Is) analysis: $(grep -m1 '^# B+' "$RUN/result.md"); $(grep -oE '^exit [0-9]+' "$RUN/result.md" | tail -1) (0 complete, 5 C1-only, 3 invalid, 4 incomplete)"
+---
+>   RUN_DIR="$RUN" bash "$PKG/scripts/run_cpu.sh" v070 scripts/analysis_e.py /work/run/result.json > "$RUN/result.md" 2> "$RUN/result.err"
+>   echo "$(date -Is) analysis: $(grep -m1 '^# E ' "$RUN/result.md"); $(grep -oE '^exit [0-9]+' "$RUN/result.md" | tail -1) (0 complete, 3 invalid, 4 incomplete)"
+249d248
+<   [ "$e" = b1 ] && { PREV="$RUN/cache-v091-after.json"; [ -s "$PREV" ] || PREV="$RUN/cache-v09x-before.json"; }
+261c260
+< echo "$(date -Is) B+ DONE; total wall $(( $(date +%s)-T0 ))s, $TOTAL_GH GPU-h (ledger $LEDGER)"
+---
+> echo "$(date -Is) E DONE; total wall $(( $(date +%s)-T0 ))s, $TOTAL_GH GPU-h (ledger $LEDGER)"

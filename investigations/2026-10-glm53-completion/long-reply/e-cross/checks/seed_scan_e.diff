@@ -1,0 +1,9 @@
+2c2,3
+< """Seed inventory for the re-freeze of the stock 0.7.0 replication (variant F needs three request seeds never used by any
+---
+> """[E copy of rep070/refreeze/checks/seed_scan.py (sha256 3d8e80e4...); only SKIP_DIRS differs]
+> Seed inventory for the re-freeze of the stock 0.7.0 replication (variant F needs three request seeds never used by any
+26c27
+< SKIP_DIRS = ("<runs>/rep070/refreeze",)  # this package (its own seed lists)
+---
+> SKIP_DIRS = ("<runs>/long-reply/e-cross",)  # E copy: this package only (its own seed lists)

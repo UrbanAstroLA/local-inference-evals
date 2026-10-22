@@ -1,0 +1,1 @@
+{"session": 1, "recipe": "glm53-flash-exl3-k3.25@tpurtell+v0.9.1", "tag": "+d091b", "image": "sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07", "passes": "1", "seed": 70705, "start": 1792631098, "stop": 1792643992, "wall_s": 12894, "gpus": 2, "gpu_hours": 7.163, "chain_rc": 0, "watchdog_fired": false}
