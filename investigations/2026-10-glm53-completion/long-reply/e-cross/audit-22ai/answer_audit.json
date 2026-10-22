@@ -1,0 +1,46 @@
+{
+ "v070": {
+  "all": {
+   "stopped": 22,
+   "reasoning_closed": 22,
+   "final_letter": 22,
+   "correct": 12
+  },
+  "by_original_stratum": {
+   "finished": {
+    "stopped": 18,
+    "reasoning_closed": 18,
+    "final_letter": 18,
+    "correct": 12
+   },
+   "capped": {
+    "stopped": 4,
+    "reasoning_closed": 4,
+    "final_letter": 4,
+    "correct": 0
+   }
+  }
+ },
+ "v091": {
+  "all": {
+   "stopped": 15,
+   "reasoning_closed": 15,
+   "final_letter": 15,
+   "correct": 10
+  },
+  "by_original_stratum": {
+   "finished": {
+    "stopped": 14,
+    "reasoning_closed": 14,
+    "final_letter": 14,
+    "correct": 10
+   },
+   "capped": {
+    "stopped": 1,
+    "reasoning_closed": 1,
+    "final_letter": 1,
+    "correct": 0
+   }
+  }
+ }
+}

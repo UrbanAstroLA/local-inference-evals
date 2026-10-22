@@ -1,0 +1,22 @@
+2026-10-21T22:52:22-07:00 E runner start; engines v070 v091; approved 19.9 GPU-h (35820 s wall)
+cache inventory: 2890 files, 898 unreadable, sha256 78280f63a702101f
+cache inventory: 2081 files, 678 unreadable, sha256 a014960101a49d7a
+2026-10-21T22:52:24-07:00 v070: starting glm53-flash-exl3-k3.25@tpurtell (ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629) via <stacks>/glm53-flash-v0.7.0/start.sh
+2026-10-21T23:00:43-07:00 v070: ready; client starts
+2026-10-22T01:49:44-07:00 v070: client rc=0 (client v070: 52 / 52 requests returned 200; failures [])
+2026-10-22T01:49:46-07:00 v070: docker stop rc=0
+  inspect: image OK; published on ['127.0.0.1'] (loopback only)
+cache inventory: 2890 files, 898 unreadable, sha256 78280f63a702101f
+cache diff cache-v070-before.json -> cache-v070-after.json: 0 added, 0 removed, 0 changed
+  v070: warm-up lines 9; preemption lines 0
+2026-10-22T01:49:57-07:00 v091: starting glm53-flash-exl3-k3.25@tpurtell+v0.9.1 (ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07) via <stacks>/glm53-flash-v0.9.0/start.sh
+2026-10-22T02:01:49-07:00 v091: ready; client starts
+2026-10-22T03:59:29-07:00 v091: client rc=0 (client v091: 52 / 52 requests returned 200; failures [])
+2026-10-22T03:59:35-07:00 v091: docker stop rc=0
+  inspect: image OK; published on ['127.0.0.1'] (loopback only)
+cache inventory: 2081 files, 678 unreadable, sha256 a014960101a49d7a
+cache diff cache-v09x-before.json -> cache-v091-after.json: 0 added, 0 removed, 0 changed
+  v091: warm-up lines 9; preemption lines 0
+2026-10-22T04:00:57-07:00 analysis: # E prefix-source x engine continuation result: COMPLETE; exit 0 (0 complete, 3 invalid, 4 incomplete)
+2026-10-22T04:00:57-07:00 E DONE; total wall 18515s, 10.245 GPU-h (ledger <runs>/long-reply/e-cross/run/costs.jsonl)
+no GLM container running

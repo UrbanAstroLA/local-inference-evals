@@ -2722,3 +2722,35 @@ E", relayed by the operator, before any E data; wording only).**
 
 **Amendment 22aj (2026-10-22; operator: "yes to both", before any E data).** E authorized at up to 19.9 occupied
 GPU-hours, single attempt, no retry; package SHA256SUMS 60a10748… verified at launch; interpretation under 22ai.
+
+**Amendment 22ak (2026-10-22; E result).**
+- **Run:** valid on every frozen check. 104 / 104 requests HTTP 200, all 13 renderings equal, no preemption, 9 warm-ups
+  per session, loopback publish. 10.245 GPU-hours of 19.9 (v070 5.918, v091 4.327).
+- **Reading: R-I** (two-engine rule). E1 is not EFFECT and not SMALL ("unresolved").
+- **Stop-token endpoint within +64k, prefix as the unit:**
+
+  | engine | P | stopped / 52 | originally capped | originally finished |
+  |---|---:|---:|---:|---:|
+  | stock 0.7.0 | 0.423 | 22 | 0.125 | 0.900 |
+  | stock 0.9.1 | 0.288 | 15 | 0.031 | 0.700 |
+
+- **E1 = +0.135** (95% +0.038 to +0.250; 90% +0.058 to +0.231; two-sided sign-flip p 0.0625; prefixes 5 / 0 / 8).
+  - The point estimate is below the 0.15 EFFECT threshold.
+  - With 5 discordant prefixes, all in one direction, 0.0625 is the smallest two-sided p the exact test can give.
+    This is a property of the design, not a change to the reading.
+- **Between-prefix variation:** η² 0.72 in the observed sample.
+- **Cross (descriptive, prespecified):**
+  - 0.7.0-generated prefixes (B+): 0.417 on both engines;
+  - 0.9.1-generated prefixes (E): 0.423 (v070) and 0.288 (v091);
+  - interaction E1 − C1: +0.135 (95% +0.013 to +0.271; permutation p 0.10);
+  - source contrast, confounded with question: −0.061 (95% −0.369 to +0.260);
+  - question-matched rows (8 questions) mostly follow each prefix's original outcome.
+- **Supplementary answer audit (22ai; counts only):** every stopped continuation closed its reasoning and gave a final
+  letter under the frozen extractor (22 / 22 and 15 / 15). Correct: 12 / 22 (v070) and 10 / 15 (v091). Continuations
+  of originally capped prefixes that stopped (4 and 1) were all incorrect.
+- **Limits:**
+  - per 22ai, this is an effect of the engine bundle after prefill reconstruction of token prefixes, not from identical
+    internal states;
+  - one session per engine in fixed order;
+  - re-tokenized ids;
+  - the endpoint covers about 164k tokens.

@@ -410,7 +410,11 @@ check("amendments 22z-22aa: option D 5.8844 (2 x 10,592 s) of 10.0; cumulative 1
 d2 = st("Long-reply option D2")
 check("amendments 22af-22ag: option D2 7.1633 (2 x 12,894 s) of 10.0; cumulative 118.07 GPU-hours",
       len(d2) == 1 and arms_ok(d2[0]) and d2[0]["gpu_hours"] == 7.1633
-      and f"{sum(c['gpu_hours'] for c in allcost):.2f}" == "118.07")
+      and f"{sum(c['gpu_hours'] for c in allcost[:before('Long-reply E prefix-source')]):.2f}" == "118.07")
+ex = st("Long-reply E prefix-source")
+check("amendment 22ak: E 10.2445 (2 x 10,652 s + 2 x 7,788 s) of 19.9; cumulative 128.31 GPU-hours",
+      len(ex) == 1 and arms_ok(ex[0]) and ex[0]["gpu_hours"] == 10.2445
+      and f"{sum(c['gpu_hours'] for c in allcost):.2f}" == "128.31")
 
 print("\n## Checks (checks.jsonl)")
 for line in (HERE / "checks.jsonl").read_text().splitlines():

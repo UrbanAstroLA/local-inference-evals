@@ -1,0 +1,2 @@
+{"engine": "v070", "recipe": "glm53-flash-exl3-k3.25@tpurtell", "image": "sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629", "start": 1792648344, "stop": 1792658996, "wall_s": 10652, "gpus": 2, "gpu_hours": 5.918, "client_rc": 0, "watchdog_fired": false}
+{"engine": "v091", "recipe": "glm53-flash-exl3-k3.25@tpurtell+v0.9.1", "image": "sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07", "start": 1792658997, "stop": 1792666785, "wall_s": 7788, "gpus": 2, "gpu_hours": 4.327, "client_rc": 0, "watchdog_fired": false}

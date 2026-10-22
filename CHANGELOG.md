@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-10-22, later (completion investigation, amendment 22ak): prefix-source cross (E) result
+
+Contents unchanged. One investigation run is added.
+
+- **`PLAN.md`**: amendment 22ak (E: valid, R-I).
+- **`long-reply/e-cross/`**: run outputs (request logs, frozen result, cache inventories, GPU and watchdog logs) and
+  `audit-22ai/` (the answer audit: counts only). Raw outputs, prefixes, server logs and docker inspect output are
+  withheld. Substitutions are in `PUBLIC-COPIES-22ak.txt`.
+- **`costs.jsonl`** (10.2445) and **`recompute.py`**: cumulative 128.31.
+- **`long-reply/README.md`**, investigation `README.md` and **`LEDGER.md`**.
+
 ## 2026-10-22, later (completion investigation, amendments 22ai-22aj): review disposition for E
 
 Contents unchanged.
