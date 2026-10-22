@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-22, upstream (completion investigation)
+
+Contents unchanged.
+
+- **Investigation `README.md`:** the Status and Next steps entries for upstream now link the submitted corrections
+  (tpurtell PRs #7-#11; vLLM issue #63168) instead of describing them as held drafts.
+
 ## 2026-10-22, final (completion investigation): status sections brought up to date
 
 Contents unchanged.

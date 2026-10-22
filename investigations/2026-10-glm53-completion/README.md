@@ -22,8 +22,13 @@ difference. Quantization is held fixed.
   - on prefill-reconstructed token prefixes, the stock engines stopped alike on 0.7.0-generated prefixes (B+). On
     0.9.1-generated ones, 0.7.0 stopped more often (E; +13.5 points, below the frozen criterion);
   - extra stops were not comparably more correct answers.
-- **Upstream.** Contributions (the defect reproductions and patches) are prepared as drafts and held. Reporting them is
-  the operator's decision.
+- **Upstream.** The verified corrections were submitted on 2026-10-22, each with a reproduction and its verification:
+  - tpurtell's engine: [#7](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/7) (D2),
+    [#8](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/8) (D1),
+    [#9](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/9) (D3),
+    [#10](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/10) (D4) and
+    [#11](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/11) (D7, requires #7);
+  - upstream vLLM: D7 reported as [vllm-project/vllm#63168](https://github.com/vllm-project/vllm/issues/63168).
 - **Spend:** 128.31 occupied GPU-hours in all ([`costs.jsonl`](costs.jsonl), [recompute](#recompute)).
 
 Plan: [`PLAN.md`](PLAN.md), frozen 2026-10-10, with [dated amendments](PLAN.md#dated-amendments).
@@ -1383,7 +1388,7 @@ Stated with their evidence so far.
 - **Reopening:** any further experiment would need a new proposal, independent review and authorization. For an
   interaction study on long replies, the requirements recorded in [`long-reply/CLOSEOUT.md`](long-reply/CLOSEOUT.md)
   apply.
-- **Upstream:** minimal reproductions and patches are prepared and held; offering them upstream is a separate decision.
+- **Upstream:** the corrections are submitted (tpurtell #7-#11; vLLM issue #63168).
 
 Open, with their evidence above and in the [open questions](#open-questions):
 
