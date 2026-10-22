@@ -1,4 +1,4 @@
-# Long-reply completion (amendments 22q-22ak)
+# Long-reply completion (amendments 22q-22al; closed)
 
 The question: what drives completion of GPQA replies that run past 100,000 generated tokens?
 
@@ -94,19 +94,22 @@ Reasoning text from the stock 0.7.0 replication, with definitions hashed before 
 - **Answer audit (descriptive):** every stopped continuation gave a final letter (22 / 22 and 15 / 15). Correct:
   12 / 22 and 10 / 15.
 
-## Reading so far
-- Once in trouble, both engines loop the same way.
-- From 0.7.0-generated token prefixes, reconstructed by prefill, the two stock engines stopped alike (B+). From
-  0.9.1-generated prefixes, 0.7.0 stopped more often (E; not supported by the frozen rule).
-- The early signatures are not clearly engine-specific. The interjection signature appears on both engines. The
-  low characters-per-token, digit-heavy signature appears on 0.7.0 and in D2, but only weakly in D.
+## Status at close (amendment 22al)
+**Closed as unresolved, with positive findings.** See [`CLOSEOUT.md`](CLOSEOUT.md) for:
+- the summary in the independent review's wording;
+- what was established;
+- the answer audit over all attempts;
+- what remains open;
+- the requirements before any interaction study.
 
-Neither frozen test (B+, E) discriminated: both read R-I. Descriptively, any stock-engine difference appeared on
-0.9.1-generated histories (+0.135) and not on 0.7.0-generated ones (0.000). That is consistent with 0.9.1
-trajectories reaching states its engine bundle then handles worse, but it is not established. Each engine's prefill
-reconstructs the state, so original decode-built state is absent. The endpoint covers about 164k tokens, and each
-engine ran in one session in fixed order.
-
+In brief:
+- In B+, the stock engines stopped at identical aggregate rates on selected 0.7.0-generated prefixes.
+- In E, 0.7.0 stopped more often on selected 0.9.1-generated prefixes (+13.5 points; 5 prefixes favouring 0.7.0, none
+  favouring 0.9.1).
+- Neither met its frozen criterion. The pattern suggests possible dependence on prefix source; it does not establish
+  an interaction or locate its cause.
+- Additional stops did not translate into comparably more correct answers: 23.1% against 19.2% correct over all
+  attempts.
 
 **Privacy.** Reply text, prefixes and token ids stay local (`PRIVATE/`, `raw/`) and are never published. The published
 files hold ids, hashes, counts and metrics only.

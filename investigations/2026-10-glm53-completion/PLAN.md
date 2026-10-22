@@ -2754,3 +2754,32 @@ GPU-hours, single attempt, no retry; package SHA256SUMS 60a10748… verified at 
   - one session per engine in fixed order;
   - re-tokenized ids;
   - the endpoint covers about 164k tokens.
+
+**Amendment 22al (2026-10-22; adopts the independent review "review disposition: run E, amendments 22ai-22ak",
+relayed by the operator; the long-reply allocation closes).**
+- **Decision:** close the current long-reply line as **unresolved, with positive findings**. E is kept as suggestive
+  evidence requiring independent confirmation. Readings are unchanged: B+ R-I (after 22v), E R-I without SMALL. No
+  threshold relaxed, no one-sided test.
+- **Summary wording, primary statement:** "In B+, the stock engines had identical aggregate stopping rates on selected
+  0.7.0-generated prefixes. In E, 0.7.0 stopped more often on selected 0.9.1-generated prefixes: +13.5 percentage
+  points, with five prefix-level differences favoring 0.7.0 and none favoring 0.9.1. Neither experiment met its frozen
+  criterion for an engine effect or state dominance. The cross-experiment pattern suggests possible dependence on
+  prefix source, but does not establish an interaction or locate its cause."
+- **Summary wording, separate hypothesis:** "One hypothesis is that the engine bundles respond differently to features
+  of 0.9.1-generated histories after prefill reconstruction. Differences in selected histories, reconstruction, and
+  sessions remain alternative explanations."
+- **"Reaching states its engine handles worse"** is withdrawn from the main finding as too mechanistic.
+- **E1 statistics:** its bootstrap interval and exact sign-flip p use different constructions; both are reported. The
+  exact-test floor explains the discreteness and does not override the rule.
+- **Correction to earlier framing:** these results replace any suggestion of a near-universal completion cliff on the
+  corrected engines (the pooled B0 + B1 figure of 0.12 in 19f rested on 17 replies). B1 stopped on 25 / 48 B+
+  continuations.
+- **Answer audit over all attempts (E):**
+  - correct 12 / 52 (23.1%) against 10 / 52 (19.2%), a difference of +3.8 points against a stopping difference of +13.5;
+  - the seven extra stops and two extra correct answers are aggregate differences, not paired rescues;
+  - all 4 / 1 capped-origin stops were incorrect.
+- **C stays unfunded.** Any interaction study needs a new proposal meeting the review's requirements: a fresh
+  confirmatory cohort; multiple source-generation sessions; a question-matched core; fixed strata weighting; multiple
+  balanced continuation sessions; more histories rather than more seeds; clustering-aware analysis; power ≥ 80% for a
+  decision-relevant effect; and a decision that depends on it (e.g. correct answers per GPU-hour).
+- **Close-out document:** `long-reply/CLOSEOUT.md`.

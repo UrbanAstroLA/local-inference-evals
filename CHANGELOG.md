@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-10-22, close-out (completion investigation, amendment 22al): long-reply line closed
+
+Contents unchanged. No run is added.
+
+- **`PLAN.md`**: amendment 22al (independent review's disposition: the long-reply allocation closes as unresolved,
+  with positive findings; summary wording; answer audit over all attempts; requirements for any future interaction
+  study).
+- **New `long-reply/CLOSEOUT.md`**; `long-reply/README.md` gains its status at close.
+- **Open-question rows updated:** investigation `README.md` (long-reply termination: closed; the pooled B0 + B1 0.12
+  figure superseded) and `FINDINGS.md` (the 0.7.0 vs 0.9.1 empty-reply question: replication O3, both lines closed).
+- **`LEDGER.md`**.
+
 ## 2026-10-22, later (completion investigation, amendment 22ak): prefix-source cross (E) result
 
 Contents unchanged. One investigation run is added.

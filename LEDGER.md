@@ -641,6 +641,25 @@ What was asked, run, found, corrected and withdrawn, in date order.
 - Cumulative 128.31 GPU-hours.
   [Long-reply](investigations/2026-10-glm53-completion/long-reply/README.md).
 
+**2026-10-22. Long-reply completion closed as unresolved, with positive findings (amendment 22al).**
+- **Decision:** on independent review, the allocation closes. E is kept as suggestive evidence requiring independent
+  confirmation; its R-I reading is unchanged.
+- **Summary:** in B+, the stock engines had identical aggregate stopping rates on selected 0.7.0-generated prefixes.
+  In E, 0.7.0 stopped more often on selected 0.9.1-generated prefixes (+13.5 points; five prefix-level differences
+  favouring 0.7.0, none favouring 0.9.1). Neither met its frozen criterion. A dependence on prefix source is
+  suggested, not established, and its cause is not located.
+- **Established:**
+  - the same terminal-loop forms on both stock engines;
+  - observable differences that precede terminal repetition;
+  - prefix identity strongly predicting outcomes in these samples;
+  - prefill-reconstructed long histories finishing on every tested engine.
+- **Correctness:** extra stops were not comparably more correct answers. Over all attempts in E, 23.1% were correct on
+  0.7.0 and 19.2% on 0.9.1, against a stopping difference of +13.5 points.
+- **Correction:** this supersedes the earlier pooled B0 + B1 figure (0.12 on 17 replies). B1 stopped on 25 / 48 B+
+  continuations.
+- **Any further interaction study** needs a new proposal with a fresh cohort and a decision that depends on it.
+- No GPU-hours added (cumulative 128.31). [Close-out](investigations/2026-10-glm53-completion/long-reply/CLOSEOUT.md).
+
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough
   qualification. They also said the D7 path "cannot run" where the basis is a reconstruction. These are reworded in the
