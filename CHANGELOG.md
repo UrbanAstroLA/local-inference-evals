@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-10-22, later (completion investigation, amendments 22ai-22aj): review disposition for E
+
+Contents unchanged.
+
+- **`PLAN.md`**: amendment 22ai (independent review: E proceeds unchanged; interpretation corrections; a fixed
+  result-statement table; a supplementary answer audit; B+ citation wording; C held for a result-dependent review) and
+  22aj (authorization).
+- **Wording corrected** in the investigation `README.md`, `LEDGER.md` and `long-reply/README.md`: B+ is now stated in
+  the review's citation wording; "identical states" becomes token prefixes reconstructed by each engine's prefill; η²
+  describes between-prefix variation, not a causal share.
+
 ## 2026-10-22 (completion investigation, amendments 22ac-22ah): second 0.9.1 text pass; E frozen
 
 Contents unchanged. One investigation run is added.
