@@ -1,4 +1,7 @@
 # sha256 of local files not published (reason in brackets). Paths relative to the local folder.
-d3b8d0b5ae493373855e9747d1ba7e53014e9ebce1c47ebceea26991067225ed  ./INTERVENTION-PROPOSAL.md   (local only: planned next steps (public text states questions and evidence only))
+5a39aa474c8eb8f9eaea270ae89b44894ee4122921180d6018fccf4837749efc  ./INTERVENTION-PROPOSAL.md   (local only: planned next steps (public text states questions and evidence only))
 fbbd5815eca6e141d72d5851aa68c46e73463f29e75733fbca1351bb59dd8a78  ./NEXT-STEPS.md   (local only: planned next steps (public text states questions and evidence only))
+0a28b040b5ec514c9ac993986017e8aefd4fc1f5f17b1de9e49958361ffff6ca  ./next/LIVE-CHECK-PREP.md   (local only: planned next steps and pricing (public text states questions and evidence only))
+ac4d042f125e7973b7540442ae664453e5d929c5f053f00d589c30277b12b944  ./next/MOE-SWITCH-FEASIBILITY.md   (local only: planned next steps and pricing (public text states questions and evidence only))
+2bed542dcb5b60f1d3e588f3d7af08f126f7f40dca7fb9613e41392b3905176d  ./next/PRICING.md   (local only: planned next steps and pricing (public text states questions and evidence only))
 # dispatch/src/: 15393 engine source files copied from the stock images by digest, 1.7 GB, not published or hashed here; cited files are hashed in dispatch/SOURCE-SHA256.txt

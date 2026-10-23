@@ -21,18 +21,18 @@ with equal weight per question. The within-question permutation keeps each engin
 
 ## Empty replies (all 11 passes)
 
-| Comparison | 0.7.0 | 0.9.1 | Δ rate, 0.7.0 − 0.9.1 (95% question bootstrap) | Rate ratio (95%) | Within-question permutation, two-sided p | Pass-level exact, one-sided p | Session-level exact, one-sided p |
+| Comparison | 0.7.0 | 0.9.1 | Δ rate, 0.7.0 − 0.9.1 (95% question bootstrap) | Rate ratio (95%) | Within-question permutation, two-sided p (Monte Carlo, 20,000 draws) | Pass-level exact permutation, one-sided / two-sided p | Session-level exact permutation, one-sided / two-sided p |
 |---|---|---|---|---|---:|---:|---:|
-| Original (3 vs 3 passes, same seeds) | 4 / 594 (0, 3, 1) | 16 / 594 (5, 5, 6) | −2.02 pp (−3.54 to −0.67) | 0.25 (0.06–0.55) | 0.005 | 0.050 (20 arrangements) | 0.17 (6) |
-| Fresh seeds only (3 vs 2) | 10 / 594 (2, 4, 4) | 14 / 396 (6, 8) | −1.85 pp (−4.12 to +0.17) | 0.48 (0.15–1.09) | 0.040 | 0.10 (10) | 0.17 (6) |
-| Pooled (6 vs 5) | 14 / 1,188 | 30 / 990 | −1.85 pp (−3.23 to −0.66) | 0.39 (0.19–0.65) | 0.001 | 0.002 (462) | 0.014 (70) |
+| Original (3 vs 3 passes, same seeds) | 4 / 594 (0, 3, 1) | 16 / 594 (5, 5, 6) | −2.02 pp (−3.54 to −0.67) | 0.25 (0.06–0.55) | 0.005 | 0.050 / 0.10 (20 arrangements) | 0.17 / 0.33 (6) |
+| Fresh seeds only (3 vs 2) | 10 / 594 (2, 4, 4) | 14 / 396 (6, 8) | −1.85 pp (−4.12 to +0.17) | 0.48 (0.15–1.09) | 0.040 | 0.10 / 0.10 (10) | 0.17 / 0.33 (6) |
+| Pooled (6 vs 5) | 14 / 1,188 | 30 / 990 | −1.85 pp (−3.23 to −0.66) | 0.39 (0.19–0.65) | 0.001 | 0.0022 / 0.0065 (462) | 0.0143 / 0.0286 (70) |
 
 - **Fresh seeds alone:** the interval runs from 4.1 points fewer to 0.2 points more empties on 0.7.0, and the ratio
   from 0.15 to 1.09. A ~2-point reduction is as compatible with these data as a small one. This is not evidence that
   the gap is absent.
 - **Pooled:** every 0.7.0 pass (0-4 empties) is below every 0.9.1 pass (5-8), and every 0.7.0 session's rate is
   below every 0.9.1 session's.
-- **Assumptions, stated:**
+- **Assumptions, stated** (corrected 22an: the within-question test is Monte Carlo, not exact; the pass- and session-level tests are exact under exchangeability of historical passes and sessions):
   - Passes and sessions are exchangeable between engines under the null.
   - Questions are independent units.
   - Same-seed passes on the two engines are coupled (log reply-length correlation 0.66-0.91, 22m). That coupling
@@ -49,7 +49,7 @@ with equal weight per question. The within-question permutation keeps each engin
 | Finish by 165,536 tokens once past 100k (the B+/E horizon) | 6/14 vs 7/25 | 16/29 vs 8/22 | 22/43 vs 15/47: +0.19 (−0.05 to +0.45) |
 
 **Readings, descriptive:**
-- How often replies reach 100k does not separate the engines. The gap sits in what happens after 100k.
+- There is no clear difference in reaching 100k (pooled ratio 0.92, 0.67-1.26). A difference within that interval is not excluded (wording corrected, 22an). The clear difference is in what happens after 100k.
 - Part of the finishing difference arises after 165k tokens: 7 of 0.7.0's 29 finishes against 3 of 0.9.1's 18.
   The continuation experiments' +64k horizon could not see that part. Their own rates are consistent with the
   natural +64k rates (B+ 0.7.0 on 0.7.0 prefixes; E 0.9.1 on 0.9.1 prefixes).
@@ -63,7 +63,7 @@ with equal weight per question. The within-question permutation keeps each engin
 
 ## What this does and does not support
 - **Supports, descriptively and post hoc:** in all stock data, 0.7.0 leaves fewer empty replies than 0.9.1. The
-  pooled reduction is about 1.9 points (ratio about 0.4), concentrated in finishing after 100k.
+  pooled reduction is about 1.9 points (ratio about 0.4), with the clear difference in finishing after 100k and no clear difference in reaching 100k.
 - **Does not support:**
   - a mechanism;
   - a population effect free of session confounding (4 sessions per engine);

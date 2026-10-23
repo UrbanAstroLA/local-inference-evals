@@ -2829,3 +2829,42 @@ relayed by the operator; the long-reply allocation closes).**
   - `long-reply/discovery/REPORT.md` and `long-reply/README.md`: "the other 8" onsets is corrected to 6, with 2 that
     never formed a terminal loop (the report's own table).
 - **Withheld locally:** the engine source copies (image digests are the reference) and the planned next steps.
+
+**Amendment 22an (2026-10-22; adopts the independent review "disposition on the CPU reconnaissance", relayed by the
+operator; no GPU use).**
+- **Decision:** the reconnaissance (22am) is accepted with reporting corrections. A causal-intervention design was
+  reviewed. It is not authorized, and any GPU work needs a new, revised proposal and authorization.
+- **Answers adopted:**
+  - the "metadata-reset discrepancy" is H4-meta, the align-mode block-boundary reset of KDA `num_accepted` (21h, 21j;
+    explained in 21k). Direct verification of the convolution state at the boundary remains missing;
+  - the pooled stock comparison is meaningful descriptive evidence: the direction is consistent across the original
+    and fresh cohorts. It does not change O3 or establish a causal engine effect.
+- **Reporting corrections (applied in place in `recon-2026-10-22/`, listed in its README):**
+  - **22am's session-level permutation** is one-sided p 0.0143, two-sided 0.0286. Both assume exchangeable historical
+    sessions. The pass-level test is exact under the same kind of assumption (one-sided 0.0022, two-sided 0.0065
+    pooled). 22am's within-question p (0.001) is Monte Carlo (20,000 draws), not exact.
+  - **Reaching 100k:** "no clear difference" (ratio 0.92, 0.67-1.26) is supported; "the engines do not differ" is
+    not. Corrected in the investigation README, FINDINGS, LEDGER and `f1/result.md`.
+  - **Dispatch:**
+    - the post-100k window assumes constant throughput within each request;
+    - client-side outstanding requests are not engine-side decode-step membership;
+    - the reported "decode speed past 100k" simplifies to T / secs, a whole-request average. It corroborates nothing
+      about decoding inside late loops; the field is renamed;
+    - the routed-expert launch statement is corrected. Both versions use packed routes and whole tiles: 0.9.1 at 8 in
+      flight runs an exact 32-wide launch (K128/N128, block_m 8); 0.7.0 at 6-8 in flight runs the 1,024-wide prefill
+      launch (K64/N256, block_m 64). Whether outputs differ is unmeasured.
+  - **The first contrast's D2 window experiment** kept NO READING after failed validation gates (22j-22k). Its
+    descriptive figures are not a validated negative result.
+- **Added (zero-GPU):**
+  - **Deterministic lookahead positive control** for the draft-slot reproduction (`draft-slot/lookahead_control.py`):
+    with the block alignment constructed, every predicted crossing is detected (12 / 12, async and sync). An unfaulted
+    control at the same alignment gives 0.
+  - **Causal-length source for verify rows** (`dispatch/DISPATCH.md` section 2a; read in code, not measured):
+    - without `positions`, the stock B12x sparse-MLA builder takes verify-row lengths from the async CPU upper bound,
+      which the code describes as "not a valid causal mask for multi-token verification";
+    - with `positions` (port 01, tpurtell PR #7; B1) it uses `positions + 1`;
+    - port 01 therefore changes this source as well as the kpool tail ring;
+    - whether the stock path can admit a selection at or beyond a row's causal position (`sel_causal`) has not been
+      measured on a stock image.
+- **Handoff documents** are aligned with the published evidence, preserving every frozen reading.
+- No GPU-hours added (cumulative 128.31).

@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-10-22, review of the reconnaissance (completion investigation, amendment 22an)
+
+No run is added; no GPU use.
+
+- **`PLAN.md`:** amendment 22an (the independent review's disposition; reporting corrections; additions).
+- **`recon-2026-10-22/`:**
+  - `f1/result.md`: one- and two-sided exact permutation p; Monte Carlo label; reaching-100k wording;
+  - `dispatch/`: client-side in-flight caveat; throughput field renamed (whole-request average); MoE launch geometry
+    corrected; section 2a, the causal-length source for verify rows;
+  - `draft-slot/`: deterministic lookahead control (new `lookahead_control.py` and result).
+- **Wording, reaching 100k:** investigation `README.md`, `FINDINGS.md`, `LEDGER.md`.
+- **`long-reply/README.md`:** the question-matched figure's caveat restored (the 0.9.1 family pools modified arms).
+- **`LEDGER.md`**.
+
 ## 2026-10-22, reconnaissance after close (completion investigation, amendment 22am)
 
 No run is added; no GPU use.

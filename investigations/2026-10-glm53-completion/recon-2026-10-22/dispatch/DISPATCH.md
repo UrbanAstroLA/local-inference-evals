@@ -32,8 +32,11 @@ Long replies run at full occupancy. Share of each request's post-100k time spent
 - **Correction to `audits/phase1-dispatch-storage.md` Q1:** its inference that long unanswered replies "spend their
   final stretch with few requests left" does not hold for most capped replies. The decisive cell is 8 in flight.
 - **Window caveat:** the past-100k window assumes a constant decode rate within each request (I).
-- **Decode speed past 100k (O):** capped replies decode faster than finished ones on both engines. 0.7.0: 45-49 tok/s
-  capped against 33-43 finished. 0.9.1: 69-71 against 48-61. This fits higher draft acceptance inside loops.
+- **Client side, not engine side:** the in-flight count is the number of outstanding client requests. It is not the
+  number of requests in a given uniform decode step: prefill, mixed and waiting steps differ (correction, 22an).
+- **Throughput (correction, 22an):** the figure first reported here as decode speed past 100k equals T / secs, the
+  whole-request average (`(T − 100000) / (secs × (1 − 100000 / T)) = T / secs`). It is not a measurement after 100k
+  and does not corroborate faster decoding inside late loops. The field is now `whole_request_tok_s`.
 
 ## 2. Decode verify step at n requests in flight
 
@@ -63,8 +66,12 @@ batches replay FULL graphs at the padded size (S; OD for B1/0.9.1: `gate/RESULT.
 - **Kernel schedule (S):** both plans build the mixed-Trellis W4A16 kernel with `schedule_whole_tiles=True`
   (`b12x/moe/_shared/kernels/w4a16/mixed_trellis.py:1913, 2186`; `kernel.py:1533-1538`). One CTA computes each output
   tile over the full K, so the split-K path is not used by either plan.
-- **Differences (S):** tile geometry (direct decode K64/N128 against expert-packed prefill K128/N128,
-  `exl3.py:2373-2377`), the routing path (direct top-k routes against packed) and FC2 grouping.
+- **Differences (S; corrected 22an):** both plans use packed routes (direct routes are disabled for projection-mixed
+  EXL3, `_MIXED_TRELLIS_DIRECT_ROUTE_LIMIT = 0`). The decode plan compiles an exact launch per width 1..32 (tile
+  K128/N128 at 10-32 rows); the prefill plan compiles one 1,024-wide launch (tile K64/N256, block_m 64). At 8 in flight:
+  0.9.1 runs an exact 32-wide K128/N128 block-8 launch; 0.7.0 runs the 1,024-wide K64/N256 block-64 launch
+  (`b12x/moe/fused_moe/_impl.py` `_trellis_exact_launch_token_counts`, `_projection_mixed_tile_config`). Details:
+  `../next/MOE-SWITCH-FEASIBILITY.md` (local).
 - **Not established:** whether the two plans give bitwise-equal outputs for the same rows (unmeasured).
 
 **Other kernel families per version:**
@@ -82,6 +89,28 @@ batches replay FULL graphs at the padded size (S; OD for B1/0.9.1: `gate/RESULT.
 | Index-K tail ring | ring 4 < verify window 6 (P2), no positions (D2) | ring 8, no positions (D2); B1 fixed | S |
 | D2 wrong decode-built pools at 8 in flight | 100% | stock 78-90% (by acceptance); B1 0% | H (`defect-repros/D2-kpool-tail-ring/two-rank/`) |
 | Sampler, rejection sampler, KDA code, stop rules | identical bytes | identical bytes | S (README config diff) |
+
+## 2a. Causal-length source for multi-token verify rows (S; read in code, not measured; added 22an)
+
+| | Stock 0.7.0 (DCP2) | Stock 0.9.1 (DCP1, no `positions` in the metadata) | B1 / stock + port 01 (DCP1, `positions` passed) |
+|---|---|---|---|
+| Per-token cache length on verify rows (B12x sparse-MLA builder) | from the CPU `seq_lens_cpu_upper_bound`, converted to DCP-local lengths | from the CPU `seq_lens_cpu_upper_bound`: `context = bound − q_len`, lengths `context + 1 … context + q_len` | `positions + 1` |
+
+**What the bound is (S):**
+- It is the scheduler's `num_computed_tokens` plus scheduled tokens (v091 `model_runner.py:1370-1378`).
+- Under async scheduling the scheduler's count assumes the previous step's drafts were accepted. The builder's comment
+  calls the bound "an optimistic CPU sequence-length bound … not a valid causal mask for multi-token verification"
+  (v091 `b12x_mla_sparse.py:1439-1445`). The same branch is in v070 (`:1233-1239`).
+
+**Inferred, not measured:**
+- Without positions, verify-row lengths can exceed `positions + 1` by the previous step's rejected-draft count. At the
+  served per-position acceptance (0.755 / 0.579 / 0.454) that count is positive in about half of decode steps.
+- The decode kernel receives these lengths as `cache_seqlens` for verify batches (`:3178-3181`).
+- Attention reads only indexer-selected entries, so a longer length matters only if a selection at or beyond a row's
+  causal position can occur. That is the `sel_causal` invariant, checked on B0 / B1 (positions path) and never on a
+  stock image.
+
+**Scope note:** passing `positions` (port 01, tpurtell PR #7) changes this source as well as the kpool tail ring.
 
 ## 3. Context and pool-length thresholds (S; `thresholds.out`)
 
@@ -127,7 +156,7 @@ Per-position draft acceptance, aggregated from each session's `SpecDecoding metr
 
 ## 5. What differs in the cell where long replies run (n = 8, past 100k)
 
-1. Routed-expert plan: expert-packed prefill plan (0.7.0) against direct Trellis decode plan (0.9.1). I; both schedule whole tiles; whether outputs differ is unmeasured.
+1. Routed-expert launch: 1,024-wide prefill launch, K64/N256, block_m 64 (0.7.0) against exact 32-wide decode launch, K128/N128, block_m 8 (0.9.1). Both packed routes and whole tiles. I per step; whether outputs differ is unmeasured.
 2. Expert layout (EP2 replicated against TP rank-sliced) and its partial-sum all-reduce. O.
 3. Sparse-MLA decode kernel family and KV split (DCP2 LSE combine against layer-owned DCP1). O/S.
 4. Verify width 6 against 4, draft depth, and draft KV placement. O.

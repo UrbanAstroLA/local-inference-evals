@@ -26,8 +26,8 @@ difference. Quantization is held fixed.
   - Pooling every stock pass (post hoc), 0.7.0 left 14 of 1,188 replies empty and 0.9.1 30 of 990: rate difference
     −1.85 points (−3.23 to −0.66), ratio 0.39. Every 0.7.0 pass and session lies below every 0.9.1 one. Fresh seeds
     alone: −1.85 points (−4.12 to +0.17).
-  - The difference sits in finishing once past 100k tokens (29 / 43 against 18 / 47), not in reaching 100k
-    (ratio 0.92).
+  - The clear difference is in finishing once past 100k tokens (29 / 43 against 18 / 47); there is no clear difference
+    in reaching 100k (ratio 0.92, 0.67-1.26; a difference is not excluded). Wording corrected in 22an.
   - Long replies run mostly at 8 requests in flight, where the two engines' decode batches take different
     routed-expert plans (top-k routes differ only at 3-4 in flight) ([dispatch table](recon-2026-10-22/dispatch/DISPATCH.md)).
   - A CPU reproduction of the drafter's slot mapping on the stock 0.9.1 image found no violation in the exercised

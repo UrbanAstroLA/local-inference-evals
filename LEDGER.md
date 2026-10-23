@@ -664,13 +664,28 @@ What was asked, run, found, corrected and withdrawn, in date order.
 - **CPU only;** no frozen reading changes.
 - **Pooled stock passes (post hoc):** 0.7.0 left 14 of 1,188 replies empty, 0.9.1 30 of 990 (−1.85 points, −3.23 to
   −0.66). Every 0.7.0 pass and session sits below every 0.9.1 one. Fresh seeds alone: −1.85 (−4.12 to +0.17).
-- **Where it sits:** in finishing once past 100k tokens (29 / 43 against 18 / 47), not in reaching 100k.
+- **Where it sits:** a clear difference in finishing once past 100k tokens (29 / 43 against 18 / 47); no clear
+  difference in reaching 100k (wording corrected in 22an).
 - **Dispatch:** long replies run mostly at 8 requests in flight. There the engines' decode batches (48 against 32 rows)
   take different routed-expert plans; their top-k routes differ only at 3-4 requests in flight. Per-step dispatch was never logged on a stock image.
 - **Draft slot mapping (stock 0.9.1, CPU):** no violation in the exercised states; planted faults detected.
 - **Errata (owned):** a sign in the investigation README; a loop-onset count (6, not 8) in the long-reply discovery
   report.
 - No GPU-hours added (cumulative 128.31). [Reconnaissance](investigations/2026-10-glm53-completion/recon-2026-10-22/README.md).
+
+**2026-10-22. Review of the reconnaissance: accepted with corrections (amendment 22an).**
+- **Corrections (owned):**
+  - exact permutation p is reported one- and two-sided (session level 0.0143 / 0.0286) with its assumption; the
+    within-question test is Monte Carlo;
+  - "no clear difference" in reaching 100k, not "no difference";
+  - a throughput figure was a whole-request average, not a post-100k measurement;
+  - the routed-expert launch geometry statement was wrong and is corrected.
+- **NO READING stays NO READING:** the first contrast's D2 window figures are not a validated negative.
+- **Added:**
+  - a deterministic positive control for the draft-slot check (12 / 12);
+  - from the code: passing `positions` also changes the per-token causal-length source for speculative verify rows,
+    so the tail-ring correction is not a single isolated change. Not measured.
+- No GPU-hours added (cumulative 128.31).
 
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough

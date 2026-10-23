@@ -141,7 +141,7 @@ def tail_exposure(R):
             agg[n] = agg.get(n, 0) + s
         per.append({"T": T, "finish": r.get("finish_reason"), "secs_after_100k": round(b - a, 1),
                     "mean_inflight": round(sum(n * s for n, s in prof.items()) / tot, 2) if tot else None,
-                    "decode_tok_s_after_100k": round((T - 100000) / (b - a), 1) if b > a else None})
+                    "whole_request_tok_s": round(T / r["secs"], 1) if r["secs"] else None})  # = (T-1e5)/(b-a) under the constant-rate window; not a post-100k measurement
     tot = sum(agg.values())
     return {"long_requests": len(per), "inflight_time_share": {str(n): round(s / tot, 4) for n, s in sorted(agg.items())} if tot else {},
             "per_request": per, "label": "INFERRED window (constant decode rate within a request); client-side in-flight count"}

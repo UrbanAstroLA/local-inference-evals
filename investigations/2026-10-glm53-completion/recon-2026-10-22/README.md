@@ -8,10 +8,10 @@ reply and answer text appear in no output; outputs carry ids, flags, counts and 
 | 1. Input manifest | `f1/manifest.json` (+ `f1/result.md` "Inputs") | done |
 | 2. Original / fresh / pooled stock comparisons | `f1/` (`stock_compare.py`, `result.json`, `result.md`, `rows.jsonl`) | done; post hoc, descriptive |
 | 3. Dispatch table | `dispatch/` (`DISPATCH.md`, `gather.py`, `observed.json`, `SOURCE-SHA256.txt`, `src/` image copies) | done |
-| 4. Draft-slot CPU reproduction | `draft-slot/` (`harness.py`, `run.sh`, `out/`, `README.md`) | done: 0 violations in 6 reachable-state scenarios; 3 of 4 positive controls robust, lookahead control weak |
+| 4. Draft-slot CPU reproduction | `draft-slot/` (`harness.py`, `lookahead_control.py`, `run.sh`, `out/`, `README.md`) | done: 0 violations in 6 reachable-state scenarios; all 4 positive controls detected, the lookahead one deterministically (12 / 12, 22an) |
 | 5. CPU EXL3 decoder | — | deferred, as instructed: an approximate negative engagement count cannot replace Stage B on the real kernels |
 | 6. Coverage map (replaces validation recalibration) | `coverage/COVERAGE.md` | done |
-| 7. One causal intervention | `INTERVENTION-PROPOSAL.md`, `NEXT-STEPS.md` (local only, not published) | proposal only; not authorized |
+| 7. One causal intervention | `INTERVENTION-PROPOSAL.md`, `NEXT-STEPS.md`, `next/` (local only, not published) | reviewed (22an); not authorized |
 
 **Inputs touched, all read-only:**
 - public `runs/` and investigation files;
@@ -25,3 +25,17 @@ reply and answer text appear in no output; outputs carry ids, flags, counts and 
 
 **Disk:** `dispatch/src` holds about 1.6 GB of source copied from the images, which are the durable reference. It can
 be deleted and re-copied by digest.
+
+**Corrections after review (amendment 22an), applied in place:**
+- `f1/result.md`: exact permutation tests are reported one- and two-sided with their exchangeability assumption
+  (session level 0.0143 / 0.0286); the within-question test is labelled Monte Carlo. "No clear difference in reaching
+  100k" replaces wording that implied no difference.
+- `dispatch/DISPATCH.md`:
+  - in-flight counts are client side, not engine decode-step membership;
+  - the former "decode speed past 100k" equals T / secs, a whole-request average (field renamed in `gather.py`), and
+    corroborates nothing about late loops;
+  - the routed-expert launch geometry is corrected (packed routes in both; exact 32-wide K128/N128 against 1,024-wide
+    K64/N256);
+  - section 2a adds the causal-length source for verify rows (read in code).
+- `draft-slot/`: the lookahead positive control is made deterministic by constructing the block alignment.
+

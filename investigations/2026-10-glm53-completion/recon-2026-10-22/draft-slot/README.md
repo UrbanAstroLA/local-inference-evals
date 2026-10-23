@@ -55,14 +55,14 @@ sharing. On 0.7.0 (DCP2, sharing off) a draft-slot error could cost acceptance a
 | Frontier block-table entry replaced by another live request's block | I1 / I2: 18,422 | 3,145-3,183 |
 | Missed block-table append (each new block's first append skipped once) | block 0: 15 | 16-47 (probabilistic version: 0 once) |
 | Bonus query slot dropped when drafts were rejected (checker-only tamper) | I3: 4,979 | 899 |
-| Lookahead K instead of K+1 | **0 (async and sync)** | async runs: 0, 0, 2; sync runs: 1, 1 |
+| Lookahead K instead of K+1, unaligned prompts | **0 (async and sync)** | async runs: 0, 0, 2; sync runs: 1, 1 |
+| **Lookahead K, constructed alignment** (`lookahead_control.py`; P = 1,041, all drafts accepted, so c ≡ 1081 mod 1088 recurs every 272 steps) | **12 / 12 expected crossings: I4 12, block 0 12 (async and sync)**; unfaulted control at the same alignment: 0 | — |
 
-**The lookahead plant is a weak control:**
-- It bites only when a query row's last position falls exactly on the first position of an unallocated 1,088-token
-  block.
-- That depends on prompt-length alignment and, under async scheduling, on the optimistic over-allocation.
-- It was detected in 3 of 7 runs.
-- So I4 is shown to be able to fire, but its sensitivity to this fault class is low in these scenarios.
+**The lookahead control (made deterministic, 22an):**
+- With unaligned prompts it bites only when a query row's last position falls exactly on the first position of an
+  unallocated 1,088-token block, so it fired in 3 of 7 runs.
+- With the alignment constructed, it fires at every predicted crossing and only there. I4 and the block-0 check
+  therefore have a deterministic positive control (`out/lookahead-control.json`).
 
 ## Reading
 - **Clean, within coverage.** In the exercised reachable states (async and sync scheduling, window frees, block
@@ -79,5 +79,5 @@ sharing. On 0.7.0 (DCP2, sharing off) a draft-slot error could cost acceptance a
   - KV-connector paths.
 
 ## Files
-`harness.py`, `run.sh`, `out/image-id.txt`, `out/result.json`, `out/result-quick.json`, `out/full.log`,
-`out/quick.log`.
+`harness.py`, `lookahead_control.py`, `run.sh`, `out/image-id.txt`, `out/result.json`, `out/result-quick.json`,
+`out/lookahead-control.json`, `out/full.log`, `out/quick.log`.

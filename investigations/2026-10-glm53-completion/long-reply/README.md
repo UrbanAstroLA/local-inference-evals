@@ -22,7 +22,9 @@ Reasoning text from the stock 0.7.0 replication, with definitions hashed before 
   and more interjections, before any repetition.
 - **Geometry:** onset positions do not cluster on the attention block, prefill chunk or powers of two.
 - **Question-matched:** on the 14 questions long on both engine families, the 0.7.0 family finished 23 / 36 long
-  replies and the 0.9.1 family 18 / 58. Which questions go long does not explain the gap.
+  replies and the 0.9.1 family 18 / 58. The 0.9.1 family pools stock 0.9.1 with the modified col511, B0 and B1
+  arms, and seeds 1234-1236 are shared across engines (caveat restored, 22an). Which questions go long does not
+  explain the gap.
 
 ## 2. B+: fixed 0.7.0-built prefixes, continued on three engines (`bplus/`; 13.06 GPU-hours)
 - **Design:** 12 prefixes cut at 100k from 0.7.0 replies, 4 seeds each, +64k tokens on stock 0.7.0, stock 0.9.1 and B1.
