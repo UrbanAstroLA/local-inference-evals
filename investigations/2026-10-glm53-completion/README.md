@@ -47,7 +47,8 @@ difference. Quantization is held fixed.
       control was detected.
     - The discrepancy is ruled down as a computational contributor in the tested 0.9.1 configuration and under the
       verified masking/compaction conditions. Not extended to 0.7.0 (DCP2), untested configurations or arbitrary cache
-      contents; an audit of the cache slot the masking relies on is pending.
+      contents. A bounded audit and a writer census of the cache slot the masking relies on (22ar) find that it stays
+      all zero on the served path; two allocator assumptions remain inference.
   - Port 01 changes the tail ring and the length source together, and the live check does not separate them. Not
     shown to relate to the completion difference.
   - 1.51 GPU-hours, including a first attempt of the port-01 arm that stopped before traffic on an instrument race

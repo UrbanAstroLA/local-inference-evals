@@ -2975,3 +2975,35 @@ pre-registered; 0.0022 GPU-hours).**
   independent rows. Rows from the same steps, requests and ranks are dependent, so they are nominal. They are not a
   population bound, and not the probability that a defect remains. The zero-violation counts and coverage stand.
 - GPU-hours 0.0022 (cumulative 129.82).
+
+**Amendment 22ar (2026-10-23; the slot-0 condition of level 3; zero GPU).**
+- **Question** (as narrowed by the independent assessment): can the exact slot-0 storage read by the tested attention
+  kernels contain values that invalidate the level-3 masking argument at consumption?
+- **Audit** (`livecheck-22ao/level3/P2-SLOT0-AUDIT.md`):
+  - slot 0 is bytes [0, 528) of each MLA layer's own KV tensor (11 ranges across the two ranks);
+  - the served V2 runner zero-fills these tensors, and block 0 is the shared null block;
+  - co-owning KDA conv state and the slot-shared draft layer occupy the same bytes, and their writers skip block 0 or
+    write elsewhere in the page;
+  - the live check's 1,077,076 tail-stash "null" events hit the indexer tensors' own null block, a separate
+    allocation.
+- **Writer census** (`livecheck-22ao/level3/P2-WRITER-CENSUS.md`, `p2-census/`): a static taint pass over 736
+  served-scope files classifies all 760 call sites that receive these tensors:
+  - 334 guarded, region-excluded, read-only or disjoint;
+  - 11 conditional on an allocator assumption;
+  - 143 not reached in the served configuration;
+  - 9 zeros only;
+  - 263 not data writes;
+  - **0** that can write non-finite or arbitrary bytes, or that are undetermined.
+  - It adds two writers the audit's trace missed: a copy-on-write page copy (destination never block 0) and the
+    warm-up block zeroer (zeros).
+- **Verdict:** slot 0 stays all zero at every attention read on the served 0.9.1 path, which is the "slot 0 zero" case
+  measured bit-equal in 22aq. No ordering assumption is needed.
+- **Residual inference:**
+  - mamba align-mode copy destinations are never block 0;
+  - real draft query positions fall in allocated draft blocks;
+  - neither copy kernel checks its destination;
+  - the census is static and name-based.
+- **Side finding:** the safety rests on null-block avoidance in four co-owner writers, three without an in-kernel check.
+- **Erratum (owned):** level 3's source reading cited the V1 runner for the zero-filled cache. The served runner is V2,
+  which also zero-fills. Annotated in place; conclusion unchanged.
+- No GPU-hours added (cumulative 129.82).

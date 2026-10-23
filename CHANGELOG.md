@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-10-23, the slot-0 condition of level 3 (completion investigation, amendment 22ar)
+
+No GPU use.
+
+- **`livecheck-22ao/level3/`:**
+  - `P2-SLOT0-AUDIT.md` (the bounded audit);
+  - `P2-WRITER-CENSUS.md` with `p2-census/` (scripts and output);
+  - `README.md` and `RESULT.md` updated with the outcome.
+- **Erratum:** a runner citation in `level3/SOURCE-READING.md`, annotated in place.
+- **`PLAN.md`:** amendment 22ar.
+- **Investigation `README.md`:** the Status entry.
+- **`LEDGER.md`**.
+
 ## 2026-10-23, level 3 of the causal-length check (completion investigation, amendment 22aq)
 
 0.0022 GPU-hours (cumulative 129.82).

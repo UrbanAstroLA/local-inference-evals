@@ -721,6 +721,14 @@ What was asked, run, found, corrected and withdrawn, in date order.
 - **Correction (owned):** the 22ap rule-of-three bounds assume independent rows and are nominal.
 - GPU-hours 0.0022 (cumulative 129.82). [Level 3](investigations/2026-10-glm53-completion/livecheck-22ao/level3/README.md).
 
+**2026-10-23. The cache slot level 3 relies on stays zero on the served path (amendment 22ar).**
+- **A bounded audit and a static writer census** (760 call sites; 0 that can write non-finite or arbitrary bytes)
+  find that the slot-0 bytes the attention kernels read for empty entries stay all zero on the served 0.9.1 path.
+  That is the case level 3 measured bit-equal.
+- **Two allocator assumptions remain inference.**
+- **Erratum (owned):** level 3 cited the V1 runner for the zero-filled cache; the served V2 runner also zero-fills.
+- No GPU-hours added (cumulative 129.82). [Level 3](investigations/2026-10-glm53-completion/livecheck-22ao/level3/README.md).
+
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough
   qualification. They also said the D7 path "cannot run" where the basis is a reconstruction. These are reworded in the

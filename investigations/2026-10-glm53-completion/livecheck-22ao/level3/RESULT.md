@@ -26,7 +26,8 @@ Reading:
   multiplies slot 0's V by P = 0. Stock already performs the same product on every row whose last tile is partial
   (54 / 64 here), so a non-finite slot 0 would corrupt baseline rows too. The condition the masking argument needs is
   that the slot-0 record read by these kernels is finite at consumption (a real finite record also gives bit-equal
-  outputs); a bounded audit of that storage is pending.
+  outputs). The bounded audit and writer census (22ar, `P2-SLOT0-AUDIT.md`, `P2-WRITER-CENSUS.md`) find that it stays
+  all zero on the served path, with two allocator assumptions left as inference.
 - Limits: synthetic inputs and one random seed; plans prepared with the library's default configuration (decode
   plan matches the served split plan); extend plan at 64 rows rather than the served max_batched rows; DCP1 / GLM_NEXT
   / topk 2048 route only.

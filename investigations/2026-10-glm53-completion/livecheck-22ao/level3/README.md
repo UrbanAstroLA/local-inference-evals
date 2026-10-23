@@ -33,11 +33,54 @@ in-count columns `[p + 1, nsa)` were empty (-1). Does the attention output diffe
        every row whose last tile is partial.
 3. **Mechanism.** The causal-length discrepancy is **ruled down as a computational contributor in the tested 0.9.1
    configuration and under the verified masking/compaction conditions.**
-   - The masking argument requires the slot-0 record read by these kernels to be finite at consumption. A bounded
-     audit of that storage is pending.
+   - The masking argument requires the slot-0 record read by these kernels to be finite at consumption. The bounded
+     audit and writer census below (22ar) find that it stays all zero on the served path, with two allocator
+     assumptions left as inference.
    - Not extended to DCP2 (0.7.0 uses rank-local lengths), untested kernel configurations or plan settings, or
      arbitrary cache contents.
    - It does not bear on the 0.7.0-0.9.1 completion difference beyond removing this candidate.
+
+## Slot-0 audit and writer census (amendment 22ar)
+**Question** (as narrowed by the independent assessment): can the exact slot-0 storage read by the tested attention
+kernels contain values that invalidate the masking argument at consumption?
+
+- **Audit** ([`P2-SLOT0-AUDIT.md`](P2-SLOT0-AUDIT.md), zero GPU). Slot 0 is bytes [0, 528) of each MLA layer's own
+  KV tensor: 11 ranges, 6 layers on rank 0 and 5 on rank 1.
+  - The tensors are zero-filled at allocation by the served V2 runner, and block 0 is the shared null block.
+  - The same bytes are also the conv state of co-owning KDA layers and token 0 of the slot-shared draft layer. Every
+    writer found skips index -1 / block 0, or writes elsewhere in the page.
+  - The 1,077,076 tail-stash "null" events from the live check are writes into the indexer tensors' own null block,
+    a separate allocation.
+- **Census** ([`P2-WRITER-CENSUS.md`](P2-WRITER-CENSUS.md), scripts and output in [`p2-census/`](p2-census/), zero
+  GPU). A static taint pass over 736 served-scope files classified all 760 call sites that receive these tensors:
+
+  | Class | Call sites |
+  |---|---|
+  | guarded, region-excluded, read-only or disjoint | 334 |
+  | conditional on an allocator assumption | 11 |
+  | not reached in the served configuration | 143 |
+  | writes zeros only (the warm-up block zeroer) | 9 |
+  | not a data write | 263 |
+  | can write non-finite or arbitrary bytes, or undetermined | **0** |
+
+  It found two writers the audit's trace had missed: a copy-on-write page copy, whose destination is never block 0,
+  and the warm-up zeroer, which writes zeros.
+- **Verdict:** slot 0 stays all zero (E4M3 +0, FP32 scale 0.0) at every attention read on the served 0.9.1 path. That
+  is the "slot 0 zero" case measured bit-equal above. No ordering assumption is needed.
+- **Residual inference (not closed by source):**
+  - the mamba align-mode copy destinations are never block 0;
+  - every real draft query position falls in an allocated draft block, and context writes stay in the window.
+  - Neither copy kernel checks `dst != 0`.
+  - The census is name-based static analysis.
+  - Compiled kernels absent from the image (FA2, `reshape_and_cache_flash`) are assumed to write only their outputs.
+- **Side finding:** slot 0 is safe because of null-block avoidance in four co-owner writers, three of them without an
+  in-kernel check. A regression there would put non-E4M3 bytes (likely NaN codes) into MLA slot 0.
+- **Notes:**
+  - The audit cites the guard file as revised in 22ap (`b41e8581`). Arm A ran the 22ao guard (`e2dcd964`), which is
+    identical up to line 943; later line numbers are 17 lower in that file.
+  - Erratum: `SOURCE-READING.md` cited the V1 runner (`gpu_model_runner.py`) for the zero-filled cache. The served
+    runner is V2 (`gpu/attn_utils.py:214`), which also uses `torch.zeros`. The conclusion is unchanged; the line is
+    annotated there.
 
 ## Source argument
 [`SOURCE-READING.md`](SOURCE-READING.md) (zero GPU) gives the call chain and the cited file hashes. In summary:
