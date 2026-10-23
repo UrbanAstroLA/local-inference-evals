@@ -1,0 +1,133 @@
+{
+ "source": "vllm.mapguard_hooks (image)",
+ "guard_sha": null,
+ "results": [
+  {
+   "test": "L1 exact lengths: len_pos = len_neg = 0, all tokens checked",
+   "ok": true,
+   "len": {
+    "len_checked": 23548,
+    "len_pos": 0,
+    "len_neg": 0
+   },
+   "truth": {
+    "pos": 0,
+    "neg": 0,
+    "checked": 23548,
+    "rows": 33
+   }
+  },
+  {
+   "test": "L1b exact lengths: per-row records = batch rows, all d = 0",
+   "ok": true,
+   "records": 33,
+   "rows": 33
+  },
+  {
+   "test": "L2 over-estimate: len_pos equals truth and > 0; len_neg = 0",
+   "ok": true,
+   "len": {
+    "len_checked": 23548,
+    "len_pos": 20,
+    "len_neg": 0
+   },
+   "truth": {
+    "pos": 20,
+    "neg": 0,
+    "checked": 23548,
+    "rows": 33
+   },
+   "hist": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    23528,
+    0,
+    4,
+    16,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "test": "L2b per-row records carry the signed d (> 0 present, none < 0)",
+   "ok": true,
+   "d_hist": {
+    "0": 28,
+    "2": 1,
+    "3": 4
+   }
+  },
+  {
+   "test": "L3 under-estimate: len_neg equals truth and > 0; len_pos = 0",
+   "ok": true,
+   "len": {
+    "len_checked": 23548,
+    "len_pos": 0,
+    "len_neg": 4716
+   },
+   "truth": {
+    "pos": 0,
+    "neg": 4716,
+    "checked": 23548,
+    "rows": 33
+   }
+  },
+  {
+   "test": "P1 every plant class planted and detected at every planted token (PLANT_MOD 7)",
+   "ok": true,
+   "plants": {
+    "pa_planted": 6728,
+    "pa_det": 6728,
+    "pb_planted": 3802,
+    "pb_det": 3802,
+    "pc_planted": 186,
+    "pc_det": 186,
+    "pd_planted": 186,
+    "pd_det": 186
+   }
+  },
+  {
+   "test": "P2 frozen violation counters identical with plants on and off",
+   "ok": true,
+   "with_plants": {},
+   "without": {}
+  },
+  {
+   "test": "P2b frozen negative control still clean (no violation counter set)",
+   "ok": true,
+   "viol": {}
+  },
+  {
+   "test": "P3 default PLANT_MOD 97: deterministic planted subset, all detected",
+   "ok": true,
+   "plants": {
+    "pa_planted": 486,
+    "pa_det": 486,
+    "pb_planted": 276,
+    "pb_det": 276,
+    "pc_planted": 12,
+    "pc_det": 12,
+    "pd_planted": 12,
+    "pd_det": 12
+   }
+  },
+  {
+   "test": "N1 signed consumed count counters present",
+   "ok": true,
+   "nsa": {
+    "nsa_pos": 0,
+    "nsa_neg": 0
+   }
+  }
+ ],
+ "ok": true
+}

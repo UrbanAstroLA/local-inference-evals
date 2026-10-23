@@ -1,0 +1,182 @@
+#!/bin/bash
+# 22ao live causal-length check: arm A (stock 0.9.1 + guard), then arm C (stock 0.9.1 + port 01 + guard).
+# Adapted from the frozen B1 mapguard runner (d7/step2/run/run_mapguard.sh). The GPU run is launched only
+# after the operator's authorization:
+#   APPROVED_GPU_H=2.0 run_22ao.sh            (DRY_RUN=1: gates only; MOCK=1: CPU session simulation, no docker
+#                                               server, no GPU, against tests/mock_server.py)
+# Budget: item "livecheck-22ao", one attempt, total <= APPROVED_GPU_H (<= 2.0) over every cost line; each arm's wall
+# cap 1740 s x 2 GPUs = 0.967 GPU-h; an arm is refused if the remaining budget cannot fit MIN_WALL.
+# Unattended-safe: budget gate, image-id pins, frozen hashes, pre-flight (no glm53* container; GPUs idle except
+# desktop type-G graphics clients), guard-installed check before traffic, wall-cap watchdog, stop on every exit
+# path, one cost line per arm counted to the moment the GPUs are released. No `set -e`.
+set -u
+HERE=$(cd "$(dirname "$0")" && pwd)
+ROOT=${ROOT_OVERRIDE:-<runs>/livecheck-22ao}   # override: CPU tests on a scratch copy only
+[ -n "$HERE" ] && [ -d "$ROOT" ] || { echo "path check failed"; exit 2; }
+COSTS=$ROOT/costs.jsonl
+ITEM=livecheck-22ao
+MAX_GH=2.0
+ST=<stacks>/glm53-flash-v0.9.0
+RC=<recipes>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1
+CN=glm53-flash-exl3-b12x-vllm
+FIXTURE=$ROOT/PRIVATE/panel_fixture.LOCAL.json
+GPUS=2
+WALL_CAP=${WALL_CAP:-1740}     # per arm: ready ~700-800 s + traffic ~300-500 s + cleanup ~70 s + margin
+MIN_WALL=${MIN_WALL:-1260}
+RESERVE=${RESERVE:-150}
+GATE_CAP=${GATE_CAP:-1020}
+DEBUG="GLM53_MAPGUARD=device GLM53_MAPGUARD_DIR=/tmp/mapguard GLM53_MAPGUARD_POLL_SECS=20"
+OUT=$ROOT/run-1
+MOCK=${MOCK:-0}
+if [ "$MOCK" = 1 ]; then OUT=$ROOT/tests/out/mock-run; COSTS=$ROOT/tests/out/mock-costs.jsonl; rm -rf "${OUT:?}"; : > "$COSTS"; fi
+if [ -e "$OUT" ] && [ "$MOCK" != 1 ]; then echo "ABORT: $OUT exists (one attempt only)"; exit 2; fi
+touch "$COSTS" || exit 2
+
+# ---- budget gate
+if [ -z "${APPROVED_GPU_H:-}" ]; then echo "REFUSED: set APPROVED_GPU_H (authorized ceiling, at most $MAX_GH)"; exit 2; fi
+python3 -c "import sys; sys.exit(0 if 0 < float('$APPROVED_GPU_H') <= $MAX_GH else 1)" || {
+  echo "REFUSED: APPROVED_GPU_H=$APPROVED_GPU_H outside (0, $MAX_GH]"; exit 2; }
+read -r SPENT NLINES < <(python3 -c "
+import json
+s=0.0; n=0
+for l in open('$COSTS'):
+    l=l.strip()
+    if l:
+        d=json.loads(l)
+        if d.get('item')=='$ITEM': s+=float(d.get('gpu_hours',0)); n+=1
+print(round(s,4), n)")
+if [ "$NLINES" -gt 0 ] && [ "$MOCK" != 1 ]; then echo "REFUSED: $NLINES cost lines already recorded for $ITEM (one attempt only)"; exit 2; fi
+
+# ---- frozen hashes, image pins, fixture
+if [ "$MOCK" != 1 ]; then
+  ( cd "$ROOT" && sha256sum -c --quiet SHA256SUMS ) > /tmp/22ao-sha.txt 2>&1 || { echo "ABORT: frozen hashes differ"; cat /tmp/22ao-sha.txt; exit 2; }
+  for arm in a c; do
+    IMG=local/glm53-v091-22ao-$arm:local
+    ID=$(docker image inspect "$IMG" --format '{{.Id}}' 2>/dev/null)
+    EXP=$(awk -v t="$IMG" '$1==t {print $2}' "$HERE/images.txt")
+    [ -n "$EXP" ] && [ "$ID" = "$EXP" ] || { echo "ABORT: $IMG is '$ID', expected '$EXP'"; exit 2; }
+  done
+fi
+[ -f "$FIXTURE" ] || { echo "ABORT: panel fixture missing"; exit 2; }
+if [ "${DRY_RUN:-0}" = 1 ]; then echo "DRY_RUN: budget gate, attempt count, frozen hashes, image pins and fixture passed"; exit 0; fi
+mkdir -p "$OUT" && cd "$OUT" || exit 2
+echo "budget: spent $SPENT; per-arm cap $(python3 -c "print(round($GPUS*$WALL_CAP/3600,3))") GPU-h; approved $APPROVED_GPU_H" | tee "$OUT/budget.txt"
+( cd "$ROOT" && sha256sum runner/client_22ao.py runner/run_22ao.sh runner/images.txt analysis/analyze_22ao.py ) > "$OUT/scripts.sha256" 2>/dev/null
+
+preflight() {
+  [ "$MOCK" = 1 ] && return 0
+  echo "== preflight $(date -u +%FT%TZ)" | tee -a "$1/preflight.txt"
+  nvidia-smi --query-gpu=index,memory.used,utilization.gpu --format=csv | tee -a "$1/preflight.txt"
+  docker ps --format '{{.Names}} {{.Image}} {{.Status}}' | tee -a "$1/preflight.txt"
+  if docker ps --format '{{.Names}}' | grep -qE '^glm53|b0cache|mgtest'; then echo "ABORT: inference/fixture container running"; return 3; fi
+  local PROCS
+  PROCS=$(nvidia-smi 2>/dev/null | awk '/Processes:/{p=1;next} p && /^\|/ && $2 ~ /^[0-9]+$/ {print}' \
+    | grep -vE '[[:space:]]G[[:space:]].*(gnome-shell|Xwayland|xdg-desktop-portal|firefox|snap-store)' \
+    | grep -vE '[[:space:]]C\+G[[:space:]].*--disable-logging')
+  if [ -n "$PROCS" ]; then echo "ABORT: GPU clients other than desktop type-G graphics:"; echo "$PROCS"; return 3; fi
+  local IDX MEM UTIL LIM
+  while read -r IDX MEM UTIL; do
+    LIM=1024; [ "$IDX" = 1 ] && LIM=4096
+    if [ "$MEM" -gt "$LIM" ] || [ "$UTIL" -gt 5 ]; then echo "ABORT: GPU$IDX busy mem=${MEM}MiB util=${UTIL}%"; return 3; fi
+  done < <(nvidia-smi --query-gpu=index,memory.used,utilization.gpu --format=csv,noheader,nounits | tr -d ' ' | tr ',' ' ')
+  return 0
+}
+
+run_arm() {  # $1 = a | c
+  local arm=$1 AO="$OUT/arm-$1" IMG=local/glm53-v091-22ao-$1:local
+  mkdir -p "$AO" || return 2
+  read -r SPENT _ < <(python3 -c "
+import json
+s=0.0
+for l in open('$COSTS'):
+    l=l.strip()
+    if l:
+        d=json.loads(l)
+        if d.get('item')=='$ITEM': s+=float(d.get('gpu_hours',0))
+print(round(s,4), 0)")
+  local CAP=$WALL_CAP LEFT_S
+  LEFT_S=$(python3 -c "print(int(($APPROVED_GPU_H - $SPENT) * 3600 / $GPUS))")
+  [ "$LEFT_S" -lt "$CAP" ] && CAP=$LEFT_S
+  if [ "$CAP" -lt "$MIN_WALL" ]; then echo "REFUSED arm $arm: ${CAP}s wall left < ${MIN_WALL}s" | tee "$AO/refused.txt"; return 2; fi
+  preflight "$AO" || { echo "arm $arm: preflight failed" | tee "$AO/refused.txt"; return 3; }
+  local START T0 TEND="" RC_MAIN="" WD=""
+  START=$(date -u +%Y-%m-%dT%H:%M:%SZ); T0=$(date +%s); ARM_ACTIVE=1
+  local IMG_ID; IMG_ID=$(docker image inspect "$IMG" --format '{{.Id}}' 2>/dev/null)
+  arm_cleanup() {
+    [ "${ARM_ACTIVE:-0}" = 1 ] || return 0
+    ARM_ACTIVE=0
+    [ -n "$WD" ] && kill "$WD" 2>/dev/null
+    echo "== cleanup arm $arm $(date -u +%FT%TZ)"
+    if [ "$MOCK" = 1 ]; then
+      [ -n "${MOCKPID:-}" ] && kill "$MOCKPID" 2>/dev/null
+    else
+      if [ "$(docker inspect --format '{{.State.Running}}' "$CN" 2>/dev/null)" = true ]; then
+        docker exec "$CN" sh -c 'mkdir -p /tmp/mapguard && touch /tmp/mapguard/DUMP' >/dev/null 2>&1
+        sleep 8
+        docker logs "$CN" > "$AO/server.log" 2>&1
+        docker exec "$CN" sh -c 'cd /usr/local/lib/python3.12/dist-packages/vllm && sha256sum mapguard_hooks.py model_executor/layers/sparse_attn_indexer_kpool.py v1/attention/backends/mla/b12x_mla_sparse.py v1/core/sched/scheduler.py v1/attention/backends/mla/indexer.py v1/worker/gpu/model_states/mamba_hybrid.py; env | grep -E "^(GLM53|VLLM)" | sort' > "$AO/container-files-env.txt" 2>&1
+      fi
+      ( cd "$ST" && ./stop.sh ) >> "$AO/stop.log" 2>&1
+      docker ps --format '{{.Names}}' | grep -q "^$CN\$" && docker stop -t 30 "$CN" >> "$AO/stop.log" 2>&1
+    fi
+    TEND=$(date +%s)
+    local SECS=$((TEND - T0)) GH
+    GH=$(python3 -c "print(round($GPUS*$SECS/3600,4))")
+    printf '{"item":"%s","arm":"%s","start":"%s","end":"%s","seconds":%s,"gpus":%s,"gpu_hours":%s,"image":"%s","rc":%s,"wall_cap":%s,"mock":%s,"purpose":"22ao live causal-length check"}\n' \
+      "$ITEM" "$arm" "$START" "$(date -u -d @"$TEND" +%Y-%m-%dT%H:%M:%SZ)" "$SECS" "$GPUS" "$GH" "$IMG_ID" "${RC_MAIN:-null}" "$CAP" "$MOCK" >> "$COSTS"
+    echo "arm $arm occupied ${SECS}s x $GPUS GPU = ${GH} GPU-h"
+    if [ "$MOCK" != 1 ]; then mkdir -p "$AO/mapguard"; docker cp "$CN:/tmp/mapguard/." "$AO/mapguard/" >/dev/null 2>&1; fi
+  }
+  # watchdog: stops the server even if this script hangs
+  # the watchdog kills its own sleep on TERM, so cleanup leaves no orphaned sleep holding this script's stdout
+  ( trap 'kill "$SP" 2>/dev/null; exit 0' TERM; sleep $(( CAP > 300 ? CAP - 75 : CAP )) & SP=$!; wait "$SP" || exit 0; \
+    echo "WALL CAP reached arm $arm"; \
+    if [ "$MOCK" = 1 ]; then pkill -f "tests/mock_server_22ao[.]py" 2>/dev/null; else docker stop -t 30 "$CN" >/dev/null 2>&1; fi ) &
+  WD=$!
+  echo "== start arm $arm $START image=$IMG ($IMG_ID) cap ${CAP}s"
+  if [ "$MOCK" = 1 ]; then
+    python3 "$ROOT/tests/mock_server_22ao.py" "$AO/mock-stats.json" > "$AO/mock-server.log" 2>&1 &
+    MOCKPID=$!; sleep 2
+  else
+    ( unset EXTRA_SERVE_ARGS; cd "$ST" && source "$RC/env.sh" && export SPECULATIVE_METHOD=dflash2 DFLASH_TOKENS=3 \
+        IMAGE="$IMG" DEBUG_ENV="$DEBUG" && ./start.sh ) > "$AO/start.log" 2>&1
+    local SRC=$?
+    if [ $SRC -ne 0 ]; then echo "start failed rc=$SRC"; RC_MAIN=5; arm_cleanup; return 5; fi
+    local READY=0 RUN NE NW NS
+    while [ $(( $(date +%s) - T0 )) -lt "$GATE_CAP" ]; do
+      RUN=$(docker inspect --format '{{.State.Running}} {{.RestartCount}}' "$CN" 2>/dev/null)
+      if [ "$RUN" != "true 0" ]; then echo "container state '$RUN'"; RC_MAIN=6; arm_cleanup; return 6; fi
+      if docker logs "$CN" 2>&1 | grep -qE 'Engine core initialization failed|CUDA out of memory|Traceback'; then
+        echo "engine error during start-up"; RC_MAIN=6; arm_cleanup; return 6; fi
+      NE=$(docker exec "$CN" sh -c 'grep -h "\"guard_error\"" /tmp/mapguard/*.jsonl 2>/dev/null | wc -l' 2>/dev/null)
+      if [ "${NE:-0}" -gt 0 ]; then echo "INCOMPLETE: guard error during start-up"; RC_MAIN=8; arm_cleanup; return 8; fi
+      if docker exec "$CN" test -f /tmp/glm53-release-ready 2>/dev/null && curl -sf -m 5 http://127.0.0.1:8001/v1/models >/dev/null; then
+        READY=1; break; fi
+      sleep 10
+    done
+    if [ $READY -ne 1 ]; then echo "readiness timeout"; RC_MAIN=7; arm_cleanup; return 7; fi
+    echo "ready after $(( $(date +%s) - T0 ))s" | tee "$AO/gate.txt"
+    docker logs "$CN" 2>&1 | grep -n "cudagraph_mode\|Graph capturing finished\|GPU KV cache size\|async_scheduling\|guard_error" | cut -c1-300 | tail -n 20 >> "$AO/gate.txt"
+    NW=$(docker exec "$CN" sh -c 'grep -l "\"kind\": \"init\"" /tmp/mapguard/mg_p*.jsonl 2>/dev/null | wc -l')
+    NS=$(docker exec "$CN" sh -c 'grep -l "installed_scheduler" /tmp/mapguard/ms_p*.jsonl 2>/dev/null | wc -l')
+    echo "guard: worker ranks $NW, scheduler side $NS" | tee -a "$AO/gate.txt"
+    if [ "${NW:-0}" -lt 2 ] || [ "${NS:-0}" -lt 1 ]; then echo "INCOMPLETE: guard not installed"; RC_MAIN=8; arm_cleanup; return 8; fi
+  fi
+  local DEADLINE=$((T0 + CAP - RESERVE))
+  echo "== client arm $arm (deadline in $((DEADLINE - $(date +%s)))s)"
+  local BASE=http://127.0.0.1:8001; [ "$MOCK" = 1 ] && BASE=http://127.0.0.1:18001
+  timeout $((DEADLINE - $(date +%s) + 15)) env PANEL_FIXTURE="$FIXTURE" python3 "$HERE/client_22ao.py" "$AO" "$DEADLINE" "$BASE" 2>&1 | tee -a "$AO/client.log"
+  RC_MAIN=${PIPESTATUS[0]}
+  echo "client rc=$RC_MAIN"
+  arm_cleanup
+  return 0
+}
+
+on_exit() { [ "${ARM_ACTIVE:-0}" = 1 ] && arm_cleanup; }
+trap on_exit EXIT
+trap 'echo "signal"; exit 4' INT TERM
+run_arm a; RA=$?
+run_arm c; RCC=$?
+echo "arms: a rc=$RA, c rc=$RCC"
+python3 "$ROOT/analysis/analyze_22ao.py" "$OUT" 2>&1 | tee "$OUT/verdict-console.txt"
+exit 0

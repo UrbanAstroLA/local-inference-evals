@@ -1,0 +1,1 @@
+budget: spent 0.5883; per-arm cap 0.967 GPU-h; approved 2.0

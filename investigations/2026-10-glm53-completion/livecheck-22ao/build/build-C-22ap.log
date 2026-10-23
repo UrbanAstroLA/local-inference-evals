@@ -1,0 +1,58 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.C-22ap
+#1 transferring dockerfile: 3.64kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07
+#2 DONE 1.5s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/9] FROM ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07
+#4 resolve ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 92.33kB done
+#5 DONE 0.0s
+
+#6 [3/9] COPY port01/port-kpool-tail-positions-glm53.py /tmp/port01.py
+#6 CACHED
+
+#7 [2/9] RUN printf '%s\n'     "e7935f2a9b8ecbc75410defff571d9940ad2abf511286bf0936d0c324936df39  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py"     "6e74c42cf4385bb0451243098ec8b4a84005675fa776169fddb2fb230bab0157  /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/b12x_mla_sparse.py"     "e405e84eb3674b04bc6251b2736fe0dce8f66a907123c82dd31b4c2ebc73841f  /usr/local/lib/python3.12/dist-packages/vllm/v1/core/sched/scheduler.py"     "67449677b787f37e31f69de97269097907ebda395879eb67d0b2ebb991a2f0dc  /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/indexer.py"     "82968af5e104f99f8f9d15c5eb8c15c13640f7b6ab8e2bd1580b0c49e9cf9968  /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_states/mamba_hybrid.py"   | sha256sum -c - && ! test -e /usr/local/lib/python3.12/dist-packages/vllm/mapguard_hooks.py
+#7 CACHED
+
+#8 [4/9] RUN echo "67b66aa86d5f5ab25893400fb08c48a067c000a118d9f82dd10911adc8537b1e  /tmp/port01.py" | sha256sum -c -  && python3 /tmp/port01.py /usr/local/lib/python3.12/dist-packages/vllm && python3 /tmp/port01.py /usr/local/lib/python3.12/dist-packages/vllm | grep -q "already applied"  && ! sha256sum /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/indexer.py | grep -q 67449677b787f37e  && ! sha256sum /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_states/mamba_hybrid.py | grep -q 82968af5e104f99f  && python3 -m compileall -q /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/indexer.py /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_states/mamba_hybrid.py  && rm /tmp/port01.py
+#8 CACHED
+
+#9 [5/9] COPY files-22ap/mapguard_hooks.py /usr/local/lib/python3.12/dist-packages/vllm/mapguard_hooks.py
+#9 DONE 0.0s
+
+#10 [6/9] COPY files/vllm/model_executor/layers/sparse_attn_indexer_kpool.py /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py
+#10 DONE 0.0s
+
+#11 [7/9] COPY files/vllm/v1/attention/backends/mla/b12x_mla_sparse.py /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/b12x_mla_sparse.py
+#11 DONE 0.0s
+
+#12 [8/9] COPY files/vllm/v1/core/sched/scheduler.py /usr/local/lib/python3.12/dist-packages/vllm/v1/core/sched/scheduler.py
+#12 DONE 0.0s
+
+#13 [9/9] RUN printf '%s\n'     "b41e8581147c1c5c988d9bcca69c9ceb2f0cbd400d11f086076a1f4f8a3b2adb  /usr/local/lib/python3.12/dist-packages/vllm/mapguard_hooks.py"     "c2fa077780fad64523eb63cc31c67cffce5223df66eabe6ffad42747dd444942  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py"     "490cab51913b261150d0fedcb319419077eaa021397975694404fd644edec7a2  /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/b12x_mla_sparse.py"     "755916f22df976c58d1dd68996482f12366dd49102275a6e21e89dab7bd4b108  /usr/local/lib/python3.12/dist-packages/vllm/v1/core/sched/scheduler.py"   | sha256sum -c -  && python3 -m py_compile /usr/local/lib/python3.12/dist-packages/vllm/mapguard_hooks.py /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/b12x_mla_sparse.py /usr/local/lib/python3.12/dist-packages/vllm/v1/core/sched/scheduler.py  && test "$(grep -c "local-mapguard" /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py)" = 9  && test "$(grep -c "local-mapguard" /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/b12x_mla_sparse.py)" = 5  && test "$(grep -c "local-mapguard" /usr/local/lib/python3.12/dist-packages/vllm/v1/core/sched/scheduler.py)" = 2  && ! grep -q "local-col511-fix\|local-d7" /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py
+#13 0.067 /usr/local/lib/python3.12/dist-packages/vllm/mapguard_hooks.py: OK
+#13 0.067 /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py: OK
+#13 0.067 /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/b12x_mla_sparse.py: OK
+#13 0.067 /usr/local/lib/python3.12/dist-packages/vllm/v1/core/sched/scheduler.py: OK
+#13 DONE 0.2s
+
+#14 exporting to image
+#14 exporting layers 0.1s done
+#14 exporting manifest sha256:71721ac1c979f365980a5b88a2656e3a2067d0c4f3c01c99c1a964928ff764fa done
+#14 exporting config sha256:f8fdcd630706d0d6c43ec056c065960c46d988359c3953d3e70d3f81d3a0fb7e done
+#14 exporting attestation manifest sha256:9e3ec2d009acfe97e9a64170f5a7ce347105a811b904150ab0a5eccaea83cab9 done
+#14 exporting manifest list sha256:450cbd4dd034cfde5eaef0402d8810f40d0bb82455e77b6d0af105c12d9de416 done
+#14 naming to docker.io/local/glm53-v091-22ao-c:local done
+#14 unpacking to docker.io/local/glm53-v091-22ao-c:local 0.1s done
+#14 DONE 0.3s

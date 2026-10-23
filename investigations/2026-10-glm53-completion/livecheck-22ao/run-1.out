@@ -1,0 +1,62 @@
+budget: spent 0.0; per-arm cap 0.967 GPU-h; approved 2.0
+== preflight 2026-10-23T14:44:22Z
+index, memory.used [MiB], utilization.gpu [%]
+0, 20 MiB, 0 %
+1, 1998 MiB, 2 %
+== start arm a 2026-10-23T14:44:22Z image=local/glm53-v091-22ao-a:local (sha256:dd51ed7315ae6896602f9724cfc512382f5e97b38af9f37f70420c05163c420e) cap 1740s
+ready after 874s
+guard: worker ranks 2, scheduler side 1
+== client arm a (deadline in 716s)
+07:59:58 q120 seed 72208 long gen=2560 finish=length 61.3s err=None
+08:00:10 q109 seed 72207 long gen=3072 finish=length 73.3s err=None
+08:00:21 q121 seed 72209 short gen=768 finish=length 22.7s err=None
+08:00:37 q127 seed 72210 short gen=768 finish=length 26.8s err=None
+08:00:40 q147 seed 72211 short gen=768 finish=length 19.6s err=None
+08:00:43 q88 seed 72206 long gen=3584 finish=length 106.6s err=None
+08:00:44 q79 seed 72204 long gen=4608 finish=length 107.8s err=None
+08:01:02 q170 seed 72212 short gen=768 finish=length 25.1s err=None
+08:01:03 q69 seed 72214 short gen=768 finish=length 19.6s err=None
+08:01:03 q81 seed 72205 long gen=4096 finish=length 126.2s err=None
+08:01:05 q8 seed 72213 short gen=768 finish=length 24.5s err=None
+08:01:07 q71 seed 72215 short gen=768 finish=length 22.3s err=None
+08:01:22 q79 seed 72216 short gen=768 finish=length 20.0s err=None
+08:01:25 q81 seed 72217 short gen=768 finish=length 21.7s err=None
+08:01:25 q109 seed 72219 short gen=768 finish=length 19.9s err=None
+08:01:27 q120 seed 72220 short gen=768 finish=length 20.7s err=None
+08:01:28 q88 seed 72218 short gen=768 finish=length 24.7s err=None
+08:01:31 q71 seed 72203 long gen=5120 finish=length 154.1s err=None
+08:01:37 q8 seed 72201 long gen=6144 finish=length 160.6s err=None
+08:01:43 q69 seed 72202 long gen=5632 finish=length 166.1s err=None
+08:01:44 q121 seed 72221 short gen=768 finish=length 22.0s err=None
+08:01:45 q147 seed 72223 short gen=768 finish=length 20.2s err=None
+08:01:45 q127 seed 72222 short gen=768 finish=length 20.6s err=None
+08:01:47 q170 seed 72224 short gen=768 finish=length 19.6s err=None
+client rc=0
+== cleanup arm a 2026-10-23T15:01:47Z
+arm a occupied 1059s x 2 GPU = 0.5883 GPU-h
+== preflight 2026-10-23T15:02:01Z
+index, memory.used [MiB], utilization.gpu [%]
+0, 20 MiB, 53 %
+1, 2004 MiB, 0 %
+ABORT: GPU0 busy mem=20MiB util=53%
+arm c: preflight failed
+arms: a rc=0, c rc=3
+# 22ao live check: result (frozen analysis)
+
+## Arm A
+- instrument ok: True (guard errors 0, plants {'a': {'planted': 15521, 'det': 15521}, 'b': {'planted': 12639, 'det': 12639}, 'c': {'planted': 7986, 'det': 7986}, 'd': {'planted': 8899, 'det': 8899}}, attribution 0.9985, async True, blocked waits 0/6084)
+- L1 consumed length == p + 1 (signed): **POSITIVE FINDING (672155)**
+- L2 sel_causal: **CLEAN WITHIN COVERAGE (95% upper bound 0.0001 per row, N = 48782)**
+- L2 sel_foreign: **CLEAN WITHIN COVERAGE (95% upper bound 0.0001 per row, N = 48782)**
+- L2 masked_live: **CLEAN WITHIN COVERAGE (95% upper bound 0.0001 per row, N = 48782)**
+- L2 sel_len: **POSITIVE FINDING (99495)**
+- L2 nsa_pos: **POSITIVE FINDING (99495)**
+- coverage: {"dense_after_reject": {"count": 18050, "min": 300, "met": true}, "dense_after_accept": {"count": 12520, "min": 100, "met": true}, "clamped": {"count": 18212, "min": 300, "met": true}, "recycles": {"count": 76, "min": 10, "met": true}, "recycles_shorter": {"count": 76, "min": 5, "met": true}, "transitions": {"count": 20, "min": 20, "met": true}, "full_per_size": {"4": {"count": 119, "min": 20, "met": true}, "8": {"count": 50, "min": 20, "met": true}, "16": {"count": 87, "min": 20, "met": true}, "24": {"count": 221, "min": 20, "met": true}, "32": {"count": 2184, "min": 20, "met": true}}}
+- level 1: {"len_checked": 1506571, "len_pos": 672155, "len_neg": 0, "d_verify_rows": {"0": 18410, "1": 6892, "2": 9750, "3": 13906}, "d_by_prev_rej": {"0": {"0": 18230}, "1": {"1": 6892}, "2": {"2": 9750}, "3": {"3": 13906}, "None": {"0": 180}}, "d_on_recycled_rows": {}}
+- level 2: {"sel_causal": 0, "sel_foreign": 0, "masked_live": 0, "sel_len": 99495, "nsa_pos": 99495, "nsa_neg": 0, "checked": 1506571, "sel_hole": 1827408, "inact_read": 15114}
+- known D2 findings: {"tail_w_stash.mism": 1077362, "tail_w_stash.null": 1077076, "tail_w_stash.foreign": 286, "tail_w_seed.mism": 9080}
+- steady / drain steps: 2135 / 340; graph modes {'PIECEWISE': 7, 'FULL': 2989, 'none': 44}; client {'requests': 24, 'errors': 0, 'skipped': 0}
+
+## Arm C
+- INCOMPLETE: no guard records
+

@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-10-23, live causal-length check run (completion investigation, amendment 22ap)
+
+1.51 GPU-hours (cumulative 129.82).
+
+- **`livecheck-22ao/run-1/`:** both arms' guard, client and server records, the frozen analysis (`result.md`) and
+  notes (`NOTES-22ap.md`). The port-01 arm's first attempt is kept as `arm-c.attempt1-guard-race/` with its analysis
+  (`result.attempt1.*`). Guard cache-byte snapshots are redacted (`withheld-kv-bytes`); local hashes of every changed
+  copy are in `PUBLIC-COPIES-22ap.txt`.
+- **`livecheck-22ao/AMENDMENT-22ap-preflight.md`:** the pre-flight change, the arm C continuation and retry, and the
+  guard fix, with the frozen copies of each changed file (`*.frozen-22ao`, `*.22ap-attempt1`) and `AUTHORIZATION.txt`.
+- **Guard fix:** `guard/make_guard_22ao.py`, `build/Dockerfile.C-22ap`, `tests/test_22ap_poll_race.py` and its
+  output; the 22ao guard tests re-run (`tests/out/test-22ao-22ap.*`, identical).
+- **`PLAN.md`:** amendment 22ap.
+- **Investigation `README.md`:** the Status entry.
+- **`LEDGER.md`**.
+
 ## 2026-10-23, live causal-length check frozen (completion investigation, amendment 22ao)
 
 No run is added; no GPU use.

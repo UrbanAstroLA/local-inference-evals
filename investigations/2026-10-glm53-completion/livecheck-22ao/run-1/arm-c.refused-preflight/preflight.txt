@@ -1,0 +1,4 @@
+== preflight 2026-10-23T15:02:01Z
+index, memory.used [MiB], utilization.gpu [%]
+0, 20 MiB, 53 %
+1, 2004 MiB, 0 %

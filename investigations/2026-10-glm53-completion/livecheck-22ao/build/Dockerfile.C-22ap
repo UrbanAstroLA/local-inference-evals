@@ -1,0 +1,37 @@
+# Arm C (22ao): stock tpurtell 0.9.1 + port 01 (tpurtell PR #7) + observe-only mapping guard (22ao amendment of the B1 guard).
+# 22ap rebuild: identical to Dockerfile.C except the guard (poll-race fix, files-22ap/mapguard_hooks.py).
+# Inert unless GLM53_MAPGUARD=device. Stock computation is otherwise unchanged. Built with --network none.
+FROM ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07
+ARG VP=/usr/local/lib/python3.12/dist-packages/vllm
+# Gate 0: the files replaced are the stock 0.9.1 files; no guard present.
+RUN printf '%s\n' \
+    "e7935f2a9b8ecbc75410defff571d9940ad2abf511286bf0936d0c324936df39  ${VP}/model_executor/layers/sparse_attn_indexer_kpool.py" \
+    "6e74c42cf4385bb0451243098ec8b4a84005675fa776169fddb2fb230bab0157  ${VP}/v1/attention/backends/mla/b12x_mla_sparse.py" \
+    "e405e84eb3674b04bc6251b2736fe0dce8f66a907123c82dd31b4c2ebc73841f  ${VP}/v1/core/sched/scheduler.py" \
+    "67449677b787f37e31f69de97269097907ebda395879eb67d0b2ebb991a2f0dc  ${VP}/v1/attention/backends/mla/indexer.py" \
+    "82968af5e104f99f8f9d15c5eb8c15c13640f7b6ab8e2bd1580b0c49e9cf9968  ${VP}/v1/worker/gpu/model_states/mamba_hybrid.py" \
+  | sha256sum -c - && ! test -e ${VP}/mapguard_hooks.py
+# Port 01 exactly as submitted (PR #7), applied to the image's own files; a second run must be a no-op.
+COPY port01/port-kpool-tail-positions-glm53.py /tmp/port01.py
+RUN echo "67b66aa86d5f5ab25893400fb08c48a067c000a118d9f82dd10911adc8537b1e  /tmp/port01.py" | sha256sum -c - \
+ && python3 /tmp/port01.py ${VP} && python3 /tmp/port01.py ${VP} | grep -q "already applied" \
+ && ! sha256sum ${VP}/v1/attention/backends/mla/indexer.py | grep -q 67449677b787f37e \
+ && ! sha256sum ${VP}/v1/worker/gpu/model_states/mamba_hybrid.py | grep -q 82968af5e104f99f \
+ && python3 -m compileall -q ${VP}/v1/attention/backends/mla/indexer.py ${VP}/v1/worker/gpu/model_states/mamba_hybrid.py \
+ && rm /tmp/port01.py
+COPY files-22ap/mapguard_hooks.py ${VP}/mapguard_hooks.py
+COPY files/vllm/model_executor/layers/sparse_attn_indexer_kpool.py ${VP}/model_executor/layers/sparse_attn_indexer_kpool.py
+COPY files/vllm/v1/attention/backends/mla/b12x_mla_sparse.py ${VP}/v1/attention/backends/mla/b12x_mla_sparse.py
+COPY files/vllm/v1/core/sched/scheduler.py ${VP}/v1/core/sched/scheduler.py
+RUN printf '%s\n' \
+    "b41e8581147c1c5c988d9bcca69c9ceb2f0cbd400d11f086076a1f4f8a3b2adb  ${VP}/mapguard_hooks.py" \
+    "c2fa077780fad64523eb63cc31c67cffce5223df66eabe6ffad42747dd444942  ${VP}/model_executor/layers/sparse_attn_indexer_kpool.py" \
+    "490cab51913b261150d0fedcb319419077eaa021397975694404fd644edec7a2  ${VP}/v1/attention/backends/mla/b12x_mla_sparse.py" \
+    "755916f22df976c58d1dd68996482f12366dd49102275a6e21e89dab7bd4b108  ${VP}/v1/core/sched/scheduler.py" \
+  | sha256sum -c - \
+ && python3 -m py_compile ${VP}/mapguard_hooks.py ${VP}/model_executor/layers/sparse_attn_indexer_kpool.py ${VP}/v1/attention/backends/mla/b12x_mla_sparse.py ${VP}/v1/core/sched/scheduler.py \
+ && test "$(grep -c "local-mapguard" ${VP}/model_executor/layers/sparse_attn_indexer_kpool.py)" = 9 \
+ && test "$(grep -c "local-mapguard" ${VP}/v1/attention/backends/mla/b12x_mla_sparse.py)" = 5 \
+ && test "$(grep -c "local-mapguard" ${VP}/v1/core/sched/scheduler.py)" = 2 \
+ && ! grep -q "local-col511-fix\|local-d7" ${VP}/model_executor/layers/sparse_attn_indexer_kpool.py
+LABEL io.local.base="stock tpurtell 0.9.1 sha256:a9e985c0" io.local.purpose="22ao live causal-length check (22ap guard fix), arm C (port 01 + observe-only guard)"

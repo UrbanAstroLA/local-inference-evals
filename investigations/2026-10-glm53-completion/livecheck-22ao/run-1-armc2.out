@@ -1,0 +1,71 @@
+22ap retry: arm C attempt 1 sent no traffic; it is kept as arm-c.attempt1-guard-race
+22ap retry: one arm-C cost line (rc 8, guard error at start-up) recorded
+budget: spent 0.9927; per-arm cap 0.967 GPU-h; approved 4.0
+== preflight 2026-10-23T17:13:35Z
+index, memory.used [MiB], utilization.gpu [%]
+0, 20 MiB, 0 %
+1, 1996 MiB, 2 %
+utilization sample 1: idle
+== start arm c 2026-10-23T17:13:35Z image=local/glm53-v091-22ao-c:local (sha256:450cbd4dd034cfde5eaef0402d8810f40d0bb82455e77b6d0af105c12d9de416) cap 1740s
+ready after 743s
+guard: worker ranks 2, scheduler side 1
+== client arm c (deadline in 847s)
+10:26:57 q120 seed 72208 long gen=2560 finish=length 58.5s err=None
+10:27:12 q109 seed 72207 long gen=3072 finish=length 73.5s err=None
+10:27:19 q121 seed 72209 short gen=768 finish=length 22.1s err=None
+10:27:36 q147 seed 72211 short gen=768 finish=length 17.7s err=None
+10:27:41 q127 seed 72210 short gen=768 finish=length 29.3s err=None
+10:27:43 q88 seed 72206 long gen=3584 finish=length 104.4s err=None
+10:27:48 q79 seed 72204 long gen=4608 finish=length 109.7s err=None
+10:28:00 q170 seed 72212 short gen=768 finish=length 23.6s err=None
+10:28:03 q8 seed 72213 short gen=768 finish=length 22.4s err=None
+10:28:04 q69 seed 72214 short gen=768 finish=length 21.9s err=None
+10:28:06 q81 seed 72205 long gen=4096 finish=length 128.1s err=None
+10:28:11 q71 seed 72215 short gen=768 finish=length 23.2s err=None
+10:28:21 q79 seed 72216 short gen=768 finish=length 20.7s err=None
+10:28:24 q81 seed 72217 short gen=768 finish=length 20.6s err=None
+10:28:27 q109 seed 72219 short gen=768 finish=length 20.5s err=None
+10:28:28 q88 seed 72218 short gen=768 finish=length 23.6s err=None
+10:28:32 q71 seed 72203 long gen=5120 finish=length 153.7s err=None
+10:28:33 q120 seed 72220 short gen=768 finish=length 21.9s err=None
+10:28:39 q8 seed 72201 long gen=6144 finish=length 161.0s err=None
+10:28:42 q121 seed 72221 short gen=768 finish=length 21.6s err=None
+10:28:44 q147 seed 72223 short gen=768 finish=length 17.6s err=None
+10:28:45 q69 seed 72202 long gen=5632 finish=length 166.4s err=None
+10:28:45 q127 seed 72222 short gen=768 finish=length 20.9s err=None
+10:28:48 q170 seed 72224 short gen=768 finish=length 19.4s err=None
+client rc=0
+== cleanup arm c 2026-10-23T17:28:48Z
+arm c occupied 926s x 2 GPU = 0.5144 GPU-h
+arms: a rc=skip, c rc=0
+# 22ao live check: result (frozen analysis)
+
+## Arm A
+- instrument ok: True (guard errors 0, plants {'a': {'planted': 15521, 'det': 15521}, 'b': {'planted': 12639, 'det': 12639}, 'c': {'planted': 7986, 'det': 7986}, 'd': {'planted': 8899, 'det': 8899}}, attribution 0.9985, async True, blocked waits 0/6084)
+- L1 consumed length == p + 1 (signed): **POSITIVE FINDING (672155)**
+- L2 sel_causal: **CLEAN WITHIN COVERAGE (95% upper bound 0.0001 per row, N = 48782)**
+- L2 sel_foreign: **CLEAN WITHIN COVERAGE (95% upper bound 0.0001 per row, N = 48782)**
+- L2 masked_live: **CLEAN WITHIN COVERAGE (95% upper bound 0.0001 per row, N = 48782)**
+- L2 sel_len: **POSITIVE FINDING (99495)**
+- L2 nsa_pos: **POSITIVE FINDING (99495)**
+- coverage: {"dense_after_reject": {"count": 18050, "min": 300, "met": true}, "dense_after_accept": {"count": 12520, "min": 100, "met": true}, "clamped": {"count": 18212, "min": 300, "met": true}, "recycles": {"count": 76, "min": 10, "met": true}, "recycles_shorter": {"count": 76, "min": 5, "met": true}, "transitions": {"count": 20, "min": 20, "met": true}, "full_per_size": {"4": {"count": 119, "min": 20, "met": true}, "8": {"count": 50, "min": 20, "met": true}, "16": {"count": 87, "min": 20, "met": true}, "24": {"count": 221, "min": 20, "met": true}, "32": {"count": 2184, "min": 20, "met": true}}}
+- level 1: {"len_checked": 1506571, "len_pos": 672155, "len_neg": 0, "d_verify_rows": {"0": 18410, "1": 6892, "2": 9750, "3": 13906}, "d_by_prev_rej": {"0": {"0": 18230}, "1": {"1": 6892}, "2": {"2": 9750}, "3": {"3": 13906}, "None": {"0": 180}}, "d_on_recycled_rows": {}}
+- level 2: {"sel_causal": 0, "sel_foreign": 0, "masked_live": 0, "sel_len": 99495, "nsa_pos": 99495, "nsa_neg": 0, "checked": 1506571, "sel_hole": 1827408, "inact_read": 15114}
+- known D2 findings: {"tail_w_stash.mism": 1077362, "tail_w_stash.null": 1077076, "tail_w_stash.foreign": 286, "tail_w_seed.mism": 9080}
+- steady / drain steps: 2135 / 340; graph modes {'PIECEWISE': 7, 'FULL': 2989, 'none': 44}; client {'requests': 24, 'errors': 0, 'skipped': 0}
+
+## Arm C
+- instrument ok: True (guard errors 0, plants {'a': {'planted': 15554, 'det': 15554}, 'b': {'planted': 12672, 'det': 12672}, 'c': {'planted': 8965, 'det': 8965}, 'd': {'planted': 8965, 'det': 8965}}, attribution 0.9985, async True, blocked waits 0/6120)
+- L1 consumed length == p + 1 (signed): **CLEAN WITHIN COVERAGE (95% upper bound 0.0001 per row, N = 48964)**
+- L2 sel_causal: **CLEAN WITHIN COVERAGE (95% upper bound 0.0001 per row, N = 48964)**
+- L2 sel_foreign: **CLEAN WITHIN COVERAGE (95% upper bound 0.0001 per row, N = 48964)**
+- L2 masked_live: **CLEAN WITHIN COVERAGE (95% upper bound 0.0001 per row, N = 48964)**
+- L2 sel_len: **CLEAN WITHIN COVERAGE (95% upper bound 0.0001 per row, N = 48964)**
+- L2 nsa_pos: **CLEAN WITHIN COVERAGE (95% upper bound 0.0001 per row, N = 48964)**
+- coverage: {"dense_after_reject": {"count": 18570, "min": 300, "met": true}, "dense_after_accept": {"count": 12282, "min": 100, "met": true}, "clamped": {"count": 18112, "min": 300, "met": true}, "recycles": {"count": 76, "min": 10, "met": true}, "recycles_shorter": {"count": 76, "min": 5, "met": true}, "transitions": {"count": 20, "min": 20, "met": true}, "full_per_size": {"4": {"count": 146, "min": 20, "met": true}, "8": {"count": 61, "min": 20, "met": true}, "16": {"count": 97, "min": 20, "met": true}, "24": {"count": 166, "min": 20, "met": true}, "32": {"count": 2201, "min": 20, "met": true}}}
+- level 1: {"len_checked": 1510575, "len_pos": 0, "len_neg": 0, "d_verify_rows": {"0": 49140}, "d_by_prev_rej": {"0": {"0": 18090}, "1": {"0": 6818}, "2": {"0": 10176}, "3": {"0": 13876}, "None": {"0": 180}}, "d_on_recycled_rows": {}}
+- level 2: {"sel_causal": 0, "sel_foreign": 0, "masked_live": 0, "sel_len": 0, "nsa_pos": 0, "nsa_neg": 0, "checked": 1510575, "sel_hole": 1601259, "inact_read": 11022}
+- known D2 findings: {}
+- steady / drain steps: 2175 / 295; graph modes {'PIECEWISE': 7, 'FULL': 3007, 'none': 44}; client {'requests': 24, 'errors': 0, 'skipped': 0}
+
+runner rc=0

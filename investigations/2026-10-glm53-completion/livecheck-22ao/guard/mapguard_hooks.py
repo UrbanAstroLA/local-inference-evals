@@ -941,6 +941,7 @@ class _State:
         self.row_reuse = 0
         self.uploads = 0          # 22ao
         self.blocked_waits = 0    # 22ao
+        self.poll_lock = threading.Lock()   # 22ap: engine-thread baseline and poller thread poll one at a time
         self.sched = None
         self.cur_fp = None
         self.baseline_done = False
@@ -1151,6 +1152,12 @@ def _ensure_poller() -> None:
         S.poller.start()
 
 
+def _alloc_pins(tensors, pin):
+    """22ap: host copy buffers as normal tensors, whichever thread (and inference mode) allocates them."""
+    with torch.inference_mode(False):
+        return [torch.empty(t.shape, dtype=t.dtype, pin_memory=pin) for t in tensors]
+
+
 def _snapshot():
     dev = S.dev
     # B1 amendment: log counters are copied BEFORE their buffers (side-stream copies run in order;
@@ -1161,7 +1168,7 @@ def _snapshot():
     if dev.cnt.is_cuda:
         if S.side is None:
             S.side = torch.cuda.Stream(device=dev.cnt.device)
-            S.pins = [torch.empty(t.shape, dtype=t.dtype, pin_memory=True) for t in tensors]
+            S.pins = _alloc_pins(tensors, pin=True)
         with torch.cuda.stream(S.side):
             for p_, t in zip(S.pins, tensors):
                 p_.copy_(t, non_blocking=True)
@@ -1173,6 +1180,16 @@ def _snapshot():
 
 
 def poll(reason: str) -> None:
+    if not S.poll_lock.acquire(timeout=60.0):   # 22ap: bounded, so the exit poll cannot hang shutdown
+        _err("poll_lock", RuntimeError("poll lock not acquired in 60 s (" + reason + ")"))
+        return
+    try:
+        _poll_locked(reason)
+    finally:
+        S.poll_lock.release()
+
+
+def _poll_locked(reason: str) -> None:
     if S.dev is None:
         return
     try:

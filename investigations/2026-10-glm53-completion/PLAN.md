@@ -2923,3 +2923,30 @@ frozen before any data; no GPU use).**
   - the port-01 image is validated by its gate rather than by file equality with B1, whose copies also carry port 05;
   - a blocked-wait counter was added.
 - No GPU-hours added (cumulative 128.31).
+
+**Amendment 22ap (2026-10-23; the 22ao live check, run under the operator's authorization; 1.51 GPU-hours).**
+- **Arm A (stock 0.9.1 + guard), 0.59 GPU-hours, instrument valid** (guard errors 0; all four plant classes detected
+  at every planted token; attribution 0.9985; async scheduling on; blocked host waits 0 / 6,084):
+  - level 1, POSITIVE FINDING: consumed length > p + 1 on 672,155 of 1,506,571 checked rows, never below. On verify
+    rows, d = L − (p + 1) equals the request's previous-step rejected-draft count in every joined row (0: 18,230;
+    1: 6,892; 2: 9,750; 3: 13,906);
+  - level 2: `sel_causal`, `sel_foreign`, `masked_live` 0 (CLEAN WITHIN COVERAGE, 95% upper bound 0.0001 per row,
+    N = 48,782); `sel_len` / `nsa_pos` 99,495 (consumed count above p + 1 in the dense regime), with the extra
+    in-count columns empty (-1);
+  - known D2 tail-ring findings recorded (tail_w_stash mismatches 1,077,362; tail_w_seed 9,080).
+- **Arm C (stock 0.9.1 + port 01 + guard), 0.51 GPU-hours, instrument valid:** levels 1 and 2 CLEAN WITHIN COVERAGE
+  (d = 0 on all 1,510,575 rows, including 30,870 verify rows after 1-3 rejected drafts; N = 48,964); no D2 findings;
+  every coverage minimum met.
+- **Decision-table row:** a level-1 discrepancy with no consumed non-causal or foreign entry. The discrepancy is
+  recorded without a leakage claim. Open: whether empty in-count columns, or tail-column compaction, change the
+  attention output (level 3, not measured). A and C differ by port 01 as a whole.
+- **Amendments, disclosed in `livecheck-22ao/AMENDMENT-22ap-preflight.md`:**
+  - arm C's pre-flight refused it on a transient utilization reading seconds after arm A stopped. The runner now
+    re-samples utilization (memory limits unchanged) and can continue `run-1` with arm C alone. Written before arm A's
+    results were read;
+  - arm C's first attempt (0.40 GPU-hours) stopped at the start-up gate before any traffic: a thread race in the
+    guard's polling made its copy buffers inference tensors. Fixed in the guard builder with a CPU test that
+    reproduces it; image C rebuilt with only the guard file changed (one of 2,435 engine Python files); the 22ao
+    guard tests re-run with identical results. The retry was authorized after arm A's results were read, with the
+    ceiling raised to 4.0 GPU-hours. The first attempt's records are kept.
+- GPU-hours 1.51 (cumulative 129.82).

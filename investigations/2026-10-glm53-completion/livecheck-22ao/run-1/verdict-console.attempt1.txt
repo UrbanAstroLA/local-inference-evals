@@ -1,0 +1,30 @@
+# 22ao live check: result (frozen analysis)
+
+## Arm A
+- instrument ok: True (guard errors 0, plants {'a': {'planted': 15521, 'det': 15521}, 'b': {'planted': 12639, 'det': 12639}, 'c': {'planted': 7986, 'det': 7986}, 'd': {'planted': 8899, 'det': 8899}}, attribution 0.9985, async True, blocked waits 0/6084)
+- L1 consumed length == p + 1 (signed): **POSITIVE FINDING (672155)**
+- L2 sel_causal: **CLEAN WITHIN COVERAGE (95% upper bound 0.0001 per row, N = 48782)**
+- L2 sel_foreign: **CLEAN WITHIN COVERAGE (95% upper bound 0.0001 per row, N = 48782)**
+- L2 masked_live: **CLEAN WITHIN COVERAGE (95% upper bound 0.0001 per row, N = 48782)**
+- L2 sel_len: **POSITIVE FINDING (99495)**
+- L2 nsa_pos: **POSITIVE FINDING (99495)**
+- coverage: {"dense_after_reject": {"count": 18050, "min": 300, "met": true}, "dense_after_accept": {"count": 12520, "min": 100, "met": true}, "clamped": {"count": 18212, "min": 300, "met": true}, "recycles": {"count": 76, "min": 10, "met": true}, "recycles_shorter": {"count": 76, "min": 5, "met": true}, "transitions": {"count": 20, "min": 20, "met": true}, "full_per_size": {"4": {"count": 119, "min": 20, "met": true}, "8": {"count": 50, "min": 20, "met": true}, "16": {"count": 87, "min": 20, "met": true}, "24": {"count": 221, "min": 20, "met": true}, "32": {"count": 2184, "min": 20, "met": true}}}
+- level 1: {"len_checked": 1506571, "len_pos": 672155, "len_neg": 0, "d_verify_rows": {"0": 18410, "1": 6892, "2": 9750, "3": 13906}, "d_by_prev_rej": {"0": {"0": 18230}, "1": {"1": 6892}, "2": {"2": 9750}, "3": {"3": 13906}, "None": {"0": 180}}, "d_on_recycled_rows": {}}
+- level 2: {"sel_causal": 0, "sel_foreign": 0, "masked_live": 0, "sel_len": 99495, "nsa_pos": 99495, "nsa_neg": 0, "checked": 1506571, "sel_hole": 1827408, "inact_read": 15114}
+- known D2 findings: {"tail_w_stash.mism": 1077362, "tail_w_stash.null": 1077076, "tail_w_stash.foreign": 286, "tail_w_seed.mism": 9080}
+- steady / drain steps: 2135 / 340; graph modes {'PIECEWISE': 7, 'FULL': 2989, 'none': 44}; client {'requests': 24, 'errors': 0, 'skipped': 0}
+
+## Arm C
+- instrument ok: False (guard errors 8, plants {'a': {'planted': 22, 'det': 22}, 'b': {'planted': 22, 'det': 22}, 'c': {'planted': 22, 'det': 22}, 'd': {'planted': 22, 'det': 22}}, attribution 0.0, async True, blocked waits 0/4)
+- L1 consumed length == p + 1 (signed): **INCOMPLETE (instrument: guard errors, attribution)**
+- L2 sel_causal: **INCOMPLETE (instrument: guard errors, attribution)**
+- L2 sel_foreign: **INCOMPLETE (instrument: guard errors, attribution)**
+- L2 masked_live: **INCOMPLETE (instrument: guard errors, attribution)**
+- L2 sel_len: **INCOMPLETE (instrument: guard errors, attribution)**
+- L2 nsa_pos: **INCOMPLETE (instrument: guard errors, attribution)**
+- coverage: {"dense_after_reject": {"count": 0, "min": 300, "met": false}, "dense_after_accept": {"count": 0, "min": 100, "met": false}, "clamped": {"count": 0, "min": 300, "met": false}, "recycles": {"count": 52, "min": 10, "met": true}, "recycles_shorter": {"count": 52, "min": 5, "met": true}, "transitions": {"count": 13, "min": 20, "met": false}, "full_per_size": {"4": {"count": 52, "min": 20, "met": true}, "8": {"count": 29, "min": 20, "met": true}, "16": {"count": 63, "min": 20, "met": true}, "24": {"count": 22, "min": 20, "met": true}, "32": {"count": 12, "min": 20, "met": false}}}
+- level 1: {"len_checked": 1716, "len_pos": 0, "len_neg": 0, "d_verify_rows": {}, "d_by_prev_rej": {}, "d_on_recycled_rows": {}}
+- level 2: {"sel_causal": 0, "sel_foreign": 0, "masked_live": 0, "sel_len": 0, "nsa_pos": 0, "nsa_neg": 0, "checked": 1716, "sel_hole": 0, "inact_read": 0}
+- known D2 findings: {}
+- steady / drain steps: 8 / 0; graph modes {'PIECEWISE': 3, 'FULL': 514, 'none': 27}; client {'requests': 0, 'errors': 0, 'skipped': 0}
+

@@ -1,0 +1,2 @@
+2026-10-23 14:44Z operator: "push, gpu is authorized" -> APPROVED_GPU_H=2.0, one attempt (amendment 22ap at publication)
+2026-10-23 operator: "Yes, do all three. You are approved for an additional 2 hours of GPU-h budget" -> guard poll-race fix, arm C image rebuild, arm C retry; ceiling 4.0 GPU-h total (amendment 22ap)

@@ -15,7 +15,7 @@ ROOT=${ROOT_OVERRIDE:-<runs>/livecheck-22ao}   # override: CPU tests on a scratc
 [ -n "$HERE" ] && [ -d "$ROOT" ] || { echo "path check failed"; exit 2; }
 COSTS=$ROOT/costs.jsonl
 ITEM=livecheck-22ao
-MAX_GH=2.0
+MAX_GH=4.0   # 22ap: 2.0 (14:44Z) + 2.0 additional (operator, after arm A), see AUTHORIZATION.txt
 ST=<stacks>/glm53-flash-v0.9.0
 RC=<recipes>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1
 CN=glm53-flash-exl3-b12x-vllm
@@ -28,8 +28,23 @@ GATE_CAP=${GATE_CAP:-1020}
 DEBUG="GLM53_MAPGUARD=device GLM53_MAPGUARD_DIR=/tmp/mapguard GLM53_MAPGUARD_POLL_SECS=20"
 OUT=$ROOT/run-1
 MOCK=${MOCK:-0}
+# 22ap (disclosed, decided before any arm A outcome was read): ARMS=c completes the authorized attempt with the arm
+# the pre-flight refused; it writes only run-1/arm-c and leaves arm A's records untouched.
+ARMS=${ARMS:-"a c"}
+CONT=0; [ "$ARMS" = "c" ] && CONT=1
+# 22ap retry (operator-approved after attempt 1 of arm C stopped on a guard poll race, before any traffic):
+# RETRY_C=1 with ARMS=c accepts exactly one earlier arm-C cost line with rc 8 and no client records, and keeps that
+# attempt as run-1/arm-c.attempt1-guard-race. Arm C then runs on the rebuilt image (guard fix only).
+RETRY_C=${RETRY_C:-0}; [ "$CONT" = 1 ] || RETRY_C=0
 if [ "$MOCK" = 1 ]; then OUT=$ROOT/tests/out/mock-run; COSTS=$ROOT/tests/out/mock-costs.jsonl; rm -rf "${OUT:?}"; : > "$COSTS"; fi
-if [ -e "$OUT" ] && [ "$MOCK" != 1 ]; then echo "ABORT: $OUT exists (one attempt only)"; exit 2; fi
+if [ -e "$OUT" ] && [ "$MOCK" != 1 ]; then
+  if [ "$CONT" = 1 ] && [ -d "$OUT/arm-a" ] && [ ! -d "$OUT/arm-c/mapguard" ] && [ ! -s "$OUT/arm-c/client.jsonl" ]; then
+    echo "22ap continuation: $OUT exists with arm A only; arm C will be added"
+  elif [ "$RETRY_C" = 1 ] && [ -d "$OUT/arm-a" ] && [ -d "$OUT/arm-c/mapguard" ] && [ ! -s "$OUT/arm-c/client.jsonl" ] \
+       && [ ! -e "$OUT/arm-c.attempt1-guard-race" ]; then
+    echo "22ap retry: arm C attempt 1 sent no traffic; it is kept as arm-c.attempt1-guard-race"
+  else echo "ABORT: $OUT exists (one attempt only)"; exit 2; fi
+fi
 touch "$COSTS" || exit 2
 
 # ---- budget gate
@@ -45,7 +60,13 @@ for l in open('$COSTS'):
         d=json.loads(l)
         if d.get('item')=='$ITEM': s+=float(d.get('gpu_hours',0)); n+=1
 print(round(s,4), n)")
-if [ "$NLINES" -gt 0 ] && [ "$MOCK" != 1 ]; then echo "REFUSED: $NLINES cost lines already recorded for $ITEM (one attempt only)"; exit 2; fi
+if [ "$NLINES" -gt 0 ] && [ "$MOCK" != 1 ]; then
+  NC=$(grep -c '"arm":"c"' "$COSTS")
+  NC8=$(grep '"arm":"c"' "$COSTS" | grep -c '"rc":8,')
+  if [ "$CONT" = 1 ] && [ "$RETRY_C" != 1 ] && [ "$NC" = 0 ]; then echo "22ap continuation: $NLINES arm-A cost line(s) recorded, none for arm C"
+  elif [ "$RETRY_C" = 1 ] && [ "$NC" = 1 ] && [ "$NC8" = 1 ]; then echo "22ap retry: one arm-C cost line (rc 8, guard error at start-up) recorded"
+  else echo "REFUSED: $NLINES cost lines already recorded for $ITEM (one attempt only)"; exit 2; fi
+fi
 
 # ---- frozen hashes, image pins, fixture
 if [ "$MOCK" != 1 ]; then
@@ -60,8 +81,16 @@ fi
 [ -f "$FIXTURE" ] || { echo "ABORT: panel fixture missing"; exit 2; }
 if [ "${DRY_RUN:-0}" = 1 ]; then echo "DRY_RUN: budget gate, attempt count, frozen hashes, image pins and fixture passed"; exit 0; fi
 mkdir -p "$OUT" && cd "$OUT" || exit 2
-echo "budget: spent $SPENT; per-arm cap $(python3 -c "print(round($GPUS*$WALL_CAP/3600,3))") GPU-h; approved $APPROVED_GPU_H" | tee "$OUT/budget.txt"
-( cd "$ROOT" && sha256sum runner/client_22ao.py runner/run_22ao.sh runner/images.txt analysis/analyze_22ao.py ) > "$OUT/scripts.sha256" 2>/dev/null
+if [ "$RETRY_C" = 1 ]; then
+  mv "$OUT/arm-c" "$OUT/arm-c.attempt1-guard-race" || exit 2   # keep attempt 1
+  for f in result.json result.md verdict-console.txt; do [ -e "$OUT/$f" ] && mv "$OUT/$f" "$OUT/${f%.*}.attempt1.${f##*.}"; done
+  SFX=-armc2
+elif [ "$CONT" = 1 ]; then
+  [ -d "$OUT/arm-c" ] && mv "$OUT/arm-c" "$OUT/arm-c.refused-preflight"   # keep the refusal record
+  SFX=-armc   # arm A's budget.txt and scripts.sha256 stay as written
+fi
+echo "budget: spent $SPENT; per-arm cap $(python3 -c "print(round($GPUS*$WALL_CAP/3600,3))") GPU-h; approved $APPROVED_GPU_H" | tee "$OUT/budget${SFX:-}.txt"
+( cd "$ROOT" && sha256sum runner/client_22ao.py runner/run_22ao.sh runner/images.txt analysis/analyze_22ao.py ) > "$OUT/scripts${SFX:-}.sha256" 2>/dev/null
 
 preflight() {
   [ "$MOCK" = 1 ] && return 0
@@ -74,12 +103,21 @@ preflight() {
     | grep -vE '[[:space:]]G[[:space:]].*(gnome-shell|Xwayland|xdg-desktop-portal|firefox|snap-store)' \
     | grep -vE '[[:space:]]C\+G[[:space:]].*--disable-logging')
   if [ -n "$PROCS" ]; then echo "ABORT: GPU clients other than desktop type-G graphics:"; echo "$PROCS"; return 3; fi
-  local IDX MEM UTIL LIM
-  while read -r IDX MEM UTIL; do
-    LIM=1024; [ "$IDX" = 1 ] && LIM=4096
-    if [ "$MEM" -gt "$LIM" ] || [ "$UTIL" -gt 5 ]; then echo "ABORT: GPU$IDX busy mem=${MEM}MiB util=${UTIL}%"; return 3; fi
-  done < <(nvidia-smi --query-gpu=index,memory.used,utilization.gpu --format=csv,noheader,nounits | tr -d ' ' | tr ',' ' ')
-  return 0
+  local IDX MEM UTIL LIM busy try
+  # memory limits as frozen; utilization re-sampled (22ap): a GPU released seconds earlier can read busy with no
+  # memory held. Pass on the first sample with every GPU at <= 5%; up to 12 samples, 5 s apart.
+  for try in $(seq 1 12); do
+    busy=""
+    while read -r IDX MEM UTIL; do
+      LIM=1024; [ "$IDX" = 1 ] && LIM=4096
+      if [ "$MEM" -gt "$LIM" ]; then echo "ABORT: GPU$IDX busy mem=${MEM}MiB util=${UTIL}%"; return 3; fi
+      [ "$UTIL" -gt 5 ] && busy="$busy GPU$IDX:${UTIL}%"
+    done < <(nvidia-smi --query-gpu=index,memory.used,utilization.gpu --format=csv,noheader,nounits | tr -d ' ' | tr ',' ' ')
+    echo "utilization sample $try:${busy:- idle}" | tee -a "$1/preflight.txt"
+    [ -z "$busy" ] && return 0
+    sleep 5
+  done
+  echo "ABORT: utilization above 5% in 12 samples:$busy"; return 3
 }
 
 run_arm() {  # $1 = a | c
@@ -175,8 +213,11 @@ print(round(s,4), 0)")
 on_exit() { [ "${ARM_ACTIVE:-0}" = 1 ] && arm_cleanup; }
 trap on_exit EXIT
 trap 'echo "signal"; exit 4' INT TERM
-run_arm a; RA=$?
-run_arm c; RCC=$?
+RA=skip; RCC=skip
+for a_ in $ARMS; do
+  run_arm "$a_"; r_=$?
+  [ "$a_" = a ] && RA=$r_; [ "$a_" = c ] && RCC=$r_
+done
 echo "arms: a rc=$RA, c rc=$RCC"
 python3 "$ROOT/analysis/analyze_22ao.py" "$OUT" 2>&1 | tee "$OUT/verdict-console.txt"
 exit 0

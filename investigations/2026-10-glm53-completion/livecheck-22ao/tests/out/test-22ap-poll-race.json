@@ -1,0 +1,25 @@
+{
+ "results": [
+  {
+   "test": "R1 old allocation reproduces the arm C failure",
+   "ok": true,
+   "guard_errors": 3,
+   "inference_buffers": 15
+  },
+  {
+   "test": "R2 fixed allocation: same replay, no guard errors, normal buffers",
+   "ok": true,
+   "guard_errors": 0,
+   "inference_buffers": 0
+  },
+  {
+   "test": "R3 16 concurrent polls: no errors, each length record emitted once",
+   "ok": true,
+   "guard_errors": 0,
+   "polls": 16,
+   "lrec_emitted": 35,
+   "n_lrec": 35
+  }
+ ],
+ "ok": true
+}

@@ -65,5 +65,34 @@ rep('''                  ring=sorted(ring), row_reuse=S.row_reuse, guard_errors=
 rep('''        self.row_reuse = 0''', '''        self.row_reuse = 0
         self.uploads = 0          # 22ao
         self.blocked_waits = 0    # 22ao''')
+# 22ap: poll race fix. The pinned copy buffers were created by whichever thread polled first; when that was the
+# engine thread's baseline poll (inside torch.inference_mode) they became inference tensors and every later poll from
+# the poller thread failed on copy_. Buffers are now allocated with inference mode off, and polls are serialized.
+rep('''        self.blocked_waits = 0    # 22ao''', '''        self.blocked_waits = 0    # 22ao
+        self.poll_lock = threading.Lock()   # 22ap: engine-thread baseline and poller thread poll one at a time''')
+rep('''            S.pins = [torch.empty(t.shape, dtype=t.dtype, pin_memory=True) for t in tensors]''',
+    '''            S.pins = _alloc_pins(tensors, pin=True)''')
+rep('''def _snapshot():''', '''def _alloc_pins(tensors, pin):
+    """22ap: host copy buffers as normal tensors, whichever thread (and inference mode) allocates them."""
+    with torch.inference_mode(False):
+        return [torch.empty(t.shape, dtype=t.dtype, pin_memory=pin) for t in tensors]
+
+
+def _snapshot():''')
+rep('''def poll(reason: str) -> None:
+    if S.dev is None:
+        return''', '''def poll(reason: str) -> None:
+    if not S.poll_lock.acquire(timeout=60.0):   # 22ap: bounded, so the exit poll cannot hang shutdown
+        _err("poll_lock", RuntimeError("poll lock not acquired in 60 s (" + reason + ")"))
+        return
+    try:
+        _poll_locked(reason)
+    finally:
+        S.poll_lock.release()
+
+
+def _poll_locked(reason: str) -> None:
+    if S.dev is None:
+        return''')
 open(DST, "w").write(s)
 print("written", DST, hashlib.sha256(s.encode()).hexdigest()[:16])
