@@ -1,0 +1,217 @@
+{
+ "created": "2026-10-22",
+ "purpose": "recon F1 input manifest (CPU only, read-only inputs)",
+ "frozen_loader": {
+  "path": "<runs>/rep070/refreeze/frozen/analysis_col511.py",
+  "sha256": "b5b13ce2155085ca46fb24877f12b7cd0a5cdd16eb4cf19012958e7b86ae0033"
+ },
+ "sources": [
+  {
+   "engine": "0.7.0",
+   "set": "original",
+   "label": "0.7.0 record (seeds 1234-1236)",
+   "image": "sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629",
+   "files": {
+    "<this-repo>/runs/2026-09-29_glm53-flash_k3.25-v0.7.0-dflash5_gpqa-diamond/results.jsonl": "da381c6b175392d59d37f7922772bb9732dc1c17d3c1d72b22ad314d75dae837"
+   },
+   "sessions": {
+    "1": "070-rec-A (2026-09-29)",
+    "2": "070-rec-B (2026-10-10)",
+    "3": "070-rec-B (2026-10-10)"
+   },
+   "notes": "pass 1 unlogged: finish_reason / completion_tokens null; no server log"
+  },
+  {
+   "engine": "0.9.1",
+   "set": "original",
+   "label": "0.9.1 record (seeds 1234-1236)",
+   "image": "sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07",
+   "files": {
+    "<this-repo>/runs/2026-10-08_glm53-flash_k3.25-v0.9.1-dflash3_gpqa-diamond/results.jsonl": "9d2f57c9c4c1c5fe0833f5d534a290bfc61793101ca0f5cf1cf6bb04cbc970b2"
+   },
+   "sessions": {
+    "1": "091-rec-A (2026-10-08)",
+    "2": "091-rec-B (2026-10-09)",
+    "3": "091-rec-B (2026-10-09)"
+   },
+   "notes": ""
+  },
+  {
+   "engine": "0.7.0",
+   "set": "fresh",
+   "label": "0.7.0 rep070-F (seeds 70701-70703)",
+   "image": "sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629",
+   "files": {
+    "<gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+rep070-F.s1.requests.jsonl": "8b4519a6cc1c2e5fd13d858423e8b33bc66d2c74321c59f8886ffed998f32783",
+    "<gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+rep070-F.s2.requests.jsonl": "1c06d1425f6482a291eec1d717faf18c9f994a582ba00e5b35ace6ec1cc0c0ef",
+    "pass1": "413a62c67fe4c4444c7749cda2a10ca48390d78e2af311c8b02828cbfd7634b1",
+    "pass2": "2c2b9ce8d974d4509b874094a4b554719ae03f763de3e439fdd117ee6d105e91",
+    "pass3": "4721ba0bcdef0ab6d56248151e32b58e4e55818dc4e655bd03eb5e5b4c5f749d"
+   },
+   "sessions": {
+    "1": "070-rep-s1 (2026-10-16)",
+    "2": "070-rep-s2 (2026-10-16/17)",
+    "3": "070-rep-s2 (2026-10-16/17)"
+   },
+   "notes": "frozen loader b5b13ce2155085ca; 15 loader checks ok"
+  },
+  {
+   "engine": "0.9.1",
+   "set": "fresh",
+   "label": "0.9.1 D (seed 70704)",
+   "image": "sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07",
+   "files": {
+    "<this-repo>/investigations/2026-10-glm53-completion/long-reply/d091/run/rows-d091.jsonl": "cb793cef64e2aeb9c5c47695ebdafe9897f9ad800316049c8463b5160c8dc8f8"
+   },
+   "sessions": {
+    "1": "091-D (2026-10-21)"
+   },
+   "notes": ""
+  },
+  {
+   "engine": "0.9.1",
+   "set": "fresh",
+   "label": "0.9.1 D2 (seed 70705)",
+   "image": "sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07",
+   "files": {
+    "<this-repo>/investigations/2026-10-glm53-completion/long-reply/d091b/run/rows-d091.jsonl": "4101578ca7e4cf670998ecc32abc93239f985da7efe574fc5a51fd1b4a5fdf07"
+   },
+   "sessions": {
+    "1": "091-D2 (2026-10-22)"
+   },
+   "notes": ""
+  }
+ ],
+ "coverage_by_pass": {
+  "0.7.0 record (seeds 1234-1236)#p1": {
+   "engine": "0.7.0",
+   "session": "070-rec-A (2026-09-29)",
+   "seed": [
+    1234
+   ],
+   "requests": 198,
+   "logged": 0,
+   "missing_tokens_and_finish_reason": 198
+  },
+  "0.7.0 record (seeds 1234-1236)#p2": {
+   "engine": "0.7.0",
+   "session": "070-rec-B (2026-10-10)",
+   "seed": [
+    1235
+   ],
+   "requests": 198,
+   "logged": 198,
+   "missing_tokens_and_finish_reason": 0
+  },
+  "0.7.0 record (seeds 1234-1236)#p3": {
+   "engine": "0.7.0",
+   "session": "070-rec-B (2026-10-10)",
+   "seed": [
+    1236
+   ],
+   "requests": 198,
+   "logged": 198,
+   "missing_tokens_and_finish_reason": 0
+  },
+  "0.7.0 rep070-F (seeds 70701-70703)#p1": {
+   "engine": "0.7.0",
+   "session": "070-rep-s1 (2026-10-16)",
+   "seed": [
+    70701
+   ],
+   "requests": 198,
+   "logged": 198,
+   "missing_tokens_and_finish_reason": 0
+  },
+  "0.7.0 rep070-F (seeds 70701-70703)#p2": {
+   "engine": "0.7.0",
+   "session": "070-rep-s2 (2026-10-16/17)",
+   "seed": [
+    70702
+   ],
+   "requests": 198,
+   "logged": 198,
+   "missing_tokens_and_finish_reason": 0
+  },
+  "0.7.0 rep070-F (seeds 70701-70703)#p3": {
+   "engine": "0.7.0",
+   "session": "070-rep-s2 (2026-10-16/17)",
+   "seed": [
+    70703
+   ],
+   "requests": 198,
+   "logged": 198,
+   "missing_tokens_and_finish_reason": 0
+  },
+  "0.9.1 D (seed 70704)#p1": {
+   "engine": "0.9.1",
+   "session": "091-D (2026-10-21)",
+   "seed": [
+    70704
+   ],
+   "requests": 198,
+   "logged": 198,
+   "missing_tokens_and_finish_reason": 0
+  },
+  "0.9.1 D2 (seed 70705)#p1": {
+   "engine": "0.9.1",
+   "session": "091-D2 (2026-10-22)",
+   "seed": [
+    70705
+   ],
+   "requests": 198,
+   "logged": 198,
+   "missing_tokens_and_finish_reason": 0
+  },
+  "0.9.1 record (seeds 1234-1236)#p1": {
+   "engine": "0.9.1",
+   "session": "091-rec-A (2026-10-08)",
+   "seed": [
+    1234
+   ],
+   "requests": 198,
+   "logged": 198,
+   "missing_tokens_and_finish_reason": 0
+  },
+  "0.9.1 record (seeds 1234-1236)#p2": {
+   "engine": "0.9.1",
+   "session": "091-rec-B (2026-10-09)",
+   "seed": [
+    1235
+   ],
+   "requests": 198,
+   "logged": 198,
+   "missing_tokens_and_finish_reason": 0
+  },
+  "0.9.1 record (seeds 1234-1236)#p3": {
+   "engine": "0.9.1",
+   "session": "091-rec-B (2026-10-09)",
+   "seed": [
+    1236
+   ],
+   "requests": 198,
+   "logged": 198,
+   "missing_tokens_and_finish_reason": 0
+  }
+ },
+ "questions": {
+  "ids": "0-197",
+  "doc_prompt_target_hashes_identical_across_all_passes": true,
+  "n": 198
+ },
+ "rules": {
+  "unit": "question (doc_id 0-197); a question-pass is one request",
+  "E_empty": "lm-eval reply empty (frozen analysis_col511 definition; published 'empty' field)",
+  "E_capped": "finish_reason == 'length' (ran to the 327,680-token cap); logged passes only",
+  "E_reach100k": "completion_tokens >= 100,000; logged passes only",
+  "E_finish_given_reach": "finish_reason == 'stop' among E_reach100k",
+  "E_finish_by_165536_given_reach": "finish_reason == 'stop' and completion_tokens <= 165,536 among E_reach100k (horizon of the B+/E continuations: cut near 100k + 65,536)",
+  "estimator": "per-question rate difference averaged over questions (each engine's rate = events / passes on that question), i.e. equal weight per question; handles unequal pass counts",
+  "conditional_estimator": "ratio of pooled events over pooled at-risk, question-cluster bootstrap; plus a question-matched mean over questions at risk on both engines",
+  "interval": "question bootstrap, 20,000 resamples, seed 20261022, 2.5/97.5 percentiles",
+  "test_within_question": "stratified permutation: within each question, the pass outcomes of both engines are reassigned to engines keeping each engine's pass count; 20,000 draws, seed 20261023",
+  "test_pass_level": "exact permutation over passes (each pass a unit, statistic = mean empties per pass)",
+  "test_session_level": "exact permutation over server sessions (statistic = mean empty rate per session)",
+  "reporting": "effect, interval and the range of effects the data are compatible with; an interval that includes 0 is NOT read as 'no gap' and does not decide whether correctness work continues"
+ }
+}

@@ -15,7 +15,7 @@ Reasoning text from the stock 0.7.0 replication, with definitions hashed before 
 
 - **Capped replies:** 8 of 10 end in an exact loop (period 2-1,001 tokens). Four are 2-token loops: an interjection
   plus a separator. 2 replies do not loop.
-- **Onsets:** only 2 were already looping at 100k; the rest began 43k-188k tokens later. No capped reply recovered from
+- **Onsets:** only 2 were already looping at 100k; 6 began 43k-188k tokens later and 2 never formed a terminal loop (erratum 22am). No capped reply recovered from
   a terminal loop.
 - **Finished replies:** 15 of 19 produce new text to the end of their reasoning.
 - **Early signatures:** capped replies had lower characters per token in their first 100k tokens (2.31 against 3.15)

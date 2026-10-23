@@ -660,6 +660,18 @@ What was asked, run, found, corrected and withdrawn, in date order.
 - **Any further interaction study** needs a new proposal with a fresh cohort and a decision that depends on it.
 - No GPU-hours added (cumulative 128.31). [Close-out](investigations/2026-10-glm53-completion/long-reply/CLOSEOUT.md).
 
+**2026-10-22. Reconnaissance after close: the stock contrast pooled; dispatch, a draft-slot check (amendment 22am).**
+- **CPU only;** no frozen reading changes.
+- **Pooled stock passes (post hoc):** 0.7.0 left 14 of 1,188 replies empty, 0.9.1 30 of 990 (−1.85 points, −3.23 to
+  −0.66). Every 0.7.0 pass and session sits below every 0.9.1 one. Fresh seeds alone: −1.85 (−4.12 to +0.17).
+- **Where it sits:** in finishing once past 100k tokens (29 / 43 against 18 / 47), not in reaching 100k.
+- **Dispatch:** long replies run mostly at 8 requests in flight. There the engines' decode batches (48 against 32 rows)
+  take different routed-expert plans; their top-k routes differ only at 3-4 requests in flight. Per-step dispatch was never logged on a stock image.
+- **Draft slot mapping (stock 0.9.1, CPU):** no violation in the exercised states; planted faults detected.
+- **Errata (owned):** a sign in the investigation README; a loop-onset count (6, not 8) in the long-reply discovery
+  report.
+- No GPU-hours added (cumulative 128.31). [Reconnaissance](investigations/2026-10-glm53-completion/recon-2026-10-22/README.md).
+
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough
   qualification. They also said the D7 path "cannot run" where the basis is a reconstruction. These are reworded in the

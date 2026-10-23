@@ -1,0 +1,851 @@
+{
+ "rules": {
+  "unit": "question (doc_id 0-197); a question-pass is one request",
+  "E_empty": "lm-eval reply empty (frozen analysis_col511 definition; published 'empty' field)",
+  "E_capped": "finish_reason == 'length' (ran to the 327,680-token cap); logged passes only",
+  "E_reach100k": "completion_tokens >= 100,000; logged passes only",
+  "E_finish_given_reach": "finish_reason == 'stop' among E_reach100k",
+  "E_finish_by_165536_given_reach": "finish_reason == 'stop' and completion_tokens <= 165,536 among E_reach100k (horizon of the B+/E continuations: cut near 100k + 65,536)",
+  "estimator": "per-question rate difference averaged over questions (each engine's rate = events / passes on that question), i.e. equal weight per question; handles unequal pass counts",
+  "conditional_estimator": "ratio of pooled events over pooled at-risk, question-cluster bootstrap; plus a question-matched mean over questions at risk on both engines",
+  "interval": "question bootstrap, 20,000 resamples, seed 20261022, 2.5/97.5 percentiles",
+  "test_within_question": "stratified permutation: within each question, the pass outcomes of both engines are reassigned to engines keeping each engine's pass count; 20,000 draws, seed 20261023",
+  "test_pass_level": "exact permutation over passes (each pass a unit, statistic = mean empties per pass)",
+  "test_session_level": "exact permutation over server sessions (statistic = mean empty rate per session)",
+  "reporting": "effect, interval and the range of effects the data are compatible with; an interval that includes 0 is NOT read as 'no gap' and does not decide whether correctness work continues"
+ },
+ "post_hoc": true,
+ "comparisons": {
+  "original": {
+   "empty": {
+    "endpoint": "empty",
+    "sets": [
+     "original"
+    ],
+    "logged_only": false,
+    "passes": {
+     "0.7.0": 3,
+     "0.9.1": 3
+    },
+    "events": {
+     "0.7.0": 4,
+     "0.9.1": 16
+    },
+    "requests": {
+     "0.7.0": 594,
+     "0.9.1": 594
+    },
+    "per_pass": {
+     "0.7.0 | 0.7.0 record (seeds 1234-1236)#p1": "0/198",
+     "0.7.0 | 0.7.0 record (seeds 1234-1236)#p2": "3/198",
+     "0.7.0 | 0.7.0 record (seeds 1234-1236)#p3": "1/198",
+     "0.9.1 | 0.9.1 record (seeds 1234-1236)#p1": "5/198",
+     "0.9.1 | 0.9.1 record (seeds 1234-1236)#p2": "5/198",
+     "0.9.1 | 0.9.1 record (seeds 1234-1236)#p3": "6/198"
+    },
+    "per_session": {
+     "0.7.0 | 070-rec-A (2026-09-29)": "0/198",
+     "0.7.0 | 070-rec-B (2026-10-10)": "4/396",
+     "0.9.1 | 091-rec-A (2026-10-08)": "5/198",
+     "0.9.1 | 091-rec-B (2026-10-09)": "11/396"
+    },
+    "rate_070_pct": 0.6734006734006733,
+    "rate_091_pct": 2.6936026936026933,
+    "diff_pp": -2.02020202020202,
+    "diff_pp_ci95": [
+     -3.535353535353535,
+     -0.6734006734006733
+    ],
+    "bootstrap_valid": 20000,
+    "ratio_070_over_091": 0.25,
+    "ratio_ci95": [
+     0.05882352941176471,
+     0.5454545454545455
+    ],
+    "within_question_permutation": {
+     "obs": -0.020202020202020204,
+     "questions_with_events": 12,
+     "p_one_sided_070_fewer": 0.0026498675066246686,
+     "p_one_sided_070_more": 0.999550022498875,
+     "p_two_sided": 0.004899755012249388,
+     "draws": 20000
+    },
+    "pass_level_exact": {
+     "obs": -0.0202020202020202,
+     "p_one_sided_070_fewer": 0.05,
+     "p_two_sided": 0.1,
+     "arrangements": 20
+    },
+    "session_level_exact": {
+     "obs": -0.02146464646464646,
+     "p_one_sided_070_fewer": 0.16666666666666666,
+     "p_two_sided": 0.3333333333333333,
+     "arrangements": 6
+    }
+   },
+   "capped": {
+    "endpoint": "capped (logged passes)",
+    "sets": [
+     "original"
+    ],
+    "logged_only": true,
+    "passes": {
+     "0.7.0": 2,
+     "0.9.1": 3
+    },
+    "events": {
+     "0.7.0": 4,
+     "0.9.1": 15
+    },
+    "requests": {
+     "0.7.0": 396,
+     "0.9.1": 594
+    },
+    "per_pass": {
+     "0.7.0 | 0.7.0 record (seeds 1234-1236)#p2": "3/198",
+     "0.7.0 | 0.7.0 record (seeds 1234-1236)#p3": "1/198",
+     "0.9.1 | 0.9.1 record (seeds 1234-1236)#p1": "4/198",
+     "0.9.1 | 0.9.1 record (seeds 1234-1236)#p2": "5/198",
+     "0.9.1 | 0.9.1 record (seeds 1234-1236)#p3": "6/198"
+    },
+    "per_session": {
+     "0.7.0 | 070-rec-B (2026-10-10)": "4/396",
+     "0.9.1 | 091-rec-A (2026-10-08)": "4/198",
+     "0.9.1 | 091-rec-B (2026-10-09)": "11/396"
+    },
+    "rate_070_pct": 1.0101010101010102,
+    "rate_091_pct": 2.525252525252525,
+    "diff_pp": -1.515151515151515,
+    "diff_pp_ci95": [
+     -3.0303030303030303,
+     -0.1683501683501682
+    ],
+    "bootstrap_valid": 20000,
+    "ratio_070_over_091": 0.4,
+    "ratio_ci95": [
+     0.09375,
+     0.875
+    ],
+    "within_question_permutation": {
+     "obs": -0.015151515151515148,
+     "questions_with_events": 11,
+     "p_one_sided_070_fewer": 0.04269786510674466,
+     "p_one_sided_070_more": 0.9892505374731263,
+     "p_two_sided": 0.06014699265036748,
+     "draws": 20000
+    },
+    "pass_level_exact": {
+     "obs": -0.01515151515151515,
+     "p_one_sided_070_fewer": 0.1,
+     "p_two_sided": 0.1,
+     "arrangements": 10
+    },
+    "session_level_exact": {
+     "obs": -0.01388888888888889,
+     "p_one_sided_070_fewer": 0.3333333333333333,
+     "p_two_sided": 0.3333333333333333,
+     "arrangements": 3
+    }
+   },
+   "reach100k": {
+    "endpoint": "reach 100k (logged passes)",
+    "sets": [
+     "original"
+    ],
+    "logged_only": true,
+    "passes": {
+     "0.7.0": 2,
+     "0.9.1": 3
+    },
+    "events": {
+     "0.7.0": 14,
+     "0.9.1": 25
+    },
+    "requests": {
+     "0.7.0": 396,
+     "0.9.1": 594
+    },
+    "per_pass": {
+     "0.7.0 | 0.7.0 record (seeds 1234-1236)#p2": "8/198",
+     "0.7.0 | 0.7.0 record (seeds 1234-1236)#p3": "6/198",
+     "0.9.1 | 0.9.1 record (seeds 1234-1236)#p1": "7/198",
+     "0.9.1 | 0.9.1 record (seeds 1234-1236)#p2": "9/198",
+     "0.9.1 | 0.9.1 record (seeds 1234-1236)#p3": "9/198"
+    },
+    "per_session": {
+     "0.7.0 | 070-rec-B (2026-10-10)": "14/396",
+     "0.9.1 | 091-rec-A (2026-10-08)": "7/198",
+     "0.9.1 | 091-rec-B (2026-10-09)": "18/396"
+    },
+    "rate_070_pct": 3.535353535353535,
+    "rate_091_pct": 4.2087542087542085,
+    "diff_pp": -0.6734006734006731,
+    "diff_pp_ci95": [
+     -2.7777777777777777,
+     1.5151515151515151
+    ],
+    "bootstrap_valid": 20000,
+    "ratio_070_over_091": 0.8400000000000001,
+    "ratio_ci95": [
+     0.445945945945946,
+     1.5
+    ],
+    "within_question_permutation": {
+     "obs": -0.006734006734006733,
+     "questions_with_events": 18,
+     "p_one_sided_070_fewer": 0.3176841157942103,
+     "p_one_sided_070_more": 0.8186590670466477,
+     "p_two_sided": 0.5213739313034348,
+     "draws": 20000
+    },
+    "pass_level_exact": {
+     "obs": -0.006734006734006731,
+     "p_one_sided_070_fewer": 0.2,
+     "p_two_sided": 0.3,
+     "arrangements": 10
+    },
+    "session_level_exact": {
+     "obs": -0.005050505050505048,
+     "p_one_sided_070_fewer": 0.6666666666666666,
+     "p_two_sided": 1.0,
+     "arrangements": 3
+    }
+   },
+   "finish_given_reach": {
+    "endpoint": "finish | reach 100k",
+    "sets": [
+     "original"
+    ],
+    "at_risk": {
+     "0.7.0": 14,
+     "0.9.1": 25
+    },
+    "events": {
+     "0.7.0": 10,
+     "0.9.1": 10
+    },
+    "questions_at_risk": {
+     "0.7.0": 11,
+     "0.9.1": 15
+    },
+    "p_070": 0.7142857142857143,
+    "p_091": 0.4,
+    "diff": 0.3142857142857143,
+    "diff_ci95_question_bootstrap": [
+     0.034946236559139865,
+     0.5514705882352942
+    ],
+    "bootstrap_valid": 20000,
+    "question_matched": {
+     "questions": 7,
+     "mean_diff": 0.21428571428571433,
+     "ci95": [
+      -0.047619047619047616,
+      0.4761904761904763
+     ],
+     "bootstrap_valid": 20000
+    }
+   },
+   "finish_by_165536_given_reach": {
+    "endpoint": "finish by 165,536 | reach 100k",
+    "sets": [
+     "original"
+    ],
+    "at_risk": {
+     "0.7.0": 14,
+     "0.9.1": 25
+    },
+    "events": {
+     "0.7.0": 6,
+     "0.9.1": 7
+    },
+    "questions_at_risk": {
+     "0.7.0": 11,
+     "0.9.1": 15
+    },
+    "p_070": 0.42857142857142855,
+    "p_091": 0.28,
+    "diff": 0.14857142857142852,
+    "diff_ci95_question_bootstrap": [
+     -0.14583333333333334,
+     0.4492753623188406
+    ],
+    "bootstrap_valid": 20000,
+    "question_matched": {
+     "questions": 7,
+     "mean_diff": -0.16666666666666666,
+     "ci95": [
+      -0.3095238095238095,
+      -0.047619047619047616
+     ],
+     "bootstrap_valid": 20000
+    }
+   }
+  },
+  "fresh": {
+   "empty": {
+    "endpoint": "empty",
+    "sets": [
+     "fresh"
+    ],
+    "logged_only": false,
+    "passes": {
+     "0.7.0": 3,
+     "0.9.1": 2
+    },
+    "events": {
+     "0.7.0": 10,
+     "0.9.1": 14
+    },
+    "requests": {
+     "0.7.0": 594,
+     "0.9.1": 396
+    },
+    "per_pass": {
+     "0.7.0 | 0.7.0 rep070-F (seeds 70701-70703)#p1": "2/198",
+     "0.7.0 | 0.7.0 rep070-F (seeds 70701-70703)#p2": "4/198",
+     "0.7.0 | 0.7.0 rep070-F (seeds 70701-70703)#p3": "4/198",
+     "0.9.1 | 0.9.1 D (seed 70704)#p1": "6/198",
+     "0.9.1 | 0.9.1 D2 (seed 70705)#p1": "8/198"
+    },
+    "per_session": {
+     "0.7.0 | 070-rep-s1 (2026-10-16)": "2/198",
+     "0.7.0 | 070-rep-s2 (2026-10-16/17)": "8/396",
+     "0.9.1 | 091-D (2026-10-21)": "6/198",
+     "0.9.1 | 091-D2 (2026-10-22)": "8/198"
+    },
+    "rate_070_pct": 1.6835016835016834,
+    "rate_091_pct": 3.535353535353535,
+    "diff_pp": -1.8518518518518516,
+    "diff_pp_ci95": [
+     -4.1245791245791255,
+     0.1683501683501682
+    ],
+    "bootstrap_valid": 20000,
+    "ratio_070_over_091": 0.4761904761904762,
+    "ratio_ci95": [
+     0.15384615384615385,
+     1.0909090909090908
+    ],
+    "within_question_permutation": {
+     "obs": -0.01851851851851852,
+     "questions_with_events": 13,
+     "p_one_sided_070_fewer": 0.02414879256037198,
+     "p_one_sided_070_more": 0.9937503124843757,
+     "p_two_sided": 0.03984800759962002,
+     "draws": 20000
+    },
+    "pass_level_exact": {
+     "obs": -0.018518518518518524,
+     "p_one_sided_070_fewer": 0.1,
+     "p_two_sided": 0.1,
+     "arrangements": 10
+    },
+    "session_level_exact": {
+     "obs": -0.020202020202020207,
+     "p_one_sided_070_fewer": 0.16666666666666666,
+     "p_two_sided": 0.3333333333333333,
+     "arrangements": 6
+    }
+   },
+   "capped": {
+    "endpoint": "capped (logged passes)",
+    "sets": [
+     "fresh"
+    ],
+    "logged_only": true,
+    "passes": {
+     "0.7.0": 3,
+     "0.9.1": 2
+    },
+    "events": {
+     "0.7.0": 10,
+     "0.9.1": 14
+    },
+    "requests": {
+     "0.7.0": 594,
+     "0.9.1": 396
+    },
+    "per_pass": {
+     "0.7.0 | 0.7.0 rep070-F (seeds 70701-70703)#p1": "2/198",
+     "0.7.0 | 0.7.0 rep070-F (seeds 70701-70703)#p2": "4/198",
+     "0.7.0 | 0.7.0 rep070-F (seeds 70701-70703)#p3": "4/198",
+     "0.9.1 | 0.9.1 D (seed 70704)#p1": "6/198",
+     "0.9.1 | 0.9.1 D2 (seed 70705)#p1": "8/198"
+    },
+    "per_session": {
+     "0.7.0 | 070-rep-s1 (2026-10-16)": "2/198",
+     "0.7.0 | 070-rep-s2 (2026-10-16/17)": "8/396",
+     "0.9.1 | 091-D (2026-10-21)": "6/198",
+     "0.9.1 | 091-D2 (2026-10-22)": "8/198"
+    },
+    "rate_070_pct": 1.6835016835016834,
+    "rate_091_pct": 3.535353535353535,
+    "diff_pp": -1.8518518518518516,
+    "diff_pp_ci95": [
+     -4.1245791245791255,
+     0.1683501683501682
+    ],
+    "bootstrap_valid": 20000,
+    "ratio_070_over_091": 0.4761904761904762,
+    "ratio_ci95": [
+     0.15384615384615385,
+     1.0909090909090908
+    ],
+    "within_question_permutation": {
+     "obs": -0.01851851851851852,
+     "questions_with_events": 13,
+     "p_one_sided_070_fewer": 0.02414879256037198,
+     "p_one_sided_070_more": 0.9937503124843757,
+     "p_two_sided": 0.03984800759962002,
+     "draws": 20000
+    },
+    "pass_level_exact": {
+     "obs": -0.018518518518518524,
+     "p_one_sided_070_fewer": 0.1,
+     "p_two_sided": 0.1,
+     "arrangements": 10
+    },
+    "session_level_exact": {
+     "obs": -0.020202020202020207,
+     "p_one_sided_070_fewer": 0.16666666666666666,
+     "p_two_sided": 0.3333333333333333,
+     "arrangements": 6
+    }
+   },
+   "reach100k": {
+    "endpoint": "reach 100k (logged passes)",
+    "sets": [
+     "fresh"
+    ],
+    "logged_only": true,
+    "passes": {
+     "0.7.0": 3,
+     "0.9.1": 2
+    },
+    "events": {
+     "0.7.0": 29,
+     "0.9.1": 22
+    },
+    "requests": {
+     "0.7.0": 594,
+     "0.9.1": 396
+    },
+    "per_pass": {
+     "0.7.0 | 0.7.0 rep070-F (seeds 70701-70703)#p1": "6/198",
+     "0.7.0 | 0.7.0 rep070-F (seeds 70701-70703)#p2": "10/198",
+     "0.7.0 | 0.7.0 rep070-F (seeds 70701-70703)#p3": "13/198",
+     "0.9.1 | 0.9.1 D (seed 70704)#p1": "10/198",
+     "0.9.1 | 0.9.1 D2 (seed 70705)#p1": "12/198"
+    },
+    "per_session": {
+     "0.7.0 | 070-rep-s1 (2026-10-16)": "6/198",
+     "0.7.0 | 070-rep-s2 (2026-10-16/17)": "23/396",
+     "0.9.1 | 091-D (2026-10-21)": "10/198",
+     "0.9.1 | 091-D2 (2026-10-22)": "12/198"
+    },
+    "rate_070_pct": 4.882154882154882,
+    "rate_091_pct": 5.555555555555555,
+    "diff_pp": -0.6734006734006731,
+    "diff_pp_ci95": [
+     -3.0303030303030303,
+     1.5151515151515151
+    ],
+    "bootstrap_valid": 20000,
+    "ratio_070_over_091": 0.8787878787878788,
+    "ratio_ci95": [
+     0.5454545454545454,
+     1.375
+    ],
+    "within_question_permutation": {
+     "obs": -0.0067340067340067354,
+     "questions_with_events": 23,
+     "p_one_sided_070_fewer": 0.328133593320334,
+     "p_one_sided_070_more": 0.7959102044897756,
+     "p_two_sided": 0.552322383880806,
+     "draws": 20000
+    },
+    "pass_level_exact": {
+     "obs": -0.006734006734006731,
+     "p_one_sided_070_fewer": 0.5,
+     "p_two_sided": 0.8,
+     "arrangements": 10
+    },
+    "session_level_exact": {
+     "obs": -0.01136363636363636,
+     "p_one_sided_070_fewer": 0.3333333333333333,
+     "p_two_sided": 0.6666666666666666,
+     "arrangements": 6
+    }
+   },
+   "finish_given_reach": {
+    "endpoint": "finish | reach 100k",
+    "sets": [
+     "fresh"
+    ],
+    "at_risk": {
+     "0.7.0": 29,
+     "0.9.1": 22
+    },
+    "events": {
+     "0.7.0": 19,
+     "0.9.1": 8
+    },
+    "questions_at_risk": {
+     "0.7.0": 18,
+     "0.9.1": 17
+    },
+    "p_070": 0.6551724137931034,
+    "p_091": 0.36363636363636365,
+    "diff": 0.2915360501567398,
+    "diff_ci95_question_bootstrap": [
+     -0.018840579710144967,
+     0.5984848484848485
+    ],
+    "bootstrap_valid": 20000,
+    "question_matched": {
+     "questions": 11,
+     "mean_diff": 0.13636363636363635,
+     "ci95": [
+      -0.25757575757575757,
+      0.5303030303030303
+     ],
+     "bootstrap_valid": 20000
+    }
+   },
+   "finish_by_165536_given_reach": {
+    "endpoint": "finish by 165,536 | reach 100k",
+    "sets": [
+     "fresh"
+    ],
+    "at_risk": {
+     "0.7.0": 29,
+     "0.9.1": 22
+    },
+    "events": {
+     "0.7.0": 16,
+     "0.9.1": 8
+    },
+    "questions_at_risk": {
+     "0.7.0": 18,
+     "0.9.1": 17
+    },
+    "p_070": 0.5517241379310345,
+    "p_091": 0.36363636363636365,
+    "diff": 0.18808777429467083,
+    "diff_ci95_question_bootstrap": [
+     -0.18666666666666665,
+     0.5454545454545454
+    ],
+    "bootstrap_valid": 20000,
+    "question_matched": {
+     "questions": 11,
+     "mean_diff": 0.0606060606060606,
+     "ci95": [
+      -0.3939393939393939,
+      0.5151515151515151
+     ],
+     "bootstrap_valid": 20000
+    }
+   }
+  },
+  "pooled": {
+   "empty": {
+    "endpoint": "empty",
+    "sets": [
+     "original",
+     "fresh"
+    ],
+    "logged_only": false,
+    "passes": {
+     "0.7.0": 6,
+     "0.9.1": 5
+    },
+    "events": {
+     "0.7.0": 14,
+     "0.9.1": 30
+    },
+    "requests": {
+     "0.7.0": 1188,
+     "0.9.1": 990
+    },
+    "per_pass": {
+     "0.7.0 | 0.7.0 record (seeds 1234-1236)#p1": "0/198",
+     "0.7.0 | 0.7.0 record (seeds 1234-1236)#p2": "3/198",
+     "0.7.0 | 0.7.0 record (seeds 1234-1236)#p3": "1/198",
+     "0.7.0 | 0.7.0 rep070-F (seeds 70701-70703)#p1": "2/198",
+     "0.7.0 | 0.7.0 rep070-F (seeds 70701-70703)#p2": "4/198",
+     "0.7.0 | 0.7.0 rep070-F (seeds 70701-70703)#p3": "4/198",
+     "0.9.1 | 0.9.1 D (seed 70704)#p1": "6/198",
+     "0.9.1 | 0.9.1 D2 (seed 70705)#p1": "8/198",
+     "0.9.1 | 0.9.1 record (seeds 1234-1236)#p1": "5/198",
+     "0.9.1 | 0.9.1 record (seeds 1234-1236)#p2": "5/198",
+     "0.9.1 | 0.9.1 record (seeds 1234-1236)#p3": "6/198"
+    },
+    "per_session": {
+     "0.7.0 | 070-rec-A (2026-09-29)": "0/198",
+     "0.7.0 | 070-rec-B (2026-10-10)": "4/396",
+     "0.7.0 | 070-rep-s1 (2026-10-16)": "2/198",
+     "0.7.0 | 070-rep-s2 (2026-10-16/17)": "8/396",
+     "0.9.1 | 091-D (2026-10-21)": "6/198",
+     "0.9.1 | 091-D2 (2026-10-22)": "8/198",
+     "0.9.1 | 091-rec-A (2026-10-08)": "5/198",
+     "0.9.1 | 091-rec-B (2026-10-09)": "11/396"
+    },
+    "rate_070_pct": 1.1784511784511782,
+    "rate_091_pct": 3.0303030303030303,
+    "diff_pp": -1.851851851851852,
+    "diff_pp_ci95": [
+     -3.2323232323232323,
+     -0.6565656565656569
+    ],
+    "bootstrap_valid": 20000,
+    "ratio_070_over_091": 0.38888888888888884,
+    "ratio_ci95": [
+     0.18518518518518517,
+     0.6481481481481481
+    ],
+    "within_question_permutation": {
+     "obs": -0.01851851851851852,
+     "questions_with_events": 19,
+     "p_one_sided_070_fewer": 0.000599970001499925,
+     "p_one_sided_070_more": 0.999850007499625,
+     "p_two_sided": 0.000999950002499875,
+     "draws": 20000
+    },
+    "pass_level_exact": {
+     "obs": -0.018518518518518517,
+     "p_one_sided_070_fewer": 0.0021645021645021645,
+     "p_two_sided": 0.006493506493506494,
+     "arrangements": 462
+    },
+    "session_level_exact": {
+     "obs": -0.020833333333333336,
+     "p_one_sided_070_fewer": 0.014285714285714285,
+     "p_two_sided": 0.02857142857142857,
+     "arrangements": 70
+    }
+   },
+   "capped": {
+    "endpoint": "capped (logged passes)",
+    "sets": [
+     "original",
+     "fresh"
+    ],
+    "logged_only": true,
+    "passes": {
+     "0.7.0": 5,
+     "0.9.1": 5
+    },
+    "events": {
+     "0.7.0": 14,
+     "0.9.1": 29
+    },
+    "requests": {
+     "0.7.0": 990,
+     "0.9.1": 990
+    },
+    "per_pass": {
+     "0.7.0 | 0.7.0 record (seeds 1234-1236)#p2": "3/198",
+     "0.7.0 | 0.7.0 record (seeds 1234-1236)#p3": "1/198",
+     "0.7.0 | 0.7.0 rep070-F (seeds 70701-70703)#p1": "2/198",
+     "0.7.0 | 0.7.0 rep070-F (seeds 70701-70703)#p2": "4/198",
+     "0.7.0 | 0.7.0 rep070-F (seeds 70701-70703)#p3": "4/198",
+     "0.9.1 | 0.9.1 D (seed 70704)#p1": "6/198",
+     "0.9.1 | 0.9.1 D2 (seed 70705)#p1": "8/198",
+     "0.9.1 | 0.9.1 record (seeds 1234-1236)#p1": "4/198",
+     "0.9.1 | 0.9.1 record (seeds 1234-1236)#p2": "5/198",
+     "0.9.1 | 0.9.1 record (seeds 1234-1236)#p3": "6/198"
+    },
+    "per_session": {
+     "0.7.0 | 070-rec-B (2026-10-10)": "4/396",
+     "0.7.0 | 070-rep-s1 (2026-10-16)": "2/198",
+     "0.7.0 | 070-rep-s2 (2026-10-16/17)": "8/396",
+     "0.9.1 | 091-D (2026-10-21)": "6/198",
+     "0.9.1 | 091-D2 (2026-10-22)": "8/198",
+     "0.9.1 | 091-rec-A (2026-10-08)": "4/198",
+     "0.9.1 | 091-rec-B (2026-10-09)": "11/396"
+    },
+    "rate_070_pct": 1.4141414141414141,
+    "rate_091_pct": 2.929292929292929,
+    "diff_pp": -1.515151515151515,
+    "diff_pp_ci95": [
+     -2.8282828282828283,
+     -0.404040404040404
+    ],
+    "bootstrap_valid": 20000,
+    "ratio_070_over_091": 0.48275862068965525,
+    "ratio_ci95": [
+     0.23529411764705885,
+     0.8076923076923077
+    ],
+    "within_question_permutation": {
+     "obs": -0.015151515151515152,
+     "questions_with_events": 18,
+     "p_one_sided_070_fewer": 0.0050497475126243686,
+     "p_one_sided_070_more": 0.9985000749962502,
+     "p_two_sided": 0.010599470026498675,
+     "draws": 20000
+    },
+    "pass_level_exact": {
+     "obs": -0.015151515151515152,
+     "p_one_sided_070_fewer": 0.011904761904761904,
+     "p_two_sided": 0.023809523809523808,
+     "arrangements": 252
+    },
+    "session_level_exact": {
+     "obs": -0.016203703703703703,
+     "p_one_sided_070_fewer": 0.05714285714285714,
+     "p_two_sided": 0.08571428571428572,
+     "arrangements": 35
+    }
+   },
+   "reach100k": {
+    "endpoint": "reach 100k (logged passes)",
+    "sets": [
+     "original",
+     "fresh"
+    ],
+    "logged_only": true,
+    "passes": {
+     "0.7.0": 5,
+     "0.9.1": 5
+    },
+    "events": {
+     "0.7.0": 43,
+     "0.9.1": 47
+    },
+    "requests": {
+     "0.7.0": 990,
+     "0.9.1": 990
+    },
+    "per_pass": {
+     "0.7.0 | 0.7.0 record (seeds 1234-1236)#p2": "8/198",
+     "0.7.0 | 0.7.0 record (seeds 1234-1236)#p3": "6/198",
+     "0.7.0 | 0.7.0 rep070-F (seeds 70701-70703)#p1": "6/198",
+     "0.7.0 | 0.7.0 rep070-F (seeds 70701-70703)#p2": "10/198",
+     "0.7.0 | 0.7.0 rep070-F (seeds 70701-70703)#p3": "13/198",
+     "0.9.1 | 0.9.1 D (seed 70704)#p1": "10/198",
+     "0.9.1 | 0.9.1 D2 (seed 70705)#p1": "12/198",
+     "0.9.1 | 0.9.1 record (seeds 1234-1236)#p1": "7/198",
+     "0.9.1 | 0.9.1 record (seeds 1234-1236)#p2": "9/198",
+     "0.9.1 | 0.9.1 record (seeds 1234-1236)#p3": "9/198"
+    },
+    "per_session": {
+     "0.7.0 | 070-rec-B (2026-10-10)": "14/396",
+     "0.7.0 | 070-rep-s1 (2026-10-16)": "6/198",
+     "0.7.0 | 070-rep-s2 (2026-10-16/17)": "23/396",
+     "0.9.1 | 091-D (2026-10-21)": "10/198",
+     "0.9.1 | 091-D2 (2026-10-22)": "12/198",
+     "0.9.1 | 091-rec-A (2026-10-08)": "7/198",
+     "0.9.1 | 091-rec-B (2026-10-09)": "18/396"
+    },
+    "rate_070_pct": 4.3434343434343425,
+    "rate_091_pct": 4.747474747474747,
+    "diff_pp": -0.40404040404040453,
+    "diff_pp_ci95": [
+     -1.8181818181818181,
+     0.9090909090909094
+    ],
+    "bootstrap_valid": 20000,
+    "ratio_070_over_091": 0.9148936170212765,
+    "ratio_ci95": [
+     0.6666666666666666,
+     1.259259259259259
+    ],
+    "within_question_permutation": {
+     "obs": -0.00404040404040404,
+     "questions_with_events": 28,
+     "p_one_sided_070_fewer": 0.33538323083845806,
+     "p_one_sided_070_more": 0.759962001899905,
+     "p_two_sided": 0.663866806659667,
+     "draws": 20000
+    },
+    "pass_level_exact": {
+     "obs": -0.004040404040404039,
+     "p_one_sided_070_fewer": 0.3492063492063492,
+     "p_two_sided": 0.6984126984126984,
+     "arrangements": 252
+    },
+    "session_level_exact": {
+     "obs": -0.006734006734006738,
+     "p_one_sided_070_fewer": 0.2571428571428571,
+     "p_two_sided": 0.45714285714285713,
+     "arrangements": 35
+    }
+   },
+   "finish_given_reach": {
+    "endpoint": "finish | reach 100k",
+    "sets": [
+     "original",
+     "fresh"
+    ],
+    "at_risk": {
+     "0.7.0": 43,
+     "0.9.1": 47
+    },
+    "events": {
+     "0.7.0": 29,
+     "0.9.1": 18
+    },
+    "questions_at_risk": {
+     "0.7.0": 20,
+     "0.9.1": 21
+    },
+    "p_070": 0.6744186046511628,
+    "p_091": 0.3829787234042553,
+    "diff": 0.29143988124690745,
+    "diff_ci95_question_bootstrap": [
+     0.09654686398872442,
+     0.5060975609756098
+    ],
+    "bootstrap_valid": 20000,
+    "question_matched": {
+     "questions": 13,
+     "mean_diff": 0.17564102564102563,
+     "ci95": [
+      -0.09102564102564102,
+      0.45641025641025645
+     ],
+     "bootstrap_valid": 20000
+    }
+   },
+   "finish_by_165536_given_reach": {
+    "endpoint": "finish by 165,536 | reach 100k",
+    "sets": [
+     "original",
+     "fresh"
+    ],
+    "at_risk": {
+     "0.7.0": 43,
+     "0.9.1": 47
+    },
+    "events": {
+     "0.7.0": 22,
+     "0.9.1": 15
+    },
+    "questions_at_risk": {
+     "0.7.0": 20,
+     "0.9.1": 21
+    },
+    "p_070": 0.5116279069767442,
+    "p_091": 0.3191489361702128,
+    "diff": 0.19247897080653142,
+    "diff_ci95_question_bootstrap": [
+     -0.046153846153846156,
+     0.4520094562647754
+    ],
+    "bootstrap_valid": 20000,
+    "question_matched": {
+     "questions": 13,
+     "mean_diff": 0.06923076923076922,
+     "ci95": [
+      -0.2205128205128205,
+      0.37179487179487175
+     ],
+     "bootstrap_valid": 20000
+    }
+   }
+  }
+ }
+}

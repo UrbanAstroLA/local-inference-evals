@@ -1,0 +1,2841 @@
+{
+ "sessions": [
+  {
+   "label": "0.7.0 record p2-3",
+   "engine": "0.7.0",
+   "K": 5,
+   "workload": "gpqa",
+   "server_log": "<gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+ps.server.log",
+   "capture_sizes": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    24,
+    32,
+    40,
+    48,
+    56,
+    64,
+    72,
+    80,
+    88,
+    96
+   ],
+   "kv_pool_tokens": [
+    2758919
+   ],
+   "cudagraph_mode": "FULL_AND_PIECEWISE",
+   "status_lines": 2752,
+   "occupancy_share_by_running": {
+    "0": 0.0015,
+    "1-2": 0.0614,
+    "3-5": 0.0541,
+    "6-8": 0.8815,
+    ">8": 0.0015
+   },
+   "acceptance": {
+    "lines": 2751,
+    "drafted": 11783570,
+    "accept_rate": 0.4102,
+    "mean_accepted_per_block": 2.051,
+    "per_position": [
+     0.7098,
+     0.503,
+     0.363,
+     0.2694,
+     0.2057
+    ]
+   },
+   "acceptance_by_running": {
+    "0": {
+     "lines": 3,
+     "drafted": 5870,
+     "accept_rate": 0.6315,
+     "mean_accepted_per_block": 3.158,
+     "per_position": [
+      0.8167,
+      0.6805,
+      0.608,
+      0.5544,
+      0.4976
+     ]
+    },
+    "1-2": {
+     "lines": 169,
+     "drafted": 365080,
+     "accept_rate": 0.5147,
+     "mean_accepted_per_block": 2.574,
+     "per_position": [
+      0.7809,
+      0.6022,
+      0.4761,
+      0.3877,
+      0.3268
+     ]
+    },
+    "3-5": {
+     "lines": 149,
+     "drafted": 510345,
+     "accept_rate": 0.4357,
+     "mean_accepted_per_block": 2.179,
+     "per_position": [
+      0.7331,
+      0.5325,
+      0.3912,
+      0.2953,
+      0.2266
+     ]
+    },
+    "6-8": {
+     "lines": 2426,
+     "drafted": 10880885,
+     "accept_rate": 0.4052,
+     "mean_accepted_per_block": 2.026,
+     "per_position": [
+      0.7062,
+      0.498,
+      0.3576,
+      0.2639,
+      0.2004
+     ]
+    },
+    ">8": {
+     "lines": 4,
+     "drafted": 21390,
+     "accept_rate": 0.4709,
+     "mean_accepted_per_block": 2.355,
+     "per_position": [
+      0.7552,
+      0.5848,
+      0.4447,
+      0.324,
+      0.2458
+     ]
+    }
+   },
+   "requests_logged": 396,
+   "tail_exposure": {
+    "long_requests": 14,
+    "inflight_time_share": {
+     "1": 0.035,
+     "2": 0.007,
+     "3": 0.0134,
+     "4": 0.0204,
+     "5": 0.0455,
+     "6": 0.0027,
+     "7": 0.0116,
+     "8": 0.8644
+    },
+    "per_request": [
+     {
+      "T": 110545,
+      "finish": "stop",
+      "secs_after_100k": 286.6,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 36.8
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 5318.0,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 42.8
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 6200.2,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 36.7
+     },
+     {
+      "T": 233223,
+      "finish": "stop",
+      "secs_after_100k": 3461.2,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 38.5
+     },
+     {
+      "T": 230448,
+      "finish": "stop",
+      "secs_after_100k": 3109.1,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 42.0
+     },
+     {
+      "T": 100868,
+      "finish": "stop",
+      "secs_after_100k": 31.6,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 27.5
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 4844.2,
+      "mean_inflight": 7.86,
+      "decode_tok_s_after_100k": 47.0
+     },
+     {
+      "T": 152970,
+      "finish": "stop",
+      "secs_after_100k": 663.2,
+      "mean_inflight": 1.0,
+      "decode_tok_s_after_100k": 79.9
+     },
+     {
+      "T": 102001,
+      "finish": "stop",
+      "secs_after_100k": 71.0,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 28.2
+     },
+     {
+      "T": 103553,
+      "finish": "stop",
+      "secs_after_100k": 121.3,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 29.3
+     },
+     {
+      "T": 220231,
+      "finish": "stop",
+      "secs_after_100k": 2787.1,
+      "mean_inflight": 7.95,
+      "decode_tok_s_after_100k": 43.1
+     },
+     {
+      "T": 102493,
+      "finish": "stop",
+      "secs_after_100k": 62.2,
+      "mean_inflight": 3.0,
+      "decode_tok_s_after_100k": 40.1
+     },
+     {
+      "T": 250709,
+      "finish": "stop",
+      "secs_after_100k": 3223.1,
+      "mean_inflight": 6.34,
+      "decode_tok_s_after_100k": 46.8
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 4162.9,
+      "mean_inflight": 5.81,
+      "decode_tok_s_after_100k": 54.7
+     }
+    ],
+    "label": "INFERRED window (constant decode rate within a request); client-side in-flight count"
+   }
+  },
+  {
+   "label": "0.7.0 rep070 s1",
+   "engine": "0.7.0",
+   "K": 5,
+   "workload": "gpqa",
+   "server_log": "<runs>/rep070/run-F/server-s1.log",
+   "capture_sizes": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    24,
+    32,
+    40,
+    48,
+    56,
+    64,
+    72,
+    80,
+    88,
+    96
+   ],
+   "kv_pool_tokens": [
+    2758919
+   ],
+   "cudagraph_mode": "FULL_AND_PIECEWISE",
+   "status_lines": 1158,
+   "occupancy_share_by_running": {
+    "0": 0.0017,
+    "1-2": 0.0604,
+    "3-5": 0.0328,
+    "6-8": 0.9016,
+    ">8": 0.0035
+   },
+   "acceptance": {
+    "lines": 1157,
+    "drafted": 4927875,
+    "accept_rate": 0.4404,
+    "mean_accepted_per_block": 2.202,
+    "per_position": [
+     0.7282,
+     0.5333,
+     0.3983,
+     0.3041,
+     0.2383
+    ]
+   },
+   "acceptance_by_running": {
+    "0": {
+     "lines": 1,
+     "drafted": 4485,
+     "accept_rate": 0.4997,
+     "mean_accepted_per_block": 2.498,
+     "per_position": [
+      0.806,
+      0.631,
+      0.478,
+      0.35,
+      0.233
+     ]
+    },
+    "1-2": {
+     "lines": 69,
+     "drafted": 141750,
+     "accept_rate": 0.4071,
+     "mean_accepted_per_block": 2.035,
+     "per_position": [
+      0.725,
+      0.5129,
+      0.364,
+      0.2533,
+      0.1803
+     ]
+    },
+    "3-5": {
+     "lines": 38,
+     "drafted": 135240,
+     "accept_rate": 0.4578,
+     "mean_accepted_per_block": 2.289,
+     "per_position": [
+      0.7548,
+      0.561,
+      0.4187,
+      0.3145,
+      0.2399
+     ]
+    },
+    "6-8": {
+     "lines": 1044,
+     "drafted": 4625440,
+     "accept_rate": 0.4409,
+     "mean_accepted_per_block": 2.205,
+     "per_position": [
+      0.7274,
+      0.5329,
+      0.3986,
+      0.3053,
+      0.2402
+     ]
+    },
+    ">8": {
+     "lines": 4,
+     "drafted": 20820,
+     "accept_rate": 0.4394,
+     "mean_accepted_per_block": 2.197,
+     "per_position": [
+      0.7414,
+      0.5494,
+      0.4048,
+      0.2914,
+      0.2105
+     ]
+    },
+    "unpaired": {
+     "lines": 1,
+     "drafted": 140,
+     "accept_rate": 0.4857,
+     "mean_accepted_per_block": 2.429,
+     "per_position": [
+      0.75,
+      0.643,
+      0.429,
+      0.321,
+      0.286
+     ]
+    }
+   },
+   "requests_logged": 198,
+   "tail_exposure": {
+    "long_requests": 6,
+    "inflight_time_share": {
+     "1": 0.0262,
+     "2": 0.0036,
+     "3": 0.0193,
+     "4": 0.0011,
+     "5": 0.0078,
+     "6": 0.0056,
+     "7": 0.0288,
+     "8": 0.9077
+    },
+    "per_request": [
+     {
+      "T": 124709,
+      "finish": "stop",
+      "secs_after_100k": 847.7,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 29.1
+     },
+     {
+      "T": 144012,
+      "finish": "stop",
+      "secs_after_100k": 1365.5,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 32.2
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 5042.5,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 45.2
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 5035.7,
+      "mean_inflight": 7.95,
+      "decode_tok_s_after_100k": 45.2
+     },
+     {
+      "T": 150616,
+      "finish": "stop",
+      "secs_after_100k": 959.3,
+      "mean_inflight": 5.65,
+      "decode_tok_s_after_100k": 52.8
+     },
+     {
+      "T": 124517,
+      "finish": "stop",
+      "secs_after_100k": 355.9,
+      "mean_inflight": 1.0,
+      "decode_tok_s_after_100k": 68.9
+     }
+    ],
+    "label": "INFERRED window (constant decode rate within a request); client-side in-flight count"
+   }
+  },
+  {
+   "label": "0.7.0 rep070 s2",
+   "engine": "0.7.0",
+   "K": 5,
+   "workload": "gpqa",
+   "server_log": "<runs>/rep070/run-F/server-s2.log",
+   "capture_sizes": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    24,
+    32,
+    40,
+    48,
+    56,
+    64,
+    72,
+    80,
+    88,
+    96
+   ],
+   "kv_pool_tokens": [
+    2758919
+   ],
+   "cudagraph_mode": "FULL_AND_PIECEWISE",
+   "status_lines": 3057,
+   "occupancy_share_by_running": {
+    "0": 0.001,
+    "1-2": 0.0455,
+    "3-5": 0.0144,
+    "6-8": 0.9378,
+    ">8": 0.0013
+   },
+   "acceptance": {
+    "lines": 3056,
+    "drafted": 13144075,
+    "accept_rate": 0.4532,
+    "mean_accepted_per_block": 2.266,
+    "per_position": [
+     0.7334,
+     0.5423,
+     0.4112,
+     0.3212,
+     0.2578
+    ]
+   },
+   "acceptance_by_running": {
+    "0": {
+     "lines": 2,
+     "drafted": 2560,
+     "accept_rate": 0.6301,
+     "mean_accepted_per_block": 3.15,
+     "per_position": [
+      0.8454,
+      0.7483,
+      0.6585,
+      0.5529,
+      0.3458
+     ]
+    },
+    "1-2": {
+     "lines": 138,
+     "drafted": 318890,
+     "accept_rate": 0.5941,
+     "mean_accepted_per_block": 2.971,
+     "per_position": [
+      0.8271,
+      0.6816,
+      0.5688,
+      0.4799,
+      0.4133
+     ]
+    },
+    "3-5": {
+     "lines": 44,
+     "drafted": 165345,
+     "accept_rate": 0.5483,
+     "mean_accepted_per_block": 2.741,
+     "per_position": [
+      0.7843,
+      0.6267,
+      0.5156,
+      0.4359,
+      0.3787
+     ]
+    },
+    "6-8": {
+     "lines": 2866,
+     "drafted": 12630915,
+     "accept_rate": 0.4483,
+     "mean_accepted_per_block": 2.242,
+     "per_position": [
+      0.7303,
+      0.5376,
+      0.4058,
+      0.3156,
+      0.2523
+     ]
+    },
+    ">8": {
+     "lines": 4,
+     "drafted": 21880,
+     "accept_rate": 0.4711,
+     "mean_accepted_per_block": 2.355,
+     "per_position": [
+      0.7583,
+      0.5931,
+      0.449,
+      0.3241,
+      0.2309
+     ]
+    },
+    "unpaired": {
+     "lines": 2,
+     "drafted": 4485,
+     "accept_rate": 0.3868,
+     "mean_accepted_per_block": 1.934,
+     "per_position": [
+      0.7112,
+      0.4872,
+      0.3292,
+      0.239,
+      0.1688
+     ]
+    }
+   },
+   "requests_logged": 396,
+   "tail_exposure": {
+    "long_requests": 23,
+    "inflight_time_share": {
+     "1": 0.0182,
+     "2": 0.0128,
+     "3": 0.0081,
+     "4": 0.0054,
+     "5": 0.007,
+     "6": 0.0042,
+     "7": 0.0073,
+     "8": 0.9369
+    },
+    "per_request": [
+     {
+      "T": 134402,
+      "finish": "stop",
+      "secs_after_100k": 1213.1,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 28.4
+     },
+     {
+      "T": 126276,
+      "finish": "stop",
+      "secs_after_100k": 939.7,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 28.0
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 5826.0,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 39.1
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 4777.4,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 47.7
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3916.9,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 58.1
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 5133.6,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 44.4
+     },
+     {
+      "T": 163343,
+      "finish": "stop",
+      "secs_after_100k": 1711.1,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 37.0
+     },
+     {
+      "T": 206688,
+      "finish": "stop",
+      "secs_after_100k": 2500.4,
+      "mean_inflight": 7.71,
+      "decode_tok_s_after_100k": 42.7
+     },
+     {
+      "T": 142105,
+      "finish": "stop",
+      "secs_after_100k": 1287.1,
+      "mean_inflight": 5.89,
+      "decode_tok_s_after_100k": 32.7
+     },
+     {
+      "T": 150052,
+      "finish": "stop",
+      "secs_after_100k": 1068.9,
+      "mean_inflight": 4.75,
+      "decode_tok_s_after_100k": 46.8
+     },
+     {
+      "T": 100217,
+      "finish": "stop",
+      "secs_after_100k": 5.4,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 40.1
+     },
+     {
+      "T": 149478,
+      "finish": "stop",
+      "secs_after_100k": 1266.5,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 39.1
+     },
+     {
+      "T": 108084,
+      "finish": "stop",
+      "secs_after_100k": 244.1,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 33.1
+     },
+     {
+      "T": 124863,
+      "finish": "stop",
+      "secs_after_100k": 591.3,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 42.1
+     },
+     {
+      "T": 157835,
+      "finish": "stop",
+      "secs_after_100k": 1991.7,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 29.0
+     },
+     {
+      "T": 148563,
+      "finish": "stop",
+      "secs_after_100k": 1702.5,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 28.5
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 4884.4,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 46.6
+     },
+     {
+      "T": 173347,
+      "finish": "stop",
+      "secs_after_100k": 2521.9,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 29.1
+     },
+     {
+      "T": 197631,
+      "finish": "stop",
+      "secs_after_100k": 2379.2,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 41.0
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3642.1,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 62.5
+     },
+     {
+      "T": 103977,
+      "finish": "stop",
+      "secs_after_100k": 134.2,
+      "mean_inflight": 5.61,
+      "decode_tok_s_after_100k": 29.6
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 4624.7,
+      "mean_inflight": 7.68,
+      "decode_tok_s_after_100k": 49.2
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 2776.5,
+      "mean_inflight": 5.12,
+      "decode_tok_s_after_100k": 82.0
+     }
+    ],
+    "label": "INFERRED window (constant decode rate within a request); client-side in-flight count"
+   }
+  },
+  {
+   "label": "0.9.1 record p1",
+   "engine": "0.9.1",
+   "K": 3,
+   "workload": "gpqa",
+   "server_log": "<gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1.server.log",
+   "capture_sizes": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    24,
+    32,
+    40,
+    48,
+    56,
+    64
+   ],
+   "kv_pool_tokens": [
+    4707515
+   ],
+   "cudagraph_mode": "FULL_AND_PIECEWISE",
+   "status_lines": 859,
+   "occupancy_share_by_running": {
+    "0": 0.0047,
+    "1-2": 0.0256,
+    "3-5": 0.0431,
+    "6-8": 0.9232,
+    ">8": 0.0035
+   },
+   "acceptance": {
+    "lines": 858,
+    "drafted": 4111050,
+    "accept_rate": 0.5977,
+    "mean_accepted_per_block": 1.793,
+    "per_position": [
+     0.7564,
+     0.5803,
+     0.4563
+    ]
+   },
+   "acceptance_by_running": {
+    "0": {
+     "lines": 3,
+     "drafted": 8892,
+     "accept_rate": 0.6345,
+     "mean_accepted_per_block": 1.904,
+     "per_position": [
+      0.7991,
+      0.6158,
+      0.4889
+     ]
+    },
+    "1-2": {
+     "lines": 22,
+     "drafted": 42660,
+     "accept_rate": 0.7932,
+     "mean_accepted_per_block": 2.38,
+     "per_position": [
+      0.8894,
+      0.7906,
+      0.6994
+     ]
+    },
+    "3-5": {
+     "lines": 37,
+     "drafted": 116106,
+     "accept_rate": 0.6941,
+     "mean_accepted_per_block": 2.082,
+     "per_position": [
+      0.8181,
+      0.6821,
+      0.5822
+     ]
+    },
+    "6-8": {
+     "lines": 793,
+     "drafted": 3933282,
+     "accept_rate": 0.5926,
+     "mean_accepted_per_block": 1.778,
+     "per_position": [
+      0.7531,
+      0.5749,
+      0.4499
+     ]
+    },
+    ">8": {
+     "lines": 3,
+     "drafted": 10110,
+     "accept_rate": 0.5937,
+     "mean_accepted_per_block": 1.781,
+     "per_position": [
+      0.7521,
+      0.5809,
+      0.448
+     ]
+    }
+   },
+   "requests_logged": 198,
+   "tail_exposure": {
+    "long_requests": 7,
+    "inflight_time_share": {
+     "1": 0.0075,
+     "2": 0.0144,
+     "3": 0.0191,
+     "4": 0.0076,
+     "5": 0.033,
+     "6": 0.0033,
+     "7": 0.0017,
+     "8": 0.9135
+    },
+    "per_request": [
+     {
+      "T": 106387,
+      "finish": "stop",
+      "secs_after_100k": 105.3,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 60.7
+     },
+     {
+      "T": 203164,
+      "finish": "stop",
+      "secs_after_100k": 1665.6,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 61.9
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3380.9,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 67.3
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3173.6,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 71.7
+     },
+     {
+      "T": 136344,
+      "finish": "stop",
+      "secs_after_100k": 732.3,
+      "mean_inflight": 7.26,
+      "decode_tok_s_after_100k": 49.6
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 2881.2,
+      "mean_inflight": 7.25,
+      "decode_tok_s_after_100k": 79.0
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3335.7,
+      "mean_inflight": 7.11,
+      "decode_tok_s_after_100k": 68.3
+     }
+    ],
+    "label": "INFERRED window (constant decode rate within a request); client-side in-flight count"
+   }
+  },
+  {
+   "label": "0.9.1 record p2-3",
+   "engine": "0.9.1",
+   "K": 3,
+   "workload": "gpqa",
+   "server_log": "<gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps.server.log",
+   "capture_sizes": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    24,
+    32,
+    40,
+    48,
+    56,
+    64
+   ],
+   "kv_pool_tokens": [
+    4707515
+   ],
+   "cudagraph_mode": "FULL_AND_PIECEWISE",
+   "status_lines": 1996,
+   "occupancy_share_by_running": {
+    "0": 0.003,
+    "1-2": 0.0772,
+    "3-5": 0.1042,
+    "6-8": 0.8146,
+    ">8": 0.001
+   },
+   "acceptance": {
+    "lines": 1995,
+    "drafted": 9158025,
+    "accept_rate": 0.596,
+    "mean_accepted_per_block": 1.788,
+    "per_position": [
+     0.7553,
+     0.5789,
+     0.4538
+    ]
+   },
+   "acceptance_by_running": {
+    "0": {
+     "lines": 5,
+     "drafted": 9096,
+     "accept_rate": 0.7586,
+     "mean_accepted_per_block": 2.276,
+     "per_position": [
+      0.862,
+      0.7551,
+      0.6593
+     ]
+    },
+    "1-2": {
+     "lines": 153,
+     "drafted": 354393,
+     "accept_rate": 0.9841,
+     "mean_accepted_per_block": 2.952,
+     "per_position": [
+      0.9929,
+      0.9836,
+      0.9759
+     ]
+    },
+    "3-5": {
+     "lines": 208,
+     "drafted": 671055,
+     "accept_rate": 0.7742,
+     "mean_accepted_per_block": 2.323,
+     "per_position": [
+      0.8796,
+      0.7646,
+      0.6783
+     ]
+    },
+    "6-8": {
+     "lines": 1626,
+     "drafted": 8111376,
+     "accept_rate": 0.564,
+     "mean_accepted_per_block": 1.692,
+     "per_position": [
+      0.7344,
+      0.5455,
+      0.412
+     ]
+    },
+    ">8": {
+     "lines": 2,
+     "drafted": 9609,
+     "accept_rate": 0.6166,
+     "mean_accepted_per_block": 1.85,
+     "per_position": [
+      0.7595,
+      0.6073,
+      0.4834
+     ]
+    },
+    "unpaired": {
+     "lines": 1,
+     "drafted": 2496,
+     "accept_rate": 0.9311,
+     "mean_accepted_per_block": 2.793,
+     "per_position": [
+      0.971,
+      0.93,
+      0.892
+     ]
+    }
+   },
+   "requests_logged": 396,
+   "tail_exposure": {
+    "long_requests": 18,
+    "inflight_time_share": {
+     "1": 0.0112,
+     "2": 0.058,
+     "3": 0.0477,
+     "4": 0.0662,
+     "5": 0.0342,
+     "6": 0.002,
+     "7": 0.0026,
+     "8": 0.7781
+    },
+    "per_request": [
+     {
+      "T": 104835,
+      "finish": "stop",
+      "secs_after_100k": 100.4,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 48.2
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3206.0,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 71.0
+     },
+     {
+      "T": 123709,
+      "finish": "stop",
+      "secs_after_100k": 395.5,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 60.0
+     },
+     {
+      "T": 106687,
+      "finish": "stop",
+      "secs_after_100k": 124.5,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 53.7
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3263.1,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 69.8
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3711.2,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 61.4
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3174.7,
+      "mean_inflight": 7.74,
+      "decode_tok_s_after_100k": 71.7
+     },
+     {
+      "T": 274150,
+      "finish": "stop",
+      "secs_after_100k": 1836.9,
+      "mean_inflight": 4.13,
+      "decode_tok_s_after_100k": 94.8
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 2490.2,
+      "mean_inflight": 4.73,
+      "decode_tok_s_after_100k": 91.4
+     },
+     {
+      "T": 102222,
+      "finish": "stop",
+      "secs_after_100k": 47.1,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 47.2
+     },
+     {
+      "T": 109684,
+      "finish": "stop",
+      "secs_after_100k": 145.0,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 66.8
+     },
+     {
+      "T": 175275,
+      "finish": "stop",
+      "secs_after_100k": 1575.3,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 47.8
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3521.2,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 64.7
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3437.3,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 66.2
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3841.9,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 59.3
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 2962.6,
+      "mean_inflight": 6.21,
+      "decode_tok_s_after_100k": 76.9
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 2527.7,
+      "mean_inflight": 4.7,
+      "decode_tok_s_after_100k": 90.1
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 2117.9,
+      "mean_inflight": 3.15,
+      "decode_tok_s_after_100k": 107.5
+     }
+    ],
+    "label": "INFERRED window (constant decode rate within a request); client-side in-flight count"
+   }
+  },
+  {
+   "label": "0.9.1 D",
+   "engine": "0.9.1",
+   "K": 3,
+   "workload": "gpqa",
+   "server_log": "<runs>/long-reply/d091/run/server-s1.log",
+   "capture_sizes": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    24,
+    32,
+    40,
+    48,
+    56,
+    64
+   ],
+   "kv_pool_tokens": [
+    4707515
+   ],
+   "cudagraph_mode": "FULL_AND_PIECEWISE",
+   "status_lines": 991,
+   "occupancy_share_by_running": {
+    "0": 0.002,
+    "1-2": 0.1524,
+    "3-5": 0.0303,
+    "6-8": 0.8123,
+    ">8": 0.003
+   },
+   "acceptance": {
+    "lines": 990,
+    "drafted": 4438872,
+    "accept_rate": 0.633,
+    "mean_accepted_per_block": 1.899,
+    "per_position": [
+     0.7801,
+     0.6178,
+     0.5012
+    ]
+   },
+   "acceptance_by_running": {
+    "0": {
+     "lines": 1,
+     "drafted": 2553,
+     "accept_rate": 0.7152,
+     "mean_accepted_per_block": 2.146,
+     "per_position": [
+      0.841,
+      0.714,
+      0.59
+     ]
+    },
+    "1-2": {
+     "lines": 151,
+     "drafted": 323067,
+     "accept_rate": 0.9064,
+     "mean_accepted_per_block": 2.719,
+     "per_position": [
+      0.9492,
+      0.9027,
+      0.8674
+     ]
+    },
+    "3-5": {
+     "lines": 30,
+     "drafted": 89595,
+     "accept_rate": 0.7396,
+     "mean_accepted_per_block": 2.219,
+     "per_position": [
+      0.8578,
+      0.7303,
+      0.6307
+     ]
+    },
+    "6-8": {
+     "lines": 804,
+     "drafted": 4004361,
+     "accept_rate": 0.6087,
+     "mean_accepted_per_block": 1.826,
+     "per_position": [
+      0.7648,
+      0.5923,
+      0.4689
+     ]
+    },
+    ">8": {
+     "lines": 3,
+     "drafted": 14424,
+     "accept_rate": 0.6186,
+     "mean_accepted_per_block": 1.856,
+     "per_position": [
+      0.7622,
+      0.614,
+      0.4795
+     ]
+    },
+    "unpaired": {
+     "lines": 1,
+     "drafted": 4872,
+     "accept_rate": 0.5741,
+     "mean_accepted_per_block": 1.722,
+     "per_position": [
+      0.741,
+      0.557,
+      0.425
+     ]
+    }
+   },
+   "requests_logged": 198,
+   "tail_exposure": {
+    "long_requests": 10,
+    "inflight_time_share": {
+     "1": 0.0366,
+     "2": 0.0883,
+     "3": 0.0195,
+     "4": 0.0009,
+     "5": 0.0156,
+     "6": 0.0127,
+     "7": 0.002,
+     "8": 0.8244
+    },
+    "per_request": [
+     {
+      "T": 114599,
+      "finish": "stop",
+      "secs_after_100k": 288.6,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 50.6
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3174.5,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 71.7
+     },
+     {
+      "T": 106839,
+      "finish": "stop",
+      "secs_after_100k": 125.5,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 54.5
+     },
+     {
+      "T": 145775,
+      "finish": "stop",
+      "secs_after_100k": 668.6,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 68.5
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3230.3,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 70.5
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3351.6,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 67.9
+     },
+     {
+      "T": 120630,
+      "finish": "stop",
+      "secs_after_100k": 430.8,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 47.9
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3247.5,
+      "mean_inflight": 7.84,
+      "decode_tok_s_after_100k": 70.1
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 2308.4,
+      "mean_inflight": 5.24,
+      "decode_tok_s_after_100k": 98.6
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 1852.7,
+      "mean_inflight": 2.02,
+      "decode_tok_s_after_100k": 122.9
+     }
+    ],
+    "label": "INFERRED window (constant decode rate within a request); client-side in-flight count"
+   }
+  },
+  {
+   "label": "0.9.1 D2",
+   "engine": "0.9.1",
+   "K": 3,
+   "workload": "gpqa",
+   "server_log": "<runs>/long-reply/d091b/run/server-s1.log",
+   "capture_sizes": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    24,
+    32,
+    40,
+    48,
+    56,
+    64
+   ],
+   "kv_pool_tokens": [
+    4707515
+   ],
+   "cudagraph_mode": "FULL_AND_PIECEWISE",
+   "status_lines": 1214,
+   "occupancy_share_by_running": {
+    "0": 0.0041,
+    "1-2": 0.0478,
+    "3-5": 0.1985,
+    "6-8": 0.7488,
+    ">8": 0.0008
+   },
+   "acceptance": {
+    "lines": 1213,
+    "drafted": 5386755,
+    "accept_rate": 0.6126,
+    "mean_accepted_per_block": 1.838,
+    "per_position": [
+     0.7655,
+     0.5963,
+     0.476
+    ]
+   },
+   "acceptance_by_running": {
+    "0": {
+     "lines": 4,
+     "drafted": 14385,
+     "accept_rate": 0.648,
+     "mean_accepted_per_block": 1.944,
+     "per_position": [
+      0.7951,
+      0.6366,
+      0.5122
+     ]
+    },
+    "1-2": {
+     "lines": 57,
+     "drafted": 126882,
+     "accept_rate": 0.9997,
+     "mean_accepted_per_block": 2.999,
+     "per_position": [
+      0.9998,
+      0.9997,
+      0.9995
+     ]
+    },
+    "3-5": {
+     "lines": 241,
+     "drafted": 695535,
+     "accept_rate": 0.7657,
+     "mean_accepted_per_block": 2.297,
+     "per_position": [
+      0.864,
+      0.7563,
+      0.6768
+     ]
+    },
+    "6-8": {
+     "lines": 909,
+     "drafted": 4543803,
+     "accept_rate": 0.5781,
+     "mean_accepted_per_block": 1.734,
+     "per_position": [
+      0.7438,
+      0.5602,
+      0.4304
+     ]
+    },
+    ">8": {
+     "lines": 1,
+     "drafted": 4536,
+     "accept_rate": 0.6179,
+     "mean_accepted_per_block": 1.854,
+     "per_position": [
+      0.758,
+      0.613,
+      0.483
+     ]
+    },
+    "unpaired": {
+     "lines": 1,
+     "drafted": 1614,
+     "accept_rate": 1.0,
+     "mean_accepted_per_block": 3.0,
+     "per_position": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "requests_logged": 198,
+   "tail_exposure": {
+    "long_requests": 12,
+    "inflight_time_share": {
+     "1": 0.009,
+     "2": 0.0258,
+     "3": 0.2055,
+     "4": 0.0062,
+     "5": 0.0465,
+     "6": 0.0035,
+     "7": 0.001,
+     "8": 0.7026
+    },
+    "per_request": [
+     {
+      "T": 101139,
+      "finish": "stop",
+      "secs_after_100k": 24.3,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 47.0
+     },
+     {
+      "T": 124363,
+      "finish": "stop",
+      "secs_after_100k": 506.5,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 48.1
+     },
+     {
+      "T": 137924,
+      "finish": "stop",
+      "secs_after_100k": 807.9,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 46.9
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3436.1,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 66.3
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3403.0,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 66.9
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3487.3,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 65.3
+     },
+     {
+      "T": 157970,
+      "finish": "stop",
+      "secs_after_100k": 859.3,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 67.5
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3273.8,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 69.5
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3341.8,
+      "mean_inflight": 7.44,
+      "decode_tok_s_after_100k": 68.1
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 2530.0,
+      "mean_inflight": 3.64,
+      "decode_tok_s_after_100k": 90.0
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 2436.6,
+      "mean_inflight": 3.05,
+      "decode_tok_s_after_100k": 93.4
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 2338.5,
+      "mean_inflight": 2.65,
+      "decode_tok_s_after_100k": 97.4
+     }
+    ],
+    "label": "INFERRED window (constant decode rate within a request); client-side in-flight count"
+   }
+  },
+  {
+   "label": "col511 arm s1",
+   "engine": "0.9.1+D1",
+   "K": 3,
+   "workload": "gpqa",
+   "server_log": "<runs>/arm-col511/server-s1.log",
+   "capture_sizes": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    24,
+    32,
+    40,
+    48,
+    56,
+    64
+   ],
+   "kv_pool_tokens": [
+    4707515
+   ],
+   "cudagraph_mode": "FULL_AND_PIECEWISE",
+   "status_lines": 967,
+   "occupancy_share_by_running": {
+    "0": 0.001,
+    "1-2": 0.1251,
+    "3-5": 0.1138,
+    "6-8": 0.757,
+    ">8": 0.0031
+   },
+   "acceptance": {
+    "lines": 967,
+    "drafted": 4300638,
+    "accept_rate": 0.576,
+    "mean_accepted_per_block": 1.728,
+    "per_position": [
+     0.7419,
+     0.5573,
+     0.4286
+    ]
+   },
+   "acceptance_by_running": {
+    "0": {
+     "lines": 1,
+     "drafted": 2025,
+     "accept_rate": 0.6642,
+     "mean_accepted_per_block": 1.993,
+     "per_position": [
+      0.801,
+      0.65,
+      0.541
+     ]
+    },
+    "1-2": {
+     "lines": 121,
+     "drafted": 288108,
+     "accept_rate": 0.7786,
+     "mean_accepted_per_block": 2.336,
+     "per_position": [
+      0.8718,
+      0.768,
+      0.6962
+     ]
+    },
+    "3-5": {
+     "lines": 110,
+     "drafted": 315813,
+     "accept_rate": 0.6914,
+     "mean_accepted_per_block": 2.074,
+     "per_position": [
+      0.8195,
+      0.6777,
+      0.577
+     ]
+    },
+    "6-8": {
+     "lines": 732,
+     "drafted": 3680082,
+     "accept_rate": 0.5498,
+     "mean_accepted_per_block": 1.65,
+     "per_position": [
+      0.7249,
+      0.5301,
+      0.3944
+     ]
+    },
+    ">8": {
+     "lines": 3,
+     "drafted": 14610,
+     "accept_rate": 0.6511,
+     "mean_accepted_per_block": 1.953,
+     "per_position": [
+      0.7901,
+      0.6462,
+      0.5169
+     ]
+    }
+   }
+  },
+  {
+   "label": "col511 arm s2",
+   "engine": "0.9.1+D1",
+   "K": 3,
+   "workload": "gpqa",
+   "server_log": "<runs>/arm-col511/server-s2.log",
+   "capture_sizes": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    24,
+    32,
+    40,
+    48,
+    56,
+    64
+   ],
+   "kv_pool_tokens": [
+    4707515
+   ],
+   "cudagraph_mode": "FULL_AND_PIECEWISE",
+   "status_lines": 1976,
+   "occupancy_share_by_running": {
+    "0": 0.0015,
+    "1-2": 0.087,
+    "3-5": 0.1083,
+    "6-8": 0.8016,
+    ">8": 0.0015
+   },
+   "acceptance": {
+    "lines": 1975,
+    "drafted": 8993523,
+    "accept_rate": 0.6042,
+    "mean_accepted_per_block": 1.813,
+    "per_position": [
+     0.7597,
+     0.5871,
+     0.4657
+    ]
+   },
+   "acceptance_by_running": {
+    "0": {
+     "lines": 2,
+     "drafted": 5142,
+     "accept_rate": 0.7168,
+     "mean_accepted_per_block": 2.151,
+     "per_position": [
+      0.8438,
+      0.6993,
+      0.608
+     ]
+    },
+    "1-2": {
+     "lines": 172,
+     "drafted": 333603,
+     "accept_rate": 0.9923,
+     "mean_accepted_per_block": 2.977,
+     "per_position": [
+      0.9962,
+      0.9926,
+      0.9881
+     ]
+    },
+    "3-5": {
+     "lines": 214,
+     "drafted": 658425,
+     "accept_rate": 0.8257,
+     "mean_accepted_per_block": 2.477,
+     "per_position": [
+      0.9079,
+      0.8176,
+      0.7515
+     ]
+    },
+    "6-8": {
+     "lines": 1583,
+     "drafted": 7977078,
+     "accept_rate": 0.5696,
+     "mean_accepted_per_block": 1.709,
+     "per_position": [
+      0.7375,
+      0.5511,
+      0.4203
+     ]
+    },
+    ">8": {
+     "lines": 3,
+     "drafted": 14307,
+     "accept_rate": 0.5836,
+     "mean_accepted_per_block": 1.751,
+     "per_position": [
+      0.7469,
+      0.5713,
+      0.4321
+     ]
+    },
+    "unpaired": {
+     "lines": 1,
+     "drafted": 4968,
+     "accept_rate": 0.597,
+     "mean_accepted_per_block": 1.791,
+     "per_position": [
+      0.755,
+      0.584,
+      0.452
+     ]
+    }
+   }
+  },
+  {
+   "label": "B0 s1234",
+   "engine": "B0",
+   "K": 3,
+   "workload": "gpqa",
+   "server_log": "<runs>/bundle/screen/run-d1234/server-s1.log",
+   "capture_sizes": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    24,
+    32,
+    40,
+    48,
+    56,
+    64
+   ],
+   "kv_pool_tokens": [
+    4707515
+   ],
+   "cudagraph_mode": "FULL_AND_PIECEWISE",
+   "status_lines": 805,
+   "occupancy_share_by_running": {
+    "0": 0.0012,
+    "1-2": 0.113,
+    "3-5": 0.0149,
+    "6-8": 0.8658,
+    ">8": 0.005
+   },
+   "acceptance": {
+    "lines": 805,
+    "drafted": 3693651,
+    "accept_rate": 0.5685,
+    "mean_accepted_per_block": 1.706,
+    "per_position": [
+     0.7398,
+     0.5501,
+     0.4157
+    ]
+   },
+   "acceptance_by_running": {
+    "0": {
+     "lines": 1,
+     "drafted": 1131,
+     "accept_rate": 0.7878,
+     "mean_accepted_per_block": 2.363,
+     "per_position": [
+      0.91,
+      0.785,
+      0.668
+     ]
+    },
+    "1-2": {
+     "lines": 91,
+     "drafted": 149544,
+     "accept_rate": 0.6576,
+     "mean_accepted_per_block": 1.973,
+     "per_position": [
+      0.8413,
+      0.6393,
+      0.4921
+     ]
+    },
+    "3-5": {
+     "lines": 12,
+     "drafted": 41499,
+     "accept_rate": 0.5518,
+     "mean_accepted_per_block": 1.655,
+     "per_position": [
+      0.7335,
+      0.532,
+      0.3898
+     ]
+    },
+    "6-8": {
+     "lines": 696,
+     "drafted": 3481176,
+     "accept_rate": 0.5644,
+     "mean_accepted_per_block": 1.693,
+     "per_position": [
+      0.7352,
+      0.546,
+      0.4121
+     ]
+    },
+    ">8": {
+     "lines": 4,
+     "drafted": 15429,
+     "accept_rate": 0.6533,
+     "mean_accepted_per_block": 1.96,
+     "per_position": [
+      0.7974,
+      0.647,
+      0.5159
+     ]
+    },
+    "unpaired": {
+     "lines": 1,
+     "drafted": 4872,
+     "accept_rate": 0.5866,
+     "mean_accepted_per_block": 1.76,
+     "per_position": [
+      0.747,
+      0.56,
+      0.453
+     ]
+    }
+   }
+  },
+  {
+   "label": "B0 s1235",
+   "engine": "B0",
+   "K": 3,
+   "workload": "gpqa",
+   "server_log": "<runs>/bundle/screen2/run-s1235/server-s2.log",
+   "capture_sizes": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    24,
+    32,
+    40,
+    48,
+    56,
+    64
+   ],
+   "kv_pool_tokens": [
+    4707515
+   ],
+   "cudagraph_mode": "FULL_AND_PIECEWISE",
+   "status_lines": 744,
+   "occupancy_share_by_running": {
+    "0": 0.0054,
+    "1-2": 0.1452,
+    "3-5": 0.0444,
+    "6-8": 0.8051
+   },
+   "acceptance": {
+    "lines": 743,
+    "drafted": 3399774,
+    "accept_rate": 0.5655,
+    "mean_accepted_per_block": 1.696,
+    "per_position": [
+     0.7347,
+     0.5472,
+     0.4145
+    ]
+   },
+   "acceptance_by_running": {
+    "0": {
+     "lines": 3,
+     "drafted": 13335,
+     "accept_rate": 0.6004,
+     "mean_accepted_per_block": 1.801,
+     "per_position": [
+      0.7585,
+      0.5859,
+      0.4563
+     ]
+    },
+    "1-2": {
+     "lines": 108,
+     "drafted": 248712,
+     "accept_rate": 0.9301,
+     "mean_accepted_per_block": 2.79,
+     "per_position": [
+      0.9664,
+      0.9272,
+      0.8966
+     ]
+    },
+    "3-5": {
+     "lines": 33,
+     "drafted": 114102,
+     "accept_rate": 0.6921,
+     "mean_accepted_per_block": 2.076,
+     "per_position": [
+      0.8379,
+      0.6833,
+      0.5551
+     ]
+    },
+    "6-8": {
+     "lines": 599,
+     "drafted": 3023625,
+     "accept_rate": 0.5305,
+     "mean_accepted_per_block": 1.592,
+     "per_position": [
+      0.7117,
+      0.5106,
+      0.3694
+     ]
+    }
+   }
+  },
+  {
+   "label": "B0 s1236",
+   "engine": "B0",
+   "K": 3,
+   "workload": "gpqa",
+   "server_log": "<runs>/b0-screen-s1236/run-s1236/server-s3.log",
+   "capture_sizes": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    24,
+    32,
+    40,
+    48,
+    56,
+    64
+   ],
+   "kv_pool_tokens": [
+    4707515
+   ],
+   "cudagraph_mode": "FULL_AND_PIECEWISE",
+   "status_lines": 989,
+   "occupancy_share_by_running": {
+    "0": 0.002,
+    "1-2": 0.0384,
+    "3-5": 0.2053,
+    "6-8": 0.7523,
+    ">8": 0.002
+   },
+   "acceptance": {
+    "lines": 988,
+    "drafted": 4342503,
+    "accept_rate": 0.5861,
+    "mean_accepted_per_block": 1.758,
+    "per_position": [
+     0.7572,
+     0.5763,
+     0.4248
+    ]
+   },
+   "acceptance_by_running": {
+    "0": {
+     "lines": 1,
+     "drafted": 3702,
+     "accept_rate": 0.6145,
+     "mean_accepted_per_block": 1.844,
+     "per_position": [
+      0.79,
+      0.605,
+      0.448
+     ]
+    },
+    "1-2": {
+     "lines": 38,
+     "drafted": 68046,
+     "accept_rate": 0.8697,
+     "mean_accepted_per_block": 2.609,
+     "per_position": [
+      0.999,
+      0.926,
+      0.6841
+     ]
+    },
+    "3-5": {
+     "lines": 203,
+     "drafted": 541767,
+     "accept_rate": 0.8296,
+     "mean_accepted_per_block": 2.489,
+     "per_position": [
+      0.9477,
+      0.8638,
+      0.6772
+     ]
+    },
+    "6-8": {
+     "lines": 743,
+     "drafted": 3714465,
+     "accept_rate": 0.5454,
+     "mean_accepted_per_block": 1.636,
+     "per_position": [
+      0.7251,
+      0.528,
+      0.3831
+     ]
+    },
+    ">8": {
+     "lines": 2,
+     "drafted": 9435,
+     "accept_rate": 0.609,
+     "mean_accepted_per_block": 1.827,
+     "per_position": [
+      0.7581,
+      0.5996,
+      0.4696
+     ]
+    },
+    "unpaired": {
+     "lines": 1,
+     "drafted": 5088,
+     "accept_rate": 0.5267,
+     "mean_accepted_per_block": 1.58,
+     "per_position": [
+      0.714,
+      0.504,
+      0.363
+     ]
+    }
+   }
+  },
+  {
+   "label": "B1 s1236",
+   "engine": "B1",
+   "K": 3,
+   "workload": "gpqa",
+   "server_log": "<runs>/b1-screen/run-s1236/server-s1.log",
+   "capture_sizes": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    24,
+    32,
+    40,
+    48,
+    56,
+    64
+   ],
+   "kv_pool_tokens": [
+    4707515
+   ],
+   "cudagraph_mode": "FULL_AND_PIECEWISE",
+   "status_lines": 1073,
+   "occupancy_share_by_running": {
+    "0": 0.0009,
+    "1-2": 0.0596,
+    "3-5": 0.069,
+    "6-8": 0.8686,
+    ">8": 0.0019
+   },
+   "acceptance": {
+    "lines": 1073,
+    "drafted": 4998636,
+    "accept_rate": 0.6316,
+    "mean_accepted_per_block": 1.895,
+    "per_position": [
+     0.7834,
+     0.622,
+     0.4894
+    ]
+   },
+   "acceptance_by_running": {
+    "0": {
+     "lines": 1,
+     "drafted": 3960,
+     "accept_rate": 0.628,
+     "mean_accepted_per_block": 1.884,
+     "per_position": [
+      0.784,
+      0.617,
+      0.483
+     ]
+    },
+    "1-2": {
+     "lines": 64,
+     "drafted": 150228,
+     "accept_rate": 0.9487,
+     "mean_accepted_per_block": 2.846,
+     "per_position": [
+      0.973,
+      0.9464,
+      0.9265
+     ]
+    },
+    "3-5": {
+     "lines": 74,
+     "drafted": 209157,
+     "accept_rate": 0.7864,
+     "mean_accepted_per_block": 2.359,
+     "per_position": [
+      0.8994,
+      0.7957,
+      0.6642
+     ]
+    },
+    "6-8": {
+     "lines": 932,
+     "drafted": 4625973,
+     "accept_rate": 0.6144,
+     "mean_accepted_per_block": 1.843,
+     "per_position": [
+      0.7721,
+      0.6037,
+      0.4674
+     ]
+    },
+    ">8": {
+     "lines": 2,
+     "drafted": 9318,
+     "accept_rate": 0.579,
+     "mean_accepted_per_block": 1.737,
+     "per_position": [
+      0.7362,
+      0.5692,
+      0.4318
+     ]
+    }
+   },
+   "requests_logged": 198,
+   "tail_exposure": {
+    "long_requests": 9,
+    "inflight_time_share": {
+     "1": 0.0083,
+     "2": 0.0267,
+     "3": 0.0571,
+     "4": 0.0046,
+     "5": 0.0131,
+     "6": 0.0007,
+     "7": 0.0021,
+     "8": 0.8874
+    },
+    "per_request": [
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3286.8,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 69.3
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3067.8,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 74.2
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3409.0,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 66.8
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3488.6,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 65.3
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 4458.3,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 51.1
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 2908.2,
+      "mean_inflight": 8.0,
+      "decode_tok_s_after_100k": 78.3
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 3048.8,
+      "mean_inflight": 6.89,
+      "decode_tok_s_after_100k": 74.7
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 2697.4,
+      "mean_inflight": 5.88,
+      "decode_tok_s_after_100k": 84.4
+     },
+     {
+      "T": 327680,
+      "finish": "length",
+      "secs_after_100k": 2888.5,
+      "mean_inflight": 5.43,
+      "decode_tok_s_after_100k": 78.8
+     }
+    ],
+    "label": "INFERRED window (constant decode rate within a request); client-side in-flight count"
+   }
+  },
+  {
+   "label": "B+ v070",
+   "engine": "0.7.0",
+   "K": 5,
+   "workload": "cont-B+ (0.7.0 prefixes)",
+   "server_log": "<runs>/long-reply/bplus/run/v070/server.log",
+   "capture_sizes": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    24,
+    32,
+    40,
+    48,
+    56,
+    64,
+    72,
+    80,
+    88,
+    96
+   ],
+   "kv_pool_tokens": [
+    2768240
+   ],
+   "cudagraph_mode": "FULL_AND_PIECEWISE",
+   "status_lines": 951,
+   "occupancy_share_by_running": {
+    "0": 0.0011,
+    "1-2": 0.0431,
+    "3-5": 0.021,
+    "6-8": 0.9306,
+    ">8": 0.0042
+   },
+   "acceptance": {
+    "lines": 950,
+    "drafted": 3503725,
+    "accept_rate": 0.5037,
+    "mean_accepted_per_block": 2.518,
+    "per_position": [
+     0.7855,
+     0.6022,
+     0.4669,
+     0.3681,
+     0.2956
+    ]
+   },
+   "acceptance_by_running": {
+    "0": {
+     "lines": 1,
+     "drafted": 3420,
+     "accept_rate": 0.6026,
+     "mean_accepted_per_block": 3.013,
+     "per_position": [
+      0.857,
+      0.708,
+      0.602,
+      0.496,
+      0.351
+     ]
+    },
+    "1-2": {
+     "lines": 39,
+     "drafted": 93170,
+     "accept_rate": 0.4636,
+     "mean_accepted_per_block": 2.318,
+     "per_position": [
+      0.7566,
+      0.5642,
+      0.4213,
+      0.3237,
+      0.2526
+     ]
+    },
+    "3-5": {
+     "lines": 20,
+     "drafted": 54240,
+     "accept_rate": 0.4284,
+     "mean_accepted_per_block": 2.142,
+     "per_position": [
+      0.7293,
+      0.5232,
+      0.3839,
+      0.2844,
+      0.221
+     ]
+    },
+    "6-8": {
+     "lines": 885,
+     "drafted": 3329265,
+     "accept_rate": 0.5062,
+     "mean_accepted_per_block": 2.531,
+     "per_position": [
+      0.7874,
+      0.6046,
+      0.4697,
+      0.371,
+      0.2984
+     ]
+    },
+    ">8": {
+     "lines": 4,
+     "drafted": 20180,
+     "accept_rate": 0.4791,
+     "mean_accepted_per_block": 2.395,
+     "per_position": [
+      0.7627,
+      0.598,
+      0.4557,
+      0.3309,
+      0.248
+     ]
+    },
+    "unpaired": {
+     "lines": 1,
+     "drafted": 3450,
+     "accept_rate": 0.3522,
+     "mean_accepted_per_block": 1.761,
+     "per_position": [
+      0.701,
+      0.454,
+      0.29,
+      0.187,
+      0.129
+     ]
+    }
+   },
+   "requests_logged": 0,
+   "tail_exposure": {
+    "long_requests": 0,
+    "inflight_time_share": {},
+    "per_request": [],
+    "label": "INFERRED window (constant decode rate within a request); client-side in-flight count"
+   }
+  },
+  {
+   "label": "B+ v091",
+   "engine": "0.9.1",
+   "K": 3,
+   "workload": "cont-B+ (0.7.0 prefixes)",
+   "server_log": "<runs>/long-reply/bplus/run/v091/server.log",
+   "capture_sizes": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    24,
+    32,
+    40,
+    48,
+    56,
+    64
+   ],
+   "kv_pool_tokens": [
+    4707515
+   ],
+   "cudagraph_mode": "FULL_AND_PIECEWISE",
+   "status_lines": 632,
+   "occupancy_share_by_running": {
+    "0": 0.0016,
+    "1-2": 0.0301,
+    "3-5": 0.068,
+    "6-8": 0.8972,
+    ">8": 0.0032
+   },
+   "acceptance": {
+    "lines": 631,
+    "drafted": 2449494,
+    "accept_rate": 0.6433,
+    "mean_accepted_per_block": 1.93,
+    "per_position": [
+     0.7997,
+     0.6301,
+     0.4999
+    ]
+   },
+   "acceptance_by_running": {
+    "0": {
+     "lines": 1,
+     "drafted": 4158,
+     "accept_rate": 0.6537,
+     "mean_accepted_per_block": 1.961,
+     "per_position": [
+      0.789,
+      0.649,
+      0.522
+     ]
+    },
+    "1-2": {
+     "lines": 19,
+     "drafted": 32319,
+     "accept_rate": 0.7186,
+     "mean_accepted_per_block": 2.156,
+     "per_position": [
+      0.8496,
+      0.713,
+      0.5929
+     ]
+    },
+    "3-5": {
+     "lines": 42,
+     "drafted": 131874,
+     "accept_rate": 0.6553,
+     "mean_accepted_per_block": 1.966,
+     "per_position": [
+      0.8128,
+      0.6437,
+      0.5092
+     ]
+    },
+    "6-8": {
+     "lines": 567,
+     "drafted": 2270832,
+     "accept_rate": 0.6416,
+     "mean_accepted_per_block": 1.925,
+     "per_position": [
+      0.7984,
+      0.6282,
+      0.4981
+     ]
+    },
+    ">8": {
+     "lines": 2,
+     "drafted": 10311,
+     "accept_rate": 0.6222,
+     "mean_accepted_per_block": 1.867,
+     "per_position": [
+      0.774,
+      0.6163,
+      0.4761
+     ]
+    }
+   },
+   "requests_logged": 0,
+   "tail_exposure": {
+    "long_requests": 0,
+    "inflight_time_share": {},
+    "per_request": [],
+    "label": "INFERRED window (constant decode rate within a request); client-side in-flight count"
+   }
+  },
+  {
+   "label": "B+ b1",
+   "engine": "B1",
+   "K": 3,
+   "workload": "cont-B+ (0.7.0 prefixes)",
+   "server_log": "<runs>/long-reply/bplus/run/b1/server.log",
+   "capture_sizes": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    24,
+    32,
+    40,
+    48,
+    56,
+    64
+   ],
+   "kv_pool_tokens": [
+    4707515
+   ],
+   "cudagraph_mode": "FULL_AND_PIECEWISE",
+   "status_lines": 588,
+   "occupancy_share_by_running": {
+    "0": 0.0034,
+    "1-2": 0.034,
+    "3-5": 0.0476,
+    "6-8": 0.9133,
+    ">8": 0.0017
+   },
+   "acceptance": {
+    "lines": 587,
+    "drafted": 2233656,
+    "accept_rate": 0.6535,
+    "mean_accepted_per_block": 1.961,
+    "per_position": [
+     0.8062,
+     0.6412,
+     0.5131
+    ]
+   },
+   "acceptance_by_running": {
+    "0": {
+     "lines": 2,
+     "drafted": 8523,
+     "accept_rate": 0.6057,
+     "mean_accepted_per_block": 1.817,
+     "per_position": [
+      0.7624,
+      0.5894,
+      0.4654
+     ]
+    },
+    "1-2": {
+     "lines": 20,
+     "drafted": 38526,
+     "accept_rate": 0.783,
+     "mean_accepted_per_block": 2.349,
+     "per_position": [
+      0.8825,
+      0.7763,
+      0.6901
+     ]
+    },
+    "3-5": {
+     "lines": 27,
+     "drafted": 77073,
+     "accept_rate": 0.7922,
+     "mean_accepted_per_block": 2.376,
+     "per_position": [
+      0.8829,
+      0.7826,
+      0.711
+     ]
+    },
+    "6-8": {
+     "lines": 537,
+     "drafted": 2104689,
+     "accept_rate": 0.6465,
+     "mean_accepted_per_block": 1.939,
+     "per_position": [
+      0.8024,
+      0.634,
+      0.5031
+     ]
+    },
+    ">8": {
+     "lines": 1,
+     "drafted": 4845,
+     "accept_rate": 0.5521,
+     "mean_accepted_per_block": 1.656,
+     "per_position": [
+      0.715,
+      0.542,
+      0.4
+     ]
+    }
+   },
+   "requests_logged": 0,
+   "tail_exposure": {
+    "long_requests": 0,
+    "inflight_time_share": {},
+    "per_request": [],
+    "label": "INFERRED window (constant decode rate within a request); client-side in-flight count"
+   }
+  },
+  {
+   "label": "E v070",
+   "engine": "0.7.0",
+   "K": 5,
+   "workload": "cont-E (0.9.1 prefixes)",
+   "server_log": "<runs>/long-reply/e-cross/run/v070/server.log",
+   "capture_sizes": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    24,
+    32,
+    40,
+    48,
+    56,
+    64,
+    72,
+    80,
+    88,
+    96
+   ],
+   "kv_pool_tokens": [
+    2758919
+   ],
+   "cudagraph_mode": "FULL_AND_PIECEWISE",
+   "status_lines": 1018,
+   "occupancy_share_by_running": {
+    "0": 0.002,
+    "1-2": 0.0236,
+    "3-5": 0.0796,
+    "6-8": 0.891,
+    ">8": 0.0039
+   },
+   "acceptance": {
+    "lines": 1017,
+    "drafted": 3688130,
+    "accept_rate": 0.4879,
+    "mean_accepted_per_block": 2.44,
+    "per_position": [
+     0.7801,
+     0.5929,
+     0.4501,
+     0.3453,
+     0.2712
+    ]
+   },
+   "acceptance_by_running": {
+    "0": {
+     "lines": 1,
+     "drafted": 5440,
+     "accept_rate": 0.4599,
+     "mean_accepted_per_block": 2.3,
+     "per_position": [
+      0.764,
+      0.56,
+      0.419,
+      0.324,
+      0.233
+     ]
+    },
+    "1-2": {
+     "lines": 24,
+     "drafted": 67565,
+     "accept_rate": 0.4722,
+     "mean_accepted_per_block": 2.361,
+     "per_position": [
+      0.7745,
+      0.5704,
+      0.4267,
+      0.3267,
+      0.2628
+     ]
+    },
+    "3-5": {
+     "lines": 81,
+     "drafted": 248835,
+     "accept_rate": 0.4687,
+     "mean_accepted_per_block": 2.344,
+     "per_position": [
+      0.7825,
+      0.5826,
+      0.4306,
+      0.3128,
+      0.2351
+     ]
+    },
+    "6-8": {
+     "lines": 907,
+     "drafted": 3345300,
+     "accept_rate": 0.4902,
+     "mean_accepted_per_block": 2.451,
+     "per_position": [
+      0.7805,
+      0.5945,
+      0.4526,
+      0.3487,
+      0.2747
+     ]
+    },
+    ">8": {
+     "lines": 4,
+     "drafted": 20990,
+     "accept_rate": 0.4119,
+     "mean_accepted_per_block": 2.06,
+     "per_position": [
+      0.7151,
+      0.5294,
+      0.373,
+      0.2602,
+      0.1813
+     ]
+    }
+   },
+   "requests_logged": 0,
+   "tail_exposure": {
+    "long_requests": 0,
+    "inflight_time_share": {},
+    "per_request": [],
+    "label": "INFERRED window (constant decode rate within a request); client-side in-flight count"
+   }
+  },
+  {
+   "label": "E v091",
+   "engine": "0.9.1",
+   "K": 3,
+   "workload": "cont-E (0.9.1 prefixes)",
+   "server_log": "<runs>/long-reply/e-cross/run/v091/server.log",
+   "capture_sizes": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    24,
+    32,
+    40,
+    48,
+    56,
+    64
+   ],
+   "kv_pool_tokens": [
+    4707515
+   ],
+   "cudagraph_mode": "FULL_AND_PIECEWISE",
+   "status_lines": 709,
+   "occupancy_share_by_running": {
+    "0": 0.0014,
+    "1-2": 0.0141,
+    "3-5": 0.0451,
+    "6-8": 0.9351,
+    ">8": 0.0042
+   },
+   "acceptance": {
+    "lines": 708,
+    "drafted": 2744151,
+    "accept_rate": 0.6505,
+    "mean_accepted_per_block": 1.951,
+    "per_position": [
+     0.8035,
+     0.6387,
+     0.5092
+    ]
+   },
+   "acceptance_by_running": {
+    "0": {
+     "lines": 1,
+     "drafted": 2535,
+     "accept_rate": 0.6619,
+     "mean_accepted_per_block": 1.986,
+     "per_position": [
+      0.804,
+      0.644,
+      0.538
+     ]
+    },
+    "1-2": {
+     "lines": 10,
+     "drafted": 21867,
+     "accept_rate": 0.8654,
+     "mean_accepted_per_block": 2.596,
+     "per_position": [
+      0.9229,
+      0.8599,
+      0.8135
+     ]
+    },
+    "3-5": {
+     "lines": 31,
+     "drafted": 79014,
+     "accept_rate": 0.6551,
+     "mean_accepted_per_block": 1.965,
+     "per_position": [
+      0.8163,
+      0.6406,
+      0.5084
+     ]
+    },
+    "6-8": {
+     "lines": 663,
+     "drafted": 2626263,
+     "accept_rate": 0.6487,
+     "mean_accepted_per_block": 1.946,
+     "per_position": [
+      0.8023,
+      0.6369,
+      0.5068
+     ]
+    },
+    ">8": {
+     "lines": 3,
+     "drafted": 14472,
+     "accept_rate": 0.6262,
+     "mean_accepted_per_block": 1.879,
+     "per_position": [
+      0.7743,
+      0.6189,
+      0.486
+     ]
+    }
+   },
+   "requests_logged": 0,
+   "tail_exposure": {
+    "long_requests": 0,
+    "inflight_time_share": {},
+    "per_request": [],
+    "label": "INFERRED window (constant decode rate within a request); client-side in-flight count"
+   }
+  }
+ ]
+}

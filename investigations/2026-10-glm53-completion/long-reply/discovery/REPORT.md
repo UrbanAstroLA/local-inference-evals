@@ -84,7 +84,7 @@ Medians over replies of each reply's median over full 4k windows [M]. Distinct-l
   loop. The post hoc LRS shows the 3 "fragmentary" replies are exact loops whose cycles repeat internally.
 - **Corrected reading:** 8 of 10 capped replies end in an exact loop with a period of 2-1,001 tokens. None shows
   long-period cycling. 2 (both q79) do not loop [M].
-- **State at 100k:** only 2 of 10 capped replies were looping at 100k. The other 8 started 43k-188k tokens later. All
+- **State at 100k:** only 2 of 10 capped replies were looping at 100k. 6 started 43k-188k tokens later and 2 (q79p2, q79p3) never formed a terminal loop (erratum 22am). All
   finished replies had R50 ≤ 0.018 at 100k [M].
 - **Recovery:**
   - Recovered episodes: q127p1 and q127p2 (both then finished) and q79p3 (then capped).

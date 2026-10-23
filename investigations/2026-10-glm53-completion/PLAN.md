@@ -2783,3 +2783,49 @@ relayed by the operator; the long-reply allocation closes).**
   balanced continuation sessions; more histories rather than more seeds; clustering-aware analysis; power ≥ 80% for a
   decision-relevant effect; and a decision that depends on it (e.g. correct answers per GPU-hour).
 - **Close-out document:** `long-reply/CLOSEOUT.md`.
+
+**Amendment 22am (2026-10-22; CPU-only reconnaissance after the close-out, operator-directed; no GPU use).**
+- **Scope:** read-only analysis of existing records, source copied from the two stock images by digest (never run), and
+  a CPU reproduction in a no-network, no-GPU container of the stock 0.9.1 image. No GPU-hours (cumulative 128.31). No
+  frozen reading changes: rep070 O3, B+ R-I (after 22v), E R-I. Folder: `recon-2026-10-22/`.
+- **Input manifest** (`f1/manifest.json`):
+  - weight shards, config, tokenizer and tokenizer_config are identical blobs in revisions `0490d2f7` and `701cd745`;
+  - prompt, doc and target hashes are equal for all 198 questions in all 11 stock passes;
+  - draft `bf582e4e` in every logged session (0.7.0 record pass 1 has no log);
+  - seeds, sessions and missing data per pass.
+- **Stock comparisons, post hoc and descriptive** (`f1/result.md`; unequal pass counts handled per question):
+  - original records: 4 / 594 against 16 / 594, rate difference −2.02 points (95% question bootstrap −3.54 to
+    −0.67);
+  - fresh seeds only (rep070 against D + D2): 10 / 594 against 14 / 396, −1.85 points (−4.12 to +0.17); ratio 0.48
+    (0.15-1.09);
+  - pooled: 14 / 1,188 against 30 / 990, −1.85 points (−3.23 to −0.66), ratio 0.39 (0.19-0.65). Every 0.7.0 pass
+    (0-4) and session lies below every 0.9.1 pass (5-8) and session. Exact session-level permutation p 0.014;
+    within-question permutation p 0.001; the choice to pool was made after the counts were known;
+  - reaching 100k: ratio 0.92 (0.67-1.26);
+  - finishing once past 100k: 29 / 43 against 18 / 47, +0.29 (+0.10 to +0.51); question-matched +0.18 (−0.09 to
+    +0.46);
+  - finishing by 165,536 tokens once past 100k: +0.19 (−0.05 to +0.45).
+- **Dispatch** (`dispatch/DISPATCH.md`, with evidence labels):
+  - long replies spend 70-94% of their time past 100k at 8 requests in flight. Capped replies run there at a median of
+    7.6-8.0 in flight. This corrects the inference in `audits/phase1-dispatch-storage.md` Q1 that they finish with few
+    requests left;
+  - at 8 in flight, 0.7.0 verifies 48 rows and 0.9.1 32. 0.7.0's routed experts use the expert-packed prefill plan at
+    6-8 in flight, 0.9.1's never do. Both plans schedule whole tiles; whether their outputs differ is unmeasured;
+  - draft position-1 acceptance is lower on 0.7.0 in every session (GPQA 0.710-0.733 against 0.755-0.780; B+ 0.786
+    against 0.800; E 0.780 against 0.804). At matched prompts and depth ×3, 0.9.1 with 0.7.0's layout (Phase 1
+    step 6) reads 0.651 / 0.664 against 0.690 / 0.697 for stock (step 4);
+  - no per-step dispatch was logged on a stock image.
+- **Draft-slot CPU reproduction** (`draft-slot/`; stock 0.9.1 image's own allocator and `_prepare_dflash_inputs_kernel`):
+  - 0 violations of four invariants (own-block, exclusive owner, rejected rows rewritten, allocated horizon) in 6
+    reachable-state scenarios, under async and sync scheduling;
+  - an upstream-style guard leaves every valid slot identical;
+  - planted faults detected: foreign block-table entry (18,422), missed append (15), I3 checker control (4,979). The
+    lookahead-K plant fired in 3 of 7 runs (alignment-dependent);
+  - not covered: GPU stream order, drafter graph replay, per-rank page aliasing.
+- **Coverage map** (`coverage/COVERAGE.md`): what each earlier check exercised by version, rank, graph mode, branch,
+  boundary and context. Stock 0.7.0 has no instrumented live coverage.
+- **Errata:**
+  - README "B0 across three seeds": the sign of −0.84 is corrected to a reduction of 0.84;
+  - `long-reply/discovery/REPORT.md` and `long-reply/README.md`: "the other 8" onsets is corrected to 6, with 2 that
+    never formed a terminal loop (the report's own table).
+- **Withheld locally:** the engine source copies (image digests are the reference) and the planned next steps.

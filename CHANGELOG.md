@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-10-22, reconnaissance after close (completion investigation, amendment 22am)
+
+No run is added; no GPU use.
+
+- **New `recon-2026-10-22/`:**
+  - input manifest and stock comparisons (original, fresh-seed and pooled; post hoc);
+  - per-version dispatch table;
+  - draft-slot CPU reproduction on the stock 0.9.1 image;
+  - coverage map of earlier checks.
+
+  Engine source copies are withheld (hashes of cited files published).
+- **`PLAN.md`:** amendment 22am.
+- **Investigation `README.md`:** a Status entry for the reconnaissance; erratum, the sign in "B0 across three seeds"
+  (a reduction of 0.84 points).
+- **`long-reply/discovery/REPORT.md`, `long-reply/README.md`:** erratum, loop onsets after 100k were 6, not 8; 2
+  replies never formed a terminal loop.
+- **`FINDINGS.md`:** the 0.7.0 against 0.9.1 open-question row gains the pooled stock figure.
+- **`LEDGER.md`**.
+
 ## 2026-10-22, upstream (completion investigation)
 
 Contents unchanged.

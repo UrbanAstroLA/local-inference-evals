@@ -22,6 +22,17 @@ difference. Quantization is held fixed.
   - on prefill-reconstructed token prefixes, the stock engines stopped alike on 0.7.0-generated prefixes (B+). On
     0.9.1-generated ones, 0.7.0 stopped more often (E; +13.5 points, below the frozen criterion);
   - extra stops were not comparably more correct answers.
+- **Reconnaissance after close (CPU only, amendment 22am; [`recon-2026-10-22/`](recon-2026-10-22/README.md)).**
+  - Pooling every stock pass (post hoc), 0.7.0 left 14 of 1,188 replies empty and 0.9.1 30 of 990: rate difference
+    −1.85 points (−3.23 to −0.66), ratio 0.39. Every 0.7.0 pass and session lies below every 0.9.1 one. Fresh seeds
+    alone: −1.85 points (−4.12 to +0.17).
+  - The difference sits in finishing once past 100k tokens (29 / 43 against 18 / 47), not in reaching 100k
+    (ratio 0.92).
+  - Long replies run mostly at 8 requests in flight, where the two engines' decode batches take different
+    routed-expert plans (top-k routes differ only at 3-4 in flight) ([dispatch table](recon-2026-10-22/dispatch/DISPATCH.md)).
+  - A CPU reproduction of the drafter's slot mapping on the stock 0.9.1 image found no violation in the exercised
+    states.
+  - No frozen reading changes.
 - **Upstream.** The verified corrections were submitted on 2026-10-22, each with a reproduction and its verification:
   - tpurtell's engine: [#7](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/7) (D2),
     [#8](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/8) (D1),
@@ -1117,7 +1128,7 @@ D7 attribution, and a separate record from B0's passes.
   suffices and no D7 effect is inferred.
 - **Cap volatility:** at a fixed seed on near-identical computation, 8 of the 14 questions that capped in either pass
   changed status.
-- **B0 across three seeds** against stock 0.9.1 (exploratory): 11 against 16 of 594 empty, −0.84 points [−0.34, 2.02].
+- **B0 across three seeds** against stock 0.9.1 (exploratory): 11 against 16 of 594 empty, a reduction of 0.84 points [−0.34, 2.02] (sign corrected, erratum 22am).
 
 The frozen design of the review step was: B0 and B1 differ only in the D7 file, and D7 is
 reconstructed as not reaching GPQA prompts, so this is a near-replicate of B1. It measures run-to-run variation at a

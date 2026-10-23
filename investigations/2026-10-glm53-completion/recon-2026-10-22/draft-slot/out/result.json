@@ -1,0 +1,722 @@
+{
+ "image_note": "run inside the stock 0.9.1 image; see run.sh",
+ "K": 3,
+ "block_size": 1088,
+ "patch_lines": [
+  "    ctx_ok = (j < (num_ctx - num_rejected)) & (ctx_block_id != 0)",
+  "    ctx_slot = tl.where(ctx_ok, ctx_slot, PAD_SLOT_ID)",
+  "    q_slot = tl.where(q_block_id != 0, q_slot, PAD_SLOT_ID)"
+ ],
+ "results": [
+  {
+   "scenario": "gpqa-like c8 mixed acceptance",
+   "seed": 1,
+   "concurrency": 8,
+   "faults": [],
+   "async": true,
+   "stock": {
+    "steps": 2119,
+    "counts": {
+     "rows": 13567,
+     "ctx_slots": 58394,
+     "q_slots": 54268,
+     "rejected_rows": 18473,
+     "pad": 0,
+     "rows_with_window_nulls": 4292,
+     "query_rows_crossing_block": 39,
+     "slots_in_high_blocks": 112662,
+     "prefix_hit_requests": 0,
+     "row_reuse": 4
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "patched": {
+    "steps": 2119,
+    "counts": {
+     "rows": 13567,
+     "ctx_slots": 58394,
+     "q_slots": 54268,
+     "rejected_rows": 18473,
+     "pad": 18473,
+     "rows_with_window_nulls": 4292,
+     "query_rows_crossing_block": 39,
+     "slots_in_high_blocks": 94189,
+     "prefix_hit_requests": 0,
+     "row_reuse": 4
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "valid_rows_identical_steps": "2119/2119"
+  },
+  {
+   "scenario": "gpqa-like c8 mixed acceptance [sync scheduler]",
+   "seed": 1,
+   "concurrency": 8,
+   "faults": [],
+   "async": false,
+   "stock": {
+    "steps": 2119,
+    "counts": {
+     "rows": 13567,
+     "ctx_slots": 58394,
+     "q_slots": 54268,
+     "rejected_rows": 18473,
+     "pad": 0,
+     "rows_with_window_nulls": 4290,
+     "query_rows_crossing_block": 39,
+     "slots_in_high_blocks": 112662,
+     "prefix_hit_requests": 0,
+     "row_reuse": 4
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   }
+  },
+  {
+   "scenario": "all drafts accepted (query reaches lv+1+K)",
+   "seed": 2,
+   "concurrency": 4,
+   "faults": [],
+   "async": true,
+   "stock": {
+    "steps": 1251,
+    "counts": {
+     "rows": 5004,
+     "ctx_slots": 21391,
+     "q_slots": 20016,
+     "rejected_rows": 0,
+     "pad": 0,
+     "rows_with_window_nulls": 2212,
+     "query_rows_crossing_block": 13,
+     "slots_in_high_blocks": 41407,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "patched": {
+    "steps": 1251,
+    "counts": {
+     "rows": 5004,
+     "ctx_slots": 21391,
+     "q_slots": 20016,
+     "rejected_rows": 0,
+     "pad": 0,
+     "rows_with_window_nulls": 2212,
+     "query_rows_crossing_block": 13,
+     "slots_in_high_blocks": 41407,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "valid_rows_identical_steps": "1251/1251"
+  },
+  {
+   "scenario": "all drafts accepted (query reaches lv+1+K) [sync scheduler]",
+   "seed": 2,
+   "concurrency": 4,
+   "faults": [],
+   "async": false,
+   "stock": {
+    "steps": 1251,
+    "counts": {
+     "rows": 5004,
+     "ctx_slots": 21391,
+     "q_slots": 20016,
+     "rejected_rows": 0,
+     "pad": 0,
+     "rows_with_window_nulls": 2212,
+     "query_rows_crossing_block": 13,
+     "slots_in_high_blocks": 41407,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   }
+  },
+  {
+   "scenario": "all drafts rejected",
+   "seed": 3,
+   "concurrency": 4,
+   "faults": [],
+   "async": true,
+   "stock": {
+    "steps": 2501,
+    "counts": {
+     "rows": 10004,
+     "ctx_slots": 41615,
+     "q_slots": 40016,
+     "rejected_rows": 30000,
+     "pad": 0,
+     "rows_with_window_nulls": 0,
+     "query_rows_crossing_block": 24,
+     "slots_in_high_blocks": 81631,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "patched": {
+    "steps": 2501,
+    "counts": {
+     "rows": 10004,
+     "ctx_slots": 41615,
+     "q_slots": 40016,
+     "rejected_rows": 30000,
+     "pad": 30000,
+     "rows_with_window_nulls": 0,
+     "query_rows_crossing_block": 24,
+     "slots_in_high_blocks": 51631,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "valid_rows_identical_steps": "2501/2501"
+  },
+  {
+   "scenario": "all drafts rejected [sync scheduler]",
+   "seed": 3,
+   "concurrency": 4,
+   "faults": [],
+   "async": false,
+   "stock": {
+    "steps": 2501,
+    "counts": {
+     "rows": 10004,
+     "ctx_slots": 41615,
+     "q_slots": 40016,
+     "rejected_rows": 30000,
+     "pad": 0,
+     "rows_with_window_nulls": 0,
+     "query_rows_crossing_block": 24,
+     "slots_in_high_blocks": 81631,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   }
+  },
+  {
+   "scenario": "multi-chunk prefill then decode",
+   "seed": 4,
+   "concurrency": 2,
+   "faults": [],
+   "async": true,
+   "stock": {
+    "steps": 947,
+    "counts": {
+     "rows": 1877,
+     "ctx_slots": 21476,
+     "q_slots": 7508,
+     "rejected_rows": 2475,
+     "pad": 0,
+     "rows_with_window_nulls": 1873,
+     "query_rows_crossing_block": 6,
+     "slots_in_high_blocks": 26584,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "patched": {
+    "steps": 947,
+    "counts": {
+     "rows": 1877,
+     "ctx_slots": 21476,
+     "q_slots": 7508,
+     "rejected_rows": 2475,
+     "pad": 2475,
+     "rows_with_window_nulls": 1873,
+     "query_rows_crossing_block": 6,
+     "slots_in_high_blocks": 24510,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "valid_rows_identical_steps": "947/947"
+  },
+  {
+   "scenario": "multi-chunk prefill then decode [sync scheduler]",
+   "seed": 4,
+   "concurrency": 2,
+   "faults": [],
+   "async": false,
+   "stock": {
+    "steps": 947,
+    "counts": {
+     "rows": 1877,
+     "ctx_slots": 21476,
+     "q_slots": 7508,
+     "rejected_rows": 2475,
+     "pad": 0,
+     "rows_with_window_nulls": 1873,
+     "query_rows_crossing_block": 6,
+     "slots_in_high_blocks": 26584,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   }
+  },
+  {
+   "scenario": "shared long prefix x4, staggered (prefix-cache hits, as B+/E)",
+   "seed": 5,
+   "concurrency": 4,
+   "faults": [],
+   "async": true,
+   "stock": {
+    "steps": 977,
+    "counts": {
+     "rows": 3796,
+     "ctx_slots": 38272,
+     "q_slots": 15184,
+     "rejected_rows": 5123,
+     "pad": 0,
+     "rows_with_window_nulls": 3794,
+     "query_rows_crossing_block": 7,
+     "slots_in_high_blocks": 53456,
+     "prefix_hit_requests": 3,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "patched": {
+    "steps": 977,
+    "counts": {
+     "rows": 3796,
+     "ctx_slots": 38272,
+     "q_slots": 15184,
+     "rejected_rows": 5123,
+     "pad": 5123,
+     "rows_with_window_nulls": 3794,
+     "query_rows_crossing_block": 7,
+     "slots_in_high_blocks": 48333,
+     "prefix_hit_requests": 3,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "valid_rows_identical_steps": "977/977"
+  },
+  {
+   "scenario": "shared long prefix x4, staggered (prefix-cache hits, as B+/E) [sync scheduler]",
+   "seed": 5,
+   "concurrency": 4,
+   "faults": [],
+   "async": false,
+   "stock": {
+    "steps": 977,
+    "counts": {
+     "rows": 3796,
+     "ctx_slots": 38272,
+     "q_slots": 15184,
+     "rejected_rows": 5123,
+     "pad": 0,
+     "rows_with_window_nulls": 3794,
+     "query_rows_crossing_block": 7,
+     "slots_in_high_blocks": 53456,
+     "prefix_hit_requests": 3,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   }
+  },
+  {
+   "scenario": "concurrency 1, block-boundary crossings",
+   "seed": 6,
+   "concurrency": 1,
+   "faults": [],
+   "async": true,
+   "stock": {
+    "steps": 3759,
+    "counts": {
+     "rows": 3759,
+     "ctx_slots": 15575,
+     "q_slots": 15036,
+     "rejected_rows": 5028,
+     "pad": 0,
+     "rows_with_window_nulls": 1608,
+     "query_rows_crossing_block": 8,
+     "slots_in_high_blocks": 30611,
+     "prefix_hit_requests": 0,
+     "row_reuse": 1
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "patched": {
+    "steps": 3759,
+    "counts": {
+     "rows": 3759,
+     "ctx_slots": 15575,
+     "q_slots": 15036,
+     "rejected_rows": 5028,
+     "pad": 5028,
+     "rows_with_window_nulls": 1608,
+     "query_rows_crossing_block": 8,
+     "slots_in_high_blocks": 25583,
+     "prefix_hit_requests": 0,
+     "row_reuse": 1
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "valid_rows_identical_steps": "3759/3759"
+  },
+  {
+   "scenario": "concurrency 1, block-boundary crossings [sync scheduler]",
+   "seed": 6,
+   "concurrency": 1,
+   "faults": [],
+   "async": false,
+   "stock": {
+    "steps": 3759,
+    "counts": {
+     "rows": 3759,
+     "ctx_slots": 15575,
+     "q_slots": 15036,
+     "rejected_rows": 5028,
+     "pad": 0,
+     "rows_with_window_nulls": 1606,
+     "query_rows_crossing_block": 8,
+     "slots_in_high_blocks": 30611,
+     "prefix_hit_requests": 0,
+     "row_reuse": 1
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   }
+  },
+  {
+   "scenario": "PLANT lookahead K instead of K+1",
+   "seed": 11,
+   "concurrency": 4,
+   "faults": [
+    "lookahead_K"
+   ],
+   "async": true,
+   "stock": {
+    "steps": 1251,
+    "counts": {
+     "rows": 5004,
+     "ctx_slots": 21622,
+     "q_slots": 20016,
+     "rejected_rows": 0,
+     "pad": 0,
+     "rows_with_window_nulls": 2270,
+     "query_rows_crossing_block": 9,
+     "slots_in_high_blocks": 41638,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   }
+  },
+  {
+   "scenario": "PLANT lookahead K instead of K+1 [sync scheduler]",
+   "seed": 11,
+   "concurrency": 4,
+   "faults": [
+    "lookahead_K"
+   ],
+   "async": false,
+   "stock": {
+    "steps": 1251,
+    "counts": {
+     "rows": 5004,
+     "ctx_slots": 21647,
+     "q_slots": 20016,
+     "rejected_rows": 0,
+     "pad": 0,
+     "rows_with_window_nulls": 2276,
+     "query_rows_crossing_block": 4,
+     "slots_in_high_blocks": 41663,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   }
+  },
+  {
+   "scenario": "PLANT foreign block-table entry at the frontier",
+   "seed": 11,
+   "concurrency": 4,
+   "faults": [
+    "foreign_entry"
+   ],
+   "async": true,
+   "stock": {
+    "steps": 1923,
+    "counts": {
+     "rows": 7596,
+     "ctx_slots": 31545,
+     "q_slots": 30384,
+     "rejected_rows": 10359,
+     "pad": 0,
+     "rows_with_window_nulls": 3313,
+     "query_rows_crossing_block": 19,
+     "slots_in_high_blocks": 61817,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 18422,
+     "I1_block0": 0,
+     "I2_shared_other": 18422,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": [
+     {
+      "rid": "r2",
+      "kind": "ctx",
+      "pos": 260,
+      "blk": 1072,
+      "owners": [
+       "('r3', 2)"
+      ]
+     },
+     {
+      "rid": "r2",
+      "kind": "ctx",
+      "pos": 261,
+      "blk": 1072,
+      "owners": [
+       "('r3', 2)"
+      ]
+     },
+     {
+      "rid": "r2",
+      "kind": "ctx",
+      "pos": 262,
+      "blk": 1072,
+      "owners": [
+       "('r3', 2)"
+      ]
+     },
+     {
+      "rid": "r2",
+      "kind": "ctx",
+      "pos": 263,
+      "blk": 1072,
+      "owners": [
+       "('r3', 2)"
+      ]
+     },
+     {
+      "rid": "r2",
+      "kind": "q",
+      "pos": 264,
+      "blk": 1072,
+      "owners": [
+       "('r3', 2)"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "scenario": "PLANT missed block-table append",
+   "seed": 11,
+   "concurrency": 4,
+   "faults": [
+    "missed_append"
+   ],
+   "async": true,
+   "stock": {
+    "steps": 1908,
+    "counts": {
+     "rows": 7573,
+     "ctx_slots": 31893,
+     "q_slots": 30292,
+     "rejected_rows": 10274,
+     "pad": 0,
+     "rows_with_window_nulls": 3431,
+     "query_rows_crossing_block": 16,
+     "slots_in_high_blocks": 62170,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 15,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   }
+  },
+  {
+   "scenario": "PLANT drop the bonus query slot when drafts were rejected (checker control for I3)",
+   "seed": 11,
+   "concurrency": 4,
+   "faults": [
+    "drop_bonus_query"
+   ],
+   "async": true,
+   "stock": {
+    "steps": 1908,
+    "counts": {
+     "rows": 7573,
+     "ctx_slots": 31573,
+     "q_slots": 30292,
+     "rejected_rows": 10274,
+     "pad": 4979,
+     "rows_with_window_nulls": 3314,
+     "query_rows_crossing_block": 19,
+     "slots_in_high_blocks": 56886,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 4979,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   }
+  }
+ ]
+}

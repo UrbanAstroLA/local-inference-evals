@@ -1,0 +1,33 @@
+W1023 04:41:06.988000 1 torch/utils/cpp_extension.py:178] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+WARNING 10-23 04:41:07 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-23 04:41:07 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-23 04:41:07 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-23 04:41:08 [kv_cache_coordinator.py:658] Disabling fine-grained prefix-cache hits because these KV cache managers require block-aligned lookups: KpoolTailManager.
+  gpqa-like c8 mixed acceptance [stock] step 250
+  gpqa-like c8 mixed acceptance [patched] step 250
+  gpqa-like c8 mixed acceptance [sync scheduler] [stock] step 250
+{"scenario": "gpqa-like c8 mixed acceptance"} {'I1_not_own_draft': 0, 'I1_block0': 0, 'I2_shared_other': 0, 'I3_rejected_not_rewritten': 0, 'I4_beyond_horizon': 0}
+{"scenario": "all drafts accepted (query reaches lv+1+K)"} {'I1_not_own_draft': 0, 'I1_block0': 0, 'I2_shared_other': 0, 'I3_rejected_not_rewritten': 0, 'I4_beyond_horizon': 0}
+  all drafts rejected [stock] step 250
+  all drafts rejected [patched] step 250
+  all drafts rejected [sync scheduler] [stock] step 250
+{"scenario": "all drafts rejected"} {'I1_not_own_draft': 0, 'I1_block0': 0, 'I2_shared_other': 0, 'I3_rejected_not_rewritten': 0, 'I4_beyond_horizon': 0}
+{"scenario": "multi-chunk prefill then decode"} {'I1_not_own_draft': 0, 'I1_block0': 0, 'I2_shared_other': 0, 'I3_rejected_not_rewritten': 0, 'I4_beyond_horizon': 0}
+{"scenario": "shared long prefix x4, staggered (prefix-cache hits, as B+/E)"} {'I1_not_own_draft': 0, 'I1_block0': 0, 'I2_shared_other': 0, 'I3_rejected_not_rewritten': 0, 'I4_beyond_horizon': 0}
+  concurrency 1, block-boundary crossings [stock] step 250
+  concurrency 1, block-boundary crossings [stock] step 500
+  concurrency 1, block-boundary crossings [patched] step 250
+  concurrency 1, block-boundary crossings [patched] step 500
+  concurrency 1, block-boundary crossings [sync scheduler] [stock] step 250
+  concurrency 1, block-boundary crossings [sync scheduler] [stock] step 500
+{"scenario": "concurrency 1, block-boundary crossings"} {'I1_not_own_draft': 0, 'I1_block0': 0, 'I2_shared_other': 0, 'I3_rejected_not_rewritten': 0, 'I4_beyond_horizon': 0}
+PLANT lookahead K instead of K+1 {'I1_not_own_draft': 0, 'I1_block0': 2, 'I2_shared_other': 0, 'I3_rejected_not_rewritten': 0, 'I4_beyond_horizon': 2}
+PLANT lookahead K instead of K+1 [sync scheduler] {'I1_not_own_draft': 0, 'I1_block0': 1, 'I2_shared_other': 0, 'I3_rejected_not_rewritten': 0, 'I4_beyond_horizon': 1}
+  PLANT foreign block-table entry at the frontier [stock] step 250
+PLANT foreign block-table entry at the frontier {'I1_not_own_draft': 3173, 'I1_block0': 0, 'I2_shared_other': 3173, 'I3_rejected_not_rewritten': 0, 'I4_beyond_horizon': 0}
+  PLANT missed block-table append [stock] step 250
+PLANT missed block-table append {'I1_not_own_draft': 0, 'I1_block0': 0, 'I2_shared_other': 0, 'I3_rejected_not_rewritten': 0, 'I4_beyond_horizon': 0}
+  PLANT drop the bonus query slot when drafts were rejected (checker control for I3) [stock] step 250
+PLANT drop the bonus query slot when drafts were rejected (checker control for I3) {'I1_not_own_draft': 0, 'I1_block0': 0, 'I2_shared_other': 0, 'I3_rejected_not_rewritten': 899, 'I4_beyond_horizon': 0}
+written /out/result-quick.json
+rc=0

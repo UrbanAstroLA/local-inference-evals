@@ -1,0 +1,181 @@
+W1023 04:44:53.416000 1 torch/utils/cpp_extension.py:178] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+WARNING 10-23 04:44:53 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-23 04:44:53 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-23 04:44:53 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-23 04:44:54 [kv_cache_coordinator.py:658] Disabling fine-grained prefix-cache hits because these KV cache managers require block-aligned lookups: KpoolTailManager.
+  gpqa-like c8 mixed acceptance [stock] step 250
+  gpqa-like c8 mixed acceptance [stock] step 500
+  gpqa-like c8 mixed acceptance [stock] step 750
+  gpqa-like c8 mixed acceptance [stock] step 1000
+  gpqa-like c8 mixed acceptance [stock] step 1250
+  gpqa-like c8 mixed acceptance [stock] step 1500
+  gpqa-like c8 mixed acceptance [stock] step 1750
+  gpqa-like c8 mixed acceptance [stock] step 2000
+  gpqa-like c8 mixed acceptance [patched] step 250
+  gpqa-like c8 mixed acceptance [patched] step 500
+  gpqa-like c8 mixed acceptance [patched] step 750
+  gpqa-like c8 mixed acceptance [patched] step 1000
+  gpqa-like c8 mixed acceptance [patched] step 1250
+  gpqa-like c8 mixed acceptance [patched] step 1500
+  gpqa-like c8 mixed acceptance [patched] step 1750
+  gpqa-like c8 mixed acceptance [patched] step 2000
+  gpqa-like c8 mixed acceptance [sync scheduler] [stock] step 250
+  gpqa-like c8 mixed acceptance [sync scheduler] [stock] step 500
+  gpqa-like c8 mixed acceptance [sync scheduler] [stock] step 750
+  gpqa-like c8 mixed acceptance [sync scheduler] [stock] step 1000
+  gpqa-like c8 mixed acceptance [sync scheduler] [stock] step 1250
+  gpqa-like c8 mixed acceptance [sync scheduler] [stock] step 1500
+  gpqa-like c8 mixed acceptance [sync scheduler] [stock] step 1750
+  gpqa-like c8 mixed acceptance [sync scheduler] [stock] step 2000
+{"scenario": "gpqa-like c8 mixed acceptance"} {'I1_not_own_draft': 0, 'I1_block0': 0, 'I2_shared_other': 0, 'I3_rejected_not_rewritten': 0, 'I4_beyond_horizon': 0}
+  all drafts accepted (query reaches lv+1+K) [stock] step 250
+  all drafts accepted (query reaches lv+1+K) [stock] step 500
+  all drafts accepted (query reaches lv+1+K) [stock] step 750
+  all drafts accepted (query reaches lv+1+K) [stock] step 1000
+  all drafts accepted (query reaches lv+1+K) [stock] step 1250
+  all drafts accepted (query reaches lv+1+K) [patched] step 250
+  all drafts accepted (query reaches lv+1+K) [patched] step 500
+  all drafts accepted (query reaches lv+1+K) [patched] step 750
+  all drafts accepted (query reaches lv+1+K) [patched] step 1000
+  all drafts accepted (query reaches lv+1+K) [patched] step 1250
+  all drafts accepted (query reaches lv+1+K) [sync scheduler] [stock] step 250
+  all drafts accepted (query reaches lv+1+K) [sync scheduler] [stock] step 500
+  all drafts accepted (query reaches lv+1+K) [sync scheduler] [stock] step 750
+  all drafts accepted (query reaches lv+1+K) [sync scheduler] [stock] step 1000
+  all drafts accepted (query reaches lv+1+K) [sync scheduler] [stock] step 1250
+{"scenario": "all drafts accepted (query reaches lv+1+K)"} {'I1_not_own_draft': 0, 'I1_block0': 0, 'I2_shared_other': 0, 'I3_rejected_not_rewritten': 0, 'I4_beyond_horizon': 0}
+  all drafts rejected [stock] step 250
+  all drafts rejected [stock] step 500
+  all drafts rejected [stock] step 750
+  all drafts rejected [stock] step 1000
+  all drafts rejected [stock] step 1250
+  all drafts rejected [stock] step 1500
+  all drafts rejected [stock] step 1750
+  all drafts rejected [stock] step 2000
+  all drafts rejected [stock] step 2250
+  all drafts rejected [stock] step 2500
+  all drafts rejected [patched] step 250
+  all drafts rejected [patched] step 500
+  all drafts rejected [patched] step 750
+  all drafts rejected [patched] step 1000
+  all drafts rejected [patched] step 1250
+  all drafts rejected [patched] step 1500
+  all drafts rejected [patched] step 1750
+  all drafts rejected [patched] step 2000
+  all drafts rejected [patched] step 2250
+  all drafts rejected [patched] step 2500
+  all drafts rejected [sync scheduler] [stock] step 250
+  all drafts rejected [sync scheduler] [stock] step 500
+  all drafts rejected [sync scheduler] [stock] step 750
+  all drafts rejected [sync scheduler] [stock] step 1000
+  all drafts rejected [sync scheduler] [stock] step 1250
+  all drafts rejected [sync scheduler] [stock] step 1500
+  all drafts rejected [sync scheduler] [stock] step 1750
+  all drafts rejected [sync scheduler] [stock] step 2000
+  all drafts rejected [sync scheduler] [stock] step 2250
+  all drafts rejected [sync scheduler] [stock] step 2500
+{"scenario": "all drafts rejected"} {'I1_not_own_draft': 0, 'I1_block0': 0, 'I2_shared_other': 0, 'I3_rejected_not_rewritten': 0, 'I4_beyond_horizon': 0}
+  multi-chunk prefill then decode [stock] step 250
+  multi-chunk prefill then decode [stock] step 500
+  multi-chunk prefill then decode [stock] step 750
+  multi-chunk prefill then decode [patched] step 250
+  multi-chunk prefill then decode [patched] step 500
+  multi-chunk prefill then decode [patched] step 750
+  multi-chunk prefill then decode [sync scheduler] [stock] step 250
+  multi-chunk prefill then decode [sync scheduler] [stock] step 500
+  multi-chunk prefill then decode [sync scheduler] [stock] step 750
+{"scenario": "multi-chunk prefill then decode"} {'I1_not_own_draft': 0, 'I1_block0': 0, 'I2_shared_other': 0, 'I3_rejected_not_rewritten': 0, 'I4_beyond_horizon': 0}
+  shared long prefix x4, staggered (prefix-cache hits, as B+/E) [stock] step 250
+  shared long prefix x4, staggered (prefix-cache hits, as B+/E) [stock] step 500
+  shared long prefix x4, staggered (prefix-cache hits, as B+/E) [stock] step 750
+  shared long prefix x4, staggered (prefix-cache hits, as B+/E) [patched] step 250
+  shared long prefix x4, staggered (prefix-cache hits, as B+/E) [patched] step 500
+  shared long prefix x4, staggered (prefix-cache hits, as B+/E) [patched] step 750
+  shared long prefix x4, staggered (prefix-cache hits, as B+/E) [sync scheduler] [stock] step 250
+  shared long prefix x4, staggered (prefix-cache hits, as B+/E) [sync scheduler] [stock] step 500
+  shared long prefix x4, staggered (prefix-cache hits, as B+/E) [sync scheduler] [stock] step 750
+{"scenario": "shared long prefix x4, staggered (prefix-cache hits, as B+/E)"} {'I1_not_own_draft': 0, 'I1_block0': 0, 'I2_shared_other': 0, 'I3_rejected_not_rewritten': 0, 'I4_beyond_horizon': 0}
+  concurrency 1, block-boundary crossings [stock] step 250
+  concurrency 1, block-boundary crossings [stock] step 500
+  concurrency 1, block-boundary crossings [stock] step 750
+  concurrency 1, block-boundary crossings [stock] step 1000
+  concurrency 1, block-boundary crossings [stock] step 1250
+  concurrency 1, block-boundary crossings [stock] step 1500
+  concurrency 1, block-boundary crossings [stock] step 1750
+  concurrency 1, block-boundary crossings [stock] step 2000
+  concurrency 1, block-boundary crossings [stock] step 2250
+  concurrency 1, block-boundary crossings [stock] step 2500
+  concurrency 1, block-boundary crossings [stock] step 2750
+  concurrency 1, block-boundary crossings [stock] step 3000
+  concurrency 1, block-boundary crossings [stock] step 3250
+  concurrency 1, block-boundary crossings [stock] step 3500
+  concurrency 1, block-boundary crossings [stock] step 3750
+  concurrency 1, block-boundary crossings [patched] step 250
+  concurrency 1, block-boundary crossings [patched] step 500
+  concurrency 1, block-boundary crossings [patched] step 750
+  concurrency 1, block-boundary crossings [patched] step 1000
+  concurrency 1, block-boundary crossings [patched] step 1250
+  concurrency 1, block-boundary crossings [patched] step 1500
+  concurrency 1, block-boundary crossings [patched] step 1750
+  concurrency 1, block-boundary crossings [patched] step 2000
+  concurrency 1, block-boundary crossings [patched] step 2250
+  concurrency 1, block-boundary crossings [patched] step 2500
+  concurrency 1, block-boundary crossings [patched] step 2750
+  concurrency 1, block-boundary crossings [patched] step 3000
+  concurrency 1, block-boundary crossings [patched] step 3250
+  concurrency 1, block-boundary crossings [patched] step 3500
+  concurrency 1, block-boundary crossings [patched] step 3750
+  concurrency 1, block-boundary crossings [sync scheduler] [stock] step 250
+  concurrency 1, block-boundary crossings [sync scheduler] [stock] step 500
+  concurrency 1, block-boundary crossings [sync scheduler] [stock] step 750
+  concurrency 1, block-boundary crossings [sync scheduler] [stock] step 1000
+  concurrency 1, block-boundary crossings [sync scheduler] [stock] step 1250
+  concurrency 1, block-boundary crossings [sync scheduler] [stock] step 1500
+  concurrency 1, block-boundary crossings [sync scheduler] [stock] step 1750
+  concurrency 1, block-boundary crossings [sync scheduler] [stock] step 2000
+  concurrency 1, block-boundary crossings [sync scheduler] [stock] step 2250
+  concurrency 1, block-boundary crossings [sync scheduler] [stock] step 2500
+  concurrency 1, block-boundary crossings [sync scheduler] [stock] step 2750
+  concurrency 1, block-boundary crossings [sync scheduler] [stock] step 3000
+  concurrency 1, block-boundary crossings [sync scheduler] [stock] step 3250
+  concurrency 1, block-boundary crossings [sync scheduler] [stock] step 3500
+  concurrency 1, block-boundary crossings [sync scheduler] [stock] step 3750
+{"scenario": "concurrency 1, block-boundary crossings"} {'I1_not_own_draft': 0, 'I1_block0': 0, 'I2_shared_other': 0, 'I3_rejected_not_rewritten': 0, 'I4_beyond_horizon': 0}
+  PLANT lookahead K instead of K+1 [stock] step 250
+  PLANT lookahead K instead of K+1 [stock] step 500
+  PLANT lookahead K instead of K+1 [stock] step 750
+  PLANT lookahead K instead of K+1 [stock] step 1000
+  PLANT lookahead K instead of K+1 [stock] step 1250
+PLANT lookahead K instead of K+1 {'I1_not_own_draft': 0, 'I1_block0': 0, 'I2_shared_other': 0, 'I3_rejected_not_rewritten': 0, 'I4_beyond_horizon': 0}
+  PLANT lookahead K instead of K+1 [sync scheduler] [stock] step 250
+  PLANT lookahead K instead of K+1 [sync scheduler] [stock] step 500
+  PLANT lookahead K instead of K+1 [sync scheduler] [stock] step 750
+  PLANT lookahead K instead of K+1 [sync scheduler] [stock] step 1000
+  PLANT lookahead K instead of K+1 [sync scheduler] [stock] step 1250
+PLANT lookahead K instead of K+1 [sync scheduler] {'I1_not_own_draft': 0, 'I1_block0': 0, 'I2_shared_other': 0, 'I3_rejected_not_rewritten': 0, 'I4_beyond_horizon': 0}
+  PLANT foreign block-table entry at the frontier [stock] step 250
+  PLANT foreign block-table entry at the frontier [stock] step 500
+  PLANT foreign block-table entry at the frontier [stock] step 750
+  PLANT foreign block-table entry at the frontier [stock] step 1000
+  PLANT foreign block-table entry at the frontier [stock] step 1250
+  PLANT foreign block-table entry at the frontier [stock] step 1500
+  PLANT foreign block-table entry at the frontier [stock] step 1750
+PLANT foreign block-table entry at the frontier {'I1_not_own_draft': 18422, 'I1_block0': 0, 'I2_shared_other': 18422, 'I3_rejected_not_rewritten': 0, 'I4_beyond_horizon': 0}
+  PLANT missed block-table append [stock] step 250
+  PLANT missed block-table append [stock] step 500
+  PLANT missed block-table append [stock] step 750
+  PLANT missed block-table append [stock] step 1000
+  PLANT missed block-table append [stock] step 1250
+  PLANT missed block-table append [stock] step 1500
+  PLANT missed block-table append [stock] step 1750
+PLANT missed block-table append {'I1_not_own_draft': 0, 'I1_block0': 15, 'I2_shared_other': 0, 'I3_rejected_not_rewritten': 0, 'I4_beyond_horizon': 0}
+  PLANT drop the bonus query slot when drafts were rejected (checker control for I3) [stock] step 250
+  PLANT drop the bonus query slot when drafts were rejected (checker control for I3) [stock] step 500
+  PLANT drop the bonus query slot when drafts were rejected (checker control for I3) [stock] step 750
+  PLANT drop the bonus query slot when drafts were rejected (checker control for I3) [stock] step 1000
+  PLANT drop the bonus query slot when drafts were rejected (checker control for I3) [stock] step 1250
+  PLANT drop the bonus query slot when drafts were rejected (checker control for I3) [stock] step 1500
+  PLANT drop the bonus query slot when drafts were rejected (checker control for I3) [stock] step 1750
+PLANT drop the bonus query slot when drafts were rejected (checker control for I3) {'I1_not_own_draft': 0, 'I1_block0': 0, 'I2_shared_other': 0, 'I3_rejected_not_rewritten': 4979, 'I4_beyond_horizon': 0}
+written /out/result.json
+rc=0

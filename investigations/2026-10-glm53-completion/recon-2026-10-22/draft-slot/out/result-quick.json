@@ -1,0 +1,722 @@
+{
+ "image_note": "run inside the stock 0.9.1 image; see run.sh",
+ "K": 3,
+ "block_size": 1088,
+ "patch_lines": [
+  "    ctx_ok = (j < (num_ctx - num_rejected)) & (ctx_block_id != 0)",
+  "    ctx_slot = tl.where(ctx_ok, ctx_slot, PAD_SLOT_ID)",
+  "    q_slot = tl.where(q_block_id != 0, q_slot, PAD_SLOT_ID)"
+ ],
+ "results": [
+  {
+   "scenario": "gpqa-like c8 mixed acceptance",
+   "seed": 1,
+   "concurrency": 8,
+   "faults": [],
+   "async": true,
+   "stock": {
+    "steps": 449,
+    "counts": {
+     "rows": 2568,
+     "ctx_slots": 15030,
+     "q_slots": 10272,
+     "rejected_rows": 3456,
+     "pad": 0,
+     "rows_with_window_nulls": 0,
+     "query_rows_crossing_block": 8,
+     "slots_in_high_blocks": 25302,
+     "prefix_hit_requests": 0,
+     "row_reuse": 4
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "patched": {
+    "steps": 449,
+    "counts": {
+     "rows": 2568,
+     "ctx_slots": 15030,
+     "q_slots": 10272,
+     "rejected_rows": 3456,
+     "pad": 3456,
+     "rows_with_window_nulls": 0,
+     "query_rows_crossing_block": 8,
+     "slots_in_high_blocks": 21846,
+     "prefix_hit_requests": 0,
+     "row_reuse": 4
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "valid_rows_identical_steps": "449/449"
+  },
+  {
+   "scenario": "gpqa-like c8 mixed acceptance [sync scheduler]",
+   "seed": 1,
+   "concurrency": 8,
+   "faults": [],
+   "async": false,
+   "stock": {
+    "steps": 449,
+    "counts": {
+     "rows": 2568,
+     "ctx_slots": 15030,
+     "q_slots": 10272,
+     "rejected_rows": 3456,
+     "pad": 0,
+     "rows_with_window_nulls": 0,
+     "query_rows_crossing_block": 8,
+     "slots_in_high_blocks": 25302,
+     "prefix_hit_requests": 0,
+     "row_reuse": 4
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   }
+  },
+  {
+   "scenario": "all drafts accepted (query reaches lv+1+K)",
+   "seed": 2,
+   "concurrency": 4,
+   "faults": [],
+   "async": true,
+   "stock": {
+    "steps": 226,
+    "counts": {
+     "rows": 904,
+     "ctx_slots": 5078,
+     "q_slots": 3616,
+     "rejected_rows": 0,
+     "pad": 0,
+     "rows_with_window_nulls": 0,
+     "query_rows_crossing_block": 3,
+     "slots_in_high_blocks": 8694,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "patched": {
+    "steps": 226,
+    "counts": {
+     "rows": 904,
+     "ctx_slots": 5078,
+     "q_slots": 3616,
+     "rejected_rows": 0,
+     "pad": 0,
+     "rows_with_window_nulls": 0,
+     "query_rows_crossing_block": 3,
+     "slots_in_high_blocks": 8694,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "valid_rows_identical_steps": "226/226"
+  },
+  {
+   "scenario": "all drafts accepted (query reaches lv+1+K) [sync scheduler]",
+   "seed": 2,
+   "concurrency": 4,
+   "faults": [],
+   "async": false,
+   "stock": {
+    "steps": 226,
+    "counts": {
+     "rows": 904,
+     "ctx_slots": 5078,
+     "q_slots": 3616,
+     "rejected_rows": 0,
+     "pad": 0,
+     "rows_with_window_nulls": 0,
+     "query_rows_crossing_block": 3,
+     "slots_in_high_blocks": 8694,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   }
+  },
+  {
+   "scenario": "all drafts rejected",
+   "seed": 3,
+   "concurrency": 4,
+   "faults": [],
+   "async": true,
+   "stock": {
+    "steps": 451,
+    "counts": {
+     "rows": 1804,
+     "ctx_slots": 8813,
+     "q_slots": 7216,
+     "rejected_rows": 5400,
+     "pad": 0,
+     "rows_with_window_nulls": 0,
+     "query_rows_crossing_block": 0,
+     "slots_in_high_blocks": 16029,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "patched": {
+    "steps": 451,
+    "counts": {
+     "rows": 1804,
+     "ctx_slots": 8813,
+     "q_slots": 7216,
+     "rejected_rows": 5400,
+     "pad": 5400,
+     "rows_with_window_nulls": 0,
+     "query_rows_crossing_block": 0,
+     "slots_in_high_blocks": 10629,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "valid_rows_identical_steps": "451/451"
+  },
+  {
+   "scenario": "all drafts rejected [sync scheduler]",
+   "seed": 3,
+   "concurrency": 4,
+   "faults": [],
+   "async": false,
+   "stock": {
+    "steps": 451,
+    "counts": {
+     "rows": 1804,
+     "ctx_slots": 8813,
+     "q_slots": 7216,
+     "rejected_rows": 5400,
+     "pad": 0,
+     "rows_with_window_nulls": 0,
+     "query_rows_crossing_block": 0,
+     "slots_in_high_blocks": 16029,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   }
+  },
+  {
+   "scenario": "multi-chunk prefill then decode",
+   "seed": 4,
+   "concurrency": 2,
+   "faults": [],
+   "async": true,
+   "stock": {
+    "steps": 183,
+    "counts": {
+     "rows": 349,
+     "ctx_slots": 15364,
+     "q_slots": 1396,
+     "rejected_rows": 460,
+     "pad": 0,
+     "rows_with_window_nulls": 345,
+     "query_rows_crossing_block": 0,
+     "slots_in_high_blocks": 16760,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "patched": {
+    "steps": 183,
+    "counts": {
+     "rows": 349,
+     "ctx_slots": 15364,
+     "q_slots": 1396,
+     "rejected_rows": 460,
+     "pad": 460,
+     "rows_with_window_nulls": 345,
+     "query_rows_crossing_block": 0,
+     "slots_in_high_blocks": 16300,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "valid_rows_identical_steps": "183/183"
+  },
+  {
+   "scenario": "multi-chunk prefill then decode [sync scheduler]",
+   "seed": 4,
+   "concurrency": 2,
+   "faults": [],
+   "async": false,
+   "stock": {
+    "steps": 183,
+    "counts": {
+     "rows": 349,
+     "ctx_slots": 15364,
+     "q_slots": 1396,
+     "rejected_rows": 460,
+     "pad": 0,
+     "rows_with_window_nulls": 345,
+     "query_rows_crossing_block": 0,
+     "slots_in_high_blocks": 16760,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   }
+  },
+  {
+   "scenario": "shared long prefix x4, staggered (prefix-cache hits, as B+/E)",
+   "seed": 5,
+   "concurrency": 4,
+   "faults": [],
+   "async": true,
+   "stock": {
+    "steps": 209,
+    "counts": {
+     "rows": 705,
+     "ctx_slots": 20572,
+     "q_slots": 2820,
+     "rejected_rows": 967,
+     "pad": 0,
+     "rows_with_window_nulls": 697,
+     "query_rows_crossing_block": 0,
+     "slots_in_high_blocks": 23392,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "patched": {
+    "steps": 209,
+    "counts": {
+     "rows": 705,
+     "ctx_slots": 20572,
+     "q_slots": 2820,
+     "rejected_rows": 967,
+     "pad": 967,
+     "rows_with_window_nulls": 697,
+     "query_rows_crossing_block": 0,
+     "slots_in_high_blocks": 22425,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "valid_rows_identical_steps": "209/209"
+  },
+  {
+   "scenario": "shared long prefix x4, staggered (prefix-cache hits, as B+/E) [sync scheduler]",
+   "seed": 5,
+   "concurrency": 4,
+   "faults": [],
+   "async": false,
+   "stock": {
+    "steps": 209,
+    "counts": {
+     "rows": 705,
+     "ctx_slots": 20572,
+     "q_slots": 2820,
+     "rejected_rows": 967,
+     "pad": 0,
+     "rows_with_window_nulls": 697,
+     "query_rows_crossing_block": 0,
+     "slots_in_high_blocks": 23392,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   }
+  },
+  {
+   "scenario": "concurrency 1, block-boundary crossings",
+   "seed": 6,
+   "concurrency": 1,
+   "faults": [],
+   "async": true,
+   "stock": {
+    "steps": 684,
+    "counts": {
+     "rows": 684,
+     "ctx_slots": 3668,
+     "q_slots": 2736,
+     "rejected_rows": 926,
+     "pad": 0,
+     "rows_with_window_nulls": 0,
+     "query_rows_crossing_block": 2,
+     "slots_in_high_blocks": 6404,
+     "prefix_hit_requests": 0,
+     "row_reuse": 1
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "patched": {
+    "steps": 684,
+    "counts": {
+     "rows": 684,
+     "ctx_slots": 3668,
+     "q_slots": 2736,
+     "rejected_rows": 926,
+     "pad": 926,
+     "rows_with_window_nulls": 0,
+     "query_rows_crossing_block": 2,
+     "slots_in_high_blocks": 5478,
+     "prefix_hit_requests": 0,
+     "row_reuse": 1
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   },
+   "valid_rows_identical_steps": "684/684"
+  },
+  {
+   "scenario": "concurrency 1, block-boundary crossings [sync scheduler]",
+   "seed": 6,
+   "concurrency": 1,
+   "faults": [],
+   "async": false,
+   "stock": {
+    "steps": 684,
+    "counts": {
+     "rows": 684,
+     "ctx_slots": 3668,
+     "q_slots": 2736,
+     "rejected_rows": 926,
+     "pad": 0,
+     "rows_with_window_nulls": 0,
+     "query_rows_crossing_block": 2,
+     "slots_in_high_blocks": 6404,
+     "prefix_hit_requests": 0,
+     "row_reuse": 1
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   }
+  },
+  {
+   "scenario": "PLANT lookahead K instead of K+1",
+   "seed": 11,
+   "concurrency": 4,
+   "faults": [
+    "lookahead_K"
+   ],
+   "async": true,
+   "stock": {
+    "steps": 226,
+    "counts": {
+     "rows": 904,
+     "ctx_slots": 4950,
+     "q_slots": 3616,
+     "rejected_rows": 0,
+     "pad": 0,
+     "rows_with_window_nulls": 0,
+     "query_rows_crossing_block": 4,
+     "slots_in_high_blocks": 8564,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 2,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 2
+    },
+    "examples": []
+   }
+  },
+  {
+   "scenario": "PLANT lookahead K instead of K+1 [sync scheduler]",
+   "seed": 11,
+   "concurrency": 4,
+   "faults": [
+    "lookahead_K"
+   ],
+   "async": false,
+   "stock": {
+    "steps": 226,
+    "counts": {
+     "rows": 904,
+     "ctx_slots": 5046,
+     "q_slots": 3616,
+     "rejected_rows": 0,
+     "pad": 0,
+     "rows_with_window_nulls": 0,
+     "query_rows_crossing_block": 4,
+     "slots_in_high_blocks": 8661,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 1,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 1
+    },
+    "examples": []
+   }
+  },
+  {
+   "scenario": "PLANT foreign block-table entry at the frontier",
+   "seed": 11,
+   "concurrency": 4,
+   "faults": [
+    "foreign_entry"
+   ],
+   "async": true,
+   "stock": {
+    "steps": 342,
+    "counts": {
+     "rows": 1337,
+     "ctx_slots": 6874,
+     "q_slots": 5348,
+     "rejected_rows": 1728,
+     "pad": 0,
+     "rows_with_window_nulls": 0,
+     "query_rows_crossing_block": 2,
+     "slots_in_high_blocks": 12174,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 3173,
+     "I1_block0": 0,
+     "I2_shared_other": 3173,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": [
+     {
+      "rid": "r2",
+      "kind": "ctx",
+      "pos": 520,
+      "blk": 1072,
+      "owners": [
+       "('r3', 2)"
+      ]
+     },
+     {
+      "rid": "r2",
+      "kind": "ctx",
+      "pos": 521,
+      "blk": 1072,
+      "owners": [
+       "('r3', 2)"
+      ]
+     },
+     {
+      "rid": "r2",
+      "kind": "ctx",
+      "pos": 522,
+      "blk": 1072,
+      "owners": [
+       "('r3', 2)"
+      ]
+     },
+     {
+      "rid": "r2",
+      "kind": "ctx",
+      "pos": 523,
+      "blk": 1072,
+      "owners": [
+       "('r3', 2)"
+      ]
+     },
+     {
+      "rid": "r2",
+      "kind": "q",
+      "pos": 524,
+      "blk": 1072,
+      "owners": [
+       "('r3', 2)"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "scenario": "PLANT missed block-table append",
+   "seed": 11,
+   "concurrency": 4,
+   "faults": [
+    "missed_append"
+   ],
+   "async": true,
+   "stock": {
+    "steps": 357,
+    "counts": {
+     "rows": 1372,
+     "ctx_slots": 7027,
+     "q_slots": 5488,
+     "rejected_rows": 1872,
+     "pad": 0,
+     "rows_with_window_nulls": 0,
+     "query_rows_crossing_block": 5,
+     "slots_in_high_blocks": 12515,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 0,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   }
+  },
+  {
+   "scenario": "PLANT drop the bonus query slot when drafts were rejected (checker control for I3)",
+   "seed": 11,
+   "concurrency": 4,
+   "faults": [
+    "drop_bonus_query"
+   ],
+   "async": true,
+   "stock": {
+    "steps": 351,
+    "counts": {
+     "rows": 1372,
+     "ctx_slots": 7008,
+     "q_slots": 5488,
+     "rejected_rows": 1869,
+     "pad": 899,
+     "rows_with_window_nulls": 0,
+     "query_rows_crossing_block": 4,
+     "slots_in_high_blocks": 11597,
+     "prefix_hit_requests": 0,
+     "row_reuse": 0
+    },
+    "violations": {
+     "I1_not_own_draft": 0,
+     "I1_block0": 0,
+     "I2_shared_other": 0,
+     "I3_rejected_not_rewritten": 899,
+     "I4_beyond_horizon": 0
+    },
+    "examples": []
+   }
+  }
+ ]
+}

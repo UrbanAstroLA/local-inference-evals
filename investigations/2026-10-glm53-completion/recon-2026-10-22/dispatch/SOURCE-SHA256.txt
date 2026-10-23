@@ -1,0 +1,13 @@
+# copied 2026-10-22 from images by digest (docker create + docker cp, never run): v070 = sha256:48e254d9..., v091 = sha256:a9e985c0...
+0560a6caedd3bb0198c04cd5a1816c92872c9b4c5e2b059c54110aaf9d59d1ad  src/v070/vllm/model_executor/layers/quantization/exl3.py
+956fed3ee385f0e10f8984bf0e28685a8e6bf911b8707372032df5250398cdc9  src/v070/vllm/distributed/device_communicators/b12x_pcie_all_reduce.py
+482b4511561a902c61efc5edfb3a698f5b9dcfd6d67ca513c5d12b4ccdae7710  src/v070/vllm/v1/worker/gpu/spec_decode/dflash/speculator.py
+d7aa0cdded7e1e74cb4f26225fd6cffe618aeb80e082f140be7a6b31bfc3301a  src/v070/vllm/v1/core/kv_cache_utils.py
+4b160792231daed43816676586fbf42e8269a60ebb1f1e92215880b48d19c757  src/v070/vllm/v1/attention/backends/mla/b12x_mla_sparse.py
+e7935f2a9b8ecbc75410defff571d9940ad2abf511286bf0936d0c324936df39  src/v070/vllm/model_executor/layers/sparse_attn_indexer_kpool.py
+3b4ca47cb1168bffebcfe3cf1db48daf86691c140cbf40f9c1f3aa6ad6a444d9  src/v091/vllm/model_executor/layers/quantization/exl3.py
+1a0792df57b9d1c923fc50e5ad68815c11880692f2aa10a3de968dfb586a368c  src/v091/vllm/distributed/device_communicators/b12x_pcie_all_reduce.py
+482b4511561a902c61efc5edfb3a698f5b9dcfd6d67ca513c5d12b4ccdae7710  src/v091/vllm/v1/worker/gpu/spec_decode/dflash/speculator.py
+6c950a5854ef0c3141aa711016385ea7dd1c5bb8830eee0a8572367ab05be368  src/v091/vllm/v1/core/kv_cache_utils.py
+6e74c42cf4385bb0451243098ec8b4a84005675fa776169fddb2fb230bab0157  src/v091/vllm/v1/attention/backends/mla/b12x_mla_sparse.py
+e7935f2a9b8ecbc75410defff571d9940ad2abf511286bf0936d0c324936df39  src/v091/vllm/model_executor/layers/sparse_attn_indexer_kpool.py
