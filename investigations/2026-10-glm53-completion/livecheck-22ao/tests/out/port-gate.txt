@@ -1,0 +1,4 @@
+== arm c 
+ALL MET: 3/3 (port expected)
+== arm a --expect-unpatched
+ALL MET: 3/3 (v0.9.1 omissions expected)

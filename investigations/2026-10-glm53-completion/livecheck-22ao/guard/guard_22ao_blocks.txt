@@ -1,0 +1,177 @@
+=====HEADER=====
+22ao AMENDMENT (live causal-length check on stock 0.9.1 and stock + port 01).  Base = the frozen B1 guard
+(d7/step2/guard/mapguard_hooks.py a8e59fa5...).  Additions only; no frozen check changes semantics:
+  * site "mla_len": the per-token causal length the B12x sparse-MLA builder hands the consumer
+    (cache_seq_lens_per_token) against the authoritative p + 1, signed (len_pos / len_neg on every owned
+    layer; a [-8, 8] histogram and one record per batch row per step on the rank's first owned layer).
+  * mla_r: the signed consumed count nsa - min(p + 1, width) (nsa_pos / nsa_neg; histogram).
+  * Shadow plants (positive controls for the selection checker): on guard-owned copies, for a deterministic
+    subset of checked tokens ((step * 131 + token) % 97 == 0), the checks are re-run after planting
+    (a) a same-request future key at p + 1, (b) a block of another batch row, (c) an over-long count on
+    an exact dense row, (d) an unmasked column.  Ground truth comes from a full scan of the row's
+    expected block table, not from the checker's col0 map.  Plants never touch engine memory and are
+    counted only in pa/pb/pc/pd counters.
+  * check_selected's predicates are factored into _sel_masks (pure extraction, the same expressions) so
+    the plants exercise the code that judges the engine.
+=====CONSTS=====
+LCAP = int(os.environ.get("GLM53_MAPGUARD_LCAP", "131072"))   # 22ao: per-row length records
+LREC_COLS = ["step", "batch_row", "tag", "position", "consumed_len", "d", "dense", "row_tokens"]
+PLANT_MOD = 97     # 22ao: one checked token in 97 carries the shadow plants
+HBINS = 17         # 22ao: signed-difference histograms over [-8, 8] (clamped)
+=====DEVBUF=====
+        # 22ao amendment
+        self.lrec = torch.zeros(LCAP + 1, len(LREC_COLS), dtype=torch.int64, device=device)
+        self.nlrec = torch.zeros(1, dtype=torch.int64, device=device)
+        self.lenhist = torch.zeros(HBINS, dtype=torch.int64, device=device)
+        self.nsahist = torch.zeros(HBINS, dtype=torch.int64, device=device)
+=====OLDMASKS=====
+        j = torch.arange(K, device=sel.device, dtype=torch.int64)
+        live = j[None, :] < L[:, None]
+        valid = s >= 0
+        blk = torch.div(s.clamp(min=0), geo.bs, rounding_mode="floor")
+        bclamp = blk.clamp(0, geo.nb)
+        c0 = ev.col0[bclamp]
+        rr = row[:, None].expand_as(c0)
+        held = (c0 >= 0) & (c0 < ev.nb0[row][:, None]) & \
+            (ev.bt0[rr, c0.clamp(0, W0 - 1)] == blk) & (blk < geo.nb)
+        logical = c0 * geo.bs + torch.remainder(s.clamp(min=0), geo.bs)
+        act = active[:, None]
+        sel_foreign = act & live & valid & ~held
+        sel_causal = act & live & valid & held & (logical > p[:, None])
+        sel_hole = act & live & ~valid
+        masked_live = ~live & valid
+        sel_inact = ~act & live & valid & (blk != 0)
+        sel_len = active & (L > p + 1)
+        high = act & live & valid & held & (blk >= geo.high)
+=====NEWMASKS=====
+        (live, valid, blk, held, logical, act, sel_foreign, sel_causal, sel_hole, masked_live,
+         sel_inact, sel_len, high) = _sel_masks(dev, s, L, p, row, active, K)
+=====CSTAIL=====
+        # ---- 22ao: signed consumed count, and shadow plants for the selection checker ----
+        expn = torch.minimum(p + 1, torch.full_like(p, K))
+        dn = L - expn
+        _acc_counts(dev, S_MLA_R, armed, dict(nsa_pos=active & (dn > 0), nsa_neg=active & (dn < 0)))
+        if layer == S.first_layer:
+            _hist(dev.nsahist, dn, active, armed)
+        _plants(dev, s, L, p, t, row, active, K, armed)
+=====HELPERS=====
+def _sel_masks(dev: Dev, s: torch.Tensor, L: torch.Tensor, p: torch.Tensor, row: torch.Tensor,
+               active: torch.Tensor, K: int):
+    """check_selected's predicates (extracted unchanged; 22ao) so the shadow plants run the same code."""
+    geo, ev = dev.geo, dev.ev
+    W0 = geo.W0
+    j = torch.arange(K, device=s.device, dtype=torch.int64)
+    live = j[None, :] < L[:, None]
+    valid = s >= 0
+    blk = torch.div(s.clamp(min=0), geo.bs, rounding_mode="floor")
+    bclamp = blk.clamp(0, geo.nb)
+    c0 = ev.col0[bclamp]
+    rr = row[:, None].expand_as(c0)
+    held = (c0 >= 0) & (c0 < ev.nb0[row][:, None]) & \
+        (ev.bt0[rr, c0.clamp(0, W0 - 1)] == blk) & (blk < geo.nb)
+    logical = c0 * geo.bs + torch.remainder(s.clamp(min=0), geo.bs)
+    act = active[:, None]
+    sel_foreign = act & live & valid & ~held
+    sel_causal = act & live & valid & held & (logical > p[:, None])
+    sel_hole = act & live & ~valid
+    masked_live = ~live & valid
+    sel_inact = ~act & live & valid & (blk != 0)
+    sel_len = active & (L > p + 1)
+    high = act & live & valid & held & (blk >= geo.high)
+    return (live, valid, blk, held, logical, act, sel_foreign, sel_causal, sel_hole, masked_live,
+            sel_inact, sel_len, high)
+
+
+def _hist(buf: torch.Tensor, d: torch.Tensor, mask: torch.Tensor, armed: torch.Tensor) -> None:
+    b = d.clamp(-(HBINS // 2), HBINS // 2) + HBINS // 2
+    buf.index_add_(0, b, mask.to(torch.int64) * armed)
+
+
+def _row_holds(ev: EV, geo: Geo, row: torch.Tensor, blk: torch.Tensor) -> torch.Tensor:
+    """Independent ground truth (22ao plants): does batch row `row` hold block `blk` in group 0?
+    A full scan of the row's expected table (columns < nb0), not the col0 map the checker uses."""
+    cols = torch.arange(geo.W0, device=blk.device, dtype=torch.int64)
+    tab = ev.bt0[row]
+    inrow = cols[None, :] < ev.nb0[row][:, None]
+    return ((tab == blk[:, None]) & inrow).any(dim=1)
+
+
+def _plants(dev: Dev, s: torch.Tensor, L: torch.Tensor, p: torch.Tensor, t: torch.Tensor,
+            row: torch.Tensor, active: torch.Tensor, K: int, armed: torch.Tensor) -> None:
+    """22ao shadow plants on guard-owned copies; never engine memory."""
+    geo, ev = dev.geo, dev.ev
+    W0, bs = geo.W0, geo.bs
+    plant = active & (torch.remainder(ev.step * 131 + t, PLANT_MOD) == 0)
+    j = torch.arange(K, device=s.device, dtype=torch.int64)
+    col0 = (j == 0)[None, :]
+    has0 = s[:, 0] >= 0
+    # (a) same-request future key at logical q = p + 1 (q's column exists in the row's table)
+    q = p + 1
+    cq = torch.div(q, bs, rounding_mode="floor")
+    blkq = ev.bt0[row, cq.clamp(0, W0 - 1)]
+    oka = plant & (L >= 1) & (cq < ev.nb0[row]) & (blkq > 0) & _row_holds(ev, geo, row, blkq)
+    sa = torch.where(col0 & oka[:, None], (blkq * bs + torch.remainder(q, bs))[:, None], s)
+    ma = _sel_masks(dev, sa, L, p, row, active, K)
+    deta = oka & ma[7][:, 0]
+    # (b) foreign: the next batch row's first block, when this row does not hold it
+    nr = ev.nrows.clamp(min=1)
+    orow = torch.remainder(row + 1, nr)
+    blkf = ev.bt0[orow, 0]
+    okb = plant & (L >= 1) & (ev.nrows > 1) & (blkf > 0) & (blkf < geo.nb) & \
+        ~_row_holds(ev, geo, row, blkf)
+    sb = torch.where(col0 & okb[:, None], (blkf * bs)[:, None], s)
+    mb = _sel_masks(dev, sb, L, p, row, active, K)
+    detb = okb & mb[6][:, 0]
+    # (c) over-long count on an exact dense row (L == p + 1 < K): planted L + 1
+    okc = plant & (L == p + 1) & (p + 1 < K)
+    Lc = torch.where(okc, L + 1, L)
+    mc = _sel_masks(dev, s, Lc, p, row, active, K)
+    detc = okc & mc[11]
+    # (d) unmask column L with column 0's valid slot (L < K)
+    okd = plant & (L >= 1) & (L < K) & has0
+    colL = j[None, :] == L[:, None]
+    sd = torch.where(colL & okd[:, None], s[:, 0:1].expand_as(s), s)
+    md = _sel_masks(dev, sd, L, p, row, active, K)
+    detd = okd & (md[9] & colL).any(dim=1)
+    _acc_counts(dev, S_MLA_R, armed, dict(pa_planted=oka, pa_det=deta, pb_planted=okb, pb_det=detb,
+                                          pc_planted=okc, pc_det=detc, pd_planted=okd, pd_det=detd))
+
+
+def check_len(dev: Dev, layer: int, rank: int, Lc: torch.Tensor, pos: torch.Tensor,
+              tok: torch.Tensor, width: int, record: bool) -> None:
+    """22ao: the consumed per-token causal length against the authoritative p + 1 (signed)."""
+    ev = dev.ev
+    R = dev.geo.R
+    armed = ev.armed
+    _acc_exec(dev, S_MLA_LEN, layer, armed)
+    Lv = Lc.to(torch.int64)
+    p = pos.to(torch.int64)
+    t = tok
+    row = rows_of(ev, t, R)
+    active = (t < ev.ntok) & (row < ev.nrows)
+    d = Lv - (p + 1)
+    _acc_counts(dev, S_MLA_LEN, armed, dict(len_checked=active, len_pos=active & (d > 0),
+                                             len_neg=active & (d < 0)))
+    if record:
+        _hist(dev.lenhist, d, active, armed)
+        first = active & (t == ev.qsl[row])
+        dense = ((p + 1) < int(width)).to(torch.int64)
+        rows = torch.stack([ev.step.expand_as(t), row, ev.tag[row], p, Lv, d, dense,
+                            ev.qsl[(row + 1).clamp(max=R)] - ev.qsl[row]], dim=1)
+        _append(dev.lrec, dev.nlrec, LCAP, first & (armed != 0), rows)
+=====HOOK=====
+def hook_mla_len(layer, per_token, num_tokens: int, width: int) -> None:
+    """22ao: the consumed per-token causal length (B12x sparse-MLA forward, before clamping)."""
+    if not _ok():
+        return
+    try:
+        n = int(num_tokens)
+        if n == 0:
+            return
+        L = _layer_idx(getattr(layer, "layer_name", "")) if not isinstance(layer, int) else layer
+        tok = torch.arange(n, device=per_token.device, dtype=torch.int64)
+        check_len(S.dev, L, S.rank, per_token[:n], S.pos_buf[:n], tok, int(width),
+                  record=(L == S.first_layer))
+    except Exception as exc:  # noqa: BLE001
+        _err("mla_len", exc)
+=====END=====

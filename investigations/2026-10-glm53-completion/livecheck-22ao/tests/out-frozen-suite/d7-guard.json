@@ -1,0 +1,486 @@
+{
+ "module": "vllm.mapguard_hooks (image)",
+ "module_sha256": "e2dcd964bcbe99789bdb2ed7aafa7111c42f484a1215b695e97922f1a1b28a96",
+ "kpool_file": "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py",
+ "kpool_sha256": "30ff8bdea2bfba185bf0bf5b591e7999d451baad12238761681f60d56b55b35f",
+ "guard_errors": 0,
+ "passed": 30,
+ "total": 30,
+ "secs": 2265.1,
+ "results": [
+  {
+   "test": "N0 hooked B1 call site installed (pre + post hooks, D7 writer)",
+   "ok": true,
+   "kp_file": "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py"
+  },
+  {
+   "test": "N1 B1 unaligned starts (residues 1-3, first/later rows, successive chunks, 4352 block boundary, decode rows ahead, padding): zero violations at idx_w_pf",
+   "ok": true,
+   "violations": {},
+   "guard_errors": 0,
+   "secs": 394.8
+  },
+  {
+   "test": "N2 every straddling pool exercised and byte-verified (s_events == s_verified == expected)",
+   "ok": true,
+   "expected": 5,
+   "counters": {
+    "s_events": 5,
+    "s_verified": 5,
+    "s_indet": null,
+    "s_unavail": null
+   }
+  },
+  {
+   "test": "N3 positive control: every aligned completing pool recomputed and byte-identical",
+   "ok": true,
+   "pc_checked": 3595,
+   "pc_mism": 0
+  },
+  {
+   "test": "N4 straddling-event log: one 'verified' row per straddling pool, positions as scheduled",
+   "ok": true,
+   "rows": 5
+  },
+  {
+   "test": "N5 spec decode rows / padding tokens: no D7 outcome, no slot flag (checked tokens = real prefill)",
+   "ok": true
+  },
+  {
+   "test": "O1 straddling records == independent plain-torch pooling of own tokens (interp conversions)",
+   "ok": true,
+   "straddles": 5,
+   "bad": {
+    "A": [],
+    "B": [],
+    "C": [],
+    "D": [],
+    "E": []
+   }
+  },
+  {
+   "test": "O2 oracle compress (engine kernel, interpreter) == plain-torch reference on straddling members",
+   "ok": true
+  },
+  {
+   "test": "N6 aligned-only schedule: no straddling event, positive control clean, no violation",
+   "ok": true,
+   "counters": {
+    "exec": 2,
+    "armed": 2,
+    "checked": 4500,
+    "written": 1125,
+    "pc_checked": 1125
+   }
+  },
+  {
+   "test": "F1 missing repaired pool (writer skips the straddling write) -> s_missing",
+   "ok": true,
+   "violations": {
+    "s_missing": 1
+   },
+   "s": {
+    "s_events": 1,
+    "s_verified": null,
+    "s_missing": 1,
+    "s_mism": null,
+    "s_unavail": null
+   },
+   "flags": [
+    "smiss"
+   ],
+   "outcomes": [
+    4
+   ],
+   "n_bsnap": 1
+  },
+  {
+   "test": "F2 foreign keys (writer reads another request's tail ring) -> s_mism",
+   "ok": true,
+   "violations": {
+    "s_mism": 1
+   },
+   "s": {
+    "s_events": 1,
+    "s_verified": null,
+    "s_missing": null,
+    "s_mism": 1,
+    "s_unavail": null
+   },
+   "flags": [
+    "smism"
+   ],
+   "outcomes": [
+    5
+   ],
+   "n_bsnap": 1
+  },
+  {
+   "test": "F3a stale keys, same request (old ring contents, position - 8) -> s_mism",
+   "ok": true,
+   "violations": {
+    "s_mism": 1
+   },
+   "s": {
+    "s_events": 1,
+    "s_verified": null,
+    "s_missing": null,
+    "s_mism": 1,
+    "s_unavail": null
+   },
+   "flags": [
+    "smism"
+   ],
+   "outcomes": [
+    5
+   ],
+   "n_bsnap": 1
+  },
+  {
+   "test": "F3b stale keys, same request (earlier position's key in the member's slot) -> s_mism",
+   "ok": true,
+   "violations": {
+    "s_mism": 1
+   },
+   "s": {
+    "s_events": 1,
+    "s_verified": null,
+    "s_missing": null,
+    "s_mism": 1,
+    "s_unavail": null
+   },
+   "flags": [
+    "smism"
+   ],
+   "outcomes": [
+    5
+   ],
+   "n_bsnap": 1
+  },
+  {
+   "test": "F4 incorrect logical positions given to the writer (shift +1) -> s_mism/s_missing",
+   "ok": true,
+   "violations": {
+    "s_mism": 1
+   },
+   "s": {
+    "s_events": 1,
+    "s_verified": null,
+    "s_missing": null,
+    "s_mism": 1,
+    "s_unavail": null
+   },
+   "flags": [
+    "smism"
+   ],
+   "outcomes": [
+    5
+   ],
+   "n_bsnap": 1
+  },
+  {
+   "test": "F4 incorrect logical positions given to the writer (shift -1) -> s_mism/s_missing",
+   "ok": true,
+   "violations": {
+    "s_mism": 1
+   },
+   "s": {
+    "s_events": 1,
+    "s_verified": null,
+    "s_missing": null,
+    "s_mism": 1,
+    "s_unavail": null
+   },
+   "flags": [
+    "smism"
+   ],
+   "outcomes": [
+    5
+   ],
+   "n_bsnap": 1
+  },
+  {
+   "test": "F4 incorrect logical positions given to the writer (shift +4) -> s_mism/s_missing",
+   "ok": true,
+   "violations": {
+    "s_mism": 1
+   },
+   "s": {
+    "s_events": 1,
+    "s_verified": null,
+    "s_missing": null,
+    "s_mism": 1,
+    "s_unavail": null
+   },
+   "flags": [
+    "smism"
+   ],
+   "outcomes": [
+    5
+   ],
+   "n_bsnap": 1
+  },
+  {
+   "test": "F5a no ring for the call (first row) -> d7_fallback + missing_pred + s_missing",
+   "ok": true,
+   "violations": {
+    "missing_pred": 1,
+    "s_missing": 1,
+    "d7_fallback": 1
+   },
+   "s": {
+    "s_events": 1,
+    "s_verified": null,
+    "s_missing": 1,
+    "s_mism": null,
+    "s_unavail": null
+   },
+   "flags": [
+    "pred",
+    "smiss",
+    "fallback"
+   ],
+   "outcomes": [
+    4,
+    6
+   ],
+   "n_bsnap": 1
+  },
+  {
+   "test": "F5b no ring for the call (later row: B0 cross-request pooling) -> d7_fallback + pool_cross + s_mism",
+   "ok": true,
+   "violations": {
+    "pool_cross": 1,
+    "s_mism": 1,
+    "d7_fallback": 1
+   },
+   "s": {
+    "s_events": 1,
+    "s_verified": null,
+    "s_missing": null,
+    "s_mism": 1,
+    "s_unavail": null
+   },
+   "flags": [
+    "pcross",
+    "smism",
+    "fallback"
+   ],
+   "outcomes": [
+    5,
+    6
+   ],
+   "n_bsnap": 1
+  },
+  {
+   "test": "F5c VLLM_KPOOL_SKIP_TAIL_CACHE=1 at the call site -> d7_fallback + s_missing",
+   "ok": true,
+   "violations": {
+    "missing_pred": 1,
+    "s_missing": 1,
+    "d7_fallback": 1
+   },
+   "s": {
+    "s_events": 1,
+    "s_verified": null,
+    "s_missing": 1,
+    "s_mism": null,
+    "s_unavail": null
+   },
+   "flags": [
+    "pred",
+    "smiss",
+    "fallback"
+   ],
+   "outcomes": [
+    4,
+    6
+   ],
+   "n_bsnap": 1
+  },
+  {
+   "test": "F5d row without a tail slot (null tail block) -> d7_fallback (row-level B0 rule)",
+   "ok": true,
+   "counters": {
+    "d7_fallback": 1,
+    "missing_pred": 1,
+    "s_missing": 1,
+    "s_mism": null
+   }
+  },
+  {
+   "test": "F6a B0's writer behind B1's call site (ring passed, first row) -> s_missing by bytes alone",
+   "ok": true,
+   "violations": {
+    "s_missing": 1
+   },
+   "s": {
+    "s_events": 1,
+    "s_verified": null,
+    "s_missing": 1,
+    "s_mism": null,
+    "s_unavail": null
+   },
+   "flags": [
+    "smiss"
+   ],
+   "outcomes": [
+    4
+   ],
+   "n_bsnap": 1
+  },
+  {
+   "test": "F6b B0's writer behind B1's call site (later row) -> s_mism (cross-request) by bytes alone",
+   "ok": true,
+   "violations": {
+    "s_mism": 1
+   },
+   "s": {
+    "s_events": 1,
+    "s_verified": null,
+    "s_missing": null,
+    "s_mism": 1,
+    "s_unavail": null
+   },
+   "flags": [
+    "smism"
+   ],
+   "outcomes": [
+    5
+   ],
+   "n_bsnap": 1
+  },
+  {
+   "test": "P1 unfaithful oracle (ape x1.01): aligned pools disagree (pc_mism) -> byte checks INVALID, straddling mismatches NOT counted as violations",
+   "ok": true,
+   "pc_mism": 894,
+   "s_mism": 1,
+   "assess": {
+    "violations": {},
+    "invalid": [
+     "rank 0: positive control failed (pc_mism 894 of 899 aligned pools): straddling byte checks INVALID"
+    ],
+    "notes": [
+     "r0.idx_w_pf.s_mism = 1 reported, not counted (byte oracle not validated)"
+    ],
+    "pc_failed": true
+   },
+   "win": {
+    "idx_w_pf": {
+     "exec": 2,
+     "armed": 2,
+     "checked": 3600,
+     "written": 900,
+     "s_events": 1,
+     "s_mism": 1,
+     "pc_checked": 899,
+     "pc_mism": 894
+    }
+   }
+  },
+  {
+   "test": "U1 straddling member not in the shadow (previous chunk unarmed) -> s_unavail, no violation",
+   "ok": true,
+   "counters": {
+    "exec": 2,
+    "armed": 1,
+    "checked": 555,
+    "written": 139,
+    "s_events": 1,
+    "s_unavail": 1,
+    "pc_checked": 138
+   }
+  },
+  {
+   "test": "U2 shadow slot collision (tags equal mod SH): tag check -> s_unavail, never a false violation",
+   "ok": true,
+   "counters": {
+    "exec": 2,
+    "armed": 2,
+    "checked": 4645,
+    "written": 1161,
+    "s_events": 1,
+    "s_unavail": 1,
+    "pc_checked": 1160
+   }
+  },
+  {
+   "test": "G1 new hooks: no host-sync op (.item/.tolist/nonzero/bool-index/cpu/numpy/...)",
+   "ok": true,
+   "hits": []
+  },
+  {
+   "test": "G2 observe-only: index-K cache and tail ring byte-identical with the hooks on and off (unaligned first and later rows)",
+   "ok": true,
+   "nbytes": 6893568
+  },
+  {
+   "test": "A6 exercised straddling events: counted once per (step, request, position), only when every owned layer verified it (indeterminate layers allowed if one verified)",
+   "ok": true,
+   "ev": {
+    "events": 122,
+    "exercised": 120,
+    "by_outcome": {
+     "verified": 121,
+     "indet": 1
+    }
+   }
+  },
+  {
+   "test": "A7 positive-control rule: s_mism with a clean control -> VIOLATION; with pc_mism > 0 -> INVALID (not violation); d7_fallback stays a VIOLATION; legacy hook calls -> INVALID",
+   "ok": true,
+   "clean": {
+    "violations": {},
+    "invalid": [],
+    "notes": [],
+    "pc_failed": false
+   },
+   "bad": {
+    "violations": {
+     "r0.idx_w_pf.s_mism": 1
+    },
+    "invalid": [],
+    "notes": [],
+    "pc_failed": false
+   },
+   "pcf": {
+    "violations": {},
+    "invalid": [
+     "rank 0: positive control failed (pc_mism 2 of 50000 aligned pools): straddling byte checks INVALID"
+    ],
+    "notes": [
+     "r0.idx_w_pf.s_mism = 1 reported, not counted (byte oracle not validated)"
+    ],
+    "pc_failed": true
+   },
+   "fb": {
+    "violations": {
+     "r0.idx_w_pf.d7_fallback": 1
+    },
+    "invalid": [
+     "rank 0: positive control failed (pc_mism 2 of 50000 aligned pools): straddling byte checks INVALID"
+    ],
+    "notes": [],
+    "pc_failed": true
+   },
+   "leg": {
+    "violations": {},
+    "invalid": [
+     "rank 0: 3 prefill-hook calls without the writer's ring status"
+    ],
+    "notes": [],
+    "pc_failed": false
+   }
+  },
+  {
+   "test": "A8 new coverage minimums: < 100 exercised straddling events or < 10,000 positive-control pools -> INCOMPLETE (named)",
+   "ok": true,
+   "inc": [
+    "C13_d7_straddle_events"
+   ],
+   "pc": [
+    "C14_d7_positive_control"
+   ]
+  }
+ ]
+}

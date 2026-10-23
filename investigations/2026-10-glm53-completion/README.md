@@ -33,6 +33,10 @@ difference. Quantization is held fixed.
   - A CPU reproduction of the drafter's slot mapping on the stock 0.9.1 image found no violation in the exercised
     states.
   - No frozen reading changes.
+- **Live causal-length check, frozen and not run (amendment 22ao; [`livecheck-22ao/`](livecheck-22ao/PROPOSAL.md)).**
+  Pre-registered after independent review. It would measure, on stock 0.9.1 and stock 0.9.1 + port 01 (PR #7), whether
+  speculative verify rows consume per-token causal lengths that differ from p + 1, and whether any consumed entry
+  falls outside the row's causal range. Ceiling 2.0 GPU-hours; it needs the operator's authorization.
 - **Upstream.** The verified corrections were submitted on 2026-10-22, each with a reproduction and its verification:
   - tpurtell's engine: [#7](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/7) (D2),
     [#8](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/8) (D1),

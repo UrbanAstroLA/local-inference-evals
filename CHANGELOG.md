@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-10-23, live causal-length check frozen (completion investigation, amendment 22ao)
+
+No run is added; no GPU use.
+
+- **New `livecheck-22ao/`, the frozen package:**
+  - `PROPOSAL.md` (the pre-registration) and `FREEZE.md`;
+  - the image build inputs: Dockerfiles, hooked files, port 01;
+  - the amended guard and its builder;
+  - the client, runner and analysis;
+  - the CPU tests and their outputs;
+  - `SHA256SUMS`.
+
+  The GPQA panel fixture is withheld (hash in `RAW-SHA256SUMS-livecheck-22ao.txt`).
+- **`PLAN.md`:** amendment 22ao (adopts the assessment of 22an).
+- **Investigation `README.md`:** a Status entry.
+- **`LEDGER.md`**.
+
 ## 2026-10-22, review of the reconnaissance (completion investigation, amendment 22an)
 
 No run is added; no GPU use.

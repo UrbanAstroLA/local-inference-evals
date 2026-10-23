@@ -1,0 +1,4 @@
+image sha256:4d7bd73e6f2ef6485289dcb5bcb2f2a65f1846a5959cde7cbd9c275471c72e16 guard e2dcd964bcbe9978
+test_mapguard    rc=1   27/28 passed in 1553.0 s -> /o/cpu-results.json
+test_d7_guard    rc=0   30/30 passed in 2265.1 s, guard errors 0 -> /o/d7-guard.json
+a2_regression    rc=0   }

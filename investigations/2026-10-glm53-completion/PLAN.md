@@ -2868,3 +2868,58 @@ operator; no GPU use).**
       measured on a stock image.
 - **Handoff documents** are aligned with the published evidence, preserving every frozen reading.
 - No GPU-hours added (cumulative 128.31).
+
+**Amendment 22ao (2026-10-23; adopts the independent assessment of 22an, relayed by the operator; live-check package
+frozen before any data; no GPU use).**
+- **Decision:**
+  - the causal-length finding (22an) gets first measurement priority;
+  - a bounded live check is frozen as pre-registration: `livecheck-22ao/PROPOSAL.md`, package hashes in
+    `livecheck-22ao/SHA256SUMS`;
+  - it is not authorized: the run needs the operator's authorization at ≤ 2.0 occupied GPU-hours, one attempt;
+  - the MoE-plan replay stays separately bounded;
+  - the larger D2 and behavioural allocations are deferred until this result is reviewed.
+- **Adopted from the assessment:**
+  - three evidence levels reported separately: metadata (consumed length against p + 1, signed), selection (consumed
+    entries mapped through the request's own blocks to logical positions; a key k violates causality when k ≥ p + 1),
+    computation (only after a validated selection finding);
+  - slot-reuse and shape coverage, with steady state and drain reported separately;
+  - outcome classes INCOMPLETE / POSITIVE FINDING / CLEAN WITHIN COVERAGE. Stock's known D2 tail-ring violations
+    are findings, not instrument failures;
+  - in-session positive controls for the selection checker itself;
+  - observer checks: async scheduling on, graph modes, blocked host waits;
+  - the decision table for the live result;
+  - a 0.9.1 result does not transfer to 0.7.0 (DCP2 uses rank-local lengths).
+- **Arms:**
+  - A: stock 0.9.1 `a9e985c0` + observe-only guard;
+  - C: stock 0.9.1 + port 01 (tpurtell PR #7) + guard.
+
+  Both images are built locally from the stock image with no network. Port gate 01: 3 / 3 on C; stock omissions
+  3 / 3 on A.
+- **Workload:**
+  - the 12-question panel × 2 fresh seeds (72201-72224) = 24 requests;
+  - exactly 8 outstanding with immediate backfill;
+  - 8 long requests (6,144 down to 2,560 tokens) first, then 16 short (768);
+  - natural stopping, temperature 1.0, top_p 0.95.
+- **Required exposure per arm** (engine-side records):
+  - 300 dense verify rows after a rejection;
+  - 100 after an all-accepted step;
+  - 300 clamped verify rows;
+  - 10 row recycles, 5 of them shorter-for-longer;
+  - 20 FULL replays at each padded size 4-32;
+  - 20 shape transitions.
+
+  A clean result is reported with the rule-of-three 95% bound.
+- **CPU tests before freezing** (`livecheck-22ao/tests/out/`):
+  - the 22ao guard tests, 10 / 10: the signed length site against independent truth for exact, over-estimated and
+    under-estimated lengths; all four plant classes detected at every planted token; plants leave the engine
+    counters unchanged;
+  - the frozen B1 guard suite on the amended module: `test_mapguard` 27 / 28 (N1 fails only because the frozen rig
+    does not drive the new site; every frozen-site count is identical), `test_d7_guard` 30 / 30 identical, a2
+    regression identical;
+  - runner tests 17 / 17: refusals, a real DRY_RUN, a mock session (exactly 8 outstanding, 24 / 24 seeds) and a
+    watchdog stop.
+- **Changes from the review draft:**
+  - level 3 is not attempted in-session;
+  - the port-01 image is validated by its gate rather than by file equality with B1, whose copies also carry port 05;
+  - a blocked-wait counter was added.
+- No GPU-hours added (cumulative 128.31).

@@ -687,6 +687,17 @@ What was asked, run, found, corrected and withdrawn, in date order.
     so the tail-ring correction is not a single isolated change. Not measured.
 - No GPU-hours added (cumulative 128.31).
 
+**2026-10-23. A live causal-length check, frozen before data (amendment 22ao).**
+- **Why first:** on review, the causal-length source for speculative verify rows (22an, read in code) gets first
+  measurement priority. It is a concrete path from scheduling metadata to attention. It is not shown to change
+  outputs, and it is not an explanation of the completion difference.
+- **The design**, pre-registered: stock 0.9.1 against stock 0.9.1 + port 01. It measures:
+  - the consumed length against p + 1 (signed);
+  - whether any consumed entry falls outside the row's causal range;
+  - with required coverage of rejections, recycled rows and padded shapes, in-session checks of the checker itself,
+    and three outcome classes (INCOMPLETE, POSITIVE FINDING, CLEAN WITHIN COVERAGE).
+- **Not run:** ceiling 2.0 GPU-hours, pending authorization. [Package](investigations/2026-10-glm53-completion/livecheck-22ao/PROPOSAL.md).
+
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough
   qualification. They also said the D7 path "cannot run" where the basis is a reconstruction. These are reworded in the

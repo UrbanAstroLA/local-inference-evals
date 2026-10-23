@@ -1,0 +1,21 @@
+PASS R1_no_budget  REFUSED: set APPROVED_GPU_H (authorized ceiling, at most 2.0)
+PASS R2_over_ceiling  REFUSED: APPROVED_GPU_H=2.5 outside (0, 2.0]
+PASS R3_zero  REFUSED: APPROVED_GPU_H=0 outside (0, 2.0]
+PASS R4_second_attempt  REFUSED: 1 cost lines already recorded for livecheck-22ao (one attempt only)
+PASS R5_run_dir_exists  ABORT: <scratch>/22ao-runner-tests/pkg/run-1 exists (one attempt only)
+PASS R6_hash_mismatch  ABORT: frozen hashes differ
+PASS R7_image_pin  ABORT: local/glm53-v091-22ao-a:local is 'sha256:dd51ed7315ae6896602f9724cfc512382f5e97b38af9f37f70420c05163c420e', expected 'sha256:0000ed7315ae6896602f9724cfc512382f5e97b38af9f37f70420c05163c420e'
+PASS R8_fixture_missing  ABORT: panel fixture missing
+PASS D1_dry_run  DRY_RUN: budget gate, attempt count, frozen hashes, image pins and fixture passed
+PASS D1b_dry_run_wrote_nothing  
+peak 8 served 24 requests 24
+PASS M1_mock_arm_a  peak 8 served 24
+peak 8 served 24 requests 24
+PASS M1_mock_arm_c  peak 8 served 24
+PASS M2_two_cost_lines  lines 2
+PASS M3_analysis_runs_incomplete_without_guard  
+PASS W1_watchdog_fired  
+PASS W2_cost_lines_after_watchdog  lines 2
+PASS W3_no_mock_server_left  
+done 2026-10-23T07:24:29Z
+failures: 0
