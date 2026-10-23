@@ -1,0 +1,155 @@
+{
+ "schema": "p3-moe-plan-eq/1",
+ "engine": "v070",
+ "mode": "dry",
+ "status": "error",
+ "stopped_reason": null,
+ "started_utc": "2026-10-23T19:52:42Z",
+ "argv": [
+  "--engine",
+  "v070",
+  "--out",
+  "/t/out-dry-wrongimage.json",
+  "--dry"
+ ],
+ "expected": {
+  "image": "sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629",
+  "b12x_commit": "fe054789069579e19ae5ec21f880b397bcf6575b",
+  "exl3_sha256": "0560a6caedd3bb0198c04cd5a1816c92872c9b4c5e2b059c54110aaf9d59d1ad"
+ },
+ "harness_sha256": "15ce45d8e0ab5caff09016f8f11d3c6c3e26b51499a9b22438b987a5d130b5a0",
+ "layers": [
+  3,
+  23,
+  44
+ ],
+ "model_dir": "/model-repo/snapshots/0490d2f708b12145f6516555ab066aaeb401cd21",
+ "reuse": {
+  "reused_from_image": [
+   "exl3.Exl3Config.from_config + maybe_update_config (tensor_storage, per-projection bitrates)",
+   "exl3.Exl3MoEMethod.__init__ / create_weights (parameters, TP slice dims, EP global->local map)",
+   "exl3._exl3_moe_weight_loader via Exl3MoEParameter.weight_loader (TP narrowing / EP mapping)",
+   "exl3.Exl3MoEMethod.process_weights_after_loading -> _prepare_projection_mixed_weights -> api.plan_weights / api.prepare_weights (+ EP route map)",
+   "exl3.Exl3MoEMethod._rank_sliced_runtime (decode + prefill plans, Caps, scratch, output buffers, runtime cache)",
+   "exl3.Exl3MoEMethod._bind_rank_sliced + runtime['api'].run (the plan invocation used by _apply_rank_sliced)",
+   "exl3.Exl3MoEMethod.apply (served dispatch, used as a cross-check on every fixture)",
+   "vllm fused_moe.expert_map_manager.determine_expert_map (EP linear placement)",
+   "vllm fused_moe.MoEActivation.SILU"
+  ],
+  "reimplemented_in_harness": [
+   "checkpoint iteration (safetensors index -> (param, expert_id, shard_id)); mirrors glm5next load_weights + build_expert_params_mapping; non-local EP experts are skipped before the read (the served loader returns False for them)",
+   "a minimal RoutedExperts stand-in (nn.Module with the attributes exl3 reads) and the moe/parallel config namespaces",
+   "get_current_vllm_config_or_none patched in the exl3 module during create_weights only (scheduler max_num_batched_tokens=2048, max_num_seqs=16, runner_type=generate)",
+   "plan selection: the 4 lines of _apply_rank_sliced that bind+run a plan are called with an explicitly chosen plan (decode or prefill) instead of the m-based branch",
+   "decode plan on m>32: rows split into <=32-row chunks, each bound/run through the decode plan, outputs concatenated (mirrors _apply_rank_sliced's tiling loop)",
+   "MAX_M=16 check: _rank_sliced_runtime called under VLLM_EXL3_TRELLIS_MAX_M=16 and VLLM_EXL3_PREFILL_TRELLIS=0 (decode plan built identically; the prefill arena is not duplicated)",
+   "synthetic inputs (fixtures), comparisons, digests"
+  ]
+ },
+ "served_log": {
+  "file": "<gpqa-runs>/glm53-flash-exl3-k3.25@tpurtell+ps.server.log",
+  "sha256": "30e9e9da2a19b4c2d1c54433cccbdd78a11fdbaf89fbce39881946f2a75bcd6f",
+  "slice": "ep2r0",
+  "plan_line": 238,
+  "prefill_arena_mib": 334.8,
+  "membership": {
+   "3": [
+    [
+     3,
+     126,
+     109,
+     99
+    ],
+    [
+     4,
+     18,
+     35,
+     45
+    ]
+   ],
+   "23": [
+    [
+     3,
+     131,
+     113,
+     94
+    ],
+    [
+     4,
+     13,
+     31,
+     50
+    ]
+   ],
+   "44": [
+    [
+     3,
+     120,
+     104,
+     88
+    ],
+    [
+     4,
+     24,
+     40,
+     56
+    ]
+   ]
+  },
+  "membership_lines": {
+   "3": 117,
+   "23": 159,
+   "44": 205
+  }
+ },
+ "served_env_expected": {
+  "VLLM_EXL3_TRELLIS_MIN_M": "1",
+  "VLLM_EXL3_TRELLIS_MAX_M": "32",
+  "VLLM_EXL3_TRELLIS_BLOCK_M": "8",
+  "VLLM_EXL3_PREFILL_TRELLIS": "1",
+  "VLLM_EXL3_PREFILL_BLOCK_M": "64",
+  "VLLM_EXL3_PREFILL_CAPACITY": "1024",
+  "B12X_EXL3_BF16_EPILOGUE": "0",
+  "B12X_EXL3_BF16_GEMV": "1"
+ },
+ "timings": {},
+ "slices": {},
+ "errors": [
+  "exl3.py sha256 3b4ca47cb1168bffebcfe3cf1db48daf86691c140cbf40f9c1f3aa6ad6a444d9 does not match engine v070; wrong image?"
+ ],
+ "env": {
+  "VLLM_EXL3_TRELLIS_MIN_M": "1",
+  "VLLM_EXL3_TRELLIS_MAX_M": "32",
+  "VLLM_EXL3_TRELLIS_BLOCK_M": "8",
+  "VLLM_EXL3_PREFILL_TRELLIS": "1",
+  "VLLM_EXL3_PREFILL_BLOCK_M": "64",
+  "VLLM_EXL3_PREFILL_CAPACITY": "1024",
+  "B12X_EXL3_BF16_EPILOGUE": "0",
+  "B12X_EXL3_BF16_GEMV": "1",
+  "VLLM_EXL3_PREFILL_CHUNK": null,
+  "CUDA_VISIBLE_DEVICES": "",
+  "PYTORCH_CUDA_ALLOC_CONF": null,
+  "CUDA_LAUNCH_BLOCKING": null,
+  "CUDA_MODULE_LOADING": "LAZY",
+  "B12X_COMPILE_CACHE_DIR": null,
+  "HOME": "/tmp"
+ },
+ "env_matches_served": true,
+ "env_mismatch": {},
+ "code_hashes": {
+  "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/quantization/exl3.py": "3b4ca47cb1168bffebcfe3cf1db48daf86691c140cbf40f9c1f3aa6ad6a444d9",
+  "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/fused_moe/expert_map_manager.py": "308c00f63fcb6f44518ec3a56d8f902c7bba75928c2e3aea30fbe1f3f473973b",
+  "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/fused_moe/activation.py": "907f35cd47dc6642a52e2f289ec64d8c50925664a277337835c8f18b927d7764",
+  "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/fused_moe/fused_moe_method_base.py": "ce79bed3cc0fa5d37d51a80b96bbe9c297e87a24525b4e0343934bb624f258e1",
+  "/usr/local/lib/python3.12/dist-packages/vllm/transformers_utils/repo_utils.py": "5e2e9d45a79cdfe316d811d18b7b3edaa59cc7f9006fc26f33d45663d1662e06",
+  "/opt/b12x/b12x/moe/fused_moe/__init__.py": "f3221b40f3847d588a8e7f3eed260c8621f68709330fc2837326217f057477fb",
+  "/opt/b12x/b12x/moe/fused_moe/_impl.py": "5511938eee0612aaa578bbdc4fdd68363416797f97e6479948d5d7429ea252cd",
+  "/opt/b12x/b12x/moe/fused_moe/trellis.py": "20e4499a3c574df9f4b4ba92dfaef71e91ba0593a0b718c4992c1d1bc19b9be0",
+  "/opt/b12x/b12x/moe/_shared/kernels/w4a16/mixed_trellis.py": "bd1538b965a1b12ec24dbb0975b7e8334e7b011e39936648af1f868e84d12003",
+  "/opt/b12x/b12x/moe/_shared/kernels/w4a16/kernel.py": "49479e2da5578093cea1612463e1bb306bac4d093369f7bc0a96a47332f76b9b",
+  "/opt/b12x/b12x/_lib/compiler.py": "b6667e1c6c27289a91a3d9f4e2c89a65836b7b65b5b369629d058bc2e9bcf7cc"
+ },
+ "exl3_sha256_matches_engine": false,
+ "updated_utc": "2026-10-23T19:52:42Z",
+ "elapsed_s": 0.0
+}

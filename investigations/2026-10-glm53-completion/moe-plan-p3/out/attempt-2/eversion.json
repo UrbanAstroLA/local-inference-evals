@@ -1,0 +1,156 @@
+{
+ "schema": "p3-eversion/1",
+ "effect": "E-version (B12x fe054789 vs 7fcc094e; same slice, same plan type)",
+ "inputs": {
+  "v091": "v091.json",
+  "v070": "v070.json"
+ },
+ "engines": {
+  "v091": {
+   "status": "complete",
+   "mode": "full"
+  },
+  "v070": {
+   "status": "complete",
+   "mode": "full"
+  }
+ },
+ "slices": {
+  "tp2r0": {
+   "n_common": 54,
+   "n_input_mismatch": 0,
+   "plan_args": {
+    "v091": {
+     "decode_plan": {
+      "max_tokens": 32,
+      "num_topk": 8,
+      "route_num_experts": 0,
+      "w4a16_block_size_m": 8,
+      "full_rotation_output_dtype": "torch.float32",
+      "mixed_trellis_route_id_dtypes": "(torch.int64,)",
+      "decode_config": "MoeDecodeConfig(backend='w4a16', route_planner='internal', max_active_clusters=None, dynamic_tile_m=None, dynamic_route_mode=None, w4a16_route_mode='packed', nv",
+      "swiglu_limit": null
+     },
+     "prefill_plan": {
+      "max_tokens": 1024,
+      "num_topk": 8,
+      "route_num_experts": 0,
+      "w4a16_block_size_m": 64,
+      "full_rotation_output_dtype": "torch.float32",
+      "mixed_trellis_route_id_dtypes": "(torch.int64,)",
+      "decode_config": "MoeDecodeConfig(backend='w4a16', route_planner='internal', max_active_clusters=None, dynamic_tile_m=None, dynamic_route_mode=None, w4a16_route_mode='packed', nv",
+      "swiglu_limit": null
+     }
+    },
+    "v070": {
+     "decode_plan": {
+      "max_tokens": 32,
+      "num_topk": 8,
+      "route_num_experts": 0,
+      "w4a16_block_size_m": 8,
+      "full_rotation_output_dtype": "torch.float32",
+      "mixed_trellis_route_id_dtypes": "(torch.int64,)",
+      "decode_config": null,
+      "swiglu_limit": null
+     },
+     "prefill_plan": {
+      "max_tokens": 1024,
+      "num_topk": 8,
+      "route_num_experts": 0,
+      "w4a16_block_size_m": 64,
+      "full_rotation_output_dtype": "torch.float32",
+      "mixed_trellis_route_id_dtypes": "(torch.int64,)",
+      "decode_config": null,
+      "swiglu_limit": null
+     }
+    }
+   },
+   "plans": {
+    "decode": {
+     "rows_compared": 1584,
+     "row_bitequal_frac": 1.0,
+     "n_fixtures_differ": 0,
+     "fixtures_differ": [],
+     "max_abs": null,
+     "max_rel_l2": null
+    },
+    "prefill": {
+     "rows_compared": 1584,
+     "row_bitequal_frac": 1.0,
+     "n_fixtures_differ": 0,
+     "fixtures_differ": [],
+     "max_abs": null,
+     "max_rel_l2": null
+    }
+   }
+  },
+  "ep2r0": {
+   "n_common": 54,
+   "n_input_mismatch": 0,
+   "plan_args": {
+    "v091": {
+     "decode_plan": {
+      "max_tokens": 32,
+      "num_topk": 8,
+      "route_num_experts": 288,
+      "w4a16_block_size_m": 8,
+      "full_rotation_output_dtype": "torch.float32",
+      "mixed_trellis_route_id_dtypes": "(torch.int64,)",
+      "decode_config": "MoeDecodeConfig(backend='w4a16', route_planner='internal', max_active_clusters=None, dynamic_tile_m=None, dynamic_route_mode=None, w4a16_route_mode='packed', nv",
+      "swiglu_limit": null
+     },
+     "prefill_plan": {
+      "max_tokens": 1024,
+      "num_topk": 8,
+      "route_num_experts": 288,
+      "w4a16_block_size_m": 64,
+      "full_rotation_output_dtype": "torch.float32",
+      "mixed_trellis_route_id_dtypes": "(torch.int64,)",
+      "decode_config": "MoeDecodeConfig(backend='w4a16', route_planner='internal', max_active_clusters=None, dynamic_tile_m=None, dynamic_route_mode=None, w4a16_route_mode='packed', nv",
+      "swiglu_limit": null
+     }
+    },
+    "v070": {
+     "decode_plan": {
+      "max_tokens": 32,
+      "num_topk": 8,
+      "route_num_experts": 288,
+      "w4a16_block_size_m": 8,
+      "full_rotation_output_dtype": "torch.float32",
+      "mixed_trellis_route_id_dtypes": "(torch.int64,)",
+      "decode_config": null,
+      "swiglu_limit": null
+     },
+     "prefill_plan": {
+      "max_tokens": 1024,
+      "num_topk": 8,
+      "route_num_experts": 288,
+      "w4a16_block_size_m": 64,
+      "full_rotation_output_dtype": "torch.float32",
+      "mixed_trellis_route_id_dtypes": "(torch.int64,)",
+      "decode_config": null,
+      "swiglu_limit": null
+     }
+    }
+   },
+   "plans": {
+    "decode": {
+     "rows_compared": 1584,
+     "row_bitequal_frac": 1.0,
+     "n_fixtures_differ": 0,
+     "fixtures_differ": [],
+     "max_abs": null,
+     "max_rel_l2": null
+    },
+    "prefill": {
+     "rows_compared": 1584,
+     "row_bitequal_frac": 1.0,
+     "n_fixtures_differ": 0,
+     "fixtures_differ": [],
+     "max_abs": null,
+     "max_rel_l2": null
+    }
+   }
+  }
+ }
+}

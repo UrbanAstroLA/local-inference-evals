@@ -3007,3 +3007,28 @@ pre-registered; 0.0022 GPU-hours).**
 - **Erratum (owned):** level 3's source reading cited the V1 runner for the zero-filled cache. The served runner is V2,
   which also zero-fills. Annotated in place; conclusion unchanged.
 - No GPU-hours added (cumulative 129.82).
+
+**Amendment 22as (2026-10-23; routed-expert plan comparison on synthetic inputs; 0.1458 GPU-hours).**
+- **Question:** on identical rows, do the decode-plan and prefill-plan MoE launches give different outputs?
+  - The decode plan is the exact-width launch 0.9.1 uses at 8 in flight (32 rows; K128/N128 at 10-32 rows).
+  - The prefill plan is the 1,024-wide launch 0.7.0 uses at 6-8 in flight (K64/N256).
+  - The protocol was approved by the operator before the run, after an independent assessment of the stopping rule.
+    It was not published before the run; `moe-plan-p3/PROTOCOL.md` is published with the results.
+- **Method:**
+  - Each stock image built its own rank-0 slice of layers 3, 23 and 44 through its served EXL3 code (0.9.1: TP2
+    half-intermediate; 0.7.0: EP2 experts 0-143), with both plans under the served environment. The planned arena
+    matches the served log.
+  - Input panel: 426 synthetic fixtures per layer covering shapes 1-48, three activation scales and heavy-tailed rows,
+    spread/concentrated expert routes, three routing-weight patterns, padding and two seeds.
+  - Positive controls, determinism repeats, a dispatch cross-check against `Exl3MoEMethod.apply`, and a
+    same-slice comparison across the two B12x versions.
+- **Results (both engines, all layers):**
+  - every plan is deterministic;
+  - the plans are bit-equal at m = 1 and 8 (same K64/N256 tile);
+  - at m = 16-48 nearly every row differs: bf16 relative L2 median 8.4e-4 (max 1.0e-3), fp32 about 2e-4. The size is
+    essentially independent of input scale, routing pattern, m and layer;
+  - controls, padding independence and dispatch checks pass;
+  - the B12x versions are bit-equal on all 1,584 compared rows.
+- **Not tested:** the EP2/TP2 cross-GPU reductions; captured inputs; CUDA-graph replay; the source mechanism of the
+  difference. Whether differences of this size affect generation is not measured.
+- GPU-hours 0.1458 (cumulative 129.97).

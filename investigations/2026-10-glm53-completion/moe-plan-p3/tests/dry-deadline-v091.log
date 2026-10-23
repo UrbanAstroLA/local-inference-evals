@@ -1,0 +1,4 @@
+WARNING 10-23 19:52:34 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+W1023 19:52:34.143000 1 torch/utils/cpp_extension.py:178] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+INFO 10-23 19:52:35 [exl3.py:727] EXL3 standard fused MoE enabled for glm5_next: projection tiers (3, 4) via b12x
+{"engine": "v091", "mode": "dry", "status": "partial", "stopped_reason": "soft_deadline", "elapsed_s": 12.2, "dry_selfcheck": true}

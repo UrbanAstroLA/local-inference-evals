@@ -1,0 +1,72 @@
+{
+ "schema": "p3-eversion/1",
+ "effect": "E-version (B12x fe054789 vs 7fcc094e; same slice, same plan type)",
+ "inputs": {
+  "v091": "out-dry-v091.json",
+  "v070": "out-dry-v070.json"
+ },
+ "engines": {
+  "v091": {
+   "status": "complete",
+   "mode": "dry"
+  },
+  "v070": {
+   "status": "complete",
+   "mode": "dry"
+  }
+ },
+ "slices": {
+  "tp2r0": {
+   "n_common": 54,
+   "n_input_mismatch": 0,
+   "plan_args": {
+    "v091": {},
+    "v070": {}
+   },
+   "plans": {
+    "decode": {
+     "rows_compared": 1584,
+     "row_bitequal_frac": 1.0,
+     "n_fixtures_differ": 0,
+     "fixtures_differ": [],
+     "max_abs": null,
+     "max_rel_l2": null
+    },
+    "prefill": {
+     "rows_compared": 1584,
+     "row_bitequal_frac": 1.0,
+     "n_fixtures_differ": 0,
+     "fixtures_differ": [],
+     "max_abs": null,
+     "max_rel_l2": null
+    }
+   }
+  },
+  "ep2r0": {
+   "n_common": 54,
+   "n_input_mismatch": 0,
+   "plan_args": {
+    "v091": {},
+    "v070": {}
+   },
+   "plans": {
+    "decode": {
+     "rows_compared": 1584,
+     "row_bitequal_frac": 1.0,
+     "n_fixtures_differ": 0,
+     "fixtures_differ": [],
+     "max_abs": null,
+     "max_rel_l2": null
+    },
+    "prefill": {
+     "rows_compared": 1584,
+     "row_bitequal_frac": 1.0,
+     "n_fixtures_differ": 0,
+     "fixtures_differ": [],
+     "max_abs": null,
+     "max_rel_l2": null
+    }
+   }
+  }
+ }
+}

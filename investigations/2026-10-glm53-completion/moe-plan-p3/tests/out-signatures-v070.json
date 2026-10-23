@@ -1,0 +1,402 @@
+{
+ "engine": "v070",
+ "checks": [
+  {
+   "name": "Exl3Config.from_config",
+   "ok": true,
+   "detail": "got=['config'] expected=['config']"
+  },
+  {
+   "name": "Exl3Config.maybe_update_config",
+   "ok": true,
+   "detail": "got=['self', 'model_name', 'hf_config', 'revision'] expected=['self', 'model_name', 'hf_config', 'revision']"
+  },
+  {
+   "name": "Exl3MoEMethod.__init__",
+   "ok": true,
+   "detail": "got=['self', 'quant_config', 'moe'] expected=['self', 'quant_config', 'moe']"
+  },
+  {
+   "name": "Exl3MoEMethod.create_weights",
+   "ok": true,
+   "detail": "got=['self', 'layer', 'num_experts', 'hidden_size', 'intermediate_size_per_partition', 'params_dtype', 'extra_weight_attrs'] expected=['self', 'layer', 'num_experts', 'hidden_size', 'intermediate_size_per_partition', 'params_dtype', 'extra_weight_attrs']"
+  },
+  {
+   "name": "Exl3MoEMethod.process_weights_after_loading",
+   "ok": true,
+   "detail": "got=['self', 'layer'] expected=['self', 'layer']"
+  },
+  {
+   "name": "Exl3MoEMethod._rank_sliced_runtime",
+   "ok": true,
+   "detail": "got=['self', 'layer', 'x', 'topk_ids'] expected=['self', 'layer', 'x', 'topk_ids']"
+  },
+  {
+   "name": "Exl3MoEMethod._bind_rank_sliced",
+   "ok": true,
+   "detail": "got=['runtime', 'layer', 'plan', 'scratch', 'output', 'x', 'topk_weights', 'topk_ids'] expected=['runtime', 'layer', 'plan', 'scratch', 'output', 'x', 'topk_weights', 'topk_ids']"
+  },
+  {
+   "name": "_bind_rank_sliced is staticmethod",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "Exl3MoEMethod._apply_rank_sliced",
+   "ok": true,
+   "detail": "got=['self', 'layer', 'x', 'topk_weights', 'topk_ids'] expected=['self', 'layer', 'x', 'topk_weights', 'topk_ids']"
+  },
+  {
+   "name": "Exl3MoEMethod.apply",
+   "ok": true,
+   "detail": "got=['self', 'layer', 'x', 'topk_weights', 'topk_ids', 'shared_experts', 'shared_experts_input'] expected=['self', 'layer', 'x', 'topk_weights', 'topk_ids', 'shared_experts', 'shared_experts_input']"
+  },
+  {
+   "name": "exl3._exl3_moe_weight_loader",
+   "ok": true,
+   "detail": "got=['param', 'loaded_weight', 'weight_name', 'shard_id', 'expert_id', 'return_success'] expected=['param', 'loaded_weight', 'weight_name', 'shard_id', 'expert_id', 'return_success']"
+  },
+  {
+   "name": "Exl3MoEParameter.map_global_expert_id",
+   "ok": true,
+   "detail": "got=['self', 'expert_id'] expected=['self', 'expert_id']"
+  },
+  {
+   "name": "exl3._load_b12x_fused_moe",
+   "ok": true,
+   "detail": "got=[] expected=[]"
+  },
+  {
+   "name": "exl3 module attr get_current_vllm_config_or_none",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "exl3 module attr _SPARKINFER_FUSED_MOE_API",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "exl3 module attr _RANK_SLICED_RUNTIMES",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "vllm.model_executor.parameter.get_tensor_model_parallel_rank (patched during create_weights)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "vllm.model_executor.parameter.get_tensor_model_parallel_world_size (patched during create_weights)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "BasevLLMParameter.__init__ reads TP rank/size via module globals",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "determine_expert_map",
+   "ok": true,
+   "detail": "got=['ep_size', 'ep_rank', 'global_num_experts', 'expert_placement_strategy', 'num_fused_shared_experts', 'return_expert_mask'] expected=['ep_size', 'ep_rank', 'global_num_experts', 'expert_placement_strategy', 'num_fused_shared_experts', 'return_expert_mask']"
+  },
+  {
+   "name": "determine_expert_map(2,0,288,linear) = experts 0..143",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "MoEActivation.SILU value",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "b12x api.plan_weights callable",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "b12x api.prepare_weights callable",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "b12x api.Caps callable",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "b12x api.plan callable",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "b12x api.bind callable",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "b12x api.run callable",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "MixedTrellisCompileResult launch fields",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "name": "TPMoEFP4Binding.mixed_trellis_binding",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "TPMoEScratchPlan caps/_mixed_trellis_launches",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "_trellis_exact_launch_token_counts(32) = 1..32",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "_trellis_exact_launch_token_counts(16) = 1..16",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "_trellis_exact_launch_token_counts(1024) = (1024,)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "_MIXED_TRELLIS_DIRECT_ROUTE_LIMIT == 0",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "tile rule K128/N128 at 10..32, K64/N256 at 1..9 and 1024 (I=1024 and 2048)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "_apply_rank_sliced contains: if runtime[\"min_trellis_m\"] <= m <= runtime[\"max_trellis_m\"]:",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "_apply_rank_sliced contains: plan=runtime[\"trellis_plan\"],",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "_apply_rank_sliced contains: plan=runtime[\"prefill_plan\"],",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "_apply_rank_sliced contains: output = runtime[\"api\"].run(binding=binding)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "_apply_rank_sliced contains: return output.to(x.dtype)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "_apply_rank_sliced contains: if runtime[\"prefill_plan\"] is not None and m > runtime[\"max_trellis_m\"]:",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "apply contains: x_2d = x.reshape(-1, x.shape[-1]).contiguous()",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "apply contains: ids = topk_ids.reshape(x_2d.shape[0], -1).contiguous()",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "apply contains: weights = topk_weights.reshape_as(ids).to(torch.float32).contiguous()",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "_rank_sliced_runtime contains: max_trellis_m = _positive_env_int(\"VLLM_EXL3_TRELLIS_MAX_M\", 32)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "_rank_sliced_runtime contains: block_m = _positive_env_int(\"VLLM_EXL3_TRELLIS_BLOCK_M\", 8)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "_rank_sliced_runtime contains: prefill_block_m = _positive_env_int(\"VLLM_EXL3_PREFILL_BLOCK_M\", 64)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "_rank_sliced_runtime contains: \"VLLM_EXL3_PREFILL_CAPACITY\", 1024",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "_rank_sliced_runtime contains: scheduler_max_batched_tokens, prefill_capacity",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "_rank_sliced_runtime contains: \"B12X_EXL3_BF16_EPILOGUE\", \"0\"",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "_rank_sliced_runtime contains: trellis_plan, trellis_scratch, trellis_output = _plan_with_scratch(",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "_rank_sliced_runtime contains: _plan_with_scratch(max_batched_tokens, prefill_block_m)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "_rank_sliced_runtime contains: \"mixed_trellis_route_id_dtypes\": (topk_ids.dtype,),",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "_rank_sliced_runtime contains: w4a16_block_size_m=plan_block_m,",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "create_weights contains: get_current_vllm_config_or_none()",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "create_weights contains: scheduler_config.max_num_batched_tokens",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "create_weights contains: (\"w13\", \"trellis\"): 1,",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "create_weights contains: (\"w2\", \"trellis\"): 0,",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "_prepare_projection_mixed_weights contains: source_format=\"exl3_trellis_mcg\"",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "_prepare_projection_mixed_weights contains: tile_config = None",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "_prepare_projection_mixed_weights contains: trellis_rate_granularity=\"per_expert_projection\"",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "exl3 never forwards swiglu_limit to B12x (stock routed path has no clamp)",
+   "ok": true,
+   "detail": ""
+  }
+ ],
+ "failures": [],
+ "def_lines": {
+  "Exl3MoEMethod.create_weights": 1708,
+  "Exl3MoEMethod.process_weights_after_loading": 1898,
+  "Exl3MoEMethod._prepare_projection_mixed_weights": 2249,
+  "Exl3MoEMethod._rank_sliced_runtime": 2717,
+  "Exl3MoEMethod._bind_rank_sliced": 3042,
+  "Exl3MoEMethod._apply_rank_sliced": 3076,
+  "Exl3MoEMethod.apply": 3261,
+  "_load_b12x_fused_moe": 213
+ },
+ "api_type": "module",
+ "tile_rule_params": [
+  "configured",
+  "token_count",
+  "direct_topk_routes"
+ ],
+ "tile_rule": {
+  "I1024.m1": [
+   64,
+   256,
+   64,
+   256
+  ],
+  "I1024.m9": [
+   64,
+   256,
+   64,
+   256
+  ],
+  "I1024.m10": [
+   128,
+   128,
+   128,
+   128
+  ],
+  "I1024.m32": [
+   128,
+   128,
+   128,
+   128
+  ],
+  "I1024.m1024": [
+   64,
+   256,
+   64,
+   256
+  ],
+  "I2048.m1": [
+   64,
+   256,
+   64,
+   256
+  ],
+  "I2048.m9": [
+   64,
+   256,
+   64,
+   256
+  ],
+  "I2048.m10": [
+   128,
+   128,
+   128,
+   128
+  ],
+  "I2048.m32": [
+   128,
+   128,
+   128,
+   128
+  ],
+  "I2048.m1024": [
+   64,
+   256,
+   64,
+   256
+  ]
+ },
+ "exl3_sha256": "0560a6caedd3bb0198c04cd5a1816c92872c9b4c5e2b059c54110aaf9d59d1ad",
+ "torch": "2.13.0+cu130",
+ "pass": true
+}

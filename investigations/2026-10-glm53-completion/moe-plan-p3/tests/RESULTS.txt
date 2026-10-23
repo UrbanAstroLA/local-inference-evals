@@ -1,0 +1,11 @@
+== CPU tests 2026-10-23T19:50:54Z
+ok signatures-v091 
+ok signatures-v070 
+ok dry-v091 ok fixtures=1332 membership=True probe=True
+ok dry-v070 ok fixtures=1332 membership=True probe=True
+ok dry-smoke-v091 ok fixtures=10
+ok deadline-partial ok fixtures_done=537
+ok wrong-image-refused 
+ok eversion-dry ok {'tp2r0': (54, 0), 'ep2r0': (54, 0)}
+ok wrapper wrapper tests: 28 passed, 0 failed (re-run after cosmetic DRY_RUN print fix)
+== 9 passed, 0 failed

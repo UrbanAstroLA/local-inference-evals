@@ -53,6 +53,17 @@ difference. Quantization is held fixed.
     shown to relate to the completion difference.
   - 1.51 GPU-hours, including a first attempt of the port-01 arm that stopped before traffic on an instrument race
     (fixed and retried; [amendment](livecheck-22ao/AMENDMENT-22ap-preflight.md)).
+- **Routed-expert plan comparison on synthetic inputs (22as; [`moe-plan-p3/`](moe-plan-p3/RESULT.md)).**
+  - Each engine's served EXL3 code built its rank-0 slice of 3 MoE layers from the K3.25 weights. Identical synthetic
+    rows went through the decode plan (the exact-width launch 0.9.1 uses at 8 in flight) and the prefill plan (the
+    1,024-wide launch 0.7.0 uses at 6-8 in flight).
+  - Both plans are deterministic, and they agree bit-for-bit at 1 and 8 rows, where they use the same tile.
+  - From 16 rows up they differ reproducibly on nearly every row: relative L2 about 8.4e-4 in the bf16 output (about
+    2e-4 in fp32). This holds in both engines and every layer, independent of input scale and routing pattern.
+  - The two engines' B12x versions give bit-identical outputs for the same slice and plan.
+  - Not tested: the cross-GPU expert-partition reductions, captured (real) inputs and CUDA-graph replay. Whether
+    differences of this size affect generation is not measured, and they are not shown to explain the completion
+    difference.
 - **Upstream.** The verified corrections were submitted on 2026-10-22, each with a reproduction and its verification:
   - tpurtell's engine: [#7](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/7) (D2),
     [#8](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/8) (D1),

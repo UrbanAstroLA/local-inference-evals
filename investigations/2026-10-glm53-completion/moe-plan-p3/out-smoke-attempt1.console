@@ -1,0 +1,16 @@
+budget: 0.5 GPU-h; used 0 s over 0 prior attempt(s); remaining 1800 s
+attempt 1 (smoke): wall cap 420 s (requested 420 s)
+image v091: sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 b12x 7fcc094edcc93af61fdfbe14300100e3204363ea
+== preflight 2026-10-23T19:57:08Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 20 MiB, 0 %
+1, NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 2025 MiB, 3 %
+gpu_uuid, pid, process_name, used_gpu_memory [MiB]
+GPU0 sample 1: util 0% mem 20 MiB
+== v091 start 2026-10-23T19:57:08Z timeout 390 s soft 330 s
+v091 rc=0, 146 s x 1 GPU
+INFO 10-23 19:58:52 [exl3.py:3118] EXL3 rank-sliced runtime planned: Trellis m=1..32 block_m=8, prefill trellis block_m=64 arena=262.6MiB capacity=1024 chunk=128 topk=8
+INFO 10-23 19:59:31 [exl3.py:3118] EXL3 rank-sliced runtime planned: Trellis m=1..16 block_m=8, prefill parity capacity=1024 chunk=128 topk=8
+{"engine": "v091", "mode": "smoke", "status": "complete", "stopped_reason": null, "elapsed_s": 143.5, "dry_selfcheck": null}
+attempt 1 done; budget used so far: 146 s = 0.0406 GPU-h of 0.5
+wrapper rc=0

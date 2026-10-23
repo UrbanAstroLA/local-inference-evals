@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-10-23, routed-expert plan comparison on synthetic inputs (completion investigation, amendment 22as)
+
+0.1458 GPU-hours (cumulative 129.97).
+
+- **New `moe-plan-p3/`:**
+  - `PROTOCOL.md` and `RESULT.md`;
+  - the harness (`harness/`) and its CPU tests (`tests/`);
+  - the run records of attempts 1 (smoke) and 2 (full) and the cost ledger.
+  - Withheld: tensor files and the compile cache (hashes in `RAW-SHA256SUMS-moe-plan-p3.txt`).
+- **`PLAN.md`:** amendment 22as.
+- **Investigation `README.md`:** a Status entry.
+- **`LEDGER.md`**.
+
 ## 2026-10-23, the slot-0 condition of level 3 (completion investigation, amendment 22ar)
 
 No GPU use.

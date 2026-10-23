@@ -729,6 +729,18 @@ What was asked, run, found, corrected and withdrawn, in date order.
 - **Erratum (owned):** level 3 cited the V1 runner for the zero-filled cache; the served V2 runner also zero-fills.
 - No GPU-hours added (cumulative 129.82). [Level 3](investigations/2026-10-glm53-completion/livecheck-22ao/level3/README.md).
 
+**2026-10-23. The two routed-expert plans differ reproducibly from 16 rows up (amendment 22as).**
+- **Setup:** each engine's served EXL3 code ran identical synthetic rows through the decode plan (0.9.1 at 8 in
+  flight) and the prefill plan (0.7.0 at 6-8 in flight).
+- **Results:**
+  - bit-equal at 1 and 8 rows (same tile);
+  - from 16 rows, nearly every row differs (bf16 relative L2 about 8.4e-4), in both engines and all three layers
+    tested;
+  - each plan is deterministic, and the two B12x versions agree bit-for-bit.
+- **Not measured:** real inputs, the cross-GPU partition, and any effect on generation. Not shown to explain the
+  completion difference.
+- GPU-hours 0.1458 (cumulative 129.97). [Result](investigations/2026-10-glm53-completion/moe-plan-p3/RESULT.md).
+
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough
   qualification. They also said the D7 path "cannot run" where the basis is a reconstruction. These are reworded in the

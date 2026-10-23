@@ -1,0 +1,191 @@
+----- refuse-without-reason (rc=2, want 2)
+REFUSED: ATTEMPT_REASON is not set (say why this attempt runs)
+PASS refuse-without-reason
+----- dryrun-prints-budget (rc=0, want 0)
+budget: 0.5 GPU-h; used 0 s over 0 prior attempt(s); remaining 1800 s
+attempt 1 (full): wall cap 1800 s (requested 1800 s)
+image v091: sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 b12x fakecommit
+image v070: sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629 b12x fakecommit
+== preflight 2026-10-23T19:56:08Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, FAKE GPU, 3 MiB, 0 %
+gpu_uuid, pid, process_name, used_memory
+GPU0 sample 1: util 0% mem 3 MiB
+DRY_RUN: all gates passed; no container started, nothing written.
+plan: attempt 1 -> <runs>/moe-plan-p3/tests/scratch-wrapper/out/attempt-1; total wall cap 1800 s; remaining budget 1800 s
+  v091: timeout <cap-left - 30> docker run --rm --name p3-a1-v091 --network none --gpus device=0 --user 1000:1000 -e HOME=/tmp <served env> -v <runs>/moe-plan-p3/tests/scratch-wrapper/harness:/h:ro -v <runs>/moe-plan-p3/tests/scratch-wrapper/out/attempt-1:/o -v <models>/models--wrldsuksgo2mars--GLM-5.3-Flash-EXL3-K3.25-v1:/model-repo:ro -v <runs>/moe-plan-p3/tests/scratch-wrapper/out/compile-cache/v091:/cc --entrypoint python3 sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 /h/moe_plan_eq.py --engine v091 --out /o/v091.json  --deadline-s <timeout - 60, <= 55% of cap>
+  v070: timeout <cap-left - 30> docker run --rm --name p3-a1-v070 --network none --gpus device=0 --user 1000:1000 -e HOME=/tmp <served env> -v <runs>/moe-plan-p3/tests/scratch-wrapper/harness:/h:ro -v <runs>/moe-plan-p3/tests/scratch-wrapper/out/attempt-1:/o -v <models>/models--wrldsuksgo2mars--GLM-5.3-Flash-EXL3-K3.25-v1:/model-repo:ro -v <runs>/moe-plan-p3/tests/scratch-wrapper/out/compile-cache/v070:/cc --entrypoint python3 sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629 /h/moe_plan_eq.py --engine v070 --out /o/v070.json  --deadline-s <timeout - 60>
+  then (CPU only, no GPU): compare_eversion.py v091.json v070.json eversion.json
+PASS dryrun-prints-budget
+PASS dryrun-no-container
+PASS dryrun-no-attempt-dir
+PASS dryrun-no-cost-line
+----- dryrun-plans-attempt-1-cap-1800 (rc=0, want 0)
+budget: 0.5 GPU-h; used 0 s over 0 prior attempt(s); remaining 1800 s
+attempt 1 (full): wall cap 1800 s (requested 1800 s)
+image v091: sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 b12x fakecommit
+image v070: sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629 b12x fakecommit
+== preflight 2026-10-23T19:56:08Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, FAKE GPU, 3 MiB, 0 %
+gpu_uuid, pid, process_name, used_memory
+GPU0 sample 1: util 0% mem 3 MiB
+DRY_RUN: all gates passed; no container started, nothing written.
+plan: attempt 1 -> <runs>/moe-plan-p3/tests/scratch-wrapper/out/attempt-1; total wall cap 1800 s; remaining budget 1800 s
+  v091: timeout <cap-left - 30> docker run --rm --name p3-a1-v091 --network none --gpus device=0 --user 1000:1000 -e HOME=/tmp <served env> -v <runs>/moe-plan-p3/tests/scratch-wrapper/harness:/h:ro -v <runs>/moe-plan-p3/tests/scratch-wrapper/out/attempt-1:/o -v <models>/models--wrldsuksgo2mars--GLM-5.3-Flash-EXL3-K3.25-v1:/model-repo:ro -v <runs>/moe-plan-p3/tests/scratch-wrapper/out/compile-cache/v091:/cc --entrypoint python3 sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 /h/moe_plan_eq.py --engine v091 --out /o/v091.json  --deadline-s <timeout - 60, <= 55% of cap>
+  v070: timeout <cap-left - 30> docker run --rm --name p3-a1-v070 --network none --gpus device=0 --user 1000:1000 -e HOME=/tmp <served env> -v <runs>/moe-plan-p3/tests/scratch-wrapper/harness:/h:ro -v <runs>/moe-plan-p3/tests/scratch-wrapper/out/attempt-1:/o -v <models>/models--wrldsuksgo2mars--GLM-5.3-Flash-EXL3-K3.25-v1:/model-repo:ro -v <runs>/moe-plan-p3/tests/scratch-wrapper/out/compile-cache/v070:/cc --entrypoint python3 sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629 /h/moe_plan_eq.py --engine v070 --out /o/v070.json  --deadline-s <timeout - 60>
+  then (CPU only, no GPU): compare_eversion.py v091.json v070.json eversion.json
+PASS dryrun-plans-attempt-1-cap-1800
+----- dryrun-smoke-cap-420 (rc=0, want 0)
+budget: 0.5 GPU-h; used 0 s over 0 prior attempt(s); remaining 1800 s
+attempt 1 (smoke): wall cap 420 s (requested 420 s)
+image v091: sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 b12x fakecommit
+== preflight 2026-10-23T19:56:08Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, FAKE GPU, 3 MiB, 0 %
+gpu_uuid, pid, process_name, used_memory
+GPU0 sample 1: util 0% mem 3 MiB
+DRY_RUN: all gates passed; no container started, nothing written.
+plan: attempt 1 -> <runs>/moe-plan-p3/tests/scratch-wrapper/out/attempt-1; total wall cap 420 s; remaining budget 1800 s
+  v091: timeout <cap-left - 30> docker run --rm --name p3-a1-v091 --network none --gpus device=0 --user 1000:1000 -e HOME=/tmp <served env> -v <runs>/moe-plan-p3/tests/scratch-wrapper/harness:/h:ro -v <runs>/moe-plan-p3/tests/scratch-wrapper/out/attempt-1:/o -v <models>/models--wrldsuksgo2mars--GLM-5.3-Flash-EXL3-K3.25-v1:/model-repo:ro -v <runs>/moe-plan-p3/tests/scratch-wrapper/out/compile-cache/v091:/cc --entrypoint python3 sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 /h/moe_plan_eq.py --engine v091 --out /o/v091.json --smoke --deadline-s <timeout - 60>
+PASS dryrun-smoke-cap-420
+----- abort-gpu0-memory (rc=3, want 3)
+budget: 0.5 GPU-h; used 0 s over 0 prior attempt(s); remaining 1800 s
+attempt 1 (full): wall cap 1800 s (requested 1800 s)
+image v091: sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 b12x fakecommit
+image v070: sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629 b12x fakecommit
+== preflight 2026-10-23T19:56:08Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, FAKE GPU, 3 MiB, 0 %
+gpu_uuid, pid, process_name, used_memory
+ABORT: GPU0 memory 5000 MiB > 1024 MiB
+PASS abort-gpu0-memory
+----- abort-gpu0-busy (rc=3, want 3)
+budget: 0.5 GPU-h; used 0 s over 0 prior attempt(s); remaining 1800 s
+attempt 1 (full): wall cap 1800 s (requested 1800 s)
+image v091: sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 b12x fakecommit
+image v070: sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629 b12x fakecommit
+== preflight 2026-10-23T19:56:08Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, FAKE GPU, 3 MiB, 0 %
+gpu_uuid, pid, process_name, used_memory
+GPU0 sample 1: util 80% mem 3 MiB
+GPU0 sample 2: util 80% mem 3 MiB
+GPU0 sample 3: util 80% mem 3 MiB
+GPU0 sample 4: util 80% mem 3 MiB
+GPU0 sample 5: util 80% mem 3 MiB
+GPU0 sample 6: util 80% mem 3 MiB
+GPU0 sample 7: util 80% mem 3 MiB
+GPU0 sample 8: util 80% mem 3 MiB
+GPU0 sample 9: util 80% mem 3 MiB
+GPU0 sample 10: util 80% mem 3 MiB
+GPU0 sample 11: util 80% mem 3 MiB
+GPU0 sample 12: util 80% mem 3 MiB
+ABORT: GPU0 busy after 12 samples
+PASS abort-gpu0-busy
+----- smoke-attempt-1 (rc=0, want 0)
+budget: 0.5 GPU-h; used 0 s over 0 prior attempt(s); remaining 1800 s
+attempt 1 (smoke): wall cap 420 s (requested 420 s)
+image v091: sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 b12x fakecommit
+== preflight 2026-10-23T19:56:08Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, FAKE GPU, 3 MiB, 0 %
+gpu_uuid, pid, process_name, used_memory
+GPU0 sample 1: util 0% mem 3 MiB
+== v091 start 2026-10-23T19:56:08Z timeout 390 s soft 330 s
+v091 rc=0, 0 s x 1 GPU
+attempt 1 done; budget used so far: 0 s = 0.0000 GPU-h of 0.5
+PASS smoke-attempt-1
+PASS smoke-dir-attempt-1
+PASS smoke-one-cost-line
+PASS smoke-cost-fields
+PASS smoke-runargs
+----- full-attempt-2 (rc=0, want 0)
+budget: 0.5 GPU-h; used 0 s over 1 prior attempt(s); remaining 1800 s
+attempt 2 (full): wall cap 1800 s (requested 1800 s)
+image v091: sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 b12x fakecommit
+image v070: sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629 b12x fakecommit
+== preflight 2026-10-23T19:56:08Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, FAKE GPU, 3 MiB, 0 %
+gpu_uuid, pid, process_name, used_memory
+GPU0 sample 1: util 0% mem 3 MiB
+== v091 start 2026-10-23T19:56:08Z timeout 1770 s soft 990 s
+v091 rc=0, 0 s x 1 GPU
+== v070 start 2026-10-23T19:56:08Z timeout 1770 s soft 1710 s
+v070 rc=0, 0 s x 1 GPU
+eversion compare rc=0 (CPU only)
+attempt 2 done; budget used so far: 0 s = 0.0000 GPU-h of 0.5
+PASS full-attempt-2
+PASS full-dir-attempt-2
+PASS attempt-1-untouched
+PASS full-cost-lines
+PASS first-image-soft-share
+PASS compare-runs-without-gpu
+----- dryrun-after-attempts (rc=0, want 0)
+budget: 0.5 GPU-h; used 0 s over 2 prior attempt(s); remaining 1800 s
+attempt 3 (full): wall cap 1800 s (requested 1800 s)
+image v091: sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 b12x fakecommit
+image v070: sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629 b12x fakecommit
+== preflight 2026-10-23T19:56:08Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, FAKE GPU, 3 MiB, 0 %
+gpu_uuid, pid, process_name, used_memory
+GPU0 sample 1: util 0% mem 3 MiB
+DRY_RUN: all gates passed; no container started, nothing written.
+plan: attempt 3 -> <runs>/moe-plan-p3/tests/scratch-wrapper/out/attempt-3; total wall cap 1800 s; remaining budget 1800 s
+  v091: timeout <cap-left - 30> docker run --rm --name p3-a3-v091 --network none --gpus device=0 --user 1000:1000 -e HOME=/tmp <served env> -v <runs>/moe-plan-p3/tests/scratch-wrapper/harness:/h:ro -v <runs>/moe-plan-p3/tests/scratch-wrapper/out/attempt-3:/o -v <models>/models--wrldsuksgo2mars--GLM-5.3-Flash-EXL3-K3.25-v1:/model-repo:ro -v <runs>/moe-plan-p3/tests/scratch-wrapper/out/compile-cache/v091:/cc --entrypoint python3 sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 /h/moe_plan_eq.py --engine v091 --out /o/v091.json  --deadline-s <timeout - 60, <= 55% of cap>
+  v070: timeout <cap-left - 30> docker run --rm --name p3-a3-v070 --network none --gpus device=0 --user 1000:1000 -e HOME=/tmp <served env> -v <runs>/moe-plan-p3/tests/scratch-wrapper/harness:/h:ro -v <runs>/moe-plan-p3/tests/scratch-wrapper/out/attempt-3:/o -v <models>/models--wrldsuksgo2mars--GLM-5.3-Flash-EXL3-K3.25-v1:/model-repo:ro -v <runs>/moe-plan-p3/tests/scratch-wrapper/out/compile-cache/v070:/cc --entrypoint python3 sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629 /h/moe_plan_eq.py --engine v070 --out /o/v070.json  --deadline-s <timeout - 60>
+  then (CPU only, no GPU): compare_eversion.py v091.json v070.json eversion.json
+PASS dryrun-after-attempts
+----- refuse-existing-attempt-dir (rc=2, want 2)
+budget: 0.5 GPU-h; used 0 s over 2 prior attempt(s); remaining 1800 s
+attempt 3 (full): wall cap 1800 s (requested 1800 s)
+REFUSED: <runs>/moe-plan-p3/tests/scratch-wrapper/out/attempt-3 already exists (attempt numbering out of step with costs.jsonl; never overwritten)
+PASS refuse-existing-attempt-dir
+----- cap-shrinks-to-remaining (rc=0, want 0)
+budget: 0.5 GPU-h; used 1000 s over 3 prior attempt(s); remaining 800 s
+attempt 4 (full): wall cap 800 s (requested 1800 s)
+image v091: sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 b12x fakecommit
+image v070: sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629 b12x fakecommit
+== preflight 2026-10-23T19:56:08Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, FAKE GPU, 3 MiB, 0 %
+gpu_uuid, pid, process_name, used_memory
+GPU0 sample 1: util 0% mem 3 MiB
+DRY_RUN: all gates passed; no container started, nothing written.
+plan: attempt 4 -> <runs>/moe-plan-p3/tests/scratch-wrapper/out/attempt-4; total wall cap 800 s; remaining budget 800 s
+  v091: timeout <cap-left - 30> docker run --rm --name p3-a4-v091 --network none --gpus device=0 --user 1000:1000 -e HOME=/tmp <served env> -v <runs>/moe-plan-p3/tests/scratch-wrapper/harness:/h:ro -v <runs>/moe-plan-p3/tests/scratch-wrapper/out/attempt-4:/o -v <models>/models--wrldsuksgo2mars--GLM-5.3-Flash-EXL3-K3.25-v1:/model-repo:ro -v <runs>/moe-plan-p3/tests/scratch-wrapper/out/compile-cache/v091:/cc --entrypoint python3 sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 /h/moe_plan_eq.py --engine v091 --out /o/v091.json  --deadline-s <timeout - 60, <= 55% of cap>
+  v070: timeout <cap-left - 30> docker run --rm --name p3-a4-v070 --network none --gpus device=0 --user 1000:1000 -e HOME=/tmp <served env> -v <runs>/moe-plan-p3/tests/scratch-wrapper/harness:/h:ro -v <runs>/moe-plan-p3/tests/scratch-wrapper/out/attempt-4:/o -v <models>/models--wrldsuksgo2mars--GLM-5.3-Flash-EXL3-K3.25-v1:/model-repo:ro -v <runs>/moe-plan-p3/tests/scratch-wrapper/out/compile-cache/v070:/cc --entrypoint python3 sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629 /h/moe_plan_eq.py --engine v070 --out /o/v070.json  --deadline-s <timeout - 60>
+  then (CPU only, no GPU): compare_eversion.py v091.json v070.json eversion.json
+PASS cap-shrinks-to-remaining
+----- refuse-budget-exhausted (rc=2, want 2)
+budget: 0.5 GPU-h; used 1620 s over 4 prior attempt(s); remaining 180 s
+attempt 5 (full): wall cap 180 s (requested 1800 s)
+REFUSED: budget exhausted: 180 s remaining < 300 s
+PASS refuse-budget-exhausted
+----- refuse-budget-exhausted-smoke (rc=2, want 2)
+budget: 0.5 GPU-h; used 1620 s over 4 prior attempt(s); remaining 180 s
+attempt 5 (smoke): wall cap 180 s (requested 420 s)
+REFUSED: budget exhausted: 180 s remaining < 300 s
+PASS refuse-budget-exhausted-smoke
+----- second-image-skipped (rc=0, want 0)
+budget: 0.5 GPU-h; used 1488 s over 3 prior attempt(s); remaining 312 s
+attempt 4 (full): wall cap 312 s (requested 1800 s)
+image v091: sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 b12x fakecommit
+image v070: sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629 b12x fakecommit
+== preflight 2026-10-23T19:56:08Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, FAKE GPU, 3 MiB, 0 %
+gpu_uuid, pid, process_name, used_memory
+GPU0 sample 1: util 0% mem 3 MiB
+== v091 start 2026-10-23T19:56:08Z timeout 282 s soft 171 s
+v091 rc=0, 15 s x 1 GPU
+SKIP v070: 297 s left of the 312 s cap (< 300 s)
+attempt 4 done; budget used so far: 1503 s = 0.4175 GPU-h of 0.5
+PASS second-image-skipped
+PASS skip-cost-line
+----- abort-malformed-ledger (rc=3, want 3)
+ABORT: cannot read <runs>/moe-plan-p3/tests/scratch-wrapper/costs.jsonl: ERR malformed line 7
+PASS abort-malformed-ledger
+wrapper tests: 28 passed, 0 failed

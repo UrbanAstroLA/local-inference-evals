@@ -1,0 +1,2 @@
+2026-10-23 operator: "approve p3 stage 1 at that ceiling" -> P3 Stage 1 (PROPOSAL.md), GPU0 only, <= 0.5 occupied GPU-hours incl. load/plan/compile, one attempt
+2026-10-23 operator: "retry to test properly is approved" -> retries allowed; all attempts together stay within the 0.5 occupied GPU-hour ceiling (budget gate on costs.jsonl total); each attempt logged with its reason

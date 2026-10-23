@@ -1,0 +1,5 @@
+INFO 10-23 19:57:19 [exl3.py:727] EXL3 standard fused MoE enabled for glm5_next: projection tiers (3, 4) via b12x
+INFO 10-23 19:57:21 [exl3.py:2536] EXL3 projection-mixed Trellis language_model.model.layers.3.mlp.experts: tiers=(bits,gate,up,down)((3, 248, 221, 180), (4, 40, 67, 108))
+INFO 10-23 19:58:52 [exl3.py:3118] EXL3 rank-sliced runtime planned: Trellis m=1..32 block_m=8, prefill trellis block_m=64 arena=262.6MiB capacity=1024 chunk=128 topk=8
+INFO 10-23 19:59:31 [exl3.py:3118] EXL3 rank-sliced runtime planned: Trellis m=1..16 block_m=8, prefill parity capacity=1024 chunk=128 topk=8
+{"engine": "v091", "mode": "smoke", "status": "complete", "stopped_reason": null, "elapsed_s": 143.5, "dry_selfcheck": null}

@@ -1,0 +1,13 @@
+INFO 10-23 20:00:37 [exl3.py:727] EXL3 standard fused MoE enabled for glm5_next: projection tiers (3, 4) via b12x
+INFO 10-23 20:00:39 [exl3.py:2536] EXL3 projection-mixed Trellis language_model.model.layers.3.mlp.experts: tiers=(bits,gate,up,down)((3, 248, 221, 180), (4, 40, 67, 108))
+INFO 10-23 20:00:43 [exl3.py:3118] EXL3 rank-sliced runtime planned: Trellis m=1..32 block_m=8, prefill trellis block_m=64 arena=262.6MiB capacity=1024 chunk=128 topk=8
+INFO 10-23 20:00:43 [exl3.py:3118] EXL3 rank-sliced runtime planned: Trellis m=1..16 block_m=8, prefill parity capacity=1024 chunk=128 topk=8
+INFO 10-23 20:00:53 [exl3.py:2536] EXL3 projection-mixed Trellis language_model.model.layers.23.mlp.experts: tiers=(bits,gate,up,down)((3, 248, 221, 180), (4, 40, 67, 108))
+INFO 10-23 20:01:02 [exl3.py:2536] EXL3 projection-mixed Trellis language_model.model.layers.44.mlp.experts: tiers=(bits,gate,up,down)((3, 247, 220, 180), (4, 41, 68, 108))
+INFO 10-23 20:01:12 [exl3.py:2524] EXL3 projection-mixed B12x EP active: 288 global / 144 local experts with a precomposed route map
+INFO 10-23 20:01:12 [exl3.py:2536] EXL3 projection-mixed Trellis language_model.model.layers.3.mlp.experts: tiers=(bits,gate,up,down)((3, 126, 109, 99), (4, 18, 35, 45))
+INFO 10-23 20:02:39 [exl3.py:3118] EXL3 rank-sliced runtime planned: Trellis m=1..32 block_m=8, prefill trellis block_m=64 arena=311.2MiB capacity=1024 chunk=128 topk=8
+INFO 10-23 20:02:39 [exl3.py:3183] Dispatching EXL3 routes through B12x replicated-input EP; vLLM will all-reduce the rank-local partial.
+INFO 10-23 20:02:41 [exl3.py:2536] EXL3 projection-mixed Trellis language_model.model.layers.23.mlp.experts: tiers=(bits,gate,up,down)((3, 131, 113, 94), (4, 13, 31, 50))
+INFO 10-23 20:02:43 [exl3.py:2536] EXL3 projection-mixed Trellis language_model.model.layers.44.mlp.experts: tiers=(bits,gate,up,down)((3, 120, 104, 88), (4, 24, 40, 56))
+{"engine": "v091", "mode": "full", "status": "complete", "stopped_reason": null, "elapsed_s": 138.9, "dry_selfcheck": null}

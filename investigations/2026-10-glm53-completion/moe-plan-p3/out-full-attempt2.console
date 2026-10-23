@@ -1,0 +1,23 @@
+budget: 0.5 GPU-h; used 146 s over 1 prior attempt(s); remaining 1654 s
+attempt 2 (full): wall cap 1654 s (requested 1800 s)
+image v091: sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 b12x 7fcc094edcc93af61fdfbe14300100e3204363ea
+image v070: sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629 b12x fe054789069579e19ae5ec21f880b397bcf6575b
+== preflight 2026-10-23T20:00:26Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 20 MiB, 0 %
+1, NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 2011 MiB, 1 %
+gpu_uuid, pid, process_name, used_gpu_memory [MiB]
+GPU0 sample 1: util 0% mem 20 MiB
+== v091 start 2026-10-23T20:00:26Z timeout 1624 s soft 909 s
+v091 rc=0, 141 s x 1 GPU
+INFO 10-23 20:02:41 [exl3.py:2536] EXL3 projection-mixed Trellis language_model.model.layers.23.mlp.experts: tiers=(bits,gate,up,down)((3, 131, 113, 94), (4, 13, 31, 50))
+INFO 10-23 20:02:43 [exl3.py:2536] EXL3 projection-mixed Trellis language_model.model.layers.44.mlp.experts: tiers=(bits,gate,up,down)((3, 120, 104, 88), (4, 24, 40, 56))
+{"engine": "v091", "mode": "full", "status": "complete", "stopped_reason": null, "elapsed_s": 138.9, "dry_selfcheck": null}
+== v070 start 2026-10-23T20:02:47Z timeout 1483 s soft 1423 s
+v070 rc=0, 238 s x 1 GPU
+INFO 10-23 20:06:38 [exl3.py:2434] EXL3 projection-mixed Trellis language_model.model.layers.23.mlp.experts: tiers=(bits,gate,up,down)((3, 248, 221, 180), (4, 40, 67, 108))
+INFO 10-23 20:06:41 [exl3.py:2434] EXL3 projection-mixed Trellis language_model.model.layers.44.mlp.experts: tiers=(bits,gate,up,down)((3, 247, 220, 180), (4, 41, 68, 108))
+{"engine": "v070", "mode": "full", "status": "complete", "stopped_reason": null, "elapsed_s": 235.6, "dry_selfcheck": null}
+eversion compare rc=0 (CPU only)
+attempt 2 done; budget used so far: 525 s = 0.1458 GPU-h of 0.5
+wrapper rc=0
