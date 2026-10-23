@@ -701,7 +701,7 @@ What was asked, run, found, corrected and withdrawn, in date order.
 **2026-10-23. The live causal-length check, run (amendment 22ap).**
 - **Stock 0.9.1:** speculative verify rows consumed per-token causal lengths above p + 1 on 672,155 of 1,506,571
   checked rows, never below; the excess equalled the previous step's rejected-draft count. No consumed entry fell
-  beyond the causal range or belonged to another request (0 of 48,782 rows, 95% bound 0.0001 per row): the extra
+  beyond the causal range or belonged to another request (0 of 48,782 rows; nominal 3/N bound, see 22aq): the extra
   in-count columns were empty.
 - **With port 01 (PR #7):** no excess on any row; every selection check clean within coverage.
 - **Not measured:** whether the empty columns change the attention output. Not shown to relate to the completion
@@ -710,6 +710,16 @@ What was asked, run, found, corrected and withdrawn, in date order.
   before the stock arm's results were read); its first attempt stopped before traffic on an instrument race, which was
   fixed and the arm retried with the operator's authorization after the stock arm's results were read.
 - GPU-hours 1.51 (cumulative 129.82). [Results](investigations/2026-10-glm53-completion/livecheck-22ao/run-1/result.md).
+
+**2026-10-23. Level 3: the inflated count leaves the attention output unchanged in the tested configuration (amendment 22aq).**
+- **A subsequent investigation**, run after the live check was read; not pre-registered.
+- **Compaction** gave identical consumed inputs in the tested cases (12,282 CPU cases).
+- **The stock decode and extend kernels** gave bit-identical outputs for the exact and inflated counts (64 / 64 rows,
+  r = 1-3), and a planted control was detected.
+- **Ruled down** as a computational contributor in the tested 0.9.1 configuration and under the verified
+  masking/compaction conditions. Not extended to 0.7.0, untested configurations or arbitrary cache contents.
+- **Correction (owned):** the 22ap rule-of-three bounds assume independent rows and are nominal.
+- GPU-hours 0.0022 (cumulative 129.82). [Level 3](investigations/2026-10-glm53-completion/livecheck-22ao/level3/README.md).
 
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough

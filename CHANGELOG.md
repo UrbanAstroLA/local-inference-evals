@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-10-23, level 3 of the causal-length check (completion investigation, amendment 22aq)
+
+0.0022 GPU-hours (cumulative 129.82).
+
+- **New `livecheck-22ao/level3/`:**
+  - `README.md` (the three conclusions and their scope) and `SOURCE-READING.md`;
+  - the CPU compaction harness and its output;
+  - the GPU kernel test (`kernel_eq.py`, `run_level3.sh`), its result, log and cost line.
+- **Correction:** the 22ap rule-of-three bounds are nominal (rows are dependent). Wording updated in the investigation
+  `README.md`, `PLAN.md` and `LEDGER.md`.
+- **`PLAN.md`:** amendment 22aq.
+- **Investigation `README.md`:** the Status entry.
+- **`LEDGER.md`**.
+
 ## 2026-10-23, live causal-length check run (completion investigation, amendment 22ap)
 
 1.51 GPU-hours (cumulative 129.82).

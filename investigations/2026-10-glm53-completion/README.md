@@ -37,11 +37,19 @@ difference. Quantization is held fixed.
   [results](livecheck-22ao/run-1/result.md), [notes](livecheck-22ao/run-1/NOTES-22ap.md)).**
   - Stock 0.9.1: speculative verify rows consumed per-token causal lengths above p + 1 on 672,155 of 1,506,571 checked
     rows, never below. On every joined verify row the excess equalled the previous step's rejected-draft count (0-3).
-  - No consumed entry fell beyond the row's causal range or belonged to another request (0 of 48,782 rows; 95% upper
-    bound 0.0001 per row). The extra in-count columns were empty (-1).
+  - No consumed entry fell beyond the row's causal range or belonged to another request (0 of 48,782 rows; nominal
+    rule-of-three bound 0.0001 per row, which assumes independent rows: see 22aq). The extra in-count columns were
+    empty (-1).
   - Stock 0.9.1 + port 01 (PR #7): no excess on any of 1,510,575 rows; every selection check clean within coverage.
-  - Not measured: whether the empty in-count columns change the attention output. Port 01 changes the tail ring and the
-    length source together, and this check does not separate them. Not shown to relate to the completion difference.
+  - Level 3, a subsequent investigation (22aq; [`livecheck-22ao/level3/`](livecheck-22ao/level3/README.md)):
+    - compaction gave identical consumed inputs in the tested cases;
+    - the stock decode and extend kernels gave bit-identical outputs for the exact and inflated counts, and a planted
+      control was detected.
+    - The discrepancy is ruled down as a computational contributor in the tested 0.9.1 configuration and under the
+      verified masking/compaction conditions. Not extended to 0.7.0 (DCP2), untested configurations or arbitrary cache
+      contents; an audit of the cache slot the masking relies on is pending.
+  - Port 01 changes the tail ring and the length source together, and the live check does not separate them. Not
+    shown to relate to the completion difference.
   - 1.51 GPU-hours, including a first attempt of the port-01 arm that stopped before traffic on an instrument race
     (fixed and retried; [amendment](livecheck-22ao/AMENDMENT-22ap-preflight.md)).
 - **Upstream.** The verified corrections were submitted on 2026-10-22, each with a reproduction and its verification:

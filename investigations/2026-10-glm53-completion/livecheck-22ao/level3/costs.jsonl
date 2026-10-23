@@ -1,0 +1,1 @@
+{"item":"level3-kernel-eq","start":"2026-10-23T18:17:06Z","end":"2026-10-23T18:17:14Z","seconds":8,"gpus":1,"gpu_hours":0.0022,"image":"sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07","rc":0,"wall_cap":1200,"purpose":"22ap level 3: inflated nsa vs p+1, stock kernels, synthetic"}

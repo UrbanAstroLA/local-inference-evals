@@ -1,0 +1,213 @@
+{
+ "started": 1792779428.3407526,
+ "dry": false,
+ "tests": [
+  {
+   "test": "L0 layout: front-packed distinct non-zero slots, -1 after, spare outside the row",
+   "ok": true,
+   "rows": 64,
+   "p1_min": 1,
+   "p1_max": 2047,
+   "rows_crossing_64_boundary": {
+    "1": 10,
+    "2": 25,
+    "3": 33
+   }
+  },
+  {
+   "test": "D0 decode: A run twice is bit-equal",
+   "ok": true,
+   "rows_differing": 0,
+   "out_shape": [
+    64,
+    64,
+    512
+   ]
+  },
+  {
+   "test": "D0 extend: A run twice is bit-equal",
+   "ok": true,
+   "rows_differing": 0,
+   "out_shape": [
+    64,
+    64,
+    512
+   ]
+  },
+  {
+   "test": "E decode slot0=zero r=1: A vs B bit-equal on every row",
+   "ok": true,
+   "rows_out_differing": 0,
+   "rows_lse_differing": 0,
+   "max_abs": 0.0,
+   "rows_crossing_64": 10,
+   "nan_rows_A": 0
+  },
+  {
+   "test": "E decode slot0=zero r=2: A vs B bit-equal on every row",
+   "ok": true,
+   "rows_out_differing": 0,
+   "rows_lse_differing": 0,
+   "max_abs": 0.0,
+   "rows_crossing_64": 25,
+   "nan_rows_A": 0
+  },
+  {
+   "test": "E decode slot0=zero r=3: A vs B bit-equal on every row",
+   "ok": true,
+   "rows_out_differing": 0,
+   "rows_lse_differing": 0,
+   "max_abs": 0.0,
+   "rows_crossing_64": 33,
+   "nan_rows_A": 0
+  },
+  {
+   "test": "E extend slot0=zero r=1: A vs B bit-equal on every row",
+   "ok": true,
+   "rows_out_differing": 0,
+   "rows_lse_differing": 0,
+   "max_abs": 0.0,
+   "rows_crossing_64": 10,
+   "nan_rows_A": 0
+  },
+  {
+   "test": "E extend slot0=zero r=2: A vs B bit-equal on every row",
+   "ok": true,
+   "rows_out_differing": 0,
+   "rows_lse_differing": 0,
+   "max_abs": 0.0,
+   "rows_crossing_64": 25,
+   "nan_rows_A": 0
+  },
+  {
+   "test": "E extend slot0=zero r=3: A vs B bit-equal on every row",
+   "ok": true,
+   "rows_out_differing": 0,
+   "rows_lse_differing": 0,
+   "max_abs": 0.0,
+   "rows_crossing_64": 33,
+   "nan_rows_A": 0
+  },
+  {
+   "test": "E decode slot0=real r=1: A vs B bit-equal on every row",
+   "ok": true,
+   "rows_out_differing": 0,
+   "rows_lse_differing": 0,
+   "max_abs": 0.0,
+   "rows_crossing_64": 10,
+   "nan_rows_A": 0
+  },
+  {
+   "test": "E decode slot0=real r=2: A vs B bit-equal on every row",
+   "ok": true,
+   "rows_out_differing": 0,
+   "rows_lse_differing": 0,
+   "max_abs": 0.0,
+   "rows_crossing_64": 25,
+   "nan_rows_A": 0
+  },
+  {
+   "test": "E decode slot0=real r=3: A vs B bit-equal on every row",
+   "ok": true,
+   "rows_out_differing": 0,
+   "rows_lse_differing": 0,
+   "max_abs": 0.0,
+   "rows_crossing_64": 33,
+   "nan_rows_A": 0
+  },
+  {
+   "test": "E extend slot0=real r=1: A vs B bit-equal on every row",
+   "ok": true,
+   "rows_out_differing": 0,
+   "rows_lse_differing": 0,
+   "max_abs": 0.0,
+   "rows_crossing_64": 10,
+   "nan_rows_A": 0
+  },
+  {
+   "test": "E extend slot0=real r=2: A vs B bit-equal on every row",
+   "ok": true,
+   "rows_out_differing": 0,
+   "rows_lse_differing": 0,
+   "max_abs": 0.0,
+   "rows_crossing_64": 25,
+   "nan_rows_A": 0
+  },
+  {
+   "test": "E extend slot0=real r=3: A vs B bit-equal on every row",
+   "ok": true,
+   "rows_out_differing": 0,
+   "rows_lse_differing": 0,
+   "max_abs": 0.0,
+   "rows_crossing_64": 33,
+   "nan_rows_A": 0
+  },
+  {
+   "test": "P decode: planted live non-causal entry changes every row",
+   "ok": true,
+   "rows_differing": 64,
+   "of": 64,
+   "max_abs": 0.67041015625
+  },
+  {
+   "test": "P extend: planted live non-causal entry changes every row",
+   "ok": true,
+   "rows_differing": 64,
+   "of": 64,
+   "max_abs": 0.67041015625
+  },
+  {
+   "test": "N decode slot0=NaN (diagnostic)",
+   "ok": null,
+   "nan_rows_A": 54,
+   "nan_rows_B": 54,
+   "rows_bits_differing": 0
+  },
+  {
+   "test": "N extend slot0=NaN (diagnostic)",
+   "ok": null,
+   "nan_rows_A": 54,
+   "nan_rows_B": 64,
+   "rows_bits_differing": 10
+  }
+ ],
+ "info": {
+  "device": "NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition",
+  "capability": [
+   12,
+   0
+  ],
+  "plan_decode_s": 0.0,
+  "last_decode_plan": {
+   "model_type": "2",
+   "native_glm_h8": "False",
+   "native_dsv4_h8": "False",
+   "native_dsv4_h16": "False",
+   "heads_per_block": "16",
+   "math_warps": "8",
+   "block_threads": "288",
+   "io_warps": "1",
+   "kv_stage_packed": "False",
+   "kv_smem_stride": "528",
+   "kv_gmem_stride": "528",
+   "fp8_rope": "False",
+   "qk_candidates_per_warp": "8",
+   "qk_swap_ab": "False",
+   "topk": "2048",
+   "extra_topk": "0",
+   "has_extra": "False",
+   "num_main_chunks": "32",
+   "num_chunks": "32",
+   "num_splits": "32",
+   "chunks_per_split": "1",
+   "num_tokens": "64",
+   "h_blocks": "4",
+   "sm_count": "188",
+   "per_token_len": "True"
+  },
+  "plan_extend_s": 0.0,
+  "kernel_section_s": 2.9
+ },
+ "ok": true,
+ "finished": 1792779433.561505
+}

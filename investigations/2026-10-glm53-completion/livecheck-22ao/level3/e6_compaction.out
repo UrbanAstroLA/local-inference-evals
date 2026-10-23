@@ -1,0 +1,3 @@
+b12x_mla_sparse.py 6e74c42cf4385bb0
+kpool_compress.py 7fb8eab0d71c2c57
+cases 12282 table-or-attended-set mismatches 0 cases where post-compaction nsa equal: 9198 differ: 3084 of which extra all-masked 64-chunk: 186 secs 533.3

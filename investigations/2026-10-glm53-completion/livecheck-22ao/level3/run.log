@@ -1,0 +1,24 @@
+PASS L0 layout: front-packed distinct non-zero slots, -1 after, spare outside the row  {"rows": 64, "p1_min": 1, "p1_max": 2047, "rows_crossing_64_boundary": {"1": 10, "2": 25, "3": 33}}
+attention.sparse_mla: SparseMlaQuery (max_width=0, max_q_chunks=0, max_kv_rows=0, max_physical_records=4096, max_page_table_width=64, max_batch=4095, max_q_rows=4095, max_chunks_per_row=0, ...) was not prepared before its first use; preparing its default configuration. Repeated matching declarations are logged at DEBUG.
+attention.sparse_mla: SparseMlaQuery (max_width=0, max_q_chunks=0, max_kv_rows=0, max_physical_records=4096, max_page_table_width=64, max_batch=4096, max_q_rows=4096, max_chunks_per_row=0, ...) was not prepared before its first use; preparing its default configuration. Repeated matching declarations are logged at DEBUG.
+attention.sparse_mla: SparseMlaQuery (max_width=2048, max_q_chunks=0, max_kv_rows=0, max_physical_records=0, max_page_table_width=2048, max_batch=64, max_q_rows=64, max_chunks_per_row=32, ...) was not prepared before its first use; preparing its default configuration. Repeated matching declarations are logged at DEBUG.
+PASS D0 decode: A run twice is bit-equal  {"rows_differing": 0, "out_shape": [64, 64, 512]}
+attention.sparse_mla: SparseMlaQuery (max_width=2048, max_q_chunks=0, max_kv_rows=0, max_physical_records=0, max_page_table_width=2048, max_batch=64, max_q_rows=64, max_chunks_per_row=32, ...) was not prepared before its first use; preparing its default configuration. Repeated matching declarations are logged at DEBUG.
+PASS D0 extend: A run twice is bit-equal  {"rows_differing": 0, "out_shape": [64, 64, 512]}
+PASS E decode slot0=zero r=1: A vs B bit-equal on every row  {"rows_out_differing": 0, "rows_lse_differing": 0, "max_abs": 0.0, "rows_crossing_64": 10, "nan_rows_A": 0}
+PASS E decode slot0=zero r=2: A vs B bit-equal on every row  {"rows_out_differing": 0, "rows_lse_differing": 0, "max_abs": 0.0, "rows_crossing_64": 25, "nan_rows_A": 0}
+PASS E decode slot0=zero r=3: A vs B bit-equal on every row  {"rows_out_differing": 0, "rows_lse_differing": 0, "max_abs": 0.0, "rows_crossing_64": 33, "nan_rows_A": 0}
+PASS E extend slot0=zero r=1: A vs B bit-equal on every row  {"rows_out_differing": 0, "rows_lse_differing": 0, "max_abs": 0.0, "rows_crossing_64": 10, "nan_rows_A": 0}
+PASS E extend slot0=zero r=2: A vs B bit-equal on every row  {"rows_out_differing": 0, "rows_lse_differing": 0, "max_abs": 0.0, "rows_crossing_64": 25, "nan_rows_A": 0}
+PASS E extend slot0=zero r=3: A vs B bit-equal on every row  {"rows_out_differing": 0, "rows_lse_differing": 0, "max_abs": 0.0, "rows_crossing_64": 33, "nan_rows_A": 0}
+PASS E decode slot0=real r=1: A vs B bit-equal on every row  {"rows_out_differing": 0, "rows_lse_differing": 0, "max_abs": 0.0, "rows_crossing_64": 10, "nan_rows_A": 0}
+PASS E decode slot0=real r=2: A vs B bit-equal on every row  {"rows_out_differing": 0, "rows_lse_differing": 0, "max_abs": 0.0, "rows_crossing_64": 25, "nan_rows_A": 0}
+PASS E decode slot0=real r=3: A vs B bit-equal on every row  {"rows_out_differing": 0, "rows_lse_differing": 0, "max_abs": 0.0, "rows_crossing_64": 33, "nan_rows_A": 0}
+PASS E extend slot0=real r=1: A vs B bit-equal on every row  {"rows_out_differing": 0, "rows_lse_differing": 0, "max_abs": 0.0, "rows_crossing_64": 10, "nan_rows_A": 0}
+PASS E extend slot0=real r=2: A vs B bit-equal on every row  {"rows_out_differing": 0, "rows_lse_differing": 0, "max_abs": 0.0, "rows_crossing_64": 25, "nan_rows_A": 0}
+PASS E extend slot0=real r=3: A vs B bit-equal on every row  {"rows_out_differing": 0, "rows_lse_differing": 0, "max_abs": 0.0, "rows_crossing_64": 33, "nan_rows_A": 0}
+PASS P decode: planted live non-causal entry changes every row  {"rows_differing": 64, "of": 64, "max_abs": 0.67041015625}
+PASS P extend: planted live non-causal entry changes every row  {"rows_differing": 64, "of": 64, "max_abs": 0.67041015625}
+INFO N decode slot0=NaN (diagnostic)  {"nan_rows_A": 54, "nan_rows_B": 54, "rows_bits_differing": 0}
+INFO N extend slot0=NaN (diagnostic)  {"nan_rows_A": 54, "nan_rows_B": 64, "rows_bits_differing": 10}
+ALL PASS

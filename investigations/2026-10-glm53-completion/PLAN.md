@@ -2950,3 +2950,28 @@ frozen before any data; no GPU use).**
     guard tests re-run with identical results. The retry was authorized after arm A's results were read, with the
     ceiling raised to 4.0 GPU-hours. The first attempt's records are kept.
 - GPU-hours 1.51 (cumulative 129.82).
+
+**Amendment 22aq (2026-10-23; level 3, a subsequent investigation after the 22ao live check was read; not
+pre-registered; 0.0022 GPU-hours).**
+- **Question:** does the inflated consumed count on stock 0.9.1 (extra in-count columns empty) change the attention
+  output? Folder `livecheck-22ao/level3/`.
+- **Three conclusions, kept separate:**
+  - *Compaction:* the stock compaction and masking kernels give the same attended set per 64-slot chunk for
+    `nsa = p + 1` and `p + 1 + r` (CPU interpreter; indexer seq 1-2,047 × r = 1-3, sorted and shuffled pools;
+    12,282 cases, 0 mismatches).
+  - *Kernels:* stock decode and extend kernels on synthetic inputs, served decode split plan (32 splits, 1 chunk each,
+    per-row lengths):
+    - A vs B bit-equal (output and LSE) on 64 / 64 rows, r = 1-3, with cache slot 0 zero and with a real finite
+      record. This includes 10 / 25 / 33 boundary-crossing rows.
+    - Positive control (one live non-causal slot planted) changes 64 / 64 rows.
+    - Diagnostic: with slot 0 set to NaN bytes, the extend kernel's output changes on the boundary-crossing rows.
+  - *Mechanism:* ruled down as a computational contributor in the tested 0.9.1 configuration and under the verified
+    masking/compaction conditions. The masking argument needs the slot-0 record read by these kernels to be finite at
+    consumption; a bounded audit of that storage is in progress. Not extended to DCP2, untested kernel
+    configurations, or arbitrary cache contents.
+- **Source argument** (`level3/SOURCE-READING.md`): the call chain from the metadata builder to both kernels, with the
+  cited file hashes.
+- **Correction to 22ap (adopted from an independent assessment):** the 95% rule-of-three figures (3/N per row) assume
+  independent rows. Rows from the same steps, requests and ranks are dependent, so they are nominal. They are not a
+  population bound, and not the probability that a defect remains. The zero-violation counts and coverage stand.
+- GPU-hours 0.0022 (cumulative 129.82).
