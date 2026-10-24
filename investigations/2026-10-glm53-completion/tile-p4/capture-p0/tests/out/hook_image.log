@@ -1,0 +1,44 @@
+== hook_image (image) 2026-10-24T19:19:50Z
+PASS C1 init: 7 targets resolved, all layout_ok
+PASS C1 one capture record, ok
+PASS C1 npz written 0600 with the logged sha256
+PASS C1 every slice == the bytes at the independently computed offsets (18 slices)
+PASS C1 view copy == raw copy for every slice
+PASS C1 device two-sum == host two-sum (15 slices)
+PASS C1 indexer pool 511 split out (values + scale, 132 B)
+PASS C1 pools 511 / 1022 listed for blocks 0-2
+PASS C1 pre-copy destination column 3 = block 10 hashed, not stored
+PASS C1 physical ids recorded (MLA 7 block 0 = 5, KDA 4 col 2 = 6)
+PASS C1 engine-side prompt ids hashed (cached span)
+PASS C2 no second capture for the same request; none for other tags
+PASS C3 rank 1: KDA targets only, MLA/indexer 3/7 listed missing
+PASS C3 rank-1 capture ok and bytes correct
+PASS N1 recurrent view at the wrong offset -> target not layout_ok, capture not ok
+PASS N2 swapped kernel pages -> kernel_pages_contiguous False for block 0
+PASS N3 n_computed 13,000 -> capture not ok, nothing written
+WARNING 10-24 19:19:58 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+W1024 19:19:58.867000 7 torch/utils/cpp_extension.py:178] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+WARNING 10-24 19:19:58 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-24 19:19:58 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+PASS L1 hooks installed on the toy (12) and the conv wrapper
+PASS L1 loc file written
+PASS L1 every boundary's per-row sha256 == host sha256 of the toy's trace (27 tensors)
+PASS L1 identities hold (L3.pre_attn.y == L3.attn_in.x, L4.in == L3 outputs)
+PASS L1 L4.state_end: column 6, sha of the column written in the last step
+PASS L1 raw rows kept for positions < RAW_FIRST and the boundary
+PASS L1 steps recorded eager, engine-side ids hashed
+PASS L2 boundaries before the MoE equal the reference
+PASS L2 L3.moe_out differs at exactly one token
+PASS L2 raw cur/ref rows of the differing token == the two traces
+PASS L2 analysis loc_first() on the hook's own files: L3.moe_out at position 137
+PASS L2 analysis raw_magnitude reads the saved rows (|diff| ~ 1)
+PASS L3 not armed -> no record
+PASS L3 capturing / graph mode FULL -> no rows recorded
+PASS L3 '-N' warm, 2-row batch, 60-token step -> not armed
+PASS L3 the 60-token step is logged as skipped
+PASS L3 no p4/cap0 errors in the whole run
+PASS P1 cap0 calls: register in register, on_batch in _s0_batch, after_forward in on_logits, on_remove in on_remove
+PASS P1 the cap0 step/sched flush in on_remove is rank-0 only and guarded by flush_allowed()
+PASS P1 p4_hooks minus its 21 marked lines == the stage-0 module
+cap0 hook tests: 37 PASS, 0 FAIL
+rc=0

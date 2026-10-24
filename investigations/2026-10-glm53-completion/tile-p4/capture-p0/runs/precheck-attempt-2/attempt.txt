@@ -1,0 +1,1 @@
+cap0 precheck attempt 2; reason: capture-p0 pre-check, image a2; approved 2.0 GPU-h

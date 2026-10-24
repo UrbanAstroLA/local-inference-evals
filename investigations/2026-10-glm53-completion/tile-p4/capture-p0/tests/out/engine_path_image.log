@@ -1,0 +1,12 @@
+== engine_path_image (image) 2026-10-24T19:21:01Z
+W1024 19:21:07.253000 7 torch/utils/cpp_extension.py:178] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+PASS E0 cap0_hooks imported (GLM53_CAP0=on) None
+PASS E1 warm + capture without a forced request: rank-0 sched and step logs written at removal, rows for both ['CAP-r1', 'CW-r1-N']
+PASS E1 no p4 error []
+/usr/local/lib/python3.12/dist-packages/triton/runtime/interpreter.py:594: RuntimeWarning: divide by zero encountered in log
+  return TensorHandle(op(arg.data), arg.dtype.scalar)
+PASS E2 double flush (cap0 removal + forced store flush): no step logged twice in sched or steps 12/12
+PASS E2 step-ring files do not overlap; no p4 error [(1, 1), (2, 2), (3, 12)][]
+PASS E3 rank 1: no sched / steps log written (rank-0-only, as in Stage 0) 
+test_engine_path_cpu: 6/6 checks passed
+rc=0

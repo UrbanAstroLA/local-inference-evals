@@ -1,0 +1,1 @@
+cap0 session attempt 2: COMPLETE (replicates ['r1', 'r2', 'r3', 'r4', 'r5', 'r6'] of ['r1', 'r2', 'r3', 'r4', 'r5', 'r6']; ok 6; hook errors 0)

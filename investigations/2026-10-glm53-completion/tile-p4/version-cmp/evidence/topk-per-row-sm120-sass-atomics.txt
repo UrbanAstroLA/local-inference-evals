@@ -1,0 +1,21 @@
+# Zero-GPU disassembly of the compiled _C top-k kernels (sm_120 cubin) in each image.
+# Method: docker run --rm --network none -e CUDA_VISIBLE_DEVICES= --entrypoint bash <image>; cuobjdump -xelf + cuobjdump -sass (nvdisasm from the image's nvidia/cu13 wheel)
+# on /usr/local/lib/python3.12/dist-packages/vllm/_C_stable_libtorch.abi3.so (byte-identical in both images).
+# Counts are a presence check for shared-memory atomics (ATOMS.*), not a proof of output-order behaviour.
+
+== image 48e254d94f58
+cubin: x.140.sm_120.cubin
+_ZN4vllm17topKPerRowPrefillILi512ELb1EEEvPKfPKiS4_Piiiii instr=5907 {'ATOMS.POPC.INC.32': 84, 'ATOMS.ADD': 88}
+_ZN4vllm17topKPerRowPrefillILi512ELb0EEEvPKfPKiS4_Piiiii instr=5663 {'ATOMS.POPC.INC.32': 84, 'ATOMS.ADD': 88}
+_ZN4vllm16topKPerRowDecodeILi1024ELb1ELb0ELb1EEEvPKfPKiPiiiiiiPfiS4_ instr=6320 {'ATOMS.POPC.INC.32': 84, 'ATOMS.ADD': 88}
+_ZN4vllm16topKPerRowDecodeILi512ELb1ELb1ELb0EEEvPKfPKiPiiiiiiPfiS4_ instr=5921 {'ATOMS.POPC.INC.32': 84, 'ATOMS.ADD': 88}
+_ZN4vllm16topKPerRowDecodeILi512ELb1ELb0ELb0EEEvPKfPKiPiiiiiiPfiS4_ instr=5759 {'ATOMS.POPC.INC.32': 84, 'ATOMS.ADD': 88}
+_ZN4vllm16topKPerRowDecodeILi512ELb0ELb0ELb0EEEvPKfPKiPiiiiiiPfiS4_ instr=5520 {'ATOMS.POPC.INC.32': 84, 'ATOMS.ADD': 88}
+== image a9e985c09885
+cubin: x.140.sm_120.cubin
+_ZN4vllm17topKPerRowPrefillILi512ELb1EEEvPKfPKiS4_Piiiii instr=5907 {'ATOMS.POPC.INC.32': 84, 'ATOMS.ADD': 88}
+_ZN4vllm17topKPerRowPrefillILi512ELb0EEEvPKfPKiS4_Piiiii instr=5663 {'ATOMS.POPC.INC.32': 84, 'ATOMS.ADD': 88}
+_ZN4vllm16topKPerRowDecodeILi1024ELb1ELb0ELb1EEEvPKfPKiPiiiiiiPfiS4_ instr=6320 {'ATOMS.POPC.INC.32': 84, 'ATOMS.ADD': 88}
+_ZN4vllm16topKPerRowDecodeILi512ELb1ELb1ELb0EEEvPKfPKiPiiiiiiPfiS4_ instr=5921 {'ATOMS.POPC.INC.32': 84, 'ATOMS.ADD': 88}
+_ZN4vllm16topKPerRowDecodeILi512ELb1ELb0ELb0EEEvPKfPKiPiiiiiiPfiS4_ instr=5759 {'ATOMS.POPC.INC.32': 84, 'ATOMS.ADD': 88}
+_ZN4vllm16topKPerRowDecodeILi512ELb0ELb0ELb0EEEvPKfPKiPiiiiiiPfiS4_ instr=5520 {'ATOMS.POPC.INC.32': 84, 'ATOMS.ADD': 88}

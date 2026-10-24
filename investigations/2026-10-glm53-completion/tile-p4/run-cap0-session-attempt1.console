@@ -1,0 +1,22 @@
+budget: approved 2.0 GPU-h (costs-cap0.jsonl); used 0.0050; left 1.9950; session attempt 1: wall cap 1100s x 2 GPUs
+== preflight 2026-10-24T18:51:58Z
+index, memory.used [MiB], utilization.gpu [%]
+0, 20 MiB, 0 %
+1, 2011 MiB, 2 %
+utilization sample 1: idle
+== start 2026-10-24T18:51:58Z image=local/glm53-v091-p4-cap0:local (sha256:5831fc274d037dad3e61f18ba8cfc3e334278dbdcd74d1df9f3f327e706d8a9d) cap 1100s session attempt 1 loc on
+ready after 769s
+G-instr: OK p4 init ranks [0, 1]; cap0_init ranks [0, 1]; core targets and layout as designed
+forcewin: registered records 2 (expected 2), errors 0
+GATES PASS A startup {"G3": true}
+== client (deadline in 241s)
+client rc=0
+cap0 records flushed 20 of 20 expected (wait 1s)
+== cleanup 2026-10-24T19:05:49Z (stage done)
+cap0 session attempt 1 occupied 837s x 2 GPU = 0.465 GPU-h (rc 0)
+private files: 46 under <runs>/tile-p4/PRIVATE-capture-p0/session-attempt-1 (mode 0700)
+GATES PASS A final {"G3": true}
+cap0 session attempt 1: PARTIAL (replicates ['r1', 'r2', 'r3', 'r4', 'r5', 'r6'] of ['r1', 'r2', 'r3', 'r4', 'r5', 'r6']; ok 0; hook errors 0)
+CAP0: INCOMPLETE (instrumentation/addressing invalid) (Instrumentation or addressing remains invalid)
+  why: fewer than 2 replicates passed every gate
+rc=0

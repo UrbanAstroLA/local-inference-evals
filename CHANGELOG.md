@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-10-24, exact-byte capture and version comparison (completion investigation, amendment 22az)
+
+0.897 GPU-hours (cumulative 134.92).
+
+- **`tile-p4/capture-p0/`:** protocol with dated amendments, package, CPU tests, self-critique, both attempts' run
+  records and the result. Captured bytes, row hashes and every path containing `PRIVATE` are withheld; test scratch
+  trees are withheld as counts.
+- **`tile-p4/version-cmp/`:** the v0.7.0 / v0.9.1 source comparison, with per-file hashes. Copies of third-party
+  source are withheld (hashes listed).
+- **`PLAN.md`:** amendment 22az.
+- **Investigation `README.md`:** two Status entries. **`LEDGER.md`** and the ledger page: a 22az entry.
+
 ## 2026-10-24, Stage 0 audit and wording corrections (completion investigation, amendment 22ay)
 
 No GPU use (cumulative 134.02).

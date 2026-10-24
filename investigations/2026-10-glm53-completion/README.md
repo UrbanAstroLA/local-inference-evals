@@ -113,6 +113,25 @@ difference. Quantization is held fixed.
     integer sums, not a hash; "no atomics" does not establish determinism.
   - Which tokens or bytes differ, and the operation that produces the difference, are not established; the retained
     checksums cannot resolve them.
+- **Exact-byte capture (22az; [`tile-p4/capture-p0/RESULT.md`](tile-p4/capture-p0/RESULT.md)).**
+  - Two attempts, 0.897 GPU-hours. Attempt 1 read INCOMPLETE because of two package defects (the warm-up cached one
+    block too few for the capture's cache hit; the scheduler log was not written for these requests), owned in the
+    protocol's amendments.
+  - Attempt 2 passed every gate. Identical warm prefills first part at layer 3's indexer top-k output, from token
+    2,051: the first position where sparse selection applies (more than 512 four-token pools). In every sampled row
+    the top-k holds the same pools in a different order. From that token on, the attention output, the MoE output and
+    the cached state downstream differ; every earlier position is equal at every recorded boundary.
+  - Controls compared equal; the pair without the recording hooks also differs.
+  - Not established: whether the order varies with execution or with memory placement (every pair had a different
+    allocation); the operation has not been replayed in isolation; nothing connects it to completion behaviour.
+- **Version comparison (22az, no GPU; [`tile-p4/version-cmp/VERSION-CMP.md`](tile-p4/version-cmp/VERSION-CMP.md)).**
+  - The prefill top-k code and its compiled kernel are identical in v0.7.0 and v0.9.1, and its output order is not
+    specified. Nothing between the top-k and the attention puts the order in a fixed sequence, and the sparse-MLA
+    prefill kernel walks the list in the given order in both versions.
+  - The deployed configurations differ (v0.7.0 with decode context parallelism 2; v0.9.1 with 1 and MLA layer
+    ownership).
+  - On source evidence the mechanism is present in both versions, so it does not by itself distinguish them. v0.7.0
+    was not measured.
 - **Upstream.** The verified corrections were submitted on 2026-10-22, each with a reproduction and its verification:
   - tpurtell's engine: [#7](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/7) (D2),
     [#8](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/8) (D1),

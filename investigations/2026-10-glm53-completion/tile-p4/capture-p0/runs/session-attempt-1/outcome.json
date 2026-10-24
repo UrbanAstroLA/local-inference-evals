@@ -1,0 +1,118 @@
+{
+ "attempt": 1,
+ "verdict": "PARTIAL",
+ "g_instr": true,
+ "g3_startup": true,
+ "g3_final": true,
+ "client_complete": true,
+ "planned": [
+  "r1",
+  "r2",
+  "r3",
+  "r4",
+  "r5",
+  "r6"
+ ],
+ "replicates_done": [
+  "r1",
+  "r2",
+  "r3",
+  "r4",
+  "r5",
+  "r6"
+ ],
+ "replicate_ok": {
+  "r1": false,
+  "r2": false,
+  "r3": false,
+  "r4": false,
+  "r5": false,
+  "r6": false
+ },
+ "captures": [
+  [
+   "CAP-r1",
+   0
+  ],
+  [
+   "CAP-r1",
+   1
+  ],
+  [
+   "CAP-r2",
+   0
+  ],
+  [
+   "CAP-r2",
+   1
+  ],
+  [
+   "CAP-r3",
+   0
+  ],
+  [
+   "CAP-r3",
+   1
+  ],
+  [
+   "CAP-r4",
+   0
+  ],
+  [
+   "CAP-r4",
+   1
+  ],
+  [
+   "CAP-r5",
+   0
+  ],
+  [
+   "CAP-r5",
+   1
+  ],
+  [
+   "CAP-r6",
+   0
+  ],
+  [
+   "CAP-r6",
+   1
+  ]
+ ],
+ "loc_flushed": [
+  [
+   "CW-r1-L",
+   0
+  ],
+  [
+   "CW-r1-L",
+   1
+  ],
+  [
+   "CW-r2-L",
+   0
+  ],
+  [
+   "CW-r2-L",
+   1
+  ],
+  [
+   "CW-r5-L",
+   0
+  ],
+  [
+   "CW-r5-L",
+   1
+  ],
+  [
+   "CW-r6-L",
+   0
+  ],
+  [
+   "CW-r6-L",
+   1
+  ]
+ ],
+ "hook_errors": 0,
+ "skips": []
+}

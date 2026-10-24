@@ -1,0 +1,43 @@
+# sha256 of every in-image file cited in VERSION-CMP.md
+# columns: sha256(v0.7.0 image 48e254d9)  sha256(v0.9.1 image a9e985c0)  same?  in-image path
+# '-' = file absent in that image
+7d42294c63ea52a7845a6ad0289ae3596098f5aee857718cfed34d6dcf0418f2  c3b368160f00a60c192873ba127bb1c5ec8a98bbc7e1ee7a887152f51179db53  DIFF  /usr/local/lib/python3.12/dist-packages/vllm/models/glm5next/nvidia/attention.py
+936b06c4671d52fce52ae85bb24b986db17855f32740bf55b226053fc385c4b4  936b06c4671d52fce52ae85bb24b986db17855f32740bf55b226053fc385c4b4  SAME  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/mla.py
+e7935f2a9b8ecbc75410defff571d9940ad2abf511286bf0936d0c324936df39  e7935f2a9b8ecbc75410defff571d9940ad2abf511286bf0936d0c324936df39  SAME  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer_kpool.py
+d5091557f9b12d968b323a6778838197464cf9e9c4959239de834648c001984d  890c597b6ef2b016a9a476397800e47c1453b3700abf1a8cb324ea7d797d62b7  DIFF  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer.py
+52959ea33234db6e7cfa94289dd263a15add3be4d2107285418c830b5c19e472  7fb8eab0d71c2c576f995cc91ffc79c5055269b9bed3b094247f36bc503b241d  DIFF  /usr/local/lib/python3.12/dist-packages/vllm/models/glm5next/nvidia/ops/kpool_compress.py
+aff489e6505b495db182bfaf95017e31e2ceab0cf1685b3e3a94976fec02bfce  aff489e6505b495db182bfaf95017e31e2ceab0cf1685b3e3a94976fec02bfce  SAME  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/kernels/attention/dsa/dcp_indexer_cutedsl.py
+4b160792231daed43816676586fbf42e8269a60ebb1f1e92215880b48d19c757  6e74c42cf4385bb0451243098ec8b4a84005675fa776169fddb2fb230bab0157  DIFF  /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/b12x_mla_sparse.py
+a3cf9998ba60d51bbc50dfc093162adc01482f37cacbc6b3bee909cfca4cb228  a3cf9998ba60d51bbc50dfc093162adc01482f37cacbc6b3bee909cfca4cb228  SAME  /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/sparse_utils.py
+5ca3b8955ff2dca446813057e6678065a44ec283d73db4a9d8fd24328cb4ed07  5ca3b8955ff2dca446813057e6678065a44ec283d73db4a9d8fd24328cb4ed07  SAME  /usr/local/lib/python3.12/dist-packages/vllm/_custom_ops.py
+146781ccbd1f2f616e9c0459cf3b4643f2ed0be90cb33e5c154e134bcf1f8dfa  146781ccbd1f2f616e9c0459cf3b4643f2ed0be90cb33e5c154e134bcf1f8dfa  SAME  /usr/local/lib/python3.12/dist-packages/vllm/envs.py
+a509e42c4b9b6ed388f1f5372a7b50d0aeab58f959113812f817f014febef103  e405e84eb3674b04bc6251b2736fe0dce8f66a907123c82dd31b4c2ebc73841f  DIFF  /usr/local/lib/python3.12/dist-packages/vllm/v1/core/sched/scheduler.py
+d0d43d9f02ff6c683d0c0c4efcfcb2324749c9dc9998f0d46b3952bbbb6e8d6d  c4890290637233d95256e9d8e810e0e73a1bffe3e7997d435697427e37099c1b  DIFF  /opt/b12x/b12x/attention/dsa_indexer/tiled_topk.py
+c4b01d8a5900ef5fbebcbff54bc3e3af1587d02a96f065342aca435489bf3b22  31ec54cecb81a486e6ac6239e4760d911aade1e94b0ef4810d815eae967888ff  DIFF  /opt/b12x/b12x/attention/dsa_indexer/paged.py
+da401c329eabb6dd33da46185ca66f718fd526545b60c25b51b1cc49abc02e43  655b5884939b55822c8d847bb541fbd3976eec345d52caeb085dc0b862d6518b  DIFF  /opt/b12x/b12x/attention/sparse_mla/api.py
+-  86ae220dbe5f680f22c9e7726d0c3a8845b57ad492c744ef1cac9d4baa885ced  DIFF  /opt/b12x/b12x/attention/sparse_mla/_preparation.py
+9324eba4c3e162d540dc3f1e876ac04bdf4c6eb247ffbbe372e696e25105d03e  6b9fc9977aa290cd96c412683f8cb8e71224c741b3c93040312c1fb28c551dc8  DIFF  /opt/b12x/b12x/attention/_shared/mla/api.py
+a48ba27a04629b5cb7eba1e24fc07e6af8942d6d43c312e065438040f5e1e050  1197f081741a2b1977586ccdf519df0855ee710d31d3efc56b2b1f4028d1cb4c  DIFF  /opt/b12x/b12x/attention/_shared/mla/prefill.py
+70e450ff645684ae3a97aff3004988a6b596dbe6ba0bcfe2e340f94b9eb7fb60  73fdfab3d46fdbdf303ad98665d74ce76f42c13c99287338a1ae607d414b93eb  DIFF  /opt/b12x/b12x/attention/_shared/mla/prefill_mg.py
+2fd00cdea24532620d5a5dece728fe03e064d60351e924fb7d8af24f4279d09a  36413bfca40e4aaca82b14f0bd1c5b3412d32f65738c4106e6aefa3796ef6515  DIFF  /opt/b12x/b12x/attention/_shared/mla/kernel.py
+2004c64bec008fa024a6f8352e685fca0aa2c86f18af22d7a0ab7e6e15d2377b  105c0f738f0f3ed6bf6a72c2f7db3a89a19b6e0813b84c0100541ff36307e178  DIFF  /opt/b12x/b12x/attention/_shared/mla/decode_math.py
+62fc459ee92da70b886f000299ddf1cb75dcfd285ec955084cc10fe11c61e263  be45934137dabf7b67e5bccb0273a40c196b0a05914b6304c2daf57149f831fd  DIFF  /opt/b12x/tests/attention/test_paged_indexer_integration.py
+c1de8b073277b8edfb5c85c7c8d83ee511593d77d271c26a7ddf4d1e1c5abc8d  c1de8b073277b8edfb5c85c7c8d83ee511593d77d271c26a7ddf4d1e1c5abc8d  SAME  /usr/local/bin/glm53-entrypoint
+67449677b787f37e31f69de97269097907ebda395879eb67d0b2ebb991a2f0dc  67449677b787f37e31f69de97269097907ebda395879eb67d0b2ebb991a2f0dc  SAME  /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/indexer.py
+2b096e4bf49725e0498536c60ee0377e366d188ca5dae94d89da2c5d1e87b612  2b096e4bf49725e0498536c60ee0377e366d188ca5dae94d89da2c5d1e87b612  SAME  /usr/local/lib/python3.12/dist-packages/vllm/_C_stable_libtorch.abi3.so   (binary; not copied)
+
+# Host-side files cited (not from either image): sha256  path (repo-relative to /data)
+0f9ee0cc87263a3ec33b9cbcfbb69b504d175c830aee1b60ec9fa3fafccb37ba  recipes/glm53-flash-exl3-k3.25@tpurtell/recipe.json
+ed50bc7d83751258b4707e3b9d3c5dba43b41b4d6587d5d81277d02758cea2b6  recipes/glm53-flash-exl3-k3.25@tpurtell/env.sh
+f4e300bc2b22ad12dae1fc01cf367e6fdc231c7ebb1988bdfcea2a83ce9b8708  recipes/glm53-flash-exl3-k3.25@tpurtell+v0.9.1/recipe.json
+6186bbb66ed982ac942d62ce1dda0a2b66cc63e7af015de717e66043f263414c  recipes/glm53-flash-exl3-k3.25@tpurtell+v0.9.1/env.sh
+c852511c1b13264aa750f78ed78ffccc15a3a67569179e2d84344a678378ca57  stacks/glm53-flash-v0.7.0/start.sh
+f1f3ced5dc85968cb31aabd102575d121f673e1a0f619919c5855d8fed8fb4d0  stacks/glm53-flash-v0.7.0/local-env.sh
+e1196cbcd6b4744cb41fdebf3d12d8586dbea464e702af5de47617837efe0e5e  stacks/glm53-flash-v0.9.0/start.sh
+f4658b81eeb4c4d5403a95795f10cf5962eedd8cc5161372356ac725a1404fe6  stacks/glm53-flash-v0.9.0/local-env.sh
+30e9e9da2a19b4c2d1c54433cccbdd78a11fdbaf89fbce39881946f2a75bcd6f  runs/gpqa/glm53-flash-exl3-k3.25@tpurtell+ps.server.log
+0e05caefa4ab0538957cbf2d90acf296a11bf5e5204e6f0d9fb2b373d35b622e  runs/gpqa/glm53-flash-exl3-k3.25@tpurtell+v0.9.1+ps.server.log
+6b477cfc1fbf8cdf3795c6389bc9712503e3f7c3889145036488ffab2b1a7781  model config.json (wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1 @ 701cd745)
+
+# Upstream reference copy (NOT from either image; vLLM csrc/sampler.cu fetched via GitHub API in an earlier session, commit not recorded)
+2fc28d751449adb7ea1333863061f7c5672e32caca80b49af8418144288798ac  tile-p4/version-cmp/upstream-ref/sampler.cu

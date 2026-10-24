@@ -1,0 +1,9 @@
+CAP0: INCOMPLETE (instrumentation/addressing invalid) (Instrumentation or addressing remains invalid)
+  why: fewer than 2 replicates passed every gate
+rc=0
+PASS A1 attempt 1 reads INCOMPLETE, 0 of 6 replicates counted
+PASS A1 every replicate: capture cached_tokens 8704 (must be 13056)
+PASS A1 every replicate: warm prompt_tokens 13057 (must be 17409)
+PASS A1 every replicate: no scheduler log at all
+PASS A1 every replicate: capture taken from n_computed 8704 on both ranks
+attempt-1 re-analysis checks: 5 PASS, 0 FAIL

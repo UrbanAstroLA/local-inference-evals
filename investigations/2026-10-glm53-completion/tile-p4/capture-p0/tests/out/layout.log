@@ -1,0 +1,36 @@
+PASS A1 P = 68 x 64 x 528 = 2,297,856
+PASS A1 indexer page 17 x 8,448 = 143,616
+PASS A1 KDA page use 2,244,608 of P
+PASS A1 1,088 pools per block = 17 x 64
+PASS A2 indexer block 436 = [62,616,576, 62,760,192)
+PASS A2 indexer block 762 = [109,435,392, 109,579,008)
+PASS A2 pool 511: values [67,200, 67,328), scale [67,580, 67,584)
+PASS A2 pool 1,022: values [134,656, 134,784), scale [135,160, 135,164)
+PASS A2 pool 0 and pool 1,087 bound the block
+PASS A2 two never-written pools = 264 B
+PASS A2 MLA block 436 = [436 P, 437 P)
+PASS A2 MLA record of in-block token p at b*P + 528 p
+PASS A3 conv rows 0-2 [b P, +73,728) / rows 3-5 [+73,728, +147,456)
+PASS A3 recurrent [b P + 147,456, +2,097,152)
+PASS A4 warm chunks of 17,409 tokens (amendment A1: the warm is the full capture prompt)
+PASS A4 == Stage-0 recorded warm rows of W-V1-r1-R01 (first 12 steps: 4 blocks of 2,045 / 2,045 / 262)
+PASS A4 never-written pools of block 0 == (511, 1022)
+PASS A4 never-written pools of block 1 == (511, 1022)
+PASS A4 never-written pools of block 2 == (511, 1022)
+PASS A4 never-written pools of block 3 == (511, 1022)
+PASS A4 an aligned chunking writes every pool
+PASS A5 cached-state column of n_cached 13,056 = 2
+PASS A5 pre-copy destination (13,056 + 2,045) = column 3
+PASS A5 n_cached for P_early 17,409 = 13,056
+PASS A8 cache rule: the 17,409-token warm gives the capture 13,056 cached tokens
+PASS A8 cache rule reproduces attempt 1 (13,057-token warm -> 8,704) and Stage 0 (113,940 -> 13,056)
+PASS A8 the rule matches attempt 1's measured cached_tokens on all 6 replicates
+PASS A6 Stage-0 W-V1-r1-R01 group-0 logical block 0 = 436 (AUDIT task 4)
+PASS A6 Stage-0 W-V1-r1-R01 group-2 column 2 = 440 (AUDIT task 3)
+PASS A6 Stage-0 W-V1-r2-R01 group-0 logical block 0 = 762
+PASS A6 physical() inverts the kernel-entry expansion (bpk 68)
+PASS A6 capture plan for W-V1-r1-R01: layer-7 indexer logical 0 -> AUDIT range
+PASS A6 capture plan for W-V1-r2-R01: layer-7 indexer logical 0 -> AUDIT range
+PASS A7 E4M3 0x38 = 1.0, 0x7e = 448, 0x01 = 2^-9, 0xb8 = -1.0, 0x7f = NaN
+PASS A7 LOC_OPERATION covers every boundary
+layout tests: 35 PASS, 0 FAIL

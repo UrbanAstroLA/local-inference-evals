@@ -1,0 +1,6 @@
+== engine_path_attempt1_image (image) 2026-10-24T19:21:35Z
+W1024 19:21:41.541000 7 torch/utils/cpp_extension.py:178] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+PASS E0 cap0_hooks imported (GLM53_CAP0=on) None
+PASS E1-neg the attempt-1 module leaves NO sched/steps log for non-forced keyed requests (defect reproduced) []
+test_engine_path_cpu[attempt-1 module]: 2/2 checks passed
+rc=0

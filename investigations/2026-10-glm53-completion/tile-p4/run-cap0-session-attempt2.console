@@ -1,0 +1,21 @@
+budget: approved 2.0 GPU-h (costs-cap0.jsonl); used 0.4750; left 1.5250; session attempt 2: wall cap 1100s x 2 GPUs
+== preflight 2026-10-24T19:45:10Z
+index, memory.used [MiB], utilization.gpu [%]
+0, 20 MiB, 0 %
+1, 1944 MiB, 2 %
+utilization sample 1: idle
+== start 2026-10-24T19:45:11Z image=local/glm53-v091-p4-cap0-a2:local (sha256:8cb49fcabcfe85e8624d03822d0ca7a02b10469f6a3ea6d8713aed2459abd3bd) cap 1100s session attempt 2 loc on
+ready after 699s
+G-instr: OK p4 init ranks [0, 1]; cap0_init ranks [0, 1]; core targets and layout as designed
+forcewin: registered records 2 (expected 2), errors 0
+GATES PASS A startup {"G3": true}
+== client (deadline in 310s)
+client rc=0
+cap0 records flushed 20 of 20 expected (wait 1s)
+== cleanup 2026-10-24T19:57:45Z (stage done)
+cap0 session attempt 2 occupied 760s x 2 GPU = 0.4222 GPU-h (rc 0)
+private files: 58 under <runs>/tile-p4/PRIVATE-capture-p0/session-attempt-2 (mode 0700)
+GATES PASS A final {"G3": true}
+cap0 session attempt 2: COMPLETE (replicates ['r1', 'r2', 'r3', 'r4', 'r5', 'r6'] of ['r1', 'r2', 'r3', 'r4', 'r5', 'r6']; ok 6; hook errors 0)
+CAP0: operation located (Valid state differs, reproducible local operation defect found)
+rc=0

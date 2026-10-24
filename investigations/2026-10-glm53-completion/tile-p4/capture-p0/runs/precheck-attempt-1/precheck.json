@@ -1,0 +1,69 @@
+{
+ "verdict": "PASS",
+ "device": "cuda:0",
+ "gpu": true,
+ "results": [
+  {
+   "test": "K1 point-0 capture on a served-layout device KV cache: 18 slices exact, view == raw, two-sums equal",
+   "ok": true,
+   "bad": [],
+   "secs": 0.2177
+  },
+  {
+   "test": "K2 the toy carries the served call pattern: 12 hooks + the conv wrapper installed",
+   "ok": true,
+   "hooks": [
+    "pre:Glm5NextDecoderLayer",
+    "pre:Glm5NextDecoderLayer",
+    "post:FusedOp",
+    "pre:FusedOp",
+    "post:FusedOp",
+    "pre:MLA",
+    "post:Indexer",
+    "post:MLP",
+    "pre:KDAMod",
+    "post:KDAMod",
+    "post:KDAMod",
+    "pre:ONorm"
+   ]
+  },
+  {
+   "test": "K2 graph capture with hooks installed (unarmed): captured, nothing recorded, replay == eager",
+   "ok": true,
+   "err": null,
+   "recorded": false,
+   "replay_equal": true
+  },
+  {
+   "test": "K2 graph capture with hooks installed (stale arm set): captured, nothing recorded, replay == eager",
+   "ok": true,
+   "err": null,
+   "recorded": false,
+   "replay_equal": true
+  },
+  {
+   "test": "K3 armed eager step at served sizes (2,045 tokens, 27 tensors): every row's sha256 == host",
+   "ok": true,
+   "bad": [],
+   "loc_step_s": 0.541,
+   "loc_bytes_per_token": 278928,
+   "loc_gbps": 1.054,
+   "hold_mb": 3473.0
+  },
+  {
+   "test": "N1 negative control: a device-to-host copy inside a capture fails it",
+   "ok": true
+  }
+ ],
+ "times": {
+  "capture_s": 0.2177,
+  "loc_step_s": 0.541,
+  "loc_step_bytes": 570407760,
+  "loc_bytes_per_token": 278928,
+  "loc_gbps": 1.054,
+  "hold_mb": 3473.0
+ },
+ "cap0_errors": 0,
+ "p4_errors": 0,
+ "wall_s": 12.8
+}

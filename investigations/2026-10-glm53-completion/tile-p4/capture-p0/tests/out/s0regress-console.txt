@@ -1,0 +1,9 @@
+== s0regress: rc=0
+== s0img_units (image): rc=0; 8 PASS, 0 FAIL
+== s0img_engine (image): rc=0; 7 PASS, 0 FAIL
+== s0img_big (image): rc=0; 6 PASS, 0 FAIL
+== s0img_precheck_dry (image): rc=0; 5 PASS, 1 FAIL
+== s0img_p4_units (image): rc=0; 17 PASS, 0 FAIL
+== s0img_p4_list (image): rc=0; 15 PASS, 0 FAIL
+== s0img_fw_rest (image): rc=0; 8 PASS, 0 FAIL
+== s0img_inert_off (image): rc=0; 0 PASS, 1 FAIL

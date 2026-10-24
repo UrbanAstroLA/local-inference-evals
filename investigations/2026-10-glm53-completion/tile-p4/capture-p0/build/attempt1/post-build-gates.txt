@@ -1,0 +1,12 @@
+== post-build gates 2026-10-24T18:11:23Z image sha256:5831fc274d037dad3e61f18ba8cfc3e334278dbdcd74d1df9f3f327e706d8a9d
+vllm .py files: image 2438, stage-0 base 2436
+files differing from the stage-0 image: ./cap0_hooks.py ./cap0_hooks_layout.py ./p4_hooks.py 
+PASS gate (a): only p4_hooks.py differs and the two cap0 modules are added
+PASS installed p4_hooks.py == reviewed
+PASS installed cap0_hooks.py == reviewed
+PASS installed cap0_hooks_layout.py == reviewed
+PASS gate (b1): env unset -> stage-0 gate b1 holds; cap0_hooks not imported
+PASS gate (b2): GLM53_P4=on GLM53_P4_S0=on, GLM53_CAP0 unset -> stage-0 gate b4 holds; cap0_hooks not imported
+PASS gate (b3): GLM53_CAP0=on without GLM53_P4_S0 -> not imported
+PASS gate (b4): GLM53_CAP0=on GLM53_CAP0_LOC=on -> imported and on; nothing registered, no hooks; conv patch target present and unpatched
+PASS gate (c): image layers extend the stage-0 base (106 -> 111)

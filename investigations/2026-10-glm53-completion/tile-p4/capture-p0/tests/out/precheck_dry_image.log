@@ -1,0 +1,13 @@
+== precheck_dry_image (image) 2026-10-24T19:20:10Z
+PASS K1 point-0 capture on a served-layout device KV cache: 18 slices exact, view == raw, two-sums equal  {"bad": [], "secs": 0.1243}
+WARNING 10-24 19:20:17 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+W1024 19:20:17.484000 7 torch/utils/cpp_extension.py:178] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+WARNING 10-24 19:20:17 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-24 19:20:17 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+PASS K2 the toy carries the served call pattern: 12 hooks + the conv wrapper installed  {"hooks": ["pre:Glm5NextDecoderLayer", "pre:Glm5NextDecoderLayer", "post:FusedOp", "pre:FusedOp", "post:FusedOp", "pre:MLA", "post:Indexer", "post:MLP", "pre:KDAMod", "post:KDAMod", "post:KDAMod", "pre:ONorm"]}
+PASS K2 (CPU, eager) unarmed toy step: nothing recorded  {}
+PASS K2 (CPU, eager) armed toy step: every boundary recorded, both state points  {"missing": []}
+PASS K3 armed eager step at served sizes (2,045 tokens, 27 tensors): every row's sha256 == host  {"bad": [], "loc_step_s": 0.462, "loc_bytes_per_token": 278928, "loc_gbps": 1.236, "hold_mb": 3473.0}
+PASS N1 negative control: D2H inside a capture fails (skipped on CPU)  {"skipped": true}
+VERDICT PASS {"capture_s": 0.1243, "loc_step_s": 0.462, "loc_step_bytes": 570407760, "loc_bytes_per_token": 278928, "loc_gbps": 1.236, "hold_mb": 3473.0}
+rc=0

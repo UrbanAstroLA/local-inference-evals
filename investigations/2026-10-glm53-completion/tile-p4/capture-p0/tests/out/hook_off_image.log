@@ -1,0 +1,3 @@
+== hook_off_image (image) 2026-10-24T19:20:06Z
+PASS S1 GLM53_CAP0 unset: cap0_hooks not imported; p4._cap0 is None; stage-0 recording on
+rc=0

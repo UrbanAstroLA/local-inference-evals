@@ -1,0 +1,1 @@
+CAP0: operation located (Valid state differs, reproducible local operation defect found)

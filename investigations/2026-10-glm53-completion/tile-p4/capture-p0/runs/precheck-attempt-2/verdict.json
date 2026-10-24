@@ -1,0 +1,1 @@
+{"verdict": "PASS", "gpu": true, "times": {"capture_s": 0.2202, "loc_step_s": 0.524, "loc_step_bytes": 570407760, "loc_bytes_per_token": 278928, "loc_gbps": 1.088, "hold_mb": 3473.0}, "image": "sha256:8cb49fcabcfe85e8624d03822d0ca7a02b10469f6a3ea6d8713aed2459abd3bd"}

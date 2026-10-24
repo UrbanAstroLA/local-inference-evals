@@ -1,0 +1,80 @@
+synthetic fixture root /o
+PASS A_located_moe: class 'operation located'
+PASS A_located_moe: boundary L3.moe_out -> the MoE operation
+PASS A_located_moe: located in warm chunk 1 (tokens 2,045-4,089)
+PASS A_located_moe: MLA-7 block 0 first differing record 2,100; chunk 0 untouched
+PASS A_located_moe: latent lanes only (scale lanes equal)
+PASS A_located_moe: assessor row = reproducible local operation defect found
+PASS A_located_moe: loc and no-loc pairs agree (instrumentation not implicated)
+PASS A_located_moe: every pair relocated: allocation and execution not separated
+PASS A_located_moe: controls (MLA 3, KDA 2) equal
+PASS B_located_attn_chunk1: class 'operation located'
+PASS B_located_attn_chunk1: boundary L3.attn_out (sparse MLA attention)
+PASS B_located_attn_chunk1: chunk 0 already differs in MLA-7 (dense path)
+PASS C_no_localisation: class 'slice located, operation not located'
+PASS C_no_localisation: reason: no localisation pair
+PASS C_no_localisation: assessor row = bounded replay does not locate it
+PASS D_enters_before_layer3: class 'slice located, operation not located'
+PASS D_enters_before_layer3: reason: enters before layer 3
+PASS E_pairs_disagree: class 'slice located, operation not located'
+PASS E_pairs_disagree: reason: pairs disagree
+PASS F_equal: class 'valid state equal this time (non-reproduced)'
+PASS F_equal: assessor: no row, non-reproduction
+PASS F_equal: no valid slice differs in any pair
+PASS G_rank1_capture_missing: class 'INCOMPLETE (instrumentation/addressing invalid)'
+PASS G_rank1_capture_missing: missing / invalid evidence -> INCOMPLETE, with the gate named
+PASS H_view_mismatch: class 'INCOMPLETE (instrumentation/addressing invalid)'
+PASS H_view_mismatch: missing / invalid evidence -> INCOMPLETE, with the gate named
+PASS I_n_cached_wrong: class 'INCOMPLETE (instrumentation/addressing invalid)'
+PASS I_n_cached_wrong: missing / invalid evidence -> INCOMPLETE, with the gate named
+PASS J_chunks_differ: class 'INCOMPLETE (instrumentation/addressing invalid)'
+PASS J_chunks_differ: missing / invalid evidence -> INCOMPLETE, with the gate named
+PASS L_cached_tokens_wrong: class 'INCOMPLETE (instrumentation/addressing invalid)'
+PASS L_cached_tokens_wrong: missing / invalid evidence -> INCOMPLETE, with the gate named
+PASS M_read_after_precopy: class 'INCOMPLETE (instrumentation/addressing invalid)'
+PASS M_read_after_precopy: missing / invalid evidence -> INCOMPLETE, with the gate named
+PASS N_npz_missing: class 'INCOMPLETE (instrumentation/addressing invalid)'
+PASS N_npz_missing: missing / invalid evidence -> INCOMPLETE, with the gate named
+PASS W_provenance: class 'INCOMPLETE (instrumentation/addressing invalid)'
+PASS W_provenance: missing / invalid evidence -> INCOMPLETE, with the gate named
+PASS X_twosum: class 'INCOMPLETE (instrumentation/addressing invalid)'
+PASS X_twosum: missing / invalid evidence -> INCOMPLETE, with the gate named
+PASS K_prompt_differs: class 'INCOMPLETE (instrumentation/addressing invalid)'
+PASS K_prompt_differs: cross-replicate input check named
+PASS K2_one_of_four_fails_rest_counted: class 'operation located'
+PASS K2_one_of_four_fails_rest_counted: r4 not counted, the other three are
+PASS O_loc_file_missing: class 'slice located, operation not located'
+PASS O_loc_file_missing: not equal and not located: localisation evidence missing
+PASS O_loc_file_missing: the loc gate failure is reported for r2
+PASS P_identity_violated_in_r1: class 'operation located'
+PASS P_identity_violated_in_r1: r1's localisation is excluded (identity violated)
+PASS P_identity_violated_in_r1: the remaining loc pair r2-r3 locates the MoE
+PASS Q_lifecycle: class 'operation located'
+PASS Q_lifecycle: lifecycle note: last state write != point-0 bytes
+PASS R_same_allocation_pair: class 'operation located'
+PASS R_same_allocation_pair: r1-r2 same allocation and differing -> execution nondeterminism reading
+PASS R_same_allocation_pair: r2's blocks list r1's warm as an earlier holder
+PASS S_inactive_conv_rows_only: class 'valid state equal this time (non-reproduced)'
+PASS S_inactive_conv_rows_only: stale-row inference supported (rows 3-5 differ, 0-2 equal)
+PASS S_inactive_conv_rows_only: inactive rows are never a valid-state finding
+PASS S2_live_conv_rows_differ: class 'slice located, operation not located'
+PASS S2_live_conv_rows_differ: stale-row inference refuted
+PASS T_unwritten_pools_differ: class 'valid state equal this time (non-reproduced)'
+PASS T_unwritten_pools_differ: pool 511 of layer-7 block 0: nonzero and unequal, reported
+PASS T_unwritten_pools_differ: the rest of the indexer block equal
+PASS U_causality: class 'slice located, operation not located'
+PASS U_causality: causality check rejects the located boundary
+PASS V_lifecycle_only: class 'slice located, operation not located'
+PASS V_lifecycle_only: no warm boundary differs; point-0 state != last write: lifecycle reading
+PASS V2_outside_measured_layers: class 'slice located, operation not located'
+PASS V2_outside_measured_layers: only MLA-7 differs, no layer-3/4 boundary: outside the measured layers
+PASS Y1_all_zero_valid_slice: class 'INCOMPLETE (instrumentation/addressing invalid)'
+PASS Y1_all_zero_valid_slice: all-zero MLA-7 block -> addressing suspect
+PASS Y2_file_identity: class 'INCOMPLETE (instrumentation/addressing invalid)'
+PASS Y2_file_identity: capture file's own rank != its name -> INCOMPLETE
+PASS Y3_loc_input_ids_differ: class 'slice located, operation not located'
+PASS Y3_loc_input_ids_differ: localisation INCOMPLETE noted; not located
+PASS Z_no_client_records: class 'INCOMPLETE (instrumentation/addressing invalid)'
+PASS A2 topk_sets: reversed rows = same set, other order
+PASS A2 topk_sets: a changed id = different selection
+analysis tests: 78 PASS, 0 FAIL

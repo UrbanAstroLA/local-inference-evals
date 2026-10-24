@@ -1,0 +1,49 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.cap0
+#1 transferring dockerfile: 1.86kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/local/glm53-v091-p4-s0:local
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/6] FROM docker.io/local/glm53-v091-p4-s0:local@sha256:7408f893dfe35f1fbd330153e34ea81e83460fe5e2fff200ab87ea992565d3c7
+#4 resolve docker.io/local/glm53-v091-p4-s0:local@sha256:7408f893dfe35f1fbd330153e34ea81e83460fe5e2fff200ab87ea992565d3c7 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 65.56kB done
+#5 DONE 0.0s
+
+#6 [2/6] RUN printf '%s\n' "93f4147a49caf2e2ddc6bbaf269d53fc29095d1a69953a9e923b552241d1ff6d  /usr/local/lib/python3.12/dist-packages/vllm/p4_hooks.py" | sha256sum -c -  && ! test -e /usr/local/lib/python3.12/dist-packages/vllm/cap0_hooks.py && ! test -e /usr/local/lib/python3.12/dist-packages/vllm/cap0_hooks_layout.py
+#6 CACHED
+
+#7 [3/6] COPY files/vllm/p4_hooks.py /usr/local/lib/python3.12/dist-packages/vllm/p4_hooks.py
+#7 DONE 0.0s
+
+#8 [4/6] COPY files/vllm/cap0_hooks.py /usr/local/lib/python3.12/dist-packages/vllm/cap0_hooks.py
+#8 DONE 0.0s
+
+#9 [5/6] COPY files/vllm/cap0_hooks_layout.py /usr/local/lib/python3.12/dist-packages/vllm/cap0_hooks_layout.py
+#9 DONE 0.0s
+
+#10 [6/6] RUN printf '%s\n'     "4e8852825f441cad23b8d88b009d2afcb1f8a09baade357ed41d111389b20ec3  /usr/local/lib/python3.12/dist-packages/vllm/p4_hooks.py"     "76ede504eb29c2e2baaf339f0d90eac595a43e7f41056c0971f1d5d1cb9dfe30  /usr/local/lib/python3.12/dist-packages/vllm/cap0_hooks.py"     "12dd93ce4fd24de5951130170d3f1644673e805c6531ecdb91d0a834d17fd8d7  /usr/local/lib/python3.12/dist-packages/vllm/cap0_hooks_layout.py"   | sha256sum -c -  && python3 -m py_compile /usr/local/lib/python3.12/dist-packages/vllm/p4_hooks.py /usr/local/lib/python3.12/dist-packages/vllm/cap0_hooks.py /usr/local/lib/python3.12/dist-packages/vllm/cap0_hooks_layout.py  && test "$(grep -c '# local-cap0$' /usr/local/lib/python3.12/dist-packages/vllm/p4_hooks.py)" = 21  && CUDA_VISIBLE_DEVICES= GLM53_P4=on GLM53_P4_S0=on python3 -c "import sys, vllm.p4_hooks as p; assert p._cap0 is None and 'vllm.cap0_hooks' not in sys.modules"  && CUDA_VISIBLE_DEVICES= GLM53_P4=on GLM53_P4_S0=on GLM53_CAP0=on python3 -c "import vllm.p4_hooks as p; assert p._cap0 is not None and p._cap0.ON and not p._cap0.LOC and not p._cap0.S.registered"
+#10 0.063 /usr/local/lib/python3.12/dist-packages/vllm/p4_hooks.py: OK
+#10 0.063 /usr/local/lib/python3.12/dist-packages/vllm/cap0_hooks.py: OK
+#10 0.063 /usr/local/lib/python3.12/dist-packages/vllm/cap0_hooks_layout.py: OK
+#10 DONE 7.5s
+
+#11 exporting to image
+#11 exporting layers 0.1s done
+#11 exporting manifest sha256:1b4a7f4cfda26ccbdbdfa812e5bcb6dcafcb2fba8f584873d2b897a48e98b718 done
+#11 exporting config sha256:f622f32fab31bbc977c902455cf6a5a166b67b2e11b1c8f0d9fc327ec902023d
+#11 exporting config sha256:f622f32fab31bbc977c902455cf6a5a166b67b2e11b1c8f0d9fc327ec902023d done
+#11 exporting attestation manifest sha256:ba6b4ca12f37cdce453c91c32ec33e5447669b6ca7f87172a91f18b4808a6f43 done
+#11 exporting manifest list sha256:8cb49fcabcfe85e8624d03822d0ca7a02b10469f6a3ea6d8713aed2459abd3bd done
+#11 naming to docker.io/local/glm53-v091-p4-cap0-a2:local done
+#11 unpacking to docker.io/local/glm53-v091-p4-cap0-a2:local 0.1s done
+#11 DONE 0.3s

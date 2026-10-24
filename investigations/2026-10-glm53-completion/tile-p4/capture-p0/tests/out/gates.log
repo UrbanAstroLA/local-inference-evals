@@ -1,0 +1,24 @@
+PASS B1 APPROVED_GPU_H unset -> REFUSE (no default)
+PASS B1 APPROVED_GPU_H='' -> REFUSE
+PASS B1 APPROVED_GPU_H='abc' -> REFUSE
+PASS B1 APPROVED_GPU_H='0' -> REFUSE
+PASS B1 APPROVED_GPU_H='-1' -> REFUSE
+PASS B1 APPROVED_GPU_H='nan' -> REFUSE
+PASS B1 APPROVED_GPU_H='inf' -> REFUSE
+PASS B2 session before a passed pre-check -> REFUSE
+PASS B3 pre-check cap 180 s = 0.05 GPU-h > 0.04 approved -> REFUSE (cap never shrunk)
+PASS B3 pre-check OK: cap 180 s, attempt 1, 1 GPU
+PASS B4 pre-check not re-run once passed for this image (image from the ledger line)
+PASS B4 a new image needs its own pre-check
+PASS B4 the session refuses a pre-check of another image
+PASS B4 IMAGE argument required
+PASS B5 used 0.0083 + session cap 0.6111 > 0.61 -> REFUSE
+PASS B5 approval 0.661 covers both caps: OK, cap 1100 s, 2 GPUs
+PASS B6 malformed ledger line -> REFUSE
+PASS B7 other ledgers (costs-stage0.jsonl) are not read
+PASS B8 completed attempt without an analysis result: refused
+PASS B8 INCOMPLETE prior attempt: refused without CAP0_PRIOR_ACK
+PASS B8 INCOMPLETE prior attempt: refused with a wrong ack
+PASS B8 INCOMPLETE prior attempt + its ack: OK, attempt 2
+PASS B8 a valid prior reading is never re-run, even acknowledged
+gates tests: 23 PASS, 0 FAIL

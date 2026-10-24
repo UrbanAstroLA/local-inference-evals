@@ -789,6 +789,20 @@ What was asked, run, found, corrected and withdrawn, in date order.
   the warm-up never wrote; the drafter's cached-span K/V blocks were not built by the warm-up and are all-zero.
 - No GPU-hours added (cumulative 134.02). [Audit](investigations/2026-10-glm53-completion/tile-p4/audit-s0/AUDIT.md).
 
+**2026-10-24. Exact-byte capture: identical prefills part at the layer-3 indexer top-k, which returns the same pools
+in a different order (amendment 22az).**
+- **Attempt 1 read INCOMPLETE** because of two package defects (owned); attempt 2 passed every gate.
+- **First difference:** layer 3's indexer top-k output, from token 2,051, the first position where sparse selection
+  applies. Sampled rows hold the same pools in a different order; attention output, MoE output and cached state
+  differ from there on. Earlier positions are equal at every recorded boundary.
+- **Not established:** execution vs memory placement as the source of the order; an isolated replay; any link to
+  completion behaviour.
+- **Version comparison (no GPU):** the top-k code and kernel are identical in v0.7.0 and v0.9.1, with unspecified
+  output order, and the attention walks the list in the given order in both. On source evidence the mechanism does
+  not by itself distinguish the versions; their deployed parallel configurations differ.
+- GPU-hours 0.897 (cumulative 134.92). [Result](investigations/2026-10-glm53-completion/tile-p4/capture-p0/RESULT.md) ·
+  [Version comparison](investigations/2026-10-glm53-completion/tile-p4/version-cmp/VERSION-CMP.md).
+
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough
   qualification. They also said the D7 path "cannot run" where the basis is a reconstruction. These are reworded in the

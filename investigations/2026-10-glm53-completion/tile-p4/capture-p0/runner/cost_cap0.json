@@ -1,0 +1,53 @@
+{
+ "note": "one serving session on 2 GPUs: start-up dominates; replicates cost seconds each",
+ "replicates": {
+  "default": [
+   "r1:L",
+   "r2:L",
+   "r3:N",
+   "r4:N",
+   "r5:L",
+   "r6:L"
+  ],
+  "minimum_counted": 2
+ },
+ "warm_tokens": 17409,
+ "capture_prefill_tokens": 4353,
+ "loc_tokens": 13056,
+ "loc_bytes_per_token_per_rank": 278928,
+ "cases": {
+  "planning": {
+   "start_s": 874,
+   "core_per_replicate_s": 14.6,
+   "loc_extra_per_replicate_s": 6.5,
+   "loc_gb_per_rank_per_replicate": 3.64,
+   "core_only_4rep_s": 1007,
+   "core_only_4rep_gpu_h": 0.56,
+   "default_6rep_4loc_s": 1062,
+   "default_6rep_4loc_gpu_h": 0.59,
+   "loc_option_marginal_gpu_h": 0.0144
+  },
+  "typical": {
+   "start_s": 740,
+   "core_per_replicate_s": 8.0,
+   "loc_extra_per_replicate_s": 3.7,
+   "loc_gb_per_rank_per_replicate": 3.64,
+   "core_only_4rep_s": 802,
+   "core_only_4rep_gpu_h": 0.446,
+   "default_6rep_4loc_s": 833,
+   "default_6rep_4loc_gpu_h": 0.463,
+   "loc_option_marginal_gpu_h": 0.0082
+  }
+ },
+ "precheck": {
+  "cap_s": 180,
+  "cap_gpu_h": 0.05,
+  "typical_s": 30,
+  "typical_gpu_h": 0.0083
+ },
+ "session_cap_s": 1100,
+ "session_cap_gpu_h": 0.6111,
+ "approval_needed_gpu_h": 0.661,
+ "approval_note": "APPROVED_GPU_H must cover the caps (one pre-check attempt + one session attempt): the gate refuses an attempt whose full cap does not fit",
+ "why_cap_above_0_6": "the session cap has to cover the slowest measured start-up (874 s) plus start-up gates, the client and the stop: 1,100 s x 2 GPUs = 0.611 GPU-h; with the 180 s pre-check cap the approval is 0.661.  A 0.60 total (session cap 990 s) would leave ~100 s after a 874 s start: replicates 5-6 would likely be dropped and a start-up slower than ~900 s would spend the attempt with no capture"
+}

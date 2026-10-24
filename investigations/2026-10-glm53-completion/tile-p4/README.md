@@ -8,6 +8,18 @@ see `RESULT.md` and `CRITIQUE-run1.md`. This page describes the package as built
 records and the engine: `PROPOSAL-AMENDMENTS.md`. The session runner will not start until the operator acknowledges
 that file. CPU test results: `tests/RESULTS.txt`.
 
+## Update 2026-10-24 (22az): exact-byte capture and version comparison
+
+- **`capture-p0/`** (protocol, package, CPU tests, two attempts; 0.897 GPU-h under a 2.0 GPU-h operator approval):
+  attempt 1 read INCOMPLETE (two package defects, owned in `capture-p0/PROTOCOL.md` amendments A1-A2); attempt 2
+  passed every gate. Pre-registered reading: **operation located**. Identical warm prefills first part at layer 3's
+  indexer top-k output from token 2,051, where the top-k holds the same pools in a different order
+  (`capture-p0/RESULT.md`).
+- **`version-cmp/`** (no GPU): the prefill top-k code and binary are identical in v0.7.0 and v0.9.1, its output
+  order is not specified, nothing between top-k and attention fixes the order, and the sparse-MLA prefill kernel
+  walks the index list in the given order in both versions. The deployed configurations differ (v0.7.0 DCP=2,
+  v0.9.1 DCP=1 with MLA layer ownership). Source-level only; v0.7.0 was not run.
+
 ## Update 2026-10-24 (22ay): Stage 0 ran; zero-GPU audit
 
 - **Stage 0** was approved (1.34 GPU-h) and run: 0.717 GPU-h, result `RESULT-STAGE0.md`. No P4 GPU step is

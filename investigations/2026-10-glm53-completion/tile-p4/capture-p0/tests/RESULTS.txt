@@ -1,0 +1,30 @@
+capture-p0 CPU test results, attempt-2 package (2026-10-24), logs in tests/out/.  No GPU used.  Every engine-side test ran
+in a CPU container (docker run --rm --pull=never --network none, no --gpus, CUDA_VISIBLE_DEVICES=).
+hooked = Stage-0 image 7408f893 with the capture-p0 files installed; image = local/glm53-v091-p4-cap0-a2:local
+(sha256:8cb49fca...); attempt-1 image = local/glm53-v091-p4-cap0:local (sha256:5831fc27...), used only as a negative
+control.  All data synthetic except the read-only attempt-1 re-analysis.
+
+== layout: 35 PASS, 0 FAIL                     addressing; AUDIT task-4 ranges; Stage-0 warm geometry (4 blocks); cache rule
+                                               vs Stage 0 and vs attempt 1's measured cached_tokens (all 6)
+== hook_hooked (hooked): 37 PASS, 0 FAIL       capture, negatives, localisation vs host sha256, call sites, rank-0 flush guard
+== hook_off_hooked (hooked): 1 PASS, 0 FAIL
+== hook_image (image): 37 PASS, 0 FAIL
+== hook_off_image (image): 1 PASS, 0 FAIL
+== precheck_dry_image (image): 6 PASS, 0 FAIL
+== precheck_dry_hooked (hooked): 6 PASS, 0 FAIL
+== engine_path_hooked (hooked): 6 PASS, 0 FAIL      real forcewin -> p4_hooks -> cap0_hooks, non-forced keyed requests:
+== engine_path_image (image): 6 PASS, 0 FAIL       sched/steps flushed at removal, no double flush, rank 1 writes nothing
+== engine_path_attempt1_image (image): 2 PASS, 0 FAIL   negative control: the attempt-1 module shows the missing flush
+== analysis: 78 PASS, 0 FAIL                   every outcome class; 16 planted evidence defects; A3 top-k set/order
+== runner: 35 PASS, 0 FAIL                     incl. S10 attempt-1 construction vs the mock's one-block drop -> early abort;
+                                               prior-result acknowledgement; pre-check per image
+== gates: 23 PASS, 0 FAIL
+== attempt1: 5 PASS, 0 FAIL                    read-only re-analysis of the real attempt-1 records: INCOMPLETE, 0 of 6, each
+                                               replicate names capture cached 8704, warm 13057 != 17409, no scheduler log
+Post-build gates of the a2 image (build/post-build-gates.txt): gate 0 (21 marked lines), (a), installed == reviewed x3,
+(b1)-(b4), (c) all PASS.
+Stage-0 CPU suite against the a2 image, switch off (s0regress): units 8/8, engine 7/7, big 6/6, p4_units 17/17,
+p4_list 15/15, fw_rest 8/8, precheck_dry 5 PASS 1 FAIL, inert_off 0 PASS 1 FAIL -- identical to the Stage-0 reference
+(the same two expected FAILs: N1 is GPU-only, IMG2 = B1-only hooks not applied); inertness hash 5359e50c... unchanged.
+Real-data instrument check (tests/diag_attempt1_loc.py -> tests/out/attempt1-loc-diag.json): G-loc passes for the four
+attempt-1 localisation warms on both ranks.

@@ -1,0 +1,7 @@
+PASS K1 point-0 capture on a served-layout device KV cache: 18 slices exact, view == raw, two-sums equal  {"bad": [], "secs": 0.2177}
+PASS K2 the toy carries the served call pattern: 12 hooks + the conv wrapper installed  {"hooks": ["pre:Glm5NextDecoderLayer", "pre:Glm5NextDecoderLayer", "post:FusedOp", "pre:FusedOp", "post:FusedOp", "pre:MLA", "post:Indexer", "post:MLP", "pre:KDAMod", "post:KDAMod", "post:KDAMod", "pre:ONorm"]}
+PASS K2 graph capture with hooks installed (unarmed): captured, nothing recorded, replay == eager  {"err": null, "recorded": false, "replay_equal": true}
+PASS K2 graph capture with hooks installed (stale arm set): captured, nothing recorded, replay == eager  {"err": null, "recorded": false, "replay_equal": true}
+PASS K3 armed eager step at served sizes (2,045 tokens, 27 tensors): every row's sha256 == host  {"bad": [], "loc_step_s": 0.541, "loc_bytes_per_token": 278928, "loc_gbps": 1.054, "hold_mb": 3473.0}
+PASS N1 negative control: a device-to-host copy inside a capture fails it  {}
+VERDICT PASS {"capture_s": 0.2177, "loc_step_s": 0.541, "loc_step_bytes": 570407760, "loc_bytes_per_token": 278928, "loc_gbps": 1.054, "hold_mb": 3473.0}

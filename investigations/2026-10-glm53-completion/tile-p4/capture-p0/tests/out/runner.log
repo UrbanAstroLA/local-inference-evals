@@ -1,0 +1,36 @@
+PASS S1 refuses without ATTEMPT_REASON
+PASS S2 refuses with APPROVED_GPU_H unset (no default)
+PASS S3 refuses a wrong protocol acknowledgement
+PASS S3 MOCK refuses a mock root outside tests/out
+PASS S3 refuses a CAP0_LOC other than on/off
+PASS S4 session refused before a passed pre-check
+PASS S4 a pre-check passed for ANOTHER image does not count
+PASS S5 cap 0.611 + used 0.008 > 0.6: refused (cap never shrunk)
+PASS S6 DRY_RUN passes the gates, prints the plan (warm 17,409 tokens -> capture cached 13,056) and writes nothing
+PASS S6 CAP0_LOC=off: every replicate planned without localisation
+PASS S7 MOCK session: COMPLETE (G-instr + G3, 6 replicates, captures and loc records on both ranks)
+PASS S7 G-instr and G3 evaluated before traffic
+PASS S7 gates before the first request; 12 requests one at a time; a salt per replicate; one seed per kind; warm = capture prompt (17,409); mock cache gives warm 0, capture 13,056; tags L,L,N,N,L,L
+PASS S7 one 2-GPU cost line in costs-cap0.jsonl (approval and loc recorded)
+PASS S7 private copy-out at 0700 under the synthetic path (23 files); nothing under a PRIVATE path
+PASS S7 the analysis reads the mock INCOMPLETE for the RIGHT reasons: G-client passes; the mock has no scheduler log (only the real flush path writes one) and no bytes
+PASS S8 after a completed attempt that read INCOMPLETE: refused without CAP0_PRIOR_ACK
+PASS S8 a wrong CAP0_PRIOR_ACK is refused
+PASS S8 with CAP0_PRIOR_ACK of the INCOMPLETE result: attempt 2 passes the gates
+PASS S8 a completed attempt with a valid reading is never re-run, even with an acknowledgement
+PASS S8 no mock server left listening
+PASS S9 10 of 12 hooks on rank 0: G-instr OK with LOCALISATION DEGRADED; the client still runs
+PASS S10 attempt-1 construction: the mock drops a block (8,704), the client aborts after r1 with the reason, the analysis names it
+PASS S10 outside a mock the test-only warm override is ignored
+PASS S10 the GPU runner clears the test-only override for real sessions
+PASS P1 pre-check refused without APPROVED_GPU_H
+PASS P2 pre-check refused when its cap (0.05 GPU-h) exceeds the approval
+PASS P3 pre-check DRY_RUN writes nothing
+PASS P4 FAKE pre-check reports its verdict
+PASS P4 pre-check container: --network none, --gpus device=0, read-only code, GLM53_CAP0=on + LOC
+PASS P5 one 1-GPU cost line in costs-cap0.jsonl; the verdict records the image it ran
+PASS P6 a passed pre-check is not re-run
+PASS P7 FAKE mode refuses the real package root
+PASS P8 outside FAKE, a pre-check that did not run on the GPU is FAIL (rule present in the wrapper)
+PASS P9 the real capture-p0 ledger is untouched by these tests
+test_runner_cap0: 35 PASS, 0 FAIL

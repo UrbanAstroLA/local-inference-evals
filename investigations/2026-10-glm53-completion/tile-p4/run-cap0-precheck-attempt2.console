@@ -1,0 +1,14 @@
+budget: approved 2.0 GPU-h (costs-cap0.jsonl); used 0.4700; left 1.5300; precheck attempt 2 wall cap 180s x 1 GPU
+== preflight 2026-10-24T19:44:48Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 20 MiB, 0 %
+1, NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 1944 MiB, 1 %
+GPU0 sample 1: util 0% mem 20 MiB
+PASS K1 point-0 capture on a served-layout device KV cache: 18 slices exact, view == raw, two-sums equal  {"bad": [], "secs": 0.2202}
+PASS K2 the toy carries the served call pattern: 12 hooks + the conv wrapper installed  {"hooks": ["pre:Glm5NextDecoderLayer", "pre:Glm5NextDecoderLayer", "post:FusedOp", "pre:FusedOp", "post:FusedOp", "pre:MLA", "post:Indexer", "post:MLP", "pre:KDAMod", "post:KDAMod", "post:KDAMod", "pre:ONorm"]}
+PASS K2 graph capture with hooks installed (unarmed): captured, nothing recorded, replay == eager  {"err": null, "recorded": false, "replay_equal": true}
+PASS K2 graph capture with hooks installed (stale arm set): captured, nothing recorded, replay == eager  {"err": null, "recorded": false, "replay_equal": true}
+PASS K3 armed eager step at served sizes (2,045 tokens, 27 tensors): every row's sha256 == host  {"bad": [], "loc_step_s": 0.524, "loc_bytes_per_token": 278928, "loc_gbps": 1.088, "hold_mb": 3473.0}
+PASS N1 negative control: a device-to-host copy inside a capture fails it  {}
+VERDICT PASS {"capture_s": 0.2202, "loc_step_s": 0.524, "loc_step_bytes": 570407760, "loc_bytes_per_token": 278928, "loc_gbps": 1.088, "hold_mb": 3473.0}
+cap0 precheck verdict PASS {"capture_s": 0.2202, "loc_step_s": 0.524, "loc_step_bytes": 570407760, "loc_bytes_per_token": 278928, "loc_gbps": 1.088, "hold_mb": 3473.0}

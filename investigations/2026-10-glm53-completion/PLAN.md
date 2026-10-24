@@ -3221,3 +3221,50 @@ the earlier 7.0 GPU-hour ceiling was voided).**
 - **Reading** (the assessment's table): valid state differs; the operation that produces the difference has not been
   located. No statement about the tile follows.
 - No GPU-hours added (cumulative 134.02).
+
+**Amendment 22az (2026-10-24; exact-byte capture of the differing state, and a v0.7.0 / v0.9.1 source comparison;
+0.897 GPU-hours under an operator approval of 2.0).**
+- **Design:** `tile-p4/capture-p0/PROTOCOL.md`, written and CPU-tested before any GPU step, following section 5 of the
+  independent assessment of 22ax.
+  - One serving session of stock v0.9.1 (TP 2). Six replicates, each under its own cache salt, warm the same prompt
+    and then send a capture request whose cached prefix is 13,056 tokens.
+  - Before the capture request's first forward, exact bytes of the valid cached state are copied: layer-7 MLA KV
+    (layer 3 as control), layer-4 KDA recurrent and live conv state (layer 2 as control), layer-0 conv rows 0-2 and
+    3-5 separately, and the indexer records the warm-up never writes.
+  - Four replicates also record a sha256 per token row at 12 boundaries in layers 3-4 during the warm prefill; two do
+    not, as an instrumentation contrast.
+  - Pre-registered readings mapped to the assessment's table; missing evidence reads INCOMPLETE.
+- **Attempt 1 (0.470 GPU-hours with its pre-check): INCOMPLETE, owned.** Two package defects:
+  - the 13,057-token warm-up cached three blocks, and a cache hit returns one block fewer than it matches (amendment
+    A3 of the P4 proposal), so the capture request found 8,704 cached tokens, not 13,056;
+  - the step and scheduler log was flushed only when a forced request ended, and these requests were not forced.
+  - The CPU mock reported the expected cache hit and wrote the scheduler files itself, so the tests could not see
+    either defect. Fixed in protocol amendments A1-A2: the warm-up is the full capture prompt; the log is flushed at
+    removal; the mock applies the cache rule; the client aborts at the first replicate if the cached count is wrong.
+- **Attempt 2 (0.427 GPU-hours with its pre-check): every gate passed for all six replicates.**
+  - **First difference:** in all six localisation pairs, at layer 3's indexer top-k output during the warm prefill,
+    from token 2,051. Every recorded boundary is equal for tokens 0-2,050.
+  - Token 2,051 is the first position where a row has more than 512 complete four-token pools, so the first where the
+    top-k actually selects; shorter rows take an index-ordered path without top-k.
+  - In all 24 sampled rows the top-k holds the same pool set in a different order. No selection differed.
+  - From token 2,051 on, the layer-3 attention output, the MoE output and every later recorded boundary differ, as do
+    the layer-7 MLA KV (block 0: 2,301 of 4,352 records, first position 2,051) and the layer-4 KDA state on both
+    ranks.
+  - Controls (layer-3 MLA KV, layer-2 KDA state) are byte-identical. Layer-0 conv differs only in the inactive rows
+    3-5, as the 22ay audit inferred. The pair without recording hooks also differs.
+  - **Reading** (pre-registered): operation located, at the layer-3 indexer top-k.
+  - **Not established:** whether the order varies with execution or with memory placement (every pair had a
+    different physical allocation); an isolated replay of the operation; any connection to completion behaviour.
+- **Version comparison (no GPU; `tile-p4/version-cmp/VERSION-CMP.md`):**
+  - the prefill top-k path (`sparse_attn_indexer_kpool.py`) and the compiled `_C` library are byte-identical in
+    v0.7.0 and v0.9.1; the op's output order is not specified in either image;
+  - nothing between the top-k and the attention puts the order in a fixed sequence (v0.7.0's DCP merge stages add
+    further atomic reordering);
+  - the b12x sparse-MLA prefill kernel differs between the images but in both walks the index list in the given order,
+    in tiles of 64 with an online softmax and per-tile FP8 quantisation;
+  - the decode path has the same structure;
+  - the deployed configurations differ: v0.7.0 with decode context parallelism 2, v0.9.1 with 1 and MLA layer
+    ownership.
+  - **Reading:** on source evidence the mechanism is present in both versions and does not by itself distinguish
+    them. v0.7.0 was not measured.
+- GPU-hours 0.897 (cumulative 134.92).

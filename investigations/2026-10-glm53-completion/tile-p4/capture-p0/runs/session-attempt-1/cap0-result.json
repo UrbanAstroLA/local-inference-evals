@@ -1,0 +1,175 @@
+{
+ "schema": "cap0-result/1",
+ "replicates": [
+  "r1",
+  "r2",
+  "r3",
+  "r4",
+  "r5",
+  "r6"
+ ],
+ "loc": {
+  "r1": true,
+  "r2": true,
+  "r3": false,
+  "r4": false,
+  "r5": true,
+  "r6": true
+ },
+ "gates": {
+  "r1": {
+   "ok": false,
+   "failures": [
+    "G-client: capture request missing or not ok",
+    "G-exec: warm chunks [] != [(0, 2045), (2045, 2045), (4090, 262), (4352, 2045), (6397, 2045), (8442, 262), (8704, 2045), (10749, 2045), (12794, 262)]",
+    "G-exec: the capture request's first step is not a solitary prefill from n_computed 13056",
+    "G-capture: rank 0: n_computed 8704 n_sched 2045",
+    "G-capture: rank 0: slice mla3_b2 missing",
+    "G-capture: rank 0: slice mla7_b2 missing",
+    "G-capture: rank 0: slice idx3_b2 missing",
+    "G-capture: rank 0: slice idx7_b2 missing",
+    "G-capture: rank 1: n_computed 8704 n_sched 2045",
+    "G-prov: rank 0: mla3 group 0 columns [0, 1, 2]: captured [467, 377, 395] != the warm's [467, 377, 375]",
+    "G-prov: rank 0: mla7 group 0 columns [0, 1, 2]: captured [467, 377, 395] != the warm's [467, 377, 375]",
+    "G-prov: rank 0: idx3 group 0 columns [0, 1, 2]: captured [467, 377, 395] != the warm's [467, 377, 375]",
+    "G-prov: rank 0: idx7 group 0 columns [0, 1, 2]: captured [467, 377, 395] != the warm's [467, 377, 375]",
+    "G-prov: rank 0: kda0 group 2 columns [2]: captured [385] != the warm's [471]",
+    "G-prov: rank 0: kda2 group 4 columns [2]: captured [383] != the warm's [479]",
+    "G-prov: rank 0: kda4 group 5 columns [2]: captured [382] != the warm's [483]",
+    "G-prov: rank 1: kda0 group 2 columns [2]: captured [385] != the warm's [471]",
+    "G-prov: rank 1: kda2 group 4 columns [2]: captured [383] != the warm's [479]",
+    "G-prov: rank 1: kda4 group 5 columns [2]: captured [382] != the warm's [483]"
+   ]
+  },
+  "r2": {
+   "ok": false,
+   "failures": [
+    "G-client: capture request missing or not ok",
+    "G-exec: warm chunks [] != [(0, 2045), (2045, 2045), (4090, 262), (4352, 2045), (6397, 2045), (8442, 262), (8704, 2045), (10749, 2045), (12794, 262)]",
+    "G-exec: the capture request's first step is not a solitary prefill from n_computed 13056",
+    "G-capture: rank 0: n_computed 8704 n_sched 2045",
+    "G-capture: rank 0: slice mla3_b2 missing",
+    "G-capture: rank 0: slice mla7_b2 missing",
+    "G-capture: rank 0: slice idx3_b2 missing",
+    "G-capture: rank 0: slice idx7_b2 missing",
+    "G-capture: rank 1: n_computed 8704 n_sched 2045",
+    "G-prov: rank 0: mla3 group 0 columns [0, 1, 2]: captured [392, 448, 466] != the warm's [392, 448, 394]",
+    "G-prov: rank 0: mla7 group 0 columns [0, 1, 2]: captured [392, 448, 466] != the warm's [392, 448, 394]",
+    "G-prov: rank 0: idx3 group 0 columns [0, 1, 2]: captured [392, 448, 466] != the warm's [392, 448, 394]",
+    "G-prov: rank 0: idx7 group 0 columns [0, 1, 2]: captured [392, 448, 466] != the warm's [392, 448, 394]",
+    "G-prov: rank 0: kda0 group 2 columns [2]: captured [456] != the warm's [391]",
+    "G-prov: rank 0: kda2 group 4 columns [2]: captured [454] != the warm's [389]",
+    "G-prov: rank 0: kda4 group 5 columns [2]: captured [453] != the warm's [388]",
+    "G-prov: rank 1: kda0 group 2 columns [2]: captured [456] != the warm's [391]",
+    "G-prov: rank 1: kda2 group 4 columns [2]: captured [454] != the warm's [389]",
+    "G-prov: rank 1: kda4 group 5 columns [2]: captured [453] != the warm's [388]"
+   ]
+  },
+  "r3": {
+   "ok": false,
+   "failures": [
+    "G-client: capture request missing or not ok",
+    "G-exec: warm chunks [] != [(0, 2045), (2045, 2045), (4090, 262), (4352, 2045), (6397, 2045), (8442, 262), (8704, 2045), (10749, 2045), (12794, 262)]",
+    "G-exec: the capture request's first step is not a solitary prefill from n_computed 13056",
+    "G-capture: rank 0: n_computed 8704 n_sched 2045",
+    "G-capture: rank 0: slice mla3_b2 missing",
+    "G-capture: rank 0: slice mla7_b2 missing",
+    "G-capture: rank 0: slice idx3_b2 missing",
+    "G-capture: rank 0: slice idx7_b2 missing",
+    "G-capture: rank 1: n_computed 8704 n_sched 2045",
+    "G-prov: rank 0: mla3 group 0 columns [0, 1, 2]: captured [463, 209, 351] != the warm's [463, 209, 465]",
+    "G-prov: rank 0: mla7 group 0 columns [0, 1, 2]: captured [463, 209, 351] != the warm's [463, 209, 465]",
+    "G-prov: rank 0: idx3 group 0 columns [0, 1, 2]: captured [463, 209, 351] != the warm's [463, 209, 465]",
+    "G-prov: rank 0: idx7 group 0 columns [0, 1, 2]: captured [463, 209, 351] != the warm's [463, 209, 465]",
+    "G-prov: rank 0: kda0 group 2 columns [2]: captured [217] != the warm's [462]",
+    "G-prov: rank 0: kda2 group 4 columns [2]: captured [215] != the warm's [460]",
+    "G-prov: rank 0: kda4 group 5 columns [2]: captured [214] != the warm's [459]",
+    "G-prov: rank 1: kda0 group 2 columns [2]: captured [217] != the warm's [462]",
+    "G-prov: rank 1: kda2 group 4 columns [2]: captured [215] != the warm's [460]",
+    "G-prov: rank 1: kda4 group 5 columns [2]: captured [214] != the warm's [459]"
+   ]
+  },
+  "r4": {
+   "ok": false,
+   "failures": [
+    "G-client: capture request missing or not ok",
+    "G-exec: warm chunks [] != [(0, 2045), (2045, 2045), (4090, 262), (4352, 2045), (6397, 2045), (8442, 262), (8704, 2045), (10749, 2045), (12794, 262)]",
+    "G-exec: the capture request's first step is not a solitary prefill from n_computed 13056",
+    "G-capture: rank 0: n_computed 8704 n_sched 2045",
+    "G-capture: rank 0: slice mla3_b2 missing",
+    "G-capture: rank 0: slice mla7_b2 missing",
+    "G-capture: rank 0: slice idx3_b2 missing",
+    "G-capture: rank 0: slice idx7_b2 missing",
+    "G-capture: rank 1: n_computed 8704 n_sched 2045",
+    "G-prov: rank 0: mla3 group 0 columns [0, 1, 2]: captured [348, 373, 515] != the warm's [348, 373, 350]",
+    "G-prov: rank 0: mla7 group 0 columns [0, 1, 2]: captured [348, 373, 515] != the warm's [348, 373, 350]",
+    "G-prov: rank 0: idx3 group 0 columns [0, 1, 2]: captured [348, 373, 515] != the warm's [348, 373, 350]",
+    "G-prov: rank 0: idx7 group 0 columns [0, 1, 2]: captured [348, 373, 515] != the warm's [348, 373, 350]",
+    "G-prov: rank 0: kda0 group 2 columns [2]: captured [505] != the warm's [347]",
+    "G-prov: rank 0: kda2 group 4 columns [2]: captured [503] != the warm's [345]",
+    "G-prov: rank 0: kda4 group 5 columns [2]: captured [502] != the warm's [344]",
+    "G-prov: rank 1: kda0 group 2 columns [2]: captured [505] != the warm's [347]",
+    "G-prov: rank 1: kda2 group 4 columns [2]: captured [503] != the warm's [345]",
+    "G-prov: rank 1: kda4 group 5 columns [2]: captured [502] != the warm's [344]"
+   ]
+  },
+  "r5": {
+   "ok": false,
+   "failures": [
+    "G-client: capture request missing or not ok",
+    "G-exec: warm chunks [] != [(0, 2045), (2045, 2045), (4090, 262), (4352, 2045), (6397, 2045), (8442, 262), (8704, 2045), (10749, 2045), (12794, 262)]",
+    "G-exec: the capture request's first step is not a solitary prefill from n_computed 13056",
+    "G-capture: rank 0: n_computed 8704 n_sched 2045",
+    "G-capture: rank 0: slice mla3_b2 missing",
+    "G-capture: rank 0: slice mla7_b2 missing",
+    "G-capture: rank 0: slice idx3_b2 missing",
+    "G-capture: rank 0: slice idx7_b2 missing",
+    "G-capture: rank 1: n_computed 8704 n_sched 2045",
+    "G-prov: rank 0: mla3 group 0 columns [0, 1, 2]: captured [512, 258, 276] != the warm's [512, 258, 514]",
+    "G-prov: rank 0: mla7 group 0 columns [0, 1, 2]: captured [512, 258, 276] != the warm's [512, 258, 514]",
+    "G-prov: rank 0: idx3 group 0 columns [0, 1, 2]: captured [512, 258, 276] != the warm's [512, 258, 514]",
+    "G-prov: rank 0: idx7 group 0 columns [0, 1, 2]: captured [512, 258, 276] != the warm's [512, 258, 514]",
+    "G-prov: rank 0: kda0 group 2 columns [2]: captured [266] != the warm's [511]",
+    "G-prov: rank 0: kda2 group 4 columns [2]: captured [264] != the warm's [509]",
+    "G-prov: rank 0: kda4 group 5 columns [2]: captured [263] != the warm's [508]",
+    "G-prov: rank 1: kda0 group 2 columns [2]: captured [266] != the warm's [511]",
+    "G-prov: rank 1: kda2 group 4 columns [2]: captured [264] != the warm's [509]",
+    "G-prov: rank 1: kda4 group 5 columns [2]: captured [263] != the warm's [508]"
+   ]
+  },
+  "r6": {
+   "ok": false,
+   "failures": [
+    "G-client: capture request missing or not ok",
+    "G-exec: warm chunks [] != [(0, 2045), (2045, 2045), (4090, 262), (4352, 2045), (6397, 2045), (8442, 262), (8704, 2045), (10749, 2045), (12794, 262)]",
+    "G-exec: the capture request's first step is not a solitary prefill from n_computed 13056",
+    "G-capture: rank 0: n_computed 8704 n_sched 2045",
+    "G-capture: rank 0: slice mla3_b2 missing",
+    "G-capture: rank 0: slice mla7_b2 missing",
+    "G-capture: rank 0: slice idx3_b2 missing",
+    "G-capture: rank 0: slice idx7_b2 missing",
+    "G-capture: rank 1: n_computed 8704 n_sched 2045",
+    "G-prov: rank 0: mla3 group 0 columns [0, 1, 2]: captured [273, 16, 316] != the warm's [273, 16, 275]",
+    "G-prov: rank 0: mla7 group 0 columns [0, 1, 2]: captured [273, 16, 316] != the warm's [273, 16, 275]",
+    "G-prov: rank 0: idx3 group 0 columns [0, 1, 2]: captured [273, 16, 316] != the warm's [273, 16, 275]",
+    "G-prov: rank 0: idx7 group 0 columns [0, 1, 2]: captured [273, 16, 316] != the warm's [273, 16, 275]",
+    "G-prov: rank 0: kda0 group 2 columns [2]: captured [24] != the warm's [272]",
+    "G-prov: rank 0: kda2 group 4 columns [2]: captured [54] != the warm's [270]",
+    "G-prov: rank 0: kda4 group 5 columns [2]: captured [62] != the warm's [269]",
+    "G-prov: rank 1: kda0 group 2 columns [2]: captured [24] != the warm's [272]",
+    "G-prov: rank 1: kda2 group 4 columns [2]: captured [54] != the warm's [270]",
+    "G-prov: rank 1: kda4 group 5 columns [2]: captured [62] != the warm's [269]"
+   ]
+  }
+ },
+ "counted": [],
+ "pairs": {},
+ "notes": [],
+ "cls": "incomplete",
+ "why": [
+  "fewer than 2 replicates passed every gate"
+ ],
+ "class": "INCOMPLETE (instrumentation/addressing invalid)",
+ "assessor_row": "Instrumentation or addressing remains invalid",
+ "next_action": "repair the specific measurement named in the failed gate before interpreting anything"
+}
