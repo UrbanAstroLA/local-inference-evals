@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-10-24, Stage 0 audit and wording corrections (completion investigation, amendment 22ay)
+
+No GPU use (cumulative 134.02).
+
+- **`tile-p4/audit-s0/`:** the zero-GPU audit of the retained Stage 0 records requested by the independent assessment
+  of 22ax: `AUDIT.md`, its scripts and outputs. Benchmark-derived digests and every path containing `PRIVATE` are
+  withheld.
+- **Corrected in place, marked "22ay":** `tile-p4/RESULT-STAGE0.md`, `tile-p4/STAGE0-PROTOCOL.md`, the investigation
+  `README.md` Status entry, `LEDGER.md` and the ledger page.
+  - The 22ax statement that the difference was already in layer 0's KDA state is withdrawn.
+  - Block counts restricted to valid state; the digest described as two integer sums; logical block 0 distinguished from
+    the physical null block; the "no atomics" sentence qualified.
+  - The 22ax commit message carries the withdrawn layer-0 wording; this entry supersedes it.
+- **`PLAN.md`:** amendment 22ay.
+- **`LEDGER.md`** and the ledger page: a 22ay entry.
+
 ## 2026-10-24, P4 Stage 0 determinism probe (completion investigation, amendment 22ax)
 
 0.717 GPU-hours (cumulative 134.02).

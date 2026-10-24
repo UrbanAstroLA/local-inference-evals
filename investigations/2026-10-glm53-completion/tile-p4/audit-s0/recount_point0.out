@@ -1,0 +1,295 @@
+# audit-s0 recount at digest point 0 (scripts/recount_point0.py)
+
+differ/compared per variant, family, category (physical null placeholders excluded)
+
+V1  draft     draft_cached_full          0 /     0
+V1  draft     draft_new_beyond_cached     0 /     0
+V1  idxk      cached_full             1460 /     0
+V1  idxk      new_beyond_cached          0 /     0
+V1  kda_conv  kda_cached_state         538 /     0
+V1  kda_conv  kda_running_new          516 /     0
+V1  kda_conv  kda_spec_scratch        1560 /     0
+V1  kda_rec   kda_cached_state         496 /     0
+V1  kda_rec   kda_running_new          516 /     0
+V1  kda_rec   kda_spec_scratch        1502 /     0
+V1  mla       cached_full             1460 /     0
+V1  mla       new_beyond_cached          0 /     0
+V1  tail      tail_ring_new              0 /     0
+V2  draft     draft_cached_full          0 /     0
+V2  draft     draft_new_beyond_cached     0 /     0
+V2  idxk      cached_full             1460 /     0
+V2  idxk      new_beyond_cached          0 /     0
+V2  kda_conv  kda_cached_state         534 /     0
+V2  kda_conv  kda_running_new          539 /     0
+V2  kda_conv  kda_spec_scratch        1616 /     0
+V2  kda_rec   kda_cached_state         496 /     0
+V2  kda_rec   kda_running_new          497 /     0
+V2  kda_rec   kda_spec_scratch        1490 /     0
+V2  mla       cached_full             1460 /     0
+V2  mla       new_beyond_cached          0 /     0
+V2  tail      tail_ring_new              0 /     0
+
+first mismatch in g_entry enumeration order (window -> rank -> tensor -> logical block), per scope:
+V1 as_published     {"window": "R01-early", "rank": 0, "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache", "family": "idxk", "group": 0, "logical_block": 0, "phys_r1": 436, "phys_r2": 762, "category": "cached_full", "note": "pools_unwritten_r1=[511, 1022];r2=[511, 1022]"}
+V1 valid_incl_idxk  {"window": "R01-early", "rank": 0, "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache", "family": "idxk", "group": 0, "logical_block": 0, "phys_r1": 436, "phys_r2": 762, "category": "cached_full", "note": "pools_unwritten_r1=[511, 1022];r2=[511, 1022]"}
+V1 valid_strict     {"window": "R01-early", "rank": 0, "tensor": "language_model.model.layers.7.self_attn.attn", "family": "mla", "group": 0, "logical_block": 0, "phys_r1": 436, "phys_r2": 762, "category": "cached_full", "note": ""}
+V2 as_published     {"window": "R01-early", "rank": 0, "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache", "family": "idxk", "group": 0, "logical_block": 0, "phys_r1": 116, "phys_r2": 1199, "category": "cached_full", "note": "pools_unwritten_r1=[511, 1022];r2=[511, 1022]"}
+V2 valid_incl_idxk  {"window": "R01-early", "rank": 0, "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache", "family": "idxk", "group": 0, "logical_block": 0, "phys_r1": 116, "phys_r2": 1199, "category": "cached_full", "note": "pools_unwritten_r1=[511, 1022];r2=[511, 1022]"}
+V2 valid_strict     {"window": "R01-early", "rank": 0, "tensor": "language_model.model.layers.7.self_attn.attn", "family": "mla", "group": 0, "logical_block": 0, "phys_r1": 116, "phys_r2": 1199, "category": "cached_full", "note": ""}
+
+provenance of valid-category blocks (same physical id as own replicate's warm at same logical index):
+  ('V1', 'draft', 'NOT_from_own_warm'): 40
+  ('V1', 'idxk', 'from_own_warm'): 1606
+  ('V1', 'kda_conv', 'from_own_warm'): 544
+  ('V1', 'kda_rec', 'from_own_warm'): 544
+  ('V1', 'mla', 'from_own_warm'): 1606
+  ('V2', 'draft', 'NOT_from_own_warm'): 40
+  ('V2', 'idxk', 'from_own_warm'): 1606
+  ('V2', 'kda_conv', 'from_own_warm'): 544
+  ('V2', 'kda_rec', 'from_own_warm'): 544
+  ('V2', 'mla', 'from_own_warm'): 1606
+
+aliasing at point 0 (a non-null physical id in two groups' rows of the same request):
+  ('V1', 'rows_checked'): 32
+  ('V2', 'rows_checked'): 32
+
+idxk cached_full blocks by warm pool coverage:
+  ('V1', 'with_unwritten_pools'): 1606
+  ('V2', 'with_unwritten_pools'): 1606
+
+blocks whose digest pair is (0, 0) (consistent with all-zero bytes, i.e. never written since allocation):
+  ('V1', 'draft', 'draft_cached_full', 'r1'): 40
+  ('V1', 'draft', 'draft_cached_full', 'r2'): 40
+  ('V1', 'draft', 'draft_new_beyond_cached', 'r1'): 40
+  ('V1', 'draft', 'draft_new_beyond_cached', 'r2'): 40
+  ('V1', 'idxk', 'new_beyond_cached', 'r1'): 88
+  ('V1', 'idxk', 'new_beyond_cached', 'r2'): 88
+  ('V1', 'kda_conv', 'kda_running_new', 'r1'): 50
+  ('V1', 'kda_conv', 'kda_spec_scratch', 'r1'): 878
+  ('V1', 'kda_conv', 'kda_spec_scratch', 'r2'): 72
+  ('V1', 'kda_rec', 'kda_running_new', 'r1'): 50
+  ('V1', 'kda_rec', 'kda_spec_scratch', 'r1'): 116
+  ('V1', 'mla', 'new_beyond_cached', 'r1'): 88
+  ('V1', 'mla', 'new_beyond_cached', 'r2'): 88
+  ('V1', 'tail', 'tail_ring_new', 'r1'): 88
+  ('V1', 'tail', 'tail_ring_new', 'r2'): 88
+  ('V2', 'draft', 'draft_cached_full', 'r1'): 40
+  ('V2', 'draft', 'draft_cached_full', 'r2'): 40
+  ('V2', 'draft', 'draft_new_beyond_cached', 'r1'): 40
+  ('V2', 'draft', 'draft_new_beyond_cached', 'r2'): 40
+  ('V2', 'idxk', 'new_beyond_cached', 'r1'): 88
+  ('V2', 'idxk', 'new_beyond_cached', 'r2'): 88
+  ('V2', 'kda_conv', 'kda_running_new', 'r1'): 10
+  ('V2', 'kda_conv', 'kda_spec_scratch', 'r1'): 32
+  ('V2', 'kda_conv', 'kda_spec_scratch', 'r2'): 2
+  ('V2', 'kda_rec', 'kda_running_new', 'r1'): 10
+  ('V2', 'kda_rec', 'kda_spec_scratch', 'r1'): 32
+  ('V2', 'kda_rec', 'kda_spec_scratch', 'r2'): 2
+  ('V2', 'mla', 'new_beyond_cached', 'r1'): 88
+  ('V2', 'mla', 'new_beyond_cached', 'r2'): 88
+  ('V2', 'tail', 'tail_ring_new', 'r1'): 88
+  ('V2', 'tail', 'tail_ring_new', 'r2'): 88
+
+earliest (lowest) layer with a difference in MLA cached_full or KDA recurrent cached_state, per window x rank:
+  V1 L4: 16
+  V2 L4: 16
+
+null placeholders skipped (both repeats):
+  ('V1', 'draft'): 3080
+  ('V1', 'kda_conv'): 9384
+  ('V1', 'kda_rec'): 9384
+  ('V2', 'draft'): 3080
+  ('V2', 'kda_conv'): 9384
+  ('V2', 'kda_rec'): 9384
+
+valid categories by layer (differ/compared):
+  V1 draft     draft_cached_full  L45     0 /    8
+  V1 draft     draft_cached_full  L46     0 /    8
+  V1 draft     draft_cached_full  L47     0 /    8
+  V1 draft     draft_cached_full  L48     0 /    8
+  V1 draft     draft_cached_full  L49     0 /    8
+  V1 idxk      cached_full        L3      0 /  146
+  V1 idxk      cached_full        L7    146 /  146
+  V1 idxk      cached_full        L11   146 /  146
+  V1 idxk      cached_full        L15   146 /  146
+  V1 idxk      cached_full        L19   146 /  146
+  V1 idxk      cached_full        L23   146 /  146
+  V1 idxk      cached_full        L27   146 /  146
+  V1 idxk      cached_full        L31   146 /  146
+  V1 idxk      cached_full        L35   146 /  146
+  V1 idxk      cached_full        L39   146 /  146
+  V1 idxk      cached_full        L43   146 /  146
+  V1 kda_conv  kda_cached_state   L0     16 /   16
+  V1 kda_conv  kda_cached_state   L1     16 /   16
+  V1 kda_conv  kda_cached_state   L2     10 /   16
+  V1 kda_conv  kda_cached_state   L4     16 /   16
+  V1 kda_conv  kda_cached_state   L5     16 /   16
+  V1 kda_conv  kda_cached_state   L6     16 /   16
+  V1 kda_conv  kda_cached_state   L8     16 /   16
+  V1 kda_conv  kda_cached_state   L9     16 /   16
+  V1 kda_conv  kda_cached_state   L10    16 /   16
+  V1 kda_conv  kda_cached_state   L12    16 /   16
+  V1 kda_conv  kda_cached_state   L13    16 /   16
+  V1 kda_conv  kda_cached_state   L14    16 /   16
+  V1 kda_conv  kda_cached_state   L16    16 /   16
+  V1 kda_conv  kda_cached_state   L17    16 /   16
+  V1 kda_conv  kda_cached_state   L18    16 /   16
+  V1 kda_conv  kda_cached_state   L20    16 /   16
+  V1 kda_conv  kda_cached_state   L21    16 /   16
+  V1 kda_conv  kda_cached_state   L22    16 /   16
+  V1 kda_conv  kda_cached_state   L24    16 /   16
+  V1 kda_conv  kda_cached_state   L25    16 /   16
+  V1 kda_conv  kda_cached_state   L26    16 /   16
+  V1 kda_conv  kda_cached_state   L28    16 /   16
+  V1 kda_conv  kda_cached_state   L29    16 /   16
+  V1 kda_conv  kda_cached_state   L30    16 /   16
+  V1 kda_conv  kda_cached_state   L32    16 /   16
+  V1 kda_conv  kda_cached_state   L33    16 /   16
+  V1 kda_conv  kda_cached_state   L34    16 /   16
+  V1 kda_conv  kda_cached_state   L36    16 /   16
+  V1 kda_conv  kda_cached_state   L37    16 /   16
+  V1 kda_conv  kda_cached_state   L38    16 /   16
+  V1 kda_conv  kda_cached_state   L40    16 /   16
+  V1 kda_conv  kda_cached_state   L41    16 /   16
+  V1 kda_conv  kda_cached_state   L42    16 /   16
+  V1 kda_conv  kda_cached_state   L44    16 /   16
+  V1 kda_rec   kda_cached_state   L0      0 /   16
+  V1 kda_rec   kda_cached_state   L1      0 /   16
+  V1 kda_rec   kda_cached_state   L2      0 /   16
+  V1 kda_rec   kda_cached_state   L4     16 /   16
+  V1 kda_rec   kda_cached_state   L5     16 /   16
+  V1 kda_rec   kda_cached_state   L6     16 /   16
+  V1 kda_rec   kda_cached_state   L8     16 /   16
+  V1 kda_rec   kda_cached_state   L9     16 /   16
+  V1 kda_rec   kda_cached_state   L10    16 /   16
+  V1 kda_rec   kda_cached_state   L12    16 /   16
+  V1 kda_rec   kda_cached_state   L13    16 /   16
+  V1 kda_rec   kda_cached_state   L14    16 /   16
+  V1 kda_rec   kda_cached_state   L16    16 /   16
+  V1 kda_rec   kda_cached_state   L17    16 /   16
+  V1 kda_rec   kda_cached_state   L18    16 /   16
+  V1 kda_rec   kda_cached_state   L20    16 /   16
+  V1 kda_rec   kda_cached_state   L21    16 /   16
+  V1 kda_rec   kda_cached_state   L22    16 /   16
+  V1 kda_rec   kda_cached_state   L24    16 /   16
+  V1 kda_rec   kda_cached_state   L25    16 /   16
+  V1 kda_rec   kda_cached_state   L26    16 /   16
+  V1 kda_rec   kda_cached_state   L28    16 /   16
+  V1 kda_rec   kda_cached_state   L29    16 /   16
+  V1 kda_rec   kda_cached_state   L30    16 /   16
+  V1 kda_rec   kda_cached_state   L32    16 /   16
+  V1 kda_rec   kda_cached_state   L33    16 /   16
+  V1 kda_rec   kda_cached_state   L34    16 /   16
+  V1 kda_rec   kda_cached_state   L36    16 /   16
+  V1 kda_rec   kda_cached_state   L37    16 /   16
+  V1 kda_rec   kda_cached_state   L38    16 /   16
+  V1 kda_rec   kda_cached_state   L40    16 /   16
+  V1 kda_rec   kda_cached_state   L41    16 /   16
+  V1 kda_rec   kda_cached_state   L42    16 /   16
+  V1 kda_rec   kda_cached_state   L44    16 /   16
+  V1 mla       cached_full        L3      0 /  146
+  V1 mla       cached_full        L7    146 /  146
+  V1 mla       cached_full        L11   146 /  146
+  V1 mla       cached_full        L15   146 /  146
+  V1 mla       cached_full        L19   146 /  146
+  V1 mla       cached_full        L23   146 /  146
+  V1 mla       cached_full        L27   146 /  146
+  V1 mla       cached_full        L31   146 /  146
+  V1 mla       cached_full        L35   146 /  146
+  V1 mla       cached_full        L39   146 /  146
+  V1 mla       cached_full        L43   146 /  146
+  V2 draft     draft_cached_full  L45     0 /    8
+  V2 draft     draft_cached_full  L46     0 /    8
+  V2 draft     draft_cached_full  L47     0 /    8
+  V2 draft     draft_cached_full  L48     0 /    8
+  V2 draft     draft_cached_full  L49     0 /    8
+  V2 idxk      cached_full        L3      0 /  146
+  V2 idxk      cached_full        L7    146 /  146
+  V2 idxk      cached_full        L11   146 /  146
+  V2 idxk      cached_full        L15   146 /  146
+  V2 idxk      cached_full        L19   146 /  146
+  V2 idxk      cached_full        L23   146 /  146
+  V2 idxk      cached_full        L27   146 /  146
+  V2 idxk      cached_full        L31   146 /  146
+  V2 idxk      cached_full        L35   146 /  146
+  V2 idxk      cached_full        L39   146 /  146
+  V2 idxk      cached_full        L43   146 /  146
+  V2 kda_conv  kda_cached_state   L0     16 /   16
+  V2 kda_conv  kda_cached_state   L1      8 /   16
+  V2 kda_conv  kda_cached_state   L2     14 /   16
+  V2 kda_conv  kda_cached_state   L4     16 /   16
+  V2 kda_conv  kda_cached_state   L5     16 /   16
+  V2 kda_conv  kda_cached_state   L6     16 /   16
+  V2 kda_conv  kda_cached_state   L8     16 /   16
+  V2 kda_conv  kda_cached_state   L9     16 /   16
+  V2 kda_conv  kda_cached_state   L10    16 /   16
+  V2 kda_conv  kda_cached_state   L12    16 /   16
+  V2 kda_conv  kda_cached_state   L13    16 /   16
+  V2 kda_conv  kda_cached_state   L14    16 /   16
+  V2 kda_conv  kda_cached_state   L16    16 /   16
+  V2 kda_conv  kda_cached_state   L17    16 /   16
+  V2 kda_conv  kda_cached_state   L18    16 /   16
+  V2 kda_conv  kda_cached_state   L20    16 /   16
+  V2 kda_conv  kda_cached_state   L21    16 /   16
+  V2 kda_conv  kda_cached_state   L22    16 /   16
+  V2 kda_conv  kda_cached_state   L24    16 /   16
+  V2 kda_conv  kda_cached_state   L25    16 /   16
+  V2 kda_conv  kda_cached_state   L26    16 /   16
+  V2 kda_conv  kda_cached_state   L28    16 /   16
+  V2 kda_conv  kda_cached_state   L29    16 /   16
+  V2 kda_conv  kda_cached_state   L30    16 /   16
+  V2 kda_conv  kda_cached_state   L32    16 /   16
+  V2 kda_conv  kda_cached_state   L33    16 /   16
+  V2 kda_conv  kda_cached_state   L34    16 /   16
+  V2 kda_conv  kda_cached_state   L36    16 /   16
+  V2 kda_conv  kda_cached_state   L37    16 /   16
+  V2 kda_conv  kda_cached_state   L38    16 /   16
+  V2 kda_conv  kda_cached_state   L40    16 /   16
+  V2 kda_conv  kda_cached_state   L41    16 /   16
+  V2 kda_conv  kda_cached_state   L42    16 /   16
+  V2 kda_conv  kda_cached_state   L44    16 /   16
+  V2 kda_rec   kda_cached_state   L0      0 /   16
+  V2 kda_rec   kda_cached_state   L1      0 /   16
+  V2 kda_rec   kda_cached_state   L2      0 /   16
+  V2 kda_rec   kda_cached_state   L4     16 /   16
+  V2 kda_rec   kda_cached_state   L5     16 /   16
+  V2 kda_rec   kda_cached_state   L6     16 /   16
+  V2 kda_rec   kda_cached_state   L8     16 /   16
+  V2 kda_rec   kda_cached_state   L9     16 /   16
+  V2 kda_rec   kda_cached_state   L10    16 /   16
+  V2 kda_rec   kda_cached_state   L12    16 /   16
+  V2 kda_rec   kda_cached_state   L13    16 /   16
+  V2 kda_rec   kda_cached_state   L14    16 /   16
+  V2 kda_rec   kda_cached_state   L16    16 /   16
+  V2 kda_rec   kda_cached_state   L17    16 /   16
+  V2 kda_rec   kda_cached_state   L18    16 /   16
+  V2 kda_rec   kda_cached_state   L20    16 /   16
+  V2 kda_rec   kda_cached_state   L21    16 /   16
+  V2 kda_rec   kda_cached_state   L22    16 /   16
+  V2 kda_rec   kda_cached_state   L24    16 /   16
+  V2 kda_rec   kda_cached_state   L25    16 /   16
+  V2 kda_rec   kda_cached_state   L26    16 /   16
+  V2 kda_rec   kda_cached_state   L28    16 /   16
+  V2 kda_rec   kda_cached_state   L29    16 /   16
+  V2 kda_rec   kda_cached_state   L30    16 /   16
+  V2 kda_rec   kda_cached_state   L32    16 /   16
+  V2 kda_rec   kda_cached_state   L33    16 /   16
+  V2 kda_rec   kda_cached_state   L34    16 /   16
+  V2 kda_rec   kda_cached_state   L36    16 /   16
+  V2 kda_rec   kda_cached_state   L37    16 /   16
+  V2 kda_rec   kda_cached_state   L38    16 /   16
+  V2 kda_rec   kda_cached_state   L40    16 /   16
+  V2 kda_rec   kda_cached_state   L41    16 /   16
+  V2 kda_rec   kda_cached_state   L42    16 /   16
+  V2 kda_rec   kda_cached_state   L44    16 /   16
+  V2 mla       cached_full        L3      0 /  146
+  V2 mla       cached_full        L7    146 /  146
+  V2 mla       cached_full        L11   146 /  146
+  V2 mla       cached_full        L15   146 /  146
+  V2 mla       cached_full        L19   146 /  146
+  V2 mla       cached_full        L23   146 /  146
+  V2 mla       cached_full        L27   146 /  146
+  V2 mla       cached_full        L31   146 /  146
+  V2 mla       cached_full        L35   146 /  146
+  V2 mla       cached_full        L39   146 /  146
+  V2 mla       cached_full        L43   146 /  146

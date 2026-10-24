@@ -3161,7 +3161,8 @@ the earlier 7.0 GPU-hour ceiling was voided).**
   - the first probe launch was stopped by the frozen-hash gate before any container (the approval note had changed a
     hashed file);
   - probe COMPLETE (0.7133 GPU-h): 4 replicates, 32/32 forced requests correct, full KV-digest coverage on both ranks,
-    0 hook errors.
+    0 hook errors. [22ay: every KV-cache tensor covered, for the first 48 logical blocks of each group; draft-model K/V
+    was therefore not compared in the 6 deep and close windows.]
 - **Result:**
   - G-enq passes for V1 and V2: the recorded execution is identical between repeats.
   - G-entry fails for both. The first difference is in the cached prefix state built by each replicate's own warm-up
@@ -3170,8 +3171,53 @@ the earlier 7.0 GPU-hour ceiling was voided).**
     - indexer K-cache blocks: 1,460 of 1,694;
     - layer-0 KDA state blocks also differ;
     - indexer tail cache: 0 of 88.
+    - [22ay, corrected: fully cached MLA KV blocks 1,460 of 1,606 differ, in every MLA layer from 7 on and in none at
+      layer 3; indexer K the same; KDA recurrent state at the cached boundary 496 of 544, in every KDA layer from 4 on
+      and in none at layers 0-2 (checksum comparison). The layer-0 KDA statement is withdrawn.]
 - **Reading** (the assessment's table): neither construction is reproducible. Investigate the first differing input,
   state or operation; do not label stock kernels nondeterministic.
   - Not established: the cause, the size of the differences (digests show equality only), and whether the
     instrumentation contributes. A source scan found no atomic operations in the FLA/KDA, mamba or GLM-5 model kernels.
+    [22ay: this does not establish that they are deterministic; the scan's scope does not name the MoE, top-k or
+    collective-communication kernels.]
 - GPU-hours 0.717 (cumulative 134.02).
+
+**Amendment 22ay (2026-10-24; zero-GPU audit of the Stage 0 records and wording corrections; no GPU use).**
+- **Prompted by** the independent assessment of 22ax: the entry digests covered whole allocated blocks, not the state
+  that the next step reads, so the 22ax counts did not by themselves establish that valid cached state differs.
+- **Audit:** `tile-p4/audit-s0/AUDIT.md`, from the retained records and the served source (file hashes listed there).
+  - Point 0 is taken in `prepare_attn`, before the mamba-state pre-copy and the forward.
+  - **Valid at point 0:** MLA KV and indexer K blocks fully inside the cached span; for KDA, only the cached-state
+    column (conv rows 0-2 live, rows 3-5 inactive speculative storage; recurrent state all live).
+  - **Restricted recount (per variant):** MLA KV 1,460 of 1,606 fully cached blocks differ (unique physical pairs:
+    layer 3 0 of 77, each MLA layer from 7 to 43 77 of 77); indexer K the same pattern; KDA recurrent state 496 of
+    544 (layers 0-2 0 of 16, each KDA layer from 4 to 44 16 of 16). The 22ax counts are reproduced exactly when the
+    80 draft and 88 not-yet-written blocks, none of which differed, are added back.
+  - **Earliest valid difference in layer order:** layer 4 (KDA recurrent state). Layer 3, the first MoE layer and the
+    first sparse-MLA/indexer layer, compared equal. This is layer order, not a temporal trace, and rests on equal
+    checksums.
+  - **The reported first mismatch** (rank 0, layer-7 indexer K, logical block 0, R01-early) checks out against the
+    cache addressing formula, the record layout and warm provenance. The same block's MLA KV, which contains no
+    never-written bytes, also differs.
+  - **Aliasing:** at point 0 no physical storage was digested through two tensor views. At later points the draft rows
+    keep stale ids of freed window blocks, so some bytes were digested twice there.
+  - **Not resolvable from the retained records:** which tokens or bytes differ, and whether the KDA conv differences
+    lie in the live rows. Only two sums per block were kept.
+- **Lifecycle observations, outside the question:**
+  - in every cached block, indexer pool records 511 and 1,022 are never written by the warm-up (its chunk starts are
+    not pool-aligned), yet the prefill indexer scores every pool of the context. Here they are probably zero in both
+    repeats; in general serving they would hold allocation-dependent stale bytes;
+  - the drafter's cached-span K/V blocks were not built by the warm-up and are all-zero in both repeats.
+- **Wording corrections** (marked "22ay" in `tile-p4/RESULT-STAGE0.md`, `tile-p4/STAGE0-PROTOCOL.md`, the
+  investigation README, LEDGER and the 22ax block above):
+  - the layer-0 KDA statement is withdrawn;
+  - the digest is two integer sums of the raw words. Different sums prove different bytes; equal sums do not establish
+    equal bytes, and no probability bound is claimed;
+  - logical block 0 (the first block of a request's prefix) is distinguished from physical block 0 (the shared null
+    block);
+  - G-entry compared checksums of allocated blocks, not the state read by the next step;
+  - the absence of atomic operations does not establish determinism;
+  - the 22ax commit message carries the withdrawn layer-0 wording; this amendment supersedes it.
+- **Reading** (the assessment's table): valid state differs; the operation that produces the difference has not been
+  located. No statement about the tile follows.
+- No GPU-hours added (cumulative 134.02).

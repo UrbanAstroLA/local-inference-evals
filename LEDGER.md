@@ -768,10 +768,26 @@ What was asked, run, found, corrected and withdrawn, in date order.
 **2026-10-24. Stage 0: the window-entry state is not reproducible, starting from the warm-up prefill (amendment 22ax).**
 - **A small probe** (one batch, solitary and fixed-order co-batched constructions) executed identically between
   repeats.
-- **Two solitary prefills of identical prompt ids left different cached state** (most MLA KV, indexer K-cache and
-  layer-0 KDA blocks). The cause and the size of the differences are not established.
+- **Two solitary prefills of identical prompt ids left different cached state** (the fully written MLA KV and indexer K of MLA layers 7-43, and the KDA recurrent state of layers 4
+  and later; layers 0-3 compared equal by checksum; wording corrected in 22ay). The cause and the size of the differences are not
+  established.
 - **No statement about the tile follows.**
 - GPU-hours 0.717 (cumulative 134.02). [Result](investigations/2026-10-glm53-completion/tile-p4/RESULT-STAGE0.md).
+
+**2026-10-24. Stage 0 audit: valid cached state differs from layer 4 on; the producing operation is not located
+(amendment 22ay).**
+- **A zero-GPU re-analysis** of the retained Stage 0 records, requested by the independent assessment of 22ax,
+  restricted the comparison to state that is fully written and read by the next step.
+- **Valid state differs:** the MLA KV of every MLA layer from 7 on, and the KDA recurrent state of every KDA layer from
+  4 on. Layers 0-3 (layer 3 is the first MoE and first sparse-attention layer) compared equal by checksum. This is
+  layer order, not a temporal trace.
+- **Withdrawn:** the 22ax statement that the difference was "already in layer 0's KDA state". Those differences lie in
+  scratch columns and in a checksum that includes inactive rows.
+- **Corrected:** the digest is two integer sums, not a hash; the published counts included 168 draft and not-yet-written
+  blocks (none differed); "no atomics" does not establish determinism.
+- **Lifecycle observations, outside the question:** the prefill indexer reads two pool records per cached block that
+  the warm-up never wrote; the drafter's cached-span K/V blocks were not built by the warm-up and are all-zero.
+- No GPU-hours added (cumulative 134.02). [Audit](investigations/2026-10-glm53-completion/tile-p4/audit-s0/AUDIT.md).
 
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough

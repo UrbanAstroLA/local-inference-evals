@@ -1,8 +1,10 @@
 # P4 Stage 0: determinism probe (protocol, written before any Stage-0 GPU step; approved and run 2026-10-24, result `RESULT-STAGE0.md`)
 
-**Status: not run. No GPU use is authorized.**
+**Status: approved (1.34 GPU-h) and run 2026-10-24; result in `RESULT-STAGE0.md`.** The text below is the protocol as
+written before the run. Wording corrections from the zero-GPU audit (`audit-s0/AUDIT.md`, amendment 22ay) are marked
+"22ay"; the uncorrected text is retained locally.
 - The 7.0 GPU-h ceiling is VOID (`AUTHORIZATION.txt`, 2026-10-24).
-- Stage 0 needs a new, explicit operator approval for a stated number of GPU-hours (section 7).
+- Stage 0 needed a new, explicit operator approval for a stated number of GPU-hours (section 7).
 - This protocol follows the assessor's 22av disposition, sections 2, 4, 5 and 6 (`HANDOFF-NEXT/ASSESSOR-DISPOSITION-22AV-2026-10-24.md`).
 
 ## 1. Question and scope
@@ -68,7 +70,7 @@
 | Request identity | public `req`; step ring columns `uid`, `taghash` | A per-request monotonic uid assigned at add. It is captured into every step-ring row at record time and reset at removal. It is never reused |
 | Scheduler execution | public `sched_r0_*.jsonl` | Per real step, the batch rows in batch order: engine request id, req_idx, uid, tag, scheduled tokens, computed tokens, computed prefill tokens, prefill length, prefilling flag, draft tokens. Also per step: real and padded token and request counts, graph mode, and the MoE plans bound by eager launches |
 | Enqueue order | `PRIVATE-fw/fw_r0_*.jsonl` `add` records | The order in which the runner added the requests |
-| Window-entry state | `PRIVATE/entry_<tag>_r<rank>.npz`, both ranks | Before the forward of each prefill step of a forced request (at most 7), and of its first non-prefilling step ("entry"). Every KV-cache tensor of every group is digested per **logical** block of the request (MLA KV, indexer K, KDA conv and recurrent state, draft caches), plus logical block 0 (the shared null block). Logical block ids are recorded too |
+| Window-entry state | `PRIVATE/entry_<tag>_r<rank>.npz`, both ranks | Before the forward of each prefill step of a forced request (at most 7), and of its first non-prefilling step ("entry"). Every KV-cache tensor of every group is digested per **logical** block of the request (MLA KV, indexer K, KDA conv and recurrent state, draft caches), for the first 48 logical blocks of each group, plus one extra column for **physical** block 0, the shared null block (22ay; previously "logical block 0"). A request's logical block 0 is the first block of its prefix and is an ordinary allocated block; physical block 0 is the null block that every group uses as a placeholder. Logical block ids are recorded too |
 | Per-layer state | `ldig` in `PRIVATE/p4_<tag>_r0.npz` | Two int64 digests of each token row of the state after every target layer (hidden, residual, mHC post, comb), at every recorded position. The state after layer L is the state entering layer L + 1 |
 | E1 / E2 / E4 | `PRIVATE/p4_<tag>_r0.npz` | As in run 1. In addition, positions measured in eager steps with more than 64 tokens (mixed prefill and verify steps, including o = 0) are now stored, from the step's logits rows |
 | E3 | `PRIVATE-fw/req_<tag>_r<rank>.pt` | The forcewin per-position metrics, unchanged |
@@ -91,7 +93,7 @@
    - Step by step from the replicate's first keyed step, every field of the scheduler record is identical: rows in batch order, chunk sizes, computed counts, prefilling flags, draft counts, real and padded sizes, graph mode and eager plans.
    - Labels are replicate-free. Engine ids, req_idx, uids and physical block ids are not compared.
    - Applied to both variants. For V2, this is the assessor's requirement that the prefill chunk boundaries and the start of verification match, not only the submission order.
-2. **G-entry: window-entry state identical.** For every window and both ranks:
+2. **G-entry: window-entry checksums equal** (22ay; previously "window-entry state identical": two sums per allocated block, not a byte comparison and not restricted to the state read by the next step). For every window and both ranks:
    - the same digest points (kind, computed and scheduled counts);
    - equal digests for every covered tensor and logical block at every point;
    - every cached block of the forced request was computed by **its own replicate's warm request** for that reply (provenance; groups with the largest block size).
@@ -180,15 +182,17 @@ How these reports separate the two sources of difference:
 ## 8. What Stage 0 cannot certify
 
 1. **Outputs matching for 64 positions** are an operational gate. They do not certify every persistent-state byte, or positions 64-511.
-2. **Digests are wrap-free integer sums** of the raw words.
-   - A difference in digests proves a difference in bytes.
-   - Equal digests make a difference very unlikely, but do not prove bitwise equality.
+2. **Digests are wrap-free integer sums** of the raw words (22ay, corrected).
+   - Each digest is two integer sums of the raw words: all words, and every third word.
+   - Different sums prove different bytes. Equal sums do not establish equal bytes.
+   - Swapping two words in the same position class, a +d/−d pair, or swapping whole 528-byte MLA records or
+     conv-state rows leaves both sums unchanged. No probability bound is claimed.
 3. **Coverage of the KV-cache tensors is what `entry_init` lists.**
    - A tensor whose first dimension is not a multiple of `num_blocks` is not covered. It is named in the start-up record.
    - The null tail block (D2's target) is shared scratch: it is reported, not gated.
    - Allocator state, physical addresses and the scheduler's internal queues are not digested.
 4. **D2 tail-ring races and allocation history are not removed.** The separate salt only prevents prefix reuse.
-5. **The per-layer digests cover the target model's state at the forced requests' rows.** Draft-model hidden states are not digested; their KV caches are covered by the entry digests.
+5. **The per-layer digests cover the target model's state at the forced requests' rows.** Draft-model hidden states are not digested; their KV caches are covered by the entry digests only within the first 48 logical blocks (22ay: in the 6 deep and close windows those were all null, so draft K/V was not compared there).
 6. **The stage-0 recording itself changes the captured graphs and the step timing.** It is identical in both repeats, but it is not the run-1 graph or a production server. Instrumentation remains a candidate contributor.
 7. **The multi-prompt submission does not guarantee deterministic scheduling.** G-enq tests the recorded execution, not the arrival times inside the engine.
 8. **One batch of 8 windows** is a construction test, not a sample of all windows.

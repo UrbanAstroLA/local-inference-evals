@@ -1,0 +1,2424 @@
+{
+ "point": 0,
+ "note": "counts are [differing, compared] over windows x ranks x tensors x logical blocks at digest point 0; physical null-block placeholders excluded (counted separately)",
+ "by_family_category": {
+  "V1|draft|draft_cached_full": [
+   0,
+   0
+  ],
+  "V1|draft|draft_new_beyond_cached": [
+   0,
+   0
+  ],
+  "V1|idxk|cached_full": [
+   1460,
+   0
+  ],
+  "V1|idxk|new_beyond_cached": [
+   0,
+   0
+  ],
+  "V1|kda_conv|kda_cached_state": [
+   538,
+   0
+  ],
+  "V1|kda_conv|kda_running_new": [
+   516,
+   0
+  ],
+  "V1|kda_conv|kda_spec_scratch": [
+   1560,
+   0
+  ],
+  "V1|kda_rec|kda_cached_state": [
+   496,
+   0
+  ],
+  "V1|kda_rec|kda_running_new": [
+   516,
+   0
+  ],
+  "V1|kda_rec|kda_spec_scratch": [
+   1502,
+   0
+  ],
+  "V1|mla|cached_full": [
+   1460,
+   0
+  ],
+  "V1|mla|new_beyond_cached": [
+   0,
+   0
+  ],
+  "V1|tail|tail_ring_new": [
+   0,
+   0
+  ],
+  "V2|draft|draft_cached_full": [
+   0,
+   0
+  ],
+  "V2|draft|draft_new_beyond_cached": [
+   0,
+   0
+  ],
+  "V2|idxk|cached_full": [
+   1460,
+   0
+  ],
+  "V2|idxk|new_beyond_cached": [
+   0,
+   0
+  ],
+  "V2|kda_conv|kda_cached_state": [
+   534,
+   0
+  ],
+  "V2|kda_conv|kda_running_new": [
+   539,
+   0
+  ],
+  "V2|kda_conv|kda_spec_scratch": [
+   1616,
+   0
+  ],
+  "V2|kda_rec|kda_cached_state": [
+   496,
+   0
+  ],
+  "V2|kda_rec|kda_running_new": [
+   497,
+   0
+  ],
+  "V2|kda_rec|kda_spec_scratch": [
+   1490,
+   0
+  ],
+  "V2|mla|cached_full": [
+   1460,
+   0
+  ],
+  "V2|mla|new_beyond_cached": [
+   0,
+   0
+  ],
+  "V2|tail|tail_ring_new": [
+   0,
+   0
+  ]
+ },
+ "by_layer": {
+  "V1|draft|draft_cached_full|45": [
+   0,
+   8
+  ],
+  "V1|draft|draft_cached_full|46": [
+   0,
+   8
+  ],
+  "V1|draft|draft_cached_full|47": [
+   0,
+   8
+  ],
+  "V1|draft|draft_cached_full|48": [
+   0,
+   8
+  ],
+  "V1|draft|draft_cached_full|49": [
+   0,
+   8
+  ],
+  "V1|draft|draft_new_beyond_cached|45": [
+   0,
+   8
+  ],
+  "V1|draft|draft_new_beyond_cached|46": [
+   0,
+   8
+  ],
+  "V1|draft|draft_new_beyond_cached|47": [
+   0,
+   8
+  ],
+  "V1|draft|draft_new_beyond_cached|48": [
+   0,
+   8
+  ],
+  "V1|draft|draft_new_beyond_cached|49": [
+   0,
+   8
+  ],
+  "V1|idxk|cached_full|3": [
+   0,
+   146
+  ],
+  "V1|idxk|cached_full|7": [
+   146,
+   146
+  ],
+  "V1|idxk|cached_full|11": [
+   146,
+   146
+  ],
+  "V1|idxk|cached_full|15": [
+   146,
+   146
+  ],
+  "V1|idxk|cached_full|19": [
+   146,
+   146
+  ],
+  "V1|idxk|cached_full|23": [
+   146,
+   146
+  ],
+  "V1|idxk|cached_full|27": [
+   146,
+   146
+  ],
+  "V1|idxk|cached_full|31": [
+   146,
+   146
+  ],
+  "V1|idxk|cached_full|35": [
+   146,
+   146
+  ],
+  "V1|idxk|cached_full|39": [
+   146,
+   146
+  ],
+  "V1|idxk|cached_full|43": [
+   146,
+   146
+  ],
+  "V1|idxk|new_beyond_cached|3": [
+   0,
+   8
+  ],
+  "V1|idxk|new_beyond_cached|7": [
+   0,
+   8
+  ],
+  "V1|idxk|new_beyond_cached|11": [
+   0,
+   8
+  ],
+  "V1|idxk|new_beyond_cached|15": [
+   0,
+   8
+  ],
+  "V1|idxk|new_beyond_cached|19": [
+   0,
+   8
+  ],
+  "V1|idxk|new_beyond_cached|23": [
+   0,
+   8
+  ],
+  "V1|idxk|new_beyond_cached|27": [
+   0,
+   8
+  ],
+  "V1|idxk|new_beyond_cached|31": [
+   0,
+   8
+  ],
+  "V1|idxk|new_beyond_cached|35": [
+   0,
+   8
+  ],
+  "V1|idxk|new_beyond_cached|39": [
+   0,
+   8
+  ],
+  "V1|idxk|new_beyond_cached|43": [
+   0,
+   8
+  ],
+  "V1|kda_conv|kda_cached_state|0": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|1": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|2": [
+   10,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|4": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|5": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|6": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|8": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|9": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|10": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|12": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|13": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|14": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|16": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|17": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|18": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|20": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|21": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|22": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|24": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|25": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|26": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|28": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|29": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|30": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|32": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|33": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|34": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|36": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|37": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|38": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|40": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|41": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|42": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_cached_state|44": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|0": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|1": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|2": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|4": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|5": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|6": [
+   2,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|8": [
+   2,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|9": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|10": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|12": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|13": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|14": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|16": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|17": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|18": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|20": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|21": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|22": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|24": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|25": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|26": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|28": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|29": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|30": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|32": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|33": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|34": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|36": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|37": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|38": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|40": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|41": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|42": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_running_new|44": [
+   16,
+   16
+  ],
+  "V1|kda_conv|kda_spec_scratch|0": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|1": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|2": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|4": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|5": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|6": [
+   34,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|8": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|9": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|10": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|12": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|13": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|14": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|16": [
+   34,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|17": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|18": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|20": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|21": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|22": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|24": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|25": [
+   34,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|26": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|28": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|29": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|30": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|32": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|33": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|34": [
+   34,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|36": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|37": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|38": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|40": [
+   46,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|41": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|42": [
+   48,
+   48
+  ],
+  "V1|kda_conv|kda_spec_scratch|44": [
+   34,
+   48
+  ],
+  "V1|kda_rec|kda_cached_state|0": [
+   0,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|1": [
+   0,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|2": [
+   0,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|4": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|5": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|6": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|8": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|9": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|10": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|12": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|13": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|14": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|16": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|17": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|18": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|20": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|21": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|22": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|24": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|25": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|26": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|28": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|29": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|30": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|32": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|33": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|34": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|36": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|37": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|38": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|40": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|41": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|42": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_cached_state|44": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|0": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|1": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|2": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|4": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|5": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|6": [
+   2,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|8": [
+   2,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|9": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|10": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|12": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|13": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|14": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|16": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|17": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|18": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|20": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|21": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|22": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|24": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|25": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|26": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|28": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|29": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|30": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|32": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|33": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|34": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|36": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|37": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|38": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|40": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|41": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|42": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_running_new|44": [
+   16,
+   16
+  ],
+  "V1|kda_rec|kda_spec_scratch|0": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|1": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|2": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|4": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|5": [
+   6,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|6": [
+   4,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|8": [
+   4,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|9": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|10": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|12": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|13": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|14": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|16": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|17": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|18": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|20": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|21": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|22": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|24": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|25": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|26": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|28": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|29": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|30": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|32": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|33": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|34": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|36": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|37": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|38": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|40": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|41": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|42": [
+   48,
+   48
+  ],
+  "V1|kda_rec|kda_spec_scratch|44": [
+   48,
+   48
+  ],
+  "V1|mla|cached_full|3": [
+   0,
+   146
+  ],
+  "V1|mla|cached_full|7": [
+   146,
+   146
+  ],
+  "V1|mla|cached_full|11": [
+   146,
+   146
+  ],
+  "V1|mla|cached_full|15": [
+   146,
+   146
+  ],
+  "V1|mla|cached_full|19": [
+   146,
+   146
+  ],
+  "V1|mla|cached_full|23": [
+   146,
+   146
+  ],
+  "V1|mla|cached_full|27": [
+   146,
+   146
+  ],
+  "V1|mla|cached_full|31": [
+   146,
+   146
+  ],
+  "V1|mla|cached_full|35": [
+   146,
+   146
+  ],
+  "V1|mla|cached_full|39": [
+   146,
+   146
+  ],
+  "V1|mla|cached_full|43": [
+   146,
+   146
+  ],
+  "V1|mla|new_beyond_cached|3": [
+   0,
+   8
+  ],
+  "V1|mla|new_beyond_cached|7": [
+   0,
+   8
+  ],
+  "V1|mla|new_beyond_cached|11": [
+   0,
+   8
+  ],
+  "V1|mla|new_beyond_cached|15": [
+   0,
+   8
+  ],
+  "V1|mla|new_beyond_cached|19": [
+   0,
+   8
+  ],
+  "V1|mla|new_beyond_cached|23": [
+   0,
+   8
+  ],
+  "V1|mla|new_beyond_cached|27": [
+   0,
+   8
+  ],
+  "V1|mla|new_beyond_cached|31": [
+   0,
+   8
+  ],
+  "V1|mla|new_beyond_cached|35": [
+   0,
+   8
+  ],
+  "V1|mla|new_beyond_cached|39": [
+   0,
+   8
+  ],
+  "V1|mla|new_beyond_cached|43": [
+   0,
+   8
+  ],
+  "V1|tail|tail_ring_new|3": [
+   0,
+   8
+  ],
+  "V1|tail|tail_ring_new|7": [
+   0,
+   8
+  ],
+  "V1|tail|tail_ring_new|11": [
+   0,
+   8
+  ],
+  "V1|tail|tail_ring_new|15": [
+   0,
+   8
+  ],
+  "V1|tail|tail_ring_new|19": [
+   0,
+   8
+  ],
+  "V1|tail|tail_ring_new|23": [
+   0,
+   8
+  ],
+  "V1|tail|tail_ring_new|27": [
+   0,
+   8
+  ],
+  "V1|tail|tail_ring_new|31": [
+   0,
+   8
+  ],
+  "V1|tail|tail_ring_new|35": [
+   0,
+   8
+  ],
+  "V1|tail|tail_ring_new|39": [
+   0,
+   8
+  ],
+  "V1|tail|tail_ring_new|43": [
+   0,
+   8
+  ],
+  "V2|draft|draft_cached_full|45": [
+   0,
+   8
+  ],
+  "V2|draft|draft_cached_full|46": [
+   0,
+   8
+  ],
+  "V2|draft|draft_cached_full|47": [
+   0,
+   8
+  ],
+  "V2|draft|draft_cached_full|48": [
+   0,
+   8
+  ],
+  "V2|draft|draft_cached_full|49": [
+   0,
+   8
+  ],
+  "V2|draft|draft_new_beyond_cached|45": [
+   0,
+   8
+  ],
+  "V2|draft|draft_new_beyond_cached|46": [
+   0,
+   8
+  ],
+  "V2|draft|draft_new_beyond_cached|47": [
+   0,
+   8
+  ],
+  "V2|draft|draft_new_beyond_cached|48": [
+   0,
+   8
+  ],
+  "V2|draft|draft_new_beyond_cached|49": [
+   0,
+   8
+  ],
+  "V2|idxk|cached_full|3": [
+   0,
+   146
+  ],
+  "V2|idxk|cached_full|7": [
+   146,
+   146
+  ],
+  "V2|idxk|cached_full|11": [
+   146,
+   146
+  ],
+  "V2|idxk|cached_full|15": [
+   146,
+   146
+  ],
+  "V2|idxk|cached_full|19": [
+   146,
+   146
+  ],
+  "V2|idxk|cached_full|23": [
+   146,
+   146
+  ],
+  "V2|idxk|cached_full|27": [
+   146,
+   146
+  ],
+  "V2|idxk|cached_full|31": [
+   146,
+   146
+  ],
+  "V2|idxk|cached_full|35": [
+   146,
+   146
+  ],
+  "V2|idxk|cached_full|39": [
+   146,
+   146
+  ],
+  "V2|idxk|cached_full|43": [
+   146,
+   146
+  ],
+  "V2|idxk|new_beyond_cached|3": [
+   0,
+   8
+  ],
+  "V2|idxk|new_beyond_cached|7": [
+   0,
+   8
+  ],
+  "V2|idxk|new_beyond_cached|11": [
+   0,
+   8
+  ],
+  "V2|idxk|new_beyond_cached|15": [
+   0,
+   8
+  ],
+  "V2|idxk|new_beyond_cached|19": [
+   0,
+   8
+  ],
+  "V2|idxk|new_beyond_cached|23": [
+   0,
+   8
+  ],
+  "V2|idxk|new_beyond_cached|27": [
+   0,
+   8
+  ],
+  "V2|idxk|new_beyond_cached|31": [
+   0,
+   8
+  ],
+  "V2|idxk|new_beyond_cached|35": [
+   0,
+   8
+  ],
+  "V2|idxk|new_beyond_cached|39": [
+   0,
+   8
+  ],
+  "V2|idxk|new_beyond_cached|43": [
+   0,
+   8
+  ],
+  "V2|kda_conv|kda_cached_state|0": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|1": [
+   8,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|2": [
+   14,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|4": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|5": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|6": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|8": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|9": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|10": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|12": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|13": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|14": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|16": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|17": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|18": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|20": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|21": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|22": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|24": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|25": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|26": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|28": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|29": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|30": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|32": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|33": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|34": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|36": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|37": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|38": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|40": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|41": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|42": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_cached_state|44": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|0": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|1": [
+   15,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|2": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|4": [
+   12,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|5": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|6": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|8": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|9": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|10": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|12": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|13": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|14": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|16": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|17": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|18": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|20": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|21": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|22": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|24": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|25": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|26": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|28": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|29": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|30": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|32": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|33": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|34": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|36": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|37": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|38": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|40": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|41": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|42": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_running_new|44": [
+   16,
+   16
+  ],
+  "V2|kda_conv|kda_spec_scratch|0": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|1": [
+   44,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|2": [
+   46,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|4": [
+   46,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|5": [
+   46,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|6": [
+   47,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|8": [
+   45,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|9": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|10": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|12": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|13": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|14": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|16": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|17": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|18": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|20": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|21": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|22": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|24": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|25": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|26": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|28": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|29": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|30": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|32": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|33": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|34": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|36": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|37": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|38": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|40": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|41": [
+   48,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|42": [
+   46,
+   48
+  ],
+  "V2|kda_conv|kda_spec_scratch|44": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_cached_state|0": [
+   0,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|1": [
+   0,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|2": [
+   0,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|4": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|5": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|6": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|8": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|9": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|10": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|12": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|13": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|14": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|16": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|17": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|18": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|20": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|21": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|22": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|24": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|25": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|26": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|28": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|29": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|30": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|32": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|33": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|34": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|36": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|37": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|38": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|40": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|41": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|42": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_cached_state|44": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|0": [
+   12,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|1": [
+   7,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|2": [
+   12,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|4": [
+   8,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|5": [
+   8,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|6": [
+   8,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|8": [
+   10,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|9": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|10": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|12": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|13": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|14": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|16": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|17": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|18": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|20": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|21": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|22": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|24": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|25": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|26": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|28": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|29": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|30": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|32": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|33": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|34": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|36": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|37": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|38": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|40": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|41": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|42": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_running_new|44": [
+   16,
+   16
+  ],
+  "V2|kda_rec|kda_spec_scratch|0": [
+   32,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|1": [
+   30,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|2": [
+   26,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|4": [
+   28,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|5": [
+   24,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|6": [
+   30,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|8": [
+   26,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|9": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|10": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|12": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|13": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|14": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|16": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|17": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|18": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|20": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|21": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|22": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|24": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|25": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|26": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|28": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|29": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|30": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|32": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|33": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|34": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|36": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|37": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|38": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|40": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|41": [
+   48,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|42": [
+   46,
+   48
+  ],
+  "V2|kda_rec|kda_spec_scratch|44": [
+   48,
+   48
+  ],
+  "V2|mla|cached_full|3": [
+   0,
+   146
+  ],
+  "V2|mla|cached_full|7": [
+   146,
+   146
+  ],
+  "V2|mla|cached_full|11": [
+   146,
+   146
+  ],
+  "V2|mla|cached_full|15": [
+   146,
+   146
+  ],
+  "V2|mla|cached_full|19": [
+   146,
+   146
+  ],
+  "V2|mla|cached_full|23": [
+   146,
+   146
+  ],
+  "V2|mla|cached_full|27": [
+   146,
+   146
+  ],
+  "V2|mla|cached_full|31": [
+   146,
+   146
+  ],
+  "V2|mla|cached_full|35": [
+   146,
+   146
+  ],
+  "V2|mla|cached_full|39": [
+   146,
+   146
+  ],
+  "V2|mla|cached_full|43": [
+   146,
+   146
+  ],
+  "V2|mla|new_beyond_cached|3": [
+   0,
+   8
+  ],
+  "V2|mla|new_beyond_cached|7": [
+   0,
+   8
+  ],
+  "V2|mla|new_beyond_cached|11": [
+   0,
+   8
+  ],
+  "V2|mla|new_beyond_cached|15": [
+   0,
+   8
+  ],
+  "V2|mla|new_beyond_cached|19": [
+   0,
+   8
+  ],
+  "V2|mla|new_beyond_cached|23": [
+   0,
+   8
+  ],
+  "V2|mla|new_beyond_cached|27": [
+   0,
+   8
+  ],
+  "V2|mla|new_beyond_cached|31": [
+   0,
+   8
+  ],
+  "V2|mla|new_beyond_cached|35": [
+   0,
+   8
+  ],
+  "V2|mla|new_beyond_cached|39": [
+   0,
+   8
+  ],
+  "V2|mla|new_beyond_cached|43": [
+   0,
+   8
+  ],
+  "V2|tail|tail_ring_new|3": [
+   0,
+   8
+  ],
+  "V2|tail|tail_ring_new|7": [
+   0,
+   8
+  ],
+  "V2|tail|tail_ring_new|11": [
+   0,
+   8
+  ],
+  "V2|tail|tail_ring_new|15": [
+   0,
+   8
+  ],
+  "V2|tail|tail_ring_new|19": [
+   0,
+   8
+  ],
+  "V2|tail|tail_ring_new|23": [
+   0,
+   8
+  ],
+  "V2|tail|tail_ring_new|27": [
+   0,
+   8
+  ],
+  "V2|tail|tail_ring_new|31": [
+   0,
+   8
+  ],
+  "V2|tail|tail_ring_new|35": [
+   0,
+   8
+  ],
+  "V2|tail|tail_ring_new|39": [
+   0,
+   8
+  ],
+  "V2|tail|tail_ring_new|43": [
+   0,
+   8
+  ]
+ },
+ "first_mismatch_in_g_entry_order": {
+  "V1|as_published": {
+   "window": "R01-early",
+   "rank": 0,
+   "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache",
+   "family": "idxk",
+   "group": 0,
+   "logical_block": 0,
+   "phys_r1": 436,
+   "phys_r2": 762,
+   "category": "cached_full",
+   "note": "pools_unwritten_r1=[511, 1022];r2=[511, 1022]"
+  },
+  "V1|valid_incl_idxk": {
+   "window": "R01-early",
+   "rank": 0,
+   "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache",
+   "family": "idxk",
+   "group": 0,
+   "logical_block": 0,
+   "phys_r1": 436,
+   "phys_r2": 762,
+   "category": "cached_full",
+   "note": "pools_unwritten_r1=[511, 1022];r2=[511, 1022]"
+  },
+  "V1|valid_strict": {
+   "window": "R01-early",
+   "rank": 0,
+   "tensor": "language_model.model.layers.7.self_attn.attn",
+   "family": "mla",
+   "group": 0,
+   "logical_block": 0,
+   "phys_r1": 436,
+   "phys_r2": 762,
+   "category": "cached_full",
+   "note": ""
+  },
+  "V2|as_published": {
+   "window": "R01-early",
+   "rank": 0,
+   "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache",
+   "family": "idxk",
+   "group": 0,
+   "logical_block": 0,
+   "phys_r1": 116,
+   "phys_r2": 1199,
+   "category": "cached_full",
+   "note": "pools_unwritten_r1=[511, 1022];r2=[511, 1022]"
+  },
+  "V2|valid_incl_idxk": {
+   "window": "R01-early",
+   "rank": 0,
+   "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache",
+   "family": "idxk",
+   "group": 0,
+   "logical_block": 0,
+   "phys_r1": 116,
+   "phys_r2": 1199,
+   "category": "cached_full",
+   "note": "pools_unwritten_r1=[511, 1022];r2=[511, 1022]"
+  },
+  "V2|valid_strict": {
+   "window": "R01-early",
+   "rank": 0,
+   "tensor": "language_model.model.layers.7.self_attn.attn",
+   "family": "mla",
+   "group": 0,
+   "logical_block": 0,
+   "phys_r1": 116,
+   "phys_r2": 1199,
+   "category": "cached_full",
+   "note": ""
+  }
+ },
+ "provenance_of_valid_blocks": {
+  "V1|draft|NOT_from_own_warm": 40,
+  "V1|idxk|from_own_warm": 1606,
+  "V1|kda_conv|from_own_warm": 544,
+  "V1|kda_rec|from_own_warm": 544,
+  "V1|mla|from_own_warm": 1606,
+  "V2|draft|NOT_from_own_warm": 40,
+  "V2|idxk|from_own_warm": 1606,
+  "V2|kda_conv|from_own_warm": 544,
+  "V2|kda_rec|from_own_warm": 544,
+  "V2|mla|from_own_warm": 1606
+ },
+ "aliasing_point0": {
+  "V1|rows_checked": 32,
+  "V2|rows_checked": 32
+ },
+ "null_placeholders": {
+  "V1|draft": 3080,
+  "V1|kda_conv": 9384,
+  "V1|kda_rec": 9384,
+  "V2|draft": 3080,
+  "V2|kda_conv": 9384,
+  "V2|kda_rec": 9384
+ },
+ "idxk_cached_full_blocks": {
+  "V1|with_unwritten_pools": 1606,
+  "V2|with_unwritten_pools": 1606
+ },
+ "zero_digest_blocks": {
+  "V1|draft|draft_cached_full|r1": 40,
+  "V1|draft|draft_cached_full|r2": 40,
+  "V1|draft|draft_new_beyond_cached|r1": 40,
+  "V1|draft|draft_new_beyond_cached|r2": 40,
+  "V1|idxk|cached_full|r1": 0,
+  "V1|idxk|cached_full|r2": 0,
+  "V1|idxk|new_beyond_cached|r1": 88,
+  "V1|idxk|new_beyond_cached|r2": 88,
+  "V1|kda_conv|kda_cached_state|r1": 0,
+  "V1|kda_conv|kda_cached_state|r2": 0,
+  "V1|kda_conv|kda_running_new|r1": 50,
+  "V1|kda_conv|kda_running_new|r2": 0,
+  "V1|kda_conv|kda_spec_scratch|r1": 878,
+  "V1|kda_conv|kda_spec_scratch|r2": 72,
+  "V1|kda_rec|kda_cached_state|r1": 0,
+  "V1|kda_rec|kda_cached_state|r2": 0,
+  "V1|kda_rec|kda_running_new|r1": 50,
+  "V1|kda_rec|kda_running_new|r2": 0,
+  "V1|kda_rec|kda_spec_scratch|r1": 116,
+  "V1|kda_rec|kda_spec_scratch|r2": 0,
+  "V1|mla|cached_full|r1": 0,
+  "V1|mla|cached_full|r2": 0,
+  "V1|mla|new_beyond_cached|r1": 88,
+  "V1|mla|new_beyond_cached|r2": 88,
+  "V1|tail|tail_ring_new|r1": 88,
+  "V1|tail|tail_ring_new|r2": 88,
+  "V2|draft|draft_cached_full|r1": 40,
+  "V2|draft|draft_cached_full|r2": 40,
+  "V2|draft|draft_new_beyond_cached|r1": 40,
+  "V2|draft|draft_new_beyond_cached|r2": 40,
+  "V2|idxk|cached_full|r1": 0,
+  "V2|idxk|cached_full|r2": 0,
+  "V2|idxk|new_beyond_cached|r1": 88,
+  "V2|idxk|new_beyond_cached|r2": 88,
+  "V2|kda_conv|kda_cached_state|r1": 0,
+  "V2|kda_conv|kda_cached_state|r2": 0,
+  "V2|kda_conv|kda_running_new|r1": 10,
+  "V2|kda_conv|kda_running_new|r2": 0,
+  "V2|kda_conv|kda_spec_scratch|r1": 32,
+  "V2|kda_conv|kda_spec_scratch|r2": 2,
+  "V2|kda_rec|kda_cached_state|r1": 0,
+  "V2|kda_rec|kda_cached_state|r2": 0,
+  "V2|kda_rec|kda_running_new|r1": 10,
+  "V2|kda_rec|kda_running_new|r2": 0,
+  "V2|kda_rec|kda_spec_scratch|r1": 32,
+  "V2|kda_rec|kda_spec_scratch|r2": 2,
+  "V2|mla|cached_full|r1": 0,
+  "V2|mla|cached_full|r2": 0,
+  "V2|mla|new_beyond_cached|r1": 88,
+  "V2|mla|new_beyond_cached|r2": 88,
+  "V2|tail|tail_ring_new|r1": 88,
+  "V2|tail|tail_ring_new|r2": 88
+ },
+ "earliest_layer_with_valid_difference": {
+  "V1|L4": 16,
+  "V2|L4": 16
+ }
+}

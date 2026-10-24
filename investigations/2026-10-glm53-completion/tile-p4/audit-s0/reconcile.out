@@ -1,0 +1,12 @@
+== V1, point 0
+s0map 'attn' family = 1460/1774; split: cached_full=1460/1606, draft_cached_full=0/40, draft_new_beyond_cached=0/40, new_beyond_cached=0/88
+   of which draft layers 45-49: 80 blocks
+s0map 'indexer.k_cache' = 1460/1694; split: cached_full=1460/1606, new_beyond_cached=0/88
+layer 0 kda_conv: kda_cached_state=16/16, kda_running_new=16/16, kda_spec_scratch=48/48
+layer 0 kda_rec: kda_cached_state=0/16, kda_running_new=16/16, kda_spec_scratch=48/48
+== V2, point 0
+s0map 'attn' family = 1460/1774; split: cached_full=1460/1606, draft_cached_full=0/40, draft_new_beyond_cached=0/40, new_beyond_cached=0/88
+   of which draft layers 45-49: 80 blocks
+s0map 'indexer.k_cache' = 1460/1694; split: cached_full=1460/1606, new_beyond_cached=0/88
+layer 0 kda_conv: kda_cached_state=16/16, kda_running_new=16/16, kda_spec_scratch=48/48
+layer 0 kda_rec: kda_cached_state=0/16, kda_running_new=12/16, kda_spec_scratch=32/48

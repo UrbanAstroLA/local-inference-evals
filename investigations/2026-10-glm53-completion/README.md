@@ -99,8 +99,20 @@ difference. Quantization is held fixed.
     independently warmed prefixes, the same prompt ids, seed and acceptance list.
   - The recorded scheduler execution was identical between repeats.
   - The window-entry state was not: two solitary warm-up prefills of identical prompt ids already left different
-    cached state (most MLA KV, indexer K-cache and layer-0 KDA blocks), while the indexer tail cache matched.
+    cached state (the fully written MLA KV and indexer K of MLA layers 7-43, and the KDA recurrent state of layers 4
+    and later; layers 0-3 compared equal by checksum; wording corrected in 22ay), while the indexer tail cache
+    matched.
   - The cause and the size of the differences are not established. No statement about the tile follows.
+- **Stage 0 audit (22ay, no GPU; [`tile-p4/audit-s0/AUDIT.md`](tile-p4/audit-s0/AUDIT.md)).**
+  - Restricted to state that is fully written and read by the next step, the valid cached state differs: MLA KV of
+    every MLA layer from 7 on, KDA recurrent state of every KDA layer from 4 on. Layers 0-3 (layer 3 is the first MoE
+    and first sparse-attention layer) compared equal by checksum. This is layer order, not a temporal trace.
+  - The reported first mismatch (layer-7 indexer K, logical block 0) checks out against the cache addressing, record
+    layout and warm provenance.
+  - Withdrawn: the 22ax "layer-0 KDA" statement (scratch columns and inactive rows). Corrected: the digest is two
+    integer sums, not a hash; "no atomics" does not establish determinism.
+  - Which tokens or bytes differ, and the operation that produces the difference, are not established; the retained
+    checksums cannot resolve them.
 - **Upstream.** The verified corrections were submitted on 2026-10-22, each with a reproduction and its verification:
   - tpurtell's engine: [#7](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/7) (D2),
     [#8](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/8) (D1),

@@ -8,6 +8,18 @@ see `RESULT.md` and `CRITIQUE-run1.md`. This page describes the package as built
 records and the engine: `PROPOSAL-AMENDMENTS.md`. The session runner will not start until the operator acknowledges
 that file. CPU test results: `tests/RESULTS.txt`.
 
+## Update 2026-10-24 (22ay): Stage 0 ran; zero-GPU audit
+
+- **Stage 0** was approved (1.34 GPU-h) and run: 0.717 GPU-h, result `RESULT-STAGE0.md`. No P4 GPU step is
+  authorized now.
+- **Audit** of the retained Stage 0 records: `audit-s0/AUDIT.md` (scripts in `audit-s0/scripts/`, run on CPU with
+  `--network none`; hashes in `audit-s0/SHA256SUMS`). Valid cached state differs from layer 4 on; the operation is not
+  located.
+- **Wording corrected, marked "22ay":** `RESULT-STAGE0.md`, `STAGE0-PROTOCOL.md`. The protocol edit changes its sha256,
+  so the `S0_PROTOCOL_ACK` value printed below no longer matches; Stage 0 is complete and is not re-run.
+  Previous hash list: `SHA256SUMS.pre-22ay`.
+- The section below describes the package as it stood before Stage 0 ran.
+
 ## Update 2026-10-24: analysis fixes and the Stage-0 package (CPU only; nothing has run on a GPU since run 1)
 
 **State:**
