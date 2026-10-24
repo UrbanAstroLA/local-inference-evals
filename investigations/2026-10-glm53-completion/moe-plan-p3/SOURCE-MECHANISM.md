@@ -20,6 +20,11 @@ K:7701.
 
 ## Answer in one paragraph
 
+**Scope (added in 22au).** The forced-tile GPU result (22at) establishes tile choice as the cause of the measured
+output difference on the tested inputs. The magnitude explanation below, through fp16 staging, rests on source
+analysis and CPU emulation. It is not a direct GPU ablation of each staging operation.
+
+
 The two plans run the same arithmetic per element, with one exception: **the fp32 summation order inside each GEMM.**
 The CTA tile sets how many warp rows split K and how their partial sums are folded:
 
@@ -141,7 +146,8 @@ dense δ for the next rounding.
 **Dominant source:** the *stacking* of the three fp16 staging roundings, seeded by the tile-dependent fp32 K-reduction
 order. The last stage (FC2 output fp16) contributes the largest single step. **I + C**
 
-**Neither plan is more accurate (C).** Against an un-staged reference (fp32 intermediates), each plan's error is the
+**No accuracy advantage is established (C).** The CPU emulation gives similar reference errors for the two summation
+orders (wording corrected in 22au). Against an un-staged reference (fp32 intermediates), each plan's error is the
 same, 4.19e-4 fp32 and 1.2e-3 bf16, for both tiles. The decode-vs-prefill difference is about ¼ to ½ of each plan's own
 fp16-staging error. Any change of K order would produce a difference of this size: another tile, a warp split, a
 `B12X_W4A16_SMALL_M_SPLITK`-style split-K, or another kernel. **I**

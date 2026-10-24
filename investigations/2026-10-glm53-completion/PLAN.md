@@ -3063,3 +3063,19 @@ difference; 0.8031 GPU-hours).**
     (57 per layer) and on clamped rows (40 per layer). The 64-boundary regime is INCOMPLETE (3 rows, equal).
 - **Not tested:** EP2/TP2 reductions; extend-kernel attention rows; rank 1; any effect on generation.
 - GPU-hours 0.8031 (cumulative 130.77).
+
+**Amendment 22au (2026-10-23; wording corrections adopted from the independent assessment of 22aq-22at; no GPU use).**
+- "Neither plan is more accurate" (22at) becomes: "No accuracy advantage is established; the CPU emulation gives
+  similar reference errors for the two summation orders." The accuracy comparison used synthetic weights and an
+  unstaged reference.
+- The forced-tile result establishes tile choice as the cause of the measured output difference on the tested inputs.
+  The magnitude explanation through fp16 staging is supported by source analysis and CPU emulation; it is not a direct
+  GPU ablation of every staging operation. 22at's "this confirms the mechanism" is read in that sense.
+- Corrected in place, each marked "wording corrected in 22au": `moe-plan-p3/SOURCE-MECHANISM.md` (a scope note and the
+  accuracy sentence), `captured-p3b/RESULT.md`, the investigation README Status entry, and LEDGER.
+- Scope preserved from the assessment:
+  - the captured serving inputs came from stock 0.9.1, rank 0;
+  - replay on 0.7.0's expert slice is not a captured 0.7.0 serving result;
+  - cross-GPU EP2/TP2 effects are untested;
+  - start-up batches are a separate stratum from GPQA traffic.
+- No GPU-hours added (cumulative 130.77).

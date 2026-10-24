@@ -70,8 +70,11 @@ difference. Quantization is held fixed.
   - **MoE:** on real decode rows, the two plans agree bit-for-bit at 4 and 8 rows. From 16 rows up, 89-100 % of rows
     differ (relative L2 about 6e-4 to 8.4e-4), at or slightly below the synthetic result.
   - **Mechanism:** forcing the decode plan onto the prefill plan's tile makes them bit-identical on all 90 compared
-    rows. The difference is the tile's fp32 summation order, amplified by fp16 intermediate roundings that both plans
-    share ([source note](moe-plan-p3/SOURCE-MECHANISM.md)). Neither plan is more accurate.
+    rows: tile choice is the cause of the measured difference on the tested inputs. Its size is explained, by source
+    analysis and CPU emulation rather than a GPU ablation of each step, as the tile's fp32 summation order amplified by
+    fp16 intermediate roundings that both plans share ([source note](moe-plan-p3/SOURCE-MECHANISM.md)). No accuracy
+    advantage is established; the emulation gives similar reference errors for the two summation orders (wording
+    corrected in 22au).
   - **Attention:** with all else fixed, the stock inflated count and the exact count p + 1 give bit-identical outputs
     on captured dense rows after rejected drafts (57 per layer) and clamped rows (40 per layer). The 64-boundary case
     is incomplete (3 rows captured).

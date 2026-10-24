@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-10-23, wording corrections (completion investigation, amendment 22au)
+
+No GPU use.
+
+- **Accuracy wording:** "No accuracy advantage is established" replaces "Neither plan is more accurate".
+- **Mechanism scope:** tile choice is the established cause on the tested inputs; the fp16-staging magnitude
+  explanation rests on source analysis and CPU emulation.
+- **Files corrected in place:** `moe-plan-p3/SOURCE-MECHANISM.md`, `captured-p3b/RESULT.md`, the investigation
+  `README.md` and `LEDGER.md`.
+- **`PLAN.md`:** amendment 22au.
+
 ## 2026-10-23, captured-input replay and the source of the MoE plan difference (completion investigation, amendment 22at)
 
 0.8031 GPU-hours (cumulative 130.77).

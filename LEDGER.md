@@ -746,8 +746,9 @@ What was asked, run, found, corrected and withdrawn, in date order.
   - the decode and prefill plans agree at 4-8 rows and differ on 89-100 % of rows from 16 rows up (relative L2 about
     6e-4 to 8.4e-4);
   - forcing the decode plan onto the prefill tile makes them bit-identical.
-- **Source:** fp32 summation order, amplified by fp16 intermediate roundings both plans share. Neither plan is more
-  accurate.
+- **Source:** tile choice is the cause on the tested inputs. Its size is explained by source analysis and emulation
+  (fp32 summation order amplified by shared fp16 roundings). No accuracy advantage is established (wording corrected in
+  22au).
 - **Attention:** the stock inflated count gives bit-identical outputs to the exact count on captured dense and clamped
   rows; the boundary case is incomplete.
 - **A failed first capture is kept and explained:** a poller started before CUDA-graph capture.

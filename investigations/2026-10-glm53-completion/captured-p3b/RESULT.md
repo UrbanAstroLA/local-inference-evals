@@ -57,8 +57,9 @@ was checked to be K64/N256 at m = 16-32.
 
 - Compared with the prefill plan: **bit-equal on all 90 compared rows** (30 per layer: captured m = 16-32 rows and P3's
   synthetic m = 16 and 32 fixtures).
-- This confirms the source mechanism (`../moe-plan-p3/SOURCE-MECHANISM.md`): the plan difference is the tile's
-  K-reduction order, amplified by fp16 staging.
+- This establishes tile choice as the cause of the measured difference on the tested inputs. The magnitude
+  explanation (the tile's fp32 K-reduction order, amplified by fp16 staging) rests on source analysis and CPU emulation
+  (`../moe-plan-p3/SOURCE-MECHANISM.md`), not on a GPU ablation of each staging step (wording corrected in 22au).
 
 ## Attention: exact count p + 1 vs the stock inflated count, all else fixed (v091, layers 3 and 23)
 **Baseline:** 152 of 152 rows per layer reproduce the served output bit-equal ("anchored"). The positive control is
