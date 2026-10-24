@@ -3268,3 +3268,28 @@ the earlier 7.0 GPU-hour ceiling was voided).**
   - **Reading:** on source evidence the mechanism is present in both versions and does not by itself distinguish
     them. v0.7.0 was not measured.
 - GPU-hours 0.897 (cumulative 134.92).
+
+**Amendment 22ba (2026-10-24; isolated replay of the layer-3 top-k and the sparse-MLA prefill; 0.0144 GPU-hours
+within the operator approval of 2.0).**
+- **Design:** `tile-p4/replay-topk/PROTOCOL.md`, written and CPU-tested before the GPU step, following section 5 of
+  the independent assessment of 22ax. One GPU, no server, synthetic inputs (labelled) at the served shapes, strides,
+  plans and call paths; the row window rule was traced in the served indexer metadata code rather than assumed.
+- **R1, prefill top-k** (`top_k_per_row_prefill`; binary identical in both images): 24 calls in the same memory and
+  24 relocated, in three input regimes (logits produced by the image's own logits kernel from synthetic FP8 inputs;
+  continuous values; values rounded to force ties).
+  - The order differs between calls on every row that selects, in the same memory and relocated: execution
+    nondeterminism in the section-5 sense, not allocation dependence.
+  - The set never varies without ties at the threshold; with forced ties it varies on 171-199 rows.
+  - The last column is always the lowest-scoring selected pool; rows on the index-ordered path never vary.
+- **R2, sparse-MLA prefill**, v0.9.1 and v0.7.0 (v0.7.0 as its DCP rank-0 kernel call):
+  - bit-repeatable for a fixed order across 8 repeats, scratch and unwritten-cache poisoning and 3 relocations;
+  - every reordering of the same set changes the output on every selecting row (v0.9.1 median relative L2 1.1e-3,
+    max |Δ| 0.0039-0.0156; v0.7.0 max |Δ| 0.0078-0.031). Each order differs from an fp32 reference by about 3.2e-2;
+    no order is closer.
+- **R3, composition (v0.9.1):** the top-k's own orderings through the served index path change about 2,038 rows per
+  call; no row changes without an order change.
+- **Reading:** the divergence located in 22az is reproduced in isolation. The top-k output order is nondeterministic,
+  and the sparse-MLA prefill of both versions is order-sensitive.
+- **Not established:** the tie structure of real logits; v0.7.0's selection in its served DCP=2 merge; behaviour under
+  serving contention; any effect on completion behaviour.
+- GPU-hours 0.0144 (cumulative 134.93).

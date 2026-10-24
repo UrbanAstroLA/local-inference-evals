@@ -1,0 +1,22 @@
+{
+  "schema": "replay-topk-cost/1",
+  "unit": "seconds of wall time with GPU 0 occupied (1 GPU); GPU-h = seconds / 3600",
+  "basis": [
+    "captured-p3b replay on the same v0.9.1 image (GPU0, compile cache seeded): attention-only container 14 s wall incl. start-up and a decode-plan prepare of 1.26 s; v0.7.0 MoE-only container 23 s",
+    "CPU dry runs in this package: vLLM + model package import about 11 s per image",
+    "serving start-up logs give no per-kernel B12x compile time; a cold CuTe compile of one prefill plan is ESTIMATED at 60-150 s (assumption, not measured)",
+    "the serving compile caches (<cache>/vllm-v090 for v0.9.x, <cache>/vllm for v0.7.0) are copied into replay-topk/cache/ before the first run; the v0.9.x DeepGEMM cache holds one sm120_fp8_mqa_logits kernel",
+    "kernel calls are milliseconds each: R1 = 153 top-k calls (v0.9.1) / 86 (v0.7.0); R2 = about 30 prefill calls per q regime plus index construction"
+  ],
+  "per_image": {
+    "v091": {"start_and_import_s": 25, "r1_s": 15, "deepgemm_jit_s": [2, 90], "r2_plan_and_writer_prepare_s": [6, 180],
+             "triton_jit_s": [3, 20], "r2_calls_and_host_work_s": 30, "r3_s": 8,
+             "planning_s": [89, 368], "wall_cap_s": 400},
+    "v070": {"start_and_import_s": 25, "r1_s": 8, "r2_plan_prepare_s": [5, 150], "triton_jit_s": [3, 20],
+             "r2_calls_and_host_work_s": 30, "filter_check_s": 5,
+             "planning_s": [76, 238], "wall_cap_s": 300}
+  },
+  "total": {"planning_gpu_h": [0.046, 0.168], "hard_cap_gpu_h": 0.1944,
+            "note": "warm caches: about 0.05 GPU-h; every compile cold: about 0.17 GPU-h; the budget gate reserves the full caps (700 s = 0.194 GPU-h)"},
+  "approval_requested": {"APPROVED_GPU_H": 0.2, "remaining_investigation_approval_gpu_h": 1.103}
+}

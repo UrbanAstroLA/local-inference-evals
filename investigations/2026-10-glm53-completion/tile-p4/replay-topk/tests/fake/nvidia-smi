@@ -1,0 +1,5 @@
+#!/bin/bash
+# Fake nvidia-smi for the runner tests.  FAKE_SMI_QUERY / FAKE_SMI_TABLE: files with the outputs to print.
+for a in "$@"; do case "$a" in --query-gpu=*) cat "${FAKE_SMI_QUERY}"; exit 0;; esac; done
+[ $# -eq 0 ] && { cat "${FAKE_SMI_TABLE}"; exit 0; }
+exit 0

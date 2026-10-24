@@ -1,0 +1,24 @@
+budget: approved 0.2 GPU-h; used 0.0000; left 0.2000; attempt 1; caps v091 400s v070 300s (1 GPU)
+sample 1: GPU0 mem 20 MiB util 0%; GPU1 mem 2004 MiB util 1%
+  process GPU0 pid 89543 type G 8 MiB gnome-shell
+  process GPU1 pid 89543 type G 703 MiB gnome-shell
+  process GPU1 pid 89997 type G 13 MiB Xwayland
+  process GPU1 pid 90086 type G 13 MiB xdg-desktop-portal-gnome
+  process GPU1 pid 91069 type G 399 MiB firefox
+  process GPU1 pid 97151 type G 368 MiB snap-store
+  process GPU1 pid 99539 type C+G 282 MiB ...88185955192
+PASS GPU 0 idle (mem 20 MiB, util 0%); graphics clients reported: 7 (1 on GPU 0)
+seeded compile cache v091: 104M
+== v091 start 2026-10-24T21:16:34Z timeout 380s soft 340s
+v091 rc=0, 25s x 1 GPU
+{"version": "v091", "r1": "complete", "r2": "complete", "elapsed": 20.8}
+in-container elapsed 24s
+seeded compile cache v070: 84M
+== v070 start 2026-10-24T21:16:59Z timeout 280s soft 240s
+v070 rc=0, 27s x 1 GPU
+{"version": "v070", "r1": "complete", "r2": "complete", "elapsed": 23.4}
+in-container elapsed 27s
+v091 R1 [K: A-ORDER, C: A-ORDER, T: A-SET]; R2 [flat: ORDER-SENSITIVE, peaked: ORDER-SENSITIVE]; R3 COMPOSED
+v070 R1 [C: A-ORDER, T: A-SET]; R2 [flat: ORDER-SENSITIVE, peaked: ORDER-SENSITIVE]
+replay-topk ledger: 0.0144 GPU-h used of 0.2000 approved
+rc=0

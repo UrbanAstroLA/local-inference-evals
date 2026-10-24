@@ -8,6 +8,13 @@ see `RESULT.md` and `CRITIQUE-run1.md`. This page describes the package as built
 records and the engine: `PROPOSAL-AMENDMENTS.md`. The session runner will not start until the operator acknowledges
 that file. CPU test results: `tests/RESULTS.txt`.
 
+## Update 2026-10-24 (22ba): isolated replay of the located operation
+
+- **`replay-topk/`** (one GPU, 0.0144 GPU-h, synthetic inputs at served shapes and call paths; `replay-topk/RESULT.md`):
+  the prefill top-k returns its selection in an order that varies from call to call with identical inputs in the
+  same memory; the sparse-MLA prefill is bit-repeatable for a fixed order but order-sensitive, in both v0.9.1 and
+  v0.7.0; composed, they reproduce the capture's pattern.
+
 ## Update 2026-10-24 (22az): exact-byte capture and version comparison
 
 - **`capture-p0/`** (protocol, package, CPU tests, two attempts; 0.897 GPU-h under a 2.0 GPU-h operator approval):

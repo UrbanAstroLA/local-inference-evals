@@ -1,0 +1,24 @@
+#!/bin/bash
+# Fake docker for the runner tests (tests/test_runner.sh).  Logs every call to $FAKE_LOG.
+echo "docker $*" >> "${FAKE_LOG:-/dev/null}"
+case "$1" in
+  image)  # image inspect REF --format {{.Id}}
+    ref=$3
+    [ "${FAKE_BAD_IMAGE:-0}" = 1 ] && { echo "sha256:0000"; exit 0; }
+    awk -v r="$ref" '$2==r {print $3}' "$FAKE_IMAGES"; exit 0;;
+  ps) printf '%s' "${FAKE_PS:-}"; [ -n "${FAKE_PS:-}" ] && echo; exit 0;;
+  rm) exit 0;;
+  run)
+    o=""; v=""; prev=""
+    for a in "$@"; do
+      if [ "$prev" = "-v" ]; then case "$a" in *:/o) o=${a%:/o};; esac; fi
+      prev=$a
+    done
+    for a in "$@"; do case "$a" in v091|v070) v=$a;; esac; done
+    [ -n "${FAKE_SLEEP:-}" ] && sleep "$FAKE_SLEEP"
+    if [ -n "$o" ] && [ -n "${FAKE_OUT_SRC:-}" ] && [ -d "$FAKE_OUT_SRC/$v" ]; then cp "$FAKE_OUT_SRC/$v/"* "$o/"; fi
+    echo "{\"version\": \"$v\", \"r1\": \"complete\", \"r2\": \"complete\", \"elapsed\": 1.0}"
+    echo "in-container elapsed 1s"
+    exit "${FAKE_RC:-0}";;
+esac
+exit 0

@@ -1,0 +1,24 @@
+== replay-topk v091 soft 340s
+0, NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 20 MiB, 0 %
+[21:16:36] R1 start (v091), soft budget 118.99999999999999
+INFO 10-24 21:16:48 [deep_gemm.py:191] deep_gemm not found in site-packages, trying vendored vllm.third_party.deep_gemm
+[21:16:48] R1 K: same-alloc order-varied rows 2039, set-varied 0; relocated order-varied 2039 (0.428s)
+[21:16:49] R1 C: same-alloc order-varied rows 2039, set-varied 0; relocated order-varied 2039 (0.221s)
+[21:16:49] R1 T: same-alloc order-varied rows 2039, set-varied 171; relocated order-varied 2039 (0.213s)
+[21:16:49] R2 start (v091), soft left 327s
+[21:16:52] R2 v091 flat asc: rows differ 2039/2039 (shortcut 0), max_abs 0.00391
+[21:16:53] R2 v091 flat desc: rows differ 2039/2039 (shortcut 0), max_abs 0.00391
+[21:16:53] R2 v091 flat perm1: rows differ 2039/2039 (shortcut 0), max_abs 0.00391
+[21:16:53] R2 v091 flat perm2: rows differ 2039/2039 (shortcut 0), max_abs 0.00391
+[21:16:53] R2 v091 flat perm3: rows differ 2039/2039 (shortcut 0), max_abs 0.00391
+[21:16:53] R2 v091 flat atomic2: rows differ 2039/2039 (shortcut 0), max_abs 0.00391
+[21:16:55] R2 v091 peaked asc: rows differ 2039/2039 (shortcut 0), max_abs 0.0156
+[21:16:55] R2 v091 peaked desc: rows differ 2039/2039 (shortcut 0), max_abs 0.0156
+[21:16:55] R2 v091 peaked perm1: rows differ 2039/2039 (shortcut 0), max_abs 0.0156
+[21:16:55] R2 v091 peaked perm2: rows differ 2039/2039 (shortcut 0), max_abs 0.0156
+[21:16:55] R2 v091 peaked perm3: rows differ 2039/2039 (shortcut 0), max_abs 0.0156
+[21:16:56] R2 v091 peaked atomic2: rows differ 2039/2039 (shortcut 0), max_abs 0.0156
+[21:16:56] R3: 8/8 calls with output differences
+{"version": "v091", "r1": "complete", "r2": "complete", "elapsed": 20.8}
+replay rc=0
+in-container elapsed 24s

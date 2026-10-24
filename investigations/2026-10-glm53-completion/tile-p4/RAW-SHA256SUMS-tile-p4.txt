@@ -4,6 +4,7 @@ e8b9ab51c7483da66a028c4ee8f3dbe695afb85f99cb1ca724e86af054fc6d8c  ./PROGRESS-REP
 39080e17836c389cc4e824003a79407a7d224f7c2b40cd17ed7848580f922f6f  ./PROPOSAL.md   (local only: design copy with a later-work section (PROTOCOL.md is the published design))
 e88d18be2e9a3d9a57308fcf7a407f920ebf9190d6728acc9cd148ad6a9ba70e  ./README.md.pre22ay   (superseded local copies (before the 22aw or 22ay in-place corrections))
 b9a593f58a4d7e3dfbcd908a3c90a476f191820c73da3a850bb9a3171d6f7215  ./README.md.pre22az   (superseded local copies (before the 22aw or 22ay in-place corrections))
+95381289bc73a7f714d929e59c500f8aa4c4f9d18404638af7d4d9a23b1fb031  ./README.md.pre22ba   (superseded local copies (before the 22aw or 22ay in-place corrections))
 faf669efff88f614cbf48ce1251cf41e8c1cefbbc1bf3252929137e589930fbc  ./REDESIGN-NOTES.md   (local only: future design notes)
 9efb2b5787016dcc90871203fe862c5d05fd10dcf408a9fbdf6fed2a7616dcef  ./RESULT-STAGE0.md.pre22ay   (superseded local copies (before the 22aw or 22ay in-place corrections))
 28acd12370d89980dad089c7fc37427455645ad74399b02503a4df3e5fec2695  ./RESULT.md.pre22aw   (superseded local copies (before the 22aw or 22ay in-place corrections))
@@ -123,4 +124,4 @@ d085cb0c7745a82dea2cb9fbc6e2d3daa6ffd1350970d6fa7b7ba25376dd3d8e  ./runs/g4-comp
 d58ed01fbd9dec754f633a17fa576d8f40a08bbb3c5200a6587c3c9bdb7c2c56  ./runs/g4-compile-cache/fc/fc67991fdef97f386f59d636c3b1822cd8b7b25603aa9a307f9aa8c20355141b.o   (binary)
 28f32112a4bcc8471b2ddcb57466c50e43d8398949245e01ffb7856a0f115d0b  ./runs/g4-compile-cache/fd/fdd0c405993a35dde1abb5cf7a663bcf0b0954a0472da7f53759098c9aab2817.o   (binary)
 18d9832de11998230a7465a331ce0d37a2e5a1fb13d06455073bb1069d0e8585  ./tests/__pycache__/test_gates.cpython-312.pyc   (bytecode)
-# 5531 files, 7520.3 MB, not published or hashed here: B12x compile caches (regenerated on first run), test scratch, local work not part of this release, and PRIVATE-* trees (benchmark-derived; local only); for captured-p3b, PRIVATE-capture/ (captured tensors derived from benchmark prompts; local only; per-file sha256 in runs/capture-attempt-*/caplog entry records)
+# 9239 files, 7719.5 MB, not published or hashed here: B12x compile caches (regenerated on first run), test scratch, local work not part of this release, and PRIVATE-* trees (benchmark-derived; local only); for captured-p3b, PRIVATE-capture/ (captured tensors derived from benchmark prompts; local only; per-file sha256 in runs/capture-attempt-*/caplog entry records)

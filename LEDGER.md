@@ -803,6 +803,15 @@ in a different order (amendment 22az).**
 - GPU-hours 0.897 (cumulative 134.92). [Result](investigations/2026-10-glm53-completion/tile-p4/capture-p0/RESULT.md) ·
   [Version comparison](investigations/2026-10-glm53-completion/tile-p4/version-cmp/VERSION-CMP.md).
 
+**2026-10-24. Isolated replay: the top-k order varies call to call, and the sparse attention depends on it, in both
+versions (amendment 22ba).**
+- **Top-k:** with identical inputs in the same memory, the selection order differs between calls on every row that
+  selects; the set is stable unless candidates tie at the threshold.
+- **Sparse-MLA prefill:** bit-repeatable for a fixed order; any reordering changes the output slightly (median
+  relative L2 about 1e-3), in both v0.9.1 and v0.7.0.
+- Synthetic inputs; v0.7.0's DCP merge not replayed; no completion-behaviour claim.
+- GPU-hours 0.0144 (cumulative 134.93). [Result](investigations/2026-10-glm53-completion/tile-p4/replay-topk/RESULT.md).
+
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough
   qualification. They also said the D7 path "cannot run" where the basis is a reconstruction. These are reworded in the

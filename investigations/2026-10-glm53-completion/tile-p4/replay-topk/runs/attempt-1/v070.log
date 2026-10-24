@@ -1,0 +1,21 @@
+== replay-topk v070 soft 240s
+0, NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 20 MiB, 0 %
+[21:17:01] R1 start (v070), soft budget 48.0
+[21:17:13] R1 C: same-alloc order-varied rows 2039, set-varied 0; relocated order-varied 2039 (0.451s)
+[21:17:13] R1 T: same-alloc order-varied rows 2039, set-varied 162; relocated order-varied 2039 (0.215s)
+[21:17:13] R2 start (v070), soft left 228s
+[21:17:18] R2 v070 flat asc: rows differ 2039/2039 (shortcut 0), max_abs 0.00781
+[21:17:18] R2 v070 flat desc: rows differ 2039/2039 (shortcut 0), max_abs 0.00781
+[21:17:18] R2 v070 flat perm1: rows differ 2039/2039 (shortcut 0), max_abs 0.00781
+[21:17:19] R2 v070 flat perm2: rows differ 2039/2039 (shortcut 0), max_abs 0.00781
+[21:17:19] R2 v070 flat perm3: rows differ 2039/2039 (shortcut 0), max_abs 0.00781
+[21:17:19] R2 v070 flat atomic2: rows differ 2039/2039 (shortcut 0), max_abs 0.00781
+[21:17:21] R2 v070 peaked asc: rows differ 2039/2039 (shortcut 0), max_abs 0.0312
+[21:17:21] R2 v070 peaked desc: rows differ 1973/2039 (shortcut 0), max_abs 0.0156
+[21:17:21] R2 v070 peaked perm1: rows differ 2039/2039 (shortcut 0), max_abs 0.0312
+[21:17:21] R2 v070 peaked perm2: rows differ 2039/2039 (shortcut 0), max_abs 0.0156
+[21:17:21] R2 v070 peaked perm3: rows differ 2039/2039 (shortcut 0), max_abs 0.0156
+[21:17:22] R2 v070 peaked atomic2: rows differ 2039/2039 (shortcut 0), max_abs 0.0156
+{"version": "v070", "r1": "complete", "r2": "complete", "elapsed": 23.4}
+replay rc=0
+in-container elapsed 27s

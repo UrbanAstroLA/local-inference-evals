@@ -1,0 +1,9 @@
+sample 1: GPU0 mem 20 MiB util 0%; GPU1 mem 2004 MiB util 1%
+  process GPU0 pid 89543 type G 8 MiB gnome-shell
+  process GPU1 pid 89543 type G 703 MiB gnome-shell
+  process GPU1 pid 89997 type G 13 MiB Xwayland
+  process GPU1 pid 90086 type G 13 MiB xdg-desktop-portal-gnome
+  process GPU1 pid 91069 type G 399 MiB firefox
+  process GPU1 pid 97151 type G 368 MiB snap-store
+  process GPU1 pid 99539 type C+G 282 MiB ...88185955192
+PASS GPU 0 idle (mem 20 MiB, util 0%); graphics clients reported: 7 (1 on GPU 0)

@@ -1,0 +1,230 @@
+replay-topk CPU test suite, 2026-10-24T21:15:23Z
+images: v091 sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07, v070 sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629 (CPU containers, --network none, CUDA hidden)
+part syntax: exit 0
+part served_v091: exit 0
+part served_v070: exit 0
+part dry_v091: exit 0
+part dry_v070: exit 0
+part harness: exit 0
+part analysis: exit 0
+part runner: exit 0
+part public: exit 0
+checks: 161 PASS, 0 FAIL
+
+=== syntax (host)
+PASS syntax
+=== served arguments (v091 image, CPU)
+PASS v091 S1 sha vllm/model_executor/layers/sparse_attn_indexer_kpool.py
+PASS v091 S1 sha vllm/v1/attention/backends/mla/indexer.py
+PASS v091 S1 sha vllm/v1/attention/backends/mla/sparse_utils.py
+PASS v091 S1 sha vllm/_custom_ops.py
+PASS v091 S1 sha vllm/_C_stable_libtorch.abi3.so
+PASS v091 S1 sha vllm/v1/attention/backends/mla/b12x_mla_sparse.py
+PASS v091 S1 sha vllm/models/glm5next/nvidia/ops/kpool_compress.py
+PASS v091 S1 sha vllm/models/glm5next/nvidia/attention.py
+PASS v091 S1 sha b12x/attention/_shared/mla/prefill.py
+PASS v091 S1 sha b12x/attention/_shared/mla/prefill_mg.py
+PASS v091 S1 sha b12x/attention/sparse_mla/_preparation.py
+PASS v091 S1 kpool:574 select_k
+PASS v091 S1 kpool:576-581 pool_topk full -1 int32
+PASS v091 S1 kpool:600-609 served call
+PASS v091 S1 kpool:461 buffer reset
+PASS v091 S1 kpool:644 expand drops col 511
+PASS v091 S1 kpool:561-568 logits clean_logits=False
+PASS v091 S1 indexer window rule
+PASS v091 S1 091 prefill bind/run call
+PASS v091 S1 091 index path
+PASS v091 S1 091 GLM_NEXT writer
+PASS v091 S2 op schema in binary
+PASS v091 S3 window == formula
+PASS v091 S3 logits width 1,022
+PASS v091 S3 rows with <= 512 pools = positions 2045-2050
+PASS v091 S4 served Caps(...) found
+PASS v091 S4 keyword set equal: served-only [], ours-only []
+  INFO v091 Caps.cache_record_bytes: served `self._kv_record_bytes` -> replay 528
+  INFO v091 Caps.device: served `self.device` -> replay 'dev'
+  INFO v091 Caps.dtype: served `torch.bfloat16` -> replay 'bf16'
+  INFO v091 Caps.fp8_rope: served `bool(self._kv_fp8_rope) if nvfp4_record else None` -> replay None
+  INFO v091 Caps.head_dim: served `self.q_head_dim` -> replay 512
+  INFO v091 Caps.head_major_output: served `self._head_major_mla_output if mode == 'decode' else False` -> replay False
+  INFO v091 Caps.kv_dtype: served `torch.uint8` -> replay 'uint8'
+  INFO v091 Caps.latent_scale_per_token: served `bool(self._nvfp4_dynamic_scale)` -> replay False
+  INFO v091 Caps.lse_scale: served `'natural'` -> replay 'natural'
+  INFO v091 Caps.max_batch: served `int(max_batch)` -> replay 16
+  INFO v091 Caps.max_chunks_per_row: served `self._num_splits_cap` -> replay 32
+  INFO v091 Caps.max_q_rows: served `int(max_q_rows)` -> replay 2048
+  INFO v091 Caps.max_width: served `self.topk_tokens` -> replay 2048
+  INFO v091 Caps.mode: served `mode` -> replay 'extend'
+  INFO v091 Caps.model_type: served `glm_nsa` -> replay 'GLM_NEXT'
+  INFO v091 Caps.num_q_heads: served `int(num_q_heads)` -> replay 64
+  INFO v091 Caps.page_size: served `self.block_size` -> replay 64
+  INFO v091 Caps.return_lse: served `bool(self.need_to_return_lse_for_decode) if mode == 'decode' else True` -> replay True
+  INFO v091 Caps.scale_format: served `self._b12x_scale_format` -> replay None
+  INFO v091 Caps.softmax_scale: served `self.scale` -> replay 0.0625
+  INFO v091 Caps.v_head_dim: served `self.kv_lora_rank` -> replay 512
+PASS v091 S4 split cap = ceil(2048 / 64)
+PASS v091 S4 kernel heads = ceil(heads x dcp / 8) x 8
+PASS v091 S4 091 owner-local runs all heads
+PASS v091 S4 091 NoPE record needs DCP=1 (528 B)
+PASS v091 S5 expand keeps pool order, drops col 511, tail at 2044..2046
+PASS v091 S5 091 physical slots in column order (rows p + 1 >= 2048)
+PASS v091 S5 091 nsa = min(p + 1, 2048)
+PASS v091 S6 scaling = qk_head_dim ** -0.5
+v091: 0 failure(s)
+=== served arguments (v070 image, CPU)
+PASS v070 S1 sha vllm/model_executor/layers/sparse_attn_indexer_kpool.py
+PASS v070 S1 sha vllm/v1/attention/backends/mla/indexer.py
+PASS v070 S1 sha vllm/v1/attention/backends/mla/sparse_utils.py
+PASS v070 S1 sha vllm/_custom_ops.py
+PASS v070 S1 sha vllm/_C_stable_libtorch.abi3.so
+PASS v070 S1 sha vllm/v1/attention/backends/mla/b12x_mla_sparse.py
+PASS v070 S1 sha vllm/models/glm5next/nvidia/ops/kpool_compress.py
+PASS v070 S1 sha vllm/models/glm5next/nvidia/attention.py
+PASS v070 S1 sha b12x/attention/_shared/mla/prefill.py
+PASS v070 S1 sha b12x/attention/_shared/mla/prefill_mg.py
+PASS v070 S1 kpool:574 select_k
+PASS v070 S1 kpool:576-581 pool_topk full -1 int32
+PASS v070 S1 kpool:600-609 served call
+PASS v070 S1 kpool:461 buffer reset
+PASS v070 S1 kpool:644 expand drops col 511
+PASS v070 S1 kpool:561-568 logits clean_logits=False
+PASS v070 S1 indexer window rule
+PASS v070 S1 070 prefill bind/run_extend call
+PASS v070 S1 070 DCP index path
+PASS v070 S2 op schema in binary
+PASS v070 S3 window == formula
+PASS v070 S3 logits width 1,022
+PASS v070 S3 rows with <= 512 pools = positions 2045-2050
+PASS v070 S4 served Caps(...) found
+PASS v070 S4 keyword set equal: served-only [], ours-only []
+  INFO v070 Caps.device: served `self.device` -> replay 'dev'
+  INFO v070 Caps.dtype: served `torch.bfloat16` -> replay 'bf16'
+  INFO v070 Caps.head_dim: served `self.q_head_dim` -> replay 576
+  INFO v070 Caps.head_major_output: served `self._head_major_mla_output` -> replay True
+  INFO v070 Caps.kv_dtype: served `torch.uint8` -> replay 'uint8'
+  INFO v070 Caps.max_batch: served `int(max_batch)` -> replay 16
+  INFO v070 Caps.max_chunks_per_row: served `self._num_splits_cap` -> replay 32
+  INFO v070 Caps.max_q_rows: served `int(max_q_rows)` -> replay 2048
+  INFO v070 Caps.max_width: served `self.topk_tokens` -> replay 2048
+  INFO v070 Caps.mode: served `mode` -> replay 'extend'
+  INFO v070 Caps.num_q_heads: served `int(num_q_heads)` -> replay 64
+  INFO v070 Caps.page_size: served `self.block_size` -> replay 64
+  INFO v070 Caps.v_head_dim: served `self.kv_lora_rank` -> replay 512
+PASS v070 S4 split cap = ceil(2048 / 64)
+PASS v070 S4 kernel heads = ceil(heads x dcp / 8) x 8
+PASS v070 S4 070 rope_pad 64 (q 576, record 656)
+PASS v070 S5 expand keeps pool order, drops col 511, tail at 2044..2046
+PASS v070 S5 070 filter keeps rank-0 tokens, valid count = nsa
+  INFO v070 filter output in input order on 6/6 rows (CPU interpreter; GPU order measured in R2)
+PASS v070 S6 scaling = qk_head_dim ** -0.5
+v070: 0 failure(s)
+=== dry run (v091 image, CPU, TRITON_INTERPRET=1)
+[21:09:29] R1 dry: window==formula True, first selecting p 2051
+[21:12:08] R2 dry v091: expanded [2045, 2047], nsa selecting [2048, 2048]
+{"dry": "v091", "status": "complete", "errors": 0}
+=== dry run (v070 image, CPU, TRITON_INTERPRET=1)
+[21:12:21] R1 dry: window==formula True, first selecting p 2051
+[21:14:01] R2 dry v070: expanded [2045, 2047], nsa selecting [1022, 1024]
+{"dry": "v070", "status": "complete", "errors": 0}
+=== harness with CPU stand-ins (v091 image)
+PASS harness R1 atomic: order varies in same allocation
+PASS harness R1 atomic: set and last column stable
+PASS harness R1 atomic: shortcut rows never vary
+PASS harness R1 sorted: no variation anywhere
+PASS harness R1 sorted: pattern fully descending
+PASS harness R1 ptrdep: same allocation repeatable, relocation varies
+PASS harness R1 relocation achieved
+PASS harness R1 positive control
+PASS harness R1 nowindow: semantics check fails
+PASS harness R1 T regime has ties at the threshold
+PASS harness R2 order/v091: variants change selecting rows only
+PASS harness R2 order/v091: same set / nsa per variant
+PASS harness R2 order/v091: repeat equal
+PASS harness R2 positive control detected
+PASS harness R2 sym/v070: no variant changes output
+PASS harness R3 composed: outputs differ only where top-k order differs
+PASS harness R2 output normaliser
+harness: 0 failure(s)
+=== analysis (host): stand-in cases and planted defects
+PASS analysis stand-in case h-order
+PASS analysis stand-in case h-sym
+PASS analysis stand-in case h-noise
+PASS analysis stand-in case h-ptr
+PASS analysis stand-in case h-bad
+PASS analysis h-bad v091 names the semantics gate: ['call semantics: kernel set != fp64 reference set on untied rows (stride/window/args wrong?)']
+PASS analysis h-bad v070 names the negative control: ['same_alloc: negative control failed (a row with <= 512 pools not index-ordered or varied)', 'relocated: negative control failed (a row with <= 512 pools not index-ordered or varied)', 'reference call: shortcut rows not index-ordered']
+PASS analysis markdown renders
+PASS analysis planted r1-missing -> v091.r1.C INCOMPLETE: got INCOMPLETE
+PASS analysis planted r1-status-error -> v091.r1.C INCOMPLETE: got INCOMPLETE
+PASS analysis planted r1-input-changed -> v091.r1.C INCOMPLETE: got INCOMPLETE
+PASS analysis planted r1-too-few-calls -> v091.r1.C INCOMPLETE: got INCOMPLETE
+PASS analysis planted r1-no-warmup -> v091.r1.C INCOMPLETE: got INCOMPLETE
+PASS analysis planted r1-window -> v091.r1.T INCOMPLETE: got INCOMPLETE
+PASS analysis planted r1-geometry -> v091.r1.C INCOMPLETE: got INCOMPLETE
+PASS analysis planted r1-posctrl -> v091.r1.C INCOMPLETE: got INCOMPLETE
+PASS analysis planted r1-not-relocated -> v091.r1.C INCOMPLETE: got INCOMPLETE
+PASS analysis planted r1-shortcut-varied -> v091.r1.C INCOMPLETE: got INCOMPLETE
+PASS analysis planted r1-stopped -> v091.r1.C INCOMPLETE: got INCOMPLETE
+PASS analysis planted r1-skippedK -> v091.r1.K INCOMPLETE: got INCOMPLETE
+PASS analysis planted r3-follows-r1K -> v091.r3 INCOMPLETE: got INCOMPLETE
+PASS analysis planted r2-missing -> v070.r2.flat INCOMPLETE: got INCOMPLETE
+PASS analysis planted r2-same-set-broken -> v091.r2.flat INCOMPLETE: got INCOMPLETE
+PASS analysis planted r2-order-not-changed -> v091.r2.flat INCOMPLETE: got INCOMPLETE
+PASS analysis planted r2-variant-missing -> v091.r2.flat INCOMPLETE: got INCOMPLETE
+PASS analysis planted r2-nan -> v091.r2.flat INCOMPLETE: got INCOMPLETE
+PASS analysis planted r2-few-repeats -> v091.r2.flat INCOMPLETE: got INCOMPLETE
+PASS analysis planted r2-posctrl-weak -> v091.r2.flat INCOMPLETE: got INCOMPLETE
+PASS analysis planted r2-shortcut-differs -> v091.r2.flat INCOMPLETE: got INCOMPLETE
+PASS analysis planted r2-repeat-differs -> v091.r2.flat A-EXEC: got A-EXEC
+PASS analysis planted r2-cache-poison -> v091.r2.peaked B-ALLOC: got B-ALLOC
+PASS analysis planted r2-scratch-poison -> v070.r2.flat B-ALLOC: got B-ALLOC
+PASS analysis planted r2-reloc -> v070.r2.flat B-ALLOC: got B-ALLOC
+PASS analysis planted r2-stopped -> v091.r2.flat INCOMPLETE: got INCOMPLETE
+PASS analysis planted r2-decode-caveat-only -> v091.r2.flat ORDER-SENSITIVE: got ORDER-SENSITIVE
+PASS analysis planted r3-anomaly -> v091.r3 ANOMALY: got ANOMALY
+PASS analysis planted r3-no-variation -> v091.r3 NO-TOPK-VARIATION: got NO-TOPK-VARIATION
+PASS analysis planted r3-missing -> v091.r3 INCOMPLETE: got INCOMPLETE
+PASS analysis planted r1-malformed -> v070.r1.C INCOMPLETE: got INCOMPLETE
+PASS analysis empty run dir: every unit INCOMPLETE: {'INCOMPLETE'}
+analysis: 0 failure(s)
+=== runner gates (host, fake docker / nvidia-smi)
+PASS runner no-reason
+PASS runner fake-root
+PASS runner no-approval
+PASS runner approval-nan
+PASS runner approval-inf
+PASS runner approval-zero
+PASS runner approval-text
+PASS runner approval-small
+PASS runner approval-one-image
+PASS runner bad-image-key
+PASS runner image-mismatch
+PASS runner container-running
+PASS runner gpu-compute
+PASS runner gpu-graphics
+PASS runner gpu-busy
+PASS runner gpu-mem
+PASS runner dry
+PASS runner dry wrote nothing
+PASS runner full
+PASS runner full: ledger lines
+PASS runner full: analysis written
+PASS runner full: docker flags and cleanup
+PASS runner full: compile cache env
+PASS runner rerun-complete
+PASS runner rerun-noack
+PASS runner rerun-ack
+PASS runner rerun-budget
+PASS runner attempt-exists
+PASS runner interrupt: cost line rc 130
+PASS runner interrupt handled promptly (1s)
+PASS runner interrupt: container removed
+PASS runner tampered package refused
+PASS runner budget: used counted
+PASS runner budget: caps never shrunk
+PASS runner budget: malformed ledger refused
+PASS runner budget: repeated image refused
+runner: 0 failure(s)
+=== public text (no hostnames, user names, home paths, e-mail, other projects)
+PASS public text
+=== summary

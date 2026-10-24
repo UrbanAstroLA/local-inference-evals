@@ -132,6 +132,16 @@ difference. Quantization is held fixed.
     ownership).
   - On source evidence the mechanism is present in both versions, so it does not by itself distinguish them. v0.7.0
     was not measured.
+- **Isolated replay (22ba; [`tile-p4/replay-topk/RESULT.md`](tile-p4/replay-topk/RESULT.md)).** One GPU, 0.0144
+  GPU-hours, synthetic inputs at the served shapes, strides, plans and call paths.
+  - The prefill top-k returns its selection in an order that varies from call to call with identical inputs in the
+    same memory. The selected set is stable unless candidates tie at the threshold (with forced ties it also varies).
+  - The sparse-MLA prefill kernel is bit-repeatable for a fixed order, and any reordering of the same selection
+    changes its output (median relative L2 about 1e-3, about 30 times below each order's difference from an fp32
+    reference). This holds in both v0.9.1 and v0.7.0.
+  - Feeding the top-k's own orderings through the served v0.9.1 path reproduces the capture's pattern.
+  - Not established: the tie structure of real logits; v0.7.0's selection under its served DCP=2 merge (not
+    replayed); any effect on completion behaviour.
 - **Upstream.** The verified corrections were submitted on 2026-10-22, each with a reproduction and its verification:
   - tpurtell's engine: [#7](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/7) (D2),
     [#8](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/8) (D1),

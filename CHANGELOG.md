@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-24, isolated replay of the layer-3 top-k and sparse-MLA prefill (completion investigation, amendment 22ba)
+
+0.0144 GPU-hours (cumulative 134.93).
+
+- **`tile-p4/replay-topk/`:** protocol, package, CPU tests, self-critique, attempt-1 records and the result. Compile
+  caches and synthetic test scratch trees are withheld as counts; the public-text check's deny-list is withheld.
+- **`PLAN.md`:** amendment 22ba. **Investigation `README.md`:** a Status entry. **`LEDGER.md`** and the ledger page:
+  a 22ba entry.
+
 ## 2026-10-24, exact-byte capture and version comparison (completion investigation, amendment 22az)
 
 0.897 GPU-hours (cumulative 134.92).
