@@ -1,0 +1,1 @@
+session A2 attempt 1 reason: session A2 (default tile; session control and reversal) after complete sessions A and B; tile env ''; amendments ack 22db85696ac8

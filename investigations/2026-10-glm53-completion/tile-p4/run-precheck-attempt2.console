@@ -1,0 +1,9 @@
+budget: ceiling 7.0 GPU-h; used 0.0036; left 6.9964; precheck attempt 2 wall cap 300s x 1 GPU
+== preflight 2026-10-24T04:19:59Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 20 MiB, 0 %
+1, NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 1992 MiB, 2 %
+GPU0 sample 1: util 0% mem 20 MiB
+PASS C1 capture with every in-graph hook succeeds; a flush inside the capture is refused and writes nothing  {"error": null}
+VERDICT FAIL
+precheck verdict FAIL

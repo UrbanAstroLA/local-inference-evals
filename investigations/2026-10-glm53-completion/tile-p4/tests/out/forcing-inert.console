@@ -1,0 +1,27 @@
+== fw_natural (hooked): rc=0; 7 PASS, 0 FAIL
+== fw_oracle (hooked): rc=0; 8 PASS, 0 FAIL
+== fw_rest_p4on (hooked): rc=0; 8 PASS, 0 FAIL
+== fw_poison (hooked): rc=0; 7 PASS, 0 FAIL
+== fw_reject1 (hooked): rc=0; 7 PASS, 0 FAIL
+== fw_reject2 (hooked): rc=0; 7 PASS, 0 FAIL
+== fw_reject3 (hooked): rc=0; 7 PASS, 0 FAIL
+== fw_rest (hooked): rc=0; 8 PASS, 0 FAIL
+== fw_sched7 (hooked): rc=0; 7 PASS, 0 FAIL
+== fw_seed (hooked): rc=0; 8 PASS, 0 FAIL
+== inert_orig (orig): rc=0; 0 PASS, 0 FAIL
+== inert_hooked_off (hooked): rc=0; 0 PASS, 0 FAIL
+== inert_hooked_on_unkeyed (hooked): rc=0; 0 PASS, 0 FAIL
+== image_inert_off (image): rc=125; 0 PASS, 0 FAIL
+inert_orig 5359e50c96f02f1293f5d662ff2c65419866cdaf39a2f31a93201aef41dde033
+inert_hooked_off 5359e50c96f02f1293f5d662ff2c65419866cdaf39a2f31a93201aef41dde033
+inert_hooked_on_unkeyed 5359e50c96f02f1293f5d662ff2c65419866cdaf39a2f31a93201aef41dde033
+image_inert_off None
+FAIL I1 identical outputs: original B1 files / hooked env unset / hooked env on, no keyed request / built image env unset
+tests/run_cpu_tests.sh: line 62: ge: command not found
+== image_inert_off (image): rc=125; 0 PASS, 0 FAIL
+tests/run_cpu_tests.sh: line 64: syntax error near unexpected token `;;'
+tests/run_cpu_tests.sh: line 64: `              python3 "$INV/hook-validation/tests/compare_inert.py" "$OUT" | tee "$OUT/inert-compare.txt" ;;'
+
+real	19m50.073s
+user	0m0.257s
+sys	0m0.389s

@@ -1,0 +1,24 @@
+== image_units (image) 2026-10-24T02:26:53Z
+W1024 02:26:59.726000 1 torch/utils/cpp_extension.py:178] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+PASS S1 stage hooks copy exactly (MoE and mHC hidden path), stage_n = m 
+PASS S1 m > 64 -> not staged (stage_n 0); unregistered / wrong-kind modules ignored 
+PASS S2 in-graph hooks: identical aten op sequence for different values; buffers keep their addresses 20 ops
+PASS S2 in-graph hooks: no host-sync op []
+PASS S3 flush refused before the first real batch (S.serving False): no file 
+PASS S3 flush refused while a stream is capturing: no file 
+PASS S3 flush after serving starts writes the file; the slot is freed every time 
+PASS S3 serving starts at the first real batch outside capture, never inside 
+PASS S3 the module starts no thread 
+PASS S4 p4_hooks.py: no thread, pinned memory, stream, event or synchronize []
+PASS S4 in-graph hooks: no .item / .cpu / .tolist / nonzero / .numpy / bool() []
+PASS S4 forcewin port: no thread or stream added 
+WARNING 10-24 02:27:04 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-24 02:27:04 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-24 02:27:04 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+PASS R1 register: six stages found by class/layer, draft ignored, stores allocated (rank 0), no issues []
+PASS R1 register installs the graph-mode label on the CUDA-graph managers 
+PASS R1 rank 1: no stores; a duplicate stage module is an issue 
+PASS B1 recorder: one record per key, repeats not logged, changes logged, capacity per plan, fields for the gates [('decode', 32, 128, False), ('decode', 32, 64, True), ('prefill', 900, 64, False)]
+PASS B1 exl3 hooks present and on (_P4_ON) 
+test_p4_cpu[units]: 17/17 checks passed
+rc=0

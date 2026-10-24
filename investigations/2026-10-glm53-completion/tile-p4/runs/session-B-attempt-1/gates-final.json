@@ -1,0 +1,163 @@
+{
+ "arm": "B",
+ "stage": "final",
+ "n_records": 5376,
+ "n_target_keys": 5376,
+ "ranks": [
+  0,
+  1
+ ],
+ "layers": 42,
+ "draft_records": 0,
+ "gates": {
+  "G1": {
+   "ok": true,
+   "n_keys": 420,
+   "rank_layers": 84,
+   "bad": [],
+   "n_bad": 0,
+   "changed": [],
+   "coverage_missing": [],
+   "n_coverage_missing": 0
+  },
+  "G2": {
+   "ok": true,
+   "n_keys": 4956,
+   "n_common": 2856,
+   "mismatches": [],
+   "n_mismatches": 0,
+   "absent_from_A": [
+    [
+     0,
+     3,
+     "prefill",
+     102
+    ],
+    [
+     0,
+     4,
+     "prefill",
+     102
+    ],
+    [
+     0,
+     5,
+     "prefill",
+     102
+    ],
+    [
+     0,
+     6,
+     "prefill",
+     102
+    ],
+    [
+     0,
+     7,
+     "prefill",
+     102
+    ],
+    [
+     0,
+     8,
+     "prefill",
+     102
+    ],
+    [
+     0,
+     9,
+     "prefill",
+     102
+    ],
+    [
+     0,
+     10,
+     "prefill",
+     102
+    ],
+    [
+     0,
+     11,
+     "prefill",
+     102
+    ],
+    [
+     0,
+     12,
+     "prefill",
+     102
+    ],
+    [
+     0,
+     13,
+     "prefill",
+     102
+    ],
+    [
+     0,
+     14,
+     "prefill",
+     102
+    ],
+    [
+     0,
+     15,
+     "prefill",
+     102
+    ],
+    [
+     0,
+     16,
+     "prefill",
+     102
+    ],
+    [
+     0,
+     17,
+     "prefill",
+     102
+    ],
+    [
+     0,
+     18,
+     "prefill",
+     102
+    ],
+    [
+     0,
+     19,
+     "prefill",
+     102
+    ],
+    [
+     0,
+     20,
+     "prefill",
+     102
+    ],
+    [
+     0,
+     21,
+     "prefill",
+     102
+    ],
+    [
+     0,
+     22,
+     "prefill",
+     102
+    ]
+   ],
+   "n_absent_from_A": 2100,
+   "absent_rule_failures": [],
+   "changed": [],
+   "weight_tile_config_pairs": [
+    [
+     "(64, 256, 64, 256)",
+     "None"
+    ]
+   ]
+  }
+ },
+ "ok": true
+}

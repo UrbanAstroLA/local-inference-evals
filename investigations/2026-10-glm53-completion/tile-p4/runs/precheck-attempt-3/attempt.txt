@@ -1,0 +1,1 @@
+precheck attempt 3; reason: pre-check attempt 3: same code, traceback printing added to find the post-C1 failure

@@ -1,0 +1,1 @@
+precheck attempt 1; reason: single-GPU pre-check: CUDA-graph capture with all P4 hooks, negative control, bit-exact stores

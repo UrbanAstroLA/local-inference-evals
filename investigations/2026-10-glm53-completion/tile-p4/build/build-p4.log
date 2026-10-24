@@ -1,0 +1,64 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.p4
+#1 transferring dockerfile: 3.76kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07
+#2 DONE 0.7s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [ 1/10] FROM ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07
+#4 resolve ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 31.05kB done
+#5 DONE 0.0s
+
+#6 [ 2/10] RUN printf '%s\n'     "101e456b28fbebd0cb73e3f43ae38b4726844a43ee96ec61239bbe455853205f  /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_runner.py"     "308d4171f892f27231655289ceb03cd4566533c7d26b8f98bd62ef0a34f986f0  /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/spec_decode/rejection_sampler.py"     "76070739447fc9f7563ef164ef80c0777208d1ea07dec3a6f6d2a0755188d7ae  /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/sample/sampler.py"     "3b4ca47cb1168bffebcfe3cf1db48daf86691c140cbf40f9c1f3aa6ad6a444d9  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/quantization/exl3.py"     "28c93ec6efa760fbf05dd6c36184c2a2ef1cba2902cc422b702c41f282c61ecb  /usr/local/lib/python3.12/dist-packages/vllm/models/glm5next/nvidia/model.py"   | sha256sum -c - && ! test -e /usr/local/lib/python3.12/dist-packages/vllm/p4_hooks.py && ! test -e /usr/local/lib/python3.12/dist-packages/vllm/forcewin_hooks.py
+#6 CACHED
+
+#7 [ 3/10] COPY files/vllm/p4_hooks.py /usr/local/lib/python3.12/dist-packages/vllm/p4_hooks.py
+#7 DONE 0.0s
+
+#8 [ 4/10] COPY files/vllm/forcewin_hooks.py /usr/local/lib/python3.12/dist-packages/vllm/forcewin_hooks.py
+#8 DONE 0.0s
+
+#9 [ 5/10] COPY files/vllm/v1/worker/gpu/model_runner.py /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_runner.py
+#9 DONE 0.0s
+
+#10 [ 6/10] COPY files/vllm/v1/worker/gpu/spec_decode/rejection_sampler.py /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/spec_decode/rejection_sampler.py
+#10 DONE 0.0s
+
+#11 [ 7/10] COPY files/vllm/v1/worker/gpu/sample/sampler.py /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/sample/sampler.py
+#11 DONE 0.0s
+
+#12 [ 8/10] COPY files/vllm/model_executor/layers/quantization/exl3.py /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/quantization/exl3.py
+#12 DONE 0.0s
+
+#13 [ 9/10] COPY files/vllm/models/glm5next/nvidia/model.py /usr/local/lib/python3.12/dist-packages/vllm/models/glm5next/nvidia/model.py
+#13 DONE 0.0s
+
+#14 [10/10] RUN printf '%s\n'     "887dbe3fd5c1b53cdc73f7a8873d49439a50dfceb217e7c75e41097a6cd48b19  /usr/local/lib/python3.12/dist-packages/vllm/p4_hooks.py"     "d6b10341dc83504660a73ef61a0e34b1b8d4774cd6d7b898dcf837b3554c5fc0  /usr/local/lib/python3.12/dist-packages/vllm/forcewin_hooks.py"     "8d276b3aac4bd6b5b2ef2c1f4b501140a4f1cd4e0dd1eb95f5a48d93e3a81d65  /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_runner.py"     "f5a875ef0af0f8e5ceda52d1272c56e2badd07893192f44a0421183d29f75539  /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/spec_decode/rejection_sampler.py"     "bbb1df8171c4750bea4f89ff76277a54b4b839caa25ef57d59313b2ce1e146c7  /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/sample/sampler.py"     "bdb4f14c63ccaddb084e5b7c23df591318528084b76c6535b39daf32174a388c  /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/quantization/exl3.py"     "98eb25076b977361973131fa1c2f7eeba76a113e6c4241f4e59fc0f067bc8f6b  /usr/local/lib/python3.12/dist-packages/vllm/models/glm5next/nvidia/model.py"   | sha256sum -c -  && python3 -m py_compile /usr/local/lib/python3.12/dist-packages/vllm/p4_hooks.py /usr/local/lib/python3.12/dist-packages/vllm/forcewin_hooks.py /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_runner.py /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/spec_decode/rejection_sampler.py /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/sample/sampler.py /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/quantization/exl3.py /usr/local/lib/python3.12/dist-packages/vllm/models/glm5next/nvidia/model.py   && test "$(grep -c local-forcewin /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_runner.py)" = 12  && test "$(grep -c local-forcewin /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/spec_decode/rejection_sampler.py)" = 7  && test "$(grep -c local-forcewin /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/sample/sampler.py)" = 6  && test "$(grep -c local-p4 /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/quantization/exl3.py)" = 21  && test "$(grep -c local-p4 /usr/local/lib/python3.12/dist-packages/vllm/models/glm5next/nvidia/model.py)" = 13  && CUDA_VISIBLE_DEVICES= python3 -c "import importlib.util as u; s=u.spec_from_file_location('m','/usr/local/lib/python3.12/dist-packages/vllm/p4_hooks.py'); m=u.module_from_spec(s); s.loader.exec_module(m); assert not m.ENABLED"
+#14 0.058 /usr/local/lib/python3.12/dist-packages/vllm/p4_hooks.py: OK
+#14 0.058 /usr/local/lib/python3.12/dist-packages/vllm/forcewin_hooks.py: OK
+#14 0.058 /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/model_runner.py: OK
+#14 0.058 /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/spec_decode/rejection_sampler.py: OK
+#14 0.058 /usr/local/lib/python3.12/dist-packages/vllm/v1/worker/gpu/sample/sampler.py: OK
+#14 0.059 /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/quantization/exl3.py: OK
+#14 0.059 /usr/local/lib/python3.12/dist-packages/vllm/models/glm5next/nvidia/model.py: OK
+#14 DONE 1.7s
+
+#15 exporting to image
+#15 exporting layers 0.1s done
+#15 exporting manifest sha256:7977bce0e37df6d0d3d2e9d9cc028894888dcccf95a8fb05653d1b2811391428 done
+#15 exporting config sha256:9b8240eee0ebc18d28a87934434751717052f7b9986c8cadc1bb80690d210107 done
+#15 exporting attestation manifest sha256:58e2983cbb8e2834d4b94ee533248f2bc01547124d94394ad4a0c93caa022e54 done
+#15 exporting manifest list sha256:4186bda0326732d2f82b215231ba12713bf2d75053bb8f6644ed738115590439 done
+#15 naming to docker.io/local/glm53-v091-p4-tile-r3:local done
+#15 unpacking to docker.io/local/glm53-v091-p4-tile-r3:local 0.1s done
+#15 DONE 0.4s

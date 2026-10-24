@@ -1,0 +1,14 @@
+budget: ceiling 7.0 GPU-h; used 0.0144; left 6.9856; G4 attempt 1 wall cap 900s x 1 GPU
+== preflight 2026-10-24T04:23:35Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 20 MiB, 0 %
+1, NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 1984 MiB, 2 %
+GPU0 sample 1: util 0% mem 20 MiB
+== G4 start 2026-10-24T04:23:35Z timeout 880s soft 850s
+G4 container rc=0, 46s x 1 GPU
+{"part": "moe", "engine": "v091", "status": "complete", "verdicts": {"3": "DIFFERENCES (characterize)", "23": "DIFFERENCES (characterize)", "44": "DIFFERENCES (characterize)"}, "forced": null, "dry_forced_probe": null}
+G4a rc=0
+{"part": "moe", "engine": "v091", "status": "complete", "verdicts": {"3": "BASELINE NOT REPRODUCED", "23": "BASELINE NOT REPRODUCED", "44": "BASELINE NOT REPRODUCED"}, "forced": null, "dry_forced_probe": null}
+G4b rc=0
+in-container elapsed 45s
+G4 PASS | G4b AS PREDICTED (forcing effective True; decode == prefill on 66 entries: True) | {"3": {"entries": 44, "reproduced": 44, "errors": 0}, "23": {"entries": 44, "reproduced": 44, "errors": 0}, "44": {"entries": 44, "reproduced": 44, "errors": 0}}

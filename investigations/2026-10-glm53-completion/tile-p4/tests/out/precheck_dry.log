@@ -1,0 +1,9 @@
+== precheck_dry (hooked) 2026-10-24T04:23:44Z
+W1024 04:23:50.902000 1 torch/utils/cpp_extension.py:178] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+PASS C1 capture with every in-graph hook succeeds; a flush inside the capture is refused and writes nothing  {"error": null}
+PASS C2 replays + eager bridge: every stored row == its step's input bit for bit; have exact; no p4_error  {"checked": 392, "bad": [], "errors": []}
+PASS C3 a replay without the bridge leaves the stores untouched  {}
+FAIL N1 negative control: a device-to-host copy inside a capture fails it  {"error": null}
+secs 9.5
+PASS precheck_graph.py dry run on CPU: C1, C2, C3 pass (N1 is GPU-only, here: False)
+rc=0

@@ -3079,3 +3079,33 @@ difference; 0.8031 GPU-hours).**
   - cross-GPU EP2/TP2 effects are untested;
   - start-up batches are a separate stratum from GPQA traffic.
 - No GPU-hours added (cumulative 130.77).
+
+**Amendment 22av (2026-10-24; P4 tile intervention, run 1, INCOMPLETE; 2.53 GPU-hours).**
+- **Design** (`tile-p4/PROTOCOL.md`, approved by the operator after the assessment of 22aq-22at; amendments A1-A8 in
+  `tile-p4/PROPOSAL-AMENDMENTS.md`, acknowledged before any GPU step; not published before the run):
+  - one derived stock 0.9.1 image for both arms, with the MoE decode tile forced to K64/N256 by an environment switch
+    (arm B);
+  - sessions A, B, A';
+  - forcewin forced histories from 16 re-tokenized stock replies (48 windows; early, deep and near-close), at 8 in
+    flight with a fixed acceptance schedule;
+  - endpoints: MoE output after the all-reduce, hidden states, full-normalized target log-probabilities, full-vocab
+    KL on a subset.
+- **Run:**
+  - single-GPU pre-check passed on attempt 4. Attempts 1-3 found and fixed a device write before a capture check, a
+    harness that hid tracebacks, and a slot leak; all recorded;
+  - G4 passed (switch off reproduces stock output; switch on gives decode = prefill);
+  - all three sessions COMPLETE with launch gates G1-G3 and the session-control gate passing on both ranks.
+- **Reading: INCOMPLETE** (`tile-p4/RESULT.md`, `tile-p4/CRITIQUE-run1.md`, evidence in `tile-p4/diagnostics/`):
+  - the analysis step key mislabelled steps (flush-time tags with reused request indices) and excluded about 99.9 %
+    of positions. Its reading "no reproducible A-vs-B difference" is invalid;
+  - the forced windows did not start from the same state, even within one arm. In-batch remainder prefill was packed
+    differently per repeat, and passes were not in lock step. A repeat vs A repeat: MoE layer-23 rel L2 median 0.15,
+    forced-token ln P identical on 15 % of positions, |Δ ln P(`</think>`)| median 0.18. A vs B is indistinguishable;
+  - the gates verified launches and fixed-input arithmetic but not reproducibility of the window-start state. The
+    CPU mocks did not model the real scheduler.
+- **Supported (descriptive):**
+  - the tile switch acts as designed on both ranks;
+  - matched-history forced decode built this way is not reproducible on stock 0.9.1; scheduling and packing alone
+    perturb ln P(`</think>`) by about 0.18 at identical tokens;
+  - nothing about the tile's effect on the target distribution.
+- GPU-hours 2.53 (cumulative 133.30).

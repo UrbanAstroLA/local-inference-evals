@@ -1,0 +1,12 @@
+budget: ceiling 7.0 GPU-h; used 0.0108; left 6.9892; precheck attempt 4 wall cap 300s x 1 GPU
+== preflight 2026-10-24T04:23:07Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 20 MiB, 0 %
+1, NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 1992 MiB, 1 %
+GPU0 sample 1: util 0% mem 20 MiB
+PASS C1 capture with every in-graph hook succeeds; a flush inside the capture is refused and writes nothing  {"error": null}
+PASS C2 replays + eager bridge: every stored row == its step's input bit for bit; have exact; no p4_error  {"checked": 392, "bad": [], "errors": []}
+PASS C3 a replay without the bridge leaves the stores untouched  {}
+PASS N1 negative control: a device-to-host copy inside a capture fails it  {"error": "RuntimeError('Cannot copy between CPU and CUDA tensors during CUDA graph capture unless the CPU tensor is pinned. Please use tensor.pin_memory() or allocate the tensor with pin_memory=True.')"}
+VERDICT PASS
+precheck verdict PASS

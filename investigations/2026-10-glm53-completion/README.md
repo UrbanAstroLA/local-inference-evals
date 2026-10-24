@@ -79,6 +79,18 @@ difference. Quantization is held fixed.
     on captured dense rows after rejected drafts (57 per layer) and clamped rows (40 per layer). The 64-boundary case
     is incomplete (3 rows captured).
   - Captured tensors derive from benchmark prompts and are not published. Effects on generation are not measured.
+- **Two-rank MoE tile intervention, run 1: INCOMPLETE (22av; [`tile-p4/`](tile-p4/RESULT.md)).**
+  - Stock 0.9.1 with the default tile (A, twice) was compared with the decode tile forced to K64/N256 (B) on matched
+    forced histories (48 windows from stock replies, up to 131k tokens deep).
+  - The intervention reached the engine as specified on both ranks, and every session completed.
+  - The run cannot answer its question: forced windows did not start from the same state even within one arm. In-batch
+    remainder prefill was packed differently per repeat.
+    - Repeats of arm A differ by about 0.18 (median) in ln P(`</think>`) at identical tokens, and on every position in
+      the MoE output.
+    - This is far above the tile's fixed-input effect, and A vs B looks the same as A vs A.
+  - The automated reading ("no reproducible difference") is invalid; an analysis defect excluded 99.9 % of positions.
+  - The run is reported as INCOMPLETE, with a [critique](tile-p4/CRITIQUE-run1.md). No statement about the tile's effect
+    on the target distribution follows.
 - **Upstream.** The verified corrections were submitted on 2026-10-22, each with a reproduction and its verification:
   - tpurtell's engine: [#7](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/7) (D2),
     [#8](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/8) (D1),

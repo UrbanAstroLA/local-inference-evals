@@ -1,0 +1,26 @@
+{
+ "results": [
+  {
+   "test": "C1 capture with every in-graph hook succeeds; a flush inside the capture is refused and writes nothing",
+   "ok": true,
+   "error": null
+  },
+  {
+   "test": "C2 replays + eager bridge: every stored row == its step's input bit for bit; have exact; no p4_error",
+   "ok": true,
+   "checked": 392,
+   "bad": [],
+   "errors": []
+  },
+  {
+   "test": "C3 a replay without the bridge leaves the stores untouched",
+   "ok": true
+  },
+  {
+   "test": "N1 negative control: a device-to-host copy inside a capture fails it",
+   "ok": true,
+   "error": "RuntimeError('Cannot copy between CPU and CUDA tensors during CUDA graph capture unless the CPU tensor is pinned. Please use tensor.pin_memory() or allocate the tensor with pin_memory=True.')"
+  }
+ ],
+ "verdict": "PASS"
+}

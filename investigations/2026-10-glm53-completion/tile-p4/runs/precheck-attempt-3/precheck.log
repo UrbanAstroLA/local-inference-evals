@@ -1,0 +1,12 @@
+PASS C1 capture with every in-graph hook succeeds; a flush inside the capture is refused and writes nothing  {"error": null}
+Traceback (most recent call last):
+  File "/pc/precheck_graph.py", line 190, in <module>
+    main()
+  File "/pc/precheck_graph.py", line 151, in main
+    z = np.load(os.path.join(p4.PRIV_DIR, f"p4_{t}_r0.npz"))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/numpy/lib/_npyio_impl.py", line 451, in load
+    fid = stack.enter_context(open(os.fspath(file), "rb"))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/p4pre/PRIVATE/p4_pc-7_r0.npz'
+VERDICT FAIL

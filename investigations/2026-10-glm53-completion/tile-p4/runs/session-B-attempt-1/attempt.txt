@@ -1,0 +1,1 @@
+session B attempt 1 reason: session B (forced K64/N256 tile via GLM53_P4_TILE) after a complete session A; tile env '64,256,64,256'; amendments ack 22db85696ac8

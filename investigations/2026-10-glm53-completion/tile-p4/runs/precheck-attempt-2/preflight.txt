@@ -1,0 +1,5 @@
+== preflight 2026-10-24T04:19:59Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 20 MiB, 0 %
+1, NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 1992 MiB, 2 %
+GPU0 sample 1: util 0% mem 20 MiB

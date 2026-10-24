@@ -755,6 +755,15 @@ What was asked, run, found, corrected and withdrawn, in date order.
 - **Not measured:** any effect on generation.
 - GPU-hours 0.8031 (cumulative 130.77). [Result](investigations/2026-10-glm53-completion/captured-p3b/RESULT.md).
 
+**2026-10-24. The MoE tile intervention's first run is INCOMPLETE (amendment 22av).**
+- **The intervention worked as specified:** forcing the decode tile to K64/N256 on both ranks of stock 0.9.1, with
+  every launch gate passing.
+- **The comparison could not read out:** forced windows did not start from the same state even within one arm.
+  Repeats differ by about 0.18 in ln P(`</think>`) at identical tokens, far above the tile's fixed-input effect.
+- **The automated "no difference" reading is invalid** (an analysis defect excluded 99.9 % of positions).
+- **Owned:** the design assumed the prefill-built window state was reproducible, and the gates did not check it.
+- GPU-hours 2.53 (cumulative 133.30). [Result](investigations/2026-10-glm53-completion/tile-p4/RESULT.md).
+
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough
   qualification. They also said the D7 path "cannot run" where the basis is a reconstruction. These are reworded in the

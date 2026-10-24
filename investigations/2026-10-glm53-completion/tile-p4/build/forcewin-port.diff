@@ -1,0 +1,180 @@
+--- hook-validation/hook/forcewin_hooks.py (15e93e23, B1 attempt 2)
++++ tile-p4/build/files/vllm/forcewin_hooks.py (stock 0.9.1 port)
+@@ -1,5 +1,10 @@
+ # SPDX-License-Identifier: Apache-2.0
+-"""local-forcewin: forced-history decode window, per-position termination metrics, draft-schedule control,
++"""[local-p4 PORT to stock 0.9.1 for tile-p4/: B1-only D2 injection, shadow ledger and snapshots are disabled
++(their call sites and B1 tail-ring assumptions do not exist on stock); adds the "list" draft mode (a fixed
++per-step accepted-count list, key local_fw_sched) and guarded calls into vllm.p4_hooks.  See
++tile-p4/build/port_forcewin.py and forcewin-port.diff.]
++
++local-forcewin: forced-history decode window, per-position termination metrics, draft-schedule control,
+ decode-window-only D2 fault injection and window-exposure counters for B1 (GLM-5.3-Flash, vLLM Model Runner V2).
+ 
+ PLAN.md amendment 21 sections 1-2, 4, 7 (hook-validation/PLAN-NOTES.md). Installed as ``vllm/forcewin_hooks.py``
+@@ -74,9 +79,18 @@
+ ON = os.environ.get("FORCEWIN", "").strip().lower() == "on"
+ OUT_DIR = os.environ.get("FORCEWIN_DIR", "/tmp/forcewin")
+ WMAX = int(os.environ.get("FORCEWIN_WMAX", "8448"))
+-D2_ALLOWED = ON and os.environ.get("FORCEWIN_D2", "") == "1"
+-SHADOW = ON and os.environ.get("FORCEWIN_SHADOW", "") == "1"
+-SNAP = ON and os.environ.get("FORCEWIN_SNAP", "") == "1"
++D2_ALLOWED = False   # local-p4: B1-only (stock has the D2 mapping natively; no injection site)
++SHADOW = False       # local-p4: B1-only (ledger models B1's corrected tail ring)
++SNAP = False         # local-p4: B1-only (validation snapshots; not needed for P4)
++B1_ONLY_ENV_SET = [k for k in ("FORCEWIN_D2", "FORCEWIN_SHADOW", "FORCEWIN_SNAP")
++                   if os.environ.get(k, "")]  # local-p4: logged as an error at init if any is set
++SCHED_MAX = int(os.environ.get("FORCEWIN_SCHED_MAX", "1024"))  # local-p4: "list" mode length
++try:  # local-p4
++    from vllm import p4_hooks as _p4b  # local-p4
++    if not _p4b.ENABLED:  # local-p4
++        _p4b = None  # local-p4
++except Exception:  # noqa: BLE001  local-p4
++    _p4b = None  # local-p4
+ MAX_LAYERS = int(os.environ.get("FORCEWIN_LAYERS", "16"))
+ NDESIG = int(os.environ.get("FORCEWIN_NDESIG", "1024"))
+ NSEL = int(os.environ.get("FORCEWIN_NSEL", "64"))
+@@ -102,7 +116,7 @@
+ NX = len(XCOLS)
+ # shadow pool classes
+ PC_NONE, PC_CLEAN, PC_CORRUPT, PC_RACE, PC_SEED = 0, 1, 2, 3, 4
+-DRAFT_MODES = {"natural": 0, "oracle": 1, "poison": 2, "reject": 3, "sched": 4}
++DRAFT_MODES = {"natural": 0, "oracle": 1, "poison": 2, "reject": 3, "sched": 4, "list": 5}  # local-p4: list
+ 
+ 
+ # =====================================================================================================
+@@ -214,12 +228,13 @@
+     return torch.cat(parts, dim=1)
+ 
+ 
+-def draft_rows(mode, arg, forced, forced_len, n_out, K, step_ctr, vocab):
++def draft_rows(mode, arg, forced, forced_len, n_out, K, step_ctr, vocab, sched_tab=None, sched_len=None):
+     """Draft tokens [R, K] for the draft-schedule modes (natural rows are returned unchanged by the caller).
+ 
+     The next step's row 0 predicts output index n_out; draft d (1..K) is accepted iff it equals F[n_out+d-1].
+     oracle: all K equal history (a = K unless the window ends); poison: none equal (a = 0);
+     reject:<j>: the first j-1 equal, draft j does not (a = j-1); sched:<seed>: a_s pseudo-random in 0..K per step.
++    list (local-p4): a_s = sched_tab[r, step_ctr % sched_len[r]], the request's fixed accepted-count list.
+     """
+     R = forced.shape[0]
+     dev = forced.device
+@@ -228,6 +243,10 @@
+     good = forced.gather(1, idx)
+     bad = torch.remainder(good + 1, vocab)                     # never equal to the history token
+     a_sched = torch.remainder(step_ctr * 1103515245 + arg * 12345 + 7, K + 1)
++    if sched_tab is not None:  # local-p4: "list" mode (mode 5)
++        sl = sched_len.clamp(min=1)  # local-p4
++        a_list = sched_tab.gather(1, torch.remainder(step_ctr, sl)[:, None])[:, 0].clamp(0, K)  # local-p4
++        a_sched = torch.where(mode == 5, a_list, a_sched)  # local-p4
+     n_good = torch.where(mode == 1, torch.full_like(n_out, K),
+              torch.where(mode == 2, torch.zeros_like(n_out),
+              torch.where(mode == 3, (arg - 1).clamp(min=0, max=K), a_sched)))
+@@ -412,6 +431,8 @@
+     S.mode = torch.zeros(R, dtype=torch.int64, device=dev)
+     S.marg = torch.zeros(R, dtype=torch.int64, device=dev)
+     S.nstep = torch.zeros(R, dtype=torch.int64, device=dev)      # forced steps per request (sched mode)
++    S.schedtab = torch.zeros(R, SCHED_MAX, dtype=torch.int64, device=dev)  # local-p4: list mode
++    S.schedlen = torch.ones(R, dtype=torch.int64, device=dev)  # local-p4
+     S.d2on = torch.zeros(R, dtype=torch.bool, device=dev)
+     S.d2lo = torch.zeros(R, dtype=torch.int64, device=dev)
+     S.d2hi = torch.zeros(R, dtype=torch.int64, device=dev)
+@@ -435,7 +456,10 @@
+     S.tokreq = torch.full((T + 1,), -1, dtype=torch.int64, device=dev)
+     S.sc = None      # per-step scratch
+     _log({"kind": "init", "K": S.K, "vocab": S.vocab, "max_reqs": R, "wmax": WMAX, "d2_allowed": D2_ALLOWED,
+-          "shadow": SHADOW, "snap": SNAP, "cols": COLS, "xcols": XCOLS})
++          "shadow": SHADOW, "snap": SNAP, "cols": COLS, "xcols": XCOLS,
++          "port": "local-p4 stock 0.9.1", "p4_bridge": _p4b is not None, "sched_max": SCHED_MAX})  # local-p4
++    if B1_ONLY_ENV_SET:  # local-p4
++        _err("init", RuntimeError("B1-only forcewin features requested but not ported: %s" % B1_ONLY_ENV_SET))
+ 
+ 
+ def register(runner):
+@@ -446,6 +470,8 @@
+     try:
+         _ensure(runner)
+         _log({"kind": "registered"})
++        if _p4b is not None:  # local-p4: stages and stores allocated before graph capture
++            _p4b.register(runner)  # local-p4
+     except Exception as exc:  # noqa: BLE001
+         _err("register", exc)
+ 
+@@ -517,6 +543,14 @@
+         S.isf[i] = n > 0
+         S.mode[i] = r.mode
+         S.marg[i] = r.marg
++        if r.mode == 5:  # local-p4: "list" draft mode
++            sl = [int(x) for x in (_xarg(sp, "local_fw_sched") or [])][:SCHED_MAX]  # local-p4
++            if not sl:  # local-p4
++                raise ValueError("draft mode list without local_fw_sched")  # local-p4
++            S.schedtab[i, :len(sl)].copy_(torch.tensor(sl, dtype=torch.int64))  # local-p4
++            S.schedlen[i] = len(sl)  # local-p4
++        if _p4b is not None:  # local-p4
++            _p4b.on_add(i, r.tag, n)  # local-p4
+         S.d2on[i] = r.d2 is not None
+         if r.d2 is not None:
+             S.d2lo[i] = r.P + r.d2[0]
+@@ -567,6 +601,8 @@
+         torch.save(rec, os.path.join(OUT_DIR, "req_%s_r%d.pt" % (_safe(r.tag or req_id), S.rank)))
+         _log({"kind": "done", "req": req_id, "tag": r.tag, "errors": S.errors})
+         _flush_steplog()
++        if _p4b is not None:  # local-p4: stores of this request -> PRIVATE npz; slot freed
++            _p4b.on_remove(i, r.tag, len(r.F))  # local-p4
+     except Exception as exc:  # noqa: BLE001
+         _err("remove_request", exc)
+ 
+@@ -587,6 +623,8 @@
+         S.step += 1
+         S.armed = True
+         S.fwd_armed = True
++        if _p4b is not None:  # local-p4
++            _p4b.on_batch(input_batch, S.step)  # local-p4
+         S.batch = input_batch
+         nr = input_batch.num_reqs
+         idx = input_batch.idx_mapping[:nr].to(torch.int64)
+@@ -700,6 +738,8 @@
+         S.sc = dict(idx=idx, cu=cu, pos=pos, req=req, j=j, o=o, fwin=fwin, ridx=ridx, ft=ft, m=m,
+                     p_post=torch.full((L, NT), float("nan"), device=logits.device),
+                     post_ok=torch.zeros(L, device=logits.device), L=L, nr=nr)
++        if _p4b is not None:  # local-p4
++            _p4b.on_logits(S.sc, logits, input_batch)  # local-p4
+     except Exception as exc:  # noqa: BLE001
+         S.sc = None
+         _err("on_logits", exc)
+@@ -739,6 +779,8 @@
+     S.buf[tgt_req, tgt_o] = packed
+     S.nmeas.index_put_((tgt_req, tgt_o), torch.ones(L, dtype=torch.int32, device=packed.device),
+                        accumulate=True)
++    if _p4b is not None:  # local-p4
++        _p4b.on_commit(sc, valid_flat)  # local-p4
+ 
+ 
+ def override(sampled, num_sampled, input_batch, draft_sampled, pos):
+@@ -767,6 +809,8 @@
+         S.acc_hist.index_put_((idx, acc.clamp(min=0, max=S.K + 1)), act.to(torch.int64), accumulate=True)
+         S.nstep.index_add_(0, idx, act.to(torch.int64))
+         sc["acc"], sc["valid"], sc["new_n"], sc["out_idx"] = acc, valid, new_n, out_idx
++        if _p4b is not None:  # local-p4
++            _p4b.on_step(S.step, idx, out_idx[:, 0], n_rows, acc)  # local-p4
+         return new_s, new_n
+     except Exception as exc:  # noqa: BLE001
+         _err("override", exc)
+@@ -790,6 +834,8 @@
+                               if L == sc["nr"] else torch.zeros_like(sc["idx"]), accumulate=True)
+         sc["acc"] = torch.where(fwin[: sc["nr"]], torch.zeros_like(sc["idx"]), torch.full_like(sc["idx"], -1)) \
+             if L == sc["nr"] else None
++        if _p4b is not None and sc["acc"] is not None:  # local-p4
++            _p4b.on_step(S.step, sc["idx"], sc["o"][: sc["nr"]], n_rows, sc["acc"])  # local-p4
+         return new
+     except Exception as exc:  # noqa: BLE001
+         _err("override_single", exc)
+@@ -840,7 +886,8 @@
+         rs = runner.req_states
+         nout = rs.total_len.gpu[idx].to(torch.int64) - S.plen[idx]
+         cur = rs.draft_tokens[idx]
+-        new = draft_rows(mode, S.marg[idx], S.forced[idx], S.flen[idx], nout, S.K, S.nstep[idx], S.vocab)
++        new = draft_rows(mode, S.marg[idx], S.forced[idx], S.flen[idx], nout, S.K, S.nstep[idx], S.vocab,
++                         S.schedtab[idx], S.schedlen[idx])  # local-p4: list mode table
+         use = (S.isf[idx] & (mode != 0))[:, None]
+         rs.draft_tokens[idx] = torch.where(use, new.to(cur.dtype), cur)
+     except Exception as exc:  # noqa: BLE001

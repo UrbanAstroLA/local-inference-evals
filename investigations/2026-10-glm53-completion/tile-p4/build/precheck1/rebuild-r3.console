@@ -1,0 +1,27 @@
+PASS v1/worker/gpu/model_runner.py: forcewin call sites == validated attempt-2 copy (8d276b3aac4bd6b5; make_patch.py eff09cc54693)
+PASS v1/worker/gpu/spec_decode/rejection_sampler.py: forcewin call sites == validated attempt-2 copy (f5a875ef0af0f8e5; make_patch.py eff09cc54693)
+PASS v1/worker/gpu/sample/sampler.py: forcewin call sites == validated attempt-2 copy (bbb1df8171c4750b; make_patch.py eff09cc54693)
+PASS model_executor/layers/quantization/exl3.py: 20 marked + 3 blank inserted (expected 20), replaced [(2480, '        tile_config = None', '        tile_config = _p4_forced_tile()  # local-p4')], other opcodes 0, stock-equivalent after removal True; stock 3b4ca47cb1168bff hooked bdb4f14c63ccaddb
+PASS models/glm5next/nvidia/model.py: 13 marked + 1 blank inserted (expected 13), replaced [], other opcodes 0, stock-equivalent after removal True; stock 28c93ec6efa760fb hooked 98eb25076b977361
+PASS forcewin port regenerates byte-identically (d6b10341dc835046)
+build rc=0
+sha256:4186bda0326732d2f82b215231ba12713bf2d75053bb8f6644ed738115590439
+== post-build gates 2026-10-24T04:21:45Z image sha256:4186bda0326732d2f82b215231ba12713bf2d75053bb8f6644ed738115590439
+vllm .py files: image 2436, stock 2434
+files differing from stock: ./forcewin_hooks.py ./p4_hooks.py ./model_executor/layers/quantization/exl3.py ./models/glm5next/nvidia/model.py ./v1/worker/gpu/model_runner.py ./v1/worker/gpu/sample/sampler.py ./v1/worker/gpu/spec_decode/rejection_sampler.py 
+PASS gate (a): only the 7 expected files differ
+PASS installed p4_hooks.py == reviewed
+PASS installed forcewin_hooks.py == reviewed
+PASS installed v1/worker/gpu/model_runner.py == reviewed
+PASS installed v1/worker/gpu/spec_decode/rejection_sampler.py == reviewed
+PASS installed v1/worker/gpu/sample/sampler.py == reviewed
+PASS installed model_executor/layers/quantization/exl3.py == reviewed
+PASS installed models/glm5next/nvidia/model.py == reviewed
+PASS gate (b1): env unset -> all hook flags False, _p4_forced_tile() is None, nothing patched or allocated
+PASS gate (b2): GLM53_P4_TILE='64,256,64,256' -> (64, 256, 64, 256) (P4 hooks False)
+PASS gate (b2): GLM53_P4_TILE='64,256,64,256 ' -> None (P4 hooks False)
+PASS gate (b2): GLM53_P4_TILE='64,256' -> None (P4 hooks False)
+PASS gate (b2): GLM53_P4_TILE='128,128,128,128' -> None (P4 hooks False)
+PASS gate (b2): GLM53_P4_TILE='1' -> None (P4 hooks False)
+PASS gate (b3): GLM53_P4=on FORCEWIN=on -> hooks and bridge on; no device state before registration; B1-only features off
+PASS gate (c): image layers extend the base (97 -> 106)

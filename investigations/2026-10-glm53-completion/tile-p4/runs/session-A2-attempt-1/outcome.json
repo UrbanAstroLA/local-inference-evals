@@ -1,0 +1,122 @@
+{
+ "session": "A2",
+ "attempt": 1,
+ "verdict": "COMPLETE",
+ "gates_ok": true,
+ "gates_startup": {
+  "A2-control": true
+ },
+ "gates_final": {
+  "A2-control": true
+ },
+ "batches_done": 6,
+ "batches": [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6
+ ],
+ "n_batches": 6,
+ "forced_requests": 96,
+ "forced_ok": 96,
+ "ids_equal": 96,
+ "passes": [
+  {
+   "batch": 1,
+   "rep": 1,
+   "ok": 8,
+   "n": 8,
+   "secs": 18.2
+  },
+  {
+   "batch": 1,
+   "rep": 2,
+   "ok": 8,
+   "n": 8,
+   "secs": 17.6
+  },
+  {
+   "batch": 2,
+   "rep": 1,
+   "ok": 8,
+   "n": 8,
+   "secs": 17.9
+  },
+  {
+   "batch": 2,
+   "rep": 2,
+   "ok": 8,
+   "n": 8,
+   "secs": 18.1
+  },
+  {
+   "batch": 3,
+   "rep": 1,
+   "ok": 8,
+   "n": 8,
+   "secs": 17.8
+  },
+  {
+   "batch": 3,
+   "rep": 2,
+   "ok": 8,
+   "n": 8,
+   "secs": 17.9
+  },
+  {
+   "batch": 4,
+   "rep": 1,
+   "ok": 8,
+   "n": 8,
+   "secs": 17.8
+  },
+  {
+   "batch": 4,
+   "rep": 2,
+   "ok": 8,
+   "n": 8,
+   "secs": 17.8
+  },
+  {
+   "batch": 5,
+   "rep": 1,
+   "ok": 8,
+   "n": 8,
+   "secs": 18.7
+  },
+  {
+   "batch": 5,
+   "rep": 2,
+   "ok": 8,
+   "n": 8,
+   "secs": 18.6
+  },
+  {
+   "batch": 6,
+   "rep": 1,
+   "ok": 8,
+   "n": 8,
+   "secs": 17.1
+  },
+  {
+   "batch": 6,
+   "rep": 2,
+   "ok": 8,
+   "n": 8,
+   "secs": 17.1
+  }
+ ],
+ "flushed": 96,
+ "not_flushed": [],
+ "hook_errors": 0,
+ "flush_refused_or_no_slot": 0,
+ "prefix_cache": {
+  "n": 96,
+  "equal_expected": 96,
+  "below_expected": 0
+ },
+ "client_ended": true,
+ "skips": []
+}

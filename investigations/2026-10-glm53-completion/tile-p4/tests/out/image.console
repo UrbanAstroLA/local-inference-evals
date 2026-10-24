@@ -1,0 +1,12 @@
+== image_units (image): rc=0; 17 PASS, 0 FAIL
+== image_precheck_dry (image): rc=0; 4 PASS, 1 FAIL
+FAIL N1 negative control: a device-to-host copy inside a capture fails it  {"error": null}
+== image_list (image): rc=0; 15 PASS, 0 FAIL
+== image_fw_rest (image): rc=0; 8 PASS, 0 FAIL
+== image_inert_off (image): rc=0; 0 PASS, 1 FAIL
+FAIL IMG2 built image with FORCEWIN unset: files hooked, _FW_ON False everywhere
+inert_orig 5359e50c96f02f1293f5d662ff2c65419866cdaf39a2f31a93201aef41dde033
+inert_hooked_off 5359e50c96f02f1293f5d662ff2c65419866cdaf39a2f31a93201aef41dde033
+inert_hooked_on_unkeyed 5359e50c96f02f1293f5d662ff2c65419866cdaf39a2f31a93201aef41dde033
+image_inert_off 5359e50c96f02f1293f5d662ff2c65419866cdaf39a2f31a93201aef41dde033
+PASS I1 identical outputs: original B1 files / hooked env unset / hooked env on, no keyed request / built image env unset

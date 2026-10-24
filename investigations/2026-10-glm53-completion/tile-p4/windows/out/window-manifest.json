@@ -1,0 +1,1158 @@
+{
+ "what": "P4 window manifest (public: hashes, classes, counts and token totals; no ids, text or positions)",
+ "rule": "windows/select_windows.py docstring",
+ "counts": {
+  "rows": 396,
+  "finished_available": 8,
+  "capped_available": 14,
+  "finished_selected": 8,
+  "capped_selected": 8,
+  "shortfall": {
+   "finished": 0,
+   "capped": 0
+  }
+ },
+ "n_replies": 16,
+ "n_windows": 48,
+ "batches": [
+  {
+   "batch": 1,
+   "windows": [
+    "R01-early",
+    "R01-deep",
+    "R01-close",
+    "R02-early",
+    "R02-deep",
+    "R02-close",
+    "R03-deep",
+    "R03-close"
+   ],
+   "n_warm_prefixes": 3
+  },
+  {
+   "batch": 2,
+   "windows": [
+    "R04-early",
+    "R04-deep",
+    "R04-close",
+    "R05-early",
+    "R05-deep",
+    "R05-close",
+    "R06-deep",
+    "R06-close"
+   ],
+   "n_warm_prefixes": 3
+  },
+  {
+   "batch": 3,
+   "windows": [
+    "R07-early",
+    "R07-deep",
+    "R07-close",
+    "R08-early",
+    "R08-deep",
+    "R08-close",
+    "R09-deep",
+    "R09-close"
+   ],
+   "n_warm_prefixes": 3
+  },
+  {
+   "batch": 4,
+   "windows": [
+    "R10-early",
+    "R10-deep",
+    "R10-close",
+    "R11-early",
+    "R11-deep",
+    "R11-close",
+    "R12-deep",
+    "R12-close"
+   ],
+   "n_warm_prefixes": 3
+  },
+  {
+   "batch": 5,
+   "windows": [
+    "R13-early",
+    "R13-deep",
+    "R13-close",
+    "R14-early",
+    "R14-deep",
+    "R14-close",
+    "R15-deep",
+    "R15-close"
+   ],
+   "n_warm_prefixes": 3
+  },
+  {
+   "batch": 6,
+   "windows": [
+    "R16-early",
+    "R16-deep",
+    "R16-close",
+    "R03-early",
+    "R06-early",
+    "R09-early",
+    "R12-early",
+    "R15-early"
+   ],
+   "n_warm_prefixes": 6
+  }
+ ],
+ "totals": {
+  "warm_prefill_tokens_per_session": 2143688,
+  "remainder_tokens_per_pass": 228835,
+  "forced_positions_per_pass": 24576
+ },
+ "replies": [
+  {
+   "reply": "R01",
+   "cls": "finished",
+   "source": "d091",
+   "prompt_ids_sha256": "11aa7186e650c5d3338c5fcac8a4dead3977769e6d18e89ac11847bc13fc4702",
+   "reasoning_ids_sha256": "e84f466f3aa4de9b2e82a5fe11f8f53b1ab5066ef14c0704a321201a343e9d97",
+   "reasoning_text_sha256": "0f36f9c4bd3a2ff4ed617e67282d6982d2ef63cc013c83b238f43e8a936a36f5",
+   "messages_sha256": "917d39375c214c7a5c3b58991be732ddac4968d9bc3096a9fb7d2bdd842281e6",
+   "window_ids_sha256": {
+    "early": "49714e9701645d03db8b0045250e396c4bf368b6fcb84c2fa3d3e69104f6bd4b",
+    "deep": "d73031877d277b2840be4100747cba8f9c957fa19def97e5a19857e182de44b7",
+    "close": "80ebc937ef559ce5a6b340f769dd14c27a92df70087071079c0dccbb989680fb"
+   },
+   "prefix_ids_sha256": {
+    "early": "f9f9ebb5595d6133c1aa45a31f428ae3e3fa44994356abbc8c062522d2620fc1",
+    "deep": "2b062215dfd256f88c496073edc7a76b439537102d7f463d98282c5774aad000",
+    "close": "8fe70c411273e9b7f828a9c666062e1fcced14a0b5e8ef8c9ad1fd3bbd8a99ba"
+   }
+  },
+  {
+   "reply": "R02",
+   "cls": "capped",
+   "source": "d091",
+   "prompt_ids_sha256": "54a96de51e120a070690bda80fdca2fa822e89098f95e8092711d5c9ec7c1f11",
+   "reasoning_ids_sha256": "82365e99e1b08e44e3662818e04d1214d9516adca9cf14ea90cf681fdd163134",
+   "reasoning_text_sha256": "7e70d1772693f5e05ed5356aef47d299358ab4467dc04441bfc82eeb5f2f2136",
+   "messages_sha256": "665d398f3ddd4d6b776ad63e6d0f8bafa323fd3102d2656babb20336f8aa741c",
+   "window_ids_sha256": {
+    "early": "2522014b633b4310de3785ff6832521efdfeadca7e2d1da42f740117324935b7",
+    "deep": "390bc31cf393f7ca986e75710335d9b26c3bfec99098ce206a85cf2c59a22ee7",
+    "close": "aa26507b6f5ba313c45b13f6cd126409803337644910bd1156fbf32c2a434fcb"
+   },
+   "prefix_ids_sha256": {
+    "early": "b5ba9f9c01bf4179079adc899e60555690e6bfdb46a80d5dcaf8a74bc7b87a65",
+    "deep": "87c72b4c324c44abe10f58402250cec95887081959bdd0a21522b95e881f854b",
+    "close": "0cd9fde2b282731c88d3505f449b5532501a5d33a5f320e0a5f46426e06d6f20"
+   }
+  },
+  {
+   "reply": "R03",
+   "cls": "finished",
+   "source": "d091",
+   "prompt_ids_sha256": "a6231f59b4ff699227e982f5a3a09add347c13b0c55940fc47ab8f3762e59c12",
+   "reasoning_ids_sha256": "61263529ad1cabf9cfd2db8148778f6d088e6f507902889bb91f6b46af175ee6",
+   "reasoning_text_sha256": "de70e95e37686bb4d6560c92fe13f75d6d53e1cb5d525b4f41e55f085391bd69",
+   "messages_sha256": "cc0fcf83906e882dd0517ad2c5496cc7a213ee9d4b90e4e20f5283182772d564",
+   "window_ids_sha256": {
+    "early": "fae02e6ed2fec9e992fed1476885a5a2302007dcdbfbd6ac3240df545cea422d",
+    "deep": "c5316cb790b8afb3bf2fa50197d7d31dde29a3970f6f61087dfe7b7305817597",
+    "close": "623aa1a6b0fa7a99177f7afcd34b3f7935b01cb34072903992ab4c157206dc40"
+   },
+   "prefix_ids_sha256": {
+    "early": "56a49d7957522abf52d3646d97f3650b2aae209bb70b804467fa0bad4074aeec",
+    "deep": "4848d2f7c2517862e8a7771231c3dd345f369131101b53c918622c375b8e71cc",
+    "close": "f4c62fe344a8f95da5c9c35a11313654c48ac8bf59f8062b020a3face2f2eaad"
+   }
+  },
+  {
+   "reply": "R04",
+   "cls": "capped",
+   "source": "d091",
+   "prompt_ids_sha256": "f1e170006826409b02d00d685ce44e399d6ed7f49b8f5bff47b1ca2707a8e1c4",
+   "reasoning_ids_sha256": "e681179e0c6b192fe800d287340f837e6202dc48eaf947598176d3b91806216d",
+   "reasoning_text_sha256": "4f48937350e62ddad236442d354fbf2872a0149083e3f346943806dafe14309c",
+   "messages_sha256": "10dc6818af2f92a5089fff747e92cb828cdc0856148fe159237e69f99d2fe6f7",
+   "window_ids_sha256": {
+    "early": "5edaa38ad43d040ac3b35a23d4733ec973e836cc5e258edecbac2edc2b59f703",
+    "deep": "2da0437324dfd14b9750b2617f9c0a09b6d7f084f4555885694ff1917dc0199d",
+    "close": "cd988c8a7fe00172934d128ce78fc6ed93b2cd8b8a360bfde42cd7bf15e5c79a"
+   },
+   "prefix_ids_sha256": {
+    "early": "8996bb927ee0d0433f97294c3e7d1dd9c5e8a0a41708d30b9c044e23f6d12e81",
+    "deep": "701835e2230813fc1ba1ebdabf09845b5180a5bc7eb4440656b77d1e72f5dc60",
+    "close": "fd842bdf040fc6705aa7efeab934e9f7b0c272b1449365d21fac5f242219dbf1"
+   }
+  },
+  {
+   "reply": "R05",
+   "cls": "finished",
+   "source": "d091",
+   "prompt_ids_sha256": "15c636e1f4b0b899c085fb7530e4372a35a6f33abf089a58eef1c4f192f56cd7",
+   "reasoning_ids_sha256": "a194c78b9907116238f8bd6e186181d12b09f62517a550b31cb45362715b7ef4",
+   "reasoning_text_sha256": "44802e7617347f5f07b2cc1ce9e1d79ab5eec7943634a82d20498b96c904c2f1",
+   "messages_sha256": "b41ce17bb0d4ce27af85de277fdd16b86cb88ad66683d95c799146dced26ad62",
+   "window_ids_sha256": {
+    "early": "42eb189b91eaff046bef6a7f3847b070fc23048acc609e15983ea6f4c0daef8a",
+    "deep": "123a52e3890923eee10e593f32f5b673c4142c86f096e185ed3d4b7c02864df8",
+    "close": "5021c36a9959eee1959847df01ac9b59b793b04497374b61f098ca74d00eae12"
+   },
+   "prefix_ids_sha256": {
+    "early": "cc7b2e790aeb1c6a60752e56a7e4d8a5487ba4fc7a8d9b0281c2b33d4390db3f",
+    "deep": "45f8da46bc301b21ea341679850a43638c807f7a0660333411d326d36306eef4",
+    "close": "f543a184f943698bbbe8946d514ff758fa7f6fc7977099a79096b41791c6095b"
+   }
+  },
+  {
+   "reply": "R06",
+   "cls": "capped",
+   "source": "d091",
+   "prompt_ids_sha256": "b32a73ca49abac50ebbc50269bce2e2d05fd3e908c4469945836891966118a06",
+   "reasoning_ids_sha256": "a0d9a41d139faa76f6b86f1ab5b87ffb89bf475b62024674260a14bb914990e5",
+   "reasoning_text_sha256": "5973d79ab4c452b8c9f867333954a03a80d81ba192b1567544c47700838cf69b",
+   "messages_sha256": "fb3c3b99397ef60aedbe04510923cc1b962025ef7925de1161c2208108912818",
+   "window_ids_sha256": {
+    "early": "0206888b6f96d38944d36f71209ed243069e59b235789c0632bb8841a5de7765",
+    "deep": "07f0f27361a53c6b40683286874fe410e4559b205707af64f5d6934bf86d6144",
+    "close": "c91567cfb8c4e2a094b304aa1cd4a46a593428ef3137c8a7c91da2e6dce7ba22"
+   },
+   "prefix_ids_sha256": {
+    "early": "646883b580348872ad1e284043d1d0524a54b1ba4d4bb76f45f3eaa46e0a7ea0",
+    "deep": "509b85add708a3787a880fe42705de6ae8d2ba1dc1272b7fa2b1faad0a84234f",
+    "close": "f0974c67d83e801484eca9781d1ab2b72ad598d776ccbcd641e33aeffa407b24"
+   }
+  },
+  {
+   "reply": "R07",
+   "cls": "finished",
+   "source": "d091",
+   "prompt_ids_sha256": "eaa40aae74d38562b41ed4ab77098efb72c416057eddb91b1ed2b03df6ea263e",
+   "reasoning_ids_sha256": "01f420afb24addc15e7de7684f8d722bb446c71040180f90a25a3356a07c68c3",
+   "reasoning_text_sha256": "8a46a8987c2251f1b3e41fe4a66a66e0e9e3063f48cf5b67e9350eb7d063b86d",
+   "messages_sha256": "3adfb0ce100aa3d6858f524d9208863896a179e9c003a8756c0a9f41864fac08",
+   "window_ids_sha256": {
+    "early": "f2b8e9ed9a8f0fededcffc7c18b2409698041607c0e6d32ab96d2fc5f1ef654d",
+    "deep": "1fdce220ef3676030ef0dabc7606cc2a23e6073a92f325ac9d7183973178c312",
+    "close": "ee2713dc1397acefb5f892d17209a319c306ea5a3ce64affb493b4f0e6f49d1c"
+   },
+   "prefix_ids_sha256": {
+    "early": "0ddaaad100fa2a04a03acc4a0bcdd7be3f029ddf55f5131cd56f3d9dc79111b1",
+    "deep": "50a641af58c4dcf43ba82136c3b7b44e9558a220bc3d77498b2855376eb9adb0",
+    "close": "31dbe8839d5a57f86aecd732310b75c19f0842aad8b2ced24fc356ce1aaa57cf"
+   }
+  },
+  {
+   "reply": "R08",
+   "cls": "capped",
+   "source": "d091",
+   "prompt_ids_sha256": "c6c91fbea66848f0e6281da9fce45a8c0d4523191442ffaf65e6b33d48bbe5ec",
+   "reasoning_ids_sha256": "9588e3098689e74dca997b24f0742406c87a492cd34cb84650e818f64f4854d5",
+   "reasoning_text_sha256": "ae3f6ffb19c23b0c2350f98bfdb133eed8c92ffdf5ee8346eeda97c183c9bba8",
+   "messages_sha256": "a7265d5b3458501c1b7ed88b85c4e3ce941158c0166eae2ed6bbd0cb87eacf92",
+   "window_ids_sha256": {
+    "early": "6181ec4258c2471ecafc1b1920d3a679141503d7ebdebd9190956b49b5e2295d",
+    "deep": "433e266fc02c1fb28b517278ee177aa911aba9ab0ea961362bfe0ed959f223f5",
+    "close": "e0a41713e2aec16ae02e0dce560ca0851fe3a6de9dd2bc77e177456fe6998177"
+   },
+   "prefix_ids_sha256": {
+    "early": "c840a6aae829ab256d31d8858107c30790a95c31317aaef5fbbc2f9890520763",
+    "deep": "716413735851f9c9c14408119fc253383dfcefb95f3e055d96b862a5d9b839a0",
+    "close": "9c272a22c5c22fabe2ad438ef3de4ce45ae7c34f3e910bc580a83c5c96d4cbd1"
+   }
+  },
+  {
+   "reply": "R09",
+   "cls": "finished",
+   "source": "d091b",
+   "prompt_ids_sha256": "48b1911fd5fdcb709bbbf3ee696f7d03347ddd00bf3d73e06e89cd9001a5d9fa",
+   "reasoning_ids_sha256": "e2ae9e3981e8aa1fa81f046dd7951c8c5885f4fd681fa8a9f8e7868fd4f323cf",
+   "reasoning_text_sha256": "02823581949203e620695bdadeea7056fd1847318f42ce372d8fec023fbbd221",
+   "messages_sha256": "47a261011610debb9a897690c06f06579c52514827cfbac9b77fff1299f14b6f",
+   "window_ids_sha256": {
+    "early": "e02666839b8d3635498f84fdd74d11d0205b42072739fed8bfe374fefec5a516",
+    "deep": "23c893be5e42f35c720df28324d3a93f94c8e6a6de6dad468630abeb5fdb69ac",
+    "close": "35c7b3a2616d036e677612ce7ed76625e5032eb77414c306465cad9753971a6b"
+   },
+   "prefix_ids_sha256": {
+    "early": "6c82a707f3ff1deba056f461c6e281cba1b35e8343c220f104d5203fba2a41aa",
+    "deep": "03f93bc20adbea2e2c3ba08b66a689b4201f5f238e3f6433267ff4805f9302f2",
+    "close": "aa1fa88af5373d1afb1afe3c7ddb630a6d4ca9b8f452c7a0b9bdedc57e58fa92"
+   }
+  },
+  {
+   "reply": "R10",
+   "cls": "capped",
+   "source": "d091b",
+   "prompt_ids_sha256": "c20d1410b23c28e26631ef48c6e73f2448d894de677425be9981199c0824994b",
+   "reasoning_ids_sha256": "f910e88ad96fc6b0172964e40efc9a81af26c8eea911941815f0746ff165e52e",
+   "reasoning_text_sha256": "0c7e65dbed512f9580c62842e8546559be5ea5a6e64810c148cfda47eb119b8e",
+   "messages_sha256": "f2df095f51e6374d20d58cd765f001448e3ddbf558ba1d1fb19f68ddcb6d470b",
+   "window_ids_sha256": {
+    "early": "85aeab81386e1c8b4add5f1dc9acc9d5b027e3ee4c90e7d1e33e790e1a386ee8",
+    "deep": "e268a8e3d6e74f3b0ba96a98714baadf54bb672ee81b13cd66d9e27a4ca42cbe",
+    "close": "c23c7458ced714c2d942359300cd69a08030e453d1ca556c630099ba9b55a49b"
+   },
+   "prefix_ids_sha256": {
+    "early": "749885a76244bc5395697b7178e1662a807540ba0ec213e8f783e4d8bdeba44d",
+    "deep": "8997909a1066de3bead379f67bbc24dbcb4d0845c5e55ba77af7a49686fcfb9e",
+    "close": "11bcda30b26b59da9f2dcea80d2225744433895a4c6a3ed0efa8b7a6fce36e00"
+   }
+  },
+  {
+   "reply": "R11",
+   "cls": "finished",
+   "source": "d091b",
+   "prompt_ids_sha256": "8177f1bffc424a1bd0e536eda1f1043b33f9b7eeb91b58600492392f228bf6e6",
+   "reasoning_ids_sha256": "fb15469a6d94faa34685ef202bd5e37e4ee61491a519faba4559fba2912263a4",
+   "reasoning_text_sha256": "43d8ba63c3d665f0c1f12cd9c30a8ff5f096ddab4109527616124dae13886be8",
+   "messages_sha256": "33e538fb8af2584cdc285cdcda6f47a6cd7d83087a4e6013ce6d33b4d51e3019",
+   "window_ids_sha256": {
+    "early": "d0cb579a6e043aaa08b167aa27cedb42ff6c62fe17d2c940a024e997b3315cac",
+    "deep": "e28e3e02411c9cd8ce9d65919171247797b4ed163796f2aa2e341f1b9b321323",
+    "close": "84763d67bc23f9351595162f3b22ec3af3115b2a455683f688ba64a02b04d066"
+   },
+   "prefix_ids_sha256": {
+    "early": "82953b0fc450cb3a7e1d1101c4fddf6ad67bf6adc4edf26be01666f290bfea17",
+    "deep": "3fb5fd9ed195c435388abc115dac5cfcae0bd4c90bab63675ccfe317113981b0",
+    "close": "4a852d5c902a8d1bb365f53da422cf16033ea69d1da54ce366368aa3cd1e0f8a"
+   }
+  },
+  {
+   "reply": "R12",
+   "cls": "capped",
+   "source": "d091b",
+   "prompt_ids_sha256": "f1e170006826409b02d00d685ce44e399d6ed7f49b8f5bff47b1ca2707a8e1c4",
+   "reasoning_ids_sha256": "cbbbcfb6956048343588d31f94a5123f54141cf7fd136efebb052751d838531c",
+   "reasoning_text_sha256": "7247cc7024b5bdec069ebd05d672822494bc29e6b3e2c54c55134678fd69263d",
+   "messages_sha256": "10dc6818af2f92a5089fff747e92cb828cdc0856148fe159237e69f99d2fe6f7",
+   "window_ids_sha256": {
+    "early": "5bc616fd605ba788e28bbd8221fd9fd06f2a2f39fa2180d6c654f02cbc8ad37b",
+    "deep": "4d55235e8b96779ebc4b07e47c261bbcab5d01dffbcd551aceaefc4dfdfb0951",
+    "close": "ca1f60f78f1d3eab35b2188758a8593be4dcfb4f70ee6dc408a1377e5f496e22"
+   },
+   "prefix_ids_sha256": {
+    "early": "8bc4b6bbbb577d4c19d8b92e4d9cf4cfadf243a4fcff876ad27a80502a51eb28",
+    "deep": "47061bdcba92c5063ed27e9776548f3132e4244833ca713e54291695e69519be",
+    "close": "a0977e788832d313de98506fd7d652877b049dff10e149872fcf9b4a4e402e8d"
+   }
+  },
+  {
+   "reply": "R13",
+   "cls": "finished",
+   "source": "d091b",
+   "prompt_ids_sha256": "316a3f00e23a81cc8c127a78414456f5d8dac6865f4af0d100a5b0b76dfb70c8",
+   "reasoning_ids_sha256": "cff83dd75a201bbf5bbf8d54518f2dc8c385923f3d7b138aa956afb5b41b473f",
+   "reasoning_text_sha256": "5cb5148edda6bd9794785f798c6791d9bc7feae0291d050fabc6ddbc9f318134",
+   "messages_sha256": "41039e0ac956d76261f55148bcaf681bb5c188a92f162764f3eb6eee00f2a10a",
+   "window_ids_sha256": {
+    "early": "eba9eb6f2d9204b1052a952adcd6f819ef960f28c98a5158d0421a90f9265209",
+    "deep": "1c1faa5f5c45fa8e641937f36d054c0fe123f69d16da7916c16295844fd1f3d1",
+    "close": "bfa9bad5c4236a456c442af4bc050f93f535f002e165816e88431d648744732b"
+   },
+   "prefix_ids_sha256": {
+    "early": "e7ba8d70da580799f5c97badf695e972102de71f2f00a6ffc2d03bf30c61bcfe",
+    "deep": "88d627a39d0ac6159a8b80e788013074430aff1dc9fb8cd8ef33d4a12bff12e8",
+    "close": "6d46112b8803da7a3891e636af756b1f347325dd7a9af3f703d2c626f885a256"
+   }
+  },
+  {
+   "reply": "R14",
+   "cls": "capped",
+   "source": "d091b",
+   "prompt_ids_sha256": "64713539bfaa94d12b24bac91196f8b03a0aeb1990381a56ee4e5081a4d2ac9c",
+   "reasoning_ids_sha256": "a57ff747a4c4b03e477b5e4b8dc6727d3192c78e7a0cbb40fafa7d6090448a2e",
+   "reasoning_text_sha256": "6c4e8e304e45aa57340155cc2f28ddf057200b48e722b22fb3bd65e20f1e738e",
+   "messages_sha256": "c5ae12f47c20ab2b3aa8b2eaff438f337a00b9d4e50fffb7435af588b07fc3dc",
+   "window_ids_sha256": {
+    "early": "853a5948e13139adb4dd7d02a4c6e9aba85956f62532a727f40b3a0c72f8536c",
+    "deep": "bbc28593d8d474311c024a0236cca72caeea479c8a4134396c61de5570ac797f",
+    "close": "eb15fe759bf0f0e3fb40bf43af306aa93d7900c36246a1c521d32c785e620968"
+   },
+   "prefix_ids_sha256": {
+    "early": "2fb7bccbaf54e73f1e4aa53462a80190e32bbf6ea9bcc28f49aff28586207da7",
+    "deep": "1dfb8ad5c2c423d719a6ce6150174cf41c235f548b4b28070ca6a7e76cc442e0",
+    "close": "06500bac062c357fea69bebcc287238d587f7c621bc25d570b89e4c1fe89a1e1"
+   }
+  },
+  {
+   "reply": "R15",
+   "cls": "finished",
+   "source": "d091b",
+   "prompt_ids_sha256": "15c636e1f4b0b899c085fb7530e4372a35a6f33abf089a58eef1c4f192f56cd7",
+   "reasoning_ids_sha256": "4bb1ba0030bb13e258e55ca95373a9f5e6d94c6fe6f6f87b70574a61e126a1e4",
+   "reasoning_text_sha256": "198be03b129d705f7e4608be91cd177e3b0d8ae9a3e37c176d9c1482eee8e5ad",
+   "messages_sha256": "b41ce17bb0d4ce27af85de277fdd16b86cb88ad66683d95c799146dced26ad62",
+   "window_ids_sha256": {
+    "early": "f571a63482fcf18e16c482f31a9cfe41b13ac823b8dad008d5652d84af2bb5ed",
+    "deep": "ec9524a4d44a9771da4fe953ce66dc97797ab3eb8ab660dca88a977853c2f45b",
+    "close": "dd58346c2338f9d1708e882dbaed57cd5a3157115d4c8915f2c82b02735f0ab6"
+   },
+   "prefix_ids_sha256": {
+    "early": "32aa141248635898e8341808bb215b5b1b9a00b243162cf2edcf891207b1ab35",
+    "deep": "2011a766d90e24ecda64f4f6d0d90f5625e082e1fc25a08abd15beee7315e525",
+    "close": "075149ccf728a14620574f4c4236778f22cb81b1d91106b63a275ece8296cef6"
+   }
+  },
+  {
+   "reply": "R16",
+   "cls": "capped",
+   "source": "d091b",
+   "prompt_ids_sha256": "409970ca7e064c5ca026cddc90a36a401fcf336b19463d9d3b60f412be31e4e4",
+   "reasoning_ids_sha256": "88748432f99b36573c85f8db04754a865ac9b72c044a8a40321a3e5f33d840e1",
+   "reasoning_text_sha256": "862191c67ac2f3dad84b462af3f6bd8c4fbfb7cd69c4873c68dfb24c7cf041eb",
+   "messages_sha256": "3f372df0ac7aa02812f8bf79023f2094d39e6c241a1204a33be0c9597dcd6a5c",
+   "window_ids_sha256": {
+    "early": "eb0eac94e5e734fc238c2fc9b635079bc714ae3ca8f09ed79d63ec25591bd67f",
+    "deep": "4ba641fd84536a4d8f6e60798b6568f2c31eec0850f5c2fc947f443201555f83",
+    "close": "d1ddb2186ec0633473ea728561860851a9d57363d287f1a6336b6e6107d3279c"
+   },
+   "prefix_ids_sha256": {
+    "early": "e1b6dc95fd07f5279619159c2bb018909b7a992a10e9c6e26ce842143515aefc",
+    "deep": "ff56fc91e46a649c9f335bd2e0019cd6ba9587cdd405dc17101feb27ce10bb89",
+    "close": "782d06a95b1a6392c482ea74ef5a6dac20a8f0fc96efe5253273372e9303626e"
+   }
+  }
+ ],
+ "checks": [
+  {
+   "check": "source d091 sha256",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "source d091b sha256",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "served chat template sha256",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "tokenizer.json sha256",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R01: prompt ids equal the server's logged prompt_tokens",
+   "ok": true,
+   "detail": "308 vs 308"
+  },
+  {
+   "check": "R01: transformers and tokenizers agree on the prompt",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R01: prompt ends <|assistant|><think>",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R01: no stop id or </think> in the reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R01 early: window inside the reasoning",
+   "ok": true,
+   "detail": "o 17101 N 114144"
+  },
+  {
+   "check": "R01 deep: window inside the reasoning",
+   "ok": true,
+   "detail": "o 95437 N 114144"
+  },
+  {
+   "check": "R01 close: window inside the reasoning",
+   "ok": true,
+   "detail": "o 113632 N 114144"
+  },
+  {
+   "check": "R01: windows do not overlap",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R01: early/deep P = 1 (mod 4352)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R02: prompt ids equal the server's logged prompt_tokens",
+   "ok": true,
+   "detail": "131 vs 131"
+  },
+  {
+   "check": "R02: transformers and tokenizers agree on the prompt",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R02: prompt ends <|assistant|><think>",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R02: no stop id or </think> in the reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R02 early: window inside the reasoning",
+   "ok": true,
+   "detail": "o 17278 N 327681"
+  },
+  {
+   "check": "R02 deep: window inside the reasoning",
+   "ok": true,
+   "detail": "o 95614 N 327681"
+  },
+  {
+   "check": "R02 close: window inside the reasoning",
+   "ok": true,
+   "detail": "o 130560 N 327681"
+  },
+  {
+   "check": "R02: windows do not overlap",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R02: early/deep P = 1 (mod 4352)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R03: prompt ids equal the server's logged prompt_tokens",
+   "ok": true,
+   "detail": "190 vs 190"
+  },
+  {
+   "check": "R03: transformers and tokenizers agree on the prompt",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R03: prompt ends <|assistant|><think>",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R03: no stop id or </think> in the reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R03 early: window inside the reasoning",
+   "ok": true,
+   "detail": "o 17219 N 106241"
+  },
+  {
+   "check": "R03 deep: window inside the reasoning",
+   "ok": true,
+   "detail": "o 95555 N 106241"
+  },
+  {
+   "check": "R03 close: window inside the reasoning",
+   "ok": true,
+   "detail": "o 105729 N 106241"
+  },
+  {
+   "check": "R03: windows do not overlap",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R03: early/deep P = 1 (mod 4352)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R04: prompt ids equal the server's logged prompt_tokens",
+   "ok": true,
+   "detail": "478 vs 478"
+  },
+  {
+   "check": "R04: transformers and tokenizers agree on the prompt",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R04: prompt ends <|assistant|><think>",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R04: no stop id or </think> in the reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R04 early: window inside the reasoning",
+   "ok": true,
+   "detail": "o 16931 N 327678"
+  },
+  {
+   "check": "R04 deep: window inside the reasoning",
+   "ok": true,
+   "detail": "o 95267 N 327678"
+  },
+  {
+   "check": "R04 close: window inside the reasoning",
+   "ok": true,
+   "detail": "o 130560 N 327678"
+  },
+  {
+   "check": "R04: windows do not overlap",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R04: early/deep P = 1 (mod 4352)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R05: prompt ids equal the server's logged prompt_tokens",
+   "ok": true,
+   "detail": "2795 vs 2795"
+  },
+  {
+   "check": "R05: transformers and tokenizers agree on the prompt",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R05: prompt ends <|assistant|><think>",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R05: no stop id or </think> in the reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R05 early: window inside the reasoning",
+   "ok": true,
+   "detail": "o 14614 N 145368"
+  },
+  {
+   "check": "R05 deep: window inside the reasoning",
+   "ok": true,
+   "detail": "o 97302 N 145368"
+  },
+  {
+   "check": "R05 close: window inside the reasoning",
+   "ok": true,
+   "detail": "o 144856 N 145368"
+  },
+  {
+   "check": "R05: windows do not overlap",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R05: early/deep P = 1 (mod 4352)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R06: prompt ids equal the server's logged prompt_tokens",
+   "ok": true,
+   "detail": "230 vs 230"
+  },
+  {
+   "check": "R06: transformers and tokenizers agree on the prompt",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R06: prompt ends <|assistant|><think>",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R06: no stop id or </think> in the reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R06 early: window inside the reasoning",
+   "ok": true,
+   "detail": "o 17179 N 327681"
+  },
+  {
+   "check": "R06 deep: window inside the reasoning",
+   "ok": true,
+   "detail": "o 95515 N 327681"
+  },
+  {
+   "check": "R06 close: window inside the reasoning",
+   "ok": true,
+   "detail": "o 130560 N 327681"
+  },
+  {
+   "check": "R06: windows do not overlap",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R06: early/deep P = 1 (mod 4352)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R07: prompt ids equal the server's logged prompt_tokens",
+   "ok": true,
+   "detail": "285 vs 285"
+  },
+  {
+   "check": "R07: transformers and tokenizers agree on the prompt",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R07: prompt ends <|assistant|><think>",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R07: no stop id or </think> in the reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R07 early: window inside the reasoning",
+   "ok": true,
+   "detail": "o 17124 N 120427"
+  },
+  {
+   "check": "R07 deep: window inside the reasoning",
+   "ok": true,
+   "detail": "o 95460 N 120427"
+  },
+  {
+   "check": "R07 close: window inside the reasoning",
+   "ok": true,
+   "detail": "o 119915 N 120427"
+  },
+  {
+   "check": "R07: windows do not overlap",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R07: early/deep P = 1 (mod 4352)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R08: prompt ids equal the server's logged prompt_tokens",
+   "ok": true,
+   "detail": "217 vs 217"
+  },
+  {
+   "check": "R08: transformers and tokenizers agree on the prompt",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R08: prompt ends <|assistant|><think>",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R08: no stop id or </think> in the reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R08 early: window inside the reasoning",
+   "ok": true,
+   "detail": "o 17192 N 327680"
+  },
+  {
+   "check": "R08 deep: window inside the reasoning",
+   "ok": true,
+   "detail": "o 95528 N 327680"
+  },
+  {
+   "check": "R08 close: window inside the reasoning",
+   "ok": true,
+   "detail": "o 130560 N 327680"
+  },
+  {
+   "check": "R08: windows do not overlap",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R08: early/deep P = 1 (mod 4352)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R09: prompt ids equal the server's logged prompt_tokens",
+   "ok": true,
+   "detail": "238 vs 238"
+  },
+  {
+   "check": "R09: transformers and tokenizers agree on the prompt",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R09: prompt ends <|assistant|><think>",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R09: no stop id or </think> in the reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R09 early: window inside the reasoning",
+   "ok": true,
+   "detail": "o 17171 N 100879"
+  },
+  {
+   "check": "R09 deep: window inside the reasoning",
+   "ok": true,
+   "detail": "o 95507 N 100879"
+  },
+  {
+   "check": "R09 close: window inside the reasoning",
+   "ok": true,
+   "detail": "o 100367 N 100879"
+  },
+  {
+   "check": "R09: windows do not overlap",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R09: early/deep P = 1 (mod 4352)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R10: prompt ids equal the server's logged prompt_tokens",
+   "ok": true,
+   "detail": "766 vs 766"
+  },
+  {
+   "check": "R10: transformers and tokenizers agree on the prompt",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R10: prompt ends <|assistant|><think>",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R10: no stop id or </think> in the reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R10 early: window inside the reasoning",
+   "ok": true,
+   "detail": "o 16643 N 327679"
+  },
+  {
+   "check": "R10 deep: window inside the reasoning",
+   "ok": true,
+   "detail": "o 94979 N 327679"
+  },
+  {
+   "check": "R10 close: window inside the reasoning",
+   "ok": true,
+   "detail": "o 130560 N 327679"
+  },
+  {
+   "check": "R10: windows do not overlap",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R10: early/deep P = 1 (mod 4352)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R11: prompt ids equal the server's logged prompt_tokens",
+   "ok": true,
+   "detail": "178 vs 178"
+  },
+  {
+   "check": "R11: transformers and tokenizers agree on the prompt",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R11: prompt ends <|assistant|><think>",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R11: no stop id or </think> in the reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R11 early: window inside the reasoning",
+   "ok": true,
+   "detail": "o 17231 N 124091"
+  },
+  {
+   "check": "R11 deep: window inside the reasoning",
+   "ok": true,
+   "detail": "o 95567 N 124091"
+  },
+  {
+   "check": "R11 close: window inside the reasoning",
+   "ok": true,
+   "detail": "o 123579 N 124091"
+  },
+  {
+   "check": "R11: windows do not overlap",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R11: early/deep P = 1 (mod 4352)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R12: prompt ids equal the server's logged prompt_tokens",
+   "ok": true,
+   "detail": "478 vs 478"
+  },
+  {
+   "check": "R12: transformers and tokenizers agree on the prompt",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R12: prompt ends <|assistant|><think>",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R12: no stop id or </think> in the reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R12 early: window inside the reasoning",
+   "ok": true,
+   "detail": "o 16931 N 327680"
+  },
+  {
+   "check": "R12 deep: window inside the reasoning",
+   "ok": true,
+   "detail": "o 95267 N 327680"
+  },
+  {
+   "check": "R12 close: window inside the reasoning",
+   "ok": true,
+   "detail": "o 130560 N 327680"
+  },
+  {
+   "check": "R12: windows do not overlap",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R12: early/deep P = 1 (mod 4352)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R13: prompt ids equal the server's logged prompt_tokens",
+   "ok": true,
+   "detail": "229 vs 229"
+  },
+  {
+   "check": "R13: transformers and tokenizers agree on the prompt",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R13: prompt ends <|assistant|><think>",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R13: no stop id or </think> in the reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R13 early: window inside the reasoning",
+   "ok": true,
+   "detail": "o 17180 N 137617"
+  },
+  {
+   "check": "R13 deep: window inside the reasoning",
+   "ok": true,
+   "detail": "o 95516 N 137617"
+  },
+  {
+   "check": "R13 close: window inside the reasoning",
+   "ok": true,
+   "detail": "o 137105 N 137617"
+  },
+  {
+   "check": "R13: windows do not overlap",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R13: early/deep P = 1 (mod 4352)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R14: prompt ids equal the server's logged prompt_tokens",
+   "ok": true,
+   "detail": "145 vs 145"
+  },
+  {
+   "check": "R14: transformers and tokenizers agree on the prompt",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R14: prompt ends <|assistant|><think>",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R14: no stop id or </think> in the reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R14 early: window inside the reasoning",
+   "ok": true,
+   "detail": "o 17264 N 327682"
+  },
+  {
+   "check": "R14 deep: window inside the reasoning",
+   "ok": true,
+   "detail": "o 95600 N 327682"
+  },
+  {
+   "check": "R14 close: window inside the reasoning",
+   "ok": true,
+   "detail": "o 130560 N 327682"
+  },
+  {
+   "check": "R14: windows do not overlap",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R14: early/deep P = 1 (mod 4352)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R15: prompt ids equal the server's logged prompt_tokens",
+   "ok": true,
+   "detail": "2795 vs 2795"
+  },
+  {
+   "check": "R15: transformers and tokenizers agree on the prompt",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R15: prompt ends <|assistant|><think>",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R15: no stop id or </think> in the reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R15 early: window inside the reasoning",
+   "ok": true,
+   "detail": "o 14614 N 157721"
+  },
+  {
+   "check": "R15 deep: window inside the reasoning",
+   "ok": true,
+   "detail": "o 97302 N 157721"
+  },
+  {
+   "check": "R15 close: window inside the reasoning",
+   "ok": true,
+   "detail": "o 157209 N 157721"
+  },
+  {
+   "check": "R15: windows do not overlap",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R15: early/deep P = 1 (mod 4352)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R16: prompt ids equal the server's logged prompt_tokens",
+   "ok": true,
+   "detail": "308 vs 308"
+  },
+  {
+   "check": "R16: transformers and tokenizers agree on the prompt",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R16: prompt ends <|assistant|><think>",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R16: no stop id or </think> in the reasoning ids",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R16 early: window inside the reasoning",
+   "ok": true,
+   "detail": "o 17101 N 327678"
+  },
+  {
+   "check": "R16 deep: window inside the reasoning",
+   "ok": true,
+   "detail": "o 95437 N 327678"
+  },
+  {
+   "check": "R16 close: window inside the reasoning",
+   "ok": true,
+   "detail": "o 130560 N 327678"
+  },
+  {
+   "check": "R16: windows do not overlap",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R16: early/deep P = 1 (mod 4352)",
+   "ok": true,
+   "detail": ""
+  }
+ ],
+ "private_fixture_sha256": "847af8ef8f9b578a584cc82724a94716b87120550043d7d2d07ef2ec0a2ffbcd",
+ "all_checks_ok": true
+}

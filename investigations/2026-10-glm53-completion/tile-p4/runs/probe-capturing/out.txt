@@ -1,0 +1,1 @@
+{"is_available": "True", "is_current_stream_capturing": "True", "combined": "True"}

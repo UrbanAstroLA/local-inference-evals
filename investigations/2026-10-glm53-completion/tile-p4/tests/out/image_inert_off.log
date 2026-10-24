@@ -1,0 +1,10 @@
+== image_inert_off (image) 2026-10-24T05:01:30Z
+W1024 05:01:36.627000 1 torch/utils/cpp_extension.py:178] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+WARNING 10-24 05:01:37 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-24 05:01:37 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-24 05:01:37 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+FAIL IMG2 built image with FORCEWIN unset: files hooked, _FW_ON False everywhere
+variant image-off hooked files False env None
+PARTS ['9c7923dc3460', '11047585fe10', '02433989dc22', '2e89d3b544ca', '11047585fe10', '7dcbb12110d4', 'f23d672bb9b3']
+HASH 5359e50c96f02f1293f5d662ff2c65419866cdaf39a2f31a93201aef41dde033
+rc=0

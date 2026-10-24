@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-10-24, MoE tile intervention, run 1: INCOMPLETE (completion investigation, amendment 22av)
+
+2.53 GPU-hours (cumulative 133.30).
+
+- **New `tile-p4/`:**
+  - `PROTOCOL.md`, `PROPOSAL-AMENDMENTS.md`, `RESULT.md` (INCOMPLETE) and `CRITIQUE-run1.md`;
+  - the image build, runner, pre-check, G4, analysis and CPU tests;
+  - run records and `diagnostics/`.
+  - Benchmark-derived records (`PRIVATE-*`), test scratch and compile caches are withheld
+    (`RAW-SHA256SUMS-tile-p4.txt`).
+- **`PLAN.md`:** amendment 22av.
+- **Investigation `README.md`:** a Status entry.
+- **`LEDGER.md`**.
+
 ## 2026-10-23, wording corrections (completion investigation, amendment 22au)
 
 No GPU use.

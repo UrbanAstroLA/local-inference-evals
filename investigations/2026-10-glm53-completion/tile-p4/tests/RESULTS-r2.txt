@@ -1,0 +1,2 @@
+P4 CPU test results after the precheck-1 fix (image sha256:1b20baa6cc51358e7bbf12f88743eb282baf6557479cc5a2891ffe20e64c49db), 2026-10-24T04:19:58Z; full console: build/precheck1/cpu-tests.console
+Expected FAILs: image_precheck_dry N1 (GPU-only negative control); image_inert_off IMG2 (B1-only hooks not applied on stock)

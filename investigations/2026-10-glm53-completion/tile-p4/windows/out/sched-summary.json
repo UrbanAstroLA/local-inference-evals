@@ -1,0 +1,48 @@
+{
+ "what": "P4 sched summary (public)",
+ "n": 1024,
+ "hist": {
+  "0": 193,
+  "1": 133,
+  "2": 118,
+  "3": 580
+ },
+ "mean_accepted": 2.0596,
+ "mean_tokens_per_step": 3.0596,
+ "sha256_list": "876b8835f28a67a1fdbcbb238a6a77aa088b2e2ecc2c3429dbcf490aca8044fb",
+ "sources": [
+  {
+   "file": "req_V2a-natural-34b209357e82_r0.pt",
+   "steps": 245
+  },
+  {
+   "file": "req_V2a-natural-4b92a6a90ec4_r0.pt",
+   "steps": 570
+  },
+  {
+   "file": "req_V2a-natural-53fa5b3e066f_r0.pt",
+   "steps": 304
+  },
+  {
+   "file": "req_V2a-natural-57703691f509_r0.pt",
+   "steps": 419
+  },
+  {
+   "file": "req_V2a-natural-aa89ec370e9c_r0.pt",
+   "steps": 161
+  },
+  {
+   "file": "req_V2a-natural-be2e9e349395_r0.pt",
+   "steps": 934
+  },
+  {
+   "file": "req_V2a-natural-cbac17c70af8_r0.pt",
+   "steps": 896
+  },
+  {
+   "file": "req_V2a-natural-ddfd287416a4_r0.pt",
+   "steps": 463
+  }
+ ],
+ "rule": "windows/extract_sched.py docstring"
+}

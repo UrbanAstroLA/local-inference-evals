@@ -1,0 +1,31 @@
+PASS R1 refuses without ATTEMPT_REASON
+PASS R2 refuses an unknown session
+PASS R3 refuses a wrong amendments acknowledgement
+PASS R4 session A refused before a passed precheck and G4
+PASS R5 session B refused before A
+PASS R6 DRY_RUN passes the gates, prints the plan and writes nothing
+    budget: ceiling 7.0 GPU-h; used 0.0556; left 6.9444; session A attempt 1: wall cap 2350s x 2 GPUs
+    plan: session A attempt 1 -> <runs>/tile-p4/tests/out/runner-scratch/mock-root/runs/session-A-attempt-1 (logs) and <runs>/tile-p4/tests/out/runner-scratch/mock-root/PRIVATE-runs/session-A-attempt-1 (private, 0700); wall cap 2350s; readiness by 20s;
+PASS R7 MOCK refuses a mock root outside tests/out
+PASS R8 MOCK session A: COMPLETE (G3 vs captured-p3b, 96 forced requests, flushed)
+PASS R8 private copy-out at 0700 (98 files)
+PASS R8 exactly one cost line for session A (2 GPUs, no tile env)
+PASS R8 start-up gates evaluated before traffic
+PASS R8 gates-startup.json written before the first forced request
+PASS R9 a mock start-up G1 failure stops session B before traffic (INCOMPLETE)
+PASS R9 the failed attempt still has its cost line (rc 8, tile env recorded)
+PASS R10 MOCK session B attempt 2: COMPLETE with G1 + G2 vs session A
+PASS R11 a done session is never re-run
+PASS R12 MOCK session A2: COMPLETE with the session control vs A
+PASS R12 no mock server left running
+PASS R13 budget gate refuses a session that cannot fit (6.2 of 7.0 GPU-h used + reserve)
+PASS R14 budget arithmetic (ceiling 7.0): fresh A cap 2350 s; after a 1.14 GPU-h failure a retry still gets 2350 s; at 4.2 used A is refused (reserve for B and A2)
+PASS Q1 client skips the batches it cannot finish before the deadline and ends cleanly
+PASS W1 G4 refused before a passed precheck
+PASS W2 precheck DRY_RUN writes nothing
+PASS W3 precheck (fake docker): --network none, --gpus device=0, read-only code mount, verdict PASS
+PASS W4 a passed precheck is not re-run
+PASS W5 G4 (fake docker): captures and replay code mounted read-only; verdict PASS
+PASS W6 one 1-GPU cost line each for precheck and G4
+PASS W7 FAKE mode refuses the real package root
+test_runner: 28 PASS, 0 FAIL

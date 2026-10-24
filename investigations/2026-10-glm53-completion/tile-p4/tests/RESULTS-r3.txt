@@ -1,0 +1,24 @@
+P4 CPU test results on tile-r3 (image sha256:4186bda0326732d2f82b215231ba12713bf2d75053bb8f6644ed738115590439), 2026-10-24T05:03:53Z; consoles: build/precheck1/cpu-tests-r3.console, build/precheck1/runner-r3.console
+== gen: 6 PASS, 0 FAIL; rc=0
+== p4_units (hooked): rc=0; 17 PASS, 0 FAIL
+== precheck_dry (hooked): rc=0; 4 PASS, 1 FAIL
+== p4_list (hooked): rc=0; 15 PASS, 0 FAIL
+== p4_modes (hooked): rc=0; 10 PASS, 0 FAIL
+== fw_natural (hooked): rc=0; 7 PASS, 0 FAIL
+== fw_oracle (hooked): rc=0; 8 PASS, 0 FAIL
+== fw_rest_p4on (hooked): rc=0; 8 PASS, 0 FAIL
+== fw_poison (hooked): rc=0; 7 PASS, 0 FAIL
+== fw_reject1 (hooked): rc=0; 7 PASS, 0 FAIL
+== fw_reject2 (hooked): rc=0; 7 PASS, 0 FAIL
+== fw_reject3 (hooked): rc=0; 7 PASS, 0 FAIL
+== fw_rest (hooked): rc=0; 8 PASS, 0 FAIL
+== fw_sched7 (hooked): rc=0; 7 PASS, 0 FAIL
+== fw_seed (hooked): rc=0; 8 PASS, 0 FAIL
+== inert_orig (orig): rc=0; 0 PASS, 0 FAIL
+== inert_hooked_off (hooked): rc=0; 0 PASS, 0 FAIL
+== inert_hooked_on_unkeyed (hooked): rc=0; 0 PASS, 0 FAIL
+== image_inert_off (image): rc=0; 0 PASS, 1 FAIL
+== gates: rc=0; 13 PASS, 0 FAIL
+== analysis: rc=0; 21 PASS, 0 FAIL
+== runner (re-run after scaling R13/R14 to the 7.0 ceiling): test_runner: 28 PASS, 0 FAIL
+Expected FAILs: precheck_dry N1 (GPU-only negative control; passes on GPU, precheck attempt 4); image_inert_off IMG2 (B1-only hooks not applied on stock)

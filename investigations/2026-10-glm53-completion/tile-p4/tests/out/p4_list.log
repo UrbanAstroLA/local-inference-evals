@@ -1,0 +1,23 @@
+== p4_list (hooked) 2026-10-24T04:23:59Z
+W1024 04:24:06.095000 1 torch/utils/cpp_extension.py:178] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+/usr/local/lib/python3.12/dist-packages/triton/runtime/interpreter.py:594: RuntimeWarning: divide by zero encountered in log
+  return TensorHandle(op(arg.data), arg.dtype.scalar)
+/usr/local/lib/python3.12/dist-packages/triton/runtime/interpreter.py:491: RuntimeWarning: invalid value encountered in add
+  output = op(lhs.data, rhs.data)
+PASS P1[list] committed ids == history 
+PASS P1[list] every window position measured exactly once 
+PASS P1[list] metrics == single-token reference dlp 0.0e+00 dpp 0.0e+00
+PASS P2[list] accepted count of verify step k == list[k] (last step clamped) first [3, 0, 2, 1, 3, 3, 0, 1] want [3, 0, 2, 1, 3, 3, 0, 1]
+PASS P2[list] two forced requests with the same list advance in lock step 
+PASS P4 flush file written 
+PASS P4 flush file == device stores 
+PASS P4 slot freed after removal 
+PASS P3[list] MoE stores == stage feature of prompt + F[:o], bit for bit, have == 1 (staged positions) bad []
+PASS P3[list] hidden stores only at o % 8 == 0, == reference 
+PASS P3[list] fp32 logits at o % 64 == 0 == toy logits of prompt + F[:o] 
+PASS P3[list] unstaged steps leave have == 0 
+PASS P5 steprec (row-0 output index, accepted) per step == commits [(0, 0), (1, 3), (5, 0), (6, 2)] vs [(0, 0), (1, 3), (5, 0), (6, 2)]
+PASS P4 a re-used slot starts with have == 0 (no stale rows) slot 1
+PASS P4 second request's stores complete (have == 1 at every staged position) have counts [  0 210]
+test_p4_cpu[list]: 15/15 checks passed
+rc=0

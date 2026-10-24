@@ -1,0 +1,27 @@
+{
+ "G4": "PASS",
+ "G4b": "AS PREDICTED (forcing effective True; decode == prefill on 66 entries: True)",
+ "detail": {
+  "G4a": {
+   "status": "complete",
+   "layers": {
+    "3": {
+     "entries": 44,
+     "reproduced": 44,
+     "errors": 0
+    },
+    "23": {
+     "entries": 44,
+     "reproduced": 44,
+     "errors": 0
+    },
+    "44": {
+     "entries": 44,
+     "reproduced": 44,
+     "errors": 0
+    }
+   },
+   "errors": []
+  }
+ }
+}

@@ -1,0 +1,1 @@
+precheck attempt 4; reason: pre-check attempt 4: tile-r3 (slot released host-side on refusal, deferred device reset)

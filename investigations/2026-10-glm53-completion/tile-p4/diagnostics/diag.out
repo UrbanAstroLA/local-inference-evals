@@ -1,0 +1,63 @@
+windows 48 ['R01-close', 'R01-deep', 'R01-early', 'R02-close']
+{
+"A1-A2:host_ne": 2670,
+"A1-A2:host_eq": 21906,
+"A1-B1:host_ne": 2610,
+"A1-B1:host_eq": 21966,
+"A2-B2:host_ne": 2642,
+"A2-B2:host_eq": 21934,
+"B1-B2:host_ne": 2363,
+"B1-B2:host_eq": 22213,
+"A1-A21:host_ne": 2960,
+"A1-A21:host_eq": 21616
+}
+('A1-A2', 'lp_close_absd', False) n 2670 mean 0.281681 q50 0.171315 q90 0.632151
+('A1-A2', 'lp_close_absd', True) n 21906 mean 0.306207 q50 0.168139 q90 0.679672
+('A1-A2', 'lp_forced_absd', False) n 2670 mean 0.04069 q50 0.000796 q90 0.112666
+('A1-A2', 'lp_forced_absd', True) n 21906 mean 0.037862 q50 0.000422 q90 0.111688
+('A1-A2', 'lp_forced_eq', False) n 2670 mean 0.127341 q50 0.0 q90 1.0
+('A1-A2', 'lp_forced_eq', True) n 21906 mean 0.146353 q50 0.0 q90 1.0
+('A1-A2', 'moe23_bitequal', False) n 1332 mean 0.0 q50 0.0 q90 0.0
+('A1-A2', 'moe23_bitequal', True) n 21514 mean 0.0 q50 0.0 q90 0.0
+('A1-A2', 'moe23_rel', False) n 1332 mean 0.210491 q50 0.160075 q90 0.415843
+('A1-A2', 'moe23_rel', True) n 21514 mean 0.2141 q50 0.147123 q90 0.449885
+('A1-A21', 'lp_close_absd', False) n 2960 mean 0.299859 q50 0.175557 q90 0.656246
+('A1-A21', 'lp_close_absd', True) n 21616 mean 0.314489 q50 0.177706 q90 0.671843
+('A1-A21', 'lp_forced_absd', False) n 2960 mean 0.038708 q50 0.000544 q90 0.113278
+('A1-A21', 'lp_forced_absd', True) n 21616 mean 0.040667 q50 0.000487 q90 0.120092
+('A1-A21', 'lp_forced_eq', False) n 2960 mean 0.136486 q50 0.0 q90 1.0
+('A1-A21', 'lp_forced_eq', True) n 21616 mean 0.142626 q50 0.0 q90 1.0
+('A1-A21', 'moe23_bitequal', False) n 1416 mean 0.0 q50 0.0 q90 0.0
+('A1-A21', 'moe23_bitequal', True) n 21418 mean 0.0 q50 0.0 q90 0.0
+('A1-A21', 'moe23_rel', False) n 1416 mean 0.232368 q50 0.169525 q90 0.477961
+('A1-A21', 'moe23_rel', True) n 21418 mean 0.22195 q50 0.15627 q90 0.453563
+('A1-B1', 'lp_close_absd', False) n 2610 mean 0.272147 q50 0.164055 q90 0.624984
+('A1-B1', 'lp_close_absd', True) n 21966 mean 0.328826 q50 0.183576 q90 0.70857
+('A1-B1', 'lp_forced_absd', False) n 2610 mean 0.042963 q50 0.0007 q90 0.112478
+('A1-B1', 'lp_forced_absd', True) n 21966 mean 0.039726 q50 0.000455 q90 0.114118
+('A1-B1', 'lp_forced_eq', False) n 2610 mean 0.129119 q50 0.0 q90 1.0
+('A1-B1', 'lp_forced_eq', True) n 21966 mean 0.144678 q50 0.0 q90 1.0
+('A1-B1', 'moe23_bitequal', False) n 1267 mean 0.0 q50 0.0 q90 0.0
+('A1-B1', 'moe23_bitequal', True) n 21563 mean 0.0 q50 0.0 q90 0.0
+('A1-B1', 'moe23_rel', False) n 1267 mean 0.235311 q50 0.178642 q90 0.467994
+('A1-B1', 'moe23_rel', True) n 21563 mean 0.222282 q50 0.157789 q90 0.456453
+('A2-B2', 'lp_close_absd', False) n 2642 mean 0.281384 q50 0.174597 q90 0.651744
+('A2-B2', 'lp_close_absd', True) n 21934 mean 0.285387 q50 0.176396 q90 0.643681
+('A2-B2', 'lp_forced_absd', False) n 2642 mean 0.043082 q50 0.00091 q90 0.130697
+('A2-B2', 'lp_forced_absd', True) n 21934 mean 0.039845 q50 0.000459 q90 0.116816
+('A2-B2', 'lp_forced_eq', False) n 2642 mean 0.129069 q50 0.0 q90 1.0
+('A2-B2', 'lp_forced_eq', True) n 21934 mean 0.148035 q50 0.0 q90 1.0
+('A2-B2', 'moe23_bitequal', False) n 1340 mean 0.0 q50 0.0 q90 0.0
+('A2-B2', 'moe23_bitequal', True) n 21568 mean 0.0 q50 0.0 q90 0.0
+('A2-B2', 'moe23_rel', False) n 1340 mean 0.23505 q50 0.182999 q90 0.483118
+('A2-B2', 'moe23_rel', True) n 21568 mean 0.221524 q50 0.159874 q90 0.451565
+('B1-B2', 'lp_close_absd', False) n 2363 mean 0.263232 q50 0.161629 q90 0.593749
+('B1-B2', 'lp_close_absd', True) n 22213 mean 0.274681 q50 0.164059 q90 0.624998
+('B1-B2', 'lp_forced_absd', False) n 2363 mean 0.044669 q50 0.001347 q90 0.122223
+('B1-B2', 'lp_forced_absd', True) n 22213 mean 0.037285 q50 0.000399 q90 0.11053
+('B1-B2', 'lp_forced_eq', False) n 2363 mean 0.137114 q50 0.0 q90 1.0
+('B1-B2', 'lp_forced_eq', True) n 22213 mean 0.150858 q50 0.0 q90 1.0
+('B1-B2', 'moe23_bitequal', False) n 1067 mean 0.0 q50 0.0 q90 0.0
+('B1-B2', 'moe23_bitequal', True) n 21847 mean 0.0 q50 0.0 q90 0.0
+('B1-B2', 'moe23_rel', False) n 1067 mean 0.220173 q50 0.174806 q90 0.427867
+('B1-B2', 'moe23_rel', True) n 21847 mean 0.21114 q50 0.146974 q90 0.443783

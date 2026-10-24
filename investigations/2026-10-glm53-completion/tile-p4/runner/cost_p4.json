@@ -1,0 +1,63 @@
+{
+ "tokens": {
+  "warm_per_session": 2143688,
+  "remainder_per_pass": 228835,
+  "tokens_per_step": 3.0596,
+  "steps_per_pass": 168
+ },
+ "sessions": {
+  "planning (worst measured start-up, 2,400 tok/s, 34 tok/s/req)": {
+   "start": 874,
+   "prefill": 1084,
+   "decode": 181,
+   "between_batches": 60,
+   "stop": 90,
+   "total": 2289,
+   "gpu_h": 1.272
+  },
+  "typical (740 s start-up, 2,750 tok/s, 34 tok/s/req)": {
+   "start": 740,
+   "prefill": 946,
+   "decode": 181,
+   "between_batches": 60,
+   "stop": 90,
+   "total": 2017,
+   "gpu_h": 1.121
+  },
+  "optimistic (722 s, 2,770 tok/s, 70 tok/s/req)": {
+   "start": 722,
+   "prefill": 939,
+   "decode": 88,
+   "between_batches": 60,
+   "stop": 90,
+   "total": 1899,
+   "gpu_h": 1.055
+  },
+  "literal capped window at the 327,680 cap (not adopted; A2)": {
+   "start": 874,
+   "prefill": 1739,
+   "decode": 181,
+   "between_batches": 60,
+   "stop": 90,
+   "total": 2944,
+   "gpu_h": 1.636
+  }
+ },
+ "single_gpu_checks_s": {
+  "precheck": 60,
+  "g4": 180
+ },
+ "single_gpu_checks_gpu_h": 0.067,
+ "three_sessions_plus_checks_gpu_h": {
+  "planning": 3.883,
+  "typical": 3.43
+ },
+ "caps": {
+  "session_share_s": 2350,
+  "session_share_gpu_h": 1.306,
+  "ceiling_gpu_h": 4.0,
+  "min_wall_s": 1300,
+  "precheck_cap_s": 300,
+  "g4_cap_s": 900
+ }
+}

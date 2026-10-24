@@ -1,0 +1,18 @@
+== p4_modes (hooked) 2026-10-24T04:32:14Z
+W1024 04:32:20.522000 1 torch/utils/cpp_extension.py:178] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+/usr/local/lib/python3.12/dist-packages/triton/runtime/interpreter.py:594: RuntimeWarning: divide by zero encountered in log
+  return TensorHandle(op(arg.data), arg.dtype.scalar)
+/usr/local/lib/python3.12/dist-packages/triton/runtime/interpreter.py:491: RuntimeWarning: invalid value encountered in add
+  output = op(lhs.data, rhs.data)
+PASS P6[oracle] ids == history, measured once, metrics == reference 
+PASS P3[oracle] MoE stores == stage feature of prompt + F[:o], bit for bit, have == 1 (staged positions) bad []
+PASS P3[oracle] hidden stores only at o % 8 == 0, == reference 
+PASS P3[oracle] fp32 logits at o % 64 == 0 == toy logits of prompt + F[:o] 
+PASS P3[oracle] unstaged steps leave have == 0 
+PASS P6[poison] ids == history, measured once, metrics == reference 
+PASS P3[poison] MoE stores == stage feature of prompt + F[:o], bit for bit, have == 1 (staged positions) bad []
+PASS P3[poison] hidden stores only at o % 8 == 0, == reference 
+PASS P3[poison] fp32 logits at o % 64 == 0 == toy logits of prompt + F[:o] 
+PASS P3[poison] unstaged steps leave have == 0 
+test_p4_cpu[modes]: 10/10 checks passed
+rc=0

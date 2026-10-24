@@ -1,0 +1,14 @@
+PASS G3 PASS: arm A built from captured-p3b's real launches (all layers, both ranks) 0
+PASS G3 FAIL: stock-rule violation on rank 1 layer 17 m 24
+PASS G3 FAIL: rank-0 layer-23 launch differs from captured-p3b
+PASS G3 FAIL: a capture-size key missing
+PASS G1 + G2 PASS: arm B forces K64/N256 at m 10-32 everywhere, all else equal to A [["(64, 256, 64, 256)", "None"]]
+PASS G1 FAIL: one decode launch (rank 1, layer 30, m 32) not forced
+PASS G2 FAIL: a prefill launch of B differs from A (block size)
+PASS G1 FAIL: coverage (rank 1 layer 44 m 16 never bound)
+PASS G2 FAIL: a launch that changed during the session
+PASS G2 PASS with a key absent from A judged by A's rule (decode m 6, K64/N256)
+PASS A2 control PASS: identical launches
+PASS A2 control FAIL: one launch differs from session A
+PASS G2 refuses without session A's binds
+test_gates: 13/13

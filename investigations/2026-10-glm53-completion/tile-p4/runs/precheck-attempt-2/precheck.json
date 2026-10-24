@@ -1,0 +1,10 @@
+{
+ "results": [
+  {
+   "test": "C1 capture with every in-graph hook succeeds; a flush inside the capture is refused and writes nothing",
+   "ok": true,
+   "error": null
+  }
+ ],
+ "verdict": "FAIL"
+}

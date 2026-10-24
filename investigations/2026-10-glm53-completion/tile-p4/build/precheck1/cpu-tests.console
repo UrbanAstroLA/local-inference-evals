@@ -1,0 +1,31 @@
+== gen: 6 PASS, 0 FAIL; rc=0
+== p4_units (hooked): rc=1; 16 PASS, 1 FAIL
+FAIL S3 flush after serving starts writes the file; the slot is freed every time 
+== precheck_dry (hooked): rc=1; 1 PASS, 0 FAIL
+Traceback (most recent call last):
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/p4pre-cpu/PRIVATE/p4_pc-7_r0.npz'
+== p4_list (hooked): rc=0; 15 PASS, 0 FAIL
+== p4_modes (hooked): rc=0; 10 PASS, 0 FAIL
+== fw_natural (hooked): rc=0; 7 PASS, 0 FAIL
+== fw_oracle (hooked): rc=0; 8 PASS, 0 FAIL
+== fw_rest_p4on (hooked): rc=0; 8 PASS, 0 FAIL
+== fw_poison (hooked): rc=0; 7 PASS, 0 FAIL
+== fw_reject1 (hooked): rc=0; 7 PASS, 0 FAIL
+== fw_reject2 (hooked): rc=0; 7 PASS, 0 FAIL
+== fw_reject3 (hooked): rc=0; 7 PASS, 0 FAIL
+== fw_rest (hooked): rc=0; 8 PASS, 0 FAIL
+== fw_sched7 (hooked): rc=0; 7 PASS, 0 FAIL
+== fw_seed (hooked): rc=0; 8 PASS, 0 FAIL
+== inert_orig (orig): rc=0; 0 PASS, 0 FAIL
+== inert_hooked_off (hooked): rc=0; 0 PASS, 0 FAIL
+== inert_hooked_on_unkeyed (hooked): rc=0; 0 PASS, 0 FAIL
+== image_inert_off (image): rc=0; 0 PASS, 1 FAIL
+FAIL IMG2 built image with FORCEWIN unset: files hooked, _FW_ON False everywhere
+inert_orig 5359e50c96f02f1293f5d662ff2c65419866cdaf39a2f31a93201aef41dde033
+inert_hooked_off 5359e50c96f02f1293f5d662ff2c65419866cdaf39a2f31a93201aef41dde033
+inert_hooked_on_unkeyed 5359e50c96f02f1293f5d662ff2c65419866cdaf39a2f31a93201aef41dde033
+image_inert_off 5359e50c96f02f1293f5d662ff2c65419866cdaf39a2f31a93201aef41dde033
+PASS I1 identical outputs: original B1 files / hooked env unset / hooked env on, no keyed request / built image env unset
+== gates: rc=0; 13 PASS, 0 FAIL
+== runner: rc=1; 26 PASS, 2 FAIL
+== analysis: rc=0; 21 PASS, 0 FAIL

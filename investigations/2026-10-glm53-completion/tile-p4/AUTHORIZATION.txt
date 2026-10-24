@@ -1,0 +1,2 @@
+2026-10-23 operator: "4 GPU hours approved" -> P4 (PROPOSAL.md): sessions A, B, A; ceiling 4.0 occupied GPU-hours incl. retries and single-GPU checks; histories/logits/hidden states local only
+2026-10-23 operator: "Agree, if there is a failure fix and retry, budget approved up to double original estimate" -> amendments A1-A8 acknowledged (PROPOSAL-AMENDMENTS.md sha256 prefix 22db85696ac8; A2 as built, window ends at output index 131,072); ceiling raised to 7.0 occupied GPU-hours (2 x the proposal estimate of ~3.5), retries allowed after fixing the specific failure

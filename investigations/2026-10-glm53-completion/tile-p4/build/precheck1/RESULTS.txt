@@ -1,0 +1,56 @@
+P4 CPU test results (2026-10-24T02:48:01Z); logs in tests/out/.  No GPU used; every engine-side test in a CPU container
+(docker run --rm --pull=never --network none, no --gpus, CUDA_VISIBLE_DEVICES=, TRITON_INTERPRET=1).
+hooked = stock image a9e985c0 with build/files installed over site-packages; image = built local/glm53-v091-p4-tile:local (894bd469).
+
+gen                      6 PASS  0 FAIL  rc=0
+p4_units                17 PASS  0 FAIL  rc=0
+precheck_dry             4 PASS  1 FAIL  rc=0
+p4_list                 15 PASS  0 FAIL  rc=0
+p4_modes                10 PASS  0 FAIL  rc=0
+fw_natural               7 PASS  0 FAIL  rc=0
+fw_oracle                8 PASS  0 FAIL  rc=0
+fw_poison                7 PASS  0 FAIL  rc=0
+fw_reject1               7 PASS  0 FAIL  rc=0
+fw_reject2               7 PASS  0 FAIL  rc=0
+fw_reject3               7 PASS  0 FAIL  rc=0
+fw_sched7                7 PASS  0 FAIL  rc=0
+fw_seed                  8 PASS  0 FAIL  rc=0
+fw_rest                  8 PASS  0 FAIL  rc=0
+fw_rest_p4on             8 PASS  0 FAIL  rc=0
+gates                   13 PASS  0 FAIL  
+runner                  28 PASS  0 FAIL  
+analysis                21 PASS  0 FAIL  
+image_units             17 PASS  0 FAIL  rc=0
+image_precheck_dry       4 PASS  1 FAIL  rc=0
+image_list              15 PASS  0 FAIL  rc=0
+image_fw_rest            8 PASS  0 FAIL  rc=0
+
+inertness (I1, identical output hashes of the real sampler / rejection sampler / tail-builder workload):
+inert_orig 5359e50c96f02f1293f5d662ff2c65419866cdaf39a2f31a93201aef41dde033
+inert_hooked_off 5359e50c96f02f1293f5d662ff2c65419866cdaf39a2f31a93201aef41dde033
+inert_hooked_on_unkeyed 5359e50c96f02f1293f5d662ff2c65419866cdaf39a2f31a93201aef41dde033
+image_inert_off 5359e50c96f02f1293f5d662ff2c65419866cdaf39a2f31a93201aef41dde033
+PASS I1 identical outputs: original B1 files / hooked env unset / hooked env on, no keyed request / built image env unset
+
+Expected FAILs (not defects):
+  precheck_dry / image_precheck_dry  N1 is a GPU-only negative control (a CPU copy inside a fake capture cannot fail); C1-C3 pass.
+  image_inert_off IMG2  hook-validation's B1 check that indexer.py / sparse_attn_indexer_kpool.py are hooked; on stock those
+                        hooks are deliberately not applied (README 1.3).  The P4 image's inert flags are post-build gate (b1).
+
+post-build gates (build/post-build-gates.txt):
+PASS gate (a): only the 7 expected files differ
+PASS installed p4_hooks.py == reviewed
+PASS installed forcewin_hooks.py == reviewed
+PASS installed v1/worker/gpu/model_runner.py == reviewed
+PASS installed v1/worker/gpu/spec_decode/rejection_sampler.py == reviewed
+PASS installed v1/worker/gpu/sample/sampler.py == reviewed
+PASS installed model_executor/layers/quantization/exl3.py == reviewed
+PASS installed models/glm5next/nvidia/model.py == reviewed
+PASS gate (b1): env unset -> all hook flags False, _p4_forced_tile() is None, nothing patched or allocated
+PASS gate (b2): GLM53_P4_TILE='64,256,64,256' -> (64, 256, 64, 256) (P4 hooks False)
+PASS gate (b2): GLM53_P4_TILE='64,256,64,256 ' -> None (P4 hooks False)
+PASS gate (b2): GLM53_P4_TILE='64,256' -> None (P4 hooks False)
+PASS gate (b2): GLM53_P4_TILE='128,128,128,128' -> None (P4 hooks False)
+PASS gate (b2): GLM53_P4_TILE='1' -> None (P4 hooks False)
+PASS gate (b3): GLM53_P4=on FORCEWIN=on -> hooks and bridge on; no device state before registration; B1-only features off
+PASS gate (c): image layers extend the base (97 -> 106)

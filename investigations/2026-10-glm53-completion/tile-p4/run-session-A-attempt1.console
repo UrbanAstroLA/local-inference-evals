@@ -1,0 +1,20 @@
+budget: ceiling 7.0 GPU-h; used 0.0272; left 6.9728; session A attempt 1: wall cap 2350s x 2 GPUs
+== preflight 2026-10-24T05:04:02Z
+index, memory.used [MiB], utilization.gpu [%]
+0, 20 MiB, 0 %
+1, 1995 MiB, 2 %
+utilization sample 1: idle
+== start 2026-10-24T05:04:03Z image=local/glm53-v091-p4-tile-r3:local (sha256:4186bda0326732d2f82b215231ba12713bf2d75053bb8f6644ed738115590439) cap 2350s session A attempt 1 tile ''
+ready after 719s
+hooks: OK p4 init ranks [0, 1] issues [] stores_MiB 183.2 stage_modules 6 errors 0 tile_env ''
+forcewin: registered records 2 (expected 2), errors 0
+GATES PASS A startup {"G3": true}
+== client (deadline in 1511s)
+client rc=0
+flushed 96 of 96 completed forced requests (wait 1s)
+== cleanup 2026-10-24T05:28:38Z (stage flush)
+session A attempt 1 occupied 1481s x 2 GPU = 0.8228 GPU-h (rc 0)
+private files: 386 under <runs>/tile-p4/PRIVATE-runs/session-A-attempt-1 (mode 0700)
+GATES PASS A final {"G3": true}
+OUTCOME session A attempt 1: COMPLETE (gates_ok True; batches 6/6; forced ok 96/96; flushed 96; hook errors 0)
+runner rc=0

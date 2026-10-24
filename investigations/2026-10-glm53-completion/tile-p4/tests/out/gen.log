@@ -1,0 +1,8 @@
+== gen 2026-10-24T04:23:30Z
+PASS v1/worker/gpu/model_runner.py: forcewin call sites == validated attempt-2 copy (8d276b3aac4bd6b5; make_patch.py eff09cc54693)
+PASS v1/worker/gpu/spec_decode/rejection_sampler.py: forcewin call sites == validated attempt-2 copy (f5a875ef0af0f8e5; make_patch.py eff09cc54693)
+PASS v1/worker/gpu/sample/sampler.py: forcewin call sites == validated attempt-2 copy (bbb1df8171c4750b; make_patch.py eff09cc54693)
+PASS model_executor/layers/quantization/exl3.py: 20 marked + 3 blank inserted (expected 20), replaced [(2480, '        tile_config = None', '        tile_config = _p4_forced_tile()  # local-p4')], other opcodes 0, stock-equivalent after removal True; stock 3b4ca47cb1168bff hooked bdb4f14c63ccaddb
+PASS models/glm5next/nvidia/model.py: 13 marked + 1 blank inserted (expected 13), replaced [], other opcodes 0, stock-equivalent after removal True; stock 28c93ec6efa760fb hooked 98eb25076b977361
+PASS forcewin port regenerates byte-identically (d6b10341dc835046)
+rc=0

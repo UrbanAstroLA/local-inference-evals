@@ -1,0 +1,30 @@
+fabricated propagation
+fabricated attenuation
+fabricated null
+fabricated gatefail
+fabricated noisy
+fabricated noisynull
+fabricated shapes
+PASS propagation: reading contains 'Computational propagation established' E3 differs reproducibly (A != B where A = A, same positions, both repeats): computational propagation established; behavioural direction untested | E3 differenc
+PASS attenuation: reading contains 'No demonstrated propagation' E1 differs but E3 shows no A-vs-B difference beyond A-vs-A: no demonstrated propagation on these windows; investigate attenuation before any behavioural run
+PASS null: reading contains 'Neither E1 nor E3' Neither E1 nor E3 shows a reproducible A-vs-B difference on these windows (the tile intervention did not change the measured outputs; check G1 before reading fu
+PASS gatefail: reading contains 'INCOMPLETE' INCOMPLETE; no reading (session(s) missing: ['B']) | INCOMPLETE; no reading (session(s) missing: ['B'])
+
+PASS noisy: reading contains 'Computational propagation established' E3 differs reproducibly (A != B where A = A, same positions, both repeats): computational propagation established; behavioural direction untested | (fallback ru
+PASS noisynull: reading contains 'No demonstrated propagation' E1 differs but E3 shows no A-vs-B difference beyond A-vs-A: no demonstrated propagation on these windows; investigate attenuation before any behavioural run | (
+PASS shapes: reading contains 'Computational propagation established' E3 differs reproducibly (A != B where A = A, same positions, both repeats): computational propagation established; behavioural direction untested | E3 differenc
+PASS propagation: E1/E2/E3/E4 reproducible differences present; A-stable everywhere compared
+PASS propagation: o = 0 (prefill step) is not an E1 difference (B equal there) 2044
+PASS propagation: terminal-token differences in near-close windows are reported
+PASS propagation: within-arm and session-control comparisons are bit-equal (E1, E3)
+PASS propagation: E4 full-vocabulary KL > 0 for A-B, == 0 for A-A2; restricted top-20 kept as diagnostic
+PASS propagation: acceptance follows the schedule in every session
+PASS propagation: both ranks' records identical (validity)
+PASS attenuation: E1 D > 0, E3 D == 0, E4 D == 0
+PASS null: no reproducible difference in any family
+PASS noisy: fallback rule used and AB beyond-count exceeds the null pairing
+PASS noisynull: fallback, AB beyond-count does not exceed the null pairing
+PASS shapes: positions in steps whose key differs are excluded and counted exactly (AB_1 and BB) AB_1 {'step key mismatch': 260} BB {'step key mismatch': 260} expected 260
+PASS gatefail: no endpoint is read (INCOMPLETE, no result section)
+PASS result.md written for every scenario
+check_analysis: 21/21
