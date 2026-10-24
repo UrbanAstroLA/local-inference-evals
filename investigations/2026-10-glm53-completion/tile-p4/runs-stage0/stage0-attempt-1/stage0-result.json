@@ -1,0 +1,891 @@
+{
+ "attempt": "ao",
+ "variants": {
+  "V1": {
+   "replicates_done": [
+    "V1-r1",
+    "V1-r2"
+   ],
+   "forced_ok": 16,
+   "forced": 16,
+   "verdict": "NOT REPRODUCIBLE",
+   "first_failed": "G-entry",
+   "gates": {
+    "G-enq": {
+     "steps": [
+      1379,
+      1379
+     ],
+     "enqueue_order": [
+      [
+       "R01-close",
+       "R01-deep",
+       "R01-early",
+       "R02-close",
+       "R02-deep",
+       "R02-early",
+       "R03-close",
+       "R03-deep"
+      ],
+      [
+       "R01-close",
+       "R01-deep",
+       "R01-early",
+       "R02-close",
+       "R02-deep",
+       "R02-early",
+       "R03-close",
+       "R03-deep"
+      ]
+     ],
+     "mixed_replicate_steps": [],
+     "ok": true
+    },
+    "G-entry": {
+     "windows": {
+      "R01-early": {
+       "prov": [
+        {
+         "ok": true,
+         "cached_tokens": 13056,
+         "blocks_checked": 10,
+         "not_from_warm": 0,
+         "null_placeholders": 14
+        },
+        {
+         "ok": true,
+         "cached_tokens": 13056,
+         "blocks_checked": 10,
+         "not_from_warm": 0,
+         "null_placeholders": 14
+        }
+       ],
+       "r0": {
+        "ok": false,
+        "points": 5,
+        "tensors": 91,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "r1": {
+        "ok": false,
+        "points": 5,
+        "tensors": 88,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.27.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "ok": false
+      },
+      "R01-deep": {
+       "prov": [
+        {
+         "ok": true,
+         "cached_tokens": 91392,
+         "blocks_checked": 28,
+         "not_from_warm": 0,
+         "null_placeholders": 140
+        },
+        {
+         "ok": true,
+         "cached_tokens": 91392,
+         "blocks_checked": 28,
+         "not_from_warm": 0,
+         "null_placeholders": 140
+        }
+       ],
+       "r0": {
+        "ok": false,
+        "points": 5,
+        "tensors": 91,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "r1": {
+        "ok": false,
+        "points": 5,
+        "tensors": 88,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.27.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "ok": false
+      },
+      "R01-close": {
+       "prov": [
+        {
+         "ok": true,
+         "cached_tokens": 108800,
+         "blocks_checked": 32,
+         "not_from_warm": 0,
+         "null_placeholders": 168
+        },
+        {
+         "ok": true,
+         "cached_tokens": 108800,
+         "blocks_checked": 32,
+         "not_from_warm": 0,
+         "null_placeholders": 168
+        }
+       ],
+       "r0": {
+        "ok": false,
+        "points": 5,
+        "tensors": 91,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "r1": {
+        "ok": false,
+        "points": 5,
+        "tensors": 88,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.27.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "ok": false
+      },
+      "R02-early": {
+       "prov": [
+        {
+         "ok": true,
+         "cached_tokens": 13056,
+         "blocks_checked": 10,
+         "not_from_warm": 0,
+         "null_placeholders": 14
+        },
+        {
+         "ok": true,
+         "cached_tokens": 13056,
+         "blocks_checked": 10,
+         "not_from_warm": 0,
+         "null_placeholders": 14
+        }
+       ],
+       "r0": {
+        "ok": false,
+        "points": 5,
+        "tensors": 91,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "r1": {
+        "ok": false,
+        "points": 5,
+        "tensors": 88,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.27.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "ok": false
+      },
+      "R02-deep": {
+       "prov": [
+        {
+         "ok": true,
+         "cached_tokens": 91392,
+         "blocks_checked": 28,
+         "not_from_warm": 0,
+         "null_placeholders": 140
+        },
+        {
+         "ok": true,
+         "cached_tokens": 91392,
+         "blocks_checked": 28,
+         "not_from_warm": 0,
+         "null_placeholders": 140
+        }
+       ],
+       "r0": {
+        "ok": false,
+        "points": 5,
+        "tensors": 91,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "r1": {
+        "ok": false,
+        "points": 5,
+        "tensors": 88,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.27.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "ok": false
+      },
+      "R02-close": {
+       "prov": [
+        {
+         "ok": true,
+         "cached_tokens": 126208,
+         "blocks_checked": 36,
+         "not_from_warm": 0,
+         "null_placeholders": 196
+        },
+        {
+         "ok": true,
+         "cached_tokens": 126208,
+         "blocks_checked": 36,
+         "not_from_warm": 0,
+         "null_placeholders": 196
+        }
+       ],
+       "r0": {
+        "ok": false,
+        "points": 5,
+        "tensors": 91,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "r1": {
+        "ok": false,
+        "points": 5,
+        "tensors": 88,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.27.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "ok": false
+      },
+      "R03-deep": {
+       "prov": [
+        {
+         "ok": true,
+         "cached_tokens": 91392,
+         "blocks_checked": 28,
+         "not_from_warm": 0,
+         "null_placeholders": 140
+        },
+        {
+         "ok": true,
+         "cached_tokens": 91392,
+         "blocks_checked": 28,
+         "not_from_warm": 0,
+         "null_placeholders": 140
+        }
+       ],
+       "r0": {
+        "ok": false,
+        "points": 5,
+        "tensors": 91,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "r1": {
+        "ok": false,
+        "points": 5,
+        "tensors": 88,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.27.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "ok": false
+      },
+      "R03-close": {
+       "prov": [
+        {
+         "ok": true,
+         "cached_tokens": 100096,
+         "blocks_checked": 30,
+         "not_from_warm": 0,
+         "null_placeholders": 154
+        },
+        {
+         "ok": true,
+         "cached_tokens": 100096,
+         "blocks_checked": 30,
+         "not_from_warm": 0,
+         "null_placeholders": 154
+        }
+       ],
+       "r0": {
+        "ok": false,
+        "points": 5,
+        "tensors": 91,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "r1": {
+        "ok": false,
+        "points": 5,
+        "tensors": 88,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.27.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "ok": false
+      }
+     },
+     "null_block_equal": 16,
+     "null_block_compared": 32,
+     "null_in_row_skipped": 0,
+     "ok": false,
+     "first_difference": {
+      "window": "R01-early",
+      "rank": 0,
+      "point": 0,
+      "point_kind": "prefill",
+      "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache",
+      "group": 0,
+      "logical_block": 0,
+      "point0_cached_state_equal": false
+     }
+    },
+    "G-out": "not evaluated (stopped at an earlier gate)"
+   }
+  },
+  "V2": {
+   "replicates_done": [
+    "V2-r1",
+    "V2-r2"
+   ],
+   "forced_ok": 16,
+   "forced": 16,
+   "verdict": "NOT REPRODUCIBLE",
+   "first_failed": "G-entry",
+   "gates": {
+    "G-enq": {
+     "steps": [
+      399,
+      399
+     ],
+     "enqueue_order": [
+      [
+       "R01-early",
+       "R01-deep",
+       "R01-close",
+       "R02-early",
+       "R02-deep",
+       "R02-close",
+       "R03-deep",
+       "R03-close"
+      ],
+      [
+       "R01-early",
+       "R01-deep",
+       "R01-close",
+       "R02-early",
+       "R02-deep",
+       "R02-close",
+       "R03-deep",
+       "R03-close"
+      ]
+     ],
+     "mixed_replicate_steps": [],
+     "ok": true
+    },
+    "G-entry": {
+     "windows": {
+      "R01-early": {
+       "prov": [
+        {
+         "ok": true,
+         "cached_tokens": 13056,
+         "blocks_checked": 10,
+         "not_from_warm": 0,
+         "null_placeholders": 14
+        },
+        {
+         "ok": true,
+         "cached_tokens": 13056,
+         "blocks_checked": 10,
+         "not_from_warm": 0,
+         "null_placeholders": 14
+        }
+       ],
+       "r0": {
+        "ok": false,
+        "points": 5,
+        "tensors": 91,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "r1": {
+        "ok": false,
+        "points": 5,
+        "tensors": 88,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.27.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "ok": false
+      },
+      "R01-deep": {
+       "prov": [
+        {
+         "ok": true,
+         "cached_tokens": 91392,
+         "blocks_checked": 28,
+         "not_from_warm": 0,
+         "null_placeholders": 140
+        },
+        {
+         "ok": true,
+         "cached_tokens": 91392,
+         "blocks_checked": 28,
+         "not_from_warm": 0,
+         "null_placeholders": 140
+        }
+       ],
+       "r0": {
+        "ok": false,
+        "points": 5,
+        "tensors": 91,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "r1": {
+        "ok": false,
+        "points": 5,
+        "tensors": 88,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.27.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "ok": false
+      },
+      "R01-close": {
+       "prov": [
+        {
+         "ok": true,
+         "cached_tokens": 108800,
+         "blocks_checked": 32,
+         "not_from_warm": 0,
+         "null_placeholders": 168
+        },
+        {
+         "ok": true,
+         "cached_tokens": 108800,
+         "blocks_checked": 32,
+         "not_from_warm": 0,
+         "null_placeholders": 168
+        }
+       ],
+       "r0": {
+        "ok": false,
+        "points": 5,
+        "tensors": 91,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "r1": {
+        "ok": false,
+        "points": 5,
+        "tensors": 88,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.27.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "ok": false
+      },
+      "R02-early": {
+       "prov": [
+        {
+         "ok": true,
+         "cached_tokens": 13056,
+         "blocks_checked": 10,
+         "not_from_warm": 0,
+         "null_placeholders": 14
+        },
+        {
+         "ok": true,
+         "cached_tokens": 13056,
+         "blocks_checked": 10,
+         "not_from_warm": 0,
+         "null_placeholders": 14
+        }
+       ],
+       "r0": {
+        "ok": false,
+        "points": 5,
+        "tensors": 91,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "r1": {
+        "ok": false,
+        "points": 5,
+        "tensors": 88,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.27.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "ok": false
+      },
+      "R02-deep": {
+       "prov": [
+        {
+         "ok": true,
+         "cached_tokens": 91392,
+         "blocks_checked": 28,
+         "not_from_warm": 0,
+         "null_placeholders": 140
+        },
+        {
+         "ok": true,
+         "cached_tokens": 91392,
+         "blocks_checked": 28,
+         "not_from_warm": 0,
+         "null_placeholders": 140
+        }
+       ],
+       "r0": {
+        "ok": false,
+        "points": 6,
+        "tensors": 91,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "r1": {
+        "ok": false,
+        "points": 6,
+        "tensors": 88,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.27.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "ok": false
+      },
+      "R02-close": {
+       "prov": [
+        {
+         "ok": true,
+         "cached_tokens": 126208,
+         "blocks_checked": 36,
+         "not_from_warm": 0,
+         "null_placeholders": 196
+        },
+        {
+         "ok": true,
+         "cached_tokens": 126208,
+         "blocks_checked": 36,
+         "not_from_warm": 0,
+         "null_placeholders": 196
+        }
+       ],
+       "r0": {
+        "ok": false,
+        "points": 5,
+        "tensors": 91,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "r1": {
+        "ok": false,
+        "points": 5,
+        "tensors": 88,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.27.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "ok": false
+      },
+      "R03-deep": {
+       "prov": [
+        {
+         "ok": true,
+         "cached_tokens": 91392,
+         "blocks_checked": 28,
+         "not_from_warm": 0,
+         "null_placeholders": 140
+        },
+        {
+         "ok": true,
+         "cached_tokens": 91392,
+         "blocks_checked": 28,
+         "not_from_warm": 0,
+         "null_placeholders": 140
+        }
+       ],
+       "r0": {
+        "ok": false,
+        "points": 5,
+        "tensors": 91,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "r1": {
+        "ok": false,
+        "points": 5,
+        "tensors": 88,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.27.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "ok": false
+      },
+      "R03-close": {
+       "prov": [
+        {
+         "ok": true,
+         "cached_tokens": 100096,
+         "blocks_checked": 30,
+         "not_from_warm": 0,
+         "null_placeholders": 154
+        },
+        {
+         "ok": true,
+         "cached_tokens": 100096,
+         "blocks_checked": 30,
+         "not_from_warm": 0,
+         "null_placeholders": 154
+        }
+       ],
+       "r0": {
+        "ok": false,
+        "points": 5,
+        "tensors": 91,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "r1": {
+        "ok": false,
+        "points": 5,
+        "tensors": 88,
+        "physical_block_ids_equal": false,
+        "first_difference": {
+         "point": 0,
+         "point_kind": "prefill",
+         "tensor": "language_model.model.layers.27.self_attn.indexer.k_cache",
+         "group": 0,
+         "logical_block": 0
+        }
+       },
+       "ok": false
+      }
+     },
+     "null_block_equal": 14,
+     "null_block_compared": 32,
+     "null_in_row_skipped": 0,
+     "ok": false,
+     "first_difference": {
+      "window": "R01-early",
+      "rank": 0,
+      "point": 0,
+      "point_kind": "prefill",
+      "tensor": "language_model.model.layers.7.self_attn.indexer.k_cache",
+      "group": 0,
+      "logical_block": 0,
+      "point0_cached_state_equal": false
+     }
+    },
+    "G-out": "not evaluated (stopped at an earlier gate)"
+   }
+  }
+ },
+ "interpretation": "Neither reproducible: investigate the first differing input, state or operation (V1 G-entry, V2 G-entry); do not label stock kernels nondeterministic",
+ "health": {
+  "hook_errors": 0,
+  "entry_coverage": {
+   "0": {
+    "covered": 91,
+    "uncovered": 0,
+    "n_groups": 10,
+    "groups_covered": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "uncovered_layers": []
+   },
+   "1": {
+    "covered": 88,
+    "uncovered": 0,
+    "n_groups": 10,
+    "groups_covered": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "uncovered_layers": []
+   }
+  },
+  "sched_steps": 3556,
+  "forced_adds": 32
+ }
+}

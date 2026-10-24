@@ -18,13 +18,19 @@ Caps (wall seconds of this attempt):
   session   min(SHARE_S, (left - RESERVE) x 3600 / 2), RESERVE = EST_SESSION_GH x (sessions still to run after
             this one); refused below MIN_WALL_S (start-up alone took 722-874 s; below this no batch can run).
 SHARE_S = 2350 s = 1.306 GPU-h = (4.0 - 0.08 single-GPU checks) / 3.  EST_SESSION_GH = 1.27 (runner/cost_p4.py, planning case).
+
+VOID (2026-10-24, AUTHORIZATION.txt last line): the operator voided the 7.0 GPU-h ceiling.  This gate now refuses EVERY
+step (precheck, g4, A, B, A2) unconditionally, before reading the ledger, so runner/run_p4.sh, precheck/run_precheck.sh
+and g4/run_g4.sh cannot start anything.  There is no override.  Stage 0 has its own gate and ledger
+(runner/stage0/budget_stage0.py, costs-stage0.jsonl) and needs an explicit APPROVED_GPU_H.
 """
 import glob
 import json
 import os
 import sys
 
-CEILING = 7.0   # raised from 4.0 by the operator (AUTHORIZATION.txt line 2): retries after a fix
+CEILING = 7.0   # VOID since 2026-10-24 (AUTHORIZATION.txt line 3); kept only as the record of the run-1 ceiling
+VOID = True     # every step refused; no environment variable or argument re-enables it
 SHARE_S = 2350
 MIN_WALL_S = 1300
 EST_SESSION_GH = 1.27
@@ -79,6 +85,9 @@ def session_ok(root, s):
 
 def main():
     root, step = sys.argv[1], sys.argv[2]
+    if VOID:
+        print("REFUSE run-1 GPU ceiling VOID (AUTHORIZATION.txt 2026-10-24): no P4 GPU step is authorized by this gate; "
+              "Stage 0 needs its own approval (runner/stage0/run_stage0.sh with APPROVED_GPU_H)"); return 0
     if step not in ("precheck", "g4", *ORDER):
         print("REFUSE unknown step"); return 0
     used, attempts = ledger(root)

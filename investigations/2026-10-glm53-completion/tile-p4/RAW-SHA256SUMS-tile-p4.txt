@@ -5,6 +5,7 @@ e8b9ab51c7483da66a028c4ee8f3dbe695afb85f99cb1ca724e86af054fc6d8c  ./PROGRESS-REP
 faf669efff88f614cbf48ce1251cf41e8c1cefbbc1bf3252929137e589930fbc  ./REDESIGN-NOTES.md   (local only: future design notes)
 28acd12370d89980dad089c7fc37427455645ad74399b02503a4df3e5fec2695  ./RESULT.md.pre22aw   (superseded local copies (before 22aw corrections))
 856899e095ac483ccebc615f5c400b7cb4d6f5c16c75c4727a0866deddaa6d21  ./precheck/__pycache__/precheck_graph.cpython-312.pyc   (bytecode)
+17e2f97132a6399c28ff25b3346c66a5ed79f678c0390fe6e71f99daff7c770a  ./runner/stage0/__pycache__/budget_stage0.cpython-312.pyc   (bytecode)
 4d16c1218dabbf4e28e666eb0a6ad5a9dc73ce25765063fa3976fc075860ce0d  ./runs/g4-compile-cache/06/06435a8f112090b41a8fa80077fc9fb9a922f1e01f6bb5ac1b6cfc5d421ab8d0.o   (binary)
 7ec885d529af7d3b443adbdab2f56ae6f1ee41e2aea9b167d740a07cefa0aa2d  ./runs/g4-compile-cache/0b/0b07b76738713388aa97dc0b759ae575432f11eb5af5d2c89b47c571b2ca5d8f.o   (binary)
 846513874158a99565074096048733db31cd54ef7cc38da4d5dde30acb811903  ./runs/g4-compile-cache/0c/0c1471b257335d27c30cd60e3f23542ebaf662d92fe2f62dfa890afa06864eea.o   (binary)
@@ -114,4 +115,4 @@ d085cb0c7745a82dea2cb9fbc6e2d3daa6ffd1350970d6fa7b7ba25376dd3d8e  ./runs/g4-comp
 d58ed01fbd9dec754f633a17fa576d8f40a08bbb3c5200a6587c3c9bdb7c2c56  ./runs/g4-compile-cache/fc/fc67991fdef97f386f59d636c3b1822cd8b7b25603aa9a307f9aa8c20355141b.o   (binary)
 28f32112a4bcc8471b2ddcb57466c50e43d8398949245e01ffb7856a0f115d0b  ./runs/g4-compile-cache/fd/fdd0c405993a35dde1abb5cf7a663bcf0b0954a0472da7f53759098c9aab2817.o   (binary)
 18d9832de11998230a7465a331ce0d37a2e5a1fb13d06455073bb1069d0e8585  ./tests/__pycache__/test_gates.cpython-312.pyc   (bytecode)
-# 2931 files, 5671.7 MB, not published or hashed here: B12x compile caches (regenerated on first run) and, for captured-p3b, PRIVATE-capture/ (captured tensors derived from benchmark prompts; local only; per-file sha256 in runs/capture-attempt-*/caplog entry records)
+# 4911 files, 6432.8 MB, not published or hashed here: B12x compile caches (regenerated on first run) and, for captured-p3b, PRIVATE-capture/ (captured tensors derived from benchmark prompts; local only; per-file sha256 in runs/capture-attempt-*/caplog entry records)

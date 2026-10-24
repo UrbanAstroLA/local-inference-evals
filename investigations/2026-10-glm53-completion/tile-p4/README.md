@@ -1,10 +1,116 @@
 # tile-p4: two-rank MoE tile intervention and its propagation to the target distribution
 
-**State.** Built, CPU-tested and run once (2026-10-24; 2.53 GPU-hours with the single-GPU checks). **Run 1 is INCOMPLETE**:
+**State.** Built, CPU-tested and run once (2026-10-24; 2.53 GPU-hours with the single-GPU checks). **Run 1 is INCOMPLETE**
+(re-analysed with the corrected rules: still INCOMPLETE). **The 7.0 ceiling is VOID; see the 2026-10-24 update below
+(analysis fixes, Stage-0 package, new approval needed).** Run 1:
 see `RESULT.md` and `CRITIQUE-run1.md`. This page describes the package as built, before the run. Design: `PROTOCOL.md`. Authorization:
 `AUTHORIZATION.txt` (4.0 occupied GPU-hours in total, retries and single-GPU checks included). Changes forced by the
 records and the engine: `PROPOSAL-AMENDMENTS.md`. The session runner will not start until the operator acknowledges
 that file. CPU test results: `tests/RESULTS.txt`.
+
+## Update 2026-10-24: analysis fixes and the Stage-0 package (CPU only; nothing has run on a GPU since run 1)
+
+**State:**
+- **Run 1 remains INCOMPLETE.**
+- **The 7.0 GPU-h ceiling is VOID** (`AUTHORIZATION.txt`, last line). No P4 GPU step is authorized.
+- The run-1 runner (`runner/run_p4.sh`), its pre-check and its G4 now refuse every step (`runner/budget_p4.py`, `VOID = True`).
+- Stage 0 needs a new explicit approval: **APPROVED_GPU_H ≥ 1.34**.
+  - That covers the caps: Stage-0 session 1.25 GPU-h, pre-check 0.083.
+  - Expected use is 0.92-1.13 GPU-h. See `STAGE0-PROTOCOL.md` section 7.
+
+Governing requirements: `../HANDOFF-NEXT/ASSESSOR-DISPOSITION-22AV-2026-10-24.md`, sections 2, 4, 5 and 6.
+
+Copies of every file changed by this update are in `build/stage0-prev/`. The previous hash list is `SHA256SUMS.pre-stage0`.
+
+### A. Analysis and recording fixes (assessor section 2)
+
+1. **Immutable request identity (local-p4 schema 2).**
+   - What `on_add` does:
+     - gives every keyed request a monotonic uid (never reused) and a tag hash;
+     - logs them once (public `req` record);
+     - writes them to device tables at add time.
+   - `on_step` gathers them into every step-ring row (eager), so attribution is captured **at record time**. Removal resets the tables.
+   - Graph-safe: no in-graph op was added for identity, and there is no host sync in capture.
+   - The analysis labels compositions only through uid → tag, and checks every tag-keyed forcewin row-0 measurement against the ring (attribution check).
+   - **Run-1 path:** schema-1 rings are ignored. Compositions are rebuilt from the per-request, tag-keyed forcewin records (per-position step, row, n_rows, accepted), and host step facts are joined by those step ids. The reading is INCOMPLETE by rule.
+2. **`decide()`** (`analysis/analyze_p4.py`) applies rules 1-6 in order:
+   1. gates or session missing → INCOMPLETE;
+   2. any failed forcing, attribution or measurement check (records missing on either rank, a store missing, not measured once, rank disagreement, invariants, forcewin errors, acceptance, returned ids) → INCOMPLETE;
+   3. run-1 records → INCOMPLETE;
+   4. coverage below 50 % of planned positions for AB_1, AB_2, AA, AA2_1, AA2_2 or the joint e1_moe23 / e3_lp_forced families → INCOMPLETE;
+   5. A not bit-stable on ≥ 50 % of compared positions → INCOMPLETE;
+   6. only then an effect reading.
+   - A negative reading exists only at rule 6.
+   - The `ab > null` threshold-exceedance fallback is removed as an effect criterion. It remains a table labelled DESCRIPTIVE ONLY.
+3. **Tests:** `tests/make_fake_sessions.py` and `check_analysis.py`, 15 scenarios. **46/46 PASS.**
+   - Each of these reads INCOMPLETE and never a negative finding: zero coverage, partial coverage (104 of 2,048 positions), reused indices without uids (schema 1), run-1-style records, a missing store, a missing rank-1 record, a bad forced request, gate failure, and A not bit-stable.
+   - Reused indices WITH uids read correctly.
+   - Full-coverage null data is the only scenario that gives the negative reading.
+4. **Run 1 re-analysed:** `analysis/out-run1-corrected/` (aggregates only; `OUT_DIR=analysis/out-run1-corrected analysis/run_analysis.sh`).
+   - **Reading: INCOMPLETE; descriptive only.**
+   - Even with the corrected, tag-keyed composition key, only 35-80 of 24,576 positions per pair have matching step keys, and the joint families have 0. The step compositions genuinely differ between repeats.
+   - All measurement checks pass: 96/96 forced ids per session, 13,140 acceptance checks with 0 deviations, 0 rank mismatches.
+
+**Corrected wording of the run-1 description** (assessor section 3; replaces the corresponding sentences of `CRITIQUE-run1.md` and `RESULT.md`, which stay unchanged as records):
+
+> Repeated executions under this harness produced different outputs at identical forced token histories. Their
+> execution schedules differed; the contributions of cached state, remainder prefill, current-batch arithmetic, D2
+> and instrumentation have not been isolated.
+
+- **Host step facts** match on 21,906 of 24,576 positions (89.1 %) for A repeat 1 vs repeat 2 (`diagnostics/diag.out`).
+- **Within that subset,** the median |Δ ln P(`</think>`)| is 0.168 for A1-A2 and 0.184 for A1-B1. The two distributions look similar descriptively. That does not establish equivalence and does not exclude a systematic tile effect.
+- **Withdrawn:**
+  - the "2-3 orders of magnitude" comparison (it compared different measurements);
+  - "scheduling and packing alone".
+- **Position-0 disagreement** does not prove that the incoming state differed: the position-0 computations ran in different mixed batches.
+- **The logprob is pre-nucleus.** Terminal-token eligibility and the post-filter probability need assessing before it is read as a change in the immediate chance of termination.
+- **The run-1 client:**
+  - released 8 separate HTTP requests from a barrier, which does not fix their arrival order;
+  - warmed replies concurrently, under one salt, with repeat 2 reusing repeat 1's cache;
+  - used different seeds per repeat;
+  - joined all threads between passes.
+- **Cache contamination** is a candidate to inspect, not a finding.
+
+### B. Stage-0 package (assessor section 5; `STAGE0-PROTOCOL.md`)
+
+| Path | What |
+|---|---|
+| `build/files/vllm/p4_hooks.py` | Schema 2 identity, plus the stage-0 recording (`GLM53_P4_S0=on`): scheduler execution log, per-layer state digests (in-graph, fixed shapes), logits-row staging of eager steps above 64 tokens, window-entry KV-cache digests on both ranks, block provenance. With `GLM53_P4_S0` unset, the run-1 suites pass unchanged |
+| `build/port_forcewin.py` (P14-P16) → `build/files/vllm/forcewin_hooks.py` (fe0a0b17) | Multi-prompt selection by prompt key (`local_fw_multi`); a missing or duplicate key leaves the request unforced |
+| `build/make_build_s0.sh`, `build/stage0/` | Image **`local/glm53-v091-p4-s0:local` = `sha256:7408f893dfe35f1fbd330153e34ea81e83460fe5e2fff200ab87ea992565d3c7`** (`docker build --network none --pull=false` from the stock base). Run-1 gates (a)-(c) pass, plus (b4) stage-0 on with nothing allocated before registration, and (b5) `GLM53_P4_S0` alone is inert |
+| `runner/stage0/` | `run_stage0.sh` (session), `client_stage0.py` (V1 / V2, salts, seeds, warm order), `budget_stage0.py` (APPROVED_GPU_H, `costs-stage0.jsonl`), `outcome_stage0.py`, `cost_stage0.py` / `.json`, `run_precheck_s0.sh`, `images.txt` |
+| `precheck/precheck_s0.py` | Single-GPU pre-check, to be run later by the coordinator: graph capture with the new recording (C1-C4, N1) |
+| `analysis/analyze_stage0.py`, `run_stage0_analysis.sh` | G-enq → G-entry → G-out, stop at the first failure; first-difference descriptors; the assessor's interpretation table |
+| `tests/test_stage0_cpu.py`, `test_precheck_s0_cpu.py`, `make_fake_stage0.py` / `check_stage0.py`, `mock_server_stage0.py` / `test_stage0_runner.sh` | CPU suites (`tests/run_cpu_tests.sh s0 s0image`; results in `tests/RESULTS-stage0.txt`) |
+
+**Launch order** (operator, after a new approval):
+
+```bash
+cd <runs>/tile-p4
+APPROVED_GPU_H=<approved> ATTEMPT_REASON="stage-0 pre-check" runner/stage0/run_precheck_s0.sh
+APPROVED_GPU_H=<approved> ATTEMPT_REASON="stage-0 probe" S0_PROTOCOL_ACK=$(sha256sum STAGE0-PROTOCOL.md | cut -c1-12) \
+  runner/stage0/run_stage0.sh            # analysis runs automatically -> runs-stage0/stage0-attempt-1/stage0-result.md
+```
+
+### Open risks of the Stage-0 package (what the CPU tests cannot cover)
+
+1. **Entry-digest layout on the real engine.**
+   - The code assumes each KV tensor's first dimension is `num_blocks × pages-per-block`, block-major.
+   - This was verified on synthetic caches only. A violating tensor is listed as uncovered at start-up.
+   - G-instr stops the session before traffic only if a rank has no covered tensor at all (cost: the start-up time, about 0.45 GPU-h).
+   - Uncovered groups are listed and narrow G-entry; they do not stop the session.
+2. **GPU memory.**
+   - Added after KV sizing: about 30 MB on rank 0 and about 25 MB on rank 1.
+   - Rank 1 had no P4 buffers in run 1.
+   - Entry digests also use one block-sized temporary per tensor (a few MB).
+3. **Timing.**
+   - The per-layer digests add about 10 small kernels per layer per step inside the graphs.
+   - The entry digests add an estimated 0.1-0.25 s per digest point.
+   - Both are the same in every repeat, but they make Stage 0 a different execution from run 1.
+4. **The multi-prompt path on the real server is exercised only by the mock.**
+   - The real OpenAI server's per-prompt ordering, and the choice index ↔ prompt mapping, are read from the stock source (`serving.py`: request ids `<id>-<i>`, results by index).
+   - A mismatch shows up as failed ids checks (INCOMPLETE), never as a silently wrong window.
+5. **The estimate's digest-time and solitary-decode rates are planning values.** The cap leaves an 11 % margin over the planning case. The client skips trailing replicates when needed, which gives INCOMPLETE for V2.
 
 ## Layout
 | Path | What |

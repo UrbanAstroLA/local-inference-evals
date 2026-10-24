@@ -1,0 +1,5 @@
+budget: approved 1.34 GPU-h (costs-stage0.jsonl); used 0.0039; left 1.3361; stage0 attempt 1: wall cap 2250s x 2 GPUs
+./AUTHORIZATION.txt: FAILED
+sha256sum: WARNING: 1 computed checksum did NOT match
+ABORT: frozen hashes differ (SHA256SUMS)
+runner rc=3

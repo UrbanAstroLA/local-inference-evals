@@ -1,0 +1,1 @@
+stage0 attempt 1: COMPLETE (replicates ['V1-r1', 'V1-r2', 'V2-r1', 'V2-r2']; forced ok 32/32; flushed 32; entry both ranks 32; hook errors 0)

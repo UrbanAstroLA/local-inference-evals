@@ -1,0 +1,11 @@
+ready after 719s
+47:(EngineCore pid=251) INFO 10-24 15:37:57 [core.py:122] Initializing a V1 LLM engine (v0.1.dev20051+g487ecf187) with config: model='/model-repo/snapshots/0490d2f708b12145f6516555ab066aaeb401cd21', speculative_config=SpeculativeConfig(method='dflash', model='/draft-repo/snapshots/bf582e4eacc1810f76
+242:(EngineCore pid=251) INFO 10-24 15:42:16 [kv_cache_utils.py:2299] GPU KV cache size: 4,707,515 tokens, Maximum concurrency for 1,048,576 tokens per request: 4.49x
+400:(Worker_TP0 pid=340) INFO 10-24 15:48:06 [model_runner.py:1044] Graph capturing finished in 153 secs, took 0.61 GiB
+402:(Worker_TP1 pid=374) INFO 10-24 15:48:06 [model_runner.py:1044] Graph capturing finished in 153 secs, took 0.56 GiB
+G-instr: OK p4 init ranks [0, 1] s0 [True, True] issues [] stage_modules 6 digest_layers 45 errors 0; entry coverage per rank (groups covered, groups, tensors covered, uncovered) {0: (10, 10, 91, 0), 1: (10, 10, 88, 0)}
+forcewin: registered records 2 (expected 2), errors 0
+GATES PASS A startup {"G3": true}
+client rc=0
+flushed 32 of 32 completed forced requests (wait 1s)
+GATES PASS A final {"G3": true}

@@ -1,0 +1,13 @@
+budget: approved 1.34 GPU-h (costs-stage0.jsonl); used 0.0000; left 1.3400; precheck attempt 1 wall cap 300s x 1 GPU
+== preflight 2026-10-24T15:36:36Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 20 MiB, 0 %
+1, NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 2026 MiB, 1 %
+GPU0 sample 1: util 0% mem 20 MiB
+PASS C1 capture with every in-graph hook incl. per-layer digests succeeds; flush and digests refused inside  {"error": null, "entry_cov": [true, true, true, true]}
+PASS C2 replays + eager bridge: stores and per-layer digests == inputs; step ring carries uid / tag hash; no p4_error  {"checked": 504, "bad": [], "ring_ok": true, "errors": []}
+PASS C4 entry digests == host recomputation per logical block and null block; block ids recorded; flushed  {"compared": 220, "bad": [], "tensors": ["mla.0", "idx.0", "kda.0#0", "kda.0#1"], "flushed": 8}
+PASS C3 eager 300-token step: stages / stores / layer digests take the 8 logits rows  {"bad": []}
+PASS N1 negative control: a device-to-host copy inside a capture fails it  {"error": "RuntimeError('Cannot copy between CPU and CUDA tensors during CUDA graph capture unless the CPU tensor is pinned. Please use tensor.pin_memory() or allocate the tensor with pin_memory=True.')"}
+VERDICT PASS
+stage-0 precheck verdict PASS

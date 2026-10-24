@@ -1,0 +1,47 @@
+{
+ "results": [
+  {
+   "test": "C1 capture with every in-graph hook incl. per-layer digests succeeds; flush and digests refused inside",
+   "ok": true,
+   "error": null,
+   "entry_cov": [
+    true,
+    true,
+    true,
+    true
+   ]
+  },
+  {
+   "test": "C2 replays + eager bridge: stores and per-layer digests == inputs; step ring carries uid / tag hash; no p4_error",
+   "ok": true,
+   "checked": 504,
+   "bad": [],
+   "ring_ok": true,
+   "errors": []
+  },
+  {
+   "test": "C4 entry digests == host recomputation per logical block and null block; block ids recorded; flushed",
+   "ok": true,
+   "compared": 220,
+   "bad": [],
+   "tensors": [
+    "mla.0",
+    "idx.0",
+    "kda.0#0",
+    "kda.0#1"
+   ],
+   "flushed": 8
+  },
+  {
+   "test": "C3 eager 300-token step: stages / stores / layer digests take the 8 logits rows",
+   "ok": true,
+   "bad": []
+  },
+  {
+   "test": "N1 negative control: a device-to-host copy inside a capture fails it",
+   "ok": true,
+   "error": "RuntimeError('Cannot copy between CPU and CUDA tensors during CUDA graph capture unless the CPU tensor is pinned. Please use tensor.pin_memory() or allocate the tensor with pin_memory=True.')"
+  }
+ ],
+ "verdict": "PASS"
+}

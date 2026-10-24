@@ -765,6 +765,14 @@ What was asked, run, found, corrected and withdrawn, in date order.
 - **Owned:** the design assumed the prefill-built window state was reproducible, and the gates did not check it.
 - GPU-hours 2.53 (cumulative 133.30). [Result](investigations/2026-10-glm53-completion/tile-p4/RESULT.md).
 
+**2026-10-24. Stage 0: the window-entry state is not reproducible, starting from the warm-up prefill (amendment 22ax).**
+- **A small probe** (one batch, solitary and fixed-order co-batched constructions) executed identically between
+  repeats.
+- **Two solitary prefills of identical prompt ids left different cached state** (most MLA KV, indexer K-cache and
+  layer-0 KDA blocks). The cause and the size of the differences are not established.
+- **No statement about the tile follows.**
+- GPU-hours 0.717 (cumulative 134.02). [Result](investigations/2026-10-glm53-completion/tile-p4/RESULT-STAGE0.md).
+
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough
   qualification. They also said the D7 path "cannot run" where the basis is a reconstruction. These are reworded in the

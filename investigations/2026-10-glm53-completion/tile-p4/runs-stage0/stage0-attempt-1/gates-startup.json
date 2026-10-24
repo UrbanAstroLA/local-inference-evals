@@ -1,0 +1,29 @@
+{
+ "arm": "A",
+ "stage": "startup",
+ "n_records": 1848,
+ "n_target_keys": 1848,
+ "ranks": [
+  0,
+  1
+ ],
+ "layers": 42,
+ "draft_records": 0,
+ "gates": {
+  "G3": {
+   "ok": true,
+   "p3b_keys": 78,
+   "compared": 78,
+   "mismatches": [],
+   "n_mismatches": 0,
+   "not_comparable": [],
+   "capture_size_keys_missing": [],
+   "stock_rule_violations": [],
+   "n_stock_rule_violations": 0,
+   "coverage_missing": [],
+   "n_coverage_missing": 0,
+   "changed": []
+  }
+ },
+ "ok": true
+}

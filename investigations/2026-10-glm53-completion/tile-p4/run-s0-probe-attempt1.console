@@ -1,0 +1,23 @@
+budget: approved 1.34 GPU-h (costs-stage0.jsonl); used 0.0039; left 1.3361; stage0 attempt 1: wall cap 2250s x 2 GPUs
+== preflight 2026-10-24T15:37:25Z
+index, memory.used [MiB], utilization.gpu [%]
+0, 20 MiB, 0 %
+1, 2024 MiB, 1 %
+utilization sample 1: idle
+== start 2026-10-24T15:37:26Z image=local/glm53-v091-p4-s0:local (sha256:7408f893dfe35f1fbd330153e34ea81e83460fe5e2fff200ab87ea992565d3c7) cap 2250s stage0 attempt 1
+ready after 719s
+G-instr: OK p4 init ranks [0, 1] s0 [True, True] issues [] stage_modules 6 digest_layers 45 errors 0; entry coverage per rank (groups covered, groups, tensors covered, uncovered) {0: (10, 10, 91, 0), 1: (10, 10, 88, 0)}
+forcewin: registered records 2 (expected 2), errors 0
+GATES PASS A startup {"G3": true}
+== client (deadline in 1380s)
+client rc=0
+flushed 32 of 32 completed forced requests (wait 1s)
+== cleanup 2026-10-24T15:58:44Z (stage done)
+stage0 attempt 1 occupied 1284s x 2 GPU = 0.7133 GPU-h (rc 0)
+private files: 218 under <runs>/tile-p4/PRIVATE-runs-stage0/stage0-attempt-1 (mode 0700)
+GATES PASS A final {"G3": true}
+stage0 attempt 1: COMPLETE (replicates ['V1-r1', 'V1-r2', 'V2-r1', 'V2-r2']; forced ok 32/32; flushed 32; entry both ranks 32; hook errors 0)
+STAGE0: Neither reproducible: investigate the first differing input, state or operation (V1 G-entry, V2 G-entry); do not label stock kernels nondeterministic
+  V1: NOT REPRODUCIBLE (first failed: G-entry)
+  V2: NOT REPRODUCIBLE (first failed: G-entry)
+runner rc=0

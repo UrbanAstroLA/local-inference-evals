@@ -1,0 +1,1 @@
+stage0 attempt 1 reason: stage-0 probe (arm A, one batch; V1 solitary, V2 fixed-order co-batch); relaunch after the hash gate caught the approval note in AUTHORIZATION.txt; approved 1.34 GPU-h; protocol ack 7dc5836fb44f

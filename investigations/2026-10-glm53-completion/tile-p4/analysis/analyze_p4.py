@@ -19,6 +19,16 @@ padded tokens, draft tokens, prefilling requests, graph mode) and the compositio
 (window, row-0 output index, logits rows, accepted count), with the session label removed (and, for the within-arm
 comparison, the repeat label).  Other positions are excluded and counted by reason.
 
+Request identity (stage-0 package, 2026-10-24; CRITIQUE-run1.md section 1, assessor 22av section 2):
+  schema 2 (local-p4/2): every step-ring row carries the request's uid and tag hash, captured at record time; the
+    composition is labelled through the public uid -> tag records ("req"), never through the flush-time req_idx map.
+    An attribution check requires every forcewin row-0 measurement (tag-keyed) to appear in the step ring with the
+    same uid-labelled window and output index.
+  schema 1 (run 1): the step ring has no identity column, so it is NOT used.  The run-1 path builds each step's
+    composition only from the per-request, tag-keyed forcewin records (their per-position step, row, n_rows and
+    accepted columns) and joins host step facts by those step ids.  The run-1 path never reads an effect: its
+    reading is INCOMPLETE by rule, with descriptive tables.
+
 Endpoints (PROPOSAL.md section 5):
   E1  MoE output after the TP all-reduce, layers 3/23/44, every position: bit-equality and rel L2 (bf16 -> fp32).
   E2  hidden state at layers 12, 34 and the final norm, every 8th position: bit-equality and rel L2.
@@ -33,15 +43,23 @@ Reproducible difference (fixed before data).  For a metric vector v at position 
 columns; E1/E2: the stored row; E4: the logits row):
   A-stable(o)   v_A1 == v_A2 == v_A2_1 == v_A2_2 bitwise (all four measured and key-matched),
   D(o)          A-stable(o) and v_B1 != v_A1 and v_B2 != v_A2  (B differs in both repeats).
-  Fallback when fewer than half the compared positions are A-stable: "beyond" positions,
-  min_r |v_Br - v_Ar| > max(|v_A1 - v_A2|, |v_A1 - v_A2_1|, |v_A2 - v_A2_2|) for scalar metrics, counted for AB and
-  for the null pairing (A2 in B's place, B's repeat spread in A2's), and reported side by side.
-Decision rules (PROPOSAL.md section 6):
-  any gate (G1-G4) failed or a session INCOMPLETE  -> INCOMPLETE; repair; no reading
-  E1 has D positions but E3 has none (and no excess of beyond positions)  -> "No demonstrated propagation on these
-      windows; investigate attenuation before any behavioural run"
-  E3 has D positions (or, in the fallback, more beyond positions than the null pairing)  -> "Computational
-      propagation established; behavioural direction untested"
+  Threshold-exceedance counts (min_r |v_Br - v_Ar| > the A spread, for AB and for a null pairing) are reported as a
+  DESCRIPTIVE table only.  They are not a calibrated distributional test and are never an effect criterion
+  (assessor 22av section 2; run 1's "fallback" rule is withdrawn).
+Decision rules (PROPOSAL.md section 6, as corrected 2026-10-24), applied in this order; the first that applies ends:
+  1. a session missing, a launch gate (G1-G4) failed or a session not COMPLETE      -> INCOMPLETE; no reading
+  2. a forcing, attribution or measurement check failed (records missing on either rank, a position not measured
+     exactly once, rank disagreement, invariant violations, forcewin errors, acceptance off the schedule, a forced
+     request whose returned ids differ from the forced ids)                          -> INCOMPLETE; no reading
+  3. run-1 records (schema 1: no request identity in the step records)               -> INCOMPLETE; descriptive only
+  4. comparison coverage below COVERAGE_MIN of the planned positions for any required pair (AB_1, AB_2, AA,
+     AA2_1, AA2_2) or for the joint families (e1_moe23, e3_lp_forced)                -> INCOMPLETE; no reading
+  5. A not bit-reproducible on at least STABLE_MIN of the compared positions (the bitwise rule is then inapplicable,
+     and no calibrated distributional test is implemented)                           -> INCOMPLETE; no reading
+  6. E3 has D positions -> "Computational propagation established; behavioural direction untested"
+     E1 has D positions but E3 has none -> "No demonstrated propagation on these windows; investigate attenuation"
+     neither -> "No reproducible A-vs-B difference at the compared positions" (a negative reading is allowed ONLY
+     here, i.e. with full checks, schema 2, sufficient coverage and a bit-stable A)
   D positions of E3 on terminal-token log-probabilities in near-close windows are reported as such, still not a
       completion claim.  No threshold dismisses a reproducible small difference; a changed argmax shows
       sensitivity only.
@@ -63,6 +81,10 @@ E3_BOOL = {"argmax": "argmax", "elig_lo_forced": "elig_lo_4", "elig_hi_forced": 
            "elig_lo_think_close": "elig_lo_0", "elig_hi_think_close": "elig_hi_0"}
 TERMINAL = ("lp_think_close", "lp_endoftext", "lp_user", "lp_observation")
 MOE_NAMES = ("moe3", "moe23", "moe44")
+COVERAGE_MIN = 0.5      # compared / planned positions, per required pair and joint family (fixed 2026-10-24)
+STABLE_MIN = 0.5        # A-stable / compared positions (min over E3 families)
+REQUIRED_PAIRS = ("AB_1", "AB_2", "AA", "AA2_1", "AA2_2")
+REQUIRED_JOINT = ("e1_moe23", "e3_lp_forced")
 HID_NAMES = ("hid12", "hid34", "final")
 
 
@@ -103,22 +125,59 @@ class Session:
             for row in r["rows"]:
                 d = dict(zip(cols, row))
                 self.steps[int(d["step"])] = d
+        # schema 2: uid -> tag from the public "req" records (written once, at add time)
+        self.uid_tag = {}
+        for r in jl(os.path.join(rundir, "p4log", "p4_r0_p*.jsonl")) if rundir else []:
+            if r.get("kind") == "req":
+                self.uid_tag[int(r["uid"])] = r["tag"]
+        self.schema = None
         self.comp = {}
+        self.comp_raw = {}            # schema 2: step -> [(full tag, o0, n_rows, acc)] (attribution check)
         for p in sorted(glob.glob(os.path.join(self.priv, "p4", "steprec_*_r0.npz"))):
             z = np.load(p, allow_pickle=False)
-            tags = {int(t.split(":", 1)[0]): t.split(":", 1)[1] for t in z["tags"].tolist()}
+            cols = [str(c) for c in z["cols"].tolist()]
+            sch = 2 if "uid" in cols else 1
+            self.schema = sch if self.schema in (None, sch) else -1       # -1: mixed schemas (refused)
+            if sch != 2:
+                continue        # run 1: the flush-time req_idx -> tag map is NOT used (reused indices)
+            cu = cols.index("uid")
             for rows in z["rows"]:
-                ent = []
+                ent, raw = [], []
                 st = None
                 for row in rows:
                     if int(row[0]) < 0:
                         continue
                     st = int(row[0])
-                    tag = tags.get(int(row[1]))
+                    tag = self.uid_tag.get(int(row[cu])) if int(row[cu]) >= 0 else None
                     ent.append((strip_session(tag) if tag else "unforced", int(row[2]) if tag else -1,
                                 int(row[3]), int(row[4])))
+                    if tag:
+                        raw.append((tag, int(row[2]), int(row[3]), int(row[4])))
                 if st is not None:
                     self.comp[st] = tuple(sorted(ent))
+                    self.comp_raw[st] = raw
+        self.run1 = self.schema != 2
+
+    def build_fw_comp(self, windows):
+        """Run-1 path: each step's composition of forced requests from the tag-keyed forcewin records only (row-0
+        measurement of every forced request in the step: window, output index, logits rows, accepted)."""
+        comp = {}
+        for wid in windows:
+            for rep_ in (1, 2):
+                fw = self.fw(wid, rep_)
+                if fw is None:
+                    continue
+                c = {n: i for i, n in enumerate(fw["cols"])}
+                m = fw["m"][:W]
+                for o in range(W):
+                    if fw["nmeas"][o] != 1 or m[o, c["row"]] != 0:
+                        continue
+                    st = m[o, c["step"]]
+                    if st != st:
+                        continue
+                    comp.setdefault(int(st), []).append((strip_session(self.tag(wid, rep_)), o, int(m[o, c["n_rows"]]),
+                                                         int(m[o, c["accepted"]])))
+        self.comp = {k: tuple(sorted(v)) for k, v in comp.items()}
 
     def tag(self, wid, rep):
         return f"{self.label}-{wid}-r{rep}"
@@ -276,6 +335,9 @@ def analyze(root, sess, g4_verdict):
             if w not in order:
                 order.append(w)
     windows = order
+    for s in (A, B, A2):
+        if s.run1:
+            s.build_fw_comp(windows)
     pairs = {"AB_1": (A, 1, B, 1, False), "AB_2": (A, 2, B, 2, False), "AA": (A, 1, A, 2, True),
              "BB": (B, 1, B, 2, True), "A2A2": (A2, 1, A2, 2, True), "AA2_1": (A, 1, A2, 1, False),
              "AA2_2": (A, 2, A2, 2, False)}
@@ -289,7 +351,9 @@ def analyze(root, sess, g4_verdict):
     beyond = {n: dict(ab=0, null=0, n=0) for n in E3_COLS}
     validity = dict(windows=len(windows), per_session={})
     for s in (A, B, A2):
-        validity["per_session"][s.label] = dict(records=0, nmeas_bad=0, rank_mismatch=0, inv_bad=0, fw_errors=0)
+        validity["per_session"][s.label] = dict(records=0, records_missing=0, rank1_missing=0, p4_missing=0,
+                                                nmeas_bad=0, rank_mismatch=0, inv_bad=0, fw_errors=0,
+                                                attribution_checked=0, attribution_mismatch=0, schema=s.schema)
     for wid in windows:
         cls = wid.split("-")[1]
         data = {}
@@ -298,14 +362,29 @@ def analyze(root, sess, g4_verdict):
                 wd = WinData(s, wid, r)
                 data[(s.label, r)] = wd
                 v = validity["per_session"][s.label]
+                if not wd.ok:
+                    v["records_missing"] += 1
                 if wd.ok:
                     v["records"] += 1
                     v["nmeas_bad"] += int((wd.nmeas != 1).sum())
                     v["inv_bad"] += int(wd.fw["inv"][1])
                     v["fw_errors"] = max(v["fw_errors"], int(wd.fw["errors"] or 0))
+                    if wd.p4 is None:
+                        v["p4_missing"] += 1
                     r1 = s.fw(wid, r, rank=1)
+                    if r1 is None:
+                        v["rank1_missing"] += 1
                     if r1 is None or not np.array_equal(np.nan_to_num(r1["m"][:W], nan=9.0), np.nan_to_num(wd.m, nan=9.0)):
                         v["rank_mismatch"] += 1
+                    if not s.run1:          # schema 2: the uid-labelled step ring must agree with the tag-keyed rows
+                        c = wd.c
+                        for o in range(W):
+                            if wd.nmeas[o] != 1 or wd.m[o, c["row"]] != 0 or wd.m[o, c["step"]] != wd.m[o, c["step"]]:
+                                continue
+                            v["attribution_checked"] += 1
+                            raw = s.comp_raw.get(int(wd.m[o, c["step"]]), [])
+                            if not any(t == s.tag(wid, r) and o0 == o for (t, o0, _, _) in raw):
+                                v["attribution_mismatch"] += 1
         for pname, (sx, rx, sy, ry, norep) in pairs.items():
             x, y = data[(sx.label, rx)], data[(sy.label, ry)]
             R = res[pname]
@@ -395,8 +474,18 @@ def analyze(root, sess, g4_verdict):
                 beyond[n]["ab"] += int(ab > spread_a)
                 beyond[n]["null"] += int(null > spread_null)
     # summarize
-    out = dict(windows=len(windows), validity=validity, exclusions=excl, comparisons={}, reproducible={},
-               beyond_fallback=beyond)
+    planned = len(windows) * W
+    coverage = dict(planned_positions=planned, pairs={}, joint={})
+    for p in pairs:
+        nc = res[p]["e3"]["lp_forced"]["n"]
+        coverage["pairs"][p] = dict(compared=nc, fraction=(nc / planned) if planned else 0.0)
+    for k in REQUIRED_JOINT:
+        nc = repro[k]["compared"]
+        coverage["joint"][k] = dict(compared=nc, fraction=(nc / planned) if planned else 0.0)
+    out = dict(windows=len(windows), planned_positions=planned, coverage=coverage, validity=validity,
+               exclusions=excl, comparisons={}, reproducible={},
+               threshold_exceedance_DESCRIPTIVE_ONLY=beyond, run1_path=any(s.run1 for s in (A, B, A2)),
+               schemas={s.label: s.schema for s in (A, B, A2)})
     for p, R in res.items():
         out["comparisons"][p] = dict(
             e1={n: dict(n=v["n"], bitequal_frac=(v["bitequal"] / v["n"]) if v["n"] else None, rel_l2=quant(v["rel"]))
@@ -456,18 +545,68 @@ def acceptance_check(sess, windows, sched):
     return out
 
 
-def decide(out, outcomes, g4_ok):
-    gates = all(o.get("gates_ok") for o in outcomes.values()) and g4_ok
+def client_checks(sess, windows):
+    """Forced requests per session whose returned ids equal the forced ids (client.jsonl 'ok')."""
+    out = {}
+    for lab, s in sess.items():
+        f = [d for d in s.client if d.get("kind") == "forced"]
+        ok = {(d.get("window"), d.get("rep")) for d in f if d.get("ok")}
+        out[lab] = dict(planned=2 * len(windows), forced_records=len(f),
+                        ok=sum(1 for w in windows for r in (1, 2) if (w, r) in ok))
+    return out
+
+
+def failed_checks(out, acceptance, clients):
+    """Rule 2: forcing, attribution and measurement checks.  Returns a list of failures (empty = all pass)."""
+    bad = []
+    for lab, v in out["validity"]["per_session"].items():
+        for k in ("records_missing", "rank1_missing", "p4_missing", "nmeas_bad", "rank_mismatch", "inv_bad",
+                  "fw_errors", "attribution_mismatch"):
+            if v.get(k):
+                bad.append(f"{lab}:{k}={v[k]}")
+        if v.get("schema") == -1:
+            bad.append(f"{lab}:mixed step-record schemas")
+    for lab, a in acceptance.items():
+        if a["not_as_scheduled"] or not a["steps_checked"]:
+            bad.append(f"{lab}:acceptance not_as_scheduled={a['not_as_scheduled']} checked={a['steps_checked']}")
+    for lab, c in clients.items():
+        if c["ok"] != c["planned"]:
+            bad.append(f"{lab}:forced ids ok {c['ok']}/{c['planned']}")
+    return bad
+
+
+def decide(out, outcomes, g4_ok, acceptance=None, clients=None):
+    """Decision rules 1-6 (module docstring), in order.  Every path that is not rule 6 reads INCOMPLETE."""
+    gates = all(o.get("gates_ok") for o in outcomes.values()) and g4_ok \
+        and all(o.get("verdict", "COMPLETE") == "COMPLETE" for o in outcomes.values())
     if not gates:
-        return "INCOMPLETE; repair; no reading (a launch-verification gate G1-G4 failed or a session is missing)"
+        return "INCOMPLETE; repair; no reading (a launch-verification gate G1-G4 failed, a session is missing or not COMPLETE)"
+    bad = failed_checks(out, acceptance or {}, clients or {})
+    if bad:
+        return "INCOMPLETE; no reading (failed forcing / attribution / measurement checks: %s)" % ", ".join(bad[:12])
+    if out.get("run1_path"):
+        return ("INCOMPLETE; descriptive only (run-1 records: the step records carry no request identity captured at "
+                "record time; compositions were rebuilt from tag-keyed forcewin records; the run-1 path never reads an "
+                "effect)")
+    cov = out["coverage"]
+    low = [f"{p} {cov['pairs'][p]['compared']}/{cov['planned_positions']}" for p in REQUIRED_PAIRS
+           if cov["pairs"][p]["fraction"] < COVERAGE_MIN]
+    low += [f"joint {k} {cov['joint'][k]['compared']}/{cov['planned_positions']}" for k in REQUIRED_JOINT
+            if cov["joint"][k]["fraction"] < COVERAGE_MIN]
+    if low:
+        return ("INCOMPLETE; no reading (insufficient comparison coverage, minimum %.0f%% of planned positions: %s)"
+                % (100 * COVERAGE_MIN, "; ".join(low)))
     r = out["reproducible"]
+    fams = [v for k, v in r.items() if k.startswith("e3_")]
+    stable_frac = min((v["a_stable"] / v["compared"]) if v["compared"] else 0.0 for v in fams)
+    if stable_frac < STABLE_MIN:
+        return ("INCOMPLETE; no reading (A is bit-stable on only %.2f%% of compared positions: the bitwise rule is "
+                "inapplicable and no calibrated distributional test is implemented; threshold-exceedance counts are "
+                "descriptive only)" % (100 * stable_frac))
     e1_D = sum(r["e1_" + n]["D"] for n in MOE_NAMES)
     e3_D = sum(v["D"] for k, v in r.items() if k.startswith("e3_"))
-    stable_frac = min((v["a_stable"] / v["compared"]) if v["compared"] else 0.0 for k, v in r.items() if k.startswith("e3_"))
-    fallback = stable_frac < 0.5
-    e3_beyond = any(v["ab"] > v["null"] for v in out["beyond_fallback"].values())
     lines = []
-    if (not fallback and e3_D > 0) or (fallback and e3_beyond):
+    if e3_D > 0:
         lines.append("E3 differs reproducibly (A != B where A = A, same positions, both repeats): computational "
                      "propagation established; behavioural direction untested")
         term = {k: v for k, v in r.items() if k[3:] in TERMINAL and v["D_by_class"].get("close")}
@@ -480,16 +619,27 @@ def decide(out, outcomes, g4_ok):
         lines.append("E1 differs but E3 shows no A-vs-B difference beyond A-vs-A: no demonstrated propagation on "
                      "these windows; investigate attenuation before any behavioural run")
     else:
-        lines.append("Neither E1 nor E3 shows a reproducible A-vs-B difference on these windows (the tile "
-                     "intervention did not change the measured outputs; check G1 before reading further)")
-    if fallback:
-        lines.append(f"(fallback rule used: A is bit-stable on only {stable_frac:.2%} of compared positions)")
+        lines.append("No reproducible A-vs-B difference at the compared positions (joint e3 coverage %.0f%%, A-stable "
+                     "%.0f%%): neither E1 nor E3 differs reproducibly on these windows" % (
+                         100 * out["coverage"]["joint"]["e3_lp_forced"]["fraction"], 100 * stable_frac))
     return " | ".join(lines)
 
 
 def to_md(doc):
     L = ["# P4 result (generated by analysis/analyze_p4.py; aggregates only)", "",
-         f"**Reading:** {doc['reading']}", "", "## Sessions", ""]
+         f"**Reading:** {doc['reading']}", ""]
+    res = doc.get("result") or {}
+    if res.get("coverage"):
+        cv = res["coverage"]
+        L2 = ["## Coverage (compared / planned positions; minimum %.0f%% for a reading)" % (100 * COVERAGE_MIN), "",
+              "| comparison | compared | planned | fraction |", "|---|---:|---:|---:|"]
+        for p, v in cv["pairs"].items():
+            L2.append(f"| pair {p} (E3) | {v['compared']} | {cv['planned_positions']} | {v['fraction']:.4f} |")
+        for p, v in cv["joint"].items():
+            L2.append(f"| joint {p} | {v['compared']} | {cv['planned_positions']} | {v['fraction']:.4f} |")
+        L2 += ["", f"Step-record schemas: {res.get('schemas')}; run-1 path: {res.get('run1_path')}", ""]
+        L = L + L2
+    L += ["## Sessions", ""]
     for k, v in doc["sessions"].items():
         L.append(f"- {k}: {v.get('rundir')} — {v.get('verdict')} (gates_ok {v.get('gates_ok')}, batches {v.get('batches_done')})")
     L += ["", f"G4: {doc.get('g4')}", "", "## Reproducible differences (A-stable positions where B differs in both repeats)", "",
@@ -519,9 +669,12 @@ def to_md(doc):
         g = lambda d, k: (d or {}).get(k, "")  # noqa: E731
         L.append(f"| {p} | {e['n']} | {g(e['kl_ab'], 'q50')} | {g(e['kl_ab'], 'q90')} | {g(e['tv'], 'q50')} | "
                  f"{g(e['tv'], 'q90')} | {g(e['restricted_top20_tv_DIAGNOSTIC_ONLY'], 'q50')} |")
+    L += ["", "## Threshold-exceedance counts (DESCRIPTIVE ONLY; not a calibrated test, never an effect criterion)", "",
+          "```", json.dumps(doc["result"].get("threshold_exceedance_DESCRIPTIVE_ONLY"), indent=1), "```"]
     L += ["", "## Exclusions (positions)", "", "```", json.dumps(doc["result"]["exclusions"], indent=1), "```",
           "", "## E5", "", "```", json.dumps(doc["e5"], indent=1), json.dumps(doc["acceptance"], indent=1), "```",
-          "", "## Validity", "", "```", json.dumps(doc["result"]["validity"], indent=1), "```"]
+          "", "## Validity", "", "```", json.dumps(doc["result"]["validity"], indent=1),
+          json.dumps(doc.get("clients"), indent=1), "```"]
     return "\n".join(L) + "\n"
 
 
@@ -554,10 +707,12 @@ def main():
         if d.get("kind") == "batch":
             windows += [w for w in d["windows"] if w not in windows]
     doc = dict(result=res, e5=e5(sess, sched), acceptance=acceptance_check(sess, windows, sched), g4=g4.get("G4"),
+               clients=client_checks(sess, windows),
                sessions={k: dict(rundir=os.path.relpath(v, a.root), verdict=sess[k].outcome.get("verdict"),
                                  gates_ok=sess[k].outcome.get("gates_ok"), batches_done=sess[k].outcome.get("batches_done"))
                          for k, v in dirs.items()})
-    doc["reading"] = decide(res, {k: s.outcome for k, s in sess.items()}, g4.get("G4") == "PASS")
+    doc["reading"] = decide(res, {k: s.outcome for k, s in sess.items()}, g4.get("G4") == "PASS",
+                            doc["acceptance"], doc["clients"])
     json.dump(doc, open(os.path.join(a.out, "result.json"), "w"), indent=1, default=str)
     open(os.path.join(a.out, "result.md"), "w").write(to_md(doc))
     print("READING:", doc["reading"])

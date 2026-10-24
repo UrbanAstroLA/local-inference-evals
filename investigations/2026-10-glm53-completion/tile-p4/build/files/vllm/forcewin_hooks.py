@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: Apache-2.0
 """[local-p4 PORT to stock 0.9.1 for tile-p4/: B1-only D2 injection, shadow ledger and snapshots are disabled
 (their call sites and B1 tail-ring assumptions do not exist on stock); adds the "list" draft mode (a fixed
-per-step accepted-count list, key local_fw_sched) and guarded calls into vllm.p4_hooks.  See
-tile-p4/build/port_forcewin.py and forcewin-port.diff.]
+per-step accepted-count list, key local_fw_sched), the stage-0 multi-prompt selection (key
+local_fw_multi) and guarded calls into vllm.p4_hooks.  See tile-p4/build/port_forcewin.py and
+forcewin-port.diff.]
 
 local-forcewin: forced-history decode window, per-position termination metrics, draft-schedule control,
 decode-window-only D2 fault injection and window-exposure counters for B1 (GLM-5.3-Flash, vLLM Model Runner V2).
@@ -253,6 +254,23 @@ def draft_rows(mode, arg, forced, forced_len, n_out, K, step_ctr, vocab, sched_t
     return torch.where(d[None, :] < n_good[:, None], good, bad)
 
 
+def multi_key(prompt_ids):  # local-p4
+    """Stage-0 multi-prompt key of a prompt: its length, first 8 and last 8 token ids."""  # local-p4
+    p = [int(x) for x in prompt_ids]  # local-p4
+    return "%d:%s:%s" % (len(p), ",".join(map(str, p[:8])), ",".join(map(str, p[-8:])))  # local-p4
+
+
+def multi_pick(spec, prompt_ids):  # local-p4
+    """local_fw_multi (a JSON string): {"entries": [{"key": multi_key(prompt), "F": [...], "tag": str}, ...]}.
+    Returns (F, tag) of the single entry whose key matches this prompt; otherwise ValueError."""  # local-p4
+    d = json.loads(spec) if isinstance(spec, str) else spec  # local-p4
+    k = multi_key(prompt_ids)  # local-p4
+    hit = [e for e in d.get("entries", []) if e.get("key") == k]  # local-p4
+    if len(hit) != 1:  # local-p4
+        raise ValueError("local_fw_multi: %d entries match prompt key %s" % (len(hit), k[:48]))  # local-p4
+    return [int(x) for x in hit[0]["F"]], str(hit[0]["tag"])  # local-p4
+
+
 def d2_mapping(generic, circular, qsl, positions, n_tok, n_reqs, inj_row, lo_row, hi_row):
     """Decode-window-only D2: per token, the OLD tail mapping (generic per-group slot kernel output; for
     pos >= 8 it collapses onto null tail block 0) where the token's request is injected and its position lies in
@@ -490,6 +508,9 @@ def add_request(runner, req_id, req_idx, prompt_len, new_req_data):
         sp = new_req_data.sampling_params
         F = _xarg(sp, "forcewin_hooks")
         ref = _xarg(sp, "local_fw_ref")
+        mtag = None  # local-p4
+        if F is None and _xarg(sp, "local_fw_multi") is not None:  # local-p4: stage-0 multi-prompt request
+            F, mtag = multi_pick(_xarg(sp, "local_fw_multi"), new_req_data.prompt_token_ids)  # local-p4
         if F is None and ref is None:
             S.isf[req_idx] = False
             S.d2on[req_idx] = False
@@ -499,6 +520,8 @@ def add_request(runner, req_id, req_idx, prompt_len, new_req_data):
         r.req_id, r.idx, r.P = req_id, int(req_idx), int(prompt_len)
         r.F = [int(x) for x in (F or [])][: WMAX + 1]
         r.tag = str(_xarg(sp, "local_fw_tag", ""))
+        if mtag is not None:  # local-p4
+            r.tag = mtag  # local-p4
         dm = str(_xarg(sp, "local_fw_draft", "natural"))
         name, _, arg = dm.partition(":")
         r.mode, r.marg = DRAFT_MODES.get(name, 0), int(arg or 0)

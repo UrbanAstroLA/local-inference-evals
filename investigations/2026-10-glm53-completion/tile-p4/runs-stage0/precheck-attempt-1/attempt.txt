@@ -1,0 +1,1 @@
+stage-0 precheck attempt 1; reason: stage-0 pre-check (single GPU, graph capture with schema-2 recording and stage-0 digests); approved 1.34 GPU-h

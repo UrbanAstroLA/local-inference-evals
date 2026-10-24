@@ -94,6 +94,13 @@ difference. Quantization is held fixed.
     positions, and the decision step turned missing evidence into a negative reading. (Wording corrected in 22aw.)
   - The run is reported as INCOMPLETE, with a [critique](tile-p4/CRITIQUE-run1.md). No statement about the tile's effect
     on the target distribution follows.
+- **Stage 0 determinism probe (22ax; [`tile-p4/RESULT-STAGE0.md`](tile-p4/RESULT-STAGE0.md)).**
+  - Arm A only, one batch of 8 windows, two constructions (solitary and fixed-order co-batched), each repeated with
+    independently warmed prefixes, the same prompt ids, seed and acceptance list.
+  - The recorded scheduler execution was identical between repeats.
+  - The window-entry state was not: two solitary warm-up prefills of identical prompt ids already left different
+    cached state (most MLA KV, indexer K-cache and layer-0 KDA blocks), while the indexer tail cache matched.
+  - The cause and the size of the differences are not established. No statement about the tile follows.
 - **Upstream.** The verified corrections were submitted on 2026-10-22, each with a reproduction and its verification:
   - tpurtell's engine: [#7](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/7) (D2),
     [#8](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/8) (D1),

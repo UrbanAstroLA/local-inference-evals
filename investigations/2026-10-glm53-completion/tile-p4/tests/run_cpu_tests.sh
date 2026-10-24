@@ -2,8 +2,8 @@
 # P4 CPU tests.  Every engine-side test runs in a CPU container: docker run --rm --network none, no --gpus,
 # CUDA_VISIBLE_DEVICES=, TRITON_INTERPRET=1, read-only mounts except tests/out.  Variant "hooked" = the stock image
 # with build/files installed over its (ephemeral) site-packages; "image" = the built P4 image as is.  No `set -e`.
-#   run_cpu_tests.sh [suite ...]   suites: gen units list modes forcing inert gates runner analysis image (default: all
-#                                  but image)
+#   run_cpu_tests.sh [suite ...]   suites: gen units list modes forcing inert gates runner analysis image s0 s0image
+#                                  (default: all but image, s0image).  OUT_OVERRIDE=<dir> writes logs elsewhere.
 T=$(cd "$(dirname "$0")" && pwd)
 ROOT=$(cd "$T/.." && pwd)
 INV=<runs>
@@ -24,6 +24,7 @@ run() {  # name variant env... -- dir script args
   grep -E "^FAIL|Traceback|Error:" "$OUT/$NAME.log" | grep -v Warning | head -n 8
 }
 P4ENV=(FORCEWIN=on GLM53_P4=on GLM53_P4_DIR=/tmp/p4test FORCEWIN_DIR=/tmp/p4test/fw FW_THREADS=4)
+S0ENV=(GLM53_P4_S0=on P4_PRECHECK_DEV=cpu)
 [ "$#" -eq 0 ] && set -- gen units precheck list modes forcing inert gates runner analysis
 for S in "$@"; do
   case $S in
@@ -53,6 +54,31 @@ for S in "$@"; do
                 > "$OUT/analysis.log" 2>&1
               echo "== analysis: rc=$?; $(grep -c '^PASS' "$OUT/analysis.log") PASS, $(grep -c '^FAIL' "$OUT/analysis.log") FAIL"
               grep -E "^FAIL|Traceback" "$OUT/analysis.log" | head ;;
+    s0)       # stage-0 recording and request identity (GLM53_P4_S0=on), the stage-0 pre-check dry run, stage-0 gates,
+              # stage-0 runner (mock); IMG_S0 selects the image for "s0image"
+              run s0_units hooked "${P4ENV[@]}" "${S0ENV[@]}" -- t test_stage0_cpu.py units
+              run s0_engine hooked "${P4ENV[@]}" "${S0ENV[@]}" -- t test_stage0_cpu.py engine
+              run s0_big hooked "${P4ENV[@]}" "${S0ENV[@]}" -- t test_stage0_cpu.py big
+              run s0_precheck_dry hooked GLM53_P4=on "${S0ENV[@]}" GLM53_P4_DIR=/tmp/p4pre0-cpu -- t test_precheck_s0_cpu.py
+              docker run --rm --pull=never --network none -e CUDA_VISIBLE_DEVICES= --user "$(id -u):$(id -g)" -e HOME=/tmp \
+                -v "$ROOT":/p4:ro -v "$OUT":/o --entrypoint sh "$STOCK" -c \
+                "rm -rf /o/s0-fake && python3 /p4/tests/make_fake_stage0.py /o/s0-fake && python3 /p4/tests/check_stage0.py /o/s0-fake" \
+                > "$OUT/s0_analysis.log" 2>&1
+              echo "== s0_analysis: rc=$?; $(grep -c '^PASS' "$OUT/s0_analysis.log") PASS, $(grep -c '^FAIL' "$OUT/s0_analysis.log") FAIL"
+              grep -E "^FAIL|Traceback" "$OUT/s0_analysis.log" | head
+              OUT_OVERRIDE="$OUT" bash "$T/test_stage0_runner.sh" > "$OUT/s0_runner.log" 2>&1
+              echo "== s0_runner: rc=$?; $(grep -c '^PASS' "$OUT/s0_runner.log") PASS, $(grep -c '^FAIL' "$OUT/s0_runner.log") FAIL"
+              grep -E "^FAIL" "$OUT/s0_runner.log" | head ;;
+    s0image)  P4IMG=${IMG_S0:-local/glm53-v091-p4-s0:local}
+              run s0img_units image "${P4ENV[@]}" "${S0ENV[@]}" -- t test_stage0_cpu.py units
+              run s0img_engine image "${P4ENV[@]}" "${S0ENV[@]}" -- t test_stage0_cpu.py engine
+              run s0img_big image "${P4ENV[@]}" "${S0ENV[@]}" -- t test_stage0_cpu.py big
+              run s0img_precheck_dry image GLM53_P4=on "${S0ENV[@]}" GLM53_P4_DIR=/tmp/p4pre0-cpu -- t test_precheck_s0_cpu.py
+              run s0img_p4_units image "${P4ENV[@]}" -- t test_p4_cpu.py units
+              run s0img_p4_list image "${P4ENV[@]}" -- t test_p4_cpu.py list
+              run s0img_fw_rest image FORCEWIN=on FW_THREADS=2 -- hv test_forcing.py rest
+              run s0img_inert_off image -- hv test_inert.py image-off
+              python3 "$INV/hook-validation/tests/compare_inert.py" "$OUT" | tee "$OUT/inert-compare.txt" ;;
     image)    run image_units image "${P4ENV[@]}" -- t test_p4_cpu.py units
               run image_precheck_dry image GLM53_P4=on GLM53_P4_DIR=/tmp/p4pre-cpu -- t test_precheck_cpu.py
               run image_list image "${P4ENV[@]}" -- t test_p4_cpu.py list

@@ -1,18 +1,19 @@
 --- hook-validation/hook/forcewin_hooks.py (15e93e23, B1 attempt 2)
 +++ tile-p4/build/files/vllm/forcewin_hooks.py (stock 0.9.1 port)
-@@ -1,5 +1,10 @@
+@@ -1,5 +1,11 @@
  # SPDX-License-Identifier: Apache-2.0
 -"""local-forcewin: forced-history decode window, per-position termination metrics, draft-schedule control,
 +"""[local-p4 PORT to stock 0.9.1 for tile-p4/: B1-only D2 injection, shadow ledger and snapshots are disabled
 +(their call sites and B1 tail-ring assumptions do not exist on stock); adds the "list" draft mode (a fixed
-+per-step accepted-count list, key local_fw_sched) and guarded calls into vllm.p4_hooks.  See
-+tile-p4/build/port_forcewin.py and forcewin-port.diff.]
++per-step accepted-count list, key local_fw_sched), the stage-0 multi-prompt selection (key
++local_fw_multi) and guarded calls into vllm.p4_hooks.  See tile-p4/build/port_forcewin.py and
++forcewin-port.diff.]
 +
 +local-forcewin: forced-history decode window, per-position termination metrics, draft-schedule control,
  decode-window-only D2 fault injection and window-exposure counters for B1 (GLM-5.3-Flash, vLLM Model Runner V2).
  
  PLAN.md amendment 21 sections 1-2, 4, 7 (hook-validation/PLAN-NOTES.md). Installed as ``vllm/forcewin_hooks.py``
-@@ -74,9 +79,18 @@
+@@ -74,9 +80,18 @@
  ON = os.environ.get("FORCEWIN", "").strip().lower() == "on"
  OUT_DIR = os.environ.get("FORCEWIN_DIR", "/tmp/forcewin")
  WMAX = int(os.environ.get("FORCEWIN_WMAX", "8448"))
@@ -34,7 +35,7 @@
  MAX_LAYERS = int(os.environ.get("FORCEWIN_LAYERS", "16"))
  NDESIG = int(os.environ.get("FORCEWIN_NDESIG", "1024"))
  NSEL = int(os.environ.get("FORCEWIN_NSEL", "64"))
-@@ -102,7 +116,7 @@
+@@ -102,7 +117,7 @@
  NX = len(XCOLS)
  # shadow pool classes
  PC_NONE, PC_CLEAN, PC_CORRUPT, PC_RACE, PC_SEED = 0, 1, 2, 3, 4
@@ -43,7 +44,7 @@
  
  
  # =====================================================================================================
-@@ -214,12 +228,13 @@
+@@ -214,12 +229,13 @@
      return torch.cat(parts, dim=1)
  
  
@@ -58,7 +59,7 @@
      """
      R = forced.shape[0]
      dev = forced.device
-@@ -228,6 +243,10 @@
+@@ -228,10 +244,31 @@
      good = forced.gather(1, idx)
      bad = torch.remainder(good + 1, vocab)                     # never equal to the history token
      a_sched = torch.remainder(step_ctr * 1103515245 + arg * 12345 + 7, K + 1)
@@ -69,7 +70,28 @@
      n_good = torch.where(mode == 1, torch.full_like(n_out, K),
               torch.where(mode == 2, torch.zeros_like(n_out),
               torch.where(mode == 3, (arg - 1).clamp(min=0, max=K), a_sched)))
-@@ -412,6 +431,8 @@
+     return torch.where(d[None, :] < n_good[:, None], good, bad)
++
++
++def multi_key(prompt_ids):  # local-p4
++    """Stage-0 multi-prompt key of a prompt: its length, first 8 and last 8 token ids."""  # local-p4
++    p = [int(x) for x in prompt_ids]  # local-p4
++    return "%d:%s:%s" % (len(p), ",".join(map(str, p[:8])), ",".join(map(str, p[-8:])))  # local-p4
++
++
++def multi_pick(spec, prompt_ids):  # local-p4
++    """local_fw_multi (a JSON string): {"entries": [{"key": multi_key(prompt), "F": [...], "tag": str}, ...]}.
++    Returns (F, tag) of the single entry whose key matches this prompt; otherwise ValueError."""  # local-p4
++    d = json.loads(spec) if isinstance(spec, str) else spec  # local-p4
++    k = multi_key(prompt_ids)  # local-p4
++    hit = [e for e in d.get("entries", []) if e.get("key") == k]  # local-p4
++    if len(hit) != 1:  # local-p4
++        raise ValueError("local_fw_multi: %d entries match prompt key %s" % (len(hit), k[:48]))  # local-p4
++    return [int(x) for x in hit[0]["F"]], str(hit[0]["tag"])  # local-p4
+ 
+ 
+ def d2_mapping(generic, circular, qsl, positions, n_tok, n_reqs, inj_row, lo_row, hi_row):
+@@ -412,6 +449,8 @@
      S.mode = torch.zeros(R, dtype=torch.int64, device=dev)
      S.marg = torch.zeros(R, dtype=torch.int64, device=dev)
      S.nstep = torch.zeros(R, dtype=torch.int64, device=dev)      # forced steps per request (sched mode)
@@ -78,7 +100,7 @@
      S.d2on = torch.zeros(R, dtype=torch.bool, device=dev)
      S.d2lo = torch.zeros(R, dtype=torch.int64, device=dev)
      S.d2hi = torch.zeros(R, dtype=torch.int64, device=dev)
-@@ -435,7 +456,10 @@
+@@ -435,7 +474,10 @@
      S.tokreq = torch.full((T + 1,), -1, dtype=torch.int64, device=dev)
      S.sc = None      # per-step scratch
      _log({"kind": "init", "K": S.K, "vocab": S.vocab, "max_reqs": R, "wmax": WMAX, "d2_allowed": D2_ALLOWED,
@@ -90,7 +112,7 @@
  
  
  def register(runner):
-@@ -446,6 +470,8 @@
+@@ -446,6 +488,8 @@
      try:
          _ensure(runner)
          _log({"kind": "registered"})
@@ -99,7 +121,26 @@
      except Exception as exc:  # noqa: BLE001
          _err("register", exc)
  
-@@ -517,6 +543,14 @@
+@@ -464,6 +508,9 @@
+         sp = new_req_data.sampling_params
+         F = _xarg(sp, "forcewin_hooks")
+         ref = _xarg(sp, "local_fw_ref")
++        mtag = None  # local-p4
++        if F is None and _xarg(sp, "local_fw_multi") is not None:  # local-p4: stage-0 multi-prompt request
++            F, mtag = multi_pick(_xarg(sp, "local_fw_multi"), new_req_data.prompt_token_ids)  # local-p4
+         if F is None and ref is None:
+             S.isf[req_idx] = False
+             S.d2on[req_idx] = False
+@@ -473,6 +520,8 @@
+         r.req_id, r.idx, r.P = req_id, int(req_idx), int(prompt_len)
+         r.F = [int(x) for x in (F or [])][: WMAX + 1]
+         r.tag = str(_xarg(sp, "local_fw_tag", ""))
++        if mtag is not None:  # local-p4
++            r.tag = mtag  # local-p4
+         dm = str(_xarg(sp, "local_fw_draft", "natural"))
+         name, _, arg = dm.partition(":")
+         r.mode, r.marg = DRAFT_MODES.get(name, 0), int(arg or 0)
+@@ -517,6 +566,14 @@
          S.isf[i] = n > 0
          S.mode[i] = r.mode
          S.marg[i] = r.marg
@@ -114,7 +155,7 @@
          S.d2on[i] = r.d2 is not None
          if r.d2 is not None:
              S.d2lo[i] = r.P + r.d2[0]
-@@ -567,6 +601,8 @@
+@@ -567,6 +624,8 @@
          torch.save(rec, os.path.join(OUT_DIR, "req_%s_r%d.pt" % (_safe(r.tag or req_id), S.rank)))
          _log({"kind": "done", "req": req_id, "tag": r.tag, "errors": S.errors})
          _flush_steplog()
@@ -123,7 +164,7 @@
      except Exception as exc:  # noqa: BLE001
          _err("remove_request", exc)
  
-@@ -587,6 +623,8 @@
+@@ -587,6 +646,8 @@
          S.step += 1
          S.armed = True
          S.fwd_armed = True
@@ -132,7 +173,7 @@
          S.batch = input_batch
          nr = input_batch.num_reqs
          idx = input_batch.idx_mapping[:nr].to(torch.int64)
-@@ -700,6 +738,8 @@
+@@ -700,6 +761,8 @@
          S.sc = dict(idx=idx, cu=cu, pos=pos, req=req, j=j, o=o, fwin=fwin, ridx=ridx, ft=ft, m=m,
                      p_post=torch.full((L, NT), float("nan"), device=logits.device),
                      post_ok=torch.zeros(L, device=logits.device), L=L, nr=nr)
@@ -141,7 +182,7 @@
      except Exception as exc:  # noqa: BLE001
          S.sc = None
          _err("on_logits", exc)
-@@ -739,6 +779,8 @@
+@@ -739,6 +802,8 @@
      S.buf[tgt_req, tgt_o] = packed
      S.nmeas.index_put_((tgt_req, tgt_o), torch.ones(L, dtype=torch.int32, device=packed.device),
                         accumulate=True)
@@ -150,7 +191,7 @@
  
  
  def override(sampled, num_sampled, input_batch, draft_sampled, pos):
-@@ -767,6 +809,8 @@
+@@ -767,6 +832,8 @@
          S.acc_hist.index_put_((idx, acc.clamp(min=0, max=S.K + 1)), act.to(torch.int64), accumulate=True)
          S.nstep.index_add_(0, idx, act.to(torch.int64))
          sc["acc"], sc["valid"], sc["new_n"], sc["out_idx"] = acc, valid, new_n, out_idx
@@ -159,7 +200,7 @@
          return new_s, new_n
      except Exception as exc:  # noqa: BLE001
          _err("override", exc)
-@@ -790,6 +834,8 @@
+@@ -790,6 +857,8 @@
                                if L == sc["nr"] else torch.zeros_like(sc["idx"]), accumulate=True)
          sc["acc"] = torch.where(fwin[: sc["nr"]], torch.zeros_like(sc["idx"]), torch.full_like(sc["idx"], -1)) \
              if L == sc["nr"] else None
@@ -168,7 +209,7 @@
          return new
      except Exception as exc:  # noqa: BLE001
          _err("override_single", exc)
-@@ -840,7 +886,8 @@
+@@ -840,7 +909,8 @@
          rs = runner.req_states
          nout = rs.total_len.gpu[idx].to(torch.int64) - S.plen[idx]
          cur = rs.draft_tokens[idx]

@@ -1,0 +1,3 @@
+STAGE0: Neither reproducible: investigate the first differing input, state or operation (V1 G-entry, V2 G-entry); do not label stock kernels nondeterministic
+  V1: NOT REPRODUCIBLE (first failed: G-entry)
+  V2: NOT REPRODUCIBLE (first failed: G-entry)

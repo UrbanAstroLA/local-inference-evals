@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-10-24, P4 Stage 0 determinism probe (completion investigation, amendment 22ax)
+
+0.717 GPU-hours (cumulative 134.02).
+
+- **`tile-p4/`:**
+  - `STAGE0-PROTOCOL.md` and `RESULT-STAGE0.md`;
+  - the Stage 0 runner, client, analysis and image build changes, with their CPU tests;
+  - run records (`runs-stage0/`, `costs-stage0.jsonl`);
+  - the difference map (`diagnostics/s0map.*`);
+  - the corrected run-1 analysis (`analysis/out-run1-corrected/`).
+  - Benchmark-derived records and every path containing `PRIVATE` (including test scratch) are withheld.
+- **`PLAN.md`:** amendment 22ax.
+- **Investigation `README.md`:** a Status entry.
+- **`LEDGER.md`**.
+
 ## 2026-10-24, corrections to the P4 run 1 report (completion investigation, amendment 22aw)
 
 No GPU use.

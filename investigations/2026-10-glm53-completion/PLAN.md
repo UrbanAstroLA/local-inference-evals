@@ -3138,3 +3138,40 @@ difference; 0.8031 GPU-hours).**
 - **Corrected in place, marked "22aw":** `tile-p4/RESULT.md`, `tile-p4/CRITIQUE-run1.md`, the investigation README
   Status entry, and LEDGER.
 - No GPU-hours added (cumulative 133.30).
+
+**Amendment 22ax (2026-10-24; P4 Stage 0 determinism probe; 0.717 GPU-hours under a new operator approval of 1.34;
+the earlier 7.0 GPU-hour ceiling was voided).**
+- **Design:** `tile-p4/STAGE0-PROTOCOL.md`, following section 5 of the independent assessment of 22av; written before
+  any Stage 0 GPU step.
+  - Arm A only, one batch of 8 windows.
+  - V1 solitary (one window at a time) and V2 co-batched (one multi-prompt request, fixed enqueue order).
+  - Each replicate warms its prefixes one request at a time under its own cache salt, with the same prompt ids and
+    seed.
+  - The same seed and fixed acceptance list for every forced request.
+  - Recorded per step: scheduler execution and bound launches; at window entry, KV-cache digests per logical block on
+    both ranks; cached-block provenance.
+  - Gates G-enq, G-entry, G-out, stopping at the first failure.
+- **Analysis and recording fixes (CPU), from the same assessment:**
+  - a never-reused request identity in every step record;
+  - insufficient coverage or failed checks yield INCOMPLETE before any effect reading;
+  - the threshold-count fallback is descriptive only.
+  - Run 1 re-analysed: INCOMPLETE.
+- **Run:**
+  - pre-check PASS (0.0039 GPU-h);
+  - the first probe launch was stopped by the frozen-hash gate before any container (the approval note had changed a
+    hashed file);
+  - probe COMPLETE (0.7133 GPU-h): 4 replicates, 32/32 forced requests correct, full KV-digest coverage on both ranks,
+    0 hook errors.
+- **Result:**
+  - G-enq passes for V1 and V2: the recorded execution is identical between repeats.
+  - G-entry fails for both. The first difference is in the cached prefix state built by each replicate's own warm-up
+    prefill, before any forced step:
+    - MLA KV blocks: 1,460 of 1,774 differ;
+    - indexer K-cache blocks: 1,460 of 1,694;
+    - layer-0 KDA state blocks also differ;
+    - indexer tail cache: 0 of 88.
+- **Reading** (the assessment's table): neither construction is reproducible. Investigate the first differing input,
+  state or operation; do not label stock kernels nondeterministic.
+  - Not established: the cause, the size of the differences (digests show equality only), and whether the
+    instrumentation contributes. A source scan found no atomic operations in the FLA/KDA, mamba or GLM-5 model kernels.
+- GPU-hours 0.717 (cumulative 134.02).

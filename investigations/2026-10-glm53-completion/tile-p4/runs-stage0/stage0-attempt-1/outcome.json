@@ -1,0 +1,22 @@
+{
+ "attempt": 1,
+ "verdict": "COMPLETE",
+ "g_instr": true,
+ "g3_startup": true,
+ "g3_final": true,
+ "client_complete": true,
+ "replicates_done": [
+  "V1-r1",
+  "V1-r2",
+  "V2-r1",
+  "V2-r2"
+ ],
+ "forced": 32,
+ "forced_ok": 32,
+ "warm": 12,
+ "warm_ok": 12,
+ "flushed": 32,
+ "entry_flushed_both_ranks": 32,
+ "hook_errors": 0,
+ "skips": []
+}

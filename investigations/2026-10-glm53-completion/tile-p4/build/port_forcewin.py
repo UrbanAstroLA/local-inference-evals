@@ -10,8 +10,8 @@ build/forcewin-port.diff.
 What does NOT change: every function the forcing and the per-position metrics rely on (row_plan, forced_override,
 row_metrics, post_probs, pack_metrics, on_logits, on_processed, override, override_single, _commit_rows,
 after_commit, after_propose, add_request / remove_request bookkeeping) keeps its validated statements; the port
-only adds calls into vllm.p4_hooks (each guarded and exception-isolated), the "list" draft mode, and disables the
-three B1-only features (D2 injection, shadow ledger, snapshots), whose call sites or assumptions do not exist on stock.
+only adds calls into vllm.p4_hooks (each guarded and exception-isolated), the "list" draft mode, the stage-0
+multi-prompt selection (P14-P16, local_fw_multi), and disables the three B1-only features (D2 injection, shadow ledger, snapshots), whose call sites or assumptions do not exist on stock.
 """
 import difflib
 import hashlib
@@ -30,8 +30,9 @@ PORT = [
     ('"""local-forcewin: forced-history decode window',
      '"""[local-p4 PORT to stock 0.9.1 for tile-p4/: B1-only D2 injection, shadow ledger and snapshots are disabled\n'
      '(their call sites and B1 tail-ring assumptions do not exist on stock); adds the "list" draft mode (a fixed\n'
-     'per-step accepted-count list, key local_fw_sched) and guarded calls into vllm.p4_hooks.  See\n'
-     'tile-p4/build/port_forcewin.py and forcewin-port.diff.]\n\n'
+     'per-step accepted-count list, key local_fw_sched), the stage-0 multi-prompt selection (key\n'
+     'local_fw_multi) and guarded calls into vllm.p4_hooks.  See tile-p4/build/port_forcewin.py and\n'
+     'forcewin-port.diff.]\n\n'
      'local-forcewin: forced-history decode window'),
     # P2: B1-only features off whatever the env says (stock has no persistent tail-ring copy to inject into, and the
     #     shadow ledger / KDA snapshots model B1's corrected tail ring and B1's mamba metadata)
@@ -130,6 +131,36 @@ PORT = [
     ('        new = draft_rows(mode, S.marg[idx], S.forced[idx], S.flen[idx], nout, S.K, S.nstep[idx], S.vocab)\n',
      '        new = draft_rows(mode, S.marg[idx], S.forced[idx], S.flen[idx], nout, S.K, S.nstep[idx], S.vocab,\n'
      '                         S.schedtab[idx], S.schedlen[idx])  # local-p4: list mode table\n'),
+    # P14 (stage 0): multi-prompt submission -- one HTTP request carries the 8 windows of a pass; every engine request
+    #      picks its own forced list and tag by its prompt key (length, first 8 and last 8 ids).  No match or more
+    #      than one match raises inside add_request's guard: the request stays unforced and the client's ids check
+    #      fails (never a silently wrong window).
+    ('        F = _xarg(sp, "forcewin_hooks")\n        ref = _xarg(sp, "local_fw_ref")\n',
+     '        F = _xarg(sp, "forcewin_hooks")\n        ref = _xarg(sp, "local_fw_ref")\n'
+     '        mtag = None  # local-p4\n'
+     '        if F is None and _xarg(sp, "local_fw_multi") is not None:  # local-p4: stage-0 multi-prompt request\n'
+     '            F, mtag = multi_pick(_xarg(sp, "local_fw_multi"), new_req_data.prompt_token_ids)  # local-p4\n'),
+    ('        r.tag = str(_xarg(sp, "local_fw_tag", ""))\n',
+     '        r.tag = str(_xarg(sp, "local_fw_tag", ""))\n'
+     '        if mtag is not None:  # local-p4\n'
+     '            r.tag = mtag  # local-p4\n'),
+    ('def d2_mapping(generic, circular,',
+     'def multi_key(prompt_ids):  # local-p4\n'
+     '    """Stage-0 multi-prompt key of a prompt: its length, first 8 and last 8 token ids."""  # local-p4\n'
+     '    p = [int(x) for x in prompt_ids]  # local-p4\n'
+     '    return "%d:%s:%s" % (len(p), ",".join(map(str, p[:8])), ",".join(map(str, p[-8:])))  # local-p4\n'
+     '\n\n'
+     'def multi_pick(spec, prompt_ids):  # local-p4\n'
+     '    """local_fw_multi (a JSON string): {"entries": [{"key": multi_key(prompt), "F": [...], "tag": str}, ...]}.\n'
+     '    Returns (F, tag) of the single entry whose key matches this prompt; otherwise ValueError."""  # local-p4\n'
+     '    d = json.loads(spec) if isinstance(spec, str) else spec  # local-p4\n'
+     '    k = multi_key(prompt_ids)  # local-p4\n'
+     '    hit = [e for e in d.get("entries", []) if e.get("key") == k]  # local-p4\n'
+     '    if len(hit) != 1:  # local-p4\n'
+     '        raise ValueError("local_fw_multi: %d entries match prompt key %s" % (len(hit), k[:48]))  # local-p4\n'
+     '    return [int(x) for x in hit[0]["F"]], str(hit[0]["tag"])  # local-p4\n'
+     '\n\n'
+     'def d2_mapping(generic, circular,'),
 ]
 
 

@@ -1,0 +1,35 @@
+{
+ "batch": 1,
+ "windows": 8,
+ "warm_tokens_per_replicate": 350550,
+ "remainder_tokens_per_replicate": 37211,
+ "replicates": 4,
+ "warm_tokens_session": 1402200,
+ "note_rebuild": "independent warm-prefix rebuilding per replicate: 4 x the batch's warm prefill (the proposal's 0.6 GPU-h assumed one shared warm); this dominates the workload after start-up",
+ "cases": {
+  "planning": {
+   "start": 874,
+   "v1_replicate_s": 320,
+   "v2_replicate_s": 202,
+   "warm_prefill_per_replicate_s": 146,
+   "entry_digest_per_replicate_s": 8,
+   "total_s": 2022,
+   "gpu_h": 1.124
+  },
+  "typical": {
+   "start": 740,
+   "v1_replicate_s": 227,
+   "v2_replicate_s": 171,
+   "warm_prefill_per_replicate_s": 127,
+   "entry_digest_per_replicate_s": 3,
+   "total_s": 1640,
+   "gpu_h": 0.911
+  }
+ },
+ "cap_stage0_s": 2250,
+ "cap_stage0_gpu_h": 1.25,
+ "cap_precheck_s": 300,
+ "cap_precheck_gpu_h": 0.0833,
+ "approval_needed_gpu_h": 1.333,
+ "approval_note": "APPROVED_GPU_H must cover the caps (the gate refuses an attempt whose cap does not fit): one pre-check attempt + one stage-0 attempt"
+}

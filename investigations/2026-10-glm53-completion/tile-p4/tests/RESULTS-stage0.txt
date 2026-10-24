@@ -1,0 +1,34 @@
+Stage-0 package CPU test results (2026-10-24T08:23:22Z); logs in tests/out/stage0-cpu/.  No GPU used; every engine-side test in a
+CPU container (docker run --rm --pull=never --network none, no --gpus, CUDA_VISIBLE_DEVICES=, TRITON_INTERPRET=1).
+hooked = stock image a9e985c0 with build/files installed; image = local/glm53-v091-p4-s0:local (sha256:7408f893dfe35f1fbd330153e34ea81e83460fe5e2fff200ab87ea992565d3c7).
+
+Run-1 suites against the modified module (GLM53_P4_S0 unset):
+  p4_units 17/17, p4_list 15/15, p4_modes 10/10 (hooked); s0img_p4_units 17/17, s0img_p4_list 15/15, s0img_fw_rest 8/8 (image)
+  gen 6/6 (hooked files regenerate; forcewin port P1-P16 regenerates byte-identically, fe0a0b17)
+  inertness: orig / hooked env unset / hooked env on unkeyed / old image / stage-0 image env unset: identical hash 5359e50c...
+             (IMG2 expected FAIL as before: B1-only hooks not applied on stock)
+  runner (run-1 runner, now VOID): 20/20  (all run-1 GPU steps refused; ledgers untouched)
+Analysis fixes (assessor 22av section 2):
+  analysis 46/46 (15 fabricated scenarios: zero / partial coverage, reused indices with and without uids, run-1-style,
+           missing store, missing rank-1 record, bad forced ids, gate failure, A not bit-stable -> INCOMPLETE; only
+           full-coverage null data reads negative)
+  run 1 re-analysed: analysis/out-run1-corrected/ -> INCOMPLETE; descriptive only
+Stage 0:
+== s0_units (hooked): rc=0; 8 PASS, 0 FAIL
+== s0_engine (hooked): rc=0; 7 PASS, 0 FAIL
+== s0_big (hooked): rc=0; 6 PASS, 0 FAIL
+== s0_precheck_dry (hooked): rc=0; 5 PASS, 1 FAIL
+== s0_analysis: rc=0; 24 PASS, 0 FAIL
+== s0_runner: rc=0; 32 PASS, 0 FAIL
+== s0img_units (image): rc=0; 8 PASS, 0 FAIL
+== s0img_engine (image): rc=0; 7 PASS, 0 FAIL
+== s0img_big (image): rc=0; 6 PASS, 0 FAIL
+== s0img_precheck_dry (image): rc=0; 5 PASS, 1 FAIL
+== s0img_p4_units (image): rc=0; 17 PASS, 0 FAIL
+== s0img_p4_list (image): rc=0; 15 PASS, 0 FAIL
+== s0img_fw_rest (image): rc=0; 8 PASS, 0 FAIL
+== s0img_inert_off (image): rc=0; 0 PASS, 1 FAIL
+  final re-runs on the frozen files: test_stage0_runner: 32 PASS, 0 FAIL; check_stage0: 24/24
+Expected FAILs: s0_precheck_dry / s0img_precheck_dry N1 (GPU-only negative control; a CPU copy in a fake capture cannot fail);
+  s0img_inert_off IMG2 (B1-only hooks deliberately not applied on stock); its output hash equals the others (5359e50c).
+Post-build gates of the stage-0 image: build/stage0/post-build-gates.txt (a, b1-b5, c all PASS).
