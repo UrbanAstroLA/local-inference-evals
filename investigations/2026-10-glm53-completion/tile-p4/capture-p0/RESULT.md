@@ -1,7 +1,9 @@
 # capture-p0 result (2026-10-24)
 
 **Pre-registered reading: operation located** (assessor 22ax table row "valid state differs, reproducible local
-operation defect found"). Analysis output: `runs/session-attempt-2/cap0-result.md` and `cap0-result.json`; protocol
+operation defect found"; that is the table's wording, and no correctness defect is claimed: the top-k's output order
+is unspecified, and an unspecified order can be valid while still causing numerical variation in its consumer; note
+added in 22bb). Analysis output: `runs/session-attempt-2/cap0-result.md` and `cap0-result.json`; protocol
 and amendments A1-A4: `PROTOCOL.md`.
 
 ## What ran

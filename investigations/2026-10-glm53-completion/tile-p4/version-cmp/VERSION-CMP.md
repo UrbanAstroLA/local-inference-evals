@@ -1,5 +1,8 @@
 # v0.7.0 vs v0.9.1: top-k order and sparse-MLA order sensitivity (source comparison, no GPU)
 
+**Corrected in 22bb** (marked "22bb"): the DCP filter-and-compact step is order-preserving at the served width, and
+a shared top-k binary is not a shared executed selection path. The 22az text is retained locally.
+
 Date: 2026-10-24. No GPU, no network, no model download. Every image command was
 `docker run --rm --network none -e CUDA_VISIBLE_DEVICES= --entrypoint bash <image> ...`.
 
@@ -188,7 +191,7 @@ over the traced files finds only an error-message `sorted()` at `b12x_mla_sparse
 |---|---|---|
 | DCP merge | Skipped (091:1380, 091:823) (S) | Owner path: `run_row_topk`, a CuTe port of the sglang radix-select. Output slots come from `s_out[_smem_xadd(ctr,...)]` (`b12x/attention/dsa_indexer/tiled_topk.py` 070:895-896, 914-915) (S). Fallback: CuteDSL `StableTopKFromGatheredCandidatesKernel`. Its key (score, ~token_id) fixes the **set**, but output position is `atomic_add(committed_count)` (`dcp_indexer_cutedsl.py:320-335`) (S). Either way the output is order-arbitrary (I). |
 | pool to token expand | `_expand_pools_and_append_tail_kernel`: column g maps to `pool_ids[row, g]`, so order is preserved (091:950-955) (S) | Same kernel (070:933-938) (S) |
-| logical to physical slots | `_logical_topk_to_physical_slots`, elementwise (091:773-866) (S), then `_compact_dropped_selection`, a stable cumsum compaction (091:725-747) (S) | DCP branch (070:2751-2781): `triton_filter_and_convert_dcp_index` compacts each rank's winners with an atomic slot allocator. Its docstring says "Prefix order is unspecified (only the set matters)" (`sparse_utils.py:299-308`) (S). |
+| logical to physical slots | `_logical_topk_to_physical_slots`, elementwise (091:773-866) (S), then `_compact_dropped_selection`, a stable cumsum compaction (091:725-747) (S) | DCP branch (070:2751-2781): `triton_filter_and_convert_dcp_index` compacts each rank's winners. Its docstring says "Prefix order is unspecified (only the set matters)" (`sparse_utils.py:299-308`) (S). [22bb: at the served width (2048) it takes the single-tile path, where the base is 0 and the offsets are a plain prefix sum, so it preserves input order (`sparse_utils.py` 070:100-118) (S); the replay measured order preserved on 128 of 128 rows. The atomic allocator applies only with several tiles.] |
 | design assumption stated in code | A comment says "Attention is a softmax over the selected set, so order does not affect the result" (`b12x_mla_sparse.py` 070:721-723 / 091:922-924) (S). This is true in exact arithmetic but not bit-exact in fp (Q3). | Same |
 
 ---
@@ -260,7 +263,10 @@ structure above is unchanged (S, by reading the anchors listed).
 3. **Nothing normalises order.** There is no sort, unique or canonicalising gather between
    top-k and attention (S). v0.7.0's default DCP=2 inserts two more stages whose **output
    position is atomically assigned**: the merge re-top-k and the DCP filter-and-compact. So
-   v0.7.0 has more reordering, not less (S for the code, I for the effect).
+   v0.7.0 has more reordering, not less (S for the code, I for the effect). [22bb, corrected: at the served width the
+   filter-and-compact is order-preserving (single-tile path); the merge re-top-k assigns positions atomically. In this
+   geometry v0.7.0's selection happens in that merge, not in the shared `top_k_per_row_prefill`, so the executed
+   selection path differs between the versions even though the binary is shared.]
 4. **Same kernel structure.** The MG prefill kernel is order-sensitive in the same way (S for
    structure).
 

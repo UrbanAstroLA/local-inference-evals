@@ -798,8 +798,9 @@ in a different order (amendment 22az).**
 - **Not established:** execution vs memory placement as the source of the order; an isolated replay; any link to
   completion behaviour.
 - **Version comparison (no GPU):** the top-k code and kernel are identical in v0.7.0 and v0.9.1, with unspecified
-  output order, and the attention walks the list in the given order in both. On source evidence the mechanism does
-  not by itself distinguish the versions; their deployed parallel configurations differ.
+  output order, and the attention walks the list in the given order in both. [22bb, corrected: the binary is shared,
+  but the executed selection path is not; in v0.7.0's served DCP=2 configuration the selection happens in the DCP
+  merge, which was not replayed. Ordering is not ruled out as a contributor to the version gap.]
 - GPU-hours 0.897 (cumulative 134.92). [Result](investigations/2026-10-glm53-completion/tile-p4/capture-p0/RESULT.md) ·
   [Version comparison](investigations/2026-10-glm53-completion/tile-p4/version-cmp/VERSION-CMP.md).
 
@@ -811,6 +812,21 @@ versions (amendment 22ba).**
   relative L2 about 1e-3), in both v0.9.1 and v0.7.0.
 - Synthetic inputs; v0.7.0's DCP merge not replayed; no completion-behaviour claim.
 - GPU-hours 0.0144 (cumulative 134.93). [Result](investigations/2026-10-glm53-completion/tile-p4/replay-topk/RESULT.md).
+
+**2026-10-24. Independent assessment of 22ay-22ba: scoped finding accepted; corrections (amendment 22bb).**
+- **Accepted within scope:** identical top-k inputs → varying selected-index order → different attention arithmetic →
+  different downstream state. This explains the measured prefill non-reproducibility on the tested 0.9.1 path. It
+  establishes no completion effect and does not explain the version gap.
+- **Corrected:**
+  - a shared top-k binary is not a shared executed selection path: v0.7.0's served selection runs in its DCP merge,
+    so ordering is not ruled out as a contributor to the gap;
+  - v0.7.0's DCP filter step preserves order at the served width (the version comparison had listed it as
+    reordering);
+  - "defect" in the capture result is the assessment table's label; no correctness defect is claimed for an
+    unspecified output order.
+- **Inventory:** the capture did not retain the indexer score rows or the query side, so a real-input replay is not
+  available without reconstruction.
+- No GPU-hours added (cumulative 134.93). [Inventory](investigations/2026-10-glm53-completion/tile-p4/inventory-22bb/INVENTORY.md).
 
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough

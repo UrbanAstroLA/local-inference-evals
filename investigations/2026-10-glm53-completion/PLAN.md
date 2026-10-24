@@ -3266,7 +3266,10 @@ the earlier 7.0 GPU-hour ceiling was voided).**
   - the deployed configurations differ: v0.7.0 with decode context parallelism 2, v0.9.1 with 1 and MLA layer
     ownership.
   - **Reading:** on source evidence the mechanism is present in both versions and does not by itself distinguish
-    them. v0.7.0 was not measured.
+    them. v0.7.0 was not measured. [22bb, corrected: a shared binary is not a shared executed selection path. In
+    v0.7.0's served DCP=2 configuration the selection for this geometry happens in the DCP merge, which was not
+    replayed; ordering is not ruled out as a contributor to the version gap. Its DCP filter step preserves order at
+    the served width.]
 - GPU-hours 0.897 (cumulative 134.92).
 
 **Amendment 22ba (2026-10-24; isolated replay of the layer-3 top-k and the sparse-MLA prefill; 0.0144 GPU-hours
@@ -3293,3 +3296,27 @@ within the operator approval of 2.0).**
 - **Not established:** the tie structure of real logits; v0.7.0's selection in its served DCP=2 merge; behaviour under
   serving contention; any effect on completion behaviour.
 - GPU-hours 0.0144 (cumulative 134.93).
+
+**Amendment 22bb (2026-10-24; independent assessment of 22ay-22ba; corrections and a retained-input inventory; no GPU
+use).**
+- **Assessment:** the scoped execution-nondeterminism finding is accepted. Identical top-k inputs → varying
+  selected-index order → different attention arithmetic → different downstream state. It explains the measured prefill
+  non-reproducibility on the tested 0.9.1 path; it does not establish a completion effect or explain the historical
+  engine gap. The assessment cautions against calling an unspecified output order a correctness bug, and against
+  reading a smaller-than-reference-error difference as behaviourally irrelevant.
+- **Corrections (marked "22bb"):**
+  - "does not by itself distinguish the versions" (22az: README, this plan, LEDGER, ledger page; also the 22az commit
+    message) is replaced: the top-k binary is shared, but v0.7.0's served selection for this geometry runs in its DCP
+    merge, which was not replayed, so ordering is not ruled out as a contributor to the gap;
+  - `tile-p4/version-cmp/VERSION-CMP.md`: v0.7.0's DCP filter-and-compact step takes its single-tile path at the
+    served width and preserves order (the replay measured 128 of 128 rows); the merge re-top-k still assigns positions
+    atomically;
+  - `tile-p4/capture-p0/RESULT.md`: the quoted table row "reproducible local operation defect found" is the
+    assessment table's label; no correctness defect is claimed.
+- **Inventory (`tile-p4/inventory-22bb/INVENTORY.md`):** the capture retained real layer-3 MLA KV and indexer K for the
+  whole cached span, raw boundary rows at 81 fixed positions per replicate (15 above the selection threshold) and the
+  first 8 differing rows of each differing boundary, but no indexer score rows and no query side. A real-input
+  top-k or attention replay would need reconstruction for those 15 positions from the retained inputs and the layer-3
+  bf16 weights, with a bit-exact baseline first. A statement in the progress report to the assessor that real layer-3
+  inputs were retained was wrong (owned).
+- No GPU-hours added (cumulative 134.93).

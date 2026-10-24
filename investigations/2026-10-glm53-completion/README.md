@@ -130,8 +130,9 @@ difference. Quantization is held fixed.
     prefill kernel walks the list in the given order in both versions.
   - The deployed configurations differ (v0.7.0 with decode context parallelism 2; v0.9.1 with 1 and MLA layer
     ownership).
-  - On source evidence the mechanism is present in both versions, so it does not by itself distinguish them. v0.7.0
-    was not measured.
+  - [22bb, corrected:] the top-k binary is shared, but the executed selection path is not: in v0.7.0's served DCP=2
+    configuration the selection for this geometry happens in the DCP merge, which was not replayed or measured.
+    Ordering is therefore not ruled out as a contributor to the version gap.
 - **Isolated replay (22ba; [`tile-p4/replay-topk/RESULT.md`](tile-p4/replay-topk/RESULT.md)).** One GPU, 0.0144
   GPU-hours, synthetic inputs at the served shapes, strides, plans and call paths.
   - The prefill top-k returns its selection in an order that varies from call to call with identical inputs in the
@@ -142,6 +143,12 @@ difference. Quantization is held fixed.
   - Feeding the top-k's own orderings through the served v0.9.1 path reproduces the capture's pattern.
   - Not established: the tie structure of real logits; v0.7.0's selection under its served DCP=2 merge (not
     replayed); any effect on completion behaviour.
+- **Independent assessment of 22ay-22ba (22bb; no GPU).** The scoped finding is accepted: identical top-k inputs →
+  varying selected-index order → different attention arithmetic → different downstream state. It explains the
+  measured prefill non-reproducibility on the tested 0.9.1 path; it establishes no completion effect and does not
+  explain the version gap. Corrections are marked "22bb". A
+  [retained-input inventory](tile-p4/inventory-22bb/INVENTORY.md) finds that the capture kept no indexer score rows
+  and no query side, so a real-input replay would need reconstruction.
 - **Upstream.** The verified corrections were submitted on 2026-10-22, each with a reproduction and its verification:
   - tpurtell's engine: [#7](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/7) (D2),
     [#8](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/8) (D1),

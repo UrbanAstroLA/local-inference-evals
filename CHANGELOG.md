@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-10-24, assessment of 22ay-22ba: corrections and a retained-input inventory (completion investigation, amendment 22bb)
+
+No GPU use (cumulative 134.93).
+
+- **Corrected in place, marked "22bb":** `tile-p4/version-cmp/VERSION-CMP.md` (v0.7.0's DCP filter step preserves
+  order at the served width; shared binary vs executed selection path), `tile-p4/capture-p0/RESULT.md` (the
+  assessment table's "defect" label), the investigation `README.md`, `PLAN.md` (22az block), `LEDGER.md` and the
+  ledger page. The 22az commit message carries the superseded "does not by itself distinguish the versions"; this
+  entry supersedes it.
+- **`tile-p4/inventory-22bb/INVENTORY.md`:** what the capture retained for a real-input replay.
+- **`PLAN.md`:** amendment 22bb. **Investigation `README.md`:** a Status entry. **`LEDGER.md`** and the ledger page:
+  a 22bb entry.
+
 ## 2026-10-24, isolated replay of the layer-3 top-k and sparse-MLA prefill (completion investigation, amendment 22ba)
 
 0.0144 GPU-hours (cumulative 134.93).
