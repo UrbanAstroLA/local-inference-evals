@@ -1,0 +1,192 @@
+{
+ "capture": {
+  "verdict": "CAPTURE COMPLETE",
+  "deficits": []
+ },
+ "moe": {
+  "v091": {
+   "status": "not run"
+  },
+  "v070": {
+   "status": "not run"
+  }
+ },
+ "attention": {
+  "3": {
+   "kernel": {
+    "plan_path": "vllm _prepare_b12x_sparse_mla_plan (as served)",
+    "caps_equal_to_served": null,
+    "caps_diff": null
+   },
+   "rows": 152,
+   "not_anchored": 0,
+   "not_reproduced": 0,
+   "ctrl_halve": [
+    152,
+    152
+   ],
+   "plant_detected_frac": 1.0,
+   "compaction_ctrl_fail": 0,
+   "by_regime": {
+    "dense_r>=1": {
+     "rows": 57,
+     "anchored": 57,
+     "bc_differ": 0,
+     "bf_differ": 0,
+     "bc_max_abs": 0.0,
+     "bf_max_abs": 0.0,
+     "bc_rel_l2_median": null,
+     "bf_rel_l2_median": null,
+     "r_hist": {
+      "1": 16,
+      "2": 15,
+      "3": 26
+     },
+     "nsa_changed_bc": 15,
+     "verdict": "EQUAL ON CAPTURED ROWS"
+    },
+    "dense_r0": {
+     "rows": 52,
+     "anchored": 52,
+     "bc_differ": 0,
+     "bf_differ": 0,
+     "bc_max_abs": 0.0,
+     "bf_max_abs": 0.0,
+     "bc_rel_l2_median": null,
+     "bf_rel_l2_median": null,
+     "r_hist": {
+      "0": 52
+     },
+     "nsa_changed_bc": 0,
+     "verdict": "informational (control rows)"
+    },
+    "clamped": {
+     "rows": 40,
+     "anchored": 40,
+     "bc_differ": 0,
+     "bf_differ": 0,
+     "bc_max_abs": 0.0,
+     "bf_max_abs": 0.0,
+     "bc_rel_l2_median": null,
+     "bf_rel_l2_median": null,
+     "r_hist": {
+      "0": 4,
+      "1": 12,
+      "2": 12,
+      "3": 12
+     },
+     "nsa_changed_bc": 0,
+     "verdict": "EQUAL ON CAPTURED ROWS"
+    },
+    "boundary_crossing": {
+     "rows": 3,
+     "anchored": 3,
+     "bc_differ": 0,
+     "bf_differ": 0,
+     "bc_max_abs": 0.0,
+     "bf_max_abs": 0.0,
+     "bc_rel_l2_median": null,
+     "bf_rel_l2_median": null,
+     "r_hist": {
+      "2": 1,
+      "3": 2
+     },
+     "nsa_changed_bc": 0,
+     "verdict": "INCOMPLETE (3 anchored rows < 8)"
+    }
+   }
+  },
+  "23": {
+   "kernel": {
+    "plan_path": "vllm _prepare_b12x_sparse_mla_plan (as served)",
+    "caps_equal_to_served": null,
+    "caps_diff": null
+   },
+   "rows": 152,
+   "not_anchored": 0,
+   "not_reproduced": 0,
+   "ctrl_halve": [
+    152,
+    152
+   ],
+   "plant_detected_frac": 1.0,
+   "compaction_ctrl_fail": 0,
+   "by_regime": {
+    "dense_r>=1": {
+     "rows": 57,
+     "anchored": 57,
+     "bc_differ": 0,
+     "bf_differ": 0,
+     "bc_max_abs": 0.0,
+     "bf_max_abs": 0.0,
+     "bc_rel_l2_median": null,
+     "bf_rel_l2_median": null,
+     "r_hist": {
+      "1": 16,
+      "2": 15,
+      "3": 26
+     },
+     "nsa_changed_bc": 15,
+     "verdict": "EQUAL ON CAPTURED ROWS"
+    },
+    "dense_r0": {
+     "rows": 52,
+     "anchored": 52,
+     "bc_differ": 0,
+     "bf_differ": 0,
+     "bc_max_abs": 0.0,
+     "bf_max_abs": 0.0,
+     "bc_rel_l2_median": null,
+     "bf_rel_l2_median": null,
+     "r_hist": {
+      "0": 52
+     },
+     "nsa_changed_bc": 0,
+     "verdict": "informational (control rows)"
+    },
+    "clamped": {
+     "rows": 40,
+     "anchored": 40,
+     "bc_differ": 0,
+     "bf_differ": 0,
+     "bc_max_abs": 0.0,
+     "bf_max_abs": 0.0,
+     "bc_rel_l2_median": null,
+     "bf_rel_l2_median": null,
+     "r_hist": {
+      "0": 4,
+      "1": 12,
+      "2": 12,
+      "3": 12
+     },
+     "nsa_changed_bc": 0,
+     "verdict": "EQUAL ON CAPTURED ROWS"
+    },
+    "boundary_crossing": {
+     "rows": 3,
+     "anchored": 3,
+     "bc_differ": 0,
+     "bf_differ": 0,
+     "bc_max_abs": 0.0,
+     "bf_max_abs": 0.0,
+     "bc_rel_l2_median": null,
+     "bf_rel_l2_median": null,
+     "r_hist": {
+      "2": 1,
+      "3": 2
+     },
+     "nsa_changed_bc": 0,
+     "verdict": "INCOMPLETE (3 anchored rows < 8)"
+    }
+   }
+  }
+ },
+ "forced_tile": null,
+ "not_tested": [
+  "E-partition (EP2 vs TP2 reductions)",
+  "E-version on captured rows",
+  "extend-kernel (mixed prefill+verify) attention rows",
+  "attention on rank 1 (MLA layers >= 25)"
+ ],
+ "attention_status": "complete"
+}

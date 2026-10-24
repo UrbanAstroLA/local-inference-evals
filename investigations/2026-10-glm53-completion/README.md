@@ -64,6 +64,18 @@ difference. Quantization is held fixed.
   - Not tested: the cross-GPU expert-partition reductions, captured (real) inputs and CUDA-graph replay. Whether
     differences of this size affect generation is not measured, and they are not shown to explain the completion
     difference.
+- **The same comparisons on captured serving inputs (22at; [`captured-p3b/`](captured-p3b/RESULT.md)).**
+  - Real MoE and attention inputs were captured during a short stock 0.9.1 serving run (graph-safe, observe-only
+    hooks) and replayed offline. Every replayed served output was first reproduced bit-for-bit.
+  - **MoE:** on real decode rows, the two plans agree bit-for-bit at 4 and 8 rows. From 16 rows up, 89-100 % of rows
+    differ (relative L2 about 6e-4 to 8.4e-4), at or slightly below the synthetic result.
+  - **Mechanism:** forcing the decode plan onto the prefill plan's tile makes them bit-identical on all 90 compared
+    rows. The difference is the tile's fp32 summation order, amplified by fp16 intermediate roundings that both plans
+    share ([source note](moe-plan-p3/SOURCE-MECHANISM.md)). Neither plan is more accurate.
+  - **Attention:** with all else fixed, the stock inflated count and the exact count p + 1 give bit-identical outputs
+    on captured dense rows after rejected drafts (57 per layer) and clamped rows (40 per layer). The 64-boundary case
+    is incomplete (3 rows captured).
+  - Captured tensors derive from benchmark prompts and are not published. Effects on generation are not measured.
 - **Upstream.** The verified corrections were submitted on 2026-10-22, each with a reproduction and its verification:
   - tpurtell's engine: [#7](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/7) (D2),
     [#8](https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx/pull/8) (D1),

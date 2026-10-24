@@ -1,0 +1,5 @@
+FAIL heavy only AcceleratorError("CUDA error: operation failed due to a previous error during capture\nSearch for `cudaErrorStreamCaptureInvalidated' in https://docs.nvidia.com
+OK   moe hook
+OK   attn_pre
+OK   attn_pre+in
+OK   attn_pre+in+out

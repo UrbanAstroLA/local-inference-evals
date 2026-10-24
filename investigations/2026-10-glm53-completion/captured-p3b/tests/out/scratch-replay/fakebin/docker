@@ -1,0 +1,9 @@
+#!/bin/bash
+echo "docker $*" >> "$FAKE_LOG"
+case "$1" in
+  image) exit 0 ;;
+  ps) exit 0 ;;
+  rm) exit 0 ;;
+  run) echo "RUNARGS $*" >> "$FAKE_LOG"; [ -n "${FAKE_RUN_SLEEP:-}" ] && sleep "$FAKE_RUN_SLEEP"; exit 0 ;;
+esac
+exit 0

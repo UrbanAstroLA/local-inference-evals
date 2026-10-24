@@ -1,0 +1,26 @@
+PASS R1 refuse without ATTEMPT_REASON
+PASS R2 malformed ledger aborts
+PASS R3 refuse when budget minus replay reserve < MIN_WALL
+PASS R4 MOCK DRY_RUN prints the plan, writes nothing
+PASS R4b DRY_RUN wrote nothing
+PASS R5 refuse an existing attempt directory
+PASS R6 MOCK session, quotas met -> client stopped early
+PASS R6b early-stop session records (stop record, ramp then 8 in flight, seeds 72301.., cost line, copy-out 0700, coverage)
+PASS R6c no mock server or client process left
+PASS R6d second attempt numbered 2 (budget gate counts the first)
+PASS R7 MOCK session to natural completion (16 requests, drain)
+PASS R7b full session: 16 distinct seeds 72301-72316 served, peak exactly 8, ramp 1,2,4,6,8, long requests first
+PASS R8 watchdog: wall cap reached, server stopped, cost line written
+PASS R8b watchdog attempt 2: cost line seconds <= cap + 15, no process left
+PASS Q1 replay: refuse without ATTEMPT_REASON
+PASS Q2 replay: refuse without CAPTURE_ATTEMPT
+PASS Q3 replay: abort when the capture attempt has no tensors
+PASS Q4 replay: refuse when < 120 s of budget remain
+PASS Q5 replay: GPU0 busy aborts
+PASS Q6 replay DRY_RUN prints the plan, starts nothing
+PASS Q6b replay DRY_RUN wrote nothing
+PASS Q7 replay fake run: both images, cost lines, summary
+PASS Q7b docker run argv: --network none, --gpus device=0, --user, ro mounts, served env, digests, parts; 2 cost lines
+PASS Q8 replay with 130 s left: v091 runs, v070 skipped with a cost line
+PASS Q8b skipped v070 recorded (gpus 0, skipped true), attempt 2
+wrapper tests: 25 passed, 0 failed

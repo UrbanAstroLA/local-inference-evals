@@ -1,0 +1,10 @@
+== real DRY_RUN of runner/run_p3b.sh 2026-10-23T21:19:54Z
+budget: ceiling 0.65 GPU-h (capture + replay); used 0.0000; left 0.6500; replay reserve 0.05
+capture attempt 1: wall cap 1080s x 2 GPUs = 0.6 GPU-h
+DRY_RUN: ATTEMPT_REASON, budget gate, attempt numbering, frozen hashes, image pin and fixture passed.
+plan: attempt 1 -> <runs>/captured-p3b/runs/capture-attempt-1 (logs) and <runs>/captured-p3b/PRIVATE-capture/capture-attempt-1 (captured tensors, 0700); wall cap 1080s; readiness by 930s;
+      client deadline T0+970s; watchdog at T0+1020s; image local/glm53-v091-p3b-capture:local; DEBUG_ENV 'GLM53_P3B=capture GLM53_P3B_DIR=/tmp/p3b GLM53_P3B_POLL_SECS=1'
+rc=0
+== real DRY_RUN of replay/run_replay.sh (no capture yet: must abort)
+ABORT: no captured tensors under <runs>/captured-p3b/PRIVATE-capture/capture-attempt-1
+rc=3

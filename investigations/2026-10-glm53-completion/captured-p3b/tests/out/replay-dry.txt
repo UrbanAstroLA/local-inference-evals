@@ -1,0 +1,70 @@
+----- make fake capture
+{"moe_entries": 10, "att_entries": 5, "files": 35, "torn": 0, "errors": 0}
+rc=0
+----- make fake capture (length-sensitive reference kernel)
+{"moe_entries": 10, "att_entries": 5, "files": 35, "torn": 0, "errors": 0}
+rc=0
+----- attn dry
+{"part": "attn", "status": "complete", "layers": {"3": {"dense_r>=1": "INCOMPLETE (9 anchored rows < 32)", "dense_r0": "informational (control rows)", "clamped": "INCOMPLETE (8 anchored rows < 16)", "boundary_crossing": "INCOMPLETE (2 anchored rows < 8)"}, "23": {"dense_r>=1": "INCOMPLETE (9 anchored rows < 32)", "dense_r0": "no rows", "clamped": "INCOMPLETE (4 anchored rows < 16)", "boundary_crossing": "INCOMPLETE (3 anchored rows < 8)"}}}
+rc=0
+----- attn dry, length-sensitive kernel, minima 1 (DIFFERENCES path)
+{"part": "attn", "status": "complete", "layers": {"3": {"dense_r>=1": "DIFFERENCES (characterize)", "dense_r0": "informational (control rows)", "clamped": "EQUAL ON CAPTURED ROWS", "boundary_crossing": "DIFFERENCES (characterize)"}, "23": {"dense_r>=1": "DIFFERENCES (characterize)", "dense_r0": "no rows", "clamped": "EQUAL ON CAPTURED ROWS", "boundary_crossing": "DIFFERENCES (characterize)"}}}
+rc=0
+----- attn refuses dry switches without --dry
+REFUSED: dry-test switches set outside --dry
+rc=0
+----- moe v091 dry (+ forced tile)
+{"part": "moe", "engine": "v091", "status": "complete", "verdicts": {"3": "INCOMPLETE", "23": "INCOMPLETE", "44": "INCOMPLETE"}, "forced": "PREDICTION HOLDS (bit-equal on all compared rows)", "dry_forced_probe": null}
+rc=0
+----- moe v091 dry, forced tile computes as decode (PREDICTION FAILS path)
+{"part": "moe", "engine": "v091", "status": "complete", "verdicts": {"3": "INCOMPLETE", "23": "INCOMPLETE", "44": "INCOMPLETE"}, "forced": "PREDICTION FAILS (forced decode differs from prefill)", "dry_forced_probe": null}
+rc=0
+----- moe refuses the dry switch without --dry
+REFUSED: dry-test switch set outside --dry
+rc=0
+----- moe v070 dry
+{"part": "moe", "engine": "v070", "status": "complete", "verdicts": {"3": "INCOMPLETE", "23": "INCOMPLETE", "44": "INCOMPLETE"}, "forced": null, "dry_forced_probe": null}
+rc=0
+----- moe v091 dry forced-tile probe (real layer-3 weights on CPU through the image code)
+INFO 10-23 21:37:18 [exl3.py:727] EXL3 standard fused MoE enabled for glm5_next: projection tiers (3, 4) via b12x
+{"part": "moe", "engine": "v091", "status": "complete", "verdicts": {"3": "INCOMPLETE"}, "forced": "PREDICTION HOLDS (bit-equal on all compared rows)", "dry_forced_probe": true}
+rc=0
+----- moe v070 with the v091 image is refused (exl3 hash)
+INFO 10-23 21:37:31 [exl3.py:727] EXL3 standard fused MoE enabled for glm5_next: projection tiers (3, 4) via b12x
+{"part": "moe", "engine": "v070", "status": "error", "verdicts": {}, "forced": null, "dry_forced_probe": null}
+rc=0
+----- in-container driver, v091, --dry
+== attn soft 90s
+WARNING 10-23 21:37:36 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+W1023 21:37:39.311000 10 torch/utils/cpp_extension.py:178] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+WARNING 10-23 21:37:39 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+WARNING 10-23 21:37:39 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+{"part": "attn", "status": "complete", "layers": {"3": {"dense_r>=1": "INCOMPLETE (9 anchored rows < 32)", "dense_r0": "informational (control rows)", "clamped": "INCOMPLETE (8 anchored rows < 16)", "boundary_crossing": "INCOMPLETE (2 anchored rows < 8)"}, "23": {"dense_r>=1": "INCOMPLETE (9 anchored rows < 32)", "dense_r0": "no rows", "clamped": "INCOMPLETE (4 anchored rows < 16)", "boundary_crossing": "INCOMPLETE (3 anchored rows < 8)"}}}
+attn rc=0
+== moe v091 soft 591s --forced-tile --p3-json /p3out/v091.json
+WARNING 10-23 21:37:47 [interface.py:368] Failed to import from vllm._C: ModuleNotFoundError("No module named 'vllm._C'")
+W1023 21:37:47.742000 56 torch/utils/cpp_extension.py:178] No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+INFO 10-23 21:37:48 [exl3.py:727] EXL3 standard fused MoE enabled for glm5_next: projection tiers (3, 4) via b12x
+{"part": "moe", "engine": "v091", "status": "complete", "verdicts": {"3": "INCOMPLETE", "23": "INCOMPLETE", "44": "INCOMPLETE"}, "forced": "PREDICTION HOLDS (bit-equal on all compared rows)", "dry_forced_probe": null}
+moe rc=0
+in-container elapsed 17s
+rc=0
+PASS A1 attention dry: complete; only the injected row is not anchored (not reproduced)  {"not_anchored": [[1, 2]]}
+PASS A2 attention dry: compaction control reproduces every served POST table and nsa; Bf table equal on exact cols  {"rows": 40}
+PASS A3 attention dry: P1 control detected on every row; Bc / Bf equal to A on every anchored row (masked -1 columns)  {}
+PASS A4 attention dry: regimes classified from exact p and L (all four present on layer 3; r from the fabricated L)  {"regimes": ["boundary_crossing", "clamped", "dense_r0", "dense_r>=1"]}
+PASS A5 attention dry: coverage minima unmet -> INCOMPLETE (no EQUAL verdict from too few rows)  {}
+PASS A6 attention dry: positions / lengths only in the private file (0600), not in the public JSON  {}
+PASS A7 length-sensitive kernel: DIFFERENCES on inflated dense / boundary rows, EQUAL on clamped (nsa unchanged)  {"verdicts": {"dense_r>=1": "DIFFERENCES (characterize)", "dense_r0": "informational (control rows)", "clamped": "EQUAL ON CAPTURED ROWS", "boundary_crossing": "DIFFERENCES (characterize)"}}
+PASS A8 attention refuses dry-test switches outside --dry (no output written)  {}
+PASS M1 MoE v091 dry: BASELINE reproduces every entry except the injected one  {"not_reproduced": [[23, 4]]}
+PASS M2 MoE v091 dry: E-plan equal at m <= 16, differs at m >= 24 (dry injection); repeats bit-equal  {}
+PASS M3 MoE v091 dry: composed m = 40 / 48 present, chunk rows equal the served-shape decode, ulp control ok  {}
+PASS M4 forced-tile dry: PREDICTION HOLDS when the forced tile computes as prefill  {}
+PASS M5 forced-tile dry: PREDICTION FAILS when it computes as decode  {}
+PASS M6 MoE refuses the dry switch outside --dry  {}
+PASS M7 MoE v070 dry: E-plan only (no BASELINE on another engine's slice)  {}
+PASS M8 forced-tile probe on CPU through the image code: plan_weights got None -> forced; weight plan tile forced; tile rule K128 at 10-32 stock, forced everywhere; P3 fixture inputs regenerated bit-identically  {"reached": "api.prepare_weights (CUDA required beyond)", "weight_plan_tile": [64, 256, 64, 256]}
+PASS M9 MoE refuses the wrong image (exl3.py hash)  {}
+PASS E1 in-container driver (production mounts, --dry): attention, MoE and forced-tile parts all ran  {}
+18/18 passed

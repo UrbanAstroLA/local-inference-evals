@@ -1,0 +1,26 @@
+{
+ "schema": "p3b-replay-attn/1",
+ "mode": "gpu",
+ "status": "error",
+ "started": 1792798853.5236375,
+ "layers": {
+  "3": {
+   "entries": [],
+   "rows": [],
+   "kernel": {}
+  }
+ },
+ "min_rows": {
+  "dense_r>=1": 32,
+  "clamped": 16,
+  "boundary_crossing": 8
+ },
+ "errors": [
+  {
+   "error": "TypeError(\"B12XSparseMLAScratchCaps.__init__() missing 5 required keyword-only arguments: 'device', 'num_q_heads', 'max_q_rows', 'max_width', and 'softmax_scale'\")",
+   "tb": "Traceback (most recent call last):\n  File \"/r/replay_attn.py\", line 351, in main\n    kern = Kernel(torch, args.dry, ai, dev, doc)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/r/replay_attn.py\", line 95, in __init__\n    caps, skipped = rc.deserialize_caps(sparse_mla, torch, ai[\"decode_caps\"], dev)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/r/replay_common.py\", line 109, in deserialize_caps\n    return sparse_mla.Caps(**kw), skipped\n           ^^^^^^^^^^^^^^^^^^^^^\nTypeError: B12XSparseMLAScratchCaps.__init__() missing 5 required keyword-only arguments: 'device', 'num_q_heads', 'max_q_rows', 'max_width', and 'softmax_scale'\n"
+  }
+ ],
+ "device": "NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition",
+ "finished": 1792798860.9157143
+}

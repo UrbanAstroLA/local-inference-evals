@@ -1,0 +1,41 @@
+{"kind": "init", "rank": 0, "schema": "local-p3b-capture/1", "att_info": {"3": {"input_num_heads": 8, "kernel_num_heads": 8, "q_heads_cap": 8, "q_head_dim": 64, "v_head_dim": 64, "record_bytes": 528, "topk_tokens": 2048, "returns_lse": false, "num_splits_cap": 32, "decode_caps": {}}, "23": {"input_num_heads": 8, "kernel_num_heads": 8, "q_heads_cap": 8, "q_head_dim": 64, "v_head_dim": 64, "record_bytes": 528, "topk_tokens": 2048, "returns_lse": false, "num_splits_cap": 32, "decode_caps": {}}}, "ring_bytes": {}, "ring_mib_total": 0, "issues": [], "async_scheduling": true, "env": {}}
+{"kind": "site", "key": ["moe", 3, 32], "layer": 3, "m": 32, "captured": true, "ids": [[32, 8], "torch.int32"]}
+{"kind": "site", "key": ["moe_bind", 3, 32, "decode"], "layer": 3, "m": 32, "plan": "decode", "launch": {}}
+{"kind": "site", "key": ["moe", 3, 24], "layer": 3, "m": 24, "captured": true, "ids": [[24, 8], "torch.int32"]}
+{"kind": "site", "key": ["moe_bind", 3, 24, "decode"], "layer": 3, "m": 24, "plan": "decode", "launch": {}}
+{"kind": "site", "key": ["moe", 3, 16], "layer": 3, "m": 16, "captured": true, "ids": [[16, 8], "torch.int32"]}
+{"kind": "site", "key": ["moe_bind", 3, 16, "decode"], "layer": 3, "m": 16, "plan": "decode", "launch": {}}
+{"kind": "site", "key": ["moe", 3, 8], "layer": 3, "m": 8, "captured": true, "ids": [[8, 8], "torch.int32"]}
+{"kind": "site", "key": ["moe_bind", 3, 8, "decode"], "layer": 3, "m": 8, "plan": "decode", "launch": {}}
+{"kind": "site", "key": ["moe", 3, 4], "layer": 3, "m": 4, "captured": true, "ids": [[4, 8], "torch.int32"]}
+{"kind": "site", "key": ["moe_bind", 3, 4, "decode"], "layer": 3, "m": 4, "plan": "decode", "launch": {}}
+{"kind": "site", "key": ["moe", 3, 48], "layer": 3, "m": 48, "captured": true, "ids": [[48, 8], "torch.int32"]}
+{"kind": "site", "key": ["moe_bind", 3, 48, "prefill"], "layer": 3, "m": 48, "plan": "prefill", "launch": {}}
+{"kind": "site", "key": ["moe", 23, 32], "layer": 23, "m": 32, "captured": true, "ids": [[32, 8], "torch.int32"]}
+{"kind": "site", "key": ["moe_bind", 23, 32, "decode"], "layer": 23, "m": 32, "plan": "decode", "launch": {}}
+{"kind": "site", "key": ["moe", 23, 24], "layer": 23, "m": 24, "captured": true, "ids": [[24, 8], "torch.int32"]}
+{"kind": "site", "key": ["moe_bind", 23, 24, "decode"], "layer": 23, "m": 24, "plan": "decode", "launch": {}}
+{"kind": "site", "key": ["moe", 23, 16], "layer": 23, "m": 16, "captured": true, "ids": [[16, 8], "torch.int32"]}
+{"kind": "site", "key": ["moe_bind", 23, 16, "decode"], "layer": 23, "m": 16, "plan": "decode", "launch": {}}
+{"kind": "site", "key": ["moe", 23, 8], "layer": 23, "m": 8, "captured": true, "ids": [[8, 8], "torch.int32"]}
+{"kind": "site", "key": ["moe_bind", 23, 8, "decode"], "layer": 23, "m": 8, "plan": "decode", "launch": {}}
+{"kind": "site", "key": ["moe", 23, 4], "layer": 23, "m": 4, "captured": true, "ids": [[4, 8], "torch.int32"]}
+{"kind": "site", "key": ["moe_bind", 23, 4, "decode"], "layer": 23, "m": 4, "plan": "decode", "launch": {}}
+{"kind": "site", "key": ["moe", 23, 48], "layer": 23, "m": 48, "captured": true, "ids": [[48, 8], "torch.int32"]}
+{"kind": "site", "key": ["moe_bind", 23, 48, "prefill"], "layer": 23, "m": 48, "plan": "prefill", "launch": {}}
+{"kind": "site", "key": ["moe", 44, 32], "layer": 44, "m": 32, "captured": true, "ids": [[32, 8], "torch.int32"]}
+{"kind": "site", "key": ["moe_bind", 44, 32, "decode"], "layer": 44, "m": 32, "plan": "decode", "launch": {}}
+{"kind": "site", "key": ["moe", 44, 24], "layer": 44, "m": 24, "captured": true, "ids": [[24, 8], "torch.int32"]}
+{"kind": "site", "key": ["moe_bind", 44, 24, "decode"], "layer": 44, "m": 24, "plan": "decode", "launch": {}}
+{"kind": "site", "key": ["moe", 44, 16], "layer": 44, "m": 16, "captured": true, "ids": [[16, 8], "torch.int32"]}
+{"kind": "site", "key": ["moe_bind", 44, 16, "decode"], "layer": 44, "m": 16, "plan": "decode", "launch": {}}
+{"kind": "site", "key": ["moe", 44, 8], "layer": 44, "m": 8, "captured": true, "ids": [[8, 8], "torch.int32"]}
+{"kind": "site", "key": ["moe_bind", 44, 8, "decode"], "layer": 44, "m": 8, "plan": "decode", "launch": {}}
+{"kind": "site", "key": ["moe", 44, 4], "layer": 44, "m": 4, "captured": true, "ids": [[4, 8], "torch.int32"]}
+{"kind": "site", "key": ["moe_bind", 44, 4, "decode"], "layer": 44, "m": 4, "plan": "decode", "launch": {}}
+{"kind": "site", "key": ["moe", 44, 48], "layer": 44, "m": 48, "captured": true, "ids": [[48, 8], "torch.int32"]}
+{"kind": "site", "key": ["moe_bind", 44, 48, "prefill"], "layer": 44, "m": 48, "plan": "prefill", "launch": {}}
+{"kind": "site", "key": ["att_in", 3, 32], "layer": 3, "q": [[32, 8, 64], "torch.bfloat16"]}
+{"kind": "site", "key": ["att_out", 3, 32], "layer": 3, "out": [[32, 8, 64], "torch.bfloat16", []]}
+{"kind": "site", "key": ["att_in", 23, 32], "layer": 23, "q": [[32, 8, 64], "torch.bfloat16"]}
+{"kind": "site", "key": ["att_out", 23, 32], "layer": 23, "out": [[32, 8, 64], "torch.bfloat16", []]}

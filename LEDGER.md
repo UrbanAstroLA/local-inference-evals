@@ -741,6 +741,19 @@ What was asked, run, found, corrected and withdrawn, in date order.
   completion difference.
 - GPU-hours 0.1458 (cumulative 129.97). [Result](investigations/2026-10-glm53-completion/moe-plan-p3/RESULT.md).
 
+**2026-10-23. On real decode rows the MoE plan difference reproduces, and its source is the tile (amendment 22at).**
+- **Captured serving inputs, replayed offline** after reproducing each served output bit-for-bit:
+  - the decode and prefill plans agree at 4-8 rows and differ on 89-100 % of rows from 16 rows up (relative L2 about
+    6e-4 to 8.4e-4);
+  - forcing the decode plan onto the prefill tile makes them bit-identical.
+- **Source:** fp32 summation order, amplified by fp16 intermediate roundings both plans share. Neither plan is more
+  accurate.
+- **Attention:** the stock inflated count gives bit-identical outputs to the exact count on captured dense and clamped
+  rows; the boundary case is incomplete.
+- **A failed first capture is kept and explained:** a poller started before CUDA-graph capture.
+- **Not measured:** any effect on generation.
+- GPU-hours 0.8031 (cumulative 130.77). [Result](investigations/2026-10-glm53-completion/captured-p3b/RESULT.md).
+
 - **Correction of emphasis (owned):** the summaries published earlier today said the tail analysis "located" or
   "localised" the gap and stated pooled figures, including a B0+B1 rate built on 17 replies, without enough
   qualification. They also said the D7 path "cannot run" where the basis is a reconstruction. These are reworded in the

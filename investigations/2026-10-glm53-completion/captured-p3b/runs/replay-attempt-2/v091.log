@@ -1,0 +1,5 @@
+== attn soft 90s
+INFO 10-23 23:44:21 [b12x_mla_sparse.py:229] B12x sparse MLA decode plan vllm.b12x_mla_sparse.decode.h64.rows64.w2048.rec528: rows<=64 splits=32/32
+{"part": "attn", "status": "complete", "layers": {"3": {"dense_r>=1": "EQUAL ON CAPTURED ROWS", "dense_r0": "informational (control rows)", "clamped": "EQUAL ON CAPTURED ROWS", "boundary_crossing": "INCOMPLETE (3 anchored rows < 8)"}, "23": {"dense_r>=1": "EQUAL ON CAPTURED ROWS", "dense_r0": "informational (control rows)", "clamped": "EQUAL ON CAPTURED ROWS", "boundary_crossing": "INCOMPLETE (3 anchored rows < 8)"}}}
+attn rc=0
+in-container elapsed 13s

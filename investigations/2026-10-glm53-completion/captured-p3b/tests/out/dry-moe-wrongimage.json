@@ -1,0 +1,22 @@
+{
+ "schema": "p3b-replay-moe/1",
+ "engine": "v070",
+ "mode": "dry",
+ "status": "error",
+ "p3_harness_sha256": "15ce45d8e0ab5caff09016f8f11d3c6c3e26b51499a9b22438b987a5d130b5a0",
+ "layers": {},
+ "errors": [
+  "exl3.py does not match the engine: wrong image"
+ ],
+ "timings": {
+  "import_s": 4.81
+ },
+ "quant_config": {
+  "standard_fused_moe": true,
+  "codebook": "mcg",
+  "n_tensor_storage": 37152,
+  "layers_with_projection_bitrates": 43
+ },
+ "exl3_sha256_matches_engine": false,
+ "finished": 1792791451.9449644
+}

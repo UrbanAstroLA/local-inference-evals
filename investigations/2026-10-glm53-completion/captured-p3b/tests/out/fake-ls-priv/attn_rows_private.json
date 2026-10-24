@@ -1,0 +1,391 @@
+{
+ "3": [
+  {
+   "seq": 1,
+   "rows": [
+    {
+     "row_slot": 0,
+     "p": 126,
+     "L": 129,
+     "nsa_served": 129,
+     "clen_served": 129,
+     "nsa_bf": 127,
+     "nsa_ctrl": 129
+    },
+    {
+     "row_slot": 1,
+     "p": 127,
+     "L": 130,
+     "nsa_served": 130,
+     "clen_served": 130,
+     "nsa_bf": 128,
+     "nsa_ctrl": 130
+    },
+    {
+     "row_slot": 2,
+     "p": 128,
+     "L": 131,
+     "nsa_served": 131,
+     "clen_served": 131,
+     "nsa_bf": 129,
+     "nsa_ctrl": 131
+    },
+    {
+     "row_slot": 3,
+     "p": 129,
+     "L": 132,
+     "nsa_served": 132,
+     "clen_served": 132,
+     "nsa_bf": 130,
+     "nsa_ctrl": 132
+    },
+    {
+     "row_slot": 4,
+     "p": 2100,
+     "L": 2102,
+     "nsa_served": 2048,
+     "clen_served": 2102,
+     "nsa_bf": 2048,
+     "nsa_ctrl": 2048
+    },
+    {
+     "row_slot": 5,
+     "p": 2101,
+     "L": 2103,
+     "nsa_served": 2048,
+     "clen_served": 2103,
+     "nsa_bf": 2048,
+     "nsa_ctrl": 2048
+    },
+    {
+     "row_slot": 6,
+     "p": 2102,
+     "L": 2104,
+     "nsa_served": 2048,
+     "clen_served": 2104,
+     "nsa_bf": 2048,
+     "nsa_ctrl": 2048
+    },
+    {
+     "row_slot": 7,
+     "p": 2103,
+     "L": 2105,
+     "nsa_served": 2048,
+     "clen_served": 2105,
+     "nsa_bf": 2048,
+     "nsa_ctrl": 2048
+    }
+   ]
+  },
+  {
+   "seq": 2,
+   "rows": [
+    {
+     "row_slot": 0,
+     "p": 500,
+     "L": 502,
+     "nsa_served": 502,
+     "clen_served": 502,
+     "nsa_bf": 501,
+     "nsa_ctrl": 502
+    },
+    {
+     "row_slot": 1,
+     "p": 501,
+     "L": 503,
+     "nsa_served": 503,
+     "clen_served": 503,
+     "nsa_bf": 502,
+     "nsa_ctrl": 503
+    },
+    {
+     "row_slot": 2,
+     "p": 502,
+     "L": 504,
+     "nsa_served": 504,
+     "clen_served": 504,
+     "nsa_bf": 503,
+     "nsa_ctrl": 504
+    },
+    {
+     "row_slot": 3,
+     "p": 503,
+     "L": 505,
+     "nsa_served": 505,
+     "clen_served": 505,
+     "nsa_bf": 504,
+     "nsa_ctrl": 505
+    },
+    {
+     "row_slot": 4,
+     "p": 700,
+     "L": 701,
+     "nsa_served": 701,
+     "clen_served": 701,
+     "nsa_bf": 701,
+     "nsa_ctrl": 701
+    },
+    {
+     "row_slot": 5,
+     "p": 701,
+     "L": 702,
+     "nsa_served": 702,
+     "clen_served": 702,
+     "nsa_bf": 702,
+     "nsa_ctrl": 702
+    },
+    {
+     "row_slot": 6,
+     "p": 702,
+     "L": 703,
+     "nsa_served": 703,
+     "clen_served": 703,
+     "nsa_bf": 703,
+     "nsa_ctrl": 703
+    },
+    {
+     "row_slot": 7,
+     "p": 703,
+     "L": 704,
+     "nsa_served": 704,
+     "clen_served": 704,
+     "nsa_bf": 704,
+     "nsa_ctrl": 704
+    }
+   ]
+  },
+  {
+   "seq": 3,
+   "rows": [
+    {
+     "row_slot": 0,
+     "p": 1000,
+     "L": 1004,
+     "nsa_served": 1004,
+     "clen_served": 1004,
+     "nsa_bf": 1001,
+     "nsa_ctrl": 1004
+    },
+    {
+     "row_slot": 1,
+     "p": 1001,
+     "L": 1005,
+     "nsa_served": 1005,
+     "clen_served": 1005,
+     "nsa_bf": 1002,
+     "nsa_ctrl": 1005
+    },
+    {
+     "row_slot": 2,
+     "p": 1002,
+     "L": 1006,
+     "nsa_served": 1006,
+     "clen_served": 1006,
+     "nsa_bf": 1003,
+     "nsa_ctrl": 1006
+    },
+    {
+     "row_slot": 3,
+     "p": 1003,
+     "L": 1007,
+     "nsa_served": 1007,
+     "clen_served": 1007,
+     "nsa_bf": 1004,
+     "nsa_ctrl": 1007
+    },
+    {
+     "row_slot": 4,
+     "p": 2500,
+     "L": 2503,
+     "nsa_served": 2048,
+     "clen_served": 2503,
+     "nsa_bf": 2048,
+     "nsa_ctrl": 2048
+    },
+    {
+     "row_slot": 5,
+     "p": 2501,
+     "L": 2504,
+     "nsa_served": 2048,
+     "clen_served": 2504,
+     "nsa_bf": 2048,
+     "nsa_ctrl": 2048
+    },
+    {
+     "row_slot": 6,
+     "p": 2502,
+     "L": 2505,
+     "nsa_served": 2048,
+     "clen_served": 2505,
+     "nsa_bf": 2048,
+     "nsa_ctrl": 2048
+    },
+    {
+     "row_slot": 7,
+     "p": 2503,
+     "L": 2506,
+     "nsa_served": 2048,
+     "clen_served": 2506,
+     "nsa_bf": 2048,
+     "nsa_ctrl": 2048
+    }
+   ]
+  }
+ ],
+ "23": [
+  {
+   "seq": 4,
+   "rows": [
+    {
+     "row_slot": 0,
+     "p": 190,
+     "L": 194,
+     "nsa_served": 194,
+     "clen_served": 194,
+     "nsa_bf": 191,
+     "nsa_ctrl": 194
+    },
+    {
+     "row_slot": 1,
+     "p": 191,
+     "L": 195,
+     "nsa_served": 195,
+     "clen_served": 195,
+     "nsa_bf": 192,
+     "nsa_ctrl": 195
+    },
+    {
+     "row_slot": 2,
+     "p": 192,
+     "L": 196,
+     "nsa_served": 196,
+     "clen_served": 196,
+     "nsa_bf": 193,
+     "nsa_ctrl": 196
+    },
+    {
+     "row_slot": 3,
+     "p": 193,
+     "L": 197,
+     "nsa_served": 197,
+     "clen_served": 197,
+     "nsa_bf": 194,
+     "nsa_ctrl": 197
+    },
+    {
+     "row_slot": 4,
+     "p": 2200,
+     "L": 2201,
+     "nsa_served": 2048,
+     "clen_served": 2201,
+     "nsa_bf": 2048,
+     "nsa_ctrl": 2048
+    },
+    {
+     "row_slot": 5,
+     "p": 2201,
+     "L": 2202,
+     "nsa_served": 2048,
+     "clen_served": 2202,
+     "nsa_bf": 2048,
+     "nsa_ctrl": 2048
+    },
+    {
+     "row_slot": 6,
+     "p": 2202,
+     "L": 2203,
+     "nsa_served": 2048,
+     "clen_served": 2203,
+     "nsa_bf": 2048,
+     "nsa_ctrl": 2048
+    },
+    {
+     "row_slot": 7,
+     "p": 2203,
+     "L": 2204,
+     "nsa_served": 2048,
+     "clen_served": 2204,
+     "nsa_bf": 2048,
+     "nsa_ctrl": 2048
+    }
+   ]
+  },
+  {
+   "seq": 5,
+   "rows": [
+    {
+     "row_slot": 0,
+     "p": 63,
+     "L": 65,
+     "nsa_served": 65,
+     "clen_served": 65,
+     "nsa_bf": 64,
+     "nsa_ctrl": 65
+    },
+    {
+     "row_slot": 1,
+     "p": 64,
+     "L": 66,
+     "nsa_served": 66,
+     "clen_served": 66,
+     "nsa_bf": 65,
+     "nsa_ctrl": 66
+    },
+    {
+     "row_slot": 2,
+     "p": 65,
+     "L": 67,
+     "nsa_served": 67,
+     "clen_served": 67,
+     "nsa_bf": 66,
+     "nsa_ctrl": 67
+    },
+    {
+     "row_slot": 3,
+     "p": 66,
+     "L": 68,
+     "nsa_served": 68,
+     "clen_served": 68,
+     "nsa_bf": 67,
+     "nsa_ctrl": 68
+    },
+    {
+     "row_slot": 4,
+     "p": 1500,
+     "L": 1503,
+     "nsa_served": 1503,
+     "clen_served": 1503,
+     "nsa_bf": 1501,
+     "nsa_ctrl": 1503
+    },
+    {
+     "row_slot": 5,
+     "p": 1501,
+     "L": 1504,
+     "nsa_served": 1504,
+     "clen_served": 1504,
+     "nsa_bf": 1502,
+     "nsa_ctrl": 1504
+    },
+    {
+     "row_slot": 6,
+     "p": 1502,
+     "L": 1505,
+     "nsa_served": 1505,
+     "clen_served": 1505,
+     "nsa_bf": 1503,
+     "nsa_ctrl": 1505
+    },
+    {
+     "row_slot": 7,
+     "p": 1503,
+     "L": 1506,
+     "nsa_served": 1506,
+     "clen_served": 1506,
+     "nsa_bf": 1504,
+     "nsa_ctrl": 1506
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,10 @@
+PASS model_executor/layers/quantization/exl3.py: inserted 14 lines (13 marked, 1 blank), expected 13 marked; non-insert opcodes 0; hooked sha256 ea84d715bc42b4b1e502adfee8dd644fafccd34c0531470eb91d79e5940b4c26
+PASS v1/attention/backends/mla/b12x_mla_sparse.py: inserted 21 lines (20 marked, 1 blank), expected 20 marked; non-insert opcodes 0; hooked sha256 6db4cc7b2c26f20eab6d4848159cb1efb6fd7f8fb6c4c68f817f7b3cca5bbf0d
+build rc=0
+sha256:3814fa6cb7742b36e4c65619162b376c754130284b3fedc5be1f6c091ab40b38
+== post-build gates 2026-10-23T21:35:37Z image sha256:3814fa6cb7742b36e4c65619162b376c754130284b3fedc5be1f6c091ab40b38
+vllm .py files: image 2435, stock 2434
+files differing from stock: ./p3b_capture_hooks.py ./model_executor/layers/quantization/exl3.py ./v1/attention/backends/mla/b12x_mla_sparse.py 
+PASS gate (a): only the 3 expected files differ
+PASS gate (b1): GLM53_P3B unset -> module inert, hooks off, runner not wrapped
+PASS gate (b2): GLM53_P3B=capture -> install() wrapped 6 methods; no device state before registration

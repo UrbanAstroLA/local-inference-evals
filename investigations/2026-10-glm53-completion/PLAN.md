@@ -3032,3 +3032,34 @@ pre-registered; 0.0022 GPU-hours).**
 - **Not tested:** the EP2/TP2 cross-GPU reductions; captured inputs; CUDA-graph replay; the source mechanism of the
   difference. Whether differences of this size affect generation is not measured.
 - GPU-hours 0.1458 (cumulative 129.97).
+
+**Amendment 22at (2026-10-23; captured-input replay of the MoE plans and attention counts; source mechanism of the plan
+difference; 0.8031 GPU-hours).**
+- **Source mechanism** (`moe-plan-p3/SOURCE-MECHANISM.md`, zero GPU; CPU emulation in `moe-plan-p3/mechanism/`):
+  - the plans differ only in the fp32 K-reduction order of the two GEMMs (K128/N128: 4 warp rows; K64/N256: 2);
+  - three fp16 staging roundings shared by both plans, between 128-channel transforms, amplify that ~1e-6 to ~2e-4,
+    and the bf16 cast gives ~8e-4;
+  - neither plan is more accurate than the other.
+- **Capture** (`captured-p3b/`, protocol `PROPOSAL.md`, approved before the run and not published before it):
+  - stock 0.9.1 served the GPQA panel on a derived image whose observe-only, graph-safe hooks recorded MoE inputs and
+    outputs (layers 3, 23, 44) and attention inputs and outputs (MLA layers 3, 23) on rank 0;
+  - seeds 72301-72316; the client stopped once the capture quotas were met.
+  - **Attempt 1** (0.3378 GPU-hours) failed at start-up. The capture module's poller started before CUDA-graph
+    capture, and its device-to-host copies invalidated the global-mode capture. This was reproduced on one GPU and
+    fixed by starting the poller after the first non-dummy forward. The operator raised the ceiling from 0.65 to
+    1.0 GPU-hours.
+  - **Attempt 2** (0.425 GPU-hours) completed every quota.
+- **Replay:**
+  - the served output was reproduced bit-equal from the captured inputs for every MoE layer and for 152 of 152
+    attention rows per layer before anything was compared;
+  - replay 1's attention part failed because the decode plan's settings were not captured. Replay 2 rebuilt them as
+    vLLM does, and the bit-equal baseline gate validated the rebuild.
+- **Results:**
+  - **MoE**, captured rows, 0.9.1 slice: bit-equal at m = 4 and 8; at m = 16-64, 89-100 % of rows differ, rel L2
+    medians 6.2e-4 to 8.3e-4. 0.7.0's slice on the same rows shows the same pattern.
+  - **Forced tile:** with the decode plan's tile forced to K64/N256, it is bit-equal with the prefill plan on all 90
+    compared rows. This confirms the mechanism.
+  - **Attention**, exact vs inflated count, all else fixed: bit-equal on captured dense rows with 1-3 rejected drafts
+    (57 per layer) and on clamped rows (40 per layer). The 64-boundary regime is INCOMPLETE (3 rows, equal).
+- **Not tested:** EP2/TP2 reductions; extend-kernel attention rows; rank 1; any effect on generation.
+- GPU-hours 0.8031 (cumulative 130.77).

@@ -1,0 +1,7 @@
+== post-build gates 2026-10-23T21:35:37Z image sha256:3814fa6cb7742b36e4c65619162b376c754130284b3fedc5be1f6c091ab40b38
+vllm .py files: image 2435, stock 2434
+files differing from stock: ./p3b_capture_hooks.py ./model_executor/layers/quantization/exl3.py ./v1/attention/backends/mla/b12x_mla_sparse.py 
+PASS gate (a): only the 3 expected files differ
+PASS gate (b1): GLM53_P3B unset -> module inert, hooks off, runner not wrapped
+PASS gate (b2): GLM53_P3B=capture -> install() wrapped 6 methods; no device state before registration
+3 passed

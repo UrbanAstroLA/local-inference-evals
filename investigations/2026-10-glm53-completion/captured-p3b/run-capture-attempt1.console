@@ -1,0 +1,44 @@
+budget: ceiling 0.65 GPU-h (capture + replay); used 0.0000; left 0.6500; replay reserve 0.05
+capture attempt 1: wall cap 1080s x 2 GPUs = 0.6 GPU-h
+== preflight 2026-10-23T21:21:07Z
+index, memory.used [MiB], utilization.gpu [%]
+0, 20 MiB, 0 %
+1, 1988 MiB, 1 %
+utilization sample 1: idle
+== start 2026-10-23T21:21:07Z image=local/glm53-v091-p3b-capture:local (sha256:5be4b853e99fc4695593dc2b97307ccf754973921e3357ec77f84a71a9d24374) cap 1080s attempt 1
+engine error during start-up
+== cleanup 2026-10-23T21:30:37Z
+flush wait 2s
+capture attempt 1 occupied 608s x 2 GPU = 0.3378 GPU-h (rc 6)
+captured files: 0 under <runs>/captured-p3b/PRIVATE-capture/capture-attempt-1 (mode 0700)
+# Capture coverage: INCOMPLETE
+
+- deficit: moe L3 m=32: 0 < 8
+- deficit: moe L3 m=24: 0 < 4
+- deficit: moe L3 m=16: 0 < 4
+- deficit: moe L3 m<=8: 0 < 2
+- deficit: moe L23 m=32: 0 < 8
+- deficit: moe L23 m=24: 0 < 4
+- deficit: moe L23 m=16: 0 < 4
+- deficit: moe L23 m<=8: 0 < 2
+- deficit: moe L44 m=32: 0 < 8
+- deficit: moe L44 m=24: 0 < 4
+- deficit: moe L44 m=16: 0 < 4
+- deficit: moe L44 m<=8: 0 < 2
+- deficit: att L3 dense groups: 0 < 8
+- deficit: att L3 boundary groups: 0 < 10
+- deficit: att L3 clamped groups: 0 < 6
+- deficit: att L23 dense groups: 0 < 8
+- deficit: att L23 boundary groups: 0 < 10
+- deficit: att L23 clamped groups: 0 < 6
+- deficit: 1 capture error record(s)
+
+| MoE layer/phase/m | entries |
+|---|---:|
+
+| attention layer | entries | groups by approximate category |
+|---|---:|---|
+
+abandoned 0, torn detected 0, capture errors 1
+client: sent 0, completed 0, stopped early False
+runner rc=6

@@ -1,0 +1,2 @@
+rne fc1 fp32 pre-round rel_l2 2.37e-07 fc1 fp16 elem differ frac 0.0017 max ulp diff 8
+rz fc1 fp32 pre-round rel_l2 1.62e-06 fc1 fp16 elem differ frac 0.0060 max ulp diff 8

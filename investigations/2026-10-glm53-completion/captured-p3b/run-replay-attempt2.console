@@ -1,0 +1,34 @@
+budget: ceiling 1.0 GPU-h (capture + replay); used 0.7992; left 0.2008
+replay attempt 2 of capture attempt 2: wall cap 600s x 1 GPU
+== preflight 2026-10-23T23:44:12Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 20 MiB, 0 %
+1, NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 1993 MiB, 1 %
+gpu_uuid, pid, process_name, used_gpu_memory [MiB]
+GPU0 sample 1: util 0% mem 20 MiB
+== v091 start 2026-10-23T23:44:12Z timeout 460s soft 435s parts attn
+v091 rc=0, 14s x 1 GPU
+{"part": "attn", "status": "complete", "layers": {"3": {"dense_r>=1": "EQUAL ON CAPTURED ROWS", "dense_r0": "informational (control rows)", "clamped": "EQUAL ON CAPTURED ROWS", "boundary_crossing": "INCOMPLETE (3 anchored rows < 8)"}, "23": {"dense_r>=1": "EQUAL ON CAPTURED ROWS", "dense_r0": "informational (control rows)", "clamped": "EQUAL ON CAPTURED ROWS", "boundary_crossing": "INCOMPLETE (3 anchored rows < 8)"}}}
+in-container elapsed 13s
+# captured-p3b replay summary
+
+Capture: CAPTURE COMPLETE 
+
+## MoE v091 (None): not run
+## MoE v070 (None): not run
+## Attention L3: plan vllm _prepare_b12x_sparse_mla_plan (as served), caps equal None
+- rows 152, not anchored 0, P1 [152, 152], P2 detected 1.0
+  - dense_r>=1: EQUAL ON CAPTURED ROWS (anchored 57, Bc differ 0, Bf differ 0, r {'1': 16, '2': 15, '3': 26})
+  - dense_r0: informational (control rows) (anchored 52, Bc differ 0, Bf differ 0, r {'0': 52})
+  - clamped: EQUAL ON CAPTURED ROWS (anchored 40, Bc differ 0, Bf differ 0, r {'0': 4, '1': 12, '2': 12, '3': 12})
+  - boundary_crossing: INCOMPLETE (3 anchored rows < 8) (anchored 3, Bc differ 0, Bf differ 0, r {'2': 1, '3': 2})
+## Attention L23: plan vllm _prepare_b12x_sparse_mla_plan (as served), caps equal None
+- rows 152, not anchored 0, P1 [152, 152], P2 detected 1.0
+  - dense_r>=1: EQUAL ON CAPTURED ROWS (anchored 57, Bc differ 0, Bf differ 0, r {'1': 16, '2': 15, '3': 26})
+  - dense_r0: informational (control rows) (anchored 52, Bc differ 0, Bf differ 0, r {'0': 52})
+  - clamped: EQUAL ON CAPTURED ROWS (anchored 40, Bc differ 0, Bf differ 0, r {'0': 4, '1': 12, '2': 12, '3': 12})
+  - boundary_crossing: INCOMPLETE (3 anchored rows < 8) (anchored 3, Bc differ 0, Bf differ 0, r {'2': 1, '3': 2})
+
+Not tested: E-partition (EP2 vs TP2 reductions); E-version on captured rows; extend-kernel (mixed prefill+verify) attention rows; attention on rank 1 (MLA layers >= 25)
+budget used so far (capture + replay): 0.8031 GPU-h of 1.0
+wrapper rc=0

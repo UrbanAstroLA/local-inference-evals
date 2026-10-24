@@ -1,0 +1,10 @@
+{"kind": "plan", "jobs": [[127, 72301, 2816, "long"], [8, 72302, 2560, "long"], [69, 72303, 2304, "long"], [71, 72304, 2048, "long"], [79, 72305, 1792, "long"], [81, 72306, 1536, "long"], [88, 72307, 1280, "long"], [109, 72308, 1024, "long"], [120, 72309, 512, "short"], [121, 72310, 512, "short"], [147, 72311, 512, "short"], [170, 72312, 512, "short"], [8, 72313, 512, "short"], [69, 72314, 512, "short"], [71, 72315, 512, "short"], [79, 72316, 512, "short"]], "width": 8, "ramp": [1, 2, 4, 6, 8], "ramp_s": 4.0, "panel": [8, 69, 71, 79, 81, 88, 109, 120, 121, 127, 147, 170], "t": 1792798798.683}
+{"kind": "sent", "doc": 127, "seed": 72301, "max_tokens": 2816, "kind_req": "long", "t0": 1792798798.684, "inflight_at_send": 1, "worker": 0}
+{"kind": "sent", "doc": 8, "seed": 72302, "max_tokens": 2560, "kind_req": "long", "t0": 1792798802.692, "inflight_at_send": 2, "worker": 7}
+{"kind": "sent", "doc": 69, "seed": 72303, "max_tokens": 2304, "kind_req": "long", "t0": 1792798806.701, "inflight_at_send": 3, "worker": 3}
+{"kind": "sent", "doc": 71, "seed": 72304, "max_tokens": 2048, "kind_req": "long", "t0": 1792798806.701, "inflight_at_send": 4, "worker": 1}
+{"kind": "sent", "doc": 79, "seed": 72305, "max_tokens": 1792, "kind_req": "long", "t0": 1792798810.708, "inflight_at_send": 5, "worker": 5}
+{"kind": "sent", "doc": 81, "seed": 72306, "max_tokens": 1536, "kind_req": "long", "t0": 1792798810.709, "inflight_at_send": 6, "worker": 2}
+{"kind": "sent", "doc": 88, "seed": 72307, "max_tokens": 1280, "kind_req": "long", "t0": 1792798814.718, "inflight_at_send": 7, "worker": 4}
+{"kind": "sent", "doc": 109, "seed": 72308, "max_tokens": 1024, "kind_req": "long", "t0": 1792798814.728, "inflight_at_send": 8, "worker": 6}
+{"kind": "stop", "reason": "STOP file (capture quotas met)", "inflight": 8, "queued": 8, "peak_inflight": 8, "t": 1792798818.895}

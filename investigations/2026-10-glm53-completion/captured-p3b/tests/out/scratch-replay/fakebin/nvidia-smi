@@ -1,0 +1,6 @@
+#!/bin/bash
+case "$*" in
+  *noheader*) echo "${FAKE_MEM:-3}, ${FAKE_UTIL:-0}" ;;
+  *query-compute-apps*) echo "gpu_uuid, pid, process_name, used_memory" ;;
+  *) echo "index, name, memory.used [MiB], utilization.gpu [%]"; echo "0, FAKE GPU, 3 MiB, 0 %" ;;
+esac

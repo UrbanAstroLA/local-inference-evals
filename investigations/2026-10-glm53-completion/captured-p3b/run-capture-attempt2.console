@@ -1,0 +1,62 @@
+budget: ceiling 1.0 GPU-h (capture + replay); used 0.3406; left 0.6594; replay reserve 0.05
+capture attempt 2: wall cap 1080s x 2 GPUs = 0.6 GPU-h
+== preflight 2026-10-23T23:27:45Z
+index, memory.used [MiB], utilization.gpu [%]
+0, 20 MiB, 0 %
+1, 1980 MiB, 1 %
+utilization sample 1: idle
+== start 2026-10-23T23:27:45Z image=local/glm53-v091-p3b-capture:local (sha256:3814fa6cb7742b36e4c65619162b376c754130284b3fedc5be1f6c091ab40b38) cap 1080s attempt 2
+ready after 733s
+capture gate: OK rank0 True rank1_inert True moe_sites True att_sites True issues [] ring_MiB 121.5 async True moe_sites_not_captured [['moe', 3, 80], ['moe', 23, 80], ['moe', 44, 80], ['moe', 3, 2045], ['moe', 23, 2045], ['moe', 44, 2045]]
+== client (deadline in 237s)
+quotas met at +753s: stopping the client
+client rc=0 (quotas met: 1)
+== cleanup 2026-10-23T23:40:23Z
+flush wait 2s
+capture attempt 2 occupied 765s x 2 GPU = 0.425 GPU-h (rc 0)
+captured files: 208 under <runs>/captured-p3b/PRIVATE-capture/capture-attempt-2 (mode 0700)
+# Capture coverage: CAPTURE COMPLETE
+
+- no deficit
+
+| MoE layer/phase/m | entries |
+|---|---:|
+| L3/startup/m32 | 2 |
+| L3/startup/m40 | 3 |
+| L3/startup/m48 | 3 |
+| L3/startup/m56 | 3 |
+| L3/startup/m64 | 3 |
+| L3/traffic/m4 | 4 |
+| L3/traffic/m8 | 4 |
+| L3/traffic/m16 | 6 |
+| L3/traffic/m24 | 6 |
+| L3/traffic/m32 | 10 |
+| L23/startup/m32 | 2 |
+| L23/startup/m40 | 3 |
+| L23/startup/m48 | 3 |
+| L23/startup/m56 | 3 |
+| L23/startup/m64 | 3 |
+| L23/traffic/m4 | 4 |
+| L23/traffic/m8 | 4 |
+| L23/traffic/m16 | 6 |
+| L23/traffic/m24 | 6 |
+| L23/traffic/m32 | 10 |
+| L44/startup/m32 | 2 |
+| L44/startup/m40 | 3 |
+| L44/startup/m48 | 3 |
+| L44/startup/m56 | 3 |
+| L44/startup/m64 | 3 |
+| L44/traffic/m4 | 4 |
+| L44/traffic/m8 | 4 |
+| L44/traffic/m16 | 6 |
+| L44/traffic/m24 | 6 |
+| L44/traffic/m32 | 10 |
+
+| attention layer | entries | groups by approximate category |
+|---|---:|---|
+| L3 | 38 | {'clamped': 10, 'dense': 12, 'boundary': 16} |
+| L23 | 38 | {'clamped': 10, 'dense': 12, 'boundary': 16} |
+
+abandoned 0, torn detected 0, capture errors 0
+client: sent 8, completed 0, stopped early True
+runner rc=0

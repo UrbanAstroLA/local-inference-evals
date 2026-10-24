@@ -1,0 +1,43 @@
+{
+ "results": [
+  {
+   "test": "G2a capture with the hooks and no poller succeeds",
+   "ok": true,
+   "error": null
+  },
+  {
+   "test": "G2b replays recorded; no capture_error records",
+   "ok": true,
+   "capture_errors": [],
+   "armed_steps": 1,
+   "entries_checked": 3
+  },
+  {
+   "test": "G2c captured MoE entries equal the step inputs bit for bit",
+   "ok": true,
+   "matched": 3,
+   "checked": 3,
+   "status_keys": [
+    "abandoned_att",
+    "abandoned_moe",
+    "arm_skipped_backpressure",
+    "arm_skipped_lock",
+    "armed_att",
+    "armed_moe",
+    "att_groups_armed",
+    "att_groups_emitted",
+    "att_quotas_met",
+    "dev_commits",
+    "done_step",
+    "emitted_att"
+   ]
+  },
+  {
+   "test": "G1 poller running during capture invalidates it (attempt-1 reproduction)",
+   "ok": true,
+   "error": "AcceleratorError(\"CUDA error: operation failed due to a previous error during capture\\nSearch for `cudaErrorStreamCaptureInvalidated' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.\\nFor more detailed error information, run with CUDA_LOG_FILE=stderr\\n"
+  }
+ ],
+ "ok": true,
+ "secs": 3.4
+}

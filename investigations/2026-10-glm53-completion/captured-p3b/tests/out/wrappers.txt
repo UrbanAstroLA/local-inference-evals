@@ -1,0 +1,299 @@
+----- R1 refuse without ATTEMPT_REASON (rc=2, want 2)
+REFUSED: ATTEMPT_REASON is not set (say why this attempt runs)
+PASS R1 refuse without ATTEMPT_REASON
+----- R2 malformed ledger aborts (rc=3, want 3)
+ABORT: cannot read <runs>/captured-p3b/tests/out/mock-costs.jsonl: ERR malformed ledger line 1
+PASS R2 malformed ledger aborts
+----- R3 refuse when budget minus replay reserve < MIN_WALL (rc=2, want 2)
+budget: ceiling 0.65 GPU-h (capture + replay); used 0.6000; left 0.0500; replay reserve 0.05
+capture attempt 2: wall cap 0s x 2 GPUs = 0.0 GPU-h
+REFUSED: wall cap 0s < MIN_WALL 990s (budget left 0.0500 GPU-h after the replay reserve)
+PASS R3 refuse when budget minus replay reserve < MIN_WALL
+----- R4 MOCK DRY_RUN prints the plan, writes nothing (rc=0, want 0)
+budget: ceiling 0.65 GPU-h (capture + replay); used 0.0000; left 0.6500; replay reserve 0.05
+capture attempt 1: wall cap 1080s x 2 GPUs = 0.6 GPU-h
+DRY_RUN: ATTEMPT_REASON, budget gate, attempt numbering, frozen hashes, image pin and fixture passed.
+plan: attempt 1 -> <runs>/captured-p3b/tests/out/mock-runs/capture-attempt-1 (logs) and <runs>/captured-p3b/tests/out/mock-PRIVATE/capture-attempt-1 (captured tensors, 0700); wall cap 1080s; readiness by 20s;
+      client deadline T0+970s; watchdog at T0+1020s; image local/glm53-v091-p3b-capture:local; DEBUG_ENV 'GLM53_P3B=capture GLM53_P3B_DIR=/tmp/p3b GLM53_P3B_POLL_SECS=1'
+PASS R4 MOCK DRY_RUN prints the plan, writes nothing
+PASS R4b DRY_RUN wrote nothing
+----- R5 refuse an existing attempt directory (rc=2, want 2)
+budget: ceiling 0.65 GPU-h (capture + replay); used 0.0000; left 0.6500; replay reserve 0.05
+capture attempt 1: wall cap 1080s x 2 GPUs = 0.6 GPU-h
+REFUSED: <runs>/captured-p3b/tests/out/mock-runs/capture-attempt-1 exists (attempt numbering out of step with the ledger; never overwritten)
+PASS R5 refuse an existing attempt directory
+----- R6 MOCK session, quotas met -> client stopped early (rc=0, want 0)
+budget: ceiling 0.65 GPU-h (capture + replay); used 0.0000; left 0.6500; replay reserve 0.05
+capture attempt 1: wall cap 1080s x 2 GPUs = 0.6 GPU-h
+== start 2026-10-23T21:37:52Z image=local/glm53-v091-p3b-capture:local () cap 1080s attempt 1
+ready after 1s
+== client (deadline in 969s)
+quotas met at +36s: stopping the client
+client rc=0 (quotas met: 1)
+== cleanup 2026-10-23T21:38:33Z
+capture attempt 1 occupied 41s x 2 GPU = 0.0228 GPU-h (rc 0)
+captured files: 35 under <runs>/captured-p3b/tests/out/mock-PRIVATE/capture-attempt-1 (mode 0700)
+# Capture coverage: INCOMPLETE
+
+- deficit: moe L3 m=32: 3 < 8
+- deficit: moe L3 m=24: 2 < 4
+- deficit: moe L3 m=16: 2 < 4
+- deficit: moe L23 m=32: 3 < 8
+- deficit: moe L23 m=24: 2 < 4
+- deficit: moe L23 m=16: 2 < 4
+- deficit: moe L44 m=32: 3 < 8
+- deficit: moe L44 m=24: 2 < 4
+- deficit: moe L44 m=16: 2 < 4
+- deficit: att L3 dense groups: 3 < 8
+- deficit: att L3 boundary groups: 3 < 10
+- deficit: att L3 clamped groups: 0 < 6
+- deficit: att L23 dense groups: 2 < 8
+- deficit: att L23 boundary groups: 2 < 10
+- deficit: att L23 clamped groups: 0 < 6
+
+| MoE layer/phase/m | entries |
+|---|---:|
+| L3/startup/m48 | 1 |
+| L3/traffic/m4 | 1 |
+| L3/traffic/m8 | 1 |
+| L3/traffic/m16 | 2 |
+| L3/traffic/m24 | 2 |
+| L3/traffic/m32 | 3 |
+| L23/startup/m48 | 1 |
+| L23/traffic/m4 | 1 |
+| L23/traffic/m8 | 1 |
+| L23/traffic/m16 | 2 |
+| L23/traffic/m24 | 2 |
+| L23/traffic/m32 | 3 |
+| L44/startup/m48 | 1 |
+| L44/traffic/m4 | 1 |
+| L44/traffic/m8 | 1 |
+| L44/traffic/m16 | 2 |
+| L44/traffic/m24 | 2 |
+| L44/traffic/m32 | 3 |
+
+| attention layer | entries | groups by approximate category |
+|---|---:|---|
+| L3 | 3 | {'dense': 3, 'boundary': 3} |
+| L23 | 2 | {'dense': 2, 'boundary': 2} |
+
+abandoned 5, torn detected 0, capture errors 0
+client: sent 14, completed 6, stopped early True
+PASS R6 MOCK session, quotas met -> client stopped early
+R6b True 8 14 41
+PASS R6b early-stop session records (stop record, ramp then 8 in flight, seeds 72301.., cost line, copy-out 0700, coverage)
+left: 
+PASS R6c no mock server or client process left
+----- R6d second attempt numbered 2 (budget gate counts the first) (rc=0, want 0)
+budget: ceiling 0.65 GPU-h (capture + replay); used 0.0228; left 0.6272; replay reserve 0.05
+capture attempt 2: wall cap 1039s x 2 GPUs = 0.5772 GPU-h
+DRY_RUN: ATTEMPT_REASON, budget gate, attempt numbering, frozen hashes, image pin and fixture passed.
+plan: attempt 2 -> <runs>/captured-p3b/tests/out/mock-runs/capture-attempt-2 (logs) and <runs>/captured-p3b/tests/out/mock-PRIVATE/capture-attempt-2 (captured tensors, 0700); wall cap 1039s; readiness by 20s;
+      client deadline T0+929s; watchdog at T0+979s; image local/glm53-v091-p3b-capture:local; DEBUG_ENV 'GLM53_P3B=capture GLM53_P3B_DIR=/tmp/p3b GLM53_P3B_POLL_SECS=1'
+PASS R6d second attempt numbered 2 (budget gate counts the first)
+----- R7 MOCK session to natural completion (16 requests, drain) (rc=0, want 0)
+budget: ceiling 0.65 GPU-h (capture + replay); used 0.0000; left 0.6500; replay reserve 0.05
+capture attempt 1: wall cap 1080s x 2 GPUs = 0.6 GPU-h
+== start 2026-10-23T21:38:36Z image=local/glm53-v091-p3b-capture:local () cap 1080s attempt 1
+ready after 1s
+== client (deadline in 969s)
+client rc=0 (quotas met: 0)
+== cleanup 2026-10-23T21:38:42Z
+capture attempt 1 occupied 6s x 2 GPU = 0.0033 GPU-h (rc 0)
+captured files: 35 under <runs>/captured-p3b/tests/out/mock-PRIVATE/capture-attempt-1 (mode 0700)
+# Capture coverage: INCOMPLETE
+
+- deficit: moe L3 m=32: 3 < 8
+- deficit: moe L3 m=24: 2 < 4
+- deficit: moe L3 m=16: 2 < 4
+- deficit: moe L23 m=32: 3 < 8
+- deficit: moe L23 m=24: 2 < 4
+- deficit: moe L23 m=16: 2 < 4
+- deficit: moe L44 m=32: 3 < 8
+- deficit: moe L44 m=24: 2 < 4
+- deficit: moe L44 m=16: 2 < 4
+- deficit: att L3 dense groups: 3 < 8
+- deficit: att L3 boundary groups: 3 < 10
+- deficit: att L3 clamped groups: 0 < 6
+- deficit: att L23 dense groups: 2 < 8
+- deficit: att L23 boundary groups: 2 < 10
+- deficit: att L23 clamped groups: 0 < 6
+
+| MoE layer/phase/m | entries |
+|---|---:|
+| L3/startup/m48 | 1 |
+| L3/traffic/m4 | 1 |
+| L3/traffic/m8 | 1 |
+| L3/traffic/m16 | 2 |
+| L3/traffic/m24 | 2 |
+| L3/traffic/m32 | 3 |
+| L23/startup/m48 | 1 |
+| L23/traffic/m4 | 1 |
+| L23/traffic/m8 | 1 |
+| L23/traffic/m16 | 2 |
+| L23/traffic/m24 | 2 |
+| L23/traffic/m32 | 3 |
+| L44/startup/m48 | 1 |
+| L44/traffic/m4 | 1 |
+| L44/traffic/m8 | 1 |
+| L44/traffic/m16 | 2 |
+| L44/traffic/m24 | 2 |
+| L44/traffic/m32 | 3 |
+
+| attention layer | entries | groups by approximate category |
+|---|---:|---|
+| L3 | 3 | {'dense': 3, 'boundary': 3} |
+| L23 | 2 | {'dense': 2, 'boundary': 2} |
+
+abandoned 5, torn detected 0, capture errors 0
+client: sent 16, completed 16, stopped early False
+PASS R7 MOCK session to natural completion (16 requests, drain)
+R7b True 8 16
+PASS R7b full session: 16 distinct seeds 72301-72316 served, peak exactly 8, ramp 1,2,4,6,8, long requests first
+----- R8 watchdog: wall cap reached, server stopped, cost line written (rc=0, want 0)
+budget: ceiling 0.65 GPU-h (capture + replay); used 0.5750; left 0.0750; replay reserve 0.05
+capture attempt 2: wall cap 45s x 2 GPUs = 0.025 GPU-h
+== start 2026-10-23T21:38:42Z image=local/glm53-v091-p3b-capture:local () cap 45s attempt 2
+ready after 1s
+== client (deadline in 40s)
+WALL CAP reached
+client rc=0 (quotas met: 0)
+== cleanup 2026-10-23T21:39:28Z
+capture attempt 2 occupied 46s x 2 GPU = 0.0256 GPU-h (rc 0)
+captured files: 35 under <runs>/captured-p3b/tests/out/mock-PRIVATE/capture-attempt-2 (mode 0700)
+# Capture coverage: INCOMPLETE
+
+- deficit: moe L3 m=32: 3 < 8
+- deficit: moe L3 m=24: 2 < 4
+- deficit: moe L3 m=16: 2 < 4
+- deficit: moe L23 m=32: 3 < 8
+- deficit: moe L23 m=24: 2 < 4
+- deficit: moe L23 m=16: 2 < 4
+- deficit: moe L44 m=32: 3 < 8
+- deficit: moe L44 m=24: 2 < 4
+- deficit: moe L44 m=16: 2 < 4
+- deficit: att L3 dense groups: 3 < 8
+- deficit: att L3 boundary groups: 3 < 10
+- deficit: att L3 clamped groups: 0 < 6
+- deficit: att L23 dense groups: 2 < 8
+- deficit: att L23 boundary groups: 2 < 10
+- deficit: att L23 clamped groups: 0 < 6
+
+| MoE layer/phase/m | entries |
+|---|---:|
+| L3/startup/m48 | 1 |
+| L3/traffic/m4 | 1 |
+| L3/traffic/m8 | 1 |
+| L3/traffic/m16 | 2 |
+| L3/traffic/m24 | 2 |
+| L3/traffic/m32 | 3 |
+| L23/startup/m48 | 1 |
+| L23/traffic/m4 | 1 |
+| L23/traffic/m8 | 1 |
+| L23/traffic/m16 | 2 |
+| L23/traffic/m24 | 2 |
+| L23/traffic/m32 | 3 |
+| L44/startup/m48 | 1 |
+| L44/traffic/m4 | 1 |
+| L44/traffic/m8 | 1 |
+| L44/traffic/m16 | 2 |
+| L44/traffic/m24 | 2 |
+| L44/traffic/m32 | 3 |
+
+| attention layer | entries | groups by approximate category |
+|---|---:|---|
+| L3 | 3 | {'dense': 3, 'boundary': 3} |
+| L23 | 2 | {'dense': 2, 'boundary': 2} |
+
+abandoned 5, torn detected 0, capture errors 0
+client: sent 8, completed 8, stopped early False
+PASS R8 watchdog: wall cap reached, server stopped, cost line written
+left: 
+R8b True 46 45
+PASS R8b watchdog attempt 2: cost line seconds <= cap + 15, no process left
+----- Q1 replay: refuse without ATTEMPT_REASON (rc=2, want 2)
+REFUSED: ATTEMPT_REASON is not set (say why this attempt runs)
+PASS Q1 replay: refuse without ATTEMPT_REASON
+----- Q2 replay: refuse without CAPTURE_ATTEMPT (rc=2, want 2)
+REFUSED: CAPTURE_ATTEMPT=N (the capture attempt to replay) is required
+PASS Q2 replay: refuse without CAPTURE_ATTEMPT
+----- Q3 replay: abort when the capture attempt has no tensors (rc=3, want 3)
+ABORT: no captured tensors under <runs>/captured-p3b/tests/out/scratch-replay/root/PRIVATE-capture/capture-attempt-7
+PASS Q3 replay: abort when the capture attempt has no tensors
+----- Q4 replay: refuse when < 120 s of budget remain (rc=2, want 2)
+budget: ceiling 0.65 GPU-h (capture + replay); used 0.6389; left 0.0111
+replay attempt 1 of capture attempt 1: wall cap 40s x 1 GPU
+REFUSED: wall cap 40s < 120s (budget left 0.0111 GPU-h)
+PASS Q4 replay: refuse when < 120 s of budget remain
+----- Q5 replay: GPU0 busy aborts (rc=3, want 3)
+budget: ceiling 0.65 GPU-h (capture + replay); used 0.0000; left 0.6500
+replay attempt 1 of capture attempt 1: wall cap 600s x 1 GPU
+== preflight 2026-10-23T21:39:31Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, FAKE GPU, 3 MiB, 0 %
+gpu_uuid, pid, process_name, used_memory
+ABORT: GPU0 memory 5000 MiB > 1024 MiB
+PASS Q5 replay: GPU0 busy aborts
+----- Q6 replay DRY_RUN prints the plan, starts nothing (rc=0, want 0)
+budget: ceiling 0.65 GPU-h (capture + replay); used 0.0000; left 0.6500
+replay attempt 1 of capture attempt 1: wall cap 600s x 1 GPU
+== preflight 2026-10-23T21:39:31Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, FAKE GPU, 3 MiB, 0 %
+gpu_uuid, pid, process_name, used_memory
+GPU0 sample 1: util 0% mem 3 MiB
+DRY_RUN: all gates passed; no container started, nothing written.
+plan: attempt 1 -> <runs>/captured-p3b/tests/out/scratch-replay/root/runs/replay-attempt-1 (public) and <runs>/captured-p3b/tests/out/scratch-replay/root/PRIVATE-capture/replay-attempt-1 (private, 0700); wall cap 600s
+  v091: timeout <cap-left - 20s (minus 120s for v070 when it fits)> docker run --rm --name p3b-r1-v091 --network none --gpus device=0 --user 1000:1000 <served env> -v <runs>/captured-p3b/tests/out/scratch-replay/root/replay:/r:ro -v <runs>/moe-plan-p3/harness:/p3h:ro -v <runs>/moe-plan-p3/out/attempt-2:/p3out:ro -v <models>/models--wrldsuksgo2mars--GLM-5.3-Flash-EXL3-K3.25-v1:/model-repo:ro -v <runs>/captured-p3b/tests/out/scratch-replay/root/PRIVATE-capture/capture-attempt-1:/cap:ro -v <runs>/captured-p3b/tests/out/scratch-replay/root/runs/capture-attempt-1/caplog:/caplog:ro -v <runs>/captured-p3b/tests/out/scratch-replay/root/runs/replay-attempt-1:/o -v <runs>/captured-p3b/tests/out/scratch-replay/root/PRIVATE-capture/replay-attempt-1:/po -v <runs>/captured-p3b/tests/out/scratch-replay/root/replay/compile-cache/v091:/cc --entrypoint sh ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07 /r/in_container.sh v091 <soft> attn,moe,forced
+  v070: only if >= 120s left: ... --entrypoint sh ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629 /r/in_container.sh v070 <soft> moe
+  then (CPU only, no GPU): replay/summarize_p3b.py <runs>/captured-p3b/tests/out/scratch-replay/root/runs/replay-attempt-1
+PASS Q6 replay DRY_RUN prints the plan, starts nothing
+PASS Q6b replay DRY_RUN wrote nothing
+----- Q7 replay fake run: both images, cost lines, summary (rc=0, want 0)
+budget: ceiling 0.65 GPU-h (capture + replay); used 0.5000; left 0.1500
+replay attempt 1 of capture attempt 1: wall cap 540s x 1 GPU
+== preflight 2026-10-23T21:39:31Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, FAKE GPU, 3 MiB, 0 %
+gpu_uuid, pid, process_name, used_memory
+GPU0 sample 1: util 0% mem 3 MiB
+== v091 start 2026-10-23T21:39:31Z timeout 400s soft 375s parts attn,moe,forced
+v091 rc=0, 0s x 1 GPU
+== v070 start 2026-10-23T21:39:31Z timeout 520s soft 495s parts moe
+v070 rc=0, 0s x 1 GPU
+# captured-p3b replay summary
+
+Capture: None 
+
+## MoE v091 (None): not run
+## MoE v070 (None): not run
+
+Not tested: E-partition (EP2 vs TP2 reductions); E-version on captured rows; extend-kernel (mixed prefill+verify) attention rows; attention on rank 1 (MLA layers >= 25)
+budget used so far (capture + replay): 0.5000 GPU-h of 0.65
+PASS Q7 replay fake run: both images, cost lines, summary
+Q7b True 2 ['v091', 'v070']
+PASS Q7b docker run argv: --network none, --gpus device=0, --user, ro mounts, served env, digests, parts; 2 cost lines
+----- Q8 replay with 130 s left: v091 runs, v070 skipped with a cost line (rc=0, want 0)
+budget: ceiling 0.65 GPU-h (capture + replay); used 0.6139; left 0.0361
+replay attempt 2 of capture attempt 1: wall cap 129s x 1 GPU
+== preflight 2026-10-23T21:39:32Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, FAKE GPU, 3 MiB, 0 %
+gpu_uuid, pid, process_name, used_memory
+GPU0 sample 1: util 0% mem 3 MiB
+== v091 start 2026-10-23T21:39:32Z timeout 109s soft 84s parts attn,moe,forced
+v091 rc=0, 4s x 1 GPU
+SKIP v070: 125s left of 129s
+# captured-p3b replay summary
+
+Capture: None 
+
+## MoE v091 (None): not run
+## MoE v070 (None): not run
+
+Not tested: E-partition (EP2 vs TP2 reductions); E-version on captured rows; extend-kernel (mixed prefill+verify) attention rows; attention on rank 1 (MLA layers >= 25)
+budget used so far (capture + replay): 0.6150 GPU-h of 0.65
+PASS Q8 replay with 130 s left: v091 runs, v070 skipped with a cost line
+Q8b True [{'item': 'p3b-replay', 'attempt': 2, 'capture_attempt': 1, 'attempt_reason': 'small budget', 'engine': 'v091', 'start': '2026-10-23T21:39:32Z', 'end': '2026-10-23T21:39:36Z', 'seconds': 4, 'gpus': 1, 'gpu_hours': 0.0011, 'image': 'sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07', 'rc': 0, 'skipped': False, 'skip_reason': None, 'wall_cap_total': 129, 'image_timeout': 109, 'purpose': 'captured-p3b offline replay (GPU0)'}, {'item': 'p3b-replay', 'attempt': 2, 'capture_attempt': 1, 'attempt_reason': 'small budget', 'engine': 'v070', 'start': '2026-10-23T21:39:36Z', 'end': '2026-10-23T21:39:36Z', 'seconds': 0, 'gpus': 0, 'gpu_hours': 0.0, 'image': 'sha256:48e254d94f58137c8707e6044cde4528c6af3fdd9702726b9b362e9b0e0b4629', 'rc': None, 'skipped': True, 'skip_reason': 'skipped: 125s left of 129s cap', 'wall_cap_total': 129, 'image_timeout': 0, 'purpose': 'captured-p3b offline replay (GPU0)'}]
+PASS Q8b skipped v070 recorded (gpus 0, skipped true), attempt 2
+wrapper tests: 25 passed, 0 failed

@@ -1,0 +1,149 @@
+{
+ "note": "FAKE panel fixture for MOCK tests only (no GPQA text)",
+ "items": [
+  {
+   "doc_id": 8,
+   "messages": [
+    {
+     "role": "user",
+     "content": "fake question 8"
+    }
+   ],
+   "temperature": 1.0,
+   "top_p": 0.95,
+   "chat_template_kwargs": {}
+  },
+  {
+   "doc_id": 69,
+   "messages": [
+    {
+     "role": "user",
+     "content": "fake question 69"
+    }
+   ],
+   "temperature": 1.0,
+   "top_p": 0.95,
+   "chat_template_kwargs": {}
+  },
+  {
+   "doc_id": 71,
+   "messages": [
+    {
+     "role": "user",
+     "content": "fake question 71"
+    }
+   ],
+   "temperature": 1.0,
+   "top_p": 0.95,
+   "chat_template_kwargs": {}
+  },
+  {
+   "doc_id": 79,
+   "messages": [
+    {
+     "role": "user",
+     "content": "fake question 79"
+    }
+   ],
+   "temperature": 1.0,
+   "top_p": 0.95,
+   "chat_template_kwargs": {}
+  },
+  {
+   "doc_id": 81,
+   "messages": [
+    {
+     "role": "user",
+     "content": "fake question 81"
+    }
+   ],
+   "temperature": 1.0,
+   "top_p": 0.95,
+   "chat_template_kwargs": {}
+  },
+  {
+   "doc_id": 88,
+   "messages": [
+    {
+     "role": "user",
+     "content": "fake question 88"
+    }
+   ],
+   "temperature": 1.0,
+   "top_p": 0.95,
+   "chat_template_kwargs": {}
+  },
+  {
+   "doc_id": 109,
+   "messages": [
+    {
+     "role": "user",
+     "content": "fake question 109"
+    }
+   ],
+   "temperature": 1.0,
+   "top_p": 0.95,
+   "chat_template_kwargs": {}
+  },
+  {
+   "doc_id": 120,
+   "messages": [
+    {
+     "role": "user",
+     "content": "fake question 120"
+    }
+   ],
+   "temperature": 1.0,
+   "top_p": 0.95,
+   "chat_template_kwargs": {}
+  },
+  {
+   "doc_id": 121,
+   "messages": [
+    {
+     "role": "user",
+     "content": "fake question 121"
+    }
+   ],
+   "temperature": 1.0,
+   "top_p": 0.95,
+   "chat_template_kwargs": {}
+  },
+  {
+   "doc_id": 127,
+   "messages": [
+    {
+     "role": "user",
+     "content": "fake question 127"
+    }
+   ],
+   "temperature": 1.0,
+   "top_p": 0.95,
+   "chat_template_kwargs": {}
+  },
+  {
+   "doc_id": 147,
+   "messages": [
+    {
+     "role": "user",
+     "content": "fake question 147"
+    }
+   ],
+   "temperature": 1.0,
+   "top_p": 0.95,
+   "chat_template_kwargs": {}
+  },
+  {
+   "doc_id": 170,
+   "messages": [
+    {
+     "role": "user",
+     "content": "fake question 170"
+    }
+   ],
+   "temperature": 1.0,
+   "top_p": 0.95,
+   "chat_template_kwargs": {}
+  }
+ ]
+}

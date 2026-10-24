@@ -1,0 +1,5 @@
+# sha256 of local files not published (reason in brackets). Paths relative to the local folder.
+bc2d4e0e04e52711412d93f78b16b3c890a635b1ff5ce73860e96f299a032827  ./build/files/vllm/__pycache__/p3b_capture_hooks.cpython-312.pyc   (bytecode)
+78f39bb9acffc84a8350a9da88be34abb4fc850f710f9b883ff88429362f0749  ./replay/__pycache__/replay_attn.cpython-312.pyc   (bytecode)
+4838f03a8261cc41f56f6ac8aff95bed8f8be90bb334555638e661e9cf2ac1c7  ./tests/__pycache__/gpu_graph_test.cpython-312.pyc   (bytecode)
+# 1359 files, 1197.0 MB, not published or hashed here: B12x compile caches (regenerated on first run) and, for captured-p3b, PRIVATE-capture/ (captured tensors derived from benchmark prompts; local only; per-file sha256 in runs/capture-attempt-*/caplog entry records)

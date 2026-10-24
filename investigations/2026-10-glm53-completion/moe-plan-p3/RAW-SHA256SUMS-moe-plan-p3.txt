@@ -23,4 +23,4 @@ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./tests/scratc
 5cd1b75f68cc6260f6daee0128aafcc1a640d588825f4ec4319d533630551926  ./tests/scratch-wrapper/out/attempt-4/preflight.txt   (scratch copies used by the wrapper tests)
 9a6d1aa6f7c3b1d6957212067561f261a9107dbfa44d5a84a8ac8c01c3465b8c  ./tests/scratch-wrapper/out/attempt-4/v091.json   (scratch copies used by the wrapper tests)
 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./tests/scratch-wrapper/out/attempt-4/v091.log   (scratch copies used by the wrapper tests)
-# out/compile-cache/: 450 B12x compile-cache files, 33.7 MB, not published or hashed here (regenerated on first run)
+# 450 files, 33.7 MB, not published or hashed here: B12x compile caches (regenerated on first run) and, for captured-p3b, PRIVATE-capture/ (captured tensors derived from benchmark prompts; local only; per-file sha256 in runs/capture-attempt-*/caplog entry records)

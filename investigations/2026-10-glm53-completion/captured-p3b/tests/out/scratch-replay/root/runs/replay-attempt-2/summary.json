@@ -1,0 +1,22 @@
+{
+ "capture": {
+  "verdict": null,
+  "deficits": null
+ },
+ "moe": {
+  "v091": {
+   "status": "not run"
+  },
+  "v070": {
+   "status": "not run"
+  }
+ },
+ "attention": {},
+ "forced_tile": null,
+ "not_tested": [
+  "E-partition (EP2 vs TP2 reductions)",
+  "E-version on captured rows",
+  "extend-kernel (mixed prefill+verify) attention rows",
+  "attention on rank 1 (MLA layers >= 25)"
+ ]
+}

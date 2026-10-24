@@ -1,0 +1,1410 @@
+{
+ "verdict": "CAPTURE COMPLETE",
+ "deficits": [],
+ "moe_entries": {
+  "L3/startup/m32": 2,
+  "L3/startup/m40": 3,
+  "L3/startup/m48": 3,
+  "L3/startup/m56": 3,
+  "L3/startup/m64": 3,
+  "L3/traffic/m4": 4,
+  "L3/traffic/m8": 4,
+  "L3/traffic/m16": 6,
+  "L3/traffic/m24": 6,
+  "L3/traffic/m32": 10,
+  "L23/startup/m32": 2,
+  "L23/startup/m40": 3,
+  "L23/startup/m48": 3,
+  "L23/startup/m56": 3,
+  "L23/startup/m64": 3,
+  "L23/traffic/m4": 4,
+  "L23/traffic/m8": 4,
+  "L23/traffic/m16": 6,
+  "L23/traffic/m24": 6,
+  "L23/traffic/m32": 10,
+  "L44/startup/m32": 2,
+  "L44/startup/m40": 3,
+  "L44/startup/m48": 3,
+  "L44/startup/m56": 3,
+  "L44/startup/m64": 3,
+  "L44/traffic/m4": 4,
+  "L44/traffic/m8": 4,
+  "L44/traffic/m16": 6,
+  "L44/traffic/m24": 6,
+  "L44/traffic/m32": 10
+ },
+ "moe_bind": {
+  "L3/m1": {
+   "plan": "decode",
+   "launch": {
+    "size_m": 1,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 8,
+    "fc2_moe_block_size": 8,
+    "max_m_blocks": 256,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m2": {
+   "plan": "decode",
+   "launch": {
+    "size_m": 2,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 8,
+    "fc2_moe_block_size": 8,
+    "max_m_blocks": 256,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m4": {
+   "plan": "decode",
+   "launch": {
+    "size_m": 4,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 8,
+    "fc2_moe_block_size": 8,
+    "max_m_blocks": 256,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m8": {
+   "plan": "decode",
+   "launch": {
+    "size_m": 8,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 8,
+    "fc2_moe_block_size": 8,
+    "max_m_blocks": 256,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m16": {
+   "plan": "decode",
+   "launch": {
+    "size_m": 16,
+    "fc1_tile_k": 128,
+    "fc1_tile_n": 128,
+    "fc2_tile_k": 128,
+    "fc2_tile_n": 128,
+    "moe_block_size": 8,
+    "fc2_moe_block_size": 8,
+    "max_m_blocks": 256,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m24": {
+   "plan": "decode",
+   "launch": {
+    "size_m": 24,
+    "fc1_tile_k": 128,
+    "fc1_tile_n": 128,
+    "fc2_tile_k": 128,
+    "fc2_tile_n": 128,
+    "moe_block_size": 8,
+    "fc2_moe_block_size": 8,
+    "max_m_blocks": 256,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m32": {
+   "plan": "decode",
+   "launch": {
+    "size_m": 32,
+    "fc1_tile_k": 128,
+    "fc1_tile_n": 128,
+    "fc2_tile_k": 128,
+    "fc2_tile_n": 128,
+    "moe_block_size": 8,
+    "fc2_moe_block_size": 8,
+    "max_m_blocks": 256,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m40": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m48": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m56": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m64": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m80": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m82": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m86": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m123": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m135": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m156": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m190": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m242": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m262": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m434": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m545": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m582": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m731": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m750": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L3/m873": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m1": {
+   "plan": "decode",
+   "launch": {
+    "size_m": 1,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 8,
+    "fc2_moe_block_size": 8,
+    "max_m_blocks": 256,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m2": {
+   "plan": "decode",
+   "launch": {
+    "size_m": 2,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 8,
+    "fc2_moe_block_size": 8,
+    "max_m_blocks": 256,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m4": {
+   "plan": "decode",
+   "launch": {
+    "size_m": 4,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 8,
+    "fc2_moe_block_size": 8,
+    "max_m_blocks": 256,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m8": {
+   "plan": "decode",
+   "launch": {
+    "size_m": 8,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 8,
+    "fc2_moe_block_size": 8,
+    "max_m_blocks": 256,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m16": {
+   "plan": "decode",
+   "launch": {
+    "size_m": 16,
+    "fc1_tile_k": 128,
+    "fc1_tile_n": 128,
+    "fc2_tile_k": 128,
+    "fc2_tile_n": 128,
+    "moe_block_size": 8,
+    "fc2_moe_block_size": 8,
+    "max_m_blocks": 256,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m24": {
+   "plan": "decode",
+   "launch": {
+    "size_m": 24,
+    "fc1_tile_k": 128,
+    "fc1_tile_n": 128,
+    "fc2_tile_k": 128,
+    "fc2_tile_n": 128,
+    "moe_block_size": 8,
+    "fc2_moe_block_size": 8,
+    "max_m_blocks": 256,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m32": {
+   "plan": "decode",
+   "launch": {
+    "size_m": 32,
+    "fc1_tile_k": 128,
+    "fc1_tile_n": 128,
+    "fc2_tile_k": 128,
+    "fc2_tile_n": 128,
+    "moe_block_size": 8,
+    "fc2_moe_block_size": 8,
+    "max_m_blocks": 256,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m40": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m48": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m56": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m64": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m80": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m82": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m86": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m123": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m135": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m156": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m190": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m242": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m262": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m434": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m545": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m582": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m731": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m750": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L23/m873": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m1": {
+   "plan": "decode",
+   "launch": {
+    "size_m": 1,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 8,
+    "fc2_moe_block_size": 8,
+    "max_m_blocks": 256,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m2": {
+   "plan": "decode",
+   "launch": {
+    "size_m": 2,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 8,
+    "fc2_moe_block_size": 8,
+    "max_m_blocks": 256,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m4": {
+   "plan": "decode",
+   "launch": {
+    "size_m": 4,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 8,
+    "fc2_moe_block_size": 8,
+    "max_m_blocks": 256,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m8": {
+   "plan": "decode",
+   "launch": {
+    "size_m": 8,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 8,
+    "fc2_moe_block_size": 8,
+    "max_m_blocks": 256,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m16": {
+   "plan": "decode",
+   "launch": {
+    "size_m": 16,
+    "fc1_tile_k": 128,
+    "fc1_tile_n": 128,
+    "fc2_tile_k": 128,
+    "fc2_tile_n": 128,
+    "moe_block_size": 8,
+    "fc2_moe_block_size": 8,
+    "max_m_blocks": 256,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m24": {
+   "plan": "decode",
+   "launch": {
+    "size_m": 24,
+    "fc1_tile_k": 128,
+    "fc1_tile_n": 128,
+    "fc2_tile_k": 128,
+    "fc2_tile_n": 128,
+    "moe_block_size": 8,
+    "fc2_moe_block_size": 8,
+    "max_m_blocks": 256,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m32": {
+   "plan": "decode",
+   "launch": {
+    "size_m": 32,
+    "fc1_tile_k": 128,
+    "fc1_tile_n": 128,
+    "fc2_tile_k": 128,
+    "fc2_tile_n": 128,
+    "moe_block_size": 8,
+    "fc2_moe_block_size": 8,
+    "max_m_blocks": 256,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m40": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m48": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m56": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m64": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m80": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m82": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m86": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m123": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m135": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m156": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m190": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m242": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m262": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m434": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m545": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m582": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m731": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m750": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  },
+  "L44/m873": {
+   "plan": "prefill",
+   "launch": {
+    "size_m": 1024,
+    "fc1_tile_k": 64,
+    "fc1_tile_n": 256,
+    "fc2_tile_k": 64,
+    "fc2_tile_n": 256,
+    "moe_block_size": 48,
+    "fc2_moe_block_size": 48,
+    "max_m_blocks": 453,
+    "blocks_per_sm": 1,
+    "route_ids_dtype": "torch.int64",
+    "direct_topk_routes": false
+   }
+  }
+ },
+ "att_entries": {
+  "L3": 38,
+  "L23": 38
+ },
+ "att_groups": {
+  "L3": {
+   "clamped": 10,
+   "dense": 12,
+   "boundary": 16
+  },
+  "L23": {
+   "clamped": 10,
+   "dense": 12,
+   "boundary": 16
+  }
+ },
+ "abandoned": 0,
+ "torn_detected": 0,
+ "capture_errors": 0,
+ "errors": [],
+ "flushed": {
+  "pending_at_flush": 0,
+  "flush_wait_s": 0.0,
+  "emitted_moe": 132,
+  "emitted_att": 76,
+  "armed_moe": 44,
+  "armed_att": 38,
+  "torn": 0,
+  "errors": 0,
+  "dev_commits": {
+   "moe.3": 44,
+   "moe.23": 44,
+   "moe.44": 44,
+   "att.3": 38,
+   "att.23": 38
+  },
+  "oob": {
+   "3": 0,
+   "23": 0
+  },
+  "arm_skipped_backpressure": 150,
+  "arm_skipped_lock": 0,
+  "extra_prepare": 0
+ },
+ "init": [
+  {
+   "rank": 0,
+   "inert": null,
+   "ring_mib_total": 121.5,
+   "issues": [],
+   "async_scheduling": true,
+   "file_sha256": {
+    "p3b_capture_hooks.py": "2487f2f7720160bcabf97761bbb7183918eeab95ad9ed98f838fdfba0f9cdd99",
+    "model_executor/layers/quantization/exl3.py": "ea84d715bc42b4b1e502adfee8dd644fafccd34c0531470eb91d79e5940b4c26",
+    "v1/attention/backends/mla/b12x_mla_sparse.py": "6db4cc7b2c26f20eab6d4848159cb1efb6fd7f8fb6c4c68f817f7b3cca5bbf0d"
+   }
+  },
+  {
+   "rank": 1,
+   "inert": "rank != 0",
+   "ring_mib_total": null,
+   "issues": null,
+   "async_scheduling": true,
+   "file_sha256": {
+    "p3b_capture_hooks.py": "2487f2f7720160bcabf97761bbb7183918eeab95ad9ed98f838fdfba0f9cdd99",
+    "model_executor/layers/quantization/exl3.py": "ea84d715bc42b4b1e502adfee8dd644fafccd34c0531470eb91d79e5940b4c26",
+    "v1/attention/backends/mla/b12x_mla_sparse.py": "6db4cc7b2c26f20eab6d4848159cb1efb6fd7f8fb6c4c68f817f7b3cca5bbf0d"
+   }
+  }
+ ],
+ "steps": {
+  "n": 1185,
+  "by_cg_and_padded_size": {
+   "FULL:16": 160,
+   "FULL:24": 116,
+   "FULL:32": 105,
+   "FULL:4": 227,
+   "FULL:40": 4,
+   "FULL:48": 5,
+   "FULL:56": 8,
+   "FULL:64": 314,
+   "FULL:8": 206,
+   "PIECEWISE:1": 1,
+   "PIECEWISE:2": 1,
+   "PIECEWISE:48": 3,
+   "PIECEWISE:56": 1,
+   "PIECEWISE:8": 1,
+   "none:123": 1,
+   "none:1283": 1,
+   "none:135": 1,
+   "none:156": 1,
+   "none:1795": 1,
+   "none:190": 1,
+   "none:2045": 11,
+   "none:242": 1,
+   "none:262": 4,
+   "none:434": 1,
+   "none:545": 2,
+   "none:582": 1,
+   "none:731": 1,
+   "none:750": 1,
+   "none:80": 1,
+   "none:82": 1,
+   "none:86": 2,
+   "none:873": 1
+  }
+ },
+ "client": {
+  "sent": 8,
+  "completed": 0,
+  "stopped_early": true,
+  "seeds": [
+   72301,
+   72302,
+   72303,
+   72304,
+   72305,
+   72306,
+   72307,
+   72308
+  ],
+  "finish": [],
+  "errors": []
+ }
+}

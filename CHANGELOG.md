@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-10-23, captured-input replay and the source of the MoE plan difference (completion investigation, amendment 22at)
+
+0.8031 GPU-hours (cumulative 130.77).
+
+- **New `captured-p3b/`:**
+  - `PROPOSAL.md` (the protocol) and `RESULT.md`;
+  - the capture image build (hooks, gates), runner, client, replay and summary scripts, and CPU and GPU tests;
+  - the run records of both capture attempts and both replays;
+  - the cost ledger and authorization.
+  - Captured tensors (`PRIVATE-capture/`) and compile caches are withheld (`RAW-SHA256SUMS-captured-p3b.txt`).
+- **`moe-plan-p3/`:** `SOURCE-MECHANISM.md` and the CPU emulation in `mechanism/`.
+- **`PLAN.md`:** amendment 22at.
+- **Investigation `README.md`:** a Status entry.
+- **`LEDGER.md`**.
+
 ## 2026-10-23, routed-expert plan comparison on synthetic inputs (completion investigation, amendment 22as)
 
 0.1458 GPU-hours (cumulative 129.97).

@@ -1,0 +1,13 @@
+== moe v070 soft 457s 
+INFO 10-23 23:42:40 [exl3.py:625] EXL3 standard fused MoE enabled for glm5_next: projection tiers (3, 4) via b12x
+INFO 10-23 23:42:42 [exl3.py:2422] EXL3 projection-mixed B12x EP active: 288 global / 144 local experts with a precomposed route map
+INFO 10-23 23:42:42 [exl3.py:2434] EXL3 projection-mixed Trellis language_model.model.layers.3.mlp.experts: tiers=(bits,gate,up,down)((3, 126, 109, 99), (4, 18, 35, 45))
+b12x policy fallback: moe.decode is using a heuristic on nvidia rtx pro 6000 blackwell max-q workstation edition (compute capability 12.0, 188 SMs) because profile 'nvidia.rtx.pro.6000.blackwell' does not cover the query; query={'activation': 'silu', 'hidden_size': 4096, 'intermediate_size': 2048, 'num_experts': 144, 'num_tokens': 32, 'quant_mode': 'w4a16', 'routed_rows': 256, 'source_format': 'b12x_trellis', 'top_k': 8}
+b12x policy fallback: moe.decode is using a heuristic on nvidia rtx pro 6000 blackwell max-q workstation edition (compute capability 12.0, 188 SMs) because profile 'nvidia.rtx.pro.6000.blackwell' does not cover the query; query={'activation': 'silu', 'hidden_size': 4096, 'intermediate_size': 2048, 'num_experts': 144, 'num_tokens': 8, 'quant_mode': 'w4a16', 'routed_rows': 64, 'source_format': 'b12x_trellis', 'top_k': 8}
+b12x policy fallback: moe.decode is using a heuristic on nvidia rtx pro 6000 blackwell max-q workstation edition (compute capability 12.0, 188 SMs) because profile 'nvidia.rtx.pro.6000.blackwell' does not cover the query; query={'activation': 'silu', 'hidden_size': 4096, 'intermediate_size': 2048, 'num_experts': 144, 'num_tokens': 1024, 'quant_mode': 'w4a16', 'routed_rows': 8192, 'source_format': 'b12x_trellis', 'top_k': 8}
+INFO 10-23 23:42:47 [exl3.py:3025] EXL3 rank-sliced runtime planned: Trellis m=1..32 block_m=8, prefill trellis block_m=64 arena=334.8MiB capacity=1024 chunk=128 topk=8
+INFO 10-23 23:42:48 [exl3.py:2434] EXL3 projection-mixed Trellis language_model.model.layers.23.mlp.experts: tiers=(bits,gate,up,down)((3, 131, 113, 94), (4, 13, 31, 50))
+INFO 10-23 23:42:49 [exl3.py:2434] EXL3 projection-mixed Trellis language_model.model.layers.44.mlp.experts: tiers=(bits,gate,up,down)((3, 120, 104, 88), (4, 24, 40, 56))
+{"part": "moe", "engine": "v070", "status": "complete", "verdicts": {"3": "DIFFERENCES (characterize)", "23": "DIFFERENCES (characterize)", "44": "DIFFERENCES (characterize)"}, "forced": null, "dry_forced_probe": null}
+moe rc=0
+in-container elapsed 23s

@@ -1,0 +1,9 @@
+ready after 733s
+47:(EngineCore pid=274) INFO 10-23 23:28:17 [core.py:122] Initializing a V1 LLM engine (v0.1.dev20051+g487ecf187) with config: model='/model-repo/snapshots/0490d2f708b12145f6516555ab066aaeb401cd21', speculative_config=SpeculativeConfig(method='dflash', model='/draft-repo/snapshots/bf582e4eacc1810f76
+242:(EngineCore pid=274) INFO 10-23 23:32:49 [kv_cache_utils.py:2299] GPU KV cache size: 4,707,515 tokens, Maximum concurrency for 1,048,576 tokens per request: 4.49x
+400:(Worker_TP0 pid=370) INFO 10-23 23:38:41 [model_runner.py:1033] Graph capturing finished in 155 secs, took 0.58 GiB
+402:(Worker_TP1 pid=404) INFO 10-23 23:38:41 [model_runner.py:1033] Graph capturing finished in 155 secs, took 0.56 GiB
+capture gate: OK rank0 True rank1_inert True moe_sites True att_sites True issues [] ring_MiB 121.5 async True moe_sites_not_captured [['moe', 3, 80], ['moe', 23, 80], ['moe', 44, 80], ['moe', 3, 2045], ['moe', 23, 2045], ['moe', 44, 2045]]
+quotas met at +753s: stopping the client
+client rc=0 (quotas met: 1)
+flush wait 2s

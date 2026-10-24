@@ -1,0 +1,5 @@
+== preflight 2026-10-23T21:39:32Z
+index, name, memory.used [MiB], utilization.gpu [%]
+0, FAKE GPU, 3 MiB, 0 %
+gpu_uuid, pid, process_name, used_memory
+GPU0 sample 1: util 0% mem 3 MiB

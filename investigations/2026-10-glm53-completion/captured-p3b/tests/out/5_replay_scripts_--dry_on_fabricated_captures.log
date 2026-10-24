@@ -1,0 +1,19 @@
+PASS A1 attention dry: complete; only the injected row is not anchored (not reproduced)  {"not_anchored": [[1, 2]]}
+PASS A2 attention dry: compaction control reproduces every served POST table and nsa; Bf table equal on exact cols  {"rows": 40}
+PASS A3 attention dry: P1 control detected on every row; Bc / Bf equal to A on every anchored row (masked -1 columns)  {}
+PASS A4 attention dry: regimes classified from exact p and L (all four present on layer 3; r from the fabricated L)  {"regimes": ["boundary_crossing", "clamped", "dense_r0", "dense_r>=1"]}
+PASS A5 attention dry: coverage minima unmet -> INCOMPLETE (no EQUAL verdict from too few rows)  {}
+PASS A6 attention dry: positions / lengths only in the private file (0600), not in the public JSON  {}
+PASS A7 length-sensitive kernel: DIFFERENCES on inflated dense / boundary rows, EQUAL on clamped (nsa unchanged)  {"verdicts": {"dense_r>=1": "DIFFERENCES (characterize)", "dense_r0": "informational (control rows)", "clamped": "EQUAL ON CAPTURED ROWS", "boundary_crossing": "DIFFERENCES (characterize)"}}
+PASS A8 attention refuses dry-test switches outside --dry (no output written)  {}
+PASS M1 MoE v091 dry: BASELINE reproduces every entry except the injected one  {"not_reproduced": [[23, 4]]}
+PASS M2 MoE v091 dry: E-plan equal at m <= 16, differs at m >= 24 (dry injection); repeats bit-equal  {}
+PASS M3 MoE v091 dry: composed m = 40 / 48 present, chunk rows equal the served-shape decode, ulp control ok  {}
+PASS M4 forced-tile dry: PREDICTION HOLDS when the forced tile computes as prefill  {}
+PASS M5 forced-tile dry: PREDICTION FAILS when it computes as decode  {}
+PASS M6 MoE refuses the dry switch outside --dry  {}
+PASS M7 MoE v070 dry: E-plan only (no BASELINE on another engine's slice)  {}
+PASS M8 forced-tile probe on CPU through the image code: plan_weights got None -> forced; weight plan tile forced; tile rule K128 at 10-32 stock, forced everywhere; P3 fixture inputs regenerated bit-identically  {"reached": "api.prepare_weights (CUDA required beyond)", "weight_plan_tile": [64, 256, 64, 256]}
+PASS M9 MoE refuses the wrong image (exl3.py hash)  {}
+PASS E1 in-container driver (production mounts, --dry): attention, MoE and forced-tile parts all ran  {}
+18/18 passed

@@ -1,0 +1,16 @@
+== attn soft 90s
+{"part": "attn", "status": "error", "layers": {"3": null}}
+attn rc=5
+== moe v091 soft 425s --forced-tile --p3-json /p3out/v091.json
+INFO 10-23 23:41:13 [exl3.py:727] EXL3 standard fused MoE enabled for glm5_next: projection tiers (3, 4) via b12x
+INFO 10-23 23:41:16 [exl3.py:2536] EXL3 projection-mixed Trellis language_model.model.layers.3.mlp.experts: tiers=(bits,gate,up,down)((3, 248, 221, 180), (4, 40, 67, 108))
+INFO 10-23 23:41:21 [exl3.py:3118] EXL3 rank-sliced runtime planned: Trellis m=1..32 block_m=8, prefill trellis block_m=64 arena=262.6MiB capacity=1024 chunk=128 topk=8
+INFO 10-23 23:41:24 [exl3.py:2536] EXL3 projection-mixed Trellis language_model.model.layers.23.mlp.experts: tiers=(bits,gate,up,down)((3, 248, 221, 180), (4, 40, 67, 108))
+INFO 10-23 23:41:26 [exl3.py:2536] EXL3 projection-mixed Trellis language_model.model.layers.44.mlp.experts: tiers=(bits,gate,up,down)((3, 247, 220, 180), (4, 41, 68, 108))
+INFO 10-23 23:41:28 [exl3.py:2536] EXL3 projection-mixed Trellis language_model.model.layers.3.mlp.experts: tiers=(bits,gate,up,down)((3, 248, 221, 180), (4, 40, 67, 108))
+INFO 10-23 23:42:25 [exl3.py:3118] EXL3 rank-sliced runtime planned: Trellis m=1..32 block_m=8, prefill parity capacity=1024 chunk=128 topk=8
+INFO 10-23 23:42:26 [exl3.py:2536] EXL3 projection-mixed Trellis language_model.model.layers.23.mlp.experts: tiers=(bits,gate,up,down)((3, 248, 221, 180), (4, 40, 67, 108))
+INFO 10-23 23:42:27 [exl3.py:2536] EXL3 projection-mixed Trellis language_model.model.layers.44.mlp.experts: tiers=(bits,gate,up,down)((3, 247, 220, 180), (4, 41, 68, 108))
+{"part": "moe", "engine": "v091", "status": "complete", "verdicts": {"3": "DIFFERENCES (characterize)", "23": "DIFFERENCES (characterize)", "44": "DIFFERENCES (characterize)"}, "forced": "PREDICTION HOLDS (bit-equal on all compared rows)", "dry_forced_probe": null}
+moe rc=0
+in-container elapsed 97s
