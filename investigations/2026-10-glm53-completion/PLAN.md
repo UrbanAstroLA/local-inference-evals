@@ -3109,3 +3109,32 @@ difference; 0.8031 GPU-hours).**
     perturb ln P(`</think>`) by about 0.18 at identical tokens;
   - nothing about the tile's effect on the target distribution.
 - GPU-hours 2.53 (cumulative 133.30).
+
+**Amendment 22aw (2026-10-24; corrections adopted from the independent assessment of 22av; no GPU use).**
+- **Corrected wording.** "Scheduling and packing alone caused the difference" becomes: "Repeated executions under this
+  harness produced different outputs at identical forced token histories. Their execution schedules differed; the
+  contributions of cached state, remainder prefill, current-batch arithmetic, D2 and instrumentation have not been
+  isolated."
+  - Position-zero disagreement does not show that the incoming state differed: the position-zero computations also ran
+    in different batches, and no window-entry state comparison was retained.
+- **Withdrawn.** The claim that the log-probability discrepancy is "2-3 orders of magnitude above" the tile effect. These
+  are different measurements.
+- **Figures corrected to the diagnostic's own numbers.**
+  - Coarse host step facts match on 21,906 of 24,576 positions (89.1 %, not 94 %).
+  - On that subset, median |Δ ln P(`</think>`)| is 0.168 within arm A and 0.184 between A and B.
+  - The distributions are descriptively similar. They do not establish equivalence or exclude a systematic tile
+    effect.
+  - These are pre-nucleus log-probabilities; terminal-token eligibility and post-filter probability were not assessed.
+- **Second analysis defect recorded.** `decide()` emitted a negative reading although every joint reproducibility
+  family had zero positions. Its threshold-exceedance fallback is a descriptive heuristic, not a calibrated test. Both
+  are being corrected so that insufficient coverage yields INCOMPLETE.
+- **Client construction issues recorded:**
+  - arrival order not fixed;
+  - concurrent warm requests under one cache salt;
+  - repeat 2 reusing repeat 1's cache;
+  - seeds differing between repeats.
+  - Cache contamination is a candidate, not a finding. The client joined each pass before the next, so passes did not
+    overlap.
+- **Corrected in place, marked "22aw":** `tile-p4/RESULT.md`, `tile-p4/CRITIQUE-run1.md`, the investigation README
+  Status entry, and LEDGER.
+- No GPU-hours added (cumulative 133.30).

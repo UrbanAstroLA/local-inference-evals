@@ -759,7 +759,8 @@ What was asked, run, found, corrected and withdrawn, in date order.
 - **The intervention worked as specified:** forcing the decode tile to K64/N256 on both ranks of stock 0.9.1, with
   every launch gate passing.
 - **The comparison could not read out:** forced windows did not start from the same state even within one arm.
-  Repeats differ by about 0.18 in ln P(`</think>`) at identical tokens, far above the tile's fixed-input effect.
+  Repeats within one arm disagree at identical tokens (median |Δ ln P(`</think>`)| 0.168, against 0.184 for A vs
+  B); the cause is not isolated (wording corrected in 22aw).
 - **The automated "no difference" reading is invalid** (an analysis defect excluded 99.9 % of positions).
 - **Owned:** the design assumed the prefill-built window state was reproducible, and the gates did not check it.
 - GPU-hours 2.53 (cumulative 133.30). [Result](investigations/2026-10-glm53-completion/tile-p4/RESULT.md).

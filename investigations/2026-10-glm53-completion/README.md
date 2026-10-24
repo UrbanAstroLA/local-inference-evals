@@ -83,12 +83,15 @@ difference. Quantization is held fixed.
   - Stock 0.9.1 with the default tile (A, twice) was compared with the decode tile forced to K64/N256 (B) on matched
     forced histories (48 windows from stock replies, up to 131k tokens deep).
   - The intervention reached the engine as specified on both ranks, and every session completed.
-  - The run cannot answer its question: forced windows did not start from the same state even within one arm. In-batch
-    remainder prefill was packed differently per repeat.
-    - Repeats of arm A differ by about 0.18 (median) in ln P(`</think>`) at identical tokens, and on every position in
-      the MoE output.
-    - This is far above the tile's fixed-input effect, and A vs B looks the same as A vs A.
-  - The automated reading ("no reproducible difference") is invalid; an analysis defect excluded 99.9 % of positions.
+  - The run cannot answer its question: repeated executions under this harness produced different outputs at
+    identical forced token histories, even within one arm.
+    - Median |Δ ln P(`</think>`)| (pre-nucleus) is 0.168 within arm A and 0.184 between A and B, on positions with
+      matching coarse step facts (89.1 %).
+    - The distributions look similar descriptively. That does not establish equivalence or exclude a tile effect.
+    - The execution schedules differed between repeats. The contributions of cached state, remainder prefill,
+      current-batch arithmetic, D2 and instrumentation have not been isolated.
+  - The automated reading ("no reproducible difference") is invalid: an analysis key defect excluded 99.9 % of
+    positions, and the decision step turned missing evidence into a negative reading. (Wording corrected in 22aw.)
   - The run is reported as INCOMPLETE, with a [critique](tile-p4/CRITIQUE-run1.md). No statement about the tile's effect
     on the target distribution follows.
 - **Upstream.** The verified corrections were submitted on 2026-10-22, each with a reproduction and its verification:

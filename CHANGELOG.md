@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-10-24, corrections to the P4 run 1 report (completion investigation, amendment 22aw)
+
+No GPU use.
+
+- **Wording and figures corrected per the independent assessment of 22av:**
+  - the cause of the repeat disagreement is not isolated;
+  - the "orders of magnitude" comparison is withdrawn;
+  - 89.1 % host-fact agreement, with medians 0.168 (A/A) and 0.184 (A/B).
+- **A second analysis defect recorded** (missing evidence turned into a negative reading).
+- **Files corrected in place:** `tile-p4/RESULT.md`, `tile-p4/CRITIQUE-run1.md`, the investigation `README.md` and
+  `LEDGER.md`.
+- **`PLAN.md`:** amendment 22aw.
+
 ## 2026-10-24, MoE tile intervention, run 1: INCOMPLETE (completion investigation, amendment 22av)
 
 2.53 GPU-hours (cumulative 133.30).

@@ -1,8 +1,9 @@
 # Critique of P4 run 1 (sessions A, B, A2 of 2026-10-24) and of its harness and tests
 
-**Status of the run:** the gates passed and the sessions completed (2.53 GPU-h). **The analysis reading is invalid**:
+**Status of the run:** the gates passed and the sessions completed (2.53 GPU-h). Sections 2 and 4 were corrected in
+22aw after the independent assessment of 22av. **The analysis reading is invalid**:
 "neither E1 nor E3 shows a reproducible A-vs-B difference". It rests on 10-35 compared positions out of about 24,600
-per pair. The underlying cause is that the harness did not produce matched states. **Reading: INCOMPLETE**, not a
+per pair. Repeated executions under the harness also disagreed at identical forced token histories (section 2). **Reading: INCOMPLETE**, not a
 negative result.
 
 ## 1. Analysis defect: the step key
@@ -13,39 +14,53 @@ negative result.
   - Request indices are reused across passes.
   - Rows recorded for earlier requests are therefore labelled with the wrong window, or as "unforced".
 - **Effect:** the few positions that did match are near-coincidences. They are not a sample of matched states.
+- **Second defect (identified by the independent assessment of 22av):** `decide()` turned missing evidence into a
+  negative reading. Every joint reproducibility family had zero positions, yet it emitted "the tile intervention did not
+  change the measured outputs".
+  - Its fallback also declares propagation from a count of threshold exceedances (`ab > null`). That is a descriptive
+    heuristic, not a calibrated test.
+  - Both are being corrected: insufficient coverage must yield INCOMPLETE before any effect reading.
 
-## 2. Harness defect: windows do not start from the same state, even within one arm
-Direct comparison of the recorded data, ignoring the key (`diagnostics/diag*.py` with outputs `diagnostics/*.out`; CPU only). Session A, repeat 1
-vs repeat 2, same window, same forced tokens; the host step facts are equal on about 94 % of positions:
+## 2. Repeat disagreement within one arm (wording corrected in 22aw)
+Direct comparison of the recorded per-request records, ignoring the defective key (`diagnostics/diag*.py`, outputs
+`diagnostics/*.out`; CPU only). Session A, repeat 1 vs repeat 2, same window, same forced tokens. Coarse host step facts
+match on 21,906 of 24,576 positions (89.1 %); the figures below are on that subset.
 
 | Measure | A1 vs A2 | A1 vs B1 |
 |---|---|---|
 | MoE output layer 23, rel L2 median | 0.15 (q90 0.45); 0 % bit-equal | 0.16 |
 | MoE output layer 3, rel L2 | 0.006-0.01 from window position 0 | — |
 | Forced-token ln P equal | 15 % of positions | — |
-| \|Δ ln P(`</think>`)\| median | 0.18 (q90 0.67) | 0.18 |
+| \|Δ ln P(`</think>`)\| median (pre-nucleus) | 0.168 (q90 0.68) | 0.184 |
 | Forced-token ln P differs at o = 0 | yes, e.g. -0.03038 vs -0.03058 | — |
 
-The difference exists at the first window position, so the **state at window start differs between repeats**.
+**Reading.** Repeated executions under this harness produced different outputs at identical forced token histories.
+Their execution schedules differed, for example for window R01-close:
+- in repeat 1 its first measured decode step ran with 8 requests in flight, a mixed step with 2 still prefilling;
+- in repeat 2 it ran with 4 requests in flight, a different mixed step.
 
-**Mechanism observed in the step log** (window R01-close):
-- In repeat 1 its first decode step is step 17: 8 requests in flight, a mixed step (2,024 tokens, 2 still
-  prefilling).
-- In repeat 2 it is step 165: 4 requests in flight, a different mixed packing.
-- The previous pass's requests drain one by one (steps 149-157: 4, 3, 2, 1 requests), so passes are not in lock step
-  either.
+Within each pass, requests started and ended decoding at different steps. (The client joins all request threads
+before starting the next repeat, so this does not show that passes overlapped.)
 
-**Why the starts differ.** Each forced request still prefills a 4,353-8,704-token remainder in 2,048-token chunks
-(amendment A4), co-scheduled with whatever else is running. Chunk packing, the co-batch at decode start, and therefore
-the prefill-built KV, index-K, tail-ring and KDA state differ by repeat.
+**Not established.** The contributions of cached state, remainder prefill, current-batch arithmetic, D2 and
+instrumentation have not been isolated. In particular:
+- position-zero disagreement does not show that the incoming persistent state differed, because the position-zero
+  computations themselves ran in different batches;
+- no window-entry state comparison was retained.
 
-**Consequence for decode.** Batch composition during each window differs by repeat. At ≤ 2 requests in flight (≤ 8
-rows), arm A also runs K64/N256, the same tile as B. Stock D2 tail-ring races may add further run-to-run variation.
-They are not separable here.
+**Consequences.** The A-vs-A and A-vs-B distributions look similar descriptively. They do not establish equivalence or
+exclude a systematic tile effect. At ≤ 2 requests in flight (≤ 8 rows), arm A also runs K64/N256; such steps are a
+clean local control only with matched inputs and state.
 
-**Net effect.** Run-to-run state variation is 2-3 orders of magnitude larger than the tile's measured effect at fixed
-input (about 8e-4). A-vs-B is indistinguishable from A-vs-A. This run cannot detect a tile effect of the expected size,
-in either direction.
+**Construction issues in the client** (identified by the independent assessment of 22av):
+- separate HTTP requests released from a thread barrier do not fix arrival order, and the published timestamps show
+  different orderings between repeats;
+- warm requests for different replies run concurrently, with one cache salt throughout;
+- repeat 2 reuses the cache left by repeat 1, and windows share a reply's prefixes;
+- sampling seeds differ between repeats.
+
+Equal cache-hit lengths do not establish equal cached bytes or state provenance. Cache contamination or replacement is
+a candidate to inspect, not an established finding.
 
 ## 3. Why the tests and gates did not catch it
 - **The gates check the wrong thing for this question.** G1-G3 and G4 check bound launches and the fixed-input
@@ -56,14 +71,14 @@ in either direction.
 - **The analysis tests use fabricated records** whose step composition is consistent by construction. They therefore
   never hit the tag-at-flush defect.
 - **The proposal assumed** "the prefix is built by prefill, the same arithmetic in both arms". That is true of
-  the tile, but it is not a reproducible state: prefill with cache-hit remainders is packing-dependent on this engine.
+  the tile, but reproducibility of the resulting window-start state was assumed, not verified.
   Amendment A4 noted mixed steps at batch start and handled them as a matching problem. It did not treat them as a
   state-reproducibility problem.
 
 ## 4. What the data still supports (descriptive)
 - **The intervention reached the engine:** G1/G2 pass on both ranks; G4b forced-tile equality.
-- **Matched-history decode on stock 0.9.1 under this construction is not reproducible.** Repeat-to-repeat perturbations
-  of ln P(`</think>`) are about 0.18 (median) at identical forced tokens. These are perturbations from scheduling and
-  packing alone, at the scale relevant to terminal decisions. *Inference, not tested:* natural serving also varies
-  batch composition continuously, so perturbations of this kind are likely ever-present in both engines. That bears on
-  how a per-layer 8e-4 tile effect could matter, but it does not measure it.
+- **Repeated executions under this harness disagree at identical forced token histories:** median
+  |Δ ln P(`</think>`)| 0.168 within arm A, pre-nucleus. The cause is not isolated (section 2). Terminal-token eligibility
+  and post-filter probability have not been assessed. (Corrected in 22aw: an earlier version attributed the differences
+  to "scheduling and packing alone" and compared their size with the tile's fixed-input effect, which is a different
+  measurement.)

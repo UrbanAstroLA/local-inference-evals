@@ -1,6 +1,9 @@
 # sha256 of local files not published (reason in brackets). Paths relative to the local folder.
+c01c6359097a5fdc15454d48721cff2ece985fbac01755f404c2af3fe40b8665  ./CRITIQUE-run1.md.pre22aw   (superseded local copies (before 22aw corrections))
+e8b9ab51c7483da66a028c4ee8f3dbe695afb85f99cb1ca724e86af054fc6d8c  ./PROGRESS-REPORT-22av.md   (local only: report to the assessor with a future-design proposal)
 39080e17836c389cc4e824003a79407a7d224f7c2b40cd17ed7848580f922f6f  ./PROPOSAL.md   (local only: design copy with a later-work section (PROTOCOL.md is the published design))
 faf669efff88f614cbf48ce1251cf41e8c1cefbbc1bf3252929137e589930fbc  ./REDESIGN-NOTES.md   (local only: future design notes)
+28acd12370d89980dad089c7fc37427455645ad74399b02503a4df3e5fec2695  ./RESULT.md.pre22aw   (superseded local copies (before 22aw corrections))
 856899e095ac483ccebc615f5c400b7cb4d6f5c16c75c4727a0866deddaa6d21  ./precheck/__pycache__/precheck_graph.cpython-312.pyc   (bytecode)
 4d16c1218dabbf4e28e666eb0a6ad5a9dc73ce25765063fa3976fc075860ce0d  ./runs/g4-compile-cache/06/06435a8f112090b41a8fa80077fc9fb9a922f1e01f6bb5ac1b6cfc5d421ab8d0.o   (binary)
 7ec885d529af7d3b443adbdab2f56ae6f1ee41e2aea9b167d740a07cefa0aa2d  ./runs/g4-compile-cache/0b/0b07b76738713388aa97dc0b759ae575432f11eb5af5d2c89b47c571b2ca5d8f.o   (binary)
