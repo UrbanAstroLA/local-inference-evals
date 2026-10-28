@@ -21,6 +21,9 @@
                                                # the detector's margin on finished requests
     python3 tools/analyze.py screen-power      # component screen: smallest differences detectable with 80% power (Fisher, p < 0.05)
     python3 tools/analyze.py decode-prefill    # decode vs prefill: KL by region for every run; repeat spread; where a repeat diverges
+    python3 tools/analyze.py decode-prefill-tails [RUN ...]  # decode vs prefill, tails: per run and region, positions, mean,
+                                               # p99, p99.9 and max of the per-position kl_top20 and abs_dlp (default: every
+                                               # decode-prefill-consistency/v1 run; prompts 0-5 and all prompts)
     python3 tools/analyze.py screen-speed      # median completion tokens/s of finished requests in the v2 screens
 
 Configurations are named by their labels (SCHEMA.md, "Labels") and config ids. Pass p of a GPQA run sent request seed 1233 + p
@@ -468,6 +471,35 @@ def decode_prefill():
                   f"run means {kl(pair[0]['rows'], reg):.4f} vs {kl(pair[1]['rows'], reg):.4f}")
 
 
+def quantile(xs, q):
+    """Type-7 quantile (linear interpolation between order statistics, numpy's default) of an ascending list."""
+    h = (len(xs) - 1) * q; lo = math.floor(h)
+    return xs[lo] if lo + 1 >= len(xs) else xs[lo] + (h - lo) * (xs[lo + 1] - xs[lo])
+
+
+def decode_prefill_tails(args):
+    """decode-prefill-consistency/v1, from the published per-position rows: for each run and region (i < 2,044, 2,044-2,047,
+    i >= 2,048), the number of positions and the mean, p99, p99.9 and max of kl_top20 (positions where it is defined) and of
+    abs_dlp. On prompts 0-5 (shared by every v1 run) and on all of the run's prompts. These measure the engine's agreement
+    with itself (decode vs prefill re-reading of the same tokens, same model), not a distance from a reference model.
+    The 2,044-2,047 region has 4 positions per prompt, so its p99 and p99.9 are close to its max."""
+    ms = [m for m in runs("decode-prefill-consistency/v1") if not args or m["id"] in args]
+    def stats(rows, key):
+        v = sorted(r[key] for r in rows if r[key] is not None)
+        return len(v), sum(v) / len(v), quantile(v, 0.99), quantile(v, 0.999), v[-1]
+    for docs, what in ((range(6), "prompts 0-5"), (None, "all prompts")):
+        print(f"\n{what}\n")
+        print("| run | configuration | region | positions | KL mean | KL p99 | KL p99.9 | KL max | |dlp| mean | |dlp| p99 | |dlp| p99.9 | |dlp| max |")
+        print("|---|---|---|---|---|---|---|---|---|---|---|---|")
+        for m in ms:
+            for reg in ("lt2044", "2044-2047", "ge2048"):
+                rows = [r for r in m["rows"] if r["region"] == reg and (docs is None or r["doc_id"] in docs)]
+                if not rows: continue
+                n, km, k99, k999, kx = stats(rows, "kl_top20"); _, dm, d99, d999, dx = stats(rows, "abs_dlp")
+                print(f"| {m['id']} | {config_label(m['cfg'])} | {reg} | {n:,} | {km:.4f} | {k99:.3f} | {k999:.3f} | {kx:.3f} | "
+                      f"{dm:.4f} | {d99:.3f} | {d999:.3f} | {dx:.3f} |")
+
+
 def screen_single():
     print("Single draws (repeat 1 of each question); outcomes only. Every repeat of these screens sent seed 1234, so they are not rates.")
     docs = [13, 79, 88, 121, 127]
@@ -489,4 +521,4 @@ if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "gpqa-table"
     {"gpqa-table": gpqa_table, "gpqa-pairs": lambda: gpqa_pairs(sys.argv[2:]), "gpqa-passes": gpqa_passes,
      "gpqa-records": lambda: gpqa_records(sys.argv[2:]), "gpqa-join": lambda: gpqa_join(sys.argv[2:]), "gpqa-empty": gpqa_empty, "screen-v2": screen_v2,
-     "screen-single": screen_single, "decode-prefill": decode_prefill, "screen-power": power_table, "screen-speed": screen_speed, "screen-anatomy": anatomy}[cmd]()
+     "screen-single": screen_single, "decode-prefill": decode_prefill, "decode-prefill-tails": lambda: decode_prefill_tails(sys.argv[2:]), "screen-power": power_table, "screen-speed": screen_speed, "screen-anatomy": anatomy}[cmd]()

@@ -10,6 +10,10 @@
 tokens, each position compared with prefill re-scoring of the same token ids
 (`protocols/decode-prefill-consistency/v1.md`).
 
+This KL is the engine's agreement with itself: one model and one set of weights, its decode distribution at each
+position compared with prefill re-reading the same tokens, over the top-20 tokens both return (each renormalised). It
+is not a KL between a quantized model and its BF16 base, and it is not comparable with such numbers.
+
 ## Result
 
 | Positions | Mean KL, stock | Mean KL, with the fix | Top-1 agreement, stock | With the fix |
@@ -19,6 +23,22 @@ tokens, each position compared with prefill re-scoring of the same token ids
 
 Per prompt, mean KL below 2,044 is lower with the fix in 6 of 6 prompts. The predicted i mod 4 pattern did not
 separate the two builds (see the investigation's gate record).
+
+### Tails
+
+Per-position KL and |dlp| (absolute difference in the sampled token's log-probability), prompts 0-5 (the 0.9.1 runs
+restricted to the same prompts, as the noise floor). p99 is the value 1% of positions exceed (type-7 quantiles).
+
+| Positions | Run | Positions (KL defined) | KL p99 | KL p99.9 | \|dlp\| p99 | \|dlp\| p99.9 |
+|---|---|---|---|---|---|---|
+| i < 2,044 | stock | 11,169 | 1.025 | 3.737 | 2.061 | 10.915 |
+|  | with the fix | 11,169 | 0.149 | 1.042 | 0.625 | 2.416 |
+|  | 0.9.1 run 1 (floor) | 11,169 | 0.090 | 0.768 | 0.514 | 1.643 |
+|  | 0.9.1 run 2 (floor) | 11,169 | 0.084 | 0.304 | 0.512 | 1.101 |
+| i ≥ 2,048 | stock | 4,406 | 0.446 | 1.867 | 1.149 | 7.071 |
+|  | with the fix | 4,407 | 0.312 | 2.042 | 0.843 | 4.344 |
+|  | 0.9.1 run 1 (floor) | 4,407 | 0.095 | 0.323 | 0.500 | 1.606 |
+|  | 0.9.1 run 2 (floor) | 4,407 | 0.179 | 0.674 | 0.708 | 1.908 |
 
 ## Caveats
 
@@ -34,5 +54,6 @@ separate the two builds (see the investigation's gate record).
 
 ```bash
 python3 tools/analyze.py decode-prefill
+python3 tools/analyze.py decode-prefill-tails
 python3 investigations/2026-10-glm53-looping/recompute.py
 ```

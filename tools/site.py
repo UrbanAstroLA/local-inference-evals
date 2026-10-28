@@ -837,19 +837,26 @@ def decode_prefill_fig(runs):
             lab = f"{engine_label(m['cfg'])}{' · spec on' if m['cfg']['serving']['speculative']['tokens'] else ''} · {m['date'][5:]}"
             kd.append(dict(label=lab, color=color(m["cfg"]), est=est, lo=min(per), hi=max(per),
                            tip=f"KL {est:.4f}||{rname} · {lab}; prompts 0-5; per-prompt range {min(per):.4f}-{max(per):.4f}"))
-            ktr.append([esc(f"{rname} · {lab}"), f"{est:.4f}", f"{min(per):.4f}-{max(per):.4f}", link(m["id"])])
+            q = lambda key: sorted(r[key] for r in m["rows"] if r["doc_id"] < 6 and r["region"] == reg and r[key] is not None)
+            kq, dq = q("kl_top20"), q("abs_dlp")
+            ktr.append([esc(f"{rname} · {lab}"), f"{est:.4f}", f"{min(per):.4f}-{max(per):.4f}",
+                        f"{analyze.quantile(kq, 0.99):.3f} / {analyze.quantile(kq, 0.999):.3f}",
+                        f"{analyze.quantile(dq, 0.99):.3f} / {analyze.quantile(dq, 0.999):.3f}", link(m["id"])])
         head = ("Positions below 2,044, where the tail issue acted" if reg == "lt2044" else "Positions from 2,048")
         panels.append(f'<div class="s" style="margin:10px 0 0;font-weight:600;color:var(--ink2)">{head}</div>'
                       + interval_plot(kd, 0, 0.12, [0, 0.03, 0.06, 0.09, 0.12], lambda v: "0" if v == 0 else f"{v:.4f}".rstrip("0"), "",
                                       "mean KL, decode vs prefill (lower = closer agreement)"))
     return figure("Below 2,044 tokens the DCP1 tail fix brings decode much closer to prefill (supported); from 2,048 no effect is claimed",
                   "3.25bpw, prefix caching off, one request at a time, GPQA prompts 0-5 × 2,600 decoded tokens. Dot = mean KL over the shared "
-                  "top-20 tokens (lower = decode agrees with prefill); line = range of the six prompts' means. "
+                  "top-20 tokens (lower = decode agrees with prefill); line = range of the six prompts' means. This KL is the engine's "
+                  "agreement with itself (same model, decode vs prefill re-reading of the same tokens), not a KL between a quantized "
+                  "model and its BF16 base. "
                   + tip("Which runs", "One run without the fix; three with it: the local build and two runs of the 0.9.1 release, whose difference is "
                         "the run-to-run spread; plus 0.9.1 with speculation on. The 0.9.1 runs also cover prompts 6-11. From 2,048 tokens the runs "
                         "with the fix themselves spread widely.") + ".",
                   "".join(panels),
-                  table(["Positions · engine · date", "Mean KL, prompts 0-5", "Per-prompt range", "Receipts"], ktr, numeric=(1,)),
+                  table(["Positions · engine · date", "Mean KL, prompts 0-5", "Per-prompt range", "KL p99 / p99.9",
+                         "|dlp| p99 / p99.9", "Receipts"], ktr, numeric=(1,)),
                   legend([m["cfg"] for m in dps]), "decode-vs-prefill")
 
 

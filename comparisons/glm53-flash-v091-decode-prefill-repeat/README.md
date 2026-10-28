@@ -11,6 +11,10 @@ decode-vs-prefill comparison here.
 2026-10-09, each on a fresh server, one request at a time, GPQA prompts 0-11 with the same request seeds (1234 + doc id),
 2,600 generated tokens each (`protocols/decode-prefill-consistency/v1.md`).
 
+This KL is the engine's agreement with itself: one model and one set of weights, its decode distribution at each
+position compared with prefill re-reading the same tokens, over the top-20 tokens both return (each renormalised). It
+is not a KL between a quantized model and its BF16 base, and it is not comparable with such numbers.
+
 ## Result
 
 | Positions | Mean KL, run 1 | Mean KL, run 2 | Prompts 0-5 only: run 1, run 2 |
@@ -24,6 +28,18 @@ decode-vs-prefill comparison here.
   values (log-probability of the sampled token, KL) first differ after 1 to 130 generated tokens, depending on the
   prompt; the sampled continuations then differ. Batching cannot explain this (there was none).
 
+### Tails
+
+Per-position KL and |dlp| (absolute difference in the sampled token's log-probability), all 12 prompts. p99 is the
+value 1% of positions exceed (type-7 quantiles).
+
+| Positions | Run | Positions (KL defined) | KL p99 | KL p99.9 | \|dlp\| p99 | \|dlp\| p99.9 |
+|---|---|---|---|---|---|---|
+| i < 2,044 | run 1 | 21,923 | 0.081 | 0.547 | 0.501 | 1.434 |
+|  | run 2 | 21,923 | 0.096 | 0.415 | 0.526 | 1.437 |
+| i ≥ 2,048 | run 1 | 9,229 | 0.070 | 0.290 | 0.430 | 1.054 |
+|  | run 2 | 9,229 | 0.144 | 0.756 | 0.642 | 2.021 |
+
 ## Caveats
 
 - Use: the tail-fix comparison ([`glm53-flash-v090-tailfix-decode-prefill`](../glm53-flash-v090-tailfix-decode-prefill))
@@ -33,4 +49,5 @@ decode-vs-prefill comparison here.
 
 ```bash
 python3 tools/analyze.py decode-prefill
+python3 tools/analyze.py decode-prefill-tails
 ```

@@ -11,6 +11,10 @@ item 3).
 at a time, fresh server per run. With speculation on, generated tokens pass through the draft-and-verify path, and their
 decode distributions are compared with prefill re-scoring of the same tokens.
 
+This KL is the engine's agreement with itself: one model and one set of weights, its decode distribution at each
+position compared with prefill re-reading the same tokens, over the top-20 tokens both return (each renormalised). It
+is not a KL between a quantized model and its BF16 base, and it is not comparable with such numbers.
+
 ## Result
 
 | Positions | Speculation off, run 1 | Speculation off, run 2 | Speculation on |
@@ -21,6 +25,20 @@ decode distributions are compared with prefill re-scoring of the same tokens.
 Speculation on sits somewhat above both speculation-off runs, by less than the spread between single prompts across
 repeated runs ([`glm53-flash-v091-decode-prefill-repeat`](../glm53-flash-v091-decode-prefill-repeat)).
 
+### Tails
+
+Per-position KL and |dlp| (absolute difference in the sampled token's log-probability), all 12 prompts. p99 is the
+value 1% of positions exceed (type-7 quantiles).
+
+| Positions | Run | Positions (KL defined) | KL p99 | KL p99.9 | \|dlp\| p99 | \|dlp\| p99.9 |
+|---|---|---|---|---|---|---|
+| i < 2,044 | speculation off, run 1 | 21,923 | 0.081 | 0.547 | 0.501 | 1.434 |
+|  | speculation off, run 2 | 21,923 | 0.096 | 0.415 | 0.526 | 1.437 |
+|  | speculation on | 21,923 | 0.141 | 0.875 | 0.650 | 2.107 |
+| i ≥ 2,048 | speculation off, run 1 | 9,229 | 0.070 | 0.290 | 0.430 | 1.054 |
+|  | speculation off, run 2 | 9,229 | 0.144 | 0.756 | 0.642 | 2.021 |
+|  | speculation on | 9,229 | 0.130 | 1.008 | 0.597 | 2.129 |
+
 ## Caveats
 
 - One run with speculation on does not separate a difference of this size from run-to-run variation.
@@ -29,4 +47,5 @@ repeated runs ([`glm53-flash-v091-decode-prefill-repeat`](../glm53-flash-v091-de
 
 ```bash
 python3 tools/analyze.py decode-prefill
+python3 tools/analyze.py decode-prefill-tails
 ```
